@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
@@ -24,9 +25,10 @@ namespace Azure.Data.Tables.Tests
         additionalParameters: new object[] { TableEndpointType.Storage, TableEndpointType.CosmosTable, TableEndpointType.StorageAAD })]
     public class TableServiceLiveTestsBase : RecordedTestBase<TablesTestEnvironment>
     {
-        public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode? recordedTestMode = default) : base(isAsync, recordedTestMode)
+        public TableServiceLiveTestsBase(bool isAsync, TableEndpointType endpointType, RecordedTestMode? recordedTestMode = default, bool enableTenantDiscovery = false) : base(isAsync, recordedTestMode)
         {
             _endpointType = endpointType;
+            _enableTenantDiscovery = enableTenantDiscovery;
             SanitizedHeaders.Add("My-Custom-Auth-Header");
             UriRegexSanitizers.Add(
                 new UriRegexSanitizer(@"([\x0026|&|?]sig=)(?<group>[\w\d%]+)", SanitizeValue)
@@ -53,6 +55,7 @@ namespace Azure.Data.Tables.Tests
         protected const string DoubleDecimalTypePropertyName = "SomeDoubleProperty1";
         protected const string IntTypePropertyName = "SomeIntProperty";
         protected readonly TableEndpointType _endpointType;
+        private readonly bool _enableTenantDiscovery;
         protected string ServiceUri;
         protected string AccountName;
         protected string AccountKey;
@@ -68,6 +71,7 @@ namespace Azure.Data.Tables.Tests
             { "ValidateAccountSasCredentialsWithResourceTypes", "SAS for account operations not supported" },
             { "ValidateSasCredentialsWithGenerateSasUri", "https://github.com/Azure/azure-sdk-for-net/issues/13578" },
             { "CreateEntityWithETagProperty", "https://github.com/Azure/azure-sdk-for-net/issues/21405" },
+            { "GetEntityAllowsEmptyRowKey", "Empty RowKey values are not supported by Cosmos." },
             { "ValidateSasCredentialsWithGenerateSasUriAndUpperCaseTableName", "https://github.com/Azure/azure-sdk-for-net/issues/26800" }
         };
 
@@ -114,6 +118,7 @@ namespace Azure.Data.Tables.Tests
                 _ => TestEnvironment.StorageConnectionString,
             };
             var options = InstrumentClientOptions(new TableClientOptions());
+            options.EnableTenantDiscovery = _enableTenantDiscovery;
 
             service = CreateService(ServiceUri, options);
 
@@ -178,7 +183,7 @@ namespace Azure.Data.Tables.Tests
                             { GuidTypePropertyName, new Guid($"0d391d16-97f1-4b9a-be68-4cc871f9{n:D4}") },
                             { BinaryTypePropertyName, new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 } },
                             { Int64TypePropertyName, long.Parse(number) },
-                            { DoubleTypePropertyName, double.Parse($"{number}.0") },
+                            { DoubleTypePropertyName, double.Parse($"{number}.0", CultureInfo.InvariantCulture) },
                             { DoubleDecimalTypePropertyName, n + 0.5 },
                             { IntTypePropertyName, n },
                         };
@@ -243,7 +248,7 @@ namespace Azure.Data.Tables.Tests
                             BinaryTypeProperty = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 },
                             Int64TypeProperty = long.Parse(number),
                             UInt64TypeProperty = ulong.Parse(number),
-                            DoubleTypeProperty = double.Parse($"{number}.0"),
+                            DoubleTypeProperty = double.Parse($"{number}.0", CultureInfo.InvariantCulture),
                             IntTypeProperty = n,
                         };
                     })
@@ -266,8 +271,8 @@ namespace Azure.Data.Tables.Tests
                         return new ComplexEntity(partitionKeyValue, string.Format("{0:0000}", n))
                         {
                             String = string.Format("{0:0000}", n),
-                            Binary = new BinaryData(new byte[] { 0x01, 0x02, (byte)n }),
-                            BinaryPrimitive = new byte[] { 0x01, 0x02, (byte)n },
+                            Binary = new BinaryData(new byte[] { 0x01, 0x02, 0xFF, (byte)n }),
+                            BinaryPrimitive = new byte[] { 0x01, 0x02, 0xFF, (byte)n },
                             Bool = n % 2 == 0,
                             BoolPrimitive = n % 2 == 0,
                             DateTime = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
@@ -276,7 +281,7 @@ namespace Azure.Data.Tables.Tests
                             DateTimeN = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
                             DateTimeOffsetN = new DateTime(2020, 1, 1, 1, 1, 0, DateTimeKind.Utc).AddMinutes(n),
                             Double = n + 0.5,
-                            DoubleInteger = double.Parse($"{n.ToString()}.0"),
+                            DoubleInteger = double.Parse($"{n.ToString()}.0", CultureInfo.InvariantCulture),
                             DoubleN = n + 0.5,
                             DoublePrimitive = n + 0.5,
                             DoublePrimitiveN = n + 0.5,
@@ -289,6 +294,7 @@ namespace Azure.Data.Tables.Tests
                             Int64 = (long)int.MaxValue + n,
                             LongPrimitive = (long)int.MaxValue + n,
                             LongPrimitiveN = (long)int.MaxValue + n,
+                            RenamableStringProperty = string.Format("{0:0000}", n),
                         };
                     })
                 .ToList();
@@ -343,7 +349,7 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        protected async Task CreateTestEntities<T>(List<T> entitiesToCreate) where T : class, ITableEntity, new()
+        protected async Task CreateTestEntities<T>(List<T> entitiesToCreate) where T : class, ITableEntity
         {
             foreach (var entity in entitiesToCreate)
             {
@@ -359,7 +365,7 @@ namespace Azure.Data.Tables.Tests
             }
         }
 
-        protected async Task UpsertTestEntities<T>(List<T> entitiesToCreate, TableUpdateMode updateMode) where T : class, ITableEntity, new()
+        protected async Task UpsertTestEntities<T>(List<T> entitiesToCreate, TableUpdateMode updateMode) where T : class, ITableEntity
         {
             foreach (var entity in entitiesToCreate)
             {
@@ -478,6 +484,9 @@ namespace Azure.Data.Tables.Tests
             public Double DoubleInteger { get; set; } = (Double)1234;
 
             private Guid? guidNull = null;
+
+            [DataMember(Name = "SomeNewName")]
+            public string RenamableStringProperty { get; set; }
 
             public Guid? GuidNull
             {

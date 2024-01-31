@@ -11,10 +11,11 @@
   <!-- Nuget properties -->
   <PropertyGroup>
     <PackageTags>IoT;DigitalTwins;$(PackageCommonTags)</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <Description>SDK for the Azure Digital Twins service</Description>
-    <Version>1.3.0-beta.1</Version>
+    <Version>1.5.0</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.2.2</ApiCompatVersion>
+    <ApiCompatVersion>1.4.0</ApiCompatVersion>
   </PropertyGroup>
 
   <ItemGroup>

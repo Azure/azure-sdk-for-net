@@ -57,8 +57,10 @@ namespace Microsoft.Azure.Management.Compute
         /// Name of the role.
         /// </param>
         /// <param name='resourceGroupName'>
+        /// Name of the resource group.
         /// </param>
         /// <param name='cloudServiceName'>
+        /// Name of the cloud service.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -99,7 +101,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2022-09-04";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -257,8 +259,10 @@ namespace Microsoft.Azure.Management.Compute
         /// fetch all the roles.
         /// </summary>
         /// <param name='resourceGroupName'>
+        /// Name of the resource group.
         /// </param>
         /// <param name='cloudServiceName'>
+        /// Name of the cloud service.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -295,7 +299,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2022-09-04";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

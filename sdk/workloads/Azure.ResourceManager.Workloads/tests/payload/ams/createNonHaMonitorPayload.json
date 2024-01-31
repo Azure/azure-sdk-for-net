@@ -1,0 +1,12 @@
+{
+    "location": "eastus2",
+    "properties": {
+        "appLocation": "eastus",
+        "routingPreference": "RouteAll",
+        "zoneRedundancyPreference": "Disabled",
+        "managedResourceGroupConfiguration": {
+            "name": "sapmonrg-nonhaMonitor-java-2"
+        },
+        "monitorSubnet": "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/e2e-portal-wlmonitor-do-not-delete/providers/Microsoft.Network/virtualNetworks/vnetpeeringtest/subnets/dotNetSdkTest4"
+    }
+}

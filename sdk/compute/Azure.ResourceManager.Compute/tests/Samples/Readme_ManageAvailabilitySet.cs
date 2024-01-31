@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Tests.Samples
             string availabilitySetName = "myAvailabilitySet";
             AvailabilitySetResource availabilitySet = await availabilitySetCollection.GetAsync(availabilitySetName);
             // availabilitySet is an AvailabilitySetResource instance created above
-            PatchableAvailabilitySetData update = new PatchableAvailabilitySetData()
+            AvailabilitySetPatch update = new AvailabilitySetPatch()
             {
                 PlatformFaultDomainCount = 3
             };

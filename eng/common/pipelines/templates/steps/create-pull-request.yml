@@ -13,9 +13,9 @@ parameters:
   PRTitle: not-specified
   PRBody: ''
   ScriptDirectory: eng/common/scripts
-  GHReviewersVariable: ''
-  GHTeamReviewersVariable: ''
-  GHAssignessVariable: ''
+  GHReviewers: ''
+  GHTeamReviewers: ''
+  GHAssignees: ''
   # Multiple labels seperated by comma, e.g. "bug, APIView"
   PRLabels: ''
   SkipCheckingForChanges: false
@@ -52,8 +52,8 @@ steps:
       -PRTitle "${{ parameters.PRTitle }}"
       -PRBody "${{ coalesce(parameters.PRBody, parameters.CommitMsg, parameters.PRTitle) }}"
       -PRLabels "${{ parameters.PRLabels }}"
-      -UserReviewers "$(${{ parameters.GHReviewersVariable }})"
-      -TeamReviewers "$(${{ parameters.GHTeamReviewersVariable }})"
-      -Assignees "$(${{ parameters.GHAssignessVariable }})"
+      -UserReviewers "${{ parameters.GHReviewers }}"
+      -TeamReviewers "${{ parameters.GHTeamReviewers }}"
+      -Assignees "${{ parameters.GHAssignees }}"
       -CloseAfterOpenForTesting $${{ coalesce(parameters.CloseAfterOpenForTesting, 'false') }}
       -OpenAsDraft $${{ parameters.OpenAsDraft }}

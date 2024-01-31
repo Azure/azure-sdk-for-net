@@ -21,74 +21,74 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(RowCount))
             {
-                writer.WritePropertyName("rowCount");
+                writer.WritePropertyName("rowCount"u8);
                 writer.WriteObjectValue(RowCount);
             }
             if (Optional.IsDefined(RowSkips))
             {
-                writer.WritePropertyName("rowSkips");
+                writer.WritePropertyName("rowSkips"u8);
                 writer.WriteObjectValue(RowSkips);
             }
             if (Optional.IsDefined(RfcTableFields))
             {
-                writer.WritePropertyName("rfcTableFields");
+                writer.WritePropertyName("rfcTableFields"u8);
                 writer.WriteObjectValue(RfcTableFields);
             }
             if (Optional.IsDefined(RfcTableOptions))
             {
-                writer.WritePropertyName("rfcTableOptions");
+                writer.WritePropertyName("rfcTableOptions"u8);
                 writer.WriteObjectValue(RfcTableOptions);
             }
             if (Optional.IsDefined(BatchSize))
             {
-                writer.WritePropertyName("batchSize");
+                writer.WritePropertyName("batchSize"u8);
                 writer.WriteObjectValue(BatchSize);
             }
             if (Optional.IsDefined(CustomRfcReadTableFunctionModule))
             {
-                writer.WritePropertyName("customRfcReadTableFunctionModule");
+                writer.WritePropertyName("customRfcReadTableFunctionModule"u8);
                 writer.WriteObjectValue(CustomRfcReadTableFunctionModule);
             }
             if (Optional.IsDefined(SapDataColumnDelimiter))
             {
-                writer.WritePropertyName("sapDataColumnDelimiter");
+                writer.WritePropertyName("sapDataColumnDelimiter"u8);
                 writer.WriteObjectValue(SapDataColumnDelimiter);
             }
             if (Optional.IsDefined(PartitionOption))
             {
-                writer.WritePropertyName("partitionOption");
-                writer.WriteStringValue(PartitionOption.Value.ToString());
+                writer.WritePropertyName("partitionOption"u8);
+                writer.WriteObjectValue(PartitionOption);
             }
             if (Optional.IsDefined(PartitionSettings))
             {
-                writer.WritePropertyName("partitionSettings");
+                writer.WritePropertyName("partitionSettings"u8);
                 writer.WriteObjectValue(PartitionSettings);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
-                writer.WritePropertyName("queryTimeout");
+                writer.WritePropertyName("queryTimeout"u8);
                 writer.WriteObjectValue(QueryTimeout);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
-                writer.WritePropertyName("additionalColumns");
+                writer.WritePropertyName("additionalColumns"u8);
                 writer.WriteObjectValue(AdditionalColumns);
             }
-            writer.WritePropertyName("type");
+            writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
             {
-                writer.WritePropertyName("sourceRetryCount");
+                writer.WritePropertyName("sourceRetryCount"u8);
                 writer.WriteObjectValue(SourceRetryCount);
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
-                writer.WritePropertyName("sourceRetryWait");
+                writer.WritePropertyName("sourceRetryWait"u8);
                 writer.WriteObjectValue(SourceRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
-                writer.WritePropertyName("maxConcurrentConnections");
+                writer.WritePropertyName("maxConcurrentConnections"u8);
                 writer.WriteObjectValue(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
@@ -101,6 +101,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SapTableSource DeserializeSapTableSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> rowCount = default;
             Optional<object> rowSkips = default;
             Optional<object> rfcTableFields = default;
@@ -108,7 +112,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> batchSize = default;
             Optional<object> customRfcReadTableFunctionModule = default;
             Optional<object> sapDataColumnDelimiter = default;
-            Optional<SapTablePartitionOption> partitionOption = default;
+            Optional<object> partitionOption = default;
             Optional<SapTablePartitionSettings> partitionSettings = default;
             Optional<object> queryTimeout = default;
             Optional<object> additionalColumns = default;
@@ -120,146 +124,132 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rowCount"))
+                if (property.NameEquals("rowCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rowCount = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("rowSkips"))
+                if (property.NameEquals("rowSkips"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rowSkips = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("rfcTableFields"))
+                if (property.NameEquals("rfcTableFields"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rfcTableFields = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("rfcTableOptions"))
+                if (property.NameEquals("rfcTableOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rfcTableOptions = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("batchSize"))
+                if (property.NameEquals("batchSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     batchSize = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("customRfcReadTableFunctionModule"))
+                if (property.NameEquals("customRfcReadTableFunctionModule"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     customRfcReadTableFunctionModule = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("sapDataColumnDelimiter"))
+                if (property.NameEquals("sapDataColumnDelimiter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sapDataColumnDelimiter = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("partitionOption"))
+                if (property.NameEquals("partitionOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partitionOption = new SapTablePartitionOption(property.Value.GetString());
+                    partitionOption = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("partitionSettings"))
+                if (property.NameEquals("partitionSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     partitionSettings = SapTablePartitionSettings.DeserializeSapTablePartitionSettings(property.Value);
                     continue;
                 }
-                if (property.NameEquals("queryTimeout"))
+                if (property.NameEquals("queryTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     queryTimeout = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("additionalColumns"))
+                if (property.NameEquals("additionalColumns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     additionalColumns = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceRetryCount"))
+                if (property.NameEquals("sourceRetryCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceRetryCount = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("sourceRetryWait"))
+                if (property.NameEquals("sourceRetryWait"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceRetryWait = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("maxConcurrentConnections"))
+                if (property.NameEquals("maxConcurrentConnections"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrentConnections = property.Value.GetObject();
@@ -268,7 +258,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapTableSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, rowCount.Value, rowSkips.Value, rfcTableFields.Value, rfcTableOptions.Value, batchSize.Value, customRfcReadTableFunctionModule.Value, sapDataColumnDelimiter.Value, Optional.ToNullable(partitionOption), partitionSettings.Value);
+            return new SapTableSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, rowCount.Value, rowSkips.Value, rfcTableFields.Value, rfcTableOptions.Value, batchSize.Value, customRfcReadTableFunctionModule.Value, sapDataColumnDelimiter.Value, partitionOption.Value, partitionSettings.Value);
         }
 
         internal partial class SapTableSourceConverter : JsonConverter<SapTableSource>

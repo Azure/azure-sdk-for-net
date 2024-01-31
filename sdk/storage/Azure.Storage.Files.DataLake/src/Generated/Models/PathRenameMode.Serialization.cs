@@ -20,8 +20,8 @@ namespace Azure.Storage.Files.DataLake.Models
 
         public static PathRenameMode ToPathRenameMode(this string value)
         {
-            if (string.Equals(value, "legacy", StringComparison.InvariantCultureIgnoreCase)) return PathRenameMode.Legacy;
-            if (string.Equals(value, "posix", StringComparison.InvariantCultureIgnoreCase)) return PathRenameMode.Posix;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "legacy")) return PathRenameMode.Legacy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "posix")) return PathRenameMode.Posix;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown PathRenameMode value.");
         }
     }

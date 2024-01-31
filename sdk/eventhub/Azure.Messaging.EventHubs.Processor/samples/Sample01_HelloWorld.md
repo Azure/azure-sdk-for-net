@@ -4,6 +4,12 @@ This sample demonstrates the basic flow of events through an Event Hub, with the
 
 To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README and have the prerequisites, such as the connection string information, available.
 
+## Table of contents
+
+- [Client lifetime](#client-lifetime)
+- [Publish events](#publish-events)
+- [Process events](#process-events)
+
 ## Client lifetime
 
 Each of the Event Hubs client types is safe to cache and use for the lifetime of the application, which is best practice when the application publishes or reads events regularly or semi-regularly. The clients are responsible for efficient resource management, working to keep resource usage low during periods of inactivity and manage health during periods of higher use. 

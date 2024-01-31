@@ -8,32 +8,27 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> An enumeration of containers. </summary>
     internal partial class ListContainersSegmentResponse
     {
-        /// <summary> Initializes a new instance of ListContainersSegmentResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListContainersSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="containerItems"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/> or <paramref name="containerItems"/> is null. </exception>
         internal ListContainersSegmentResponse(string serviceEndpoint, IEnumerable<ContainerItemInternal> containerItems)
         {
-            if (serviceEndpoint == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpoint));
-            }
-            if (containerItems == null)
-            {
-                throw new ArgumentNullException(nameof(containerItems));
-            }
+            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
+            Argument.AssertNotNull(containerItems, nameof(containerItems));
 
             ServiceEndpoint = serviceEndpoint;
             ContainerItems = containerItems.ToList();
         }
 
-        /// <summary> Initializes a new instance of ListContainersSegmentResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListContainersSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="prefix"></param>
         /// <param name="marker"></param>

@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Containers.ContainerRegistry.csproj" />
+    <ProjectReference Include="..\perf\Azure.Containers.ContainerRegistry.Perf\Azure.Containers.ContainerRegistry.Perf.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
@@ -23,15 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
-    <None Update="Data\oci-artifact\654b93f61054e4ce90ed203bb8d556a6200d5f906cf3eca0620738d6dc18cbed">
+    <Content Include="Data\**">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Data\oci-artifact\config.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Data\oci-artifact\manifest.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
 </Project>

@@ -43,7 +43,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="securityProfile">Gets the security profile.</param>
         /// <param name="location">Location of the VM from which the restore
         /// point was created.</param>
-        public RestorePointSourceMetadata(HardwareProfile hardwareProfile = default(HardwareProfile), RestorePointSourceVMStorageProfile storageProfile = default(RestorePointSourceVMStorageProfile), OSProfile osProfile = default(OSProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), string licenseType = default(string), string vmId = default(string), SecurityProfile securityProfile = default(SecurityProfile), string location = default(string))
+        /// <param name="userData">UserData associated with the source VM for
+        /// which restore point is captured, which is a base-64 encoded
+        /// value.</param>
+        /// <param name="hyperVGeneration">HyperVGeneration of the source VM
+        /// for which restore point is captured. Possible values include: 'V1',
+        /// 'V2'</param>
+        public RestorePointSourceMetadata(HardwareProfile hardwareProfile = default(HardwareProfile), RestorePointSourceVMStorageProfile storageProfile = default(RestorePointSourceVMStorageProfile), OSProfile osProfile = default(OSProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), string licenseType = default(string), string vmId = default(string), SecurityProfile securityProfile = default(SecurityProfile), string location = default(string), string userData = default(string), string hyperVGeneration = default(string))
         {
             HardwareProfile = hardwareProfile;
             StorageProfile = storageProfile;
@@ -53,6 +59,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             VmId = vmId;
             SecurityProfile = securityProfile;
             Location = location;
+            UserData = userData;
+            HyperVGeneration = hyperVGeneration;
             CustomInit();
         }
 
@@ -65,7 +73,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets the hardware profile.
         /// </summary>
         [JsonProperty(PropertyName = "hardwareProfile")]
-        public HardwareProfile HardwareProfile { get; set; }
+        public HardwareProfile HardwareProfile { get; private set; }
 
         /// <summary>
         /// Gets the storage profile.
@@ -77,39 +85,52 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets the OS profile.
         /// </summary>
         [JsonProperty(PropertyName = "osProfile")]
-        public OSProfile OsProfile { get; set; }
+        public OSProfile OsProfile { get; private set; }
 
         /// <summary>
         /// Gets the diagnostics profile.
         /// </summary>
         [JsonProperty(PropertyName = "diagnosticsProfile")]
-        public DiagnosticsProfile DiagnosticsProfile { get; set; }
+        public DiagnosticsProfile DiagnosticsProfile { get; private set; }
 
         /// <summary>
         /// Gets the license type, which is for bring your own license
         /// scenario.
         /// </summary>
         [JsonProperty(PropertyName = "licenseType")]
-        public string LicenseType { get; set; }
+        public string LicenseType { get; private set; }
 
         /// <summary>
         /// Gets the virtual machine unique id.
         /// </summary>
         [JsonProperty(PropertyName = "vmId")]
-        public string VmId { get; set; }
+        public string VmId { get; private set; }
 
         /// <summary>
         /// Gets the security profile.
         /// </summary>
         [JsonProperty(PropertyName = "securityProfile")]
-        public SecurityProfile SecurityProfile { get; set; }
+        public SecurityProfile SecurityProfile { get; private set; }
 
         /// <summary>
-        /// Gets or sets location of the VM from which the restore point was
-        /// created.
+        /// Gets location of the VM from which the restore point was created.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
+        public string Location { get; private set; }
+
+        /// <summary>
+        /// Gets userData associated with the source VM for which restore point
+        /// is captured, which is a base-64 encoded value.
+        /// </summary>
+        [JsonProperty(PropertyName = "userData")]
+        public string UserData { get; private set; }
+
+        /// <summary>
+        /// Gets hyperVGeneration of the source VM for which restore point is
+        /// captured. Possible values include: 'V1', 'V2'
+        /// </summary>
+        [JsonProperty(PropertyName = "hyperVGeneration")]
+        public string HyperVGeneration { get; private set; }
 
         /// <summary>
         /// Validate the object.

@@ -20,8 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         public static ResourceIdentityType ToResourceIdentityType(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return ResourceIdentityType.None;
-            if (string.Equals(value, "SystemAssigned", StringComparison.InvariantCultureIgnoreCase)) return ResourceIdentityType.SystemAssigned;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return ResourceIdentityType.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SystemAssigned")) return ResourceIdentityType.SystemAssigned;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResourceIdentityType value.");
         }
     }

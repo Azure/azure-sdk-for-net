@@ -26,7 +26,7 @@ namespace Compute.Tests
         /// Delete VMScaleSet
         /// Delete RG
         /// </summary>
-        [Fact]
+        [Fact(Skip = "SKU not available")]
         public void TestVMScaleSetScalingOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -71,7 +71,7 @@ namespace Compute.Tests
                 {
                     //Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
                     //of the test to cover deletion. CSM does persistent retrying over all RG resources.
-                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                    //m_ResourcesClient.ResourceGroups.Delete(rgName);
                 }
             }
         }

@@ -8,10 +8,16 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+
 using Microsoft.Extensions.Logging;
+
 using Moq;
+
 using OpenTelemetry.Logs;
+
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
@@ -39,7 +45,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void CallingConvertToExceptionDetailsWithNullExceptionThrowsArgumentNullException()
         {
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             Assert.Throws<ArgumentNullException>(() => new TelemetryExceptionDetails(null, "Exception Message", null));
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         }
 
         [Fact]
@@ -84,15 +92,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void TestNullMethodInfoInStack()
         {
             var frameMock = new Mock<System.Diagnostics.StackFrame>(null, 0, 0);
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
             frameMock.Setup(x => x.GetMethod()).Returns((MethodBase)null);
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
-            Models.StackFrame stackFrame = null;
+            // In AOT, StackFrame.GetMethod() can return null.
+            // In this instance, we fall back to StackFrame.ToString()
+            frameMock.Setup(x => x.ToString()).Returns("MethodName + 0x00 at offset 000 in file:line:column <filename unknown>:0:0");
 
-            stackFrame = TelemetryExceptionDetails.GetStackFrame(frameMock.Object, 0);
+            Models.StackFrame stackFrame = new Models.StackFrame(frameMock.Object, 0);
 
             Assert.Equal("unknown", stackFrame.Assembly);
             Assert.Null(stackFrame.FileName);
-            Assert.Equal("unknown", stackFrame.Method);
+            Assert.Equal("MethodName + 0x00 at offset 000 in file:line:column <filename unknown>:0:0", stackFrame.Method);
             Assert.Null(stackFrame.Line);
         }
 
@@ -103,8 +117,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             StackTrace st = new StackTrace(exception, true);
             var frame = st.GetFrame(0);
-            var line = frame.GetFileLineNumber();
-            var fileName = frame.GetFileName();
+            var line = frame?.GetFileLineNumber();
+            var fileName = frame?.GetFileName();
 
             var exceptionDetails = new TelemetryExceptionDetails(exception, exception.Message, null);
             var stack = exceptionDetails.ParsedStack;
@@ -151,16 +165,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var exception = CreateException(300);
 
             var exceptionDetails = new TelemetryExceptionDetails(exception, exception.Message, null);
-            int parsedStackLength = 0;
 
             var stack = exceptionDetails.ParsedStack;
-            for (int i = 0; i < stack.Count; i++)
-            {
-                parsedStackLength += (stack[i].Method == null ? 0 : stack[i].Method.Length)
-                                     + (stack[i].Assembly == null ? 0 : stack[i].Assembly.Length)
-                                     + (stack[i].FileName == null ? 0 : stack[i].FileName.Length);
-            }
-            Assert.True(parsedStackLength <= TelemetryExceptionDetails.MaxParsedStackLength);
+
+            int parsedStackLength = stack.Sum(x => x.GetStackFrameLength());
+
+            Assert.True(parsedStackLength <= SchemaConstants.ExceptionDetails_Stack_MaxLength);
         }
 
         [Fact]
@@ -198,7 +208,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void ExceptionDataContainsExceptionDetailsofAllInnerExceptionsOfAggregateException()
+        public void ExceptionDataContainsExceptionDetailsOfAllInnerExceptionsOfAggregateException()
         {
             var logRecords = new List<LogRecord>();
             using var loggerFactory = LoggerFactory.Create(builder =>
@@ -218,13 +228,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AggregateException aggregateException = new AggregateException("AggregateException", new[] { innerException1, innerException2 });
 
             // Passing "AggregateException" explicitly here instead of using aggregateException.Message
-            // aggregateException.Message will return different value in case of net461 compared to netcore
+            // aggregateException.Message will return different value in case of net462 compared to netcore
             logger.LogWarning(aggregateException, "AggregateException");
 
             var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
 
             Assert.Equal(3, exceptionData.Exceptions.Count);
-            Assert.Equal("AggregateException", exceptionData.Exceptions[0].Message);
+
+            var test = aggregateException.Message.ToString();
+
+            Assert.Equal(aggregateException.Message, exceptionData.Exceptions[0].Message);
             Assert.Equal("Inner1", exceptionData.Exceptions[1].Message);
             Assert.Equal("Inner2", exceptionData.Exceptions[2].Message);
         }
@@ -251,7 +264,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var exception = new Exception("Exception", innerexception2);
 
             // Passing "Exception" explicitly here instead of using exception.Message
-            // exception.Message will return different value in case of net461 compared to netcore
+            // exception.Message will return different value in case of net462 compared to netcore
             logger.LogWarning(exception, "Exception");
 
             var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
@@ -288,17 +301,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             AggregateException rootLevelException = new AggregateException("0", innerExceptions);
 
             // Passing "0" explicitly here instead of using rootLevelException.Message
-            // rootLevelException.Message will return different value in case of net461 compared to netcore
+            // rootLevelException.Message will return different value in case of net462 compared to netcore
             logger.LogWarning(rootLevelException, "0");
 
             var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
 
             Assert.Equal(maxNumberOfExceptionsAllowed + 1, exceptionData.Exceptions.Count);
 
-            for (int counter = 0; counter < maxNumberOfExceptionsAllowed; counter++)
+            // The first exception is the AggregateException
+            Assert.Equal("System.AggregateException", exceptionData.Exceptions[0].TypeName);
+
+#if NETFRAMEWORK
+            Assert.Equal("0", exceptionData.Exceptions[0].Message);
+#else
+            Assert.Equal("0 (1) (2) (3) (4) (5) (6) (7) (8) (9) (10) (11) (12) (13) (14) (15)", exceptionData.Exceptions[0].Message);
+#endif
+
+            // Assert Additional exceptions
+            for (int counter = 1; counter < maxNumberOfExceptionsAllowed; counter++)
             {
                 var details = exceptionData.Exceptions[counter];
 
+                Assert.Equal("System.Exception", exceptionData.Exceptions[counter].TypeName);
                 Assert.Equal(counter.ToString(CultureInfo.InvariantCulture), details.Message);
             }
 
@@ -334,18 +358,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var logger = loggerFactory.CreateLogger<TelemetryExceptionDataTests>();
 
-            var ex = new Exception("Message");
-            logger.Log(logLevel, ex, "Message");
+            var ex = new Exception("Exception Message");
+            logger.Log(logLevel, ex, "Log Message");
 
             var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
 
             Assert.Equal(2, exceptionData.Version);
             Assert.Equal(LogsHelper.GetSeverityLevel(logLevel), exceptionData.SeverityLevel);
-            Assert.Empty(exceptionData.Properties);
+            Assert.Equal("Log Message", exceptionData.Properties["OriginalFormat"]);
             Assert.Empty(exceptionData.Measurements);
             Assert.Equal(typeof(Exception).FullName + " at UnknownMethod", exceptionData.ProblemId);
             Assert.Equal(1, exceptionData.Exceptions.Count);
-            Assert.Equal("Message", exceptionData.Exceptions[0].Message);
+            Assert.Equal("Exception Message", exceptionData.Exceptions[0].Message);
             Assert.Null(exceptionData.Exceptions[0].Stack);
             Assert.Equal(ex.GetHashCode(), exceptionData.Exceptions[0].Id);
             Assert.Empty(exceptionData.Exceptions[0].ParsedStack);
@@ -355,7 +379,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [MethodImpl(MethodImplOptions.NoInlining)]
         private Exception CreateException(int stackDepth)
         {
-            Exception exception = null;
+            Exception? exception = null;
 
             try
             {
@@ -366,7 +390,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 exception = exp;
             }
 
-            return exception;
+            return exception!;
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]

@@ -194,6 +194,8 @@ namespace Azure.Core.Tests
             yield return M(o => o.Retry.NetworkTimeout = TimeSpan.FromDays(5), o => o.Retry.NetworkTimeout);
             yield return M(o => o.Retry.MaxRetries = 44, o => o.Retry.MaxRetries);
 
+            yield return M(o => o.RetryPolicy = new TestRetryPolicy(), o => o.RetryPolicy);
+
             yield return M(o => o.Diagnostics.ApplicationId = "a", o => o.Diagnostics.ApplicationId);
             yield return M(o => o.Diagnostics.IsLoggingEnabled = false, o => o.Diagnostics.IsLoggingEnabled);
             yield return M(o => o.Diagnostics.IsTelemetryEnabled = false, o => o.Diagnostics.IsTelemetryEnabled);
@@ -250,6 +252,10 @@ namespace Azure.Core.Tests
             /// Gets the credential diagnostic options.
             /// </summary>
             public new TestDiagnosticsOptions Diagnostics => base.Diagnostics as TestDiagnosticsOptions;
+        }
+
+        private class TestRetryPolicy : RetryPolicy
+        {
         }
     }
 }

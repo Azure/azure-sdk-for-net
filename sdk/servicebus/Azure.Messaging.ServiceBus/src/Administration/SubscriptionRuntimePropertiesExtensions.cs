@@ -22,7 +22,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 {
                     if (xDoc.Name.LocalName == "entry")
                     {
-                        return await ParseFromEntryElementAsync(topicName, xDoc, response, diagnostics).ConfigureAwait(false);
+                        return ParseFromEntryElement(topicName, xDoc, response, diagnostics);
                     }
                 }
             }
@@ -34,10 +34,10 @@ namespace Azure.Messaging.ServiceBus.Administration
             throw new ServiceBusException(
                 "Subscription was not found",
                 ServiceBusFailureReason.MessagingEntityNotFound,
-                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                innerException: new RequestFailedException(response));
         }
 
-        private static async Task<SubscriptionRuntimeProperties> ParseFromEntryElementAsync(string topicName, XElement xEntry, Response response, ClientDiagnostics diagnostics)
+        private static SubscriptionRuntimeProperties ParseFromEntryElement(string topicName, XElement xEntry, Response response, ClientDiagnostics diagnostics)
         {
             var name = xEntry.Element(XName.Get("title", AdministrationClientConstants.AtomNamespace)).Value;
             var subscriptionRuntimeInfo = new SubscriptionRuntimeProperties(topicName, name);
@@ -50,7 +50,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 throw new ServiceBusException(
                     "Subscription was not found",
                     ServiceBusFailureReason.MessagingEntityNotFound,
-                    innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                    innerException: new RequestFailedException(response));
             }
 
             foreach (var element in qdXml.Elements())
@@ -110,7 +110,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                         var entryList = xDoc.Elements(XName.Get("entry", AdministrationClientConstants.AtomNamespace));
                         foreach (var entry in entryList)
                         {
-                            subscriptionList.Add(await ParseFromEntryElementAsync(topicPath, entry, response, diagnostics).ConfigureAwait(false));
+                            subscriptionList.Add(ParseFromEntryElement(topicPath, entry, response, diagnostics));
                         }
 
                         return subscriptionList;
@@ -125,7 +125,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             throw new ServiceBusException(
                 "No subscriptions were found",
                 ServiceBusFailureReason.MessagingEntityNotFound,
-                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                innerException: new RequestFailedException(response));
         }
     }
 }

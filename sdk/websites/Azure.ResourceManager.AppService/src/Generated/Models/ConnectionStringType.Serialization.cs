@@ -14,32 +14,32 @@ namespace Azure.ResourceManager.AppService.Models
         public static string ToSerialString(this ConnectionStringType value) => value switch
         {
             ConnectionStringType.MySql => "MySql",
-            ConnectionStringType.SQLServer => "SQLServer",
-            ConnectionStringType.SQLAzure => "SQLAzure",
+            ConnectionStringType.SqlServer => "SQLServer",
+            ConnectionStringType.SqlAzure => "SQLAzure",
             ConnectionStringType.Custom => "Custom",
             ConnectionStringType.NotificationHub => "NotificationHub",
             ConnectionStringType.ServiceBus => "ServiceBus",
             ConnectionStringType.EventHub => "EventHub",
             ConnectionStringType.ApiHub => "ApiHub",
-            ConnectionStringType.DocDb => "DocDb",
+            ConnectionStringType.DocDB => "DocDb",
             ConnectionStringType.RedisCache => "RedisCache",
-            ConnectionStringType.PostgreSQL => "PostgreSQL",
+            ConnectionStringType.PostgreSql => "PostgreSQL",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ConnectionStringType value.")
         };
 
         public static ConnectionStringType ToConnectionStringType(this string value)
         {
-            if (string.Equals(value, "MySql", StringComparison.InvariantCultureIgnoreCase)) return ConnectionStringType.MySql;
-            if (string.Equals(value, "SQLServer", StringComparison.InvariantCultureIgnoreCase)) return ConnectionStringType.SQLServer;
-            if (string.Equals(value, "SQLAzure", StringComparison.InvariantCultureIgnoreCase)) return ConnectionStringType.SQLAzure;
-            if (string.Equals(value, "Custom", StringComparison.InvariantCultureIgnoreCase)) return ConnectionStringType.Custom;
-            if (string.Equals(value, "NotificationHub", StringComparison.InvariantCultureIgnoreCase)) return ConnectionStringType.NotificationHub;
-            if (string.Equals(value, "ServiceBus", StringComparison.InvariantCultureIgnoreCase)) return ConnectionStringType.ServiceBus;
-            if (string.Equals(value, "EventHub", StringComparison.InvariantCultureIgnoreCase)) return ConnectionStringType.EventHub;
-            if (string.Equals(value, "ApiHub", StringComparison.InvariantCultureIgnoreCase)) return ConnectionStringType.ApiHub;
-            if (string.Equals(value, "DocDb", StringComparison.InvariantCultureIgnoreCase)) return ConnectionStringType.DocDb;
-            if (string.Equals(value, "RedisCache", StringComparison.InvariantCultureIgnoreCase)) return ConnectionStringType.RedisCache;
-            if (string.Equals(value, "PostgreSQL", StringComparison.InvariantCultureIgnoreCase)) return ConnectionStringType.PostgreSQL;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "MySql")) return ConnectionStringType.MySql;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SQLServer")) return ConnectionStringType.SqlServer;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SQLAzure")) return ConnectionStringType.SqlAzure;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom")) return ConnectionStringType.Custom;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotificationHub")) return ConnectionStringType.NotificationHub;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ServiceBus")) return ConnectionStringType.ServiceBus;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "EventHub")) return ConnectionStringType.EventHub;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ApiHub")) return ConnectionStringType.ApiHub;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DocDb")) return ConnectionStringType.DocDB;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RedisCache")) return ConnectionStringType.RedisCache;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PostgreSQL")) return ConnectionStringType.PostgreSql;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ConnectionStringType value.");
         }
     }

@@ -7,36 +7,29 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> SharePoint Online List linked service. </summary>
     public partial class SharePointOnlineListLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of SharePointOnlineListLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharePointOnlineListLinkedService"/>. </summary>
         /// <param name="siteUrl"> The URL of the SharePoint Online site. For example, https://contoso.sharepoint.com/sites/siteName. Type: string (or Expression with resultType string). </param>
         /// <param name="tenantId"> The tenant ID under which your application resides. You can find it from Azure portal Active Directory overview page. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> The application (client) ID of your application registered in Azure Active Directory. Make sure to grant SharePoint site permission to this application. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalKey"> The client secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalKey">
+        /// The client secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string).
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteUrl"/>, <paramref name="tenantId"/>, <paramref name="servicePrincipalId"/> or <paramref name="servicePrincipalKey"/> is null. </exception>
         public SharePointOnlineListLinkedService(object siteUrl, object tenantId, object servicePrincipalId, SecretBase servicePrincipalKey)
         {
-            if (siteUrl == null)
-            {
-                throw new ArgumentNullException(nameof(siteUrl));
-            }
-            if (tenantId == null)
-            {
-                throw new ArgumentNullException(nameof(tenantId));
-            }
-            if (servicePrincipalId == null)
-            {
-                throw new ArgumentNullException(nameof(servicePrincipalId));
-            }
-            if (servicePrincipalKey == null)
-            {
-                throw new ArgumentNullException(nameof(servicePrincipalKey));
-            }
+            Argument.AssertNotNull(siteUrl, nameof(siteUrl));
+            Argument.AssertNotNull(tenantId, nameof(tenantId));
+            Argument.AssertNotNull(servicePrincipalId, nameof(servicePrincipalId));
+            Argument.AssertNotNull(servicePrincipalKey, nameof(servicePrincipalKey));
 
             SiteUrl = siteUrl;
             TenantId = tenantId;
@@ -45,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "SharePointOnlineList";
         }
 
-        /// <summary> Initializes a new instance of SharePointOnlineListLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharePointOnlineListLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -55,7 +48,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="siteUrl"> The URL of the SharePoint Online site. For example, https://contoso.sharepoint.com/sites/siteName. Type: string (or Expression with resultType string). </param>
         /// <param name="tenantId"> The tenant ID under which your application resides. You can find it from Azure portal Active Directory overview page. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> The application (client) ID of your application registered in Azure Active Directory. Make sure to grant SharePoint site permission to this application. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalKey"> The client secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalKey">
+        /// The client secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string).
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         internal SharePointOnlineListLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object siteUrl, object tenantId, object servicePrincipalId, SecretBase servicePrincipalKey, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
@@ -73,7 +70,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object TenantId { get; set; }
         /// <summary> The application (client) ID of your application registered in Azure Active Directory. Make sure to grant SharePoint site permission to this application. Type: string (or Expression with resultType string). </summary>
         public object ServicePrincipalId { get; set; }
-        /// <summary> The client secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The client secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string).
+        /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
+        /// </summary>
         public SecretBase ServicePrincipalKey { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }

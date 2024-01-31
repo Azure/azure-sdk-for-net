@@ -5,20 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class ApplicationProfile : IUtf8JsonSerializable
+    internal partial class ApplicationProfile : IUtf8JsonSerializable, IJsonModel<ApplicationProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ApplicationProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationProfile)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(GalleryApplications))
             {
-                writer.WritePropertyName("galleryApplications");
+                writer.WritePropertyName("galleryApplications"u8);
                 writer.WriteStartArray();
                 foreach (var item in GalleryApplications)
                 {
@@ -26,31 +36,101 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationProfile DeserializeApplicationProfile(JsonElement element)
+        ApplicationProfile IJsonModel<ApplicationProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<IList<VmGalleryApplication>> galleryApplications = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationProfile)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationProfile(document.RootElement, options);
+        }
+
+        internal static ApplicationProfile DeserializeApplicationProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<VirtualMachineGalleryApplication>> galleryApplications = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("galleryApplications"))
+                if (property.NameEquals("galleryApplications"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<VmGalleryApplication> array = new List<VmGalleryApplication>();
+                    List<VirtualMachineGalleryApplication> array = new List<VirtualMachineGalleryApplication>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmGalleryApplication.DeserializeVmGalleryApplication(item));
+                        array.Add(VirtualMachineGalleryApplication.DeserializeVirtualMachineGalleryApplication(item));
                     }
                     galleryApplications = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationProfile(Optional.ToList(galleryApplications));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApplicationProfile(Optional.ToList(galleryApplications), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ApplicationProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ApplicationProfile IPersistableModel<ApplicationProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApplicationProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApplicationProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

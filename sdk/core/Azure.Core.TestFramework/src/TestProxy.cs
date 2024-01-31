@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
@@ -38,6 +39,8 @@ namespace Azure.Core.TestFramework
         private readonly StringBuilder _errorBuffer = new();
         private static readonly object _lock = new();
         private static TestProxy _shared;
+        private readonly StringBuilder _output = new();
+        private static readonly bool s_enableProxyLogging;
 
         static TestProxy()
         {
@@ -56,13 +59,18 @@ namespace Azure.Core.TestFramework
             s_dotNetExe = Path.Combine(installDir, dotNetExeName);
 
             bool HasDotNetExe(string dotnetDir) => dotnetDir != null && File.Exists(Path.Combine(dotnetDir, dotNetExeName));
+            s_enableProxyLogging = TestEnvironment.EnableProxyLogging;
         }
 
-        private TestProxy(string proxyPath)
+        private TestProxy(string proxyPath, bool debugMode = false)
         {
+            bool.TryParse(Environment.GetEnvironmentVariable("PROXY_DEBUG_MODE"), out bool environmentDebugMode);
+
+            debugMode |= environmentDebugMode;
+
             ProcessStartInfo testProxyProcessInfo = new ProcessStartInfo(
                 s_dotNetExe,
-                proxyPath)
+                $"\"{proxyPath}\" --storage-location=\"{TestEnvironment.RepositoryRoot}\"")
             {
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
@@ -70,7 +78,9 @@ namespace Azure.Core.TestFramework
                 EnvironmentVariables =
                 {
                     ["ASPNETCORE_URLS"] = $"http://{IpAddress}:0;https://{IpAddress}:0",
+                    ["Logging__LogLevel__Azure.Sdk.Tools.TestProxy"] = s_enableProxyLogging ? "Debug" : "Error",
                     ["Logging__LogLevel__Default"] = "Error",
+                    ["Logging__LogLevel__Microsoft.AspNetCore"] = s_enableProxyLogging ? "Information" : "Error",
                     ["Logging__LogLevel__Microsoft.Hosting.Lifetime"] = "Information",
                     ["ASPNETCORE_Kestrel__Certificates__Default__Path"] = TestEnvironment.DevCertPath,
                     ["ASPNETCORE_Kestrel__Certificates__Default__Password"] = TestEnvironment.DevCertPassword
@@ -91,22 +101,29 @@ namespace Azure.Core.TestFramework
                         _errorBuffer.AppendLine(error);
                     }
                 });
-
-            int lines = 0;
-            while ((_proxyPortHttp == null || _proxyPortHttps == null) && lines++ < 50)
+            if (debugMode)
             {
-                string outputLine = _testProxyProcess.StandardOutput.ReadLine();
-                // useful for debugging
-                TestContext.Progress.WriteLine(outputLine);
-
-                if (ProxyPortHttp == null && TryParsePort(outputLine, "http", out _proxyPortHttp))
+                _proxyPortHttp = 5000;
+                _proxyPortHttps = 5001;
+            }
+            else
+            {
+                int lines = 0;
+                while ((_proxyPortHttp == null || _proxyPortHttps == null) && lines++ < 50)
                 {
-                    continue;
-                }
+                    string outputLine = _testProxyProcess.StandardOutput.ReadLine();
+                    // useful for debugging
+                    TestContext.Progress.WriteLine(outputLine);
 
-                if (_proxyPortHttps == null && TryParsePort(outputLine, "https", out _proxyPortHttps))
-                {
-                    continue;
+                    if (ProxyPortHttp == null && TryParsePort(outputLine, "http", out _proxyPortHttp))
+                    {
+                        continue;
+                    }
+
+                    if (_proxyPortHttps == null && TryParsePort(outputLine, "https", out _proxyPortHttps))
+                    {
+                        continue;
+                    }
                 }
             }
 
@@ -122,19 +139,34 @@ namespace Azure.Core.TestFramework
             var options = new TestProxyClientOptions();
             Client = new TestProxyRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), new Uri($"http://{IpAddress}:{_proxyPortHttp}"));
 
-            // For some reason draining the standard output stream is necessary to keep the test-proxy process healthy. Otherwise requests
-            // start timing out. This only seems to happen when not specifying a port.
             _ = Task.Run(
                 () =>
                 {
                     while (!_testProxyProcess.HasExited && !_testProxyProcess.StandardOutput.EndOfStream)
                     {
-                        _testProxyProcess.StandardOutput.ReadLine();
+                        if (s_enableProxyLogging)
+                        {
+                            lock (_output)
+                            {
+                                _output.AppendLine(_testProxyProcess.StandardOutput.ReadLine());
+                            }
+                        }
+                        // For some reason draining the standard output stream is necessary to keep the test-proxy process healthy, even
+                        // when we are not outputting logs. Otherwise, requests start timing out.
+                        else
+                        {
+                            _testProxyProcess.StandardOutput.ReadLine();
+                        }
                     }
                 });
         }
 
-        public static TestProxy Start()
+        /// <summary>
+        /// Starts the test proxy
+        /// </summary>
+        /// <param name="debugMode">If true, the proxy will be configured to look for port 5000 and 5001, which is the default used when running the proxy locally in debug mode.</param>
+        /// <returns>The started TestProxy instance.</returns>
+        public static TestProxy Start(bool debugMode = false)
         {
             if (_shared != null)
             {
@@ -150,7 +182,8 @@ namespace Azure.Core.TestFramework
                         .Assembly
                         .GetCustomAttributes<AssemblyMetadataAttribute>()
                         .Single(a => a.Key == "TestProxyPath")
-                        .Value);
+                        .Value,
+                        debugMode);
 
                     AppDomain.CurrentDomain.DomainUnload += (_, _) =>
                     {
@@ -187,7 +220,25 @@ namespace Azure.Core.TestFramework
             return false;
         }
 
-        public void CheckForErrors()
+        public async Task CheckProxyOutputAsync()
+        {
+            if (s_enableProxyLogging)
+            {
+                // add a small delay to allow the log output for the just finished test to be collected into the _output StringBuilder
+                await Task.Delay(20);
+
+                // lock to avoid any race conditions caused by appending to the StringBuilder while calling ToString
+                lock (_output)
+                {
+                    TestContext.Out.WriteLine(_output.ToString());
+                    _output.Clear();
+                }
+            }
+
+            CheckForErrors();
+        }
+
+        private void CheckForErrors()
         {
             if (_errorBuffer.Length > 0)
             {

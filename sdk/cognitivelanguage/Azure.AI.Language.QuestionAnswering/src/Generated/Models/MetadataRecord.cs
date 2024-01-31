@@ -6,26 +6,21 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
     /// <summary> Object to provide the key value pair for each metadata. </summary>
     public partial class MetadataRecord
     {
-        /// <summary> Initializes a new instance of MetadataRecord. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataRecord"/>. </summary>
         /// <param name="key"> Metadata Key from Metadata dictionary used in the QnA. </param>
         /// <param name="value"> Metadata Value from Metadata dictionary used in the QnA. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public MetadataRecord(string key, string value)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             Key = key;
             Value = value;

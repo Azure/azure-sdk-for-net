@@ -13,6 +13,7 @@ namespace Microsoft.Azure.Management.Security
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -22,18 +23,18 @@ namespace Microsoft.Azure.Management.Security
     public static partial class SecurityContactsOperationsExtensions
     {
             /// <summary>
-            /// Security contact configurations for the subscription
+            /// List all security contact configurations for the subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<SecurityContact> List(this ISecurityContactsOperations operations)
+            public static IList<SecurityContact> List(this ISecurityContactsOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Security contact configurations for the subscription
+            /// List all security contact configurations for the subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -41,7 +42,7 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SecurityContact>> ListAsync(this ISecurityContactsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<SecurityContact>> ListAsync(this ISecurityContactsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -50,7 +51,7 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Security contact configurations for the subscription
+            /// Get Default Security contact configurations for the subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -64,7 +65,7 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Security contact configurations for the subscription
+            /// Get Default Security contact configurations for the subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -84,7 +85,7 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Security contact configurations for the subscription
+            /// Create security contact configurations for the subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -101,7 +102,7 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Security contact configurations for the subscription
+            /// Create security contact configurations for the subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -124,7 +125,7 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Security contact configurations for the subscription
+            /// Delete security contact configurations for the subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -138,7 +139,7 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Security contact configurations for the subscription
+            /// Delete security contact configurations for the subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -155,47 +156,7 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Security contact configurations for the subscription
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='securityContactName'>
-            /// Name of the security contact object
-            /// </param>
-            /// <param name='securityContact'>
-            /// Security contact object
-            /// </param>
-            public static SecurityContact Update(this ISecurityContactsOperations operations, string securityContactName, SecurityContact securityContact)
-            {
-                return operations.UpdateAsync(securityContactName, securityContact).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Security contact configurations for the subscription
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='securityContactName'>
-            /// Name of the security contact object
-            /// </param>
-            /// <param name='securityContact'>
-            /// Security contact object
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<SecurityContact> UpdateAsync(this ISecurityContactsOperations operations, string securityContactName, SecurityContact securityContact, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(securityContactName, securityContact, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Security contact configurations for the subscription
+            /// List all security contact configurations for the subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -209,7 +170,7 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Security contact configurations for the subscription
+            /// List all security contact configurations for the subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

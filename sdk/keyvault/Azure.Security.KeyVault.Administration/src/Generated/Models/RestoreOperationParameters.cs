@@ -6,26 +6,21 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> The RestoreOperationParameters. </summary>
     internal partial class RestoreOperationParameters
     {
-        /// <summary> Initializes a new instance of RestoreOperationParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreOperationParameters"/>. </summary>
         /// <param name="sasTokenParameters"></param>
         /// <param name="folderToRestore"> The Folder name of the blob where the previous successful full backup was stored. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sasTokenParameters"/> or <paramref name="folderToRestore"/> is null. </exception>
         public RestoreOperationParameters(SASTokenParameter sasTokenParameters, string folderToRestore)
         {
-            if (sasTokenParameters == null)
-            {
-                throw new ArgumentNullException(nameof(sasTokenParameters));
-            }
-            if (folderToRestore == null)
-            {
-                throw new ArgumentNullException(nameof(folderToRestore));
-            }
+            Argument.AssertNotNull(sasTokenParameters, nameof(sasTokenParameters));
+            Argument.AssertNotNull(folderToRestore, nameof(folderToRestore));
 
             SasTokenParameters = sasTokenParameters;
             FolderToRestore = folderToRestore;

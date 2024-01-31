@@ -73,7 +73,7 @@ process {
 
                 Write-Error "File '$($file.FullName)' contains invalid product slug: $product" -TargetObject $file `
                     -Category InvalidData -CategoryTargetName $product -CategoryTargetType string `
-                    -RecommendedAction 'Use only product slugs listed at https://review.docs.microsoft.com/help/contribute/metadata-taxonomies?branch=master#product'
+                    -RecommendedAction 'Use only product slugs listed at https://review.docs.microsoft.com/help/contribute/metadata-taxonomies?branch=main#product'
             }
         }
 
@@ -95,7 +95,7 @@ end {
 }
 
 begin {
-    # https://review.docs.microsoft.com/help/contribute/metadata-taxonomies?branch=master#product
+    # https://review.docs.microsoft.com/help/contribute/metadata-taxonomies?branch=main#product
     $productSlugs = @(
         "ai-builder",
         "aspnet",
@@ -104,6 +104,7 @@ begin {
         "azure-active-directory-b2c",
         "azure-active-directory-domain",
         "azure-advisor",
+        "azure-ai-content-safety",
         "azure-analysis-services",
         "azure-anomaly-detector",
         "azure-api-apps",
@@ -202,6 +203,7 @@ begin {
         "azure-genomics",
         "azure-hdinsight",
         "azure-hdinsight-rserver",
+        "azure-health-insights",
         "azure-hpc-cache",
         "azure-immersive-reader",
         "azure-information-protection",
@@ -221,11 +223,13 @@ begin {
         "azure-kubernetes-service",
         "azure-lab-services",
         "azure-language-understanding",
+        "azure-language-service",
         "azure-lighthouse",
         "azure-linux-vm",
         "azure-live-ondemand-streaming",
         "azure-live-video-analytics",
         "azure-load-balancer",
+        "azure-load-testing",
         "azure-log-analytics",
         "azure-logic-apps",
         "azure-machine-learning",
@@ -244,6 +248,7 @@ begin {
         "azure-network-watcher",
         "azure-notebooks",
         "azure-notification-hubs",
+        "azure-openai",
         "azure-open-datasets",
         "azure-personalizer",
         "azure-pipelines",
@@ -319,6 +324,7 @@ begin {
         "azure-vpn-gateway",
         "azure-web-application-firewall",
         "azure-web-apps",
+        "azure-web-pubsub",
         "azure-webapp-containers",
         "blazor-server",
         "blazor-webassembly",
@@ -326,6 +332,7 @@ begin {
         "customer-voice",
         "dotnet-core",
         "dotnet-standard",
+        "document-intelligence",
         "dynamics-business-central",
         "dynamics-commerce",
         "dynamics-cust-insights",
@@ -357,6 +364,7 @@ begin {
         "ef-core",
         "ef6",
         "expression-studio",
+        "language-service",
         "m365-ems",
         "m365-ems-cloud-app-security",
         "m365-ems-configuration-manager",
@@ -497,7 +505,7 @@ Checks sample markdown files' frontmatter for invalid information.
 .DESCRIPTION
 Given a collection of markdown files, their frontmatter - if present - is checked for invalid information, including:
 
-Invalid product slugs, i.e. those not listed in https://review.docs.microsoft.com/help/contribute/metadata-taxonomies?branch=master#product.
+Invalid product slugs, i.e. those not listed in https://review.docs.microsoft.com/help/contribute/metadata-taxonomies?branch=main#product.
 
 .PARAMETER Path
 Specifies the path to an item to search. Wildcards are permitted.

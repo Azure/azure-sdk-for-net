@@ -11,7 +11,8 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal InternalReleasePhoneNumberOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "ReleasePhoneNumberOperation");
+            var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
+            _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "ReleasePhoneNumberOperation");
 
             if (response.Headers.TryGetValue<string>("operation-id", out var id))
             {

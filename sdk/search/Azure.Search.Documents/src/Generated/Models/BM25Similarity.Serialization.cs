@@ -19,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (K1 != null)
                 {
-                    writer.WritePropertyName("k1");
+                    writer.WritePropertyName("k1"u8);
                     writer.WriteNumberValue(K1.Value);
                 }
                 else
@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 if (B != null)
                 {
-                    writer.WritePropertyName("b");
+                    writer.WritePropertyName("b"u8);
                     writer.WriteNumberValue(B.Value);
                 }
                 else
@@ -39,19 +39,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("b");
                 }
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
             writer.WriteEndObject();
         }
 
         internal static BM25Similarity DeserializeBM25Similarity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double?> k1 = default;
             Optional<double?> b = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("k1"))
+                if (property.NameEquals("k1"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -61,7 +65,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     k1 = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("b"))
+                if (property.NameEquals("b"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -71,7 +75,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     b = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;

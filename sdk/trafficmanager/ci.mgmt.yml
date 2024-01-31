@@ -1,0 +1,23 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/trafficmanager/ci.mgmt.yml
+    - sdk/trafficmanager/Azure.ResourceManager.TrafficManager/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: trafficmanager
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.TrafficManager
+      safeName: AzureResourceManagerTrafficManager

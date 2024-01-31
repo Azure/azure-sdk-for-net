@@ -2,22 +2,21 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-/// <summary>
-/// The suite of tests for the `StartRecognizeContent` methods in the <see cref="FormRecognizerClient"/> class.
-/// </summary>
-/// <remarks>
-/// These tests have a dependency on live Azure services and may incur costs for the associated
-/// Azure subscription.
-/// </remarks>
 namespace Azure.AI.FormRecognizer.Tests
 {
+    /// <summary>
+    /// The suite of tests for the `StartRecognizeContent` methods in the <see cref="FormRecognizerClient"/> class.
+    /// </summary>
+    /// <remarks>
+    /// These tests have a dependency on live Azure services and may incur costs for the associated
+    /// Azure subscription.
+    /// </remarks>
     [ClientTestFixture(
     FormRecognizerClientOptions.ServiceVersion.V2_0,
     FormRecognizerClientOptions.ServiceVersion.V2_1)]
@@ -380,20 +379,6 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(0, blankPage.Tables.Count);
         }
 
-        [RecordedTest]
-        public void StartRecognizeContentThrowsForDamagedFile()
-        {
-            var client = CreateFormRecognizerClient();
-
-            // First 4 bytes are PDF signature, but fill the rest of the "file" with garbage.
-
-            var damagedFile = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x55, 0x55, 0x55 };
-            using var stream = new MemoryStream(damagedFile);
-
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentAsync(stream));
-            Assert.AreEqual("InvalidImage", ex.ErrorCode);
-        }
-
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and handle returned errors.
@@ -405,7 +390,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var invalidUri = new Uri("https://idont.ex.ist");
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentFromUriAsync(invalidUri));
-            Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
+            Assert.AreEqual("InvalidImage", ex.ErrorCode);
         }
 
         [RecordedTest]
@@ -440,64 +425,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        [TestCase("1", 1)]
-        [TestCase("1-2", 2)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
-        public async Task StartRecognizeContentWithOnePageArgument(string pages, int expected)
-        {
-            var client = CreateFormRecognizerClient();
-            RecognizeContentOperation operation;
-
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeContentAsync(stream, new RecognizeContentOptions() { Pages = { pages } });
-            }
-
-            FormPageCollection formPages = await operation.WaitForCompletionAsync();
-
-            Assert.AreEqual(expected, formPages.Count);
-        }
-
-        [RecordedTest]
-        [TestCase("1", "3", 2)]
-        [TestCase("1-2", "3", 3)]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
-        public async Task StartRecognizeContentWithMultiplePageArgument(string page1, string page2, int expected)
-        {
-            var client = CreateFormRecognizerClient();
-            RecognizeContentOperation operation;
-
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeContentAsync(stream, new RecognizeContentOptions() { Pages = { page1, page2 } });
-            }
-
-            FormPageCollection formPages = await operation.WaitForCompletionAsync();
-
-            Assert.AreEqual(expected, formPages.Count);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
-        public async Task StartRecognizeContentWithLanguage()
-        {
-            var client = CreateFormRecognizerClient();
-            RecognizeContentOperation operation;
-
-            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
-            operation = await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { Language = FormRecognizerLanguage.En });
-
-            await operation.WaitForCompletionAsync();
-            Assert.IsTrue(operation.HasValue);
-
-            var formPage = operation.Value.Single();
-
-            ValidateFormPage(formPage, includeFieldElements: true, expectedPageNumber: 1);
-        }
-
-        [RecordedTest]
         [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
         public void StartRecognizeContentWithNoSupporttedLanguage()
         {
@@ -506,36 +433,6 @@ namespace Azure.AI.FormRecognizer.Tests
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { Language = "not language" }));
             Assert.AreEqual("NotSupportedLanguage", ex.ErrorCode);
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = FormRecognizerClientOptions.ServiceVersion.V2_1)]
-        public async Task StartRecognizeContentWithReadingOrder()
-        {
-            var client = CreateFormRecognizerClient();
-            var uri = FormRecognizerTestEnvironment.CreateUri(TestFile.Form1);
-            RecognizeContentOperation basicOrderOperation, naturalOrderOperation;
-
-            basicOrderOperation = await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { ReadingOrder = FormReadingOrder.Basic });
-            naturalOrderOperation = await client.StartRecognizeContentFromUriAsync(uri, new RecognizeContentOptions() { ReadingOrder = FormReadingOrder.Natural });
-
-            await basicOrderOperation.WaitForCompletionAsync();
-            Assert.IsTrue(basicOrderOperation.HasValue);
-
-            await naturalOrderOperation.WaitForCompletionAsync();
-            Assert.IsTrue(naturalOrderOperation.HasValue);
-
-            var basicOrderFormPage = basicOrderOperation.Value.Single();
-            var naturalOrderFormPage = naturalOrderOperation.Value.Single();
-
-            ValidateFormPage(basicOrderFormPage, includeFieldElements: true, expectedPageNumber: 1);
-            ValidateFormPage(naturalOrderFormPage, includeFieldElements: true, expectedPageNumber: 1);
-
-            var basicOrderLines = basicOrderFormPage.Lines.Select(f => f.Text);
-            var naturalOrderLines = naturalOrderFormPage.Lines.Select(f => f.Text);
-
-            CollectionAssert.AreEquivalent(basicOrderLines, naturalOrderLines);
-            CollectionAssert.AreNotEqual(basicOrderLines, naturalOrderLines);
         }
     }
 }

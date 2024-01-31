@@ -61,7 +61,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="aadIssuer">The AADIssuer property of the
         /// VirtualNetworkGateway resource for vpn client connection used for
         /// AAD authentication.</param>
-        public VpnClientConfiguration(AddressSpace vpnClientAddressPool = default(AddressSpace), IList<VpnClientRootCertificate> vpnClientRootCertificates = default(IList<VpnClientRootCertificate>), IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates = default(IList<VpnClientRevokedCertificate>), IList<string> vpnClientProtocols = default(IList<string>), IList<string> vpnAuthenticationTypes = default(IList<string>), IList<IpsecPolicy> vpnClientIpsecPolicies = default(IList<IpsecPolicy>), string radiusServerAddress = default(string), string radiusServerSecret = default(string), IList<RadiusServer> radiusServers = default(IList<RadiusServer>), string aadTenant = default(string), string aadAudience = default(string), string aadIssuer = default(string))
+        /// <param name="vngClientConnectionConfigurations">per ip address pool
+        /// connection policy for virtual network gateway P2S client.</param>
+        public VpnClientConfiguration(AddressSpace vpnClientAddressPool = default(AddressSpace), IList<VpnClientRootCertificate> vpnClientRootCertificates = default(IList<VpnClientRootCertificate>), IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates = default(IList<VpnClientRevokedCertificate>), IList<string> vpnClientProtocols = default(IList<string>), IList<string> vpnAuthenticationTypes = default(IList<string>), IList<IpsecPolicy> vpnClientIpsecPolicies = default(IList<IpsecPolicy>), string radiusServerAddress = default(string), string radiusServerSecret = default(string), IList<RadiusServer> radiusServers = default(IList<RadiusServer>), string aadTenant = default(string), string aadAudience = default(string), string aadIssuer = default(string), IList<VngClientConnectionConfiguration> vngClientConnectionConfigurations = default(IList<VngClientConnectionConfiguration>))
         {
             VpnClientAddressPool = vpnClientAddressPool;
             VpnClientRootCertificates = vpnClientRootCertificates;
@@ -75,6 +77,7 @@ namespace Microsoft.Azure.Management.Network.Models
             AadTenant = aadTenant;
             AadAudience = aadAudience;
             AadIssuer = aadIssuer;
+            VngClientConnectionConfigurations = vngClientConnectionConfigurations;
             CustomInit();
         }
 
@@ -164,6 +167,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "aadIssuer")]
         public string AadIssuer { get; set; }
+
+        /// <summary>
+        /// Gets or sets per ip address pool connection policy for virtual
+        /// network gateway P2S client.
+        /// </summary>
+        [JsonProperty(PropertyName = "vngClientConnectionConfigurations")]
+        public IList<VngClientConnectionConfiguration> VngClientConnectionConfigurations { get; set; }
 
     }
 }

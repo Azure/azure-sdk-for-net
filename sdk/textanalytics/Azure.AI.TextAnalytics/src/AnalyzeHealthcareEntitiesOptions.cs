@@ -16,5 +16,20 @@ namespace Azure.AI.TextAnalytics
         public AnalyzeHealthcareEntitiesOptions()
         {
         }
+
+        /// <summary>
+        /// Optional display name for the operation.
+        /// </summary>
+        /// <remarks>
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
+        /// </remarks>
+        public string DisplayName { get; set; }
+
+        /// <inheritdoc/>
+        internal override void CheckSupported(TextAnalyticsClientOptions.ServiceVersion current)
+        {
+            base.CheckSupported(current);
+            Validation.SupportsProperty(this, DisplayName, nameof(DisplayName), TextAnalyticsClientOptions.ServiceVersion.V2022_05_01, current);
+        }
     }
 }

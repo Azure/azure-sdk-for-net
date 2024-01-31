@@ -154,6 +154,7 @@ namespace Microsoft.Azure.Batch
             Models.CertificateReference[] certRefs,
             Models.ApplicationPackageReference[] applicationPackageReferences,
             Models.MetadataItem[] metaData,
+            Models.NodeCommunicationMode? targetNodeCommunicationMode,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken);
 
@@ -163,6 +164,7 @@ namespace Microsoft.Azure.Batch
             Models.CertificateReference[] certificateReferences,
             Models.ApplicationPackageReference[] applicationPackageReferences,
             Models.MetadataItem[] metadata,
+            Models.NodeCommunicationMode? targetNodeCommunicationMode,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken);
 
@@ -292,10 +294,6 @@ namespace Microsoft.Azure.Batch
         Task<AzureOperationHeaderResponse<Models.CertificateDeleteHeaders>> DeleteCertificate(string thumbprintAlgorithm, string thumbprint, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
         Task<AzureOperationHeaderResponse<Models.CertificateCancelDeletionHeaders>> CancelDeleteCertificate(string thumbprintAlgorithm, string thumbprint, BehaviorManager bhMgr, CancellationToken cancellationToken);
-
-        Task<AzureOperationResponse<Models.JobStatistics, Models.JobGetAllLifetimeStatisticsHeaders>> GetAllJobLifetimeStats(BehaviorManager bhMgr, CancellationToken cancellationToken);
-
-        Task<AzureOperationResponse<Models.PoolStatistics, Models.PoolGetAllLifetimeStatisticsHeaders>> GetAllPoolLifetimeStats(BehaviorManager bhMgr, CancellationToken cancellationToken);
 
         Task<AzureOperationResponse<Models.TaskAddCollectionResult, Models.TaskAddCollectionHeaders>> AddTaskCollection(string jobId, IEnumerable<Models.TaskAddParameter> tasks, BehaviorManager bhMgr, CancellationToken cancellationToken);
 

@@ -53,8 +53,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'CATCH_UP', 'SUSPENDED'</param>
         /// <param name="isTerminationAllowed">Whether the user is currently
         /// allowed to terminate the link.</param>
-        /// <param name="linkType">Link type (GEO, NAMED). Possible values
-        /// include: 'GEO', 'NAMED'</param>
+        /// <param name="linkType">Link type (GEO, NAMED, STANDBY). Possible
+        /// values include: 'GEO', 'NAMED', 'STANDBY'</param>
         public ReplicationLink(string id = default(string), string name = default(string), string type = default(string), string partnerServer = default(string), string partnerDatabase = default(string), string partnerLocation = default(string), ReplicationRole? role = default(ReplicationRole?), ReplicationRole? partnerRole = default(ReplicationRole?), string replicationMode = default(string), System.DateTime? startTime = default(System.DateTime?), int? percentComplete = default(int?), string replicationState = default(string), bool? isTerminationAllowed = default(bool?), string linkType = default(string))
             : base(id, name, type)
         {
@@ -142,8 +142,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         public bool? IsTerminationAllowed { get; private set; }
 
         /// <summary>
-        /// Gets link type (GEO, NAMED). Possible values include: 'GEO',
-        /// 'NAMED'
+        /// Gets link type (GEO, NAMED, STANDBY). Possible values include:
+        /// 'GEO', 'NAMED', 'STANDBY'
         /// </summary>
         [JsonProperty(PropertyName = "properties.linkType")]
         public string LinkType { get; private set; }

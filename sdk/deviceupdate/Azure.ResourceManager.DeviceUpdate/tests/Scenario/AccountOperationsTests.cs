@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");
             DeviceUpdateAccountResource account = await CreateAccount(rg, accountName);
-            PatchableDeviceUpdateAccountData updateOptions = new PatchableDeviceUpdateAccountData()
+            DeviceUpdateAccountPatch updateOptions = new DeviceUpdateAccountPatch()
             {
                 Location = AzureLocation.WestUS2,
                 Identity = new ManagedServiceIdentity(ResourceManager.Models.ManagedServiceIdentityType.None)

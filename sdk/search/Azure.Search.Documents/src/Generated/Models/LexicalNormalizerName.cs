@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Defines the names of all text normalizers supported by Azure Cognitive Search. </summary>
+    /// <summary> Defines the names of all text normalizers supported by the search engine. </summary>
     public readonly partial struct LexicalNormalizerName : IEquatable<LexicalNormalizerName>
     {
         private readonly string _value;
@@ -28,9 +28,9 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string StandardValue = "standard";
         private const string UppercaseValue = "uppercase";
 
-        /// <summary> Converts alphabetic, numeric, and symbolic Unicode characters which are not in the first 127 ASCII characters (the &quot;Basic Latin&quot; Unicode block) into their ASCII equivalents, if such equivalents exist. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/ASCIIFoldingFilter.html. </summary>
+        /// <summary> Converts alphabetic, numeric, and symbolic Unicode characters which are not in the first 127 ASCII characters (the "Basic Latin" Unicode block) into their ASCII equivalents, if such equivalents exist. See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/ASCIIFoldingFilter.html. </summary>
         public static LexicalNormalizerName AsciiFolding { get; } = new LexicalNormalizerName(AsciiFoldingValue);
-        /// <summary> Removes elisions. For example, &quot;l&apos;avion&quot; (the plane) will be converted to &quot;avion&quot; (plane). See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/util/ElisionFilter.html. </summary>
+        /// <summary> Removes elisions. For example, "l'avion" (the plane) will be converted to "avion" (plane). See http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/util/ElisionFilter.html. </summary>
         public static LexicalNormalizerName Elision { get; } = new LexicalNormalizerName(ElisionValue);
         /// <summary> Normalizes token text to lowercase. See https://lucene.apache.org/core/6_6_1/analyzers-common/org/apache/lucene/analysis/core/LowerCaseFilter.html. </summary>
         public static LexicalNormalizerName Lowercase { get; } = new LexicalNormalizerName(LowercaseValue);

@@ -9,6 +9,7 @@ using Azure.Extensions.AspNetCore.DataProtection.Blobs;
 using Azure.Storage;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 #pragma warning disable AZC0001 // Extension methods have to be in the correct namespace to appear in intellisense.
 namespace Microsoft.AspNetCore.DataProtection
@@ -135,7 +136,7 @@ namespace Microsoft.AspNetCore.DataProtection
         /// <param name="blobName">The blob name to use.</param>
         /// <returns>The value <paramref name="builder"/>.</returns>
         /// <remarks>
-        /// The container referenced by <paramref name="containerName"/><paramref name="blobName"/> must already exist.
+        /// The container referenced by <paramref name="containerName"/> must already exist.
         /// </remarks>
         public static IDataProtectionBuilder PersistKeysToAzureBlobStorage(this IDataProtectionBuilder builder, string connectionString, string containerName, string blobName)
         {
@@ -187,6 +188,41 @@ namespace Microsoft.AspNetCore.DataProtection
             {
                 options.XmlRepository = new AzureBlobXmlRepository(blobClient);
             });
+
+            return builder;
+        }
+
+        /// <summary>
+        /// Configures the data protection system to persist keys to the specified path
+        /// in Azure Blob Storage.
+        /// </summary>
+        /// <param name="builder">The builder instance to modify.</param>
+        /// <param name="blobClientFactory">The factory delegate used to create the <see cref="BlobClient"/> in which the
+        /// key file should be stored.</param>
+        /// <returns>The value <paramref name="builder"/>.</returns>
+        /// <remarks>
+        /// The blob referenced by <paramref name="blobClient"/> must already exist.
+        /// </remarks>
+        public static IDataProtectionBuilder PersistKeysToAzureBlobStorage(this IDataProtectionBuilder builder, Func<IServiceProvider, BlobClient> blobClientFactory)
+        {
+            if (builder == null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+
+            if (blobClientFactory == null)
+            {
+                throw new ArgumentNullException(nameof(blobClientFactory));
+            }
+
+            builder.Services.AddSingleton(sp =>
+            {
+                var blobClient = blobClientFactory(sp);
+                return new AzureBlobXmlRepository(blobClient);
+            });
+
+            builder.Services.AddSingleton<IConfigureOptions<KeyManagementOptions>, ConfigureKeyManagementBlobClientOptions>();
+
             return builder;
         }
     }

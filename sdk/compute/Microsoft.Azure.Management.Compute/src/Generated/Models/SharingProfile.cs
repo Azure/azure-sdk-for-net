@@ -34,11 +34,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="permissions">This property allows you to specify the
         /// permission of sharing gallery. &lt;br&gt;&lt;br&gt; Possible values
         /// are: &lt;br&gt;&lt;br&gt; **Private** &lt;br&gt;&lt;br&gt;
-        /// **Groups**. Possible values include: 'Private', 'Groups'</param>
+        /// **Groups** &lt;br&gt;&lt;br&gt; **Community**. Possible values
+        /// include: 'Private', 'Groups', 'Community'</param>
         /// <param name="groups">A list of sharing profile groups.</param>
         /// <param name="communityGalleryInfo">Information of community gallery
         /// if current gallery is shared to community.</param>
-        public SharingProfile(string permissions = default(string), IList<SharingProfileGroup> groups = default(IList<SharingProfileGroup>), object communityGalleryInfo = default(object))
+        public SharingProfile(string permissions = default(string), IList<SharingProfileGroup> groups = default(IList<SharingProfileGroup>), CommunityGalleryInfo communityGalleryInfo = default(CommunityGalleryInfo))
         {
             Permissions = permissions;
             Groups = groups;
@@ -55,8 +56,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets this property allows you to specify the permission of
         /// sharing gallery. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible
         /// values are: &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Private**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Groups**. Possible values
-        /// include: 'Private', 'Groups'
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Groups**
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Community**. Possible values
+        /// include: 'Private', 'Groups', 'Community'
         /// </summary>
         [JsonProperty(PropertyName = "permissions")]
         public string Permissions { get; set; }
@@ -72,7 +74,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// shared to community.
         /// </summary>
         [JsonProperty(PropertyName = "communityGalleryInfo")]
-        public object CommunityGalleryInfo { get; set; }
+        public CommunityGalleryInfo CommunityGalleryInfo { get; set; }
 
     }
 }

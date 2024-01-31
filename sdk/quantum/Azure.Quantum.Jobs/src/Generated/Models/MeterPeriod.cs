@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Quantum.Jobs.Models
 {
-    /// <summary> The time period in which the quota&apos;s underlying meter is accumulated. Based on calendar year. &apos;None&apos; is used for concurrent quotas. </summary>
+    /// <summary> The time period in which the quota's underlying meter is accumulated. Based on calendar year. 'None' is used for concurrent quotas. </summary>
     public readonly partial struct MeterPeriod : IEquatable<MeterPeriod>
     {
         private readonly string _value;

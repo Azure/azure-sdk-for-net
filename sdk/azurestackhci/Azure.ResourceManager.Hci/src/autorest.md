@@ -8,17 +8,36 @@ azure-arm: true
 csharp: true
 library-name: Hci
 namespace: Azure.ResourceManager.Hci
-require: https://github.com/Azure/azure-rest-api-specs/blob/75b53c0708590483bb2166b9e2751f1bdf5adefa/specification/azurestackhci/resource-manager/readme.md
-tag: package-2021-09
-output-folder: Generated/
+tag: package-preview-2023-09
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+skip-csproj: true
+modelerfour:
+  flatten-payloads: false
+use-model-reader-writer: true
 
-rename-rules:
+# mgmt-debug:
+#   show-serialized-names: true
+
+format-by-name-rules:
+  '*TenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+  '*ClientId': 'uuid'
+  '*ApplicationObjectId': 'uuid'
+  '*ServicePrincipalObjectId': 'uuid'
+
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
@@ -29,35 +48,94 @@ rename-rules:
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
+  Etag: ETag|etag
+
+prepend-rp-prefix:
+  - Cluster
+  - ProvisioningState
+  - ClusterDesiredProperties
+  - ClusterNode
+  - ClusterReportedProperties
+  - AvailabilityType
+  - HealthState
+  - ManagedServiceIdentityType
+  - OfferList
+  - PackageVersionInfo
+  - PrecheckResult
+  - PrecheckResultTags
+  - PublisherList
+  - SkuList
+  - SkuMappings
+  - UpdateList
+  - PublisherCollection
+  - ExtensionInstanceView
+  - StatusLevelTypes
+
+rename-mapping:
+  Extension: ArcExtension
+  Extension.properties.extensionParameters.autoUpgradeMinorVersion: ShouldAutoUpgradeMinorVersion
+  Extension.properties.extensionParameters.type: ArcExtensionType
+  Status: HciClusterStatus
+  ClusterReportedProperties.clusterId: -|uuid
+  Cluster.properties.cloudId: -|uuid
+  ArcIdentityResponse: ArcIdentityResult
+  ClusterIdentityResponse: HciClusterIdentityResult
+  ClusterReportedProperties.lastUpdated: LastUpdatedOn
+  ClusterList: HciClusterListResult
+  DiagnosticLevel: HciClusterDiagnosticLevel
+  ExtensionAggregateState: ArcExtensionAggregateState
+  ExtensionList: ArcExtensionListResult
+  ImdsAttestation: ImdsAttestationState
+  PasswordCredential: ArcPasswordCredential
+  UploadCertificateRequest: HciClusterCertificateContent
+  RawCertificateData: HciClusterRawCertificate
+  PerNodeState: PerNodeArcState
+  RebootRequirement: HciNodeRebootRequirement
+  Severity: UpdateSeverity
+  State: HciUpdateState
+  Step: HciUpdateStep
+  OfferCollection: HciOfferCollection
+  OfferData: HciOfferData
+  ClusterPatch.identity.type: ManagedServiceIdentityType
+  ExtensionPatchParameters: ExtensionPatchContent
+  ExtendedLocation: ArcVmExtendedLocation
+  ExtendedLocationTypes: ArcVmExtendedLocationTypes
 
 directive:
-  - from: extensions.json
-    where: $.definitions.Extension
-    transform: $["x-ms-client-name"] = "ArcExtension"
-  - from: clusters.json
-    where: $.definitions.Cluster
-    transform: $["x-ms-client-name"] = "HciCluster"
-  - from: clusters.json
-    where: $.definitions.ClusterProperties.properties.status["x-ms-enum"]
-    transform: $.name = "HciClusterStatus"
-  - from: clusters.json
-    where: $.definitions.ClusterProperties.properties
+  - from: swagger-document
+    where: $.definitions..systemData
+    transform: $["x-ms-client-flatten"] = false
+  - from: updateRuns.json
+    where: $.definitions.UpdateRunProperties.properties
     transform: >
-      $.aadClientId.format = "uuid";
-      $.aadTenantId.format = "uuid";
-      $.cloudId.format = "uuid";
-  - from: clusters.json
-    where: $.definitions.ClusterPatchProperties.properties
-    transform: >
-      $.aadClientId.format = "uuid";
-      $.aadTenantId.format = "uuid";
-  - from: clusters.json
-    where: $.definitions.ClusterReportedProperties.properties.clusterId
-    transform: >
-      $.format = "uuid"
+      $.duration['x-ms-format'] = 'string';
+```
+### Tag: package-preview-2023-09
+
+These settings apply only when `--tag=package-preview-2023-09` is specified on the command line.
+
+```yaml $(tag) == 'package-preview-2023-09'
+input-file:
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/galleryImages.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/logicalNetworks.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/common.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/marketplaceGalleryImages.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/networkInterfaces.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/storageContainers.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/virtualHardDisks.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/virtualMachineInstances.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/arcSettings.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/clusters.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/extensions.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/offers.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/publishers.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/skus.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/updateRuns.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/updateSummaries.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/updates.json
 ```

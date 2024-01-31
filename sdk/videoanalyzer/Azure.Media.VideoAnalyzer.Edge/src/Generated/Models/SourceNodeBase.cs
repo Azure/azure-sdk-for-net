@@ -6,26 +6,28 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Base class for topology source nodes. </summary>
-    public partial class SourceNodeBase
+    /// <summary>
+    /// Base class for topology source nodes.
+    /// Please note <see cref="SourceNodeBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="IotHubMessageSource"/> and <see cref="RtspSource"/>.
+    /// </summary>
+    public abstract partial class SourceNodeBase
     {
-        /// <summary> Initializes a new instance of SourceNodeBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceNodeBase"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public SourceNodeBase(string name)
+        protected SourceNodeBase(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of SourceNodeBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SourceNodeBase"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         internal SourceNodeBase(string type, string name)

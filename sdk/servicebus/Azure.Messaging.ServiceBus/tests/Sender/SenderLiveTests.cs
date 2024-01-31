@@ -554,5 +554,20 @@ namespace Azure.Messaging.ServiceBus.Tests.Sender
                 Assert.Less(end - start, TimeSpan.FromSeconds(5));
             }
         }
+
+        [Test]
+        public async Task SendConnStringWithCustomIdentifier()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                var options = new ServiceBusSenderOptions
+                {
+                    Identifier = "testIdent-abcdefg"
+                };
+
+                await using var sender = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString).CreateSender(scope.QueueName, options);
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
+            }
+        }
     }
 }

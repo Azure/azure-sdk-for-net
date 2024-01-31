@@ -15,21 +15,18 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Response to the get custom model operation. </summary>
     internal partial class Model
     {
-        /// <summary> Initializes a new instance of Model. </summary>
+        /// <summary> Initializes a new instance of <see cref="Model"/>. </summary>
         /// <param name="modelInfo"> Basic custom model information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelInfo"/> is null. </exception>
         internal Model(CustomFormModelInfo modelInfo)
         {
-            if (modelInfo == null)
-            {
-                throw new ArgumentNullException(nameof(modelInfo));
-            }
+            Argument.AssertNotNull(modelInfo, nameof(modelInfo));
 
             ModelInfo = modelInfo;
             ComposedTrainResults = new ChangeTrackingList<TrainResult>();
         }
 
-        /// <summary> Initializes a new instance of Model. </summary>
+        /// <summary> Initializes a new instance of <see cref="Model"/>. </summary>
         /// <param name="modelInfo"> Basic custom model information. </param>
         /// <param name="keys"> Keys extracted by the custom model. </param>
         /// <param name="trainResult"> Training result for custom model. </param>

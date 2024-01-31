@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         public static RollingUpgradeStatusCode ToRollingUpgradeStatusCode(this string value)
         {
-            if (string.Equals(value, "RollingForward", StringComparison.InvariantCultureIgnoreCase)) return RollingUpgradeStatusCode.RollingForward;
-            if (string.Equals(value, "Cancelled", StringComparison.InvariantCultureIgnoreCase)) return RollingUpgradeStatusCode.Cancelled;
-            if (string.Equals(value, "Completed", StringComparison.InvariantCultureIgnoreCase)) return RollingUpgradeStatusCode.Completed;
-            if (string.Equals(value, "Faulted", StringComparison.InvariantCultureIgnoreCase)) return RollingUpgradeStatusCode.Faulted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RollingForward")) return RollingUpgradeStatusCode.RollingForward;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancelled")) return RollingUpgradeStatusCode.Cancelled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Completed")) return RollingUpgradeStatusCode.Completed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Faulted")) return RollingUpgradeStatusCode.Faulted;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RollingUpgradeStatusCode value.");
         }
     }

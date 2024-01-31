@@ -1,17 +1,6 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
-trigger:
-  branches:
-    include:
-    - main
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/servicebus/ci.mgmt.yml
-    - sdk/eventhub/service.projects
-    - sdk/servicebus/Azure.ResourceManager.ServiceBus
-
+trigger: none
 pr:
   branches:
     include:
@@ -22,16 +11,14 @@ pr:
   paths:
     include:
     - sdk/servicebus/ci.mgmt.yml
-    - sdk/eventhub/service.projects
-    - sdk/servicebus/Azure.ResourceManager.ServiceBus
-    - sdk/resourcemanager/
+    - sdk/servicebus/Azure.ResourceManager.ServiceBus/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     SdkType: mgmtclient
     ServiceDirectory: servicebus
-    ArtifactName: packages
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.ServiceBus
       safeName: AzureResourceManagerServiceBus

@@ -16,6 +16,7 @@ namespace Azure.AI.TextAnalytics
             loggedHeaderNames.Add("apim-request-id");
             loggedHeaderNames.Add("Strict-Transport-Security");
             loggedHeaderNames.Add("x-content-type-options");
+            loggedHeaderNames.Add("warn-text");
 
             clientOptions.Diagnostics.LoggedQueryParameters.Add("jobId");
             clientOptions.Diagnostics.LoggedQueryParameters.Add("$top");
@@ -26,6 +27,9 @@ namespace Azure.AI.TextAnalytics
             clientOptions.Diagnostics.LoggedQueryParameters.Add("stringIndexType");
             clientOptions.Diagnostics.LoggedQueryParameters.Add("piiCategories");
             clientOptions.Diagnostics.LoggedQueryParameters.Add("opinionMining");
+
+            clientOptions.Diagnostics.LoggedQueryParameters.Add("top");
+            clientOptions.Diagnostics.LoggedQueryParameters.Add("skip");
         }
     }
 }

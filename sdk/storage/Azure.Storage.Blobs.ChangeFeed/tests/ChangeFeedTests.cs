@@ -61,11 +61,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadStreamingAsync(default, default, default, default, default)).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreamingAsync(default, default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.DownloadStreaming(default, default, default, default, default)).Returns(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreaming(default, default)).Returns(downloadResponse);
             }
 
             if (IsAsync)
@@ -191,11 +191,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadStreamingAsync(default, default, default, default, default));
+                blobClient.Verify(r => r.DownloadStreamingAsync(default, default));
             }
             else
             {
-                blobClient.Verify(r => r.DownloadStreaming(default, default, default, default, default));
+                blobClient.Verify(r => r.DownloadStreaming(default, default));
             }
 
             if (IsAsync)
@@ -298,11 +298,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadStreamingAsync(default, default, default, default, default)).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreamingAsync(default, default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.DownloadStreaming(default, default, default, default, default)).Returns(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreaming(default, default)).Returns(downloadResponse);
             }
 
             if (IsAsync)
@@ -508,11 +508,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadStreamingAsync(default, default, default, default, default));
+                blobClient.Verify(r => r.DownloadStreamingAsync(default, default));
             }
             else
             {
-                blobClient.Verify(r => r.DownloadStreaming(default, default, default, default, default));
+                blobClient.Verify(r => r.DownloadStreaming(default, default));
             }
 
             if (IsAsync)
@@ -636,11 +636,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadStreamingAsync(default, default, default, default, default)).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreamingAsync(default, default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.DownloadStreaming(default, default, default, default, default)).Returns(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreaming(default, default)).Returns(downloadResponse);
             }
 
             if (IsAsync)
@@ -696,11 +696,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadStreamingAsync(default, default, default, default, default));
+                blobClient.Verify(r => r.DownloadStreamingAsync(default, default));
             }
             else
             {
-                blobClient.Verify(r => r.DownloadStreaming(default, default, default, default, default));
+                blobClient.Verify(r => r.DownloadStreaming(default, default));
             }
 
             if (IsAsync)
@@ -765,11 +765,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Setup(r => r.DownloadStreamingAsync(default, default, default, default, default)).ReturnsAsync(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreamingAsync(default, default)).ReturnsAsync(downloadResponse);
             }
             else
             {
-                blobClient.Setup(r => r.DownloadStreaming(default, default, default, default, default)).Returns(downloadResponse);
+                blobClient.Setup(r => r.DownloadStreaming(default, default)).Returns(downloadResponse);
             }
 
             if (IsAsync)
@@ -904,11 +904,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
 
             if (IsAsync)
             {
-                blobClient.Verify(r => r.DownloadStreamingAsync(default, default, default, default, default));
+                blobClient.Verify(r => r.DownloadStreamingAsync(default, default));
             }
             else
             {
-                blobClient.Verify(r => r.DownloadStreaming(default, default, default, default, default));
+                blobClient.Verify(r => r.DownloadStreaming(default, default));
             }
 
             if (IsAsync)

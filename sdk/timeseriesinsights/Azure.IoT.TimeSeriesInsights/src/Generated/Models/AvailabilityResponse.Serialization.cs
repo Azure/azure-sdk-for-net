@@ -14,14 +14,17 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static AvailabilityResponse DeserializeAvailabilityResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Availability> availability = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("availability"))
+                if (property.NameEquals("availability"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     availability = Availability.DeserializeAvailability(property.Value);

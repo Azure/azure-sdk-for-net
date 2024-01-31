@@ -90,6 +90,8 @@ namespace Azure
 
         internal HttpMessageSanitizer Sanitizer { get; set; } = HttpMessageSanitizer.Default;
 
+        internal RequestFailedDetailsParser? RequestFailedDetailsParser { get; set; }
+
         /// <summary>
         /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.
         /// </summary>

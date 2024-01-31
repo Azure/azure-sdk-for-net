@@ -53,7 +53,7 @@ namespace Azure.Monitor.Query.Tests
             var response = await _pipeline.SendRequestAsync(request, default);
             if (response.Status != 200)
             {
-                throw await _clientDiagnostics.CreateRequestFailedExceptionAsync(response);
+                throw new RequestFailedException(response);
             }
 
             return response;

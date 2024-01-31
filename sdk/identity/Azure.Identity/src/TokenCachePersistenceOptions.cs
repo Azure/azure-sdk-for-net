@@ -66,5 +66,16 @@ namespace Azure.Identity
         /// will throw a <see cref="CredentialUnavailableException"/> in the event no OS level user encryption is available.
         /// </summary>
         public bool UnsafeAllowUnencryptedStorage { get; set; }
+
+        /// <summary>
+        /// Creates a copy of the <see cref="TokenCachePersistenceOptions"/>.
+        /// </summary>
+        /// <returns></returns>
+        internal TokenCachePersistenceOptions Clone() {
+            return new TokenCachePersistenceOptions {
+                Name = Name,
+                UnsafeAllowUnencryptedStorage = UnsafeAllowUnencryptedStorage
+            };
+        }
     }
 }

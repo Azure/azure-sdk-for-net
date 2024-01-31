@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static ClientCertMode ToClientCertMode(this string value)
         {
-            if (string.Equals(value, "Required", StringComparison.InvariantCultureIgnoreCase)) return ClientCertMode.Required;
-            if (string.Equals(value, "Optional", StringComparison.InvariantCultureIgnoreCase)) return ClientCertMode.Optional;
-            if (string.Equals(value, "OptionalInteractiveUser", StringComparison.InvariantCultureIgnoreCase)) return ClientCertMode.OptionalInteractiveUser;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Required")) return ClientCertMode.Required;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Optional")) return ClientCertMode.Optional;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "OptionalInteractiveUser")) return ClientCertMode.OptionalInteractiveUser;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ClientCertMode value.");
         }
     }

@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Properties specific to client affine subscriptions. </summary>
     public partial class ServiceBusClientAffineProperties
     {
-        /// <summary> Initializes a new instance of ServiceBusClientAffineProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBusClientAffineProperties"/>. </summary>
         public ServiceBusClientAffineProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusClientAffineProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusClientAffineProperties"/>. </summary>
         /// <param name="clientId"> Indicates the Client ID of the application that created the client-affine subscription. </param>
         /// <param name="isDurable"> For client-affine subscriptions, this value indicates whether the subscription is durable or not. </param>
         /// <param name="isShared"> For client-affine subscriptions, this value indicates whether the subscription is shared or not. </param>
-        internal ServiceBusClientAffineProperties(string clientId, bool? isDurable, bool? isShared)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceBusClientAffineProperties(string clientId, bool? isDurable, bool? isShared, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientId = clientId;
             IsDurable = isDurable;
             IsShared = isShared;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates the Client ID of the application that created the client-affine subscription. </summary>

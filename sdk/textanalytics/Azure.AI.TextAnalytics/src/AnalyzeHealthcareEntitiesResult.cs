@@ -8,46 +8,42 @@ using System.Collections.ObjectModel;
 namespace Azure.AI.TextAnalytics
 {
     /// <summary>
-    /// The result of the analyze heathlcare operation,
-    /// containing the predicted healthcare entities, warning, and relations.
+    /// A representation of the result of analyzing the healthcare entities in a given document.
     /// </summary>
     public partial class AnalyzeHealthcareEntitiesResult : TextAnalyticsResult
     {
         private readonly IReadOnlyCollection<HealthcareEntity> _entities;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesResult"/>.
+        /// Initializes a successful <see cref="AnalyzeHealthcareEntitiesResult"/>.
         /// </summary>
-        /// <param name="id">Analyze operation id.</param>
-        /// <param name="statistics">Info about text document statistics. <see cref="TextDocumentStatistics"/>.</param>
-        /// <param name="healthcareEntities">Extracted health care entities.</param>
-        /// <param name="entityRelations">Relations between the entities. <see cref="HealthcareEntityRelation"/>.</param>
-        /// <param name="warnings">Returned warnings from the operation.</param>
-        internal AnalyzeHealthcareEntitiesResult(string id, TextDocumentStatistics statistics,
+        internal AnalyzeHealthcareEntitiesResult(
+            string id,
+            TextDocumentStatistics statistics,
             IList<HealthcareEntity> healthcareEntities,
             IList<HealthcareEntityRelation> entityRelations,
             IList<TextAnalyticsWarning> warnings)
             : base(id, statistics)
         {
             _entities = new ReadOnlyCollection<HealthcareEntity>(healthcareEntities);
-            Warnings = new ReadOnlyCollection<TextAnalyticsWarning>(warnings);
             EntityRelations = new ReadOnlyCollection<HealthcareEntityRelation>(entityRelations);
+            Warnings = (warnings is not null)
+                ? new ReadOnlyCollection<TextAnalyticsWarning>(warnings)
+                : new List<TextAnalyticsWarning>();
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AnalyzeHealthcareEntitiesResult"/>.
+        /// Initializes an <see cref="AnalyzeHealthcareEntitiesResult"/> with an error.
         /// </summary>
-        /// <param name="id">Analyze operation id.</param>
-        /// <param name="error">Operation error object.</param>
         internal AnalyzeHealthcareEntitiesResult(string id, TextAnalyticsError error) : base(id, error) { }
 
         /// <summary>
-        /// Warnings encountered while processing document.
+        /// The warnings that resulted from processing the document.
         /// </summary>
-        public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; } = new List<TextAnalyticsWarning>();
+        public IReadOnlyCollection<TextAnalyticsWarning> Warnings { get; }
 
         /// <summary>
-        /// Gets the collection of healthcare entities in the document.
+        /// The collection of healthcare entities that were recognized in this document.
         /// </summary>
         public IReadOnlyCollection<HealthcareEntity> Entities
         {
@@ -64,7 +60,7 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets the relations between the entities. <see cref="HealthcareEntityRelation"/>.
+        /// The collection of relations between the healthcare entities that were recognized in this document.
         /// </summary>
         public IReadOnlyCollection<HealthcareEntityRelation> EntityRelations { get; }
     }

@@ -11,29 +11,29 @@ namespace Azure.AI.TextAnalytics.Samples
     public partial class TextAnalyticsSamples
     {
         [Test]
-        public async Task ExtractEntityLinkingBatchAsync()
+        public async Task RecognizeLinkedEntitiesBatchAsync()
         {
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            string documentA =
+                "Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends, Steve"
+                + " Ballmer, eventually became CEO after Bill Gates as well.Steve Ballmer eventually stepped down as"
+                + " CEO of Microsoft, and was succeeded by Satya Nadella. Microsoft originally moved its headquarters"
+                + " to Bellevue, Washington in Januaray 1979, but is now headquartered in Redmond.";
 
-            string documentA = @"Microsoft was founded by Bill Gates with some friends he met at Harvard. One of his friends,
-                                Steve Ballmer, eventually became CEO after Bill Gates as well.Steve Ballmer eventually stepped
-                                down as CEO of Microsoft, and was succeeded by Satya Nadella.
-                                Microsoft originally moved its headquarters to Bellevue, Washington in Januaray 1979, but is now
-                                headquartered in Redmond";
+            string documentB =
+                "El CEO de Microsoft es Satya Nadella, quien asumió esta posición en Febrero de 2014. Él empezó como"
+                + " Ingeniero de Software en el año 1992.";
 
-            string documentB = @"El CEO de Microsoft es Satya Nadella, quien asumió esta posición en Febrero de 2014. Él
-                                empezó como Ingeniero de Software en el año 1992.";
+            string documentC =
+                "Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and sell BASIC"
+                + " interpreters for the Altair 8800. During his career at Microsoft, Gates held the positions of"
+                + " chairman chief executive officer, president and chief software architect while also being the"
+                + " largest individual shareholder until May 2014.";
 
-            string documentC = @"Microsoft was founded by Bill Gates and Paul Allen on April 4, 1975, to develop and 
-                                sell BASIC interpreters for the Altair 8800. During his career at Microsoft, Gates held
-                                the positions of chairman chief executive officer, president and chief software architect
-                                while also being the largest individual shareholder until May 2014.";
-
-            var documents = new List<TextDocumentInput>
+            List<TextDocumentInput> documents = new()
             {
                 new TextDocumentInput("1", documentA)
                 {
@@ -50,51 +50,51 @@ namespace Azure.AI.TextAnalytics.Samples
                 new TextDocumentInput("4", string.Empty)
             };
 
-            var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
+            TextAnalyticsRequestOptions options = new() { IncludeStatistics = true };
             Response<RecognizeLinkedEntitiesResultCollection> response = await client.RecognizeLinkedEntitiesBatchAsync(documents, options);
             RecognizeLinkedEntitiesResultCollection entitiesInDocuments = response.Value;
 
             int i = 0;
-            Console.WriteLine($"Results of Azure Text Analytics \"Entity Linking\", version: \"{entitiesInDocuments.ModelVersion}\"");
-            Console.WriteLine("");
+            Console.WriteLine($"Recognize Linked Entities, model version: \"{entitiesInDocuments.ModelVersion}\"");
+            Console.WriteLine();
 
-            foreach (RecognizeLinkedEntitiesResult entitiesInDocument in entitiesInDocuments)
+            foreach (RecognizeLinkedEntitiesResult documentResult in entitiesInDocuments)
             {
                 TextDocumentInput document = documents[i++];
 
-                Console.WriteLine($"On document (Id={document.Id}, Language=\"{document.Language}\"):");
+                Console.WriteLine($"Result for document with Id = \"{document.Id}\" and Language = \"{document.Language}\":");
 
-                if (entitiesInDocument.HasError)
+                if (documentResult.HasError)
                 {
-                    Console.WriteLine("  Error!");
-                    Console.WriteLine($"  Document error code: {entitiesInDocument.Error.ErrorCode}.");
-                    Console.WriteLine($"  Message: {entitiesInDocument.Error.Message}");
+                    Console.WriteLine($"  Error!");
+                    Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+                    Console.WriteLine($"  Message: {documentResult.Error.Message}");
+                    Console.WriteLine();
+                    continue;
                 }
-                else
+
+                Console.WriteLine($"Recognized {documentResult.Entities.Count} entities:");
+                foreach (LinkedEntity linkedEntity in documentResult.Entities)
                 {
-                    Console.WriteLine($"Recognized {entitiesInDocument.Entities.Count} entities:");
-                    foreach (LinkedEntity linkedEntity in entitiesInDocument.Entities)
+                    Console.WriteLine($"  Name: {linkedEntity.Name}");
+                    Console.WriteLine($"  Language: {linkedEntity.Language}");
+                    Console.WriteLine($"  Data Source: {linkedEntity.DataSource}");
+                    Console.WriteLine($"  URL: {linkedEntity.Url}");
+                    Console.WriteLine($"  Entity Id in Data Source: {linkedEntity.DataSourceEntityId}");
+                    foreach (LinkedEntityMatch match in linkedEntity.Matches)
                     {
-                        Console.WriteLine($"  Name: {linkedEntity.Name}");
-                        Console.WriteLine($"  Language: {linkedEntity.Language}");
-                        Console.WriteLine($"  Data Source: {linkedEntity.DataSource}");
-                        Console.WriteLine($"  URL: {linkedEntity.Url}");
-                        Console.WriteLine($"  Entity Id in Data Source: {linkedEntity.DataSourceEntityId}");
-                        foreach (LinkedEntityMatch match in linkedEntity.Matches)
-                        {
-                            Console.WriteLine($"    Match Text: {match.Text}");
-                            Console.WriteLine($"    Offset: {match.Offset}");
-                            Console.WriteLine($"    Length: {match.Length}");
-                            Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
-                        }
-                        Console.WriteLine("");
+                        Console.WriteLine($"    Match Text: {match.Text}");
+                        Console.WriteLine($"    Offset: {match.Offset}");
+                        Console.WriteLine($"    Length: {match.Length}");
+                        Console.WriteLine($"    Confidence score: {match.ConfidenceScore}");
                     }
-
-                    Console.WriteLine($"  Document statistics:");
-                    Console.WriteLine($"    Character count: {entitiesInDocument.Statistics.CharacterCount}");
-                    Console.WriteLine($"    Transaction count: {entitiesInDocument.Statistics.TransactionCount}");
+                    Console.WriteLine();
                 }
-                Console.WriteLine("");
+
+                Console.WriteLine($"  Document statistics:");
+                Console.WriteLine($"    Character count: {documentResult.Statistics.CharacterCount}");
+                Console.WriteLine($"    Transaction count: {documentResult.Statistics.TransactionCount}");
+                Console.WriteLine();
             }
 
             Console.WriteLine($"Batch operation statistics:");
@@ -102,7 +102,7 @@ namespace Azure.AI.TextAnalytics.Samples
             Console.WriteLine($"  Valid document count: {entitiesInDocuments.Statistics.ValidDocumentCount}");
             Console.WriteLine($"  Invalid document count: {entitiesInDocuments.Statistics.InvalidDocumentCount}");
             Console.WriteLine($"  Transaction count: {entitiesInDocuments.Statistics.TransactionCount}");
-            Console.WriteLine("");
+            Console.WriteLine();
         }
     }
 }

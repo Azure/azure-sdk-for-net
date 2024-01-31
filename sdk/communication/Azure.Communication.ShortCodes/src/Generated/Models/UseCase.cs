@@ -13,14 +13,14 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> Describes a messaging use case for a given content type by providing example messages. </summary>
     public partial class UseCase
     {
-        /// <summary> Initializes a new instance of UseCase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UseCase"/>. </summary>
         public UseCase()
         {
             Examples = new ChangeTrackingList<MessageExampleSequence>();
         }
 
-        /// <summary> Initializes a new instance of UseCase. </summary>
-        /// <param name="contentCategory"> Indicates the messaging content category used in the program e.g. &apos;ringTones&apos;, &apos;smsChat&apos;, &apos;video&apos;, &apos;loyaltyProgramPointsPrizes&apos;, &apos;gifting&apos;, &apos;inApplicationBilling&apos;, &apos;textToScreen&apos;. </param>
+        /// <summary> Initializes a new instance of <see cref="UseCase"/>. </summary>
+        /// <param name="contentCategory"> Indicates the messaging content category used in the program e.g. 'ringTones', 'smsChat', 'video', 'loyaltyProgramPointsPrizes', 'gifting', 'inApplicationBilling', 'textToScreen'. </param>
         /// <param name="examples"> Example messages to be sent to and from the end user for the indicated content type. </param>
         internal UseCase(MessageContentCategory? contentCategory, IList<MessageExampleSequence> examples)
         {
@@ -28,7 +28,7 @@ namespace Azure.Communication.ShortCodes.Models
             Examples = examples;
         }
 
-        /// <summary> Indicates the messaging content category used in the program e.g. &apos;ringTones&apos;, &apos;smsChat&apos;, &apos;video&apos;, &apos;loyaltyProgramPointsPrizes&apos;, &apos;gifting&apos;, &apos;inApplicationBilling&apos;, &apos;textToScreen&apos;. </summary>
+        /// <summary> Indicates the messaging content category used in the program e.g. 'ringTones', 'smsChat', 'video', 'loyaltyProgramPointsPrizes', 'gifting', 'inApplicationBilling', 'textToScreen'. </summary>
         public MessageContentCategory? ContentCategory { get; set; }
         /// <summary> Example messages to be sent to and from the end user for the indicated content type. </summary>
         public IList<MessageExampleSequence> Examples { get; }

@@ -18,52 +18,52 @@ namespace Azure.IoT.Hub.Service.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ModuleId))
             {
-                writer.WritePropertyName("moduleId");
+                writer.WritePropertyName("moduleId"u8);
                 writer.WriteStringValue(ModuleId);
             }
             if (Optional.IsDefined(ManagedBy))
             {
-                writer.WritePropertyName("managedBy");
+                writer.WritePropertyName("managedBy"u8);
                 writer.WriteStringValue(ManagedBy);
             }
             if (Optional.IsDefined(DeviceId))
             {
-                writer.WritePropertyName("deviceId");
+                writer.WritePropertyName("deviceId"u8);
                 writer.WriteStringValue(DeviceId);
             }
             if (Optional.IsDefined(GenerationId))
             {
-                writer.WritePropertyName("generationId");
+                writer.WritePropertyName("generationId"u8);
                 writer.WriteStringValue(GenerationId);
             }
             if (Optional.IsDefined(Etag))
             {
-                writer.WritePropertyName("etag");
+                writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(Etag);
             }
             if (Optional.IsDefined(ConnectionState))
             {
-                writer.WritePropertyName("connectionState");
+                writer.WritePropertyName("connectionState"u8);
                 writer.WriteStringValue(ConnectionState.Value.ToString());
             }
             if (Optional.IsDefined(ConnectionStateUpdatedTime))
             {
-                writer.WritePropertyName("connectionStateUpdatedTime");
+                writer.WritePropertyName("connectionStateUpdatedTime"u8);
                 writer.WriteStringValue(ConnectionStateUpdatedTime.Value, "O");
             }
             if (Optional.IsDefined(LastActivityTime))
             {
-                writer.WritePropertyName("lastActivityTime");
+                writer.WritePropertyName("lastActivityTime"u8);
                 writer.WriteStringValue(LastActivityTime.Value, "O");
             }
             if (Optional.IsDefined(CloudToDeviceMessageCount))
             {
-                writer.WritePropertyName("cloudToDeviceMessageCount");
+                writer.WritePropertyName("cloudToDeviceMessageCount"u8);
                 writer.WriteNumberValue(CloudToDeviceMessageCount.Value);
             }
             if (Optional.IsDefined(Authentication))
             {
-                writer.WritePropertyName("authentication");
+                writer.WritePropertyName("authentication"u8);
                 writer.WriteObjectValue(Authentication);
             }
             writer.WriteEndObject();
@@ -71,6 +71,10 @@ namespace Azure.IoT.Hub.Service.Models
 
         internal static ModuleIdentity DeserializeModuleIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> moduleId = default;
             Optional<string> managedBy = default;
             Optional<string> deviceId = default;
@@ -83,76 +87,71 @@ namespace Azure.IoT.Hub.Service.Models
             Optional<AuthenticationMechanism> authentication = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("moduleId"))
+                if (property.NameEquals("moduleId"u8))
                 {
                     moduleId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managedBy"))
+                if (property.NameEquals("managedBy"u8))
                 {
                     managedBy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deviceId"))
+                if (property.NameEquals("deviceId"u8))
                 {
                     deviceId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("generationId"))
+                if (property.NameEquals("generationId"u8))
                 {
                     generationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                     etag = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("connectionState"))
+                if (property.NameEquals("connectionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectionState = new ModuleConnectionState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("connectionStateUpdatedTime"))
+                if (property.NameEquals("connectionStateUpdatedTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectionStateUpdatedTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastActivityTime"))
+                if (property.NameEquals("lastActivityTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastActivityTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("cloudToDeviceMessageCount"))
+                if (property.NameEquals("cloudToDeviceMessageCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cloudToDeviceMessageCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("authentication"))
+                if (property.NameEquals("authentication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authentication = AuthenticationMechanism.DeserializeAuthenticationMechanism(property.Value);

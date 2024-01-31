@@ -9,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 using Azure.Core;
-using Azure.Core.Diagnostics;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
@@ -44,7 +43,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///   <c>true</c> if the sender is closed; otherwise, <c>false</c>.
         /// </value>
         ///
-        public override bool IsClosed => _closed;
+        public bool IsClosed => _closed;
+
+        /// <summary>
+        /// The identifier of the sender.
+        /// </summary>
+        public string Identifier { get; }
 
         /// <summary>
         ///   The name of the Service Bus entity to which the sender is bound.
@@ -53,15 +57,15 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private readonly string _entityPath;
 
         /// <summary>
-        /// The identifier for the sender.
-        /// </summary>
-        private readonly string _identifier;
-
-        /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
         /// </summary>
         ///
         private readonly ServiceBusRetryPolicy _retryPolicy;
+
+        /// <summary>
+        ///    The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.
+        /// </summary>
+        private readonly AmqpMessageConverter _messageConverter;
 
         /// <summary>
         ///   The AMQP connection scope responsible for managing transport constructs for this instance.
@@ -69,7 +73,6 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///
         private readonly AmqpConnectionScope _connectionScope;
         private readonly FaultTolerantAmqpObject<SendingAmqpLink> _sendLink;
-
         private readonly FaultTolerantAmqpObject<RequestResponseAmqpLink> _managementLink;
 
         /// <summary>
@@ -89,6 +92,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="connectionScope">The AMQP connection context for operations.</param>
         /// <param name="retryPolicy">The retry policy to consider when an operation fails.</param>
         /// <param name="identifier">The identifier for the sender.</param>
+        /// <param name="messageConverter">The converter to use for translating <see cref="ServiceBusMessage" /> into an AMQP-specific message.</param>
         ///
         /// <remarks>
         ///   As an internal type, this class performs only basic sanity checks against its arguments.  It
@@ -103,32 +107,26 @@ namespace Azure.Messaging.ServiceBus.Amqp
             string entityPath,
             AmqpConnectionScope connectionScope,
             ServiceBusRetryPolicy retryPolicy,
-            string identifier)
+            string identifier,
+            AmqpMessageConverter messageConverter)
         {
             Argument.AssertNotNullOrEmpty(entityPath, nameof(entityPath));
             Argument.AssertNotNull(connectionScope, nameof(connectionScope));
             Argument.AssertNotNull(retryPolicy, nameof(retryPolicy));
 
             _entityPath = entityPath;
-            _identifier = identifier;
+            Identifier = identifier;
             _retryPolicy = retryPolicy;
             _connectionScope = connectionScope;
 
             _sendLink = new FaultTolerantAmqpObject<SendingAmqpLink>(
                 timeout => CreateLinkAndEnsureSenderStateAsync(timeout, CancellationToken.None),
-                link =>
-                {
-                    link.Session?.SafeClose();
-                    link.SafeClose();
-                });
+                link => _connectionScope.CloseLink(link));
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => OpenManagementLinkAsync(timeout),
-                link =>
-                {
-                    link.Session?.SafeClose();
-                    link.SafeClose();
-                });
+                link => _connectionScope.CloseLink(link));
+            _messageConverter = messageConverter;
         }
 
         private async Task<RequestResponseAmqpLink> OpenManagementLinkAsync(
@@ -136,7 +134,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
         {
             RequestResponseAmqpLink link = await _connectionScope.OpenManagementLinkAsync(
                 _entityPath,
-                _identifier,
+                Identifier,
                 timeout,
                 CancellationToken.None).ConfigureAwait(false);
             link.Closed += OnManagementLinkClosed;
@@ -193,7 +191,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             options.MaxSizeInBytes ??= MaxMessageSize;
 
             Argument.AssertInRange(options.MaxSizeInBytes.Value, ServiceBusSender.MinimumBatchSizeLimit, MaxMessageSize.Value, nameof(options.MaxSizeInBytes));
-            return new AmqpMessageBatch(options);
+            return new AmqpMessageBatch(_messageConverter, options);
         }
 
         /// <summary>
@@ -213,11 +211,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     var (sender, messageBatch) = value;
                     await sender.SendBatchInternalAsync(
-                        messageBatch,
+                        messageBatch.AsReadOnly<AmqpMessage>(),
                         timeout,
                         token).ConfigureAwait(false);
                 },
-                (this, messageBatch.AsReadOnly<ServiceBusMessage>()),
+                (this, messageBatch),
             _connectionScope,
             cancellationToken).ConfigureAwait(false);
         }
@@ -231,7 +229,26 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
         internal virtual async Task SendBatchInternalAsync(
-            IReadOnlyCollection<ServiceBusMessage> messages,
+            IReadOnlyCollection<AmqpMessage> messages,
+            TimeSpan timeout,
+            CancellationToken cancellationToken)
+        {
+            using (AmqpMessage batchMessage = _messageConverter.BuildAmqpBatchFromMessages(messages, false))
+            {
+                await SendBatchInternalAsync(batchMessage, timeout, cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        ///    Sends a set of messages to the associated Queue/Topic using a batched approach.
+        /// </summary>
+        ///
+        /// <param name="batchMessage">A batch of messages to send represented as a <see cref="AmqpMessage"/>.</param>
+        /// <param name="timeout"></param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        internal virtual async Task SendBatchInternalAsync(
+            AmqpMessage batchMessage,
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
@@ -239,43 +256,39 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             try
             {
-                using (AmqpMessage batchMessage = AmqpMessageConverter.BatchSBMessagesAsAmqpMessage(messages))
+                ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
+                Transaction ambientTransaction = Transaction.Current;
+                if (ambientTransaction != null)
+                {
+                    transactionId = await AmqpTransactionManager.Instance.EnlistAsync(
+                        ambientTransaction,
+                        _connectionScope,
+                        timeout).ConfigureAwait(false);
+                }
+
+                link = await _sendLink.GetOrCreateAsync(timeout, cancellationToken).ConfigureAwait(false);
+
+                // Validate that the message is not too large to send.  This is done after the link is created to ensure
+                // that the maximum message size is known, as it is dictated by the service using the link.
+
+                if (batchMessage.SerializedMessageSize > MaxMessageSize)
                 {
                     string messageHash = batchMessage.GetHashCode().ToString(CultureInfo.InvariantCulture);
+                    throw new ServiceBusException(string.Format(CultureInfo.InvariantCulture, Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaxMessageSize, _entityPath), ServiceBusFailureReason.MessageSizeExceeded);
+                }
 
-                    ArraySegment<byte> transactionId = AmqpConstants.NullBinary;
-                    Transaction ambientTransaction = Transaction.Current;
-                    if (ambientTransaction != null)
-                    {
-                        transactionId = await AmqpTransactionManager.Instance.EnlistAsync(
-                            ambientTransaction,
-                            _connectionScope,
-                            timeout).ConfigureAwait(false);
-                    }
+                // Attempt to send the message batch.
 
-                    link = await _sendLink.GetOrCreateAsync(UseMinimum(_connectionScope.SessionTimeout, timeout), cancellationToken).ConfigureAwait(false);
+                var deliveryTag = new ArraySegment<byte>(BitConverter.GetBytes(Interlocked.Increment(ref _deliveryCount)));
+                Outcome outcome = await link.SendMessageAsync(
+                    batchMessage,
+                    deliveryTag,
+                    transactionId,
+                    cancellationToken).ConfigureAwait(false);
 
-                    // Validate that the message is not too large to send.  This is done after the link is created to ensure
-                    // that the maximum message size is known, as it is dictated by the service using the link.
-
-                    if (batchMessage.SerializedMessageSize > MaxMessageSize)
-                    {
-                        throw new ServiceBusException(string.Format(CultureInfo.InvariantCulture, Resources.MessageSizeExceeded, messageHash, batchMessage.SerializedMessageSize, MaxMessageSize, _entityPath), ServiceBusFailureReason.MessageSizeExceeded);
-                    }
-
-                    // Attempt to send the message batch.
-
-                    var deliveryTag = new ArraySegment<byte>(BitConverter.GetBytes(Interlocked.Increment(ref _deliveryCount)));
-                    Outcome outcome = await link.SendMessageAsync(
-                        batchMessage,
-                        deliveryTag,
-                        transactionId,
-                        cancellationToken).ConfigureAwait(false);
-
-                    if (outcome.DescriptorCode != Accepted.Code)
-                    {
-                        throw (outcome as Rejected)?.Error.ToMessagingContractException();
-                    }
+                if (outcome.DescriptorCode != Accepted.Code)
+                {
+                    throw (outcome as Rejected)?.Error.ToMessagingContractException();
                 }
             }
             catch (Exception exception)
@@ -308,7 +321,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     var (sender, messages) = value;
                     await sender.SendBatchInternalAsync(
-                        messages,
+                        sender._messageConverter.BatchSBMessagesAsAmqpMessage(messages, false),
                         timeout,
                         token).ConfigureAwait(false);
                 },
@@ -360,12 +373,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
         private void OnSenderLinkClosed(object sender, EventArgs e) =>
             ServiceBusEventSource.Log.SendLinkClosed(
-                _identifier,
+                Identifier,
                 sender);
 
         private void OnManagementLinkClosed(object managementLink, EventArgs e) =>
             ServiceBusEventSource.Log.ManagementLinkClosed(
-                _identifier,
+                Identifier,
                 managementLink);
 
         /// <summary>
@@ -420,7 +433,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 List<AmqpMap> entries = new List<AmqpMap>(messages.Count);
                 foreach (ServiceBusMessage message in messages)
                 {
-                    using AmqpMessage amqpMessage = AmqpMessageConverter.SBMessageToAmqpMessage(message);
+                    using AmqpMessage amqpMessage = _messageConverter.SBMessageToAmqpMessage(message);
                     var entry = new AmqpMap();
                     ArraySegment<byte>[] payload = amqpMessage.GetPayload();
                     var buffer = new BufferListStream(payload);
@@ -448,13 +461,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 request.Map[ManagementConstants.Properties.Messages] = entries;
 
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
                     _connectionScope,
                     _managementLink,
                     request,
                     timeout).ConfigureAwait(false);
-
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 if (amqpResponseMessage.StatusCode == AmqpResponseStatusCode.OK)
                 {
@@ -534,13 +546,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 request.Map[ManagementConstants.Properties.SequenceNumbers] = sequenceNumbers;
 
+                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
                 AmqpResponseMessage amqpResponseMessage = await ManagementUtilities.ExecuteRequestResponseAsync(
                         _connectionScope,
                         _managementLink,
                         request,
                         timeout).ConfigureAwait(false);
-
-                cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 if (amqpResponseMessage.StatusCode != AmqpResponseStatusCode.OK)
                 {
@@ -582,12 +593,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout,
             CancellationToken cancellationToken)
         {
-            ServiceBusEventSource.Log.CreateSendLinkStart(_identifier);
+            ServiceBusEventSource.Log.CreateSendLinkStart(Identifier);
             try
             {
                 SendingAmqpLink link = await _connectionScope.OpenSenderLinkAsync(
                     entityPath: _entityPath,
-                    identifier: _identifier,
+                    identifier: Identifier,
                     timeout: timeout,
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
@@ -604,28 +615,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     await Task.Delay(15, cancellationToken).ConfigureAwait(false);
                     MaxMessageSize = (long)link.Settings.MaxMessageSize;
                 }
-                ServiceBusEventSource.Log.CreateSendLinkComplete(_identifier);
+                ServiceBusEventSource.Log.CreateSendLinkComplete(Identifier);
                 link.Closed += OnSenderLinkClosed;
                 return link;
             }
             catch (Exception ex)
             {
-                ServiceBusEventSource.Log.CreateSendLinkException(_identifier, ex.ToString());
+                ServiceBusEventSource.Log.CreateSendLinkException(Identifier, ex.ToString());
                 throw;
             }
         }
-
-        /// <summary>
-        ///   Uses the minimum value of the two specified <see cref="TimeSpan" /> instances.
-        /// </summary>
-        ///
-        /// <param name="firstOption">The first option to consider.</param>
-        /// <param name="secondOption">The second option to consider.</param>
-        ///
-        /// <returns>The smaller of the two specified intervals.</returns>
-        ///
-        private static TimeSpan UseMinimum(TimeSpan firstOption,
-                                           TimeSpan secondOption) => (firstOption < secondOption) ? firstOption : secondOption;
 
         private bool HasLinkCommunicationError(SendingAmqpLink link) =>
             !_closed && (link?.IsClosing() ?? false);

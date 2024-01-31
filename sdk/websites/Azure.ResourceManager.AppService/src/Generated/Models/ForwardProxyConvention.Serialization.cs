@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static ForwardProxyConvention ToForwardProxyConvention(this string value)
         {
-            if (string.Equals(value, "NoProxy", StringComparison.InvariantCultureIgnoreCase)) return ForwardProxyConvention.NoProxy;
-            if (string.Equals(value, "Standard", StringComparison.InvariantCultureIgnoreCase)) return ForwardProxyConvention.Standard;
-            if (string.Equals(value, "Custom", StringComparison.InvariantCultureIgnoreCase)) return ForwardProxyConvention.Custom;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoProxy")) return ForwardProxyConvention.NoProxy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard")) return ForwardProxyConvention.Standard;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Custom")) return ForwardProxyConvention.Custom;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ForwardProxyConvention value.");
         }
     }

@@ -87,7 +87,6 @@ namespace Azure.Core
             {
                 //this is the same as Root but can't return that since this is a ctor
                 Init(null, ResourceType.Tenant, string.Empty, false, SpecialType.None);
-                return;
             }
         }
 
@@ -114,8 +113,6 @@ namespace Azure.Core
                     _resourceGroupName = resourceName;
                     break;
                 case SpecialType.Subscription:
-                    if (!Guid.TryParse(resourceName, out _))
-                        throw new FormatException($"The GUID for subscription is invalid {resourceName}.");
                     _subscriptionId = resourceName;
                     break;
                 case SpecialType.Provider:
@@ -139,13 +136,13 @@ namespace Azure.Core
             _initialized = true;
         }
 
-        private void Init()
+        private string? Parse()
         {
             ReadOnlySpan<char> remaining = _stringValue.AsSpan();
 
             if (!remaining.StartsWith(SubscriptionStart.AsSpan(), StringComparison.OrdinalIgnoreCase) &&
                 !remaining.StartsWith(ProviderStart.AsSpan(), StringComparison.OrdinalIgnoreCase))
-                throw new FormatException($"The ResourceIdentifier must start with {SubscriptionStart} or {ProviderStart}.");
+                return $"The ResourceIdentifier must start with {SubscriptionStart} or {ProviderStart}.";
 
             //trim trailing '/' off the end if it exists
             remaining = remaining[remaining.Length - 1] == Separator ? remaining.Slice(1, remaining.Length - 2) : remaining.Slice(1);
@@ -153,23 +150,46 @@ namespace Azure.Core
             ReadOnlySpan<char> nextWord = PopNextWord(ref remaining);
 
             //we know we at least have 1 ResourceIdentifier in the tree here
-            ResourceIdentifierParts nextParts = GetNextParts(Root, ref remaining, ref nextWord);
+            var errorMessage = GetNextParts(Root, ref remaining, ref nextWord, out ResourceIdentifierParts? result);
+            if (errorMessage is not null)
+                return errorMessage;
+            ResourceIdentifierParts nextParts = result!.Value;
+
             while (!nextWord.IsEmpty)
             {
                 //continue to get the next ResourceIdentifier in the tree until we reach the end which will be 'this'
                 ResourceIdentifier newParent = new ResourceIdentifier(nextParts.Parent, nextParts.ResourceType, nextParts.ResourceName, nextParts.IsProviderResource, nextParts.SpecialType);
-                nextParts = GetNextParts(newParent, ref remaining, ref nextWord);
+                if (nextParts.SpecialType == SpecialType.Subscription)
+                {
+                    errorMessage = newParent.CheckSubscriptionFormat();
+                    if (errorMessage is not null)
+                        return errorMessage;
+                }
+                errorMessage = GetNextParts(newParent, ref remaining, ref nextWord, out result);
+                if (errorMessage is not null)
+                    return errorMessage;
+                nextParts = result!.Value;
             }
 
             //initialize ourselves last
             Init(nextParts.Parent, nextParts.ResourceType, nextParts.ResourceName, nextParts.IsProviderResource, nextParts.SpecialType);
+            return nextParts.SpecialType == SpecialType.Subscription ? CheckSubscriptionFormat() : null;
+        }
+
+        private string? CheckSubscriptionFormat()
+        {
+            if (_subscriptionId is not null && !Guid.TryParse(_subscriptionId, out _))
+                return $"The GUID for subscription is invalid {_subscriptionId}.";
+            return null;
         }
 
         private T GetValue<T>(ref T value)
         {
             if (!_initialized)
             {
-                Init();
+                var error = Parse();
+                if (error is not null)
+                    throw new FormatException(error);
             }
 
             return value;
@@ -179,24 +199,30 @@ namespace Azure.Core
         {
             if (resourceTypeName.Equals(ResourceGroupKey.AsSpan(), StringComparison.OrdinalIgnoreCase))
             {
+                //resourceGroups type is Microsoft.Resources/resourceGroups only when its parent is Subscription
                 specialType = SpecialType.ResourceGroup;
-                return ResourceType.ResourceGroup;
+                if (parent.ResourceType == ResourceType.Subscription)
+                {
+                    return ResourceType.ResourceGroup;
+                }
             }
-
-            //subscriptions' type is Microsoft.Resources/subscriptions only when its parent is Tenant
-            if (resourceTypeName.Equals(SubscriptionsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) && parent.ResourceType == ResourceType.Tenant)
+            else if (resourceTypeName.Equals(SubscriptionsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) && parent.ResourceType == ResourceType.Tenant)
             {
+                //subscriptions' type is Microsoft.Resources/subscriptions only when its parent is Tenant
                 specialType = SpecialType.Subscription;
                 return ResourceType.Subscription;
             }
-
-            specialType = resourceTypeName.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : SpecialType.None;
+            else
+            {
+                specialType = resourceTypeName.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : SpecialType.None;
+            }
 
             return parent.ResourceType.AppendChild(resourceTypeName.ToString());
         }
 
-        private static ResourceIdentifierParts GetNextParts(ResourceIdentifier parent, ref ReadOnlySpan<char> remaining, ref ReadOnlySpan<char> nextWord)
+        private static string? GetNextParts(ResourceIdentifier parent, ref ReadOnlySpan<char> remaining, ref ReadOnlySpan<char> nextWord, out ResourceIdentifierParts? parts)
         {
+            parts = null;
             ReadOnlySpan<char> firstWord = nextWord;
             ReadOnlySpan<char> secondWord = PopNextWord(ref remaining);
 
@@ -204,16 +230,17 @@ namespace Azure.Core
             {
                 //subscriptions and resourceGroups aren't valid ids without their name
                 if (firstWord.Equals(SubscriptionsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) || firstWord.Equals(ResourceGroupKey.AsSpan(), StringComparison.OrdinalIgnoreCase))
-                    throw new FormatException($"The ResourceIdentifier is missing the key for {firstWord.ToString()}.");
+                    return $"The ResourceIdentifier is missing the key for {firstWord.ToString()}.";
 
                 //resourceGroup must contain either child or provider resource type
                 if (parent.ResourceType == ResourceType.ResourceGroup)
-                    throw new FormatException($"Expected {ProvidersKey} path segment after {ResourceGroupKey}.");
+                    return $"Expected {ProvidersKey} path segment after {ResourceGroupKey}.";
 
                 nextWord = secondWord;
                 SpecialType specialType = firstWord.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : SpecialType.None;
-                var resourceType =parent.ResourceType.AppendChild(firstWord.ToString());
-                return new ResourceIdentifierParts(parent, new ResourceType(resourceType), string.Empty, false, specialType);
+                var resourceType = parent.ResourceType.AppendChild(firstWord.ToString());
+                parts = new ResourceIdentifierParts(parent, new ResourceType(resourceType), string.Empty, false, specialType);
+                return null;
             }
 
             ReadOnlySpan<char> thirdWord = PopNextWord(ref remaining);
@@ -225,10 +252,11 @@ namespace Azure.Core
                     if (parent.ResourceType == ResourceType.Subscription || parent.ResourceType == ResourceType.Tenant)
                     {
                         nextWord = thirdWord;
-                        return new ResourceIdentifierParts(parent, ResourceType.Provider, secondWord.ToString(), true, SpecialType.Provider);
+                        parts = new ResourceIdentifierParts(parent, ResourceType.Provider, secondWord.ToString(), true, SpecialType.Provider);
+                        return null;
                     }
 
-                    throw new FormatException($"Provider resource can only come after the root or {SubscriptionsKey}.");
+                    return $"Provider resource can only come after the root or {SubscriptionsKey}.";
                 }
 
                 ReadOnlySpan<char> fourthWord = PopNextWord(ref remaining);
@@ -236,19 +264,21 @@ namespace Azure.Core
                 {
                     nextWord = PopNextWord(ref remaining);
                     SpecialType specialType = thirdWord.Equals(LocationsKey.AsSpan(), StringComparison.OrdinalIgnoreCase) ? SpecialType.Location : SpecialType.None;
-                    return new ResourceIdentifierParts(parent, new ResourceType(secondWord.ToString(), thirdWord.ToString()), fourthWord.ToString(), true, specialType);
+                    parts = new ResourceIdentifierParts(parent, new ResourceType(secondWord.ToString(), thirdWord.ToString()), fourthWord.ToString(), true, specialType);
+                    return null;
                 }
             }
             else
             {
                 nextWord = thirdWord;
-                return new ResourceIdentifierParts(parent, ChooseResourceType(firstWord, parent, out SpecialType specialType), secondWord.ToString(), false, specialType);
+                parts = new ResourceIdentifierParts(parent, ChooseResourceType(firstWord, parent, out SpecialType specialType), secondWord.ToString(), false, specialType);
+                return null;
             }
 
-            throw new FormatException("Invalid resource id.");
+            return "Invalid resource id.";
         }
 
-        private static ReadOnlySpan<char> PopNextWord(ref ReadOnlySpan<char> remaining)
+        private static ReadOnlySpan<char> PopNextWord(scoped ref ReadOnlySpan<char> remaining)
         {
             int index = remaining.IndexOf(Separator);
             if (index < 0)
@@ -320,14 +350,13 @@ namespace Azure.Core
             StringBuilder builder = new StringBuilder(initial);
             if (!IsProviderResource)
             {
-                builder.Append($"/{ResourceType.GetLastType()}");
+                builder.Append('/').Append(ResourceType.GetLastType());
                 if (!string.IsNullOrWhiteSpace(Name))
-                    builder.Append($"/{Name}");
+                    builder.Append('/').Append(Name);
             }
             else
             {
-                builder.Append(ProviderStart)
-                    .Append($"{ResourceType}/{Name}");
+                builder.Append(ProviderStart).Append(ResourceType).Append('/').Append(Name);
             }
 
             return builder.ToString();
@@ -468,6 +497,48 @@ namespace Azure.Core
         public static bool operator >=(ResourceIdentifier left, ResourceIdentifier right)
         {
             return left is null ? right is null : left.CompareTo(right) >= 0;
+        }
+
+        /// <summary>
+        /// Converts the string representation of a ResourceIdentifier to the equivalent <see cref="ResourceIdentifier"/> structure.
+        /// </summary>
+        /// <param name="input"> The id string to convert. </param>
+        /// <returns> A class that contains the value that was parsed. </returns>
+        /// <exception cref="FormatException"> when resourceId is not a valid <see cref="ResourceIdentifier"/> format. </exception>
+        /// <exception cref="ArgumentNullException"> when resourceId is null. </exception>
+        /// <exception cref="ArgumentException"> when resourceId is empty. </exception>
+        public static ResourceIdentifier Parse(string input)
+        {
+            var result = new ResourceIdentifier(input);
+            var error = result.Parse();
+            if (error is not null)
+                throw new FormatException(error);
+            return result;
+        }
+
+        /// <summary>
+        /// Converts the string representation of a ResourceIdentifier to the equivalent <see cref="ResourceIdentifier"/> structure.
+        /// </summary>
+        /// <param name="input"> The id string to convert. </param>
+        /// <param name="result">
+        /// The structure that will contain the parsed value.
+        /// If the method returns true result contains a valid ResourceIdentifier.
+        /// If the method returns false, result will be null.
+        /// </param>
+        /// <returns> True if the parse operation was successful; otherwise, false. </returns>
+        public static bool TryParse(string? input, out ResourceIdentifier? result)
+        {
+            result = null;
+            if (string.IsNullOrEmpty(input))
+                return false;
+
+            result = new ResourceIdentifier(input!);
+            var error = result.Parse();
+            if (error is null)
+                return true;
+
+            result = null;
+            return false;
         }
 
         /// <summary>

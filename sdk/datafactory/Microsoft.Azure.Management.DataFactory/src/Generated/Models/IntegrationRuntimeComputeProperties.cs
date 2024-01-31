@@ -49,7 +49,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// integration runtime.</param>
         /// <param name="vNetProperties">VNet properties for managed
         /// integration runtime.</param>
-        public IntegrationRuntimeComputeProperties(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string location = default(string), string nodeSize = default(string), int? numberOfNodes = default(int?), int? maxParallelExecutionsPerNode = default(int?), IntegrationRuntimeDataFlowProperties dataFlowProperties = default(IntegrationRuntimeDataFlowProperties), IntegrationRuntimeVNetProperties vNetProperties = default(IntegrationRuntimeVNetProperties))
+        /// <param name="copyComputeScaleProperties">CopyComputeScale
+        /// properties for managed integration runtime.</param>
+        /// <param
+        /// name="pipelineExternalComputeScaleProperties">PipelineExternalComputeScale
+        /// properties for managed integration runtime.</param>
+        public IntegrationRuntimeComputeProperties(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string location = default(string), string nodeSize = default(string), int? numberOfNodes = default(int?), int? maxParallelExecutionsPerNode = default(int?), IntegrationRuntimeDataFlowProperties dataFlowProperties = default(IntegrationRuntimeDataFlowProperties), IntegrationRuntimeVNetProperties vNetProperties = default(IntegrationRuntimeVNetProperties), CopyComputeScaleProperties copyComputeScaleProperties = default(CopyComputeScaleProperties), PipelineExternalComputeScaleProperties pipelineExternalComputeScaleProperties = default(PipelineExternalComputeScaleProperties))
         {
             AdditionalProperties = additionalProperties;
             Location = location;
@@ -58,6 +63,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             MaxParallelExecutionsPerNode = maxParallelExecutionsPerNode;
             DataFlowProperties = dataFlowProperties;
             VNetProperties = vNetProperties;
+            CopyComputeScaleProperties = copyComputeScaleProperties;
+            PipelineExternalComputeScaleProperties = pipelineExternalComputeScaleProperties;
             CustomInit();
         }
 
@@ -115,6 +122,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public IntegrationRuntimeVNetProperties VNetProperties { get; set; }
 
         /// <summary>
+        /// Gets or sets copyComputeScale properties for managed integration
+        /// runtime.
+        /// </summary>
+        [JsonProperty(PropertyName = "copyComputeScaleProperties")]
+        public CopyComputeScaleProperties CopyComputeScaleProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets pipelineExternalComputeScale properties for managed
+        /// integration runtime.
+        /// </summary>
+        [JsonProperty(PropertyName = "pipelineExternalComputeScaleProperties")]
+        public PipelineExternalComputeScaleProperties PipelineExternalComputeScaleProperties { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -133,6 +154,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             if (DataFlowProperties != null)
             {
                 DataFlowProperties.Validate();
+            }
+            if (CopyComputeScaleProperties != null)
+            {
+                CopyComputeScaleProperties.Validate();
+            }
+            if (PipelineExternalComputeScaleProperties != null)
+            {
+                PipelineExternalComputeScaleProperties.Validate();
             }
         }
     }

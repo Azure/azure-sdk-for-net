@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.MixedReality.Authentication
 {
@@ -14,10 +13,14 @@ namespace Azure.MixedReality.Authentication
     {
         internal static StsTokenResponseMessage DeserializeStsTokenResponseMessage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string accessToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("AccessToken"))
+                if (property.NameEquals("AccessToken"u8))
                 {
                     accessToken = property.Value.GetString();
                     continue;

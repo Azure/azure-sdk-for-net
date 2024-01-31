@@ -1,7 +1,7 @@
 # Azure Tables client library for .NET
 
-Azure Table storage is a service that stores large amounts of structured NoSQL data in the cloud, providing 
-a key/attribute store with a schema-less design. 
+Azure Table storage is a service that stores large amounts of structured NoSQL data in the cloud, providing
+a key/attribute store with a schema-less design.
 
 Azure Cosmos DB provides a Table API for applications that are written for Azure Table storage that need premium capabilities like:
 
@@ -32,7 +32,7 @@ If you need to create either of these, you can use the [Azure CLI][azure_cli].
 
 #### Creating a storage account
 
-Create a storage account `mystorageaccount` in resource group `MyResourceGroup` 
+Create a storage account `mystorageaccount` in resource group `MyResourceGroup`
 in the subscription `MySubscription` in the West US region.
 ```
 az storage account create -n mystorageaccount -g MyResourceGroup -l westus --subscription MySubscription
@@ -40,7 +40,7 @@ az storage account create -n mystorageaccount -g MyResourceGroup -l westus --sub
 
 #### Creating a Cosmos DB
 
-Create a Cosmos DB account `MyCosmosDBDatabaseAccount` in resource group `MyResourceGroup` 
+Create a Cosmos DB account `MyCosmosDBDatabaseAccount` in resource group `MyResourceGroup`
 in the subscription `MySubscription` and a table named `MyTableName` in the account.
 
 ```
@@ -77,7 +77,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -108,7 +108,6 @@ Next, we can create a new table.
 
 ```C# Snippet:TablesSample1CreateTable
 // Create a new table. The TableItem class stores properties of the created table.
-string tableName = "OfficeSupplies1p1";
 TableItem table = serviceClient.CreateTableIfNotExists(tableName);
 Console.WriteLine($"The created table's name is {table.Name}.");
 ```
@@ -137,7 +136,6 @@ Individual tables can be deleted from the service.
 
 ```C# Snippet:TablesSample1DeleteTable
 // Deletes the table made previously.
-string tableName = "OfficeSupplies1p1";
 serviceClient.DeleteTable(tableName);
 ```
 
@@ -162,21 +160,21 @@ Let's define a new `TableEntity` so that we can add it to the table.
 
 ```C# Snippet:TablesSample2CreateDictionaryEntity
 // Make a dictionary entity by defining a <see cref="TableEntity">.
-var entity = new TableEntity(partitionKey, rowKey)
+var tableEntity = new TableEntity(partitionKey, rowKey)
 {
     { "Product", "Marker Set" },
     { "Price", 5.00 },
     { "Quantity", 21 }
 };
 
-Console.WriteLine($"{entity.RowKey}: {entity["Product"]} costs ${entity.GetDouble("Price")}.");
+Console.WriteLine($"{tableEntity.RowKey}: {tableEntity["Product"]} costs ${tableEntity.GetDouble("Price")}.");
 ```
 
 Using the `TableClient` we can now add our new entity to the table.
 
 ```C# Snippet:TablesSample2AddEntity
 // Add the newly created entity.
-tableClient.AddEntity(entity);
+tableClient.AddEntity(tableEntity);
 ```
 
 ### Query table entities
@@ -196,6 +194,23 @@ Console.WriteLine($"The query returned {queryResultsFilter.Count()} entities.");
 ```
 
 If you prefer LINQ style query expressions, we can query the table using that syntax as well.
+To demonstrate this syntax, you'll need a strongly typed model such as the one below:
+
+```C# Snippet:TablesSample2DefineStronglyTypedEntity
+// Define a strongly typed entity by implementing the ITableEntity interface.
+public class OfficeSupplyEntity : ITableEntity
+{
+    public string Product { get; set; }
+    public double Price { get; set; }
+    public int Quantity { get; set; }
+    public string PartitionKey { get; set; }
+    public string RowKey { get; set; }
+    public DateTimeOffset? Timestamp { get; set; }
+    public ETag ETag { get; set; }
+}
+```
+
+Given this model class definition, here is how you'd write a query:
 
 ```C# Snippet:TablesSample4QueryEntitiesExpression
 double priceCutOff = 6.00;
@@ -213,7 +228,7 @@ tableClient.DeleteEntity(partitionKey, rowKey);
 
 ## Troubleshooting
 
-When you interact with the Azure table library using the .NET SDK, errors returned by the service correspond to the same HTTP 
+When using the Azure tables library, errors returned by the service are reported using the same HTTP
 status codes returned for [REST API][tables_rest] requests.
 
 For example, if you try to create a table that already exists, a `409` error is returned, indicating "Conflict".
@@ -269,7 +284,7 @@ the right to, and actually do, grant us the rights to use your contribution. For
 details, visit [cla.microsoft.com][cla].
 
 This project has adopted the [Microsoft Open Source Code of Conduct][coc].
-For more information see the [Code of Conduct FAQ][coc_faq] or contact 
+For more information see the [Code of Conduct FAQ][coc_faq] or contact
 [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
 <!-- LINKS -->
@@ -280,7 +295,7 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact
 [table_client_samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/samples
 [table_client_src]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/src
 [table_change_log]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/CHANGELOG.md
-[api_reference]: https://docs.microsoft.com/dotnet/api/overview/azure/data.tables-readme-pre?view=azure-dotnet-preview
+[api_reference]: https://docs.microsoft.com/dotnet/api/overview/azure/data.tables-readme
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/

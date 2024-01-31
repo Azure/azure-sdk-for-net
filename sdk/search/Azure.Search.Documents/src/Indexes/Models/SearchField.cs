@@ -15,7 +15,6 @@ namespace Azure.Search.Documents.Indexes.Models
     /// When creating an index, instead use the <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
     /// </para>
     /// </summary>
-    [CodeGenModel("Field")]
     public partial class SearchField
     {
         // TODO: Replace constructor and read-only properties when https://github.com/Azure/autorest.csharp/issues/554 is fixed.
@@ -53,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary>
         /// Gets or sets a value indicating whether the field is full-text searchable. The default is null.
         /// This means it will undergo analysis such as word-breaking during indexing.
-        /// This property can be true only for <see cref="SearchFieldDataType.String"/> or "Collection(DataType.String)". It must be false for non-string simple fields, and null for complex fields.
+        /// This property can be true only for <see cref="SearchFieldDataType.String"/>, "Collection(DataType.String)" or "Collection(DataType.Single)". It must be false for non-string simple fields, and null for complex fields.
         /// </summary>
         /// <remarks>
         /// <para>
@@ -61,10 +60,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </para>
         /// <para>
         /// This field must be set according to constraints described in the summary, or the server may respond with an error.
-        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
+        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, <see cref="VectorSearchField"/> and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
         /// </para>
         /// </remarks>
-        [CodeGenMember("searchable")]
+        [CodeGenMember("Searchable")]
         public bool? IsSearchable { get; set; }
 
         /// <summary>
@@ -78,10 +77,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </para>
         /// <para>
         /// This field must be set according to constraints described in the summary, or the server may respond with an error.
-        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
+        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, <see cref="VectorSearchField"/> and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
         /// </para>
         /// </remarks>
-        [CodeGenMember("filterable")]
+        [CodeGenMember("Filterable")]
         public bool? IsFilterable { get; set; }
 
         /// <summary>
@@ -95,7 +94,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </para>
         /// <para>
         /// This field must be set according to constraints described in the summary, or the server may respond with an error.
-        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
+        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, <see cref="VectorSearchField"/> and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
         /// </para>
         /// </remarks>
         public bool? IsHidden
@@ -104,7 +103,7 @@ namespace Azure.Search.Documents.Indexes.Models
             set => IsRetrievable = value.HasValue ? !value : null;
         }
 
-        [CodeGenMember("retrievable")]
+        [CodeGenMember("Retrievable")]
         private bool? IsRetrievable { get; set; }
 
         /// <summary>
@@ -113,9 +112,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </summary>
         /// <remarks>
         /// This field must be set according to constraints described in the summary, or the server may respond with an error.
-        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
+        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, <see cref="VectorSearchField"/> and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
         /// </remarks>
-        [CodeGenMember("sortable")]
+        [CodeGenMember("Sortable")]
         public bool? IsSortable { get; set; }
 
         /// <summary>
@@ -129,10 +128,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </para>
         /// <para>
         /// This field must be set according to constraints described in the summary, or the server may respond with an error.
-        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
+        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, <see cref="VectorSearchField"/> and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
         /// </para>
         /// </remarks>
-        [CodeGenMember("facetable")]
+        [CodeGenMember("Facetable")]
         public bool? IsFacetable { get; set; }
 
         /// <summary>
@@ -141,9 +140,9 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </summary>
         /// <remarks>
         /// This field must be set according to constraints described in the summary, or the server may respond with an error.
-        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
+        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, <see cref="VectorSearchField"/> and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
         /// </remarks>
-        [CodeGenMember("key")]
+        [CodeGenMember("Key")]
         public bool? IsKey { get; set; }
 
         /// <summary>
@@ -152,7 +151,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Once the analyzer is chosen, it cannot be changed for the field.
         /// Must be null for complex fields.
         /// </summary>
-        [CodeGenMember("analyzer")]
+        [CodeGenMember("Analyzer")]
         public LexicalAnalyzerName? AnalyzerName { get; set; }
 
         /// <summary>
@@ -163,7 +162,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// This analyzer can be updated on an existing field.
         /// Must be null for complex fields.
         /// </summary>
-        [CodeGenMember("searchAnalyzer")]
+        [CodeGenMember("SearchAnalyzer")]
         public LexicalAnalyzerName? SearchAnalyzerName { get; set; }
 
         /// <summary>
@@ -173,21 +172,30 @@ namespace Azure.Search.Documents.Indexes.Models
         /// This property cannot be set to the name of a language analyzer; use the <see cref="AnalyzerName"/> property instead if you need a language analyzer.
         /// Once the analyzer is chosen, it cannot be changed for the field.
         /// Must be null for complex fields. </summary>
-        [CodeGenMember("indexAnalyzer")]
+        [CodeGenMember("IndexAnalyzer")]
         public LexicalAnalyzerName? IndexAnalyzerName { get; set; }
+
+        /// <summary>
+        /// The name of the normalizer to use for the field.
+        /// This option can be used only with fields with filterable, sortable, or facetable enabled.
+        /// Once the normalizer is chosen, it cannot be changed for the field.
+        /// Must be null for complex fields.
+        /// </summary>
+        [CodeGenMember("Normalizer")]
+        public LexicalNormalizerName? NormalizerName { get; set; }
 
         // TODO: Remove "overrides" for collection properties when https://github.com/Azure/autorest.csharp/issues/521 is fixed.
 
         /// <summary>
         /// Gets a list of names of synonym maps associated with this field. Only fields where <see cref="IsSearchable"/> is true can have associated synonym maps.
         /// </summary>
-        [CodeGenMember("synonymMaps")]
+        [CodeGenMember("SynonymMaps")]
         public IList<string> SynonymMapNames { get; }
 
         /// <summary>
         /// Gets a list of nested fields if this field is of type <see cref="SearchFieldDataType.Complex"/> or "Collection(DataType.Complex)".
         /// </summary>
-        [CodeGenMember("fields")]
+        [CodeGenMember("Fields")]
         public IList<SearchField> Fields { get; }
 
         /// <inheritdoc/>

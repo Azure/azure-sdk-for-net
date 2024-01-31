@@ -56,6 +56,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// MBPS.</param>
         /// <param name="sharedKey">SharedKey for the vpn connection.</param>
         /// <param name="enableBgp">EnableBgp flag.</param>
+        /// <param
+        /// name="vpnGatewayCustomBgpAddresses">vpnGatewayCustomBgpAddresses
+        /// used by this connection.</param>
         /// <param name="usePolicyBasedTrafficSelectors">Enable policy-based
         /// traffic selectors.</param>
         /// <param name="ipsecPolicies">The IPSec Policies to be considered by
@@ -74,7 +77,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
         /// <param name="type">Resource type.</param>
-        public VpnSiteLinkConnection(string id = default(string), SubResource vpnSiteLink = default(SubResource), int? routingWeight = default(int?), string vpnLinkConnectionMode = default(string), string connectionStatus = default(string), string vpnConnectionProtocolType = default(string), long? ingressBytesTransferred = default(long?), long? egressBytesTransferred = default(long?), int? connectionBandwidth = default(int?), string sharedKey = default(string), bool? enableBgp = default(bool?), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), bool? enableRateLimiting = default(bool?), bool? useLocalAzureIpAddress = default(bool?), string provisioningState = default(string), IList<SubResource> ingressNatRules = default(IList<SubResource>), IList<SubResource> egressNatRules = default(IList<SubResource>), string name = default(string), string etag = default(string), string type = default(string))
+        public VpnSiteLinkConnection(string id = default(string), SubResource vpnSiteLink = default(SubResource), int? routingWeight = default(int?), string vpnLinkConnectionMode = default(string), string connectionStatus = default(string), string vpnConnectionProtocolType = default(string), long? ingressBytesTransferred = default(long?), long? egressBytesTransferred = default(long?), int? connectionBandwidth = default(int?), string sharedKey = default(string), bool? enableBgp = default(bool?), IList<GatewayCustomBgpIpAddressIpConfiguration> vpnGatewayCustomBgpAddresses = default(IList<GatewayCustomBgpIpAddressIpConfiguration>), bool? usePolicyBasedTrafficSelectors = default(bool?), IList<IpsecPolicy> ipsecPolicies = default(IList<IpsecPolicy>), bool? enableRateLimiting = default(bool?), bool? useLocalAzureIpAddress = default(bool?), string provisioningState = default(string), IList<SubResource> ingressNatRules = default(IList<SubResource>), IList<SubResource> egressNatRules = default(IList<SubResource>), string name = default(string), string etag = default(string), string type = default(string))
             : base(id)
         {
             VpnSiteLink = vpnSiteLink;
@@ -87,6 +90,7 @@ namespace Microsoft.Azure.Management.Network.Models
             ConnectionBandwidth = connectionBandwidth;
             SharedKey = sharedKey;
             EnableBgp = enableBgp;
+            VpnGatewayCustomBgpAddresses = vpnGatewayCustomBgpAddresses;
             UsePolicyBasedTrafficSelectors = usePolicyBasedTrafficSelectors;
             IpsecPolicies = ipsecPolicies;
             EnableRateLimiting = enableRateLimiting;
@@ -167,6 +171,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableBgp")]
         public bool? EnableBgp { get; set; }
+
+        /// <summary>
+        /// Gets or sets vpnGatewayCustomBgpAddresses used by this connection.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.vpnGatewayCustomBgpAddresses")]
+        public IList<GatewayCustomBgpIpAddressIpConfiguration> VpnGatewayCustomBgpAddresses { get; set; }
 
         /// <summary>
         /// Gets or sets enable policy-based traffic selectors.

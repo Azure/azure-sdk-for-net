@@ -70,6 +70,7 @@ namespace Azure.Search.Documents
             options.Converters.Add(SearchDateTimeOffsetConverter.Shared);
             options.Converters.Add(SearchDateTimeConverter.Shared);
             options.Converters.Add(SearchDocumentConverter.Shared);
+            options.Converters.Add(SearchReadOnlyMemoryConverter<float>.Shared);
 
             return options;
         }

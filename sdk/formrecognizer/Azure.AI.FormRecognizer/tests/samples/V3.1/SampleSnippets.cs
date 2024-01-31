@@ -4,19 +4,18 @@
 using System;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
-using Azure.AI.FormRecognizer.Tests;
 using Azure.AI.FormRecognizer.Training;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
+using Azure.Identity;
 
 namespace Azure.AI.FormRecognizer.Samples
 {
     /// <summary>
     /// Samples that are used in the associated README.md file.
     /// </summary>
-    public partial class Snippets : SamplesBase<FormRecognizerTestEnvironment>
+    public partial class FormRecognizerSamples
     {
-        [Test]
+        [RecordedTest]
         public void CreateFormRecognizerClient()
         {
             #region Snippet:CreateFormRecognizerClient
@@ -32,20 +31,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #endregion
         }
 
-        [Test]
-        public void CreateFormRecognizerClientTokenCredential()
-        {
-            #region Snippet:CreateFormRecognizerClientTokenCredential
-#if SNIPPET
-            string endpoint = "<endpoint>";
-#else
-            string endpoint = TestEnvironment.Endpoint;
-#endif
-            var client = new FormRecognizerClient(new Uri(endpoint), new DefaultAzureCredential());
-            #endregion
-        }
-
-        [Test]
+        [RecordedTest]
         public void CreateFormTrainingClient()
         {
             #region Snippet:CreateFormTrainingClient
@@ -61,28 +47,7 @@ namespace Azure.AI.FormRecognizer.Samples
             #endregion
         }
 
-        [Test]
-        public async Task BadRequestSnippet()
-        {
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-
-            var credential = new AzureKeyCredential(apiKey);
-            var client = new FormRecognizerClient(new Uri(endpoint), credential);
-
-            #region Snippet:FormRecognizerBadRequest
-            try
-            {
-                RecognizedFormCollection receipts = await client.StartRecognizeReceiptsFromUri(new Uri("http://invalid.uri")).WaitForCompletionAsync();
-            }
-            catch (RequestFailedException e)
-            {
-                Console.WriteLine(e.ToString());
-            }
-            #endregion
-        }
-
-        [Test]
+        [RecordedTest]
         public void CreateFormRecognizerClients()
         {
             #region Snippet:CreateFormRecognizerClients
@@ -97,6 +62,30 @@ namespace Azure.AI.FormRecognizer.Samples
 
             var formRecognizerClient = new FormRecognizerClient(new Uri(endpoint), credential);
             var formTrainingClient = new FormTrainingClient(new Uri(endpoint), credential);
+            #endregion
+        }
+
+        [RecordedTest]
+        public async Task StartLongRunningOperation()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            string apiKey = TestEnvironment.ApiKey;
+            var credential = new AzureKeyCredential(apiKey);
+            var client = new FormTrainingClient(new Uri(endpoint), credential);
+
+            Uri trainingFileUri = new Uri(TestEnvironment.BlobContainerSasUrl);
+            TrainingOperation trainingOperation = await client.StartTrainingAsync(trainingFileUri, useTrainingLabels: false);
+            Response<CustomFormModel> operationResponse = await trainingOperation.WaitForCompletionAsync();
+            CustomFormModel model = operationResponse.Value;
+
+            string resourceId = TestEnvironment.ResourceId;
+            string resourceRegion = TestEnvironment.ResourceRegion;
+            string modelId = model.ModelId;
+            CopyAuthorization authorization = await client.GetCopyAuthorizationAsync(resourceId, resourceRegion);
+
+            #region Snippet:WaitForLongRunningOperationV2
+            CopyModelOperation operation = await client.StartCopyModelAsync(modelId, authorization);
+            await operation.WaitForCompletionAsync();
             #endregion
         }
     }

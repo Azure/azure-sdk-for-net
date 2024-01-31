@@ -6,15 +6,104 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class BgpPeerStatus
+    public partial class BgpPeerStatus : IUtf8JsonSerializable, IJsonModel<BgpPeerStatus>
     {
-        internal static BgpPeerStatus DeserializeBgpPeerStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BgpPeerStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BgpPeerStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BgpPeerStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(LocalAddress))
+            {
+                writer.WritePropertyName("localAddress"u8);
+                writer.WriteStringValue(LocalAddress);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Neighbor))
+            {
+                writer.WritePropertyName("neighbor"u8);
+                writer.WriteStringValue(Neighbor);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Asn))
+            {
+                writer.WritePropertyName("asn"u8);
+                writer.WriteNumberValue(Asn.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ConnectedDuration))
+            {
+                writer.WritePropertyName("connectedDuration"u8);
+                writer.WriteStringValue(ConnectedDuration.Value, "c");
+            }
+            if (options.Format != "W" && Optional.IsDefined(RoutesReceived))
+            {
+                writer.WritePropertyName("routesReceived"u8);
+                writer.WriteNumberValue(RoutesReceived.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MessagesSent))
+            {
+                writer.WritePropertyName("messagesSent"u8);
+                writer.WriteNumberValue(MessagesSent.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MessagesReceived))
+            {
+                writer.WritePropertyName("messagesReceived"u8);
+                writer.WriteNumberValue(MessagesReceived.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        BgpPeerStatus IJsonModel<BgpPeerStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BgpPeerStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBgpPeerStatus(document.RootElement, options);
+        }
+
+        internal static BgpPeerStatus DeserializeBgpPeerStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> localAddress = default;
             Optional<string> neighbor = default;
             Optional<long> asn = default;
@@ -23,80 +112,112 @@ namespace Azure.ResourceManager.Network.Models
             Optional<long> routesReceived = default;
             Optional<long> messagesSent = default;
             Optional<long> messagesReceived = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("localAddress"))
+                if (property.NameEquals("localAddress"u8))
                 {
                     localAddress = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("neighbor"))
+                if (property.NameEquals("neighbor"u8))
                 {
                     neighbor = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("asn"))
+                if (property.NameEquals("asn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     asn = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("state"))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new BgpPeerState(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("connectedDuration"))
+                if (property.NameEquals("connectedDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectedDuration = property.Value.GetTimeSpan("c");
                     continue;
                 }
-                if (property.NameEquals("routesReceived"))
+                if (property.NameEquals("routesReceived"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     routesReceived = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("messagesSent"))
+                if (property.NameEquals("messagesSent"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     messagesSent = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("messagesReceived"))
+                if (property.NameEquals("messagesReceived"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     messagesReceived = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BgpPeerStatus(localAddress.Value, neighbor.Value, Optional.ToNullable(asn), Optional.ToNullable(state), Optional.ToNullable(connectedDuration), Optional.ToNullable(routesReceived), Optional.ToNullable(messagesSent), Optional.ToNullable(messagesReceived));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BgpPeerStatus(localAddress.Value, neighbor.Value, Optional.ToNullable(asn), Optional.ToNullable(state), Optional.ToNullable(connectedDuration), Optional.ToNullable(routesReceived), Optional.ToNullable(messagesSent), Optional.ToNullable(messagesReceived), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BgpPeerStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BgpPeerStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BgpPeerStatus IPersistableModel<BgpPeerStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BgpPeerStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBgpPeerStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BgpPeerStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BgpPeerStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

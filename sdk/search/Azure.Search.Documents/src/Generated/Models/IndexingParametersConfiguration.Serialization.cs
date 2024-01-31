@@ -18,82 +18,82 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(ParsingMode))
             {
-                writer.WritePropertyName("parsingMode");
+                writer.WritePropertyName("parsingMode"u8);
                 writer.WriteStringValue(ParsingMode.Value.ToString());
             }
             if (Optional.IsDefined(ExcludedFileNameExtensions))
             {
-                writer.WritePropertyName("excludedFileNameExtensions");
+                writer.WritePropertyName("excludedFileNameExtensions"u8);
                 writer.WriteStringValue(ExcludedFileNameExtensions);
             }
             if (Optional.IsDefined(IndexedFileNameExtensions))
             {
-                writer.WritePropertyName("indexedFileNameExtensions");
+                writer.WritePropertyName("indexedFileNameExtensions"u8);
                 writer.WriteStringValue(IndexedFileNameExtensions);
             }
             if (Optional.IsDefined(FailOnUnsupportedContentType))
             {
-                writer.WritePropertyName("failOnUnsupportedContentType");
+                writer.WritePropertyName("failOnUnsupportedContentType"u8);
                 writer.WriteBooleanValue(FailOnUnsupportedContentType.Value);
             }
             if (Optional.IsDefined(FailOnUnprocessableDocument))
             {
-                writer.WritePropertyName("failOnUnprocessableDocument");
+                writer.WritePropertyName("failOnUnprocessableDocument"u8);
                 writer.WriteBooleanValue(FailOnUnprocessableDocument.Value);
             }
             if (Optional.IsDefined(IndexStorageMetadataOnlyForOversizedDocuments))
             {
-                writer.WritePropertyName("indexStorageMetadataOnlyForOversizedDocuments");
+                writer.WritePropertyName("indexStorageMetadataOnlyForOversizedDocuments"u8);
                 writer.WriteBooleanValue(IndexStorageMetadataOnlyForOversizedDocuments.Value);
             }
             if (Optional.IsDefined(DelimitedTextHeaders))
             {
-                writer.WritePropertyName("delimitedTextHeaders");
+                writer.WritePropertyName("delimitedTextHeaders"u8);
                 writer.WriteStringValue(DelimitedTextHeaders);
             }
             if (Optional.IsDefined(DelimitedTextDelimiter))
             {
-                writer.WritePropertyName("delimitedTextDelimiter");
+                writer.WritePropertyName("delimitedTextDelimiter"u8);
                 writer.WriteStringValue(DelimitedTextDelimiter);
             }
             if (Optional.IsDefined(FirstLineContainsHeaders))
             {
-                writer.WritePropertyName("firstLineContainsHeaders");
+                writer.WritePropertyName("firstLineContainsHeaders"u8);
                 writer.WriteBooleanValue(FirstLineContainsHeaders.Value);
             }
             if (Optional.IsDefined(DocumentRoot))
             {
-                writer.WritePropertyName("documentRoot");
+                writer.WritePropertyName("documentRoot"u8);
                 writer.WriteStringValue(DocumentRoot);
             }
             if (Optional.IsDefined(DataToExtract))
             {
-                writer.WritePropertyName("dataToExtract");
+                writer.WritePropertyName("dataToExtract"u8);
                 writer.WriteStringValue(DataToExtract.Value.ToString());
             }
             if (Optional.IsDefined(ImageAction))
             {
-                writer.WritePropertyName("imageAction");
+                writer.WritePropertyName("imageAction"u8);
                 writer.WriteStringValue(ImageAction.Value.ToString());
             }
             if (Optional.IsDefined(AllowSkillsetToReadFileData))
             {
-                writer.WritePropertyName("allowSkillsetToReadFileData");
+                writer.WritePropertyName("allowSkillsetToReadFileData"u8);
                 writer.WriteBooleanValue(AllowSkillsetToReadFileData.Value);
             }
             if (Optional.IsDefined(PdfTextRotationAlgorithm))
             {
-                writer.WritePropertyName("pdfTextRotationAlgorithm");
+                writer.WritePropertyName("pdfTextRotationAlgorithm"u8);
                 writer.WriteStringValue(PdfTextRotationAlgorithm.Value.ToString());
             }
             if (Optional.IsDefined(ExecutionEnvironment))
             {
-                writer.WritePropertyName("executionEnvironment");
+                writer.WritePropertyName("executionEnvironment"u8);
                 writer.WriteStringValue(ExecutionEnvironment.Value.ToString());
             }
             if (Optional.IsDefined(_queryTimeout))
             {
-                writer.WritePropertyName("queryTimeout");
+                writer.WritePropertyName("queryTimeout"u8);
                 writer.WriteStringValue(_queryTimeout);
             }
             foreach (var item in AdditionalProperties)
@@ -106,6 +106,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static IndexingParametersConfiguration DeserializeIndexingParametersConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BlobIndexerParsingMode> parsingMode = default;
             Optional<string> excludedFileNameExtensions = default;
             Optional<string> indexedFileNameExtensions = default;
@@ -126,132 +130,122 @@ namespace Azure.Search.Documents.Indexes.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("parsingMode"))
+                if (property.NameEquals("parsingMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     parsingMode = new BlobIndexerParsingMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("excludedFileNameExtensions"))
+                if (property.NameEquals("excludedFileNameExtensions"u8))
                 {
                     excludedFileNameExtensions = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("indexedFileNameExtensions"))
+                if (property.NameEquals("indexedFileNameExtensions"u8))
                 {
                     indexedFileNameExtensions = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("failOnUnsupportedContentType"))
+                if (property.NameEquals("failOnUnsupportedContentType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     failOnUnsupportedContentType = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("failOnUnprocessableDocument"))
+                if (property.NameEquals("failOnUnprocessableDocument"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     failOnUnprocessableDocument = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("indexStorageMetadataOnlyForOversizedDocuments"))
+                if (property.NameEquals("indexStorageMetadataOnlyForOversizedDocuments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     indexStorageMetadataOnlyForOversizedDocuments = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("delimitedTextHeaders"))
+                if (property.NameEquals("delimitedTextHeaders"u8))
                 {
                     delimitedTextHeaders = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("delimitedTextDelimiter"))
+                if (property.NameEquals("delimitedTextDelimiter"u8))
                 {
                     delimitedTextDelimiter = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("firstLineContainsHeaders"))
+                if (property.NameEquals("firstLineContainsHeaders"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     firstLineContainsHeaders = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("documentRoot"))
+                if (property.NameEquals("documentRoot"u8))
                 {
                     documentRoot = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataToExtract"))
+                if (property.NameEquals("dataToExtract"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataToExtract = new BlobIndexerDataToExtract(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("imageAction"))
+                if (property.NameEquals("imageAction"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     imageAction = new BlobIndexerImageAction(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("allowSkillsetToReadFileData"))
+                if (property.NameEquals("allowSkillsetToReadFileData"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowSkillsetToReadFileData = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("pdfTextRotationAlgorithm"))
+                if (property.NameEquals("pdfTextRotationAlgorithm"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pdfTextRotationAlgorithm = new BlobIndexerPdfTextRotationAlgorithm(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("executionEnvironment"))
+                if (property.NameEquals("executionEnvironment"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     executionEnvironment = new IndexerExecutionEnvironment(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("queryTimeout"))
+                if (property.NameEquals("queryTimeout"u8))
                 {
                     queryTimeout = property.Value.GetString();
                     continue;

@@ -7,22 +7,26 @@
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Abstract base type for data identities. </summary>
-    public partial class SearchIndexerDataIdentity
+    /// <summary>
+    /// Abstract base type for data identities.
+    /// Please note <see cref="SearchIndexerDataIdentity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="SearchIndexerDataNoneIdentity"/> and <see cref="SearchIndexerDataUserAssignedIdentity"/>.
+    /// </summary>
+    public abstract partial class SearchIndexerDataIdentity
     {
-        /// <summary> Initializes a new instance of SearchIndexerDataIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataIdentity"/>. </summary>
         public SearchIndexerDataIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of SearchIndexerDataIdentity. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the identity. </param>
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerDataIdentity"/>. </summary>
+        /// <param name="oDataType"> A URI fragment specifying the type of identity. </param>
         internal SearchIndexerDataIdentity(string oDataType)
         {
             ODataType = oDataType;
         }
 
-        /// <summary> Identifies the concrete type of the identity. </summary>
+        /// <summary> A URI fragment specifying the type of identity. </summary>
         internal string ODataType { get; set; }
     }
 }

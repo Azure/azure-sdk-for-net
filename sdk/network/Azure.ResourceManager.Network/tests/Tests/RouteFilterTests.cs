@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(ruleName, filterRule.Data.Name);
 
             // Update route filter
-            filterRule.Data.Access = Access.Deny;
+            filterRule.Data.Access = NetworkAccess.Deny;
             var operation = InstrumentOperation(await filter.GetRouteFilterRules().CreateOrUpdateAsync(WaitUntil.Completed, ruleName, filterRule.Data));
             await operation.WaitForCompletionAsync();
             Assert.AreEqual(ruleName, filterRule.Data.Name);
-            Assert.AreEqual(Access.Deny, filterRule.Data.Access);
+            Assert.AreEqual(NetworkAccess.Deny, filterRule.Data.Access);
 
             // Add filter rule, this will fail due to the limitation of maximum 1 rule per filter
             Assert.ThrowsAsync<RequestFailedException>(async () => await CreateDefaultRouteFilterRule(filter, Recording.GenerateAssetName("rule2")));
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network.Tests
                 var rule = new RouteFilterRuleData()
                 {
                     Name = Recording.GenerateAssetName("test"),
-                    Access = Access.Allow,
+                    Access = NetworkAccess.Allow,
                     Communities = { Filter_Commmunity },
                     Location = TestEnvironment.Location
                 };
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Tests
         {
             var rule = new RouteFilterRuleData()
             {
-                Access = Access.Allow,
+                Access = NetworkAccess.Allow,
                 Communities = { Filter_Commmunity },
                 Location = filter.Data.Location
             };

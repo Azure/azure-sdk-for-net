@@ -73,7 +73,8 @@ namespace Azure.Security.KeyVault.Certificates
     }
     public partial class CertificateClientOptions : Azure.Core.ClientOptions
     {
-        public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V7_3) { }
+        public CertificateClientOptions(Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion version = Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion.V7_5_Preview_1) { }
+        public bool DisableChallengeResourceVerification { get { throw null; } set { } }
         public Azure.Security.KeyVault.Certificates.CertificateClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
@@ -81,6 +82,8 @@ namespace Azure.Security.KeyVault.Certificates
             V7_1 = 1,
             V7_2 = 2,
             V7_3 = 3,
+            V7_4 = 4,
+            V7_5_Preview_1 = 5,
         }
     }
     public partial class CertificateContact
@@ -305,7 +308,9 @@ namespace Azure.Security.KeyVault.Certificates
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         public System.Uri VaultUri { get { throw null; } }
         public string Version { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public byte[] X509Thumbprint { get { throw null; } }
+        public string X509ThumbprintString { get { throw null; } }
     }
     public partial class DeleteCertificateOperation : Azure.Operation<Azure.Security.KeyVault.Certificates.DeletedCertificate>
     {

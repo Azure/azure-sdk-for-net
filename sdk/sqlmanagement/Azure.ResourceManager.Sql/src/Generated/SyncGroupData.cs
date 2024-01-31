@@ -6,21 +6,57 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SyncGroup data model. </summary>
+    /// <summary>
+    /// A class representing the SyncGroup data model.
+    /// An Azure SQL Database sync group.
+    /// </summary>
     public partial class SyncGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of SyncGroupData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SyncGroupData"/>. </summary>
         public SyncGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of SyncGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,11 +70,12 @@ namespace Azure.ResourceManager.Sql
         /// <param name="hubDatabasePassword"> Password for the sync group hub database credential. </param>
         /// <param name="syncState"> Sync state of the sync group. </param>
         /// <param name="schema"> Sync schema of the sync group. </param>
-        /// <param name="enableConflictLogging"> If conflict logging is enabled. </param>
+        /// <param name="isConflictLoggingEnabled"> If conflict logging is enabled. </param>
         /// <param name="conflictLoggingRetentionInDays"> Conflict logging retention period. </param>
         /// <param name="usePrivateLinkConnection"> If use private link connection is enabled. </param>
         /// <param name="privateEndpointName"> Private endpoint name of the sync group if use private link connection is enabled. </param>
-        internal SyncGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlSku sku, int? interval, DateTimeOffset? lastSyncOn, SyncConflictResolutionPolicy? conflictResolutionPolicy, string syncDatabaseId, string hubDatabaseUserName, string hubDatabasePassword, SyncGroupState? syncState, SyncGroupSchema schema, bool? enableConflictLogging, int? conflictLoggingRetentionInDays, bool? usePrivateLinkConnection, string privateEndpointName) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SyncGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlSku sku, int? interval, DateTimeOffset? lastSyncOn, SyncConflictResolutionPolicy? conflictResolutionPolicy, ResourceIdentifier syncDatabaseId, string hubDatabaseUserName, string hubDatabasePassword, SyncGroupState? syncState, SyncGroupSchema schema, bool? isConflictLoggingEnabled, int? conflictLoggingRetentionInDays, bool? usePrivateLinkConnection, string privateEndpointName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Interval = interval;
@@ -49,10 +86,11 @@ namespace Azure.ResourceManager.Sql
             HubDatabasePassword = hubDatabasePassword;
             SyncState = syncState;
             Schema = schema;
-            EnableConflictLogging = enableConflictLogging;
+            IsConflictLoggingEnabled = isConflictLoggingEnabled;
             ConflictLoggingRetentionInDays = conflictLoggingRetentionInDays;
             UsePrivateLinkConnection = usePrivateLinkConnection;
             PrivateEndpointName = privateEndpointName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name and capacity of the SKU. </summary>
@@ -64,7 +102,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Conflict resolution policy of the sync group. </summary>
         public SyncConflictResolutionPolicy? ConflictResolutionPolicy { get; set; }
         /// <summary> ARM resource id of the sync database in the sync group. </summary>
-        public string SyncDatabaseId { get; set; }
+        public ResourceIdentifier SyncDatabaseId { get; set; }
         /// <summary> User name for the sync group hub database credential. </summary>
         public string HubDatabaseUserName { get; set; }
         /// <summary> Password for the sync group hub database credential. </summary>
@@ -74,7 +112,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Sync schema of the sync group. </summary>
         public SyncGroupSchema Schema { get; set; }
         /// <summary> If conflict logging is enabled. </summary>
-        public bool? EnableConflictLogging { get; set; }
+        public bool? IsConflictLoggingEnabled { get; set; }
         /// <summary> Conflict logging retention period. </summary>
         public int? ConflictLoggingRetentionInDays { get; set; }
         /// <summary> If use private link connection is enabled. </summary>

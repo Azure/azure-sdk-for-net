@@ -23,11 +23,11 @@ namespace Azure.Storage.Blobs.Models
 
         public static LeaseState ToLeaseState(this string value)
         {
-            if (string.Equals(value, "available", StringComparison.InvariantCultureIgnoreCase)) return LeaseState.Available;
-            if (string.Equals(value, "leased", StringComparison.InvariantCultureIgnoreCase)) return LeaseState.Leased;
-            if (string.Equals(value, "expired", StringComparison.InvariantCultureIgnoreCase)) return LeaseState.Expired;
-            if (string.Equals(value, "breaking", StringComparison.InvariantCultureIgnoreCase)) return LeaseState.Breaking;
-            if (string.Equals(value, "broken", StringComparison.InvariantCultureIgnoreCase)) return LeaseState.Broken;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "available")) return LeaseState.Available;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "leased")) return LeaseState.Leased;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "expired")) return LeaseState.Expired;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "breaking")) return LeaseState.Breaking;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "broken")) return LeaseState.Broken;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LeaseState value.");
         }
     }

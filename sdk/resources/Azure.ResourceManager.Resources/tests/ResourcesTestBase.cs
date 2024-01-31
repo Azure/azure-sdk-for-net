@@ -124,14 +124,15 @@ namespace Azure.ResourceManager.Resources.Tests
             var parametersObject = new { storageAccountType = new { value = "Standard_GRS" } };
             //convert this object to JsonElement
             var parametersString = JsonSerializer.Serialize(parametersObject);
-            var parameters = JsonDocument.Parse(parametersString).RootElement;
+            using var jsonDocument = JsonDocument.Parse(parametersString);
+            var parameters = jsonDocument.RootElement;
             tmpDeploymentProperties.Parameters = BinaryData.FromString(parameters.GetRawText());
             return tmpDeploymentProperties;
         }
 
-        protected static ArmDeploymentInput CreateDeploymentData(ArmDeploymentProperties deploymentProperties) => new ArmDeploymentInput(deploymentProperties);
+        protected static ArmDeploymentContent CreateDeploymentData(ArmDeploymentProperties deploymentProperties) => new ArmDeploymentContent(deploymentProperties);
 
-        protected static ArmDeploymentInput CreateDeploymentData(ArmDeploymentProperties deploymentProperties, AzureLocation location) => new ArmDeploymentInput(deploymentProperties)
+        protected static ArmDeploymentContent CreateDeploymentData(ArmDeploymentProperties deploymentProperties, AzureLocation location) => new ArmDeploymentContent(deploymentProperties)
         {
             Location = location
         };
@@ -156,7 +157,7 @@ namespace Azure.ResourceManager.Resources.Tests
             GenericResource userAssignedIdentities = lro2.Value;
             var managedIdentity = new ArmDeploymentScriptManagedIdentity()
             {
-                ArmDeploymentScriptManagedIdentityType = "UserAssigned",
+                IdentityType = "UserAssigned",
                 UserAssignedIdentities =
                 {
                     {

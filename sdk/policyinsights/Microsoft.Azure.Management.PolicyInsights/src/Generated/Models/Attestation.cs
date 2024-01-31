@@ -64,9 +64,13 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// attestation.</param>
         /// <param name="lastComplianceStateChangeAt">The time the compliance
         /// state was last changed in this attestation.</param>
+        /// <param name="assessmentDate">The time the evidence was
+        /// assessed</param>
+        /// <param name="metadata">Additional metadata for this
+        /// attestation</param>
         /// <param name="systemData">Azure Resource Manager metadata containing
         /// createdBy and modifiedBy information.</param>
-        public Attestation(string policyAssignmentId, string id = default(string), string name = default(string), string type = default(string), string policyDefinitionReferenceId = default(string), string complianceState = default(string), System.DateTime? expiresOn = default(System.DateTime?), string owner = default(string), string comments = default(string), IList<AttestationEvidence> evidence = default(IList<AttestationEvidence>), string provisioningState = default(string), System.DateTime? lastComplianceStateChangeAt = default(System.DateTime?), SystemData systemData = default(SystemData))
+        public Attestation(string policyAssignmentId, string id = default(string), string name = default(string), string type = default(string), string policyDefinitionReferenceId = default(string), string complianceState = default(string), System.DateTime? expiresOn = default(System.DateTime?), string owner = default(string), string comments = default(string), IList<AttestationEvidence> evidence = default(IList<AttestationEvidence>), string provisioningState = default(string), System.DateTime? lastComplianceStateChangeAt = default(System.DateTime?), System.DateTime? assessmentDate = default(System.DateTime?), object metadata = default(object), SystemData systemData = default(SystemData))
             : base(id, name, type)
         {
             PolicyAssignmentId = policyAssignmentId;
@@ -78,6 +82,8 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
             Evidence = evidence;
             ProvisioningState = provisioningState;
             LastComplianceStateChangeAt = lastComplianceStateChangeAt;
+            AssessmentDate = assessmentDate;
+            Metadata = metadata;
             SystemData = systemData;
             CustomInit();
         }
@@ -152,6 +158,18 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.lastComplianceStateChangeAt")]
         public System.DateTime? LastComplianceStateChangeAt { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the time the evidence was assessed
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.assessmentDate")]
+        public System.DateTime? AssessmentDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets additional metadata for this attestation
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.metadata")]
+        public object Metadata { get; set; }
 
         /// <summary>
         /// Gets azure Resource Manager metadata containing createdBy and

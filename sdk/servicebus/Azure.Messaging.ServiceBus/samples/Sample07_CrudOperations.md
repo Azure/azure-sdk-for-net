@@ -1,8 +1,8 @@
-## CRUD operations
+# CRUD operations
 
 This sample demonstrates how to use the management client to manage entities within a namespace.
 
-### Create a queue
+## Create a queue
 
 ```C# Snippet:CreateQueue
 string connectionString = "<connection_string>";
@@ -33,7 +33,7 @@ options.AuthorizationRules.Add(new SharedAccessAuthorizationRule(
 QueueProperties createdQueue = await client.CreateQueueAsync(options);
 ```
 
-### Get a queue
+## Get a queue
 
 You can retrieve an already created queue by supplying the queue name.
 
@@ -41,7 +41,7 @@ You can retrieve an already created queue by supplying the queue name.
 QueueProperties queue = await client.GetQueueAsync(queueName);
 ```
 
-### Update a queue
+## Update a queue
 
 In order to update a queue, you will need to pass in the `QueueDescription` after getting it from `GetQueueAsync`.
 
@@ -50,7 +50,7 @@ queue.LockDuration = TimeSpan.FromSeconds(60);
 QueueProperties updatedQueue = await client.UpdateQueueAsync(queue);
 ```
 
-### Delete a queue
+## Delete a queue
 
 A queue can be deleted using the queue name.
 
@@ -58,7 +58,7 @@ A queue can be deleted using the queue name.
 await client.DeleteQueueAsync(queueName);
 ```
 
-### Create a topic and subscription
+## Create a topic and subscription
 
 ```C# Snippet:CreateTopicAndSubscription
 string connectionString = "<connection_string>";
@@ -93,7 +93,7 @@ var subscriptionOptions = new CreateSubscriptionOptions(topicName, subscriptionN
 SubscriptionProperties createdSubscription = await client.CreateSubscriptionAsync(subscriptionOptions);
 ```
 
-### Get a topic
+## Get a topic
 
 You can retrieve an already created topic by supplying the topic name.
 
@@ -101,7 +101,7 @@ You can retrieve an already created topic by supplying the topic name.
 TopicProperties topic = await client.GetTopicAsync(topicName);
 ```
 
-### Get a subscription
+## Get a subscription
 
 You can retrieve an already created subscription by supplying the topic and subscription names.
 
@@ -109,7 +109,7 @@ You can retrieve an already created subscription by supplying the topic and subs
 SubscriptionProperties subscription = await client.GetSubscriptionAsync(topicName, subscriptionName);
 ```
 
-### Update a topic
+## Update a topic
 
 In order to update a topic, you will need to pass in the `TopicDescription` after getting it from `GetTopicAsync`.
 
@@ -118,7 +118,7 @@ topic.UserMetadata = "some metadata";
 TopicProperties updatedTopic = await client.UpdateTopicAsync(topic);
 ```
 
-### Update a subscription
+## Update a subscription
 
 In order to update a subscription, you will need to pass in the `SubscriptionDescription` after getting it from `GetSubscriptionAsync`.
 
@@ -127,7 +127,7 @@ subscription.UserMetadata = "some metadata";
 SubscriptionProperties updatedSubscription = await client.UpdateSubscriptionAsync(subscription);
 ```
 
-### Delete a subscription
+## Delete a subscription
 
 A subscription can be deleted using the topic and subscription names.
 
@@ -135,16 +135,10 @@ A subscription can be deleted using the topic and subscription names.
 await client.DeleteSubscriptionAsync(topicName, subscriptionName);
 ```
 
-### Delete a topic
+## Delete a topic
 
 A topic can be deleted using the topic name. Deleting a topic will automatically delete the associated subscriptions.
 
 ```C# Snippet:DeleteTopic
 await client.DeleteTopicAsync(topicName);
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Sample07_CrudOperations.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample07_CrudOperations.cs)

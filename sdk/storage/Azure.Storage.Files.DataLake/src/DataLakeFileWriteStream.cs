@@ -22,14 +22,12 @@ namespace Azure.Storage.Files.DataLake
             long position,
             DataLakeRequestConditions conditions,
             IProgress<long> progressHandler,
-            // TODO #27253
-            //UploadTransactionalHashingOptions hashingOptions,
+            UploadTransferValidationOptions validationOptions,
             bool? closeEvent) : base(
                 position,
                 bufferSize,
-                progressHandler
-                // TODO #27253
-                //hashingOptions
+                progressHandler,
+                transferValidation: validationOptions
                 )
         {
             ValidateBufferSize(bufferSize);
@@ -39,7 +37,10 @@ namespace Azure.Storage.Files.DataLake
             _closeEvent = closeEvent;
         }
 
-        protected override async Task AppendInternal(bool async, CancellationToken cancellationToken)
+        protected override async Task AppendInternal(
+            UploadTransferValidationOptions validationOptions,
+            bool async,
+            CancellationToken cancellationToken)
         {
             if (_buffer.Length > 0)
             {
@@ -48,35 +49,34 @@ namespace Azure.Storage.Files.DataLake
                 await _fileClient.AppendInternal(
                     content: _buffer,
                     offset: _writeIndex,
-                    // TODO #27253
-                    //options: new DataLakeFileAppendOptions
-                    //{
-                    //    TransactionalHashingOptions = _hashingOptions,
-                    //    ProgressHandler = _progressHandler,
-                    //    LeaseId = _conditions?.LeaseId
-                    //},
-                    rangeContentMD5: default,
+                    validationOptionsOverride: validationOptions,
                     leaseId: _conditions.LeaseId,
+                    leaseAction: null,
+                    leaseDuration: null,
+                    proposedLeaseId: null,
                     progressHandler: _progressHandler,
+                    flush: null,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
                 _writeIndex += _buffer.Length;
-                _buffer.Clear();
             }
         }
 
-        protected override async Task FlushInternal(bool async, CancellationToken cancellationToken)
+        protected override async Task CommitInternal(
+            bool async,
+            CancellationToken cancellationToken)
         {
-            await AppendInternal(async, cancellationToken).ConfigureAwait(false);
-
             Response<PathInfo> response = await _fileClient.FlushInternal(
                 position: _writeIndex,
                 retainUncommittedData: default,
                 close: _closeEvent,
                 httpHeaders: default,
                 conditions: _conditions,
+                leaseAction: null,
+                leaseDuration: null,
+                proposedLeaseId: null,
                 async: async,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);

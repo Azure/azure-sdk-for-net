@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Properties of the column in the table of database full schema. </summary>
     public partial class SyncFullSchemaTableColumn
     {
-        /// <summary> Initializes a new instance of SyncFullSchemaTableColumn. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SyncFullSchemaTableColumn"/>. </summary>
         internal SyncFullSchemaTableColumn()
         {
         }
 
-        /// <summary> Initializes a new instance of SyncFullSchemaTableColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncFullSchemaTableColumn"/>. </summary>
         /// <param name="dataSize"> Data size of the column. </param>
         /// <param name="dataType"> Data type of the column. </param>
         /// <param name="errorId"> Error id of the column. </param>
@@ -23,7 +58,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isPrimaryKey"> If it is the primary key of the table. </param>
         /// <param name="name"> Name of the column. </param>
         /// <param name="quotedName"> Quoted name of the column. </param>
-        internal SyncFullSchemaTableColumn(string dataSize, string dataType, string errorId, bool? hasError, bool? isPrimaryKey, string name, string quotedName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SyncFullSchemaTableColumn(string dataSize, string dataType, string errorId, bool? hasError, bool? isPrimaryKey, string name, string quotedName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataSize = dataSize;
             DataType = dataType;
@@ -32,6 +68,7 @@ namespace Azure.ResourceManager.Sql.Models
             IsPrimaryKey = isPrimaryKey;
             Name = name;
             QuotedName = quotedName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Data size of the column. </summary>

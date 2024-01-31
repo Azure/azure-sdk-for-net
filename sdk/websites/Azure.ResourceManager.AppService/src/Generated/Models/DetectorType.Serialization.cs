@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static DetectorType ToDetectorType(this string value)
         {
-            if (string.Equals(value, "Detector", StringComparison.InvariantCultureIgnoreCase)) return DetectorType.Detector;
-            if (string.Equals(value, "Analysis", StringComparison.InvariantCultureIgnoreCase)) return DetectorType.Analysis;
-            if (string.Equals(value, "CategoryOverview", StringComparison.InvariantCultureIgnoreCase)) return DetectorType.CategoryOverview;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Detector")) return DetectorType.Detector;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Analysis")) return DetectorType.Analysis;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CategoryOverview")) return DetectorType.CategoryOverview;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DetectorType value.");
         }
     }

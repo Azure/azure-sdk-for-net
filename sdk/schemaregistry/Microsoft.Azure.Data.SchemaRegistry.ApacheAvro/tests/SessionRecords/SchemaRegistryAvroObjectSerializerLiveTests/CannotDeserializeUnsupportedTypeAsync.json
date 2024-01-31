@@ -1,8 +1,0 @@
-{
-  "Entries": [],
-  "Variables": {
-    "RandomSeed": "781109729",
-    "SCHEMAREGISTRY_ENDPOINT": "sr-playground.servicebus.windows.net",
-    "SCHEMAREGISTRY_GROUP": "miyanni_srgroup"
-  }
-}

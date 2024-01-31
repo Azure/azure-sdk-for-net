@@ -13,11 +13,13 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [ClientTestFixture(true, "2021-04-01", "2018-11-01")]
     public class SecurityRuleTests : NetworkServiceClientTestBase
     {
         private SubscriptionResource _subscription;
 
-        public SecurityRuleTests(bool isAsync) : base(isAsync)
+        public SecurityRuleTests(bool isAsync, string apiVersion)
+        : base(isAsync, SecurityRuleResource.ResourceType, apiVersion)
         {
         }
 
@@ -147,7 +149,7 @@ namespace Azure.ResourceManager.Network.Tests
         private void CompareSecurityRule(SecurityRuleData rule1, SecurityRuleData rule2)
         {
             Assert.AreEqual(rule1.Name, rule2.Name);
-            Assert.AreEqual(rule1.Etag, rule2.Etag);
+            Assert.AreEqual(rule1.ETag, rule2.ETag);
             Assert.AreEqual(rule1.Access, rule2.Access);
             Assert.AreEqual(rule1.Description, rule2.Description);
             Assert.AreEqual(rule1.DestinationAddressPrefix, rule2.DestinationAddressPrefix);

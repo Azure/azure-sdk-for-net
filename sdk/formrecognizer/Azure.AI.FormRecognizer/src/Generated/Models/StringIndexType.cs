@@ -26,11 +26,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         private const string UnicodeCodePointValue = "unicodeCodePoint";
         private const string Utf16CodeUnitValue = "utf16CodeUnit";
 
-        /// <summary> textElements. </summary>
+        /// <summary> User-perceived display character, or grapheme cluster, as defined by Unicode 8.0.0. </summary>
         public static StringIndexType TextElements { get; } = new StringIndexType(TextElementsValue);
-        /// <summary> unicodeCodePoint. </summary>
+        /// <summary> Character unit represented by a single unicode code point.  Used by Python 3. </summary>
         public static StringIndexType UnicodeCodePoint { get; } = new StringIndexType(UnicodeCodePointValue);
-        /// <summary> utf16CodeUnit. </summary>
+        /// <summary> Character unit represented by a 16-bit Unicode code unit.  Used by JavaScript, Java, and .NET. </summary>
         public static StringIndexType Utf16CodeUnit { get; } = new StringIndexType(Utf16CodeUnitValue);
         /// <summary> Determines if two <see cref="StringIndexType"/> values are the same. </summary>
         public static bool operator ==(StringIndexType left, StringIndexType right) => left.Equals(right);

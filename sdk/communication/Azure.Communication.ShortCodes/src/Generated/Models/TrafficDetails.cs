@@ -10,19 +10,19 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> The TrafficDetails. </summary>
     public partial class TrafficDetails
     {
-        /// <summary> Initializes a new instance of TrafficDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficDetails"/>. </summary>
         public TrafficDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of TrafficDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrafficDetails"/>. </summary>
         /// <param name="totalMonthlyVolume"> Estimated total messages per month. </param>
         /// <param name="monthlyAverageMessagesFromUser"> Estimated number of Mobile-Originated messages likely to be received from a user per month. </param>
         /// <param name="monthlyAverageMessagesToUser"> Estimated number of Mobile-Terminated messages likely to be sent per user per month. </param>
         /// <param name="isSpiky"> Indicates if the nature of the messaging traffic will be bursty. </param>
         /// <param name="spikeDetails">
         /// If isSpiky=true, then explain additional details about the traffic pattern
-        /// e.g. &apos;Higher traffic expected during holiday season and Black Friday.&apos;.
+        /// e.g. 'Higher traffic expected during holiday season and Black Friday.'.
         /// </param>
         /// <param name="estimatedRampUpTimeInDays"> Numbers of days in which is expected to start sending messages from the short code. </param>
         internal TrafficDetails(int? totalMonthlyVolume, int? monthlyAverageMessagesFromUser, int? monthlyAverageMessagesToUser, bool? isSpiky, string spikeDetails, int? estimatedRampUpTimeInDays)
@@ -45,7 +45,7 @@ namespace Azure.Communication.ShortCodes.Models
         public bool? IsSpiky { get; set; }
         /// <summary>
         /// If isSpiky=true, then explain additional details about the traffic pattern
-        /// e.g. &apos;Higher traffic expected during holiday season and Black Friday.&apos;.
+        /// e.g. 'Higher traffic expected during holiday season and Black Friday.'.
         /// </summary>
         public string SpikeDetails { get; set; }
         /// <summary> Numbers of days in which is expected to start sending messages from the short code. </summary>

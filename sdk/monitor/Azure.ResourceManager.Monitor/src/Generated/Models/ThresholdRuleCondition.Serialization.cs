@@ -6,97 +6,175 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ThresholdRuleCondition : IUtf8JsonSerializable
+    public partial class ThresholdRuleCondition : IUtf8JsonSerializable, IJsonModel<ThresholdRuleCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThresholdRuleCondition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ThresholdRuleCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ThresholdRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ThresholdRuleCondition)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            writer.WritePropertyName("operator");
+            writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(Operator.ToSerialString());
-            writer.WritePropertyName("threshold");
+            writer.WritePropertyName("threshold"u8);
             writer.WriteNumberValue(Threshold);
             if (Optional.IsDefined(WindowSize))
             {
-                writer.WritePropertyName("windowSize");
+                writer.WritePropertyName("windowSize"u8);
                 writer.WriteStringValue(WindowSize.Value, "P");
             }
             if (Optional.IsDefined(TimeAggregation))
             {
-                writer.WritePropertyName("timeAggregation");
+                writer.WritePropertyName("timeAggregation"u8);
                 writer.WriteStringValue(TimeAggregation.Value.ToSerialString());
             }
-            writer.WritePropertyName("odata.type");
+            writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(DataSource))
             {
-                writer.WritePropertyName("dataSource");
+                writer.WritePropertyName("dataSource"u8);
                 writer.WriteObjectValue(DataSource);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ThresholdRuleCondition DeserializeThresholdRuleCondition(JsonElement element)
+        ThresholdRuleCondition IJsonModel<ThresholdRuleCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            ConditionOperator @operator = default;
+            var format = options.Format == "W" ? ((IPersistableModel<ThresholdRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ThresholdRuleCondition)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeThresholdRuleCondition(document.RootElement, options);
+        }
+
+        internal static ThresholdRuleCondition DeserializeThresholdRuleCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            MonitorConditionOperator @operator = default;
             double threshold = default;
             Optional<TimeSpan> windowSize = default;
-            Optional<TimeAggregationOperator> timeAggregation = default;
+            Optional<ThresholdRuleConditionTimeAggregationType> timeAggregation = default;
             string odataType = default;
             Optional<RuleDataSource> dataSource = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("operator"))
+                if (property.NameEquals("operator"u8))
                 {
-                    @operator = property.Value.GetString().ToConditionOperator();
+                    @operator = property.Value.GetString().ToMonitorConditionOperator();
                     continue;
                 }
-                if (property.NameEquals("threshold"))
+                if (property.NameEquals("threshold"u8))
                 {
                     threshold = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("windowSize"))
+                if (property.NameEquals("windowSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     windowSize = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("timeAggregation"))
+                if (property.NameEquals("timeAggregation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    timeAggregation = property.Value.GetString().ToTimeAggregationOperator();
+                    timeAggregation = property.Value.GetString().ToThresholdRuleConditionTimeAggregationType();
                     continue;
                 }
-                if (property.NameEquals("odata.type"))
+                if (property.NameEquals("odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSource"))
+                if (property.NameEquals("dataSource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ThresholdRuleCondition(odataType, dataSource.Value, @operator, threshold, Optional.ToNullable(windowSize), Optional.ToNullable(timeAggregation));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ThresholdRuleCondition(odataType, dataSource.Value, serializedAdditionalRawData, @operator, threshold, Optional.ToNullable(windowSize), Optional.ToNullable(timeAggregation));
         }
+
+        BinaryData IPersistableModel<ThresholdRuleCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ThresholdRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ThresholdRuleCondition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ThresholdRuleCondition IPersistableModel<ThresholdRuleCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ThresholdRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeThresholdRuleCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ThresholdRuleCondition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ThresholdRuleCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

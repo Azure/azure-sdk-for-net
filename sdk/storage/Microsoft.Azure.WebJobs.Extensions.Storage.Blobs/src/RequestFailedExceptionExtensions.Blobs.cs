@@ -33,29 +33,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common
         }
 
         /// <summary>
-        /// Determines whether the exception is due to a 409 Conflict error with the error code LeaseAlreadyPresent.
-        /// </summary>
-        /// <param name="exception">The storage exception.</param>
-        /// <returns>
-        /// <see langword="true"/> if the exception is due to a 409 Conflict error with the error code
-        /// LeaseAlreadyPresent; otherwise <see langword="false"/>.
-        /// </returns>
-        public static bool IsConflictLeaseAlreadyPresent(this RequestFailedException exception)
-        {
-            if (exception == null)
-            {
-                throw new ArgumentNullException(nameof(exception));
-            }
-
-            if (exception.Status != 409)
-            {
-                return false;
-            }
-
-            return exception.ErrorCode == "LeaseAlreadyPresent";
-        }
-
-        /// <summary>
         /// Determines whether the exception is due to a 409 Conflict error with the error code
         /// LeaseIdMismatchWithLeaseOperation.
         /// </summary>

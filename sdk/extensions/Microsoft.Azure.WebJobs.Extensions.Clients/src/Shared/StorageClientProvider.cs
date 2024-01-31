@@ -24,6 +24,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Shared
         private readonly AzureEventSourceLogForwarder _logForwarder;
         private readonly ILogger _logger;
 
+        public const string DefaultStorageEndpointSuffix = "core.windows.net";
+
         /// <summary>
         /// Initializes a new instance of the <see cref="StorageClientProvider{TClient, TClientOptions}"/> class that uses the registered Azure services.
         /// </summary>
@@ -67,6 +69,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Shared
         /// <returns>Client that was created.</returns>
         public virtual TClient Get(string name)
         {
+            IConfigurationSection connectionSection = GetWebJobsConnectionStringSection(name);
+            var credential = _componentFactory.CreateTokenCredential(connectionSection);
+            var options = CreateClientOptions(connectionSection);
+            return CreateClient(connectionSection, credential, options);
+        }
+
+        public IConfigurationSection GetWebJobsConnectionStringSection(string name)
+        {
             if (string.IsNullOrWhiteSpace(name))
             {
                 name = ConnectionStringNames.Storage; // default
@@ -80,9 +90,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Shared
                 throw new InvalidOperationException($"Storage account connection string '{IConfigurationExtensions.GetPrefixedConnectionStringName(name)}' does not exist. Make sure that it is a defined App Setting.");
             }
 
-            var credential = _componentFactory.CreateTokenCredential(connectionSection);
-            var options = CreateClientOptions(connectionSection);
-            return CreateClient(connectionSection, credential, options);
+            return connectionSection;
         }
 
         /// <summary>
@@ -166,7 +174,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Clients.Shared
         /// <param name="defaultProtocol">protocol to use for REST requests</param>
         /// <param name="endpointSuffix">endpoint suffix for the storage account</param>
         /// <returns>Uri for the storage resource</returns>
-        protected virtual Uri FormatServiceUri(string accountName, string defaultProtocol = "https", string endpointSuffix = "core.windows.net")
+        protected virtual Uri FormatServiceUri(string accountName, string defaultProtocol = "https", string endpointSuffix = DefaultStorageEndpointSuffix)
         {
             // Todo: Eventually move this into storage sdk
             var uri = string.Format(CultureInfo.InvariantCulture, "{0}://{1}.{2}.{3}", defaultProtocol, accountName, ServiceUriSubDomain, endpointSuffix);

@@ -6,111 +6,180 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class HybridConnectionData : IUtf8JsonSerializable
+    public partial class HybridConnectionData : IUtf8JsonSerializable, IJsonModel<HybridConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HybridConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HybridConnectionData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceBusNamespace))
             {
-                writer.WritePropertyName("serviceBusNamespace");
+                writer.WritePropertyName("serviceBusNamespace"u8);
                 writer.WriteStringValue(ServiceBusNamespace);
             }
             if (Optional.IsDefined(RelayName))
             {
-                writer.WritePropertyName("relayName");
+                writer.WritePropertyName("relayName"u8);
                 writer.WriteStringValue(RelayName);
             }
-            if (Optional.IsDefined(RelayArmUri))
+            if (Optional.IsDefined(RelayArmId))
             {
-                writer.WritePropertyName("relayArmUri");
-                writer.WriteStringValue(RelayArmUri.AbsoluteUri);
+                writer.WritePropertyName("relayArmUri"u8);
+                writer.WriteStringValue(RelayArmId);
             }
             if (Optional.IsDefined(Hostname))
             {
-                writer.WritePropertyName("hostname");
+                writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
             if (Optional.IsDefined(Port))
             {
-                writer.WritePropertyName("port");
+                writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
             if (Optional.IsDefined(SendKeyName))
             {
-                writer.WritePropertyName("sendKeyName");
+                writer.WritePropertyName("sendKeyName"u8);
                 writer.WriteStringValue(SendKeyName);
             }
             if (Optional.IsDefined(SendKeyValue))
             {
-                writer.WritePropertyName("sendKeyValue");
+                writer.WritePropertyName("sendKeyValue"u8);
                 writer.WriteStringValue(SendKeyValue);
             }
             if (Optional.IsDefined(ServiceBusSuffix))
             {
-                writer.WritePropertyName("serviceBusSuffix");
+                writer.WritePropertyName("serviceBusSuffix"u8);
                 writer.WriteStringValue(ServiceBusSuffix);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HybridConnectionData DeserializeHybridConnectionData(JsonElement element)
+        HybridConnectionData IJsonModel<HybridConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HybridConnectionData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHybridConnectionData(document.RootElement, options);
+        }
+
+        internal static HybridConnectionData DeserializeHybridConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> serviceBusNamespace = default;
             Optional<string> relayName = default;
-            Optional<Uri> relayArmUri = default;
+            Optional<ResourceIdentifier> relayArmUri = default;
             Optional<string> hostname = default;
             Optional<int> port = default;
             Optional<string> sendKeyName = default;
             Optional<string> sendKeyValue = default;
             Optional<string> serviceBusSuffix = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -119,52 +188,50 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("serviceBusNamespace"))
+                        if (property0.NameEquals("serviceBusNamespace"u8))
                         {
                             serviceBusNamespace = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("relayName"))
+                        if (property0.NameEquals("relayName"u8))
                         {
                             relayName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("relayArmUri"))
+                        if (property0.NameEquals("relayArmUri"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                relayArmUri = null;
                                 continue;
                             }
-                            relayArmUri = new Uri(property0.Value.GetString());
+                            relayArmUri = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("hostname"))
+                        if (property0.NameEquals("hostname"u8))
                         {
                             hostname = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("port"))
+                        if (property0.NameEquals("port"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             port = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("sendKeyName"))
+                        if (property0.NameEquals("sendKeyName"u8))
                         {
                             sendKeyName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("sendKeyValue"))
+                        if (property0.NameEquals("sendKeyValue"u8))
                         {
                             sendKeyValue = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("serviceBusSuffix"))
+                        if (property0.NameEquals("serviceBusSuffix"u8))
                         {
                             serviceBusSuffix = property0.Value.GetString();
                             continue;
@@ -172,8 +239,44 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HybridConnectionData(id, name, type, systemData, kind.Value, serviceBusNamespace.Value, relayName.Value, relayArmUri.Value, hostname.Value, Optional.ToNullable(port), sendKeyName.Value, sendKeyValue.Value, serviceBusSuffix.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HybridConnectionData(id, name, type, systemData.Value, serviceBusNamespace.Value, relayName.Value, relayArmUri.Value, hostname.Value, Optional.ToNullable(port), sendKeyName.Value, sendKeyValue.Value, serviceBusSuffix.Value, kind.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HybridConnectionData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HybridConnectionData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HybridConnectionData IPersistableModel<HybridConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHybridConnectionData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HybridConnectionData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HybridConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

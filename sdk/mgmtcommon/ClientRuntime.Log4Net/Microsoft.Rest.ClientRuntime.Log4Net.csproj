@@ -6,7 +6,7 @@
     <AssemblyTitle>Log4Net Logger for Microsoft AutoRest Generated Clients</AssemblyTitle>
     <VersionPrefix>2.1.4</VersionPrefix>
     <AssemblyName>Microsoft.Rest.ClientRuntime.Log4Net</AssemblyName>
-    <PackageTags>Rest ClientRuntime Azure Test Log4Net $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>    
+    <PackageTags>Rest ClientRuntime Azure Test Log4Net $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;net461</TargetFrameworks>
@@ -17,6 +17,6 @@
 
   <ItemGroup>
     <PackageReference Include="log4net" Version="2.0.10" />
-    <!--<PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.6" />-->
+    <!--<PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.24" />-->
   </ItemGroup>
 </Project>

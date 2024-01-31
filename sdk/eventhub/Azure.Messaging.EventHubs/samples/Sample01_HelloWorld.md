@@ -4,6 +4,12 @@ This sample demonstrates the basic flow of events through an Event Hub, with the
 
 To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples#getting-started) section of the README, and have the prerequisites and connection string information available.
 
+## Table of contents
+
+- [Create the clients](#create-the-clients)
+- [Publish events](#publish-events)
+- [Read events](#read-events)
+
 ## Create the clients
 
 To interact with Event Hubs, a client is needed for each area of functionality - such as publishing and reading of events.  All clients are scoped to a single Event Hub instance under an Event Hubs namespace, and clients that read events are also scoped to a consumer group.  For this example, we'll configure our clients using the set of information that follows.

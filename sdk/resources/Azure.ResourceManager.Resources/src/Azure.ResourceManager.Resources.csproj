@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.0.0-beta.8</Version>
+    <Version>1.8.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.7.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.Resources</PackageId>
-    <Description>
-      Azure management client SDK for Azure resource provider Resources.
-      This is the first beta preview version, so expect incompatible changes in subsequent releases as we improve the product.
-    </Description>
+    <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Resources.</Description>
     <PackageTags>azure;management;resources</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
 </Project>

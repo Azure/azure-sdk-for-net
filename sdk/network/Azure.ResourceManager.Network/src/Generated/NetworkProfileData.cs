@@ -5,36 +5,42 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the NetworkProfile data model. </summary>
-    public partial class NetworkProfileData : NetworkResourceData
+    /// <summary>
+    /// A class representing the NetworkProfile data model.
+    /// Network profile resource.
+    /// </summary>
+    public partial class NetworkProfileData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of NetworkProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfileData"/>. </summary>
         public NetworkProfileData()
         {
             ContainerNetworkInterfaces = new ChangeTrackingList<ContainerNetworkInterface>();
             ContainerNetworkInterfaceConfigurations = new ChangeTrackingList<ContainerNetworkInterfaceConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of NetworkProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkProfileData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="containerNetworkInterfaces"> List of child container network interfaces. </param>
         /// <param name="containerNetworkInterfaceConfigurations"> List of chid container network interface configurations. </param>
         /// <param name="resourceGuid"> The resource GUID property of the network profile resource. </param>
         /// <param name="provisioningState"> The provisioning state of the network profile resource. </param>
-        internal NetworkProfileData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, IReadOnlyList<ContainerNetworkInterface> containerNetworkInterfaces, IList<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfigurations, string resourceGuid, ProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal NetworkProfileData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IReadOnlyList<ContainerNetworkInterface> containerNetworkInterfaces, IList<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfigurations, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
-            Etag = etag;
+            ETag = etag;
             ContainerNetworkInterfaces = containerNetworkInterfaces;
             ContainerNetworkInterfaceConfigurations = containerNetworkInterfaceConfigurations;
             ResourceGuid = resourceGuid;
@@ -42,14 +48,14 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> List of child container network interfaces. </summary>
         public IReadOnlyList<ContainerNetworkInterface> ContainerNetworkInterfaces { get; }
         /// <summary> List of chid container network interface configurations. </summary>
         public IList<ContainerNetworkInterfaceConfiguration> ContainerNetworkInterfaceConfigurations { get; }
         /// <summary> The resource GUID property of the network profile resource. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
         /// <summary> The provisioning state of the network profile resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// /home/user/.ssh/authorized_keys</param>
         /// <param name="keyData">SSH public key certificate used to
         /// authenticate with the VM through ssh. The key needs to be at least
-        /// 2048-bit and in ssh-rsa format. &lt;br&gt;&lt;br&gt; For creating
-        /// ssh keys, see [Create SSH keys on Linux and Mac for Linux VMs in
+        /// 2048-bit and in ssh-rsa format. For creating ssh keys, see [Create
+        /// SSH keys on Linux and Mac for Linux VMs in
         /// Azure]https://docs.microsoft.com/azure/virtual-machines/linux/create-ssh-keys-detailed).</param>
         public SshPublicKey(string path = default(string), string keyData = default(string))
         {
@@ -62,8 +62,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets SSH public key certificate used to authenticate with
         /// the VM through ssh. The key needs to be at least 2048-bit and in
-        /// ssh-rsa format. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For creating
-        /// ssh keys, see [Create SSH keys on Linux and Mac for Linux VMs in
+        /// ssh-rsa format. For creating ssh keys, see [Create SSH keys on
+        /// Linux and Mac for Linux VMs in
         /// Azure]https://docs.microsoft.com/azure/virtual-machines/linux/create-ssh-keys-detailed).
         /// </summary>
         [JsonProperty(PropertyName = "keyData")]

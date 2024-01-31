@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Tests
     public class FormRecognizerLiveTestBase : RecordedTestBase<FormRecognizerTestEnvironment>
     {
         /// <summary>
-        /// The version of the REST API to test against.  This will be passed
+        /// The version of the REST API to test against. This will be passed
         /// to the .ctor via ClientTestFixture's values.
         /// </summary>
         private readonly FormRecognizerClientOptions.ServiceVersion _serviceVersion;
@@ -27,11 +27,10 @@ namespace Azure.AI.FormRecognizer.Tests
             : base(isAsync)
         {
             _serviceVersion = serviceVersion;
+
             JsonPathSanitizers.Add("$..accessToken");
-            JsonPathSanitizers.Add("$..containerUrl");
+            JsonPathSanitizers.Add("$..source");
             SanitizedHeaders.Add(Constants.AuthorizationHeader);
-            // temporary until https://github.com/Azure/azure-sdk-for-net/issues/27688 is addressed
-            CompareBodies = false;
         }
 
         /// <summary>
@@ -40,7 +39,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// </summary>
         /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
         /// <param name="apiKey">The API key to use for authentication. Defaults to <see cref="FormRecognizerTestEnvironment.ApiKey"/>.</param>
-        /// <param name="skipInstrumenting">Whether or not instrumenting should be skipped. Avoid skipping it as much as possible.</param>
         /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
         protected FormRecognizerClient CreateFormRecognizerClient(bool useTokenCredential = false, string apiKey = default) => CreateFormRecognizerClient(out _, useTokenCredential, apiKey);
 
@@ -51,7 +49,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <param name="nonInstrumentedClient">The non-instrumented version of the client to be used to resume LROs.</param>
         /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
         /// <param name="apiKey">The API key to use for authentication. Defaults to <see cref="FormRecognizerTestEnvironment.ApiKey"/>.</param>
-        /// <param name="skipInstrumenting">Whether or not instrumenting should be skipped. Avoid skipping it as much as possible.</param>
         /// <returns>The instrumented <see cref="FormRecognizerClient" />.</returns>
         protected FormRecognizerClient CreateFormRecognizerClient(out FormRecognizerClient nonInstrumentedClient, bool useTokenCredential = false, string apiKey = default)
         {
@@ -75,10 +72,8 @@ namespace Azure.AI.FormRecognizer.Tests
         /// Creates a <see cref="FormTrainingClient" /> with the endpoint and API key provided via environment
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
-        /// <param name="nonInstrumentedClient">The non-instrumented version of the client to be used to resume LROs.</param>
         /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
         /// <param name="apiKey">The API key to use for authentication. Defaults to <see cref="FormRecognizerTestEnvironment.ApiKey"/>.</param>
-        /// <param name="skipInstrumenting">Whether or not instrumenting should be skipped. Avoid skipping it as much as possible.</param>
         /// <returns>The instrumented <see cref="FormTrainingClient" />.</returns>
         protected FormTrainingClient CreateFormTrainingClient(bool useTokenCredential = false, string apiKey = default) => CreateFormTrainingClient(out _, useTokenCredential, apiKey);
 
@@ -89,7 +84,6 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <param name="nonInstrumentedClient">The non-instrumented version of the client to be used to resume LROs.</param>
         /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
         /// <param name="apiKey">The API key to use for authentication. Defaults to <see cref="FormRecognizerTestEnvironment.ApiKey"/>.</param>
-        /// <param name="skipInstrumenting">Whether or not instrumenting should be skipped. Avoid skipping it as much as possible.</param>
         /// <returns>The instrumented <see cref="FormTrainingClient" />.</returns>
         protected FormTrainingClient CreateFormTrainingClient(out FormTrainingClient nonInstrumentedClient, bool useTokenCredential = false, string apiKey = default)
         {
@@ -111,37 +105,39 @@ namespace Azure.AI.FormRecognizer.Tests
 
         /// <summary>
         /// Trains a model and returns the associated <see cref="DisposableTrainedModel"/> instance, from which
-        /// the model ID can be obtained. Upon disposal, the model will be deleted.
+        /// the model ID can be obtained. A cached model may be returned instead when running in live mode.
         /// </summary>
         /// <param name="useTrainingLabels">If <c>true</c>, use a label file created in the &lt;link-to-label-tool-doc&gt; to provide training-time labels for training a model. If <c>false</c>, the model will be trained from forms only.</param>
         /// <param name="containerType">Type of container to use to execute training.</param>
         /// <param name="modelName">Optional model name.</param>
         /// <returns>A <see cref="DisposableTrainedModel"/> instance from which the trained model ID can be obtained.</returns>
-        protected async Task<DisposableTrainedModel> CreateDisposableTrainedModelAsync(bool useTrainingLabels, ContainerType containerType = default, string modelName = default)
+        protected async ValueTask<DisposableTrainedModel> CreateDisposableTrainedModelAsync(bool useTrainingLabels, ContainerType containerType = default, string modelName = default)
         {
-            var trainingClient = CreateFormTrainingClient();
-
+            var client = CreateFormTrainingClient();
             string trainingFiles = containerType switch
             {
-                ContainerType.Singleforms => TestEnvironment.BlobContainerSasUrlV2,
-                ContainerType.MultipageFiles => TestEnvironment.MultipageBlobContainerSasUrlV2,
-                ContainerType.SelectionMarks => TestEnvironment.SelectionMarkBlobContainerSasUrlV2,
-                ContainerType.TableVariableRows => TestEnvironment.TableDynamicRowsContainerSasUrlV2,
-                ContainerType.TableFixedRows => TestEnvironment.TableFixedRowsContainerSasUrlV2,
-                _ => TestEnvironment.BlobContainerSasUrlV2,
+                ContainerType.Singleforms => TestEnvironment.BlobContainerSasUrl,
+                ContainerType.MultipageFiles => TestEnvironment.MultipageBlobContainerSasUrl,
+                ContainerType.SelectionMarks => TestEnvironment.SelectionMarkBlobContainerSasUrl,
+                _ => TestEnvironment.BlobContainerSasUrl,
             };
             var trainingFilesUri = new Uri(trainingFiles);
 
-            return await DisposableTrainedModel.TrainModelAsync(trainingClient, trainingFilesUri, useTrainingLabels, modelName);
-        }
+            // Skip caching on record and playback modes.
+            if (Recording.Mode == RecordedTestMode.Record || Recording.Mode == RecordedTestMode.Playback)
+            {
+                return await DisposableTrainedModel.TrainModelAsync(client, trainingFilesUri, useTrainingLabels, modelName);
+            }
 
-        protected enum ContainerType
-        {
-            Singleforms,
-            MultipageFiles,
-            SelectionMarks,
-            TableVariableRows,
-            TableFixedRows
+            var modelKey = new TrainedModelCache.ModelKey(_serviceVersion, containerType.ToString(), useTrainingLabels, modelName);
+
+            if (!TrainedModelCache.Models.TryGetValue(modelKey, out DisposableTrainedModel model))
+            {
+                model = await DisposableTrainedModel.TrainModelAsync(client, trainingFilesUri, useTrainingLabels, modelName, deleteOnDisposal: false);
+                TrainedModelCache.Models.Add(modelKey, model);
+            }
+
+            return model;
         }
 
         protected void ValidatePrebuiltForm(RecognizedForm recognizedForm, bool includeFieldElements, int expectedFirstPageNumber, int expectedLastPageNumber)
@@ -346,6 +342,13 @@ namespace Azure.AI.FormRecognizer.Tests
                 Assert.That(selectionMark.Confidence, Is.GreaterThanOrEqualTo(0.0).Within(0.01));
                 Assert.That(selectionMark.Confidence, Is.LessThanOrEqualTo(1.0).Within(0.01));
             }
+        }
+
+        protected enum ContainerType
+        {
+            Singleforms,
+            MultipageFiles,
+            SelectionMarks
         }
     }
 }

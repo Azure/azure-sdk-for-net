@@ -6,33 +6,68 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Object level immutability properties of the container. </summary>
     public partial class ImmutableStorageWithVersioning
     {
-        /// <summary> Initializes a new instance of ImmutableStorageWithVersioning. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ImmutableStorageWithVersioning"/>. </summary>
         public ImmutableStorageWithVersioning()
         {
         }
 
-        /// <summary> Initializes a new instance of ImmutableStorageWithVersioning. </summary>
-        /// <param name="enabled"> This is an immutable property, when set to true it enables object level immutability at the container level. </param>
+        /// <summary> Initializes a new instance of <see cref="ImmutableStorageWithVersioning"/>. </summary>
+        /// <param name="isEnabled"> This is an immutable property, when set to true it enables object level immutability at the container level. </param>
         /// <param name="timeStamp"> Returns the date and time the object level immutability was enabled. </param>
         /// <param name="migrationState"> This property denotes the container level immutability to object level immutability migration state. </param>
-        internal ImmutableStorageWithVersioning(bool? enabled, DateTimeOffset? timeStamp, MigrationState? migrationState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImmutableStorageWithVersioning(bool? isEnabled, DateTimeOffset? timeStamp, ImmutableStorageWithVersioningMigrationState? migrationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             TimeStamp = timeStamp;
             MigrationState = migrationState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This is an immutable property, when set to true it enables object level immutability at the container level. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> Returns the date and time the object level immutability was enabled. </summary>
         public DateTimeOffset? TimeStamp { get; }
         /// <summary> This property denotes the container level immutability to object level immutability migration state. </summary>
-        public MigrationState? MigrationState { get; }
+        public ImmutableStorageWithVersioningMigrationState? MigrationState { get; }
     }
 }

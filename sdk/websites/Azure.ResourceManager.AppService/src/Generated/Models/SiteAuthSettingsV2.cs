@@ -5,37 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Configuration settings for the Azure App Service Authentication / Authorization V2 feature. </summary>
-    public partial class SiteAuthSettingsV2 : ProxyOnlyResource
+    public partial class SiteAuthSettingsV2 : ResourceData
     {
-        /// <summary> Initializes a new instance of SiteAuthSettingsV2. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteAuthSettingsV2"/>. </summary>
         public SiteAuthSettingsV2()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteAuthSettingsV2. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteAuthSettingsV2"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="platform"> The configuration settings of the platform of App Service Authentication/Authorization. </param>
         /// <param name="globalValidation"> The configuration settings that determines the validation flow of users using App Service Authentication/Authorization. </param>
         /// <param name="identityProviders"> The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization. </param>
         /// <param name="login"> The configuration settings of the login flow of users using App Service Authentication/Authorization. </param>
         /// <param name="httpSettings"> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </param>
-        internal SiteAuthSettingsV2(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AuthPlatform platform, GlobalValidation globalValidation, IdentityProviders identityProviders, LoginInformation login, HttpSettings httpSettings) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteAuthSettingsV2(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AuthPlatform platform, GlobalValidation globalValidation, AppServiceIdentityProviders identityProviders, WebAppLoginInfo login, AppServiceHttpSettings httpSettings, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Platform = platform;
             GlobalValidation = globalValidation;
             IdentityProviders = identityProviders;
             Login = login;
             HttpSettings = httpSettings;
+            Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The configuration settings of the platform of App Service Authentication/Authorization. </summary>
@@ -43,10 +80,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> The configuration settings that determines the validation flow of users using App Service Authentication/Authorization. </summary>
         public GlobalValidation GlobalValidation { get; set; }
         /// <summary> The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization. </summary>
-        public IdentityProviders IdentityProviders { get; set; }
+        public AppServiceIdentityProviders IdentityProviders { get; set; }
         /// <summary> The configuration settings of the login flow of users using App Service Authentication/Authorization. </summary>
-        public LoginInformation Login { get; set; }
+        public WebAppLoginInfo Login { get; set; }
         /// <summary> The configuration settings of the HTTP requests for authentication and authorization requests made against App Service Authentication/Authorization. </summary>
-        public HttpSettings HttpSettings { get; set; }
+        public AppServiceHttpSettings HttpSettings { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

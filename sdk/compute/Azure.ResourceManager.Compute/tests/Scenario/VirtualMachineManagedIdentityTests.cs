@@ -13,10 +13,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [ClientTestFixture(true, "2021-04-01", "2020-06-01", "2022-11-01", "2023-07-01", "2023-09-01")]
     public class VirtualMachineManagedIdentityTests : VirtualMachineTestBase
     {
-        public VirtualMachineManagedIdentityTests(bool async)
-            : base(async) //, RecordedTestMode.Record)
+        public VirtualMachineManagedIdentityTests(bool async, string apiVersion)
+            : base(async, VirtualMachineResource.ResourceType, apiVersion)//, RecordedTestMode.Record)
         {
         }
 
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.AreEqual(vmName, virtualMachine.Data.Name);
             Assert.Null(virtualMachine.Data.Identity);
 
-            var updateOptions = new PatchableVirtualMachineData()
+            var updateOptions = new VirtualMachinePatch()
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
-            var updateOptions = new PatchableVirtualMachineData()
+            var updateOptions = new VirtualMachinePatch()
             {
                 Identity = identity
             };
@@ -156,7 +157,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned);
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
-            var updateOptions = new PatchableVirtualMachineData()
+            var updateOptions = new VirtualMachinePatch()
             {
                 Identity = identity
             };
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.NotNull(virtualMachine.Data.Identity.TenantId);
 
             var identity = new ManagedServiceIdentity(ManagedServiceIdentityType.None);
-            var updateOptions = new PatchableVirtualMachineData()
+            var updateOptions = new VirtualMachinePatch()
             {
                 Identity = identity
             };
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
-            var updateOptions = new PatchableVirtualMachineData()
+            var updateOptions = new VirtualMachinePatch()
             {
                 Identity = identity
             };
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned);
             var userAssignedIdentity = await CreateUserAssignedIdentityAsync();
             identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, new UserAssignedIdentity());
-            var updateOptions = new PatchableVirtualMachineData()
+            var updateOptions = new VirtualMachinePatch()
             {
                 Identity = identity
             };
@@ -279,7 +280,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.NotNull(virtualMachine.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId);
 
             var identity = new ManagedServiceIdentity(ManagedServiceIdentityType.None);
-            var updateOptions = new PatchableVirtualMachineData()
+            var updateOptions = new VirtualMachinePatch()
             {
                 Identity = identity
             };
@@ -307,7 +308,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.Null(virtualMachine.Data.Identity.PrincipalId);
             Assert.NotNull(virtualMachine.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId);
 
-            var updateOptions = new PatchableVirtualMachineData()
+            var updateOptions = new VirtualMachinePatch()
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
@@ -339,7 +340,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.NotNull(virtualMachine.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId);
 
             var identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssignedUserAssigned);
-            var updateOptions = new PatchableVirtualMachineData()
+            var updateOptions = new VirtualMachinePatch()
             {
                 Identity = identity
             };
@@ -374,7 +375,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var identity2 = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
             var userAssignedIdentity2 = await CreateUserAssignedIdentityAsync();
             identity2.UserAssignedIdentities.Add(userAssignedIdentity2.Id, new UserAssignedIdentity());
-            var updateOptions = new PatchableVirtualMachineData()
+            var updateOptions = new VirtualMachinePatch()
             {
                 Identity = identity2
             };
@@ -410,7 +411,7 @@ namespace Azure.ResourceManager.Compute.Tests
             // With JSON Merge Patch, we only need to put the identity to add in the dictionary for update operation.
             var identity = new ManagedServiceIdentity(ManagedServiceIdentityType.None);
             identity.UserAssignedIdentities.Add(userAssignedIdentity.Id, null);
-            var updateOptions = new PatchableVirtualMachineData()
+            var updateOptions = new VirtualMachinePatch()
             {
                 Identity = identity
             };
@@ -444,7 +445,7 @@ namespace Azure.ResourceManager.Compute.Tests
             // With JSON Merge Patch, we can use null to delete an identity from the dictionary.
             var identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned);
             identity.UserAssignedIdentities.Add(userAssignedIdentity1.Id, null);
-            var updateOptions = new PatchableVirtualMachineData()
+            var updateOptions = new VirtualMachinePatch()
             {
                 Identity = identity
             };
@@ -477,7 +478,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.NotNull(virtualMachine.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId);
 
             var identity = new ManagedServiceIdentity(ManagedServiceIdentityType.None);
-            var updateOptions = new PatchableVirtualMachineData()
+            var updateOptions = new VirtualMachinePatch()
             {
                 Identity = identity
             };
@@ -505,7 +506,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.NotNull(virtualMachine.Data.Identity.PrincipalId);
             Assert.NotNull(virtualMachine.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId);
 
-            var updateOptions = new PatchableVirtualMachineData()
+            var updateOptions = new VirtualMachinePatch()
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
@@ -536,7 +537,7 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.NotNull(virtualMachine.Data.Identity.PrincipalId);
             Assert.NotNull(virtualMachine.Data.Identity.UserAssignedIdentities[userAssignedIdentity.Id].PrincipalId);
 
-            var updateOptions = new PatchableVirtualMachineData()
+            var updateOptions = new VirtualMachinePatch()
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
             };

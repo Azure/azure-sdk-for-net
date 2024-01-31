@@ -6,21 +6,19 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
     /// <summary> The storage account key regenerate parameters. </summary>
     internal partial class StorageAccountRegenerteKeyParameters
     {
-        /// <summary> Initializes a new instance of StorageAccountRegenerteKeyParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountRegenerteKeyParameters"/>. </summary>
         /// <param name="keyName"> The storage account key name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
         public StorageAccountRegenerteKeyParameters(string keyName)
         {
-            if (keyName == null)
-            {
-                throw new ArgumentNullException(nameof(keyName));
-            }
+            Argument.AssertNotNull(keyName, nameof(keyName));
 
             KeyName = keyName;
         }

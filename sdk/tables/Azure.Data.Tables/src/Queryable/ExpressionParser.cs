@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Azure.Data.Tables.Queryable
 {
-    internal class ExpressionParser : LinqExpressionVisitor
+    internal class ExpressionParser : ExpressionVisitor
     {
         /// <summary>
         /// Gets or sets the filter expression to use in the table query.
@@ -18,10 +18,10 @@ namespace Azure.Data.Tables.Queryable
             Visit(e);
         }
 
-        internal override Expression VisitLambda(LambdaExpression lambda)
+        protected override Expression VisitLambda<T>(Expression<T> node)
         {
-            FilterString = ExpressionWriter.ExpressionToString(lambda.Body);
-            return lambda;
+            FilterString = ExpressionWriter.ExpressionToString(node.Body);
+            return node;
         }
     }
 }

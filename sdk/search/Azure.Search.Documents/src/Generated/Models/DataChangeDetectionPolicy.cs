@@ -7,18 +7,21 @@
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Base type for data change detection policies. </summary>
+    /// <summary>
+    /// Base type for data change detection policies.
+    /// Please note <see cref="DataChangeDetectionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="HighWaterMarkChangeDetectionPolicy"/> and <see cref="SqlIntegratedChangeTrackingPolicy"/>.
+    /// </summary>
     public partial class DataChangeDetectionPolicy
     {
-
-        /// <summary> Initializes a new instance of DataChangeDetectionPolicy. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the data change detection policy. </param>
+        /// <summary> Initializes a new instance of <see cref="DataChangeDetectionPolicy"/>. </summary>
+        /// <param name="oDataType"> A URI fragment specifying the type of data change detection policy. </param>
         internal DataChangeDetectionPolicy(string oDataType)
         {
             ODataType = oDataType;
         }
 
-        /// <summary> Identifies the concrete type of the data change detection policy. </summary>
+        /// <summary> A URI fragment specifying the type of data change detection policy. </summary>
         internal string ODataType { get; set; }
     }
 }

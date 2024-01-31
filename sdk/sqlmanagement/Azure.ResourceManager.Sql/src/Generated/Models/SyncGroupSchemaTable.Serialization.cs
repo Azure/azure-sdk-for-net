@@ -5,20 +5,30 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SyncGroupSchemaTable : IUtf8JsonSerializable
+    public partial class SyncGroupSchemaTable : IUtf8JsonSerializable, IJsonModel<SyncGroupSchemaTable>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SyncGroupSchemaTable>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SyncGroupSchemaTable>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SyncGroupSchemaTable>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SyncGroupSchemaTable)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Columns))
             {
-                writer.WritePropertyName("columns");
+                writer.WritePropertyName("columns"u8);
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
@@ -28,23 +38,57 @@ namespace Azure.ResourceManager.Sql.Models
             }
             if (Optional.IsDefined(QuotedName))
             {
-                writer.WritePropertyName("quotedName");
+                writer.WritePropertyName("quotedName"u8);
                 writer.WriteStringValue(QuotedName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SyncGroupSchemaTable DeserializeSyncGroupSchemaTable(JsonElement element)
+        SyncGroupSchemaTable IJsonModel<SyncGroupSchemaTable>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SyncGroupSchemaTable>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SyncGroupSchemaTable)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSyncGroupSchemaTable(document.RootElement, options);
+        }
+
+        internal static SyncGroupSchemaTable DeserializeSyncGroupSchemaTable(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SyncGroupSchemaTableColumn>> columns = default;
             Optional<string> quotedName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("columns"))
+                if (property.NameEquals("columns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SyncGroupSchemaTableColumn> array = new List<SyncGroupSchemaTableColumn>();
@@ -55,13 +99,49 @@ namespace Azure.ResourceManager.Sql.Models
                     columns = array;
                     continue;
                 }
-                if (property.NameEquals("quotedName"))
+                if (property.NameEquals("quotedName"u8))
                 {
                     quotedName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SyncGroupSchemaTable(Optional.ToList(columns), quotedName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SyncGroupSchemaTable(Optional.ToList(columns), quotedName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SyncGroupSchemaTable>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SyncGroupSchemaTable>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SyncGroupSchemaTable)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SyncGroupSchemaTable IPersistableModel<SyncGroupSchemaTable>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SyncGroupSchemaTable>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSyncGroupSchemaTable(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SyncGroupSchemaTable)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SyncGroupSchemaTable>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

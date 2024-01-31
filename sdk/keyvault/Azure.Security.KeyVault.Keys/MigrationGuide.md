@@ -1,6 +1,6 @@
 # Migrate from Microsoft.Azure.KeyVault to Azure.Security.KeyVault.Keys
 
-This guide is intended to assist in the migration to version 4 of the Key Vault client library [`Azure.Security.KeyVault.Keys`](https://www.nuget.org/packages/Azure.Security.KeyVault.Keys) from version 3 of [`Microsoft.Azure.KeyVault`](https://www.nuget.org/packages/Microsoft.Azure.KeyVault). It will focus on side-by-side comparisons for similar operations between the two packages.
+This guide is intended to assist in the migration to version 4 of the Key Vault client library [`Azure.Security.KeyVault.Keys`](https://www.nuget.org/packages/Azure.Security.KeyVault.Keys) from [deprecated] version 3 of [`Microsoft.Azure.KeyVault`](https://www.nuget.org/packages/Microsoft.Azure.KeyVault). It will focus on side-by-side comparisons for similar operations between the two packages.
 
 Familiarity with the `Microsoft.Azure.KeyVault` library is assumed. For those new to the Key Vault client library for .NET, please refer to the [`Azure.Security.KeyVault.Keys` README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/README.md) and [`Azure.Security.KeyVault.Keys` samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Keys/samples) for the `Azure.Security.KeyVault.Keys` library rather than this guide.
 
@@ -17,8 +17,11 @@ Familiarity with the `Microsoft.Azure.KeyVault` library is assumed. For those ne
   - [Encrypting data](#encrypting-data)
   - [Wrapping keys](#wrapping-keys)
 - [Additional samples](#additional-samples)
+- [Support](#support)
 
 ## Migration benefits
+
+> Note: `Microsoft.Azure.KeyVault` has been [deprecated]. Please upgrade to `Azure.Security.KeyVault.Keys` for continued support.
 
 A natural question to ask when considering whether or not to adopt a new version or library is what the benefits of doing so would be. As Azure has matured and been embraced by a more diverse group of developers, we have been focused on learning the patterns and practices to best support developer productivity and to understand the gaps that the .NET client libraries have.
 
@@ -341,5 +344,13 @@ Synchronous methods are also available on `CryptographyClient`, though we recomm
 
 ## Additional samples
 
-- [Key Vault keys samples for .NET](https://docs.microsoft.com/samples/azure/azure-sdk-for-net/azuresecuritykeyvaultkeys-samples/)
-- [All Key Vault samples for .NET](https://docs.microsoft.com/samples/browse/?products=azure-key-vault&languages=csharp)
+- [Key Vault keys samples for .NET](https://learn.microsoft.com/samples/azure/azure-sdk-for-net/azuresecuritykeyvaultkeys-samples/)
+- [All Key Vault samples for .NET](https://learn.microsoft.com/samples/browse/?products=azure-key-vault&languages=csharp)
+
+## Support
+
+If you have migrated your code base and are experiencing errors, see our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Keys/TROUBLESHOOTING.md).
+For additional support, please search our [existing issues](https://github.com/Azure/azure-sdk-for-net/issues) or [open a new issue](https://github.com/Azure/azure-sdk-for-net/issues/new/choose).
+You may also find existing answers on community sites like [Stack Overflow](https://stackoverflow.com/questions/tagged/azure-keyvault+.net).
+
+[deprecated]: https://aka.ms/azsdk/deprecated

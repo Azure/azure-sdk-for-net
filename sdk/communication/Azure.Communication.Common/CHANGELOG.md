@@ -1,14 +1,34 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0 (Unreleased)
 
 ### Features Added
-
-### Breaking Changes
+- Added support for a new communication identifier `MicrosoftTeamsAppIdentifier`.
+- Introduction of `MicrosoftTeamsAppIdentifier` is a breaking change. It will impact any code that previously depended on the use of UnknownIdentifier with rawIDs starting with `28:orgid:`, `28:dod:`, or `28:gcch:`.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.0.0-beta.1 (2023-03-29)
+
+### Features Added
+- Added support for a new communication identifier `MicrosoftBotIdentifier`.
+- 
+### Breaking Changes
+- Introduction of `MicrosoftBotIdentifier` is a breaking change. It will affect code that relied on using `UnknownIdentifier` with a rawID starting with `28:`.
+
+## 1.2.1 (2022-11-01)
+
+### Bugs Fixed
+- Fixed the logic of `PhoneNumberIdentifier` to always maintain the original phone number string whether it included the leading + sign or not.
+
+## 1.2.0 (2022-09-01)
+
+### Features Added
+
+- Added `string RawID { get; }` and `static CommunicationIdentifier FromRawId(string rawId)` to `CommunicationIdentifier` to translate between a `CommunicationIdentifier` and its underlying canonical rawId representation. Developers can now use the rawId as an encoded format for identifiers to store in their databases or as stable keys in general.
+- Always include `rawId` when serializing identifiers to wire format.
 
 ## 1.1.0 (2022-02-23)
 - Optimization added: When the proactive refreshing is enabled and the token refresher fails to provide a token that's not about to expire soon, the subsequent refresh attempts will be scheduled for when the token reaches half of its remaining lifetime until a token with long enough validity (>10 minutes) is obtained.

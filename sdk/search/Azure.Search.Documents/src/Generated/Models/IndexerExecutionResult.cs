@@ -8,13 +8,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents the result of an individual indexer execution. </summary>
     public partial class IndexerExecutionResult
     {
-        /// <summary> Initializes a new instance of IndexerExecutionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexerExecutionResult"/>. </summary>
         /// <param name="status"> The outcome of this indexer execution. </param>
         /// <param name="errors"> The item-level indexing errors. </param>
         /// <param name="warnings"> The item-level indexing warnings. </param>
@@ -23,14 +24,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/> or <paramref name="warnings"/> is null. </exception>
         internal IndexerExecutionResult(IndexerExecutionStatus status, IEnumerable<SearchIndexerError> errors, IEnumerable<SearchIndexerWarning> warnings, int itemCount, int failedItemCount)
         {
-            if (errors == null)
-            {
-                throw new ArgumentNullException(nameof(errors));
-            }
-            if (warnings == null)
-            {
-                throw new ArgumentNullException(nameof(warnings));
-            }
+            Argument.AssertNotNull(errors, nameof(errors));
+            Argument.AssertNotNull(warnings, nameof(warnings));
 
             Status = status;
             Errors = errors.ToList();
@@ -39,10 +34,10 @@ namespace Azure.Search.Documents.Indexes.Models
             FailedItemCount = failedItemCount;
         }
 
-        /// <summary> Initializes a new instance of IndexerExecutionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexerExecutionResult"/>. </summary>
         /// <param name="status"> The outcome of this indexer execution. </param>
         /// <param name="statusDetail"> The outcome of this indexer execution. </param>
-        /// <param name="currentState"> All of the state that defines and dictates the indexer&apos;s current execution. </param>
+        /// <param name="currentState"> All of the state that defines and dictates the indexer's current execution. </param>
         /// <param name="errorMessage"> The error message indicating the top-level error, if any. </param>
         /// <param name="startTime"> The start time of this indexer execution. </param>
         /// <param name="endTime"> The end time of this indexer execution, if the execution has already completed. </param>
@@ -72,7 +67,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public IndexerExecutionStatus Status { get; }
         /// <summary> The outcome of this indexer execution. </summary>
         public IndexerExecutionStatusDetail? StatusDetail { get; }
-        /// <summary> All of the state that defines and dictates the indexer&apos;s current execution. </summary>
+        /// <summary> All of the state that defines and dictates the indexer's current execution. </summary>
         public IndexerState CurrentState { get; }
         /// <summary> The error message indicating the top-level error, if any. </summary>
         public string ErrorMessage { get; }

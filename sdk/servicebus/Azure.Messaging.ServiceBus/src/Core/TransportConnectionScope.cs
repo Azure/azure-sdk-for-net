@@ -16,12 +16,6 @@ namespace Azure.Messaging.ServiceBus.Core
         public abstract bool IsDisposed { get; protected set; }
 
         /// <summary>
-        ///   The recommended timeout to associate with the session.
-        /// </summary>
-        ///
-        public TimeSpan SessionTimeout { get; } = TimeSpan.FromSeconds(30);
-
-        /// <summary>
         /// Disposes of the connection scope.
         /// </summary>
         public abstract void Dispose();

@@ -21,8 +21,10 @@ namespace Azure.AI.TextAnalytics
         }
 
         internal AnalyzeSentimentOptions(TextAnalyticsRequestOptions options)
-            : base(options.IncludeStatistics, options.ModelVersion)
         {
+            DisableServiceLogs = options.DisableServiceLogs;
+            IncludeStatistics = options.IncludeStatistics;
+            ModelVersion = options.ModelVersion;
         }
 
         /// <summary>
@@ -32,8 +34,15 @@ namespace Azure.AI.TextAnalytics
         /// will contain the result of this analysis.
         /// </summary>
         /// <remarks>
-        /// This property only has value for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
         /// </remarks>
         public bool? IncludeOpinionMining { get; set; }
+
+        /// <inheritdoc/>
+        internal override void CheckSupported(TextAnalyticsClientOptions.ServiceVersion current)
+        {
+            base.CheckSupported(current);
+            Validation.SupportsProperty(this, IncludeOpinionMining, nameof(IncludeOpinionMining), TextAnalyticsClientOptions.ServiceVersion.V3_1, current);
+        }
     }
 }

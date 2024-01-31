@@ -6,38 +6,30 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> An enumeration of blobs. </summary>
     internal partial class ListBlobsFlatSegmentResponse
     {
-        /// <summary> Initializes a new instance of ListBlobsFlatSegmentResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListBlobsFlatSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="containerName"></param>
         /// <param name="segment"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="containerName"/> or <paramref name="segment"/> is null. </exception>
         internal ListBlobsFlatSegmentResponse(string serviceEndpoint, string containerName, BlobFlatListSegment segment)
         {
-            if (serviceEndpoint == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpoint));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
-            if (segment == null)
-            {
-                throw new ArgumentNullException(nameof(segment));
-            }
+            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
+            Argument.AssertNotNull(containerName, nameof(containerName));
+            Argument.AssertNotNull(segment, nameof(segment));
 
             ServiceEndpoint = serviceEndpoint;
             ContainerName = containerName;
             Segment = segment;
         }
 
-        /// <summary> Initializes a new instance of ListBlobsFlatSegmentResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListBlobsFlatSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="containerName"></param>
         /// <param name="prefix"></param>

@@ -42,18 +42,24 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// backup policy.</param>
         /// <param name="retentionPolicy">Retention policy with the details on
         /// backup copy retention ranges.</param>
+        /// <param name="tieringPolicy">Tiering policy to automatically move
+        /// RPs to another tier
+        /// Key is Target Tier, defined in RecoveryPointTierType enum.
+        /// Tiering policy specifies the criteria to move RP to the target
+        /// tier.</param>
         /// <param name="instantRpRetentionRangeInDays">Instant RP retention
         /// policy range in days</param>
         /// <param name="timeZone">TimeZone optional input as string. For
         /// example: TimeZone = "Pacific Standard Time".</param>
         /// <param name="policyType">Possible values include: 'Invalid', 'V1',
         /// 'V2'</param>
-        public AzureIaaSVMProtectionPolicy(int? protectedItemsCount = default(int?), IList<string> resourceGuardOperationRequests = default(IList<string>), InstantRPAdditionalDetails instantRPDetails = default(InstantRPAdditionalDetails), SchedulePolicy schedulePolicy = default(SchedulePolicy), RetentionPolicy retentionPolicy = default(RetentionPolicy), int? instantRpRetentionRangeInDays = default(int?), string timeZone = default(string), string policyType = default(string))
+        public AzureIaaSVMProtectionPolicy(int? protectedItemsCount = default(int?), IList<string> resourceGuardOperationRequests = default(IList<string>), InstantRPAdditionalDetails instantRPDetails = default(InstantRPAdditionalDetails), SchedulePolicy schedulePolicy = default(SchedulePolicy), RetentionPolicy retentionPolicy = default(RetentionPolicy), IDictionary<string, TieringPolicy> tieringPolicy = default(IDictionary<string, TieringPolicy>), int? instantRpRetentionRangeInDays = default(int?), string timeZone = default(string), string policyType = default(string))
             : base(protectedItemsCount, resourceGuardOperationRequests)
         {
             InstantRPDetails = instantRPDetails;
             SchedulePolicy = schedulePolicy;
             RetentionPolicy = retentionPolicy;
+            TieringPolicy = tieringPolicy;
             InstantRpRetentionRangeInDays = instantRpRetentionRangeInDays;
             TimeZone = timeZone;
             PolicyType = policyType;
@@ -82,6 +88,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         [JsonProperty(PropertyName = "retentionPolicy")]
         public RetentionPolicy RetentionPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets tiering policy to automatically move RPs to another
+        /// tier
+        /// Key is Target Tier, defined in RecoveryPointTierType enum.
+        /// Tiering policy specifies the criteria to move RP to the target
+        /// tier.
+        /// </summary>
+        [JsonProperty(PropertyName = "tieringPolicy")]
+        public IDictionary<string, TieringPolicy> TieringPolicy { get; set; }
 
         /// <summary>
         /// Gets or sets instant RP retention policy range in days

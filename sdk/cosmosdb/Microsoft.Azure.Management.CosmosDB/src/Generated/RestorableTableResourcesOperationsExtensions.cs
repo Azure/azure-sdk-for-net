@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='restoreTimestampInUtc'>
             /// The timestamp when the restorable resources existed.
             /// </param>
-            public static IEnumerable<string> List(this IRestorableTableResourcesOperations operations, string location, string instanceId, string restoreLocation = default(string), string restoreTimestampInUtc = default(string))
+            public static IEnumerable<RestorableTableResourcesGetResult> List(this IRestorableTableResourcesOperations operations, string location, string instanceId, string restoreLocation = default(string), string restoreTimestampInUtc = default(string))
             {
                 return operations.ListAsync(location, instanceId, restoreLocation, restoreTimestampInUtc).GetAwaiter().GetResult();
             }
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.CosmosDB
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<string>> ListAsync(this IRestorableTableResourcesOperations operations, string location, string instanceId, string restoreLocation = default(string), string restoreTimestampInUtc = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<RestorableTableResourcesGetResult>> ListAsync(this IRestorableTableResourcesOperations operations, string location, string instanceId, string restoreLocation = default(string), string restoreTimestampInUtc = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(location, instanceId, restoreLocation, restoreTimestampInUtc, null, cancellationToken).ConfigureAwait(false))
                 {

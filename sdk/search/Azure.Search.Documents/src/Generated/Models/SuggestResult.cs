@@ -14,21 +14,18 @@ namespace Azure.Search.Documents.Models
     /// <summary> A result containing a document found by a suggestion query, plus associated metadata. </summary>
     internal partial class SuggestResult
     {
-        /// <summary> Initializes a new instance of SuggestResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuggestResult"/>. </summary>
         /// <param name="text"> The text of the suggestion result. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         internal SuggestResult(string text)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of SuggestResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SuggestResult"/>. </summary>
         /// <param name="text"> The text of the suggestion result. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal SuggestResult(string text, IReadOnlyDictionary<string, object> additionalProperties)

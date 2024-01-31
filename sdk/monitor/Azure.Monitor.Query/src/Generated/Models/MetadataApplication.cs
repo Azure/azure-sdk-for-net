@@ -6,13 +6,14 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> Application Insights apps that were part of the metadata request and that the user has access to. </summary>
     internal partial class MetadataApplication
     {
-        /// <summary> Initializes a new instance of MetadataApplication. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetadataApplication"/>. </summary>
         /// <param name="id"> The ID of the Application Insights app. </param>
         /// <param name="resourceId"> The ARM resource ID of the Application Insights app. </param>
         /// <param name="name"> The name of the Application Insights app. </param>
@@ -20,27 +21,30 @@ namespace Azure.Monitor.Query.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="resourceId"/>, <paramref name="name"/> or <paramref name="region"/> is null. </exception>
         internal MetadataApplication(string id, string resourceId, string name, string region)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (region == null)
-            {
-                throw new ArgumentNullException(nameof(region));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(region, nameof(region));
 
             Id = id;
             ResourceId = resourceId;
             Name = name;
             Region = region;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetadataApplication"/>. </summary>
+        /// <param name="id"> The ID of the Application Insights app. </param>
+        /// <param name="resourceId"> The ARM resource ID of the Application Insights app. </param>
+        /// <param name="name"> The name of the Application Insights app. </param>
+        /// <param name="region"> The Azure region of the Application Insights app. </param>
+        /// <param name="related"> The related metadata items for the Application Insights app. </param>
+        internal MetadataApplication(string id, string resourceId, string name, string region, MetadataApplicationRelated related)
+        {
+            Id = id;
+            ResourceId = resourceId;
+            Name = name;
+            Region = region;
+            Related = related;
         }
 
         /// <summary> The ID of the Application Insights app. </summary>

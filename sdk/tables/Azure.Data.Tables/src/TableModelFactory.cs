@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Data.Tables.Models
 {
-    [CodeGenModel("AzureDataTablesModelFactory")]
-    public partial class TableModelFactory
+    [CodeGenModel("DataTablesModelFactory")]
+    public static partial class TableModelFactory
     {
         /// <summary> Initializes new instance of TableItem class. </summary>
         /// <param name="name"> The name of the table. </param>

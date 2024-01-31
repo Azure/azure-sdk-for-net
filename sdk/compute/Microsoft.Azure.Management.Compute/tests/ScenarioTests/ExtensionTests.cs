@@ -16,23 +16,29 @@ namespace Compute.Tests
 {
     public class ExtensionTests : VMTestBase
     {
-        VirtualMachineExtension GetTestVMExtension()
+        VirtualMachineExtension GetTestVMExtension(
+            string name = "vmext01",
+            string publisher = "Microsoft.Compute",
+            string type = "VMAccessAgent",
+            string version = "2.0",
+            bool autoUpdateMinorVersion = false,
+            bool? enableAutomaticUpgrade = false)
         {
             var vmExtension = new VirtualMachineExtension
             {
                 Location = ComputeManagementTestUtilities.DefaultLocation,
                 Tags = new Dictionary<string, string>() { { "extensionTag1", "1" }, { "extensionTag2", "2" } },
-                Publisher = "Microsoft.Compute",
-                VirtualMachineExtensionType = "VMAccessAgent",
-                TypeHandlerVersion = "2.0",
-                AutoUpgradeMinorVersion = false,
+                Publisher = publisher,
+                VirtualMachineExtensionType = type,
+                TypeHandlerVersion = version,
+                AutoUpgradeMinorVersion = autoUpdateMinorVersion,
                 ForceUpdateTag = "RerunExtension",
                 Settings = "{}",
                 ProtectedSettings = "{}",
-                EnableAutomaticUpgrade = false,
+                EnableAutomaticUpgrade = enableAutomaticUpgrade
             };
-            typeof(Resource).GetRuntimeProperty("Name").SetValue(vmExtension, "vmext01");
-            typeof(Resource).GetRuntimeProperty("Type").SetValue(vmExtension, "Microsoft.Compute/virtualMachines/extensions");
+            typeof(ResourceWithOptionalLocation).GetRuntimeProperty("Name").SetValue(vmExtension, name);
+            typeof(ResourceWithOptionalLocation).GetRuntimeProperty("Type").SetValue(vmExtension, "Microsoft.Compute/virtualMachines/extensions");
 
             return vmExtension;
         }
@@ -119,7 +125,7 @@ namespace Compute.Tests
 
                     // Add another extension to the VM with protectedSettingsFromKeyVault
                     var vmExtension2 = GetTestVMExtension();
-                    AddProtectedSettingsFromKeyVaultToExtension(vmExtension2, rgName);
+                    AddProtectedSettingsFromKeyVaultToExtension(vmExtension2);
 
                     //For now we just validate that the protectedSettingsFromKeyVault has been accepted and persisted. Since we didn't create a KV, this failure is expected
                     try
@@ -138,6 +144,57 @@ namespace Compute.Tests
             }
         }
 
+        [Fact]
+        public void TestVMExtensionSequencing()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                EnsureClientsInitialized(context);
+
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+                // Create resource group
+                var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string asName = ComputeManagementTestUtilities.GenerateName("as");
+                VirtualMachine inputVM;
+                try
+                {
+                    // Create Storage Account, so that both the VMs can share it
+                    var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                    var vm = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM);
+
+                    // Delete an extension that does not exist in the VM. A http status code of NoContent should be returned which translates to operation success.
+                    m_CrpClient.VirtualMachineExtensions.Delete(rgName, vm.Name, "VMExtensionDoesNotExist");
+
+                    // Add an extension to the VM
+                    var vmExtension = GetTestVMExtension();
+                    var response = m_CrpClient.VirtualMachineExtensions.CreateOrUpdate(rgName, vm.Name, vmExtension.Name, vmExtension);
+                    ValidateVMExtension(vmExtension, response);
+
+                    // Add an another extension with provisionAfterExtensions to the VM
+                    var vmExtensionAfter = GetTestVMExtension(name: "AzureMonitor", publisher: "Microsoft.Azure.Monitor", type: "AzureMonitorWindowsAgent", version: "1.12", autoUpdateMinorVersion:true);
+                    vmExtensionAfter.ProvisionAfterExtensions = new List<string> { vmExtension.Name };
+                    response = m_CrpClient.VirtualMachineExtensions.CreateOrUpdate(rgName, vm.Name, vmExtensionAfter.Name, vmExtensionAfter);
+                    ValidateVMExtension(vmExtensionAfter, response);
+
+                    // Perform a Get operation on the extension with provisionAfterExtensions
+                    response = m_CrpClient.VirtualMachineExtensions.Get(rgName, vm.Name, vmExtensionAfter.Name);
+                    ValidateVMExtension(vmExtensionAfter, response);
+
+                    // Clear the sequencing in ext3
+                    vmExtensionAfter.ProvisionAfterExtensions.Clear();
+                    var patchResponse = m_CrpClient.VirtualMachineExtensions.CreateOrUpdate(rgName, vm.Name, vmExtensionAfter.Name, vmExtensionAfter);
+                    ValidateVMExtension(vmExtensionAfter, patchResponse);
+                }
+                finally
+                {
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                }
+            }
+        }
+
+
         private void ValidateVMExtension(VirtualMachineExtension vmExtExpected, VirtualMachineExtension vmExtReturned)
         {
             Assert.NotNull(vmExtReturned);
@@ -152,6 +209,15 @@ namespace Compute.Tests
             Assert.True(vmExtExpected.Tags.SequenceEqual(vmExtReturned.Tags));
             Assert.True(vmExtExpected.EnableAutomaticUpgrade == vmExtReturned.EnableAutomaticUpgrade);
             Assert.True(vmExtExpected.SuppressFailures == vmExtReturned.SuppressFailures);
+
+            if (vmExtExpected.ProvisionAfterExtensions != null)
+            {
+                Assert.True(vmExtExpected.ProvisionAfterExtensions.Count == vmExtReturned.ProvisionAfterExtensions.Count);
+                for (int i = 0; i < vmExtExpected.ProvisionAfterExtensions.Count; i++)
+                {
+                    Assert.True(vmExtExpected.ProvisionAfterExtensions[i] == vmExtReturned.ProvisionAfterExtensions[i]);
+                }
+            }
         }
 
         private void ValidateVMExtensionInstanceView(VirtualMachineExtensionInstanceView vmExtInstanceView)
@@ -163,14 +229,17 @@ namespace Compute.Tests
             Assert.NotNull(vmExtInstanceView.Statuses[0].Message);
         }
 
-        private void AddProtectedSettingsFromKeyVaultToExtension(VirtualMachineExtension vmExtension, string resourceGroupName)
+        private void AddProtectedSettingsFromKeyVaultToExtension(VirtualMachineExtension vmExtension)
         {
             vmExtension.ProtectedSettings = null;
-            string idValue = string.Format("subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.KeyVault/vaults/kvName", m_subId, resourceGroupName);
-            string sourceVaultId = string.Format("\"id\": \"{0}\"", idValue);
-            string sourceVault = "{ " + sourceVaultId + " }";
-            string secret = string.Format("\"secretUrl\": \"{0}\"", "https://kvName.vault.azure.net/secrets/secretName/79b88b3a6f5440ffb2e73e44a0db712e");
-            vmExtension.ProtectedSettingsFromKeyVault = new JRaw("{ " + string.Format("\"sourceVault\": {0},{1}", sourceVault, secret) + " }");
+            SubResource sourceVault = new SubResource();
+            sourceVault.Id = "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/RGforSDKtestResources/providers/Microsoft.KeyVault/vaults/keyVaultInSoutheastAsia";
+            string secret = "https://keyvaultinsoutheastasia.vault.azure.net/secrets/SecretForTest/2375df95e3da463c81c43c300f6506ab";
+            vmExtension.ProtectedSettingsFromKeyVault = new KeyVaultSecretReference()
+            {
+                SourceVault = sourceVault,
+                SecretUrl = secret
+            };
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -15,10 +14,14 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static RootCauseList DeserializeRootCauseList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<IncidentRootCause> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<IncidentRootCause> array = new List<IncidentRootCause>();
                     foreach (var item in property.Value.EnumerateArray())

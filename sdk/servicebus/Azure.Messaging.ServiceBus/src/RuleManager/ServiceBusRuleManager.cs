@@ -4,10 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Azure.Messaging.ServiceBus.Administration;
@@ -15,7 +19,8 @@ using Azure.Messaging.ServiceBus.Administration;
 namespace Azure.Messaging.ServiceBus
 {
     /// <summary>
-    /// Manages rules for subscriptions.
+    /// The <see cref="ServiceBusRuleManager"/> allows rules for a subscription to be managed. The rule manager requires only
+    /// Listen claims, whereas the <see cref="ServiceBusAdministrationClient"/> requires Manage claims.
     /// </summary>
     public class ServiceBusRuleManager : IAsyncDisposable
     {
@@ -24,6 +29,12 @@ namespace Azure.Messaging.ServiceBus
         /// Service Bus namespace that contains it.
         /// </summary>
         public virtual string SubscriptionPath { get; }
+
+        /// <summary>
+        /// The fully qualified Service Bus namespace that the rule manager is associated with. This is likely
+        /// to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
+        /// </summary>
+        public virtual string FullyQualifiedNamespace => _connection.FullyQualifiedNamespace;
 
         /// <summary>
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
@@ -61,6 +72,13 @@ namespace Azure.Messaging.ServiceBus
         internal readonly TransportRuleManager InnerRuleManager;
 
         /// <summary>
+        /// Responsible for creating entity scopes.
+        /// </summary>
+        private readonly MessagingClientDiagnostics _clientDiagnostics;
+
+        private const int MaxRulesPerRequest = 100;
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusRuleManager"/> class.
         /// </summary>
         ///
@@ -83,6 +101,12 @@ namespace Azure.Messaging.ServiceBus
                 subscriptionPath: SubscriptionPath,
                 retryPolicy: connection.RetryOptions.ToRetryPolicy(),
                 identifier: Identifier);
+            _clientDiagnostics = new MessagingClientDiagnostics(
+                DiagnosticProperty.DiagnosticNamespace,
+                DiagnosticProperty.ResourceProviderNamespace,
+                DiagnosticProperty.ServiceBusServiceContext,
+                FullyQualifiedNamespace,
+                SubscriptionPath);
         }
 
         /// <summary>
@@ -106,13 +130,49 @@ namespace Azure.Messaging.ServiceBus
         /// Multiple filters combine with each other using logical OR condition. i.e., If any filter succeeds, the message is passed on to the subscription.
         /// </remarks>
         ///
+        /// <exception cref="ServiceBusException">
+        ///   <list type="bullet">
+        ///     <item>
+        ///       <description>
+        ///         A rule with the same name exists under the subscription. The <see cref="ServiceBusException.Reason" /> will be set to
+        ///         <see cref="ServiceBusFailureReason.MessagingEntityAlreadyExists"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         The operation timed out. The <see cref="ServiceBusException.Reason" /> will be set to
+        ///         <see cref="ServiceBusFailureReason.ServiceTimeout"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         Either the specified size of the entity is not supported or the maximum allowable quota has been reached.
+        ///         You must specify one of the supported size values, delete existing entities, or increase your quota size.
+        ///         The failure reason will be set to <see cref="ServiceBusFailureReason.QuotaExceeded"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         The server is busy. You should wait before you retry the operation. The failure reason will be set to
+        ///         <see cref="ServiceBusFailureReason.ServiceBusy"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         An internal error or unexpected exception occurs. The failure reason will be set to
+        ///         <see cref="ServiceBusFailureReason.GeneralError"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///   </list>
+        /// </exception>
+        ///
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
-        public virtual async Task AddRuleAsync(
+        public virtual async Task CreateRuleAsync(
             string ruleName,
             RuleFilter filter,
             CancellationToken cancellationToken = default)
         {
-            await AddRuleAsync(new CreateRuleOptions(ruleName, filter), cancellationToken).ConfigureAwait(false);
+            await CreateRuleAsync(new CreateRuleOptions(ruleName, filter), cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -129,8 +189,44 @@ namespace Azure.Messaging.ServiceBus
         /// Multiple filters combine with each other using logical OR condition. i.e., If any filter succeeds, the message is passed on to the subscription.
         /// </remarks>
         ///
+        /// <exception cref="ServiceBusException">
+        ///   <list type="bullet">
+        ///     <item>
+        ///       <description>
+        ///         A rule with the same name exists under the subscription. The <see cref="ServiceBusException.Reason" /> will be set to
+        ///         <see cref="ServiceBusFailureReason.MessagingEntityAlreadyExists"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         The operation timed out. The <see cref="ServiceBusException.Reason" /> will be set to
+        ///         <see cref="ServiceBusFailureReason.ServiceTimeout"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         Either the specified size of the entity is not supported or the maximum allowable quota has been reached.
+        ///         You must specify one of the supported size values, delete existing entities, or increase your quota size.
+        ///         The failure reason will be set to <see cref="ServiceBusFailureReason.QuotaExceeded"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         The server is busy. You should wait before you retry the operation. The failure reason will be set to
+        ///         <see cref="ServiceBusFailureReason.ServiceBusy"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         An internal error or unexpected exception occurs. The failure reason will be set to
+        ///         <see cref="ServiceBusFailureReason.GeneralError"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///   </list>
+        /// </exception>
+        ///
         /// <returns>A task instance that represents the asynchronous add rule operation.</returns>
-        public virtual async Task AddRuleAsync(
+        public virtual async Task CreateRuleAsync(
             CreateRuleOptions options,
             CancellationToken cancellationToken = default)
         {
@@ -138,22 +234,27 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotNull(options, nameof(options));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             EntityNameFormatter.CheckValidRuleName(options.Name);
-            ServiceBusEventSource.Log.AddRuleStart(Identifier, options.Name);
+            ServiceBusEventSource.Log.CreateRuleStart(Identifier, options.Name);
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(
+                DiagnosticProperty.CreateRuleActivityName,
+                ActivityKind.Client);
+            scope.Start();
 
             try
             {
-                await InnerRuleManager.AddRuleAsync(
+                await InnerRuleManager.CreateRuleAsync(
                     new RuleProperties(options),
                     cancellationToken).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.AddRuleException(Identifier, exception.ToString());
+                ServiceBusEventSource.Log.CreateRuleException(Identifier, exception.ToString(), options.Name);
+                scope.Failed(exception);
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.AddRuleComplete(Identifier);
+            ServiceBusEventSource.Log.CreateRuleComplete(Identifier, options.Name);
         }
 
         /// <summary>
@@ -163,58 +264,113 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="ruleName">Name of the rule</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         ///
+        /// <exception cref="ServiceBusException">
+        ///   <list type="bullet">
+        ///     <item>
+        ///       <description>
+        ///         The specified entity could not be found. The <see cref="ServiceBusException.Reason" /> will be set to
+        ///         <see cref="ServiceBusFailureReason.MessagingEntityNotFound"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         The operation timed out. The <see cref="ServiceBusException.Reason" /> will be set to
+        ///         <see cref="ServiceBusFailureReason.ServiceTimeout"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         The server is busy. You should wait before you retry the operation. The failure reason will be set to
+        ///         <see cref="ServiceBusFailureReason.ServiceBusy"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///     <item>
+        ///       <description>
+        ///         An internal error or unexpected exception occurs. The failure reason will be set to
+        ///         <see cref="ServiceBusFailureReason.GeneralError"/> in this case.
+        ///       </description>
+        ///     </item>
+        ///   </list>
+        /// </exception>
+        ///
         /// <returns>A task instance that represents the asynchronous remove rule operation.</returns>
-        public virtual async Task RemoveRuleAsync(
+        public virtual async Task DeleteRuleAsync(
             string ruleName,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusRuleManager));
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.RemoveRuleStart(Identifier, ruleName);
+            ServiceBusEventSource.Log.DeleteRuleStart(Identifier, ruleName);
+
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(
+                DiagnosticProperty.DeleteRuleActivityName,
+                ActivityKind.Client);
+            scope.Start();
 
             try
             {
-                await InnerRuleManager.RemoveRuleAsync(
+                await InnerRuleManager.DeleteRuleAsync(
                     ruleName,
                     cancellationToken).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
-                ServiceBusEventSource.Log.RemoveRuleException(Identifier, exception.ToString());
+                ServiceBusEventSource.Log.DeleteRuleException(Identifier, exception.ToString(), ruleName);
+                scope.Failed(exception);
                 throw;
             }
 
-            ServiceBusEventSource.Log.RemoveRuleComplete(Identifier);
+            ServiceBusEventSource.Log.DeleteRuleComplete(Identifier, ruleName);
         }
 
         /// <summary>
-        /// Get all rules associated with the subscription.
+        /// Iterates over the rules associated with the subscription.
         /// </summary>
         ///
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
-        /// <returns>Returns a list of <see cref="RuleProperties"/></returns>
-        public virtual async Task<IReadOnlyList<RuleProperties>> GetRulesAsync(CancellationToken cancellationToken = default)
+        /// <returns>Returns each rule on the associated subscription.</returns>
+        public virtual async IAsyncEnumerable<RuleProperties> GetRulesAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsClosed, nameof(ServiceBusRuleManager));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.GetRuleStart(Identifier);
-            List<RuleProperties> rulePropertiesList;
+            ServiceBusEventSource.Log.GetRulesStart(Identifier);
+            int skip = 0;
 
-            try
+            while (!cancellationToken.IsCancellationRequested)
             {
-                rulePropertiesList = await InnerRuleManager.GetRulesAsync(cancellationToken).ConfigureAwait(false);
-            }
-            catch (Exception exception)
-            {
-                ServiceBusEventSource.Log.GetRuleException(Identifier, exception.ToString());
-                throw;
+                List<RuleProperties> ruleProperties;
+                using (DiagnosticScope scope = _clientDiagnostics.CreateScope(
+                    DiagnosticProperty.GetRulesActivityName,
+                    ActivityKind.Client))
+                {
+                    scope.Start();
+                    try
+                    {
+                        ruleProperties = await InnerRuleManager.GetRulesAsync(skip, MaxRulesPerRequest, cancellationToken).ConfigureAwait(false);
+                    }
+                    catch (Exception exception)
+                    {
+                        ServiceBusEventSource.Log.GetRulesException(Identifier, exception.ToString());
+                        scope.Failed(exception);
+                        throw;
+                    }
+                }
+
+                skip += ruleProperties.Count;
+
+                foreach (var rule in ruleProperties)
+                {
+                    yield return rule;
+                }
+
+                if (ruleProperties.Count < MaxRulesPerRequest)
+                {
+                    break;
+                }
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            ServiceBusEventSource.Log.GetRuleComplete(Identifier);
-            return rulePropertiesList;
+            ServiceBusEventSource.Log.GetRulesComplete(Identifier);
         }
 
         /// <summary>
@@ -223,8 +379,6 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
-            Justification = "This signature must match the IAsyncDisposable interface.")]
         public virtual async ValueTask DisposeAsync()
         {
             await CloseAsync().ConfigureAwait(false);
@@ -234,16 +388,17 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Performs the task needed to clean up resources used by the <see cref="ServiceBusRuleManager" />.
         /// </summary>
-        ///
+        /// <param name="cancellationToken"> An optional<see cref="CancellationToken"/> instance to signal the
+        /// request to cancel the operation.</param>
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        public virtual async Task CloseAsync()
+        public virtual async Task CloseAsync(CancellationToken cancellationToken = default)
         {
             IsClosed = true;
 
             ServiceBusEventSource.Log.ClientCloseStart(typeof(ServiceBusRuleManager), Identifier);
             try
             {
-                await InnerRuleManager.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                await InnerRuleManager.CloseAsync(cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

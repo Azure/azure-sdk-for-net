@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ToList))
             {
-                writer.WritePropertyName("toList");
+                writer.WritePropertyName("toList"u8);
                 writer.WriteStartArray();
                 foreach (var item in ToList)
                 {

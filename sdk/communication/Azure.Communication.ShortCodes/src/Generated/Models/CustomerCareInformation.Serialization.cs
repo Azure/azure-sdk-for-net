@@ -17,12 +17,12 @@ namespace Azure.Communication.ShortCodes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(TollFreeNumber))
             {
-                writer.WritePropertyName("tollFreeNumber");
+                writer.WritePropertyName("tollFreeNumber"u8);
                 writer.WriteStringValue(TollFreeNumber);
             }
             if (Optional.IsDefined(Email))
             {
-                writer.WritePropertyName("email");
+                writer.WritePropertyName("email"u8);
                 writer.WriteStringValue(Email);
             }
             writer.WriteEndObject();
@@ -30,16 +30,20 @@ namespace Azure.Communication.ShortCodes.Models
 
         internal static CustomerCareInformation DeserializeCustomerCareInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tollFreeNumber = default;
             Optional<string> email = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tollFreeNumber"))
+                if (property.NameEquals("tollFreeNumber"u8))
                 {
                     tollFreeNumber = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("email"))
+                if (property.NameEquals("email"u8))
                 {
                     email = property.Value.GetString();
                     continue;

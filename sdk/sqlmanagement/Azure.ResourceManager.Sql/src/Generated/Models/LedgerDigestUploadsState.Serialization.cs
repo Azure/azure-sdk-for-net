@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static LedgerDigestUploadsState ToLedgerDigestUploadsState(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return LedgerDigestUploadsState.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return LedgerDigestUploadsState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return LedgerDigestUploadsState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return LedgerDigestUploadsState.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LedgerDigestUploadsState value.");
         }
     }

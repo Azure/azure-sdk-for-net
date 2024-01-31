@@ -10,12 +10,10 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class SubResourceReadOnly : IResource
+    public partial class SubResourceReadOnly
     {
         /// <summary>
         /// Initializes a new instance of the SubResourceReadOnly class.

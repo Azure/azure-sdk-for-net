@@ -14,27 +14,21 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> An enumeration of shares. </summary>
     internal partial class ListSharesResponse
     {
-        /// <summary> Initializes a new instance of ListSharesResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListSharesResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="nextMarker"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/> or <paramref name="nextMarker"/> is null. </exception>
         internal ListSharesResponse(string serviceEndpoint, string nextMarker)
         {
-            if (serviceEndpoint == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpoint));
-            }
-            if (nextMarker == null)
-            {
-                throw new ArgumentNullException(nameof(nextMarker));
-            }
+            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
+            Argument.AssertNotNull(nextMarker, nameof(nextMarker));
 
             ServiceEndpoint = serviceEndpoint;
             ShareItems = new ChangeTrackingList<ShareItemInternal>();
             NextMarker = nextMarker;
         }
 
-        /// <summary> Initializes a new instance of ListSharesResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListSharesResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="prefix"></param>
         /// <param name="marker"></param>

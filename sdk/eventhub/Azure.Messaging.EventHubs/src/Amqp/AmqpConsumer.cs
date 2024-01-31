@@ -246,6 +246,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             var link = default(ReceivingAmqpLink);
             var retryDelay = default(TimeSpan?);
             var receivedEvents = default(List<EventData>);
+            var firstReceivedEvent = default(EventData);
             var lastReceivedEvent = default(EventData);
 
             var stopWatch = ValueStopwatch.StartNew();
@@ -264,7 +265,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if (!ReceiveLink.TryGetOpenedObject(out link))
                         {
-                            link = await ReceiveLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout), cancellationToken).ConfigureAwait(false);
+                            link = await ReceiveLink.GetOrCreateAsync(tryTimeout, cancellationToken).ConfigureAwait(false);
                         }
 
                         cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -293,6 +294,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if (receivedEventCount > 0)
                         {
+                            firstReceivedEvent = receivedEvents[0];
                             lastReceivedEvent = receivedEvents[receivedEventCount - 1];
 
                             if (lastReceivedEvent.Offset > long.MinValue)
@@ -356,7 +358,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                         if ((retryDelay.HasValue) && (!ConnectionScope.IsDisposed) && (!_closed) && (!cancellationToken.IsCancellationRequested))
                         {
                             EventHubsEventSource.Log.EventReceiveError(EventHubName, ConsumerGroup, PartitionId, operationId, activeEx.Message);
-                            await Task.Delay(UseMinimum(retryDelay.Value, waitTime.CalculateRemaining(stopWatch.GetElapsedTime())), cancellationToken).ConfigureAwait(false);
+                            await Task.Delay(waitTime.CalculateRemaining(stopWatch.GetElapsedTime()), cancellationToken).ConfigureAwait(false);
 
                             tryTimeout = RetryPolicy.CalculateTryTimeout(failedAttemptCount);
                         }
@@ -387,7 +389,18 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
             finally
             {
-                EventHubsEventSource.Log.EventReceiveComplete(EventHubName, ConsumerGroup, PartitionId, operationId, failedAttemptCount, receivedEventCount);
+                EventHubsEventSource.Log.EventReceiveComplete(
+                    EventHubName,
+                    ConsumerGroup,
+                    PartitionId,
+                    operationId,
+                    failedAttemptCount,
+                    receivedEventCount,
+                    stopWatch.GetElapsedTime().TotalSeconds,
+                    firstReceivedEvent?.SequenceNumber.ToString(),
+                    LastReceivedEvent?.SequenceNumber.ToString(),
+                    maximumEventCount,
+                    waitTime.TotalSeconds);
             }
         }
 
@@ -568,17 +581,5 @@ namespace Azure.Messaging.EventHubs.Amqp
                 null => null,
                 _ => link.TerminalException
             };
-
-        /// <summary>
-        ///   Uses the minimum value of the two specified <see cref="TimeSpan" /> instances.
-        /// </summary>
-        ///
-        /// <param name="firstOption">The first option to consider.</param>
-        /// <param name="secondOption">The second option to consider.</param>
-        ///
-        /// <returns>The smaller of the two specified intervals.</returns>
-        ///
-        private static TimeSpan UseMinimum(TimeSpan firstOption,
-                                           TimeSpan secondOption) => (firstOption < secondOption) ? firstOption : secondOption;
     }
 }

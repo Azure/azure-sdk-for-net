@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsRecordingFileStatusUpdatedEventData DeserializeAcsRecordingFileStatusUpdatedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AcsRecordingStorageInfoProperties> recordingStorageInfo = default;
             Optional<DateTimeOffset> recordingStartTime = default;
             Optional<long> recordingDurationMs = default;
@@ -26,67 +30,61 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> sessionEndReason = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("recordingStorageInfo"))
+                if (property.NameEquals("recordingStorageInfo"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recordingStorageInfo = AcsRecordingStorageInfoProperties.DeserializeAcsRecordingStorageInfoProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("recordingStartTime"))
+                if (property.NameEquals("recordingStartTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recordingStartTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("recordingDurationMs"))
+                if (property.NameEquals("recordingDurationMs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recordingDurationMs = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("recordingContentType"))
+                if (property.NameEquals("recordingContentType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recordingContentType = new AcsRecordingContentType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recordingChannelType"))
+                if (property.NameEquals("recordingChannelType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recordingChannelType = new AcsRecordingChannelType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recordingFormatType"))
+                if (property.NameEquals("recordingFormatType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recordingFormatType = new AcsRecordingFormatType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sessionEndReason"))
+                if (property.NameEquals("sessionEndReason"u8))
                 {
                     sessionEndReason = property.Value.GetString();
                     continue;

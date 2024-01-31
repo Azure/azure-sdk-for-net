@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static SiteLoadBalancing ToSiteLoadBalancing(this string value)
         {
-            if (string.Equals(value, "WeightedRoundRobin", StringComparison.InvariantCultureIgnoreCase)) return SiteLoadBalancing.WeightedRoundRobin;
-            if (string.Equals(value, "LeastRequests", StringComparison.InvariantCultureIgnoreCase)) return SiteLoadBalancing.LeastRequests;
-            if (string.Equals(value, "LeastResponseTime", StringComparison.InvariantCultureIgnoreCase)) return SiteLoadBalancing.LeastResponseTime;
-            if (string.Equals(value, "WeightedTotalTraffic", StringComparison.InvariantCultureIgnoreCase)) return SiteLoadBalancing.WeightedTotalTraffic;
-            if (string.Equals(value, "RequestHash", StringComparison.InvariantCultureIgnoreCase)) return SiteLoadBalancing.RequestHash;
-            if (string.Equals(value, "PerSiteRoundRobin", StringComparison.InvariantCultureIgnoreCase)) return SiteLoadBalancing.PerSiteRoundRobin;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WeightedRoundRobin")) return SiteLoadBalancing.WeightedRoundRobin;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LeastRequests")) return SiteLoadBalancing.LeastRequests;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LeastResponseTime")) return SiteLoadBalancing.LeastResponseTime;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "WeightedTotalTraffic")) return SiteLoadBalancing.WeightedTotalTraffic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RequestHash")) return SiteLoadBalancing.RequestHash;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PerSiteRoundRobin")) return SiteLoadBalancing.PerSiteRoundRobin;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SiteLoadBalancing value.");
         }
     }

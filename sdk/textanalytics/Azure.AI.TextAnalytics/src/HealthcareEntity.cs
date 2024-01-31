@@ -11,6 +11,19 @@ namespace Azure.AI.TextAnalytics
     /// </summary>
     public class HealthcareEntity
     {
+        internal HealthcareEntity(string text, HealthcareEntityCategory category, string subcategory, double confidenceScore, int offset, int length, IReadOnlyCollection<EntityDataSource> dataSources, HealthcareEntityAssertion assertion, string normalizedName)
+        {
+            Text = text;
+            Category = category;
+            SubCategory = subcategory;
+            ConfidenceScore = confidenceScore;
+            Offset = offset;
+            Length = length;
+            DataSources = dataSources;
+            Assertion = assertion;
+            NormalizedText = normalizedName;
+        }
+
         internal HealthcareEntity(HealthcareEntityInternal entity)
         {
             Category = entity.Category;
@@ -19,7 +32,7 @@ namespace Azure.AI.TextAnalytics
             ConfidenceScore = entity.ConfidenceScore;
             Offset = entity.Offset;
             Length = entity.Length;
-            DataSources = entity.Links;
+            DataSources = new List<EntityDataSource>(entity.Links);
             Assertion = entity.Assertion;
             NormalizedText = entity.Name;
         }
@@ -29,19 +42,15 @@ namespace Azure.AI.TextAnalytics
         public string Text { get; }
 
         /// <summary>
-        /// Gets the entity category inferred by the Text Analytics service's
-        /// healthcare model.  The list of available categories is
-        /// described at
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/named-entity-types?tabs=health"/>.
+        /// Gets the entity category inferred by the Text Analytics for
+        /// healthcare model.
         /// </summary>
         public HealthcareEntityCategory Category { get; }
 
         /// <summary>
-        /// Gets the sub category of the entity inferred by the Text Analytics service's
-        /// healthcare model.  This property may not have a value if
-        /// a sub category doesn't exist for this entity.  The list of available categories and
-        /// subcategories is described at
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/named-entity-types?tabs=health"/>.
+        /// Gets the subcategory of the entity inferred by the Text Analytics for
+        /// healthcare model. This property may not have a value if
+        /// a subcategory doesn't exist for this entity.
         /// </summary>
         public string SubCategory { get; }
 

@@ -14,7 +14,10 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly DocumentSentiment _documentSentiment;
 
-        internal AnalyzeSentimentResult(string id, TextDocumentStatistics statistics, DocumentSentiment documentSentiment)
+        internal AnalyzeSentimentResult(
+            string id,
+            TextDocumentStatistics statistics,
+            DocumentSentiment documentSentiment)
             : base(id, statistics)
         {
             _documentSentiment = documentSentiment;

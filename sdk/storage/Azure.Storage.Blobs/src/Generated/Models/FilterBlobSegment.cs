@@ -8,38 +8,30 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The result of a Filter Blobs API call. </summary>
     internal partial class FilterBlobSegment
     {
-        /// <summary> Initializes a new instance of FilterBlobSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterBlobSegment"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="where"></param>
         /// <param name="blobs"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="where"/> or <paramref name="blobs"/> is null. </exception>
         internal FilterBlobSegment(string serviceEndpoint, string @where, IEnumerable<FilterBlobItem> blobs)
         {
-            if (serviceEndpoint == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpoint));
-            }
-            if (@where == null)
-            {
-                throw new ArgumentNullException(nameof(@where));
-            }
-            if (blobs == null)
-            {
-                throw new ArgumentNullException(nameof(blobs));
-            }
+            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
+            Argument.AssertNotNull(@where, nameof(@where));
+            Argument.AssertNotNull(blobs, nameof(blobs));
 
             ServiceEndpoint = serviceEndpoint;
             Where = @where;
             Blobs = blobs.ToList();
         }
 
-        /// <summary> Initializes a new instance of FilterBlobSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilterBlobSegment"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="where"></param>
         /// <param name="blobs"></param>

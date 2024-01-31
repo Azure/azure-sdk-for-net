@@ -214,6 +214,7 @@ namespace Azure.Search.Documents.Tests
             fields.OnlyTrueFor(
                 field => field.IsSearchable.GetValueOrDefault(false),
                 nameof(ReflectableModel.Text),
+                nameof(ReflectableModel.TextWithNormalizer),
                 nameof(ReflectableModel.MoreText),
                 nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Name),
                 nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City),
@@ -245,6 +246,7 @@ namespace Azure.Search.Documents.Tests
             fields.OnlyTrueFor(
                 field => field.IsFilterable.GetValueOrDefault(false),
                 nameof(ReflectableModel.FilterableText),
+                nameof(ReflectableModel.TextWithNormalizer),
                 nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Rating),
                 nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
                 nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Rating),
@@ -323,6 +325,15 @@ namespace Azure.Search.Documents.Tests
             fields.OnlyTrueFor(
                 field => field.IndexAnalyzerName == LexicalAnalyzerName.Whitespace,
                 nameof(ReflectableModel.TextWithIndexAnalyzer));
+        }
+
+        [TestCaseSource(nameof(TestModelTypeTestData))]
+        public void NormalizerSetOnlyOnPropertiesWithNormalizerAttribute(Type modelType)
+        {
+            var fields = new FieldMap(BuildForType(modelType));
+            fields.OnlyTrueFor(
+                field => field.NormalizerName == LexicalNormalizerName.Lowercase,
+                nameof(ReflectableModel.TextWithNormalizer));
         }
 
         [TestCaseSource(nameof(TestModelTypeTestData))]
@@ -457,6 +468,29 @@ namespace Azure.Search.Documents.Tests
 
                     case nameof(ModelWithSpatialProperties.GeographyPoint):
                         Assert.AreEqual(SearchFieldDataType.GeographyPoint, field.Type);
+                        break;
+
+                    default:
+                        Assert.AreEqual(SearchFieldDataType.Complex, field.Type, $"Unexpected type for field '{field.Name}'");
+                        break;
+                }
+            }
+        }
+
+        [Test]
+        public void SupportsVectorType()
+        {
+            IList<SearchField> fields = new FieldBuilder().Build(typeof(ModelWithVectorProperty));
+            foreach (SearchField field in fields)
+            {
+                switch (field.Name)
+                {
+                    case nameof(ModelWithVectorProperty.ID):
+                        Assert.AreEqual(SearchFieldDataType.String, field.Type);
+                        break;
+
+                    case nameof(ModelWithVectorProperty.TitleVector):
+                        Assert.AreEqual(SearchFieldDataType.Collection(SearchFieldDataType.Single), field.Type);
                         break;
 
                     default:
@@ -633,6 +667,15 @@ namespace Azure.Search.Documents.Tests
             public GeometryLineString GeometryLineString { get; set; }
 
             public GeometryPolygon GeometryPolygon { get; set; }
+        }
+
+        private class ModelWithVectorProperty
+        {
+            [SimpleField(IsKey = true)]
+            public string ID { get; set; }
+
+            [VectorSearchField(VectorSearchDimensions = 1536, VectorSearchProfileName = "test-config")]
+            public IReadOnlyList<float> TitleVector { get; set; }
         }
     }
 }

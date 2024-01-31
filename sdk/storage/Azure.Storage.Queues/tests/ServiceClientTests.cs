@@ -7,10 +7,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
+using Azure.Storage.Test.Shared;
 using Moq;
 using NUnit.Framework;
 
@@ -106,6 +108,77 @@ namespace Azure.Storage.Queues.Test
         }
 
         [RecordedTest]
+        public async Task Ctor_DefaultAudience()
+        {
+            // Act - Create new Queue client with the OAuth Credential and Audience
+            QueueClientOptions options = GetOptionsWithAudience(QueueAudience.PublicAudience);
+
+            QueueServiceClient aadService = InstrumentClient(new QueueServiceClient(
+                new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            Response<QueueServiceProperties> properties = await aadService.GetPropertiesAsync();
+            Assert.IsNotNull(properties);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_CustomAudience()
+        {
+            // Arrange
+            QueueUriBuilder uriBuilder = new QueueUriBuilder(new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint));
+
+            // Act - Create new Queue client with the OAuth Credential and Audience
+            QueueClientOptions options = GetOptionsWithAudience(new QueueAudience($"https://{uriBuilder.AccountName}.queue.core.windows.net/"));
+
+            QueueServiceClient aadService = InstrumentClient(new QueueServiceClient(
+                new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            Response<QueueServiceProperties> properties = await aadService.GetPropertiesAsync();
+            Assert.IsNotNull(properties);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_StorageAccountAudience()
+        {
+            // Arrange
+            QueueUriBuilder uriBuilder = new QueueUriBuilder(new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint));
+
+            // Act - Create new Queue client with the OAuth Credential and Audience
+            QueueClientOptions options = GetOptionsWithAudience(QueueAudience.CreateQueueServiceAccountAudience(uriBuilder.AccountName));
+
+            QueueServiceClient aadService = InstrumentClient(new QueueServiceClient(
+                new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            Response<QueueServiceProperties> properties = await aadService.GetPropertiesAsync();
+            Assert.IsNotNull(properties);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_AudienceError()
+        {
+            // Act - Create new Queue client with the OAuth Credential and Audience
+            QueueClientOptions options = GetOptionsWithAudience(new QueueAudience("https://badaudience.queue.core.windows.net"));
+
+            QueueServiceClient aadContainer = InstrumentClient(new QueueServiceClient(
+                new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint),
+                new MockCredential(),
+                options));
+
+            // Assert
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                aadContainer.GetPropertiesAsync(),
+                e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
+        }
+
+        [RecordedTest]
         public async Task GetQueuesAsync()
         {
             QueueServiceClient service = GetServiceClient_SharedKey();
@@ -124,11 +197,12 @@ namespace Azure.Storage.Queues.Test
             QueueServiceClient service = GetServiceClient_SharedKey();
             await using DisposingQueue test = await GetTestQueueAsync(service);
 
-            var marker = default(string);
+            var continuationToken = default(string);
             var queues = new List<QueueItem>();
-            await foreach (Page<QueueItem> page in service.GetQueuesAsync().AsPages(marker))
+            await foreach (Page<QueueItem> page in service.GetQueuesAsync().AsPages(continuationToken))
             {
                 queues.AddRange(page.Values);
+                continuationToken = page.ContinuationToken;
             }
 
             Assert.AreNotEqual(0, queues.Count);

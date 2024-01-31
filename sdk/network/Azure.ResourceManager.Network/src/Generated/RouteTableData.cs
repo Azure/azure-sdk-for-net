@@ -5,37 +5,43 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the RouteTable data model. </summary>
-    public partial class RouteTableData : NetworkResourceData
+    /// <summary>
+    /// A class representing the RouteTable data model.
+    /// Route table resource.
+    /// </summary>
+    public partial class RouteTableData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of RouteTableData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteTableData"/>. </summary>
         public RouteTableData()
         {
             Routes = new ChangeTrackingList<RouteData>();
             Subnets = new ChangeTrackingList<SubnetData>();
         }
 
-        /// <summary> Initializes a new instance of RouteTableData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteTableData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="routes"> Collection of routes contained within a route table. </param>
         /// <param name="subnets"> A collection of references to subnets. </param>
         /// <param name="disableBgpRoutePropagation"> Whether to disable the routes learned by BGP on that route table. True means disable. </param>
         /// <param name="provisioningState"> The provisioning state of the route table resource. </param>
         /// <param name="resourceGuid"> The resource GUID property of the route table. </param>
-        internal RouteTableData(string id, string name, string resourceType, string location, IDictionary<string, string> tags, string etag, IList<RouteData> routes, IReadOnlyList<SubnetData> subnets, bool? disableBgpRoutePropagation, ProvisioningState? provisioningState, string resourceGuid) : base(id, name, resourceType, location, tags)
+        internal RouteTableData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<RouteData> routes, IReadOnlyList<SubnetData> subnets, bool? disableBgpRoutePropagation, NetworkProvisioningState? provisioningState, Guid? resourceGuid) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
-            Etag = etag;
+            ETag = etag;
             Routes = routes;
             Subnets = subnets;
             DisableBgpRoutePropagation = disableBgpRoutePropagation;
@@ -44,7 +50,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
         /// <summary> Collection of routes contained within a route table. </summary>
         public IList<RouteData> Routes { get; }
         /// <summary> A collection of references to subnets. </summary>
@@ -52,8 +58,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Whether to disable the routes learned by BGP on that route table. True means disable. </summary>
         public bool? DisableBgpRoutePropagation { get; set; }
         /// <summary> The provisioning state of the route table resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The resource GUID property of the route table. </summary>
-        public string ResourceGuid { get; }
+        public Guid? ResourceGuid { get; }
     }
 }

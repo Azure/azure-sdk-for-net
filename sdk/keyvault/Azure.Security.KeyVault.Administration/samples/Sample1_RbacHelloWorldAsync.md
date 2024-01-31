@@ -1,14 +1,14 @@
 # Creating, getting, and deleting role assignments (Async)
 
-This sample demonstrates how to create, get, and delete role assignments in Azure Key Vault.
-To get started, you'll need a URI to an Azure Key Vault. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/README.md) for links and instructions.
+This sample demonstrates how to create, get, and delete role assignments in Azure Managed HSM.
+To get started, you'll need a URI to an Azure Managed HSM. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/README.md) for links and instructions.
 
 ## Creating a KeyVaultAccessControlClient
 
-To create a new `KeyVaultAccessControlClient` to create, get, or delete role assignments, you need the endpoint to an Azure Key Vault and credentials.
+To create a new `KeyVaultAccessControlClient` to create, get, or delete role assignments, you need the endpoint to an Azure Managed HSM and credentials.
 You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.
 
-In the sample below, you can set `keyVaultUrl` based on an environment variable, configuration setting, or any way that works for your application.
+In the sample below, you can set `managedHsmUrl` based on an environment variable, configuration setting, or any way that works for your application.
 
 ```C# Snippet:HelloCreateKeyVaultAccessControlClient
 KeyVaultAccessControlClient client = new KeyVaultAccessControlClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
@@ -46,7 +46,8 @@ A role definition Id can be obtained from the `Id` property of one of the role d
 
 See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/README.md) for links and instructions on how to generate a new service principal and obtain it's object Id.
 You can also get the object Id for your currently signed in account by running the following [Azure CLI][azure_cli] command.
-```
+
+```PowerShell
 az ad signed-in-user show --query objectId
 ```
 
@@ -66,12 +67,53 @@ KeyVaultRoleAssignment fetchedAssignment = await client.GetRoleAssignmentAsync(K
 ```
 
 ## Deleting a Role Assignment
+
 To remove a role assignment from a service principal, the role assignment must be deleted. Let's delete the `createdAssignment` from the previous example.
 
 ```C# Snippet:DeleteRoleAssignmentAsync
 await client.DeleteRoleAssignmentAsync(KeyVaultRoleScope.Global, createdAssignment.Name);
 ```
 
+## Creating a Role Definition
+
+You can also create custom role definitions with custom permissions:
+
+```C# Snippet:CreateRoleDefinitionAsync
+CreateOrUpdateRoleDefinitionOptions options = new CreateOrUpdateRoleDefinitionOptions(KeyVaultRoleScope.Global)
+{
+    RoleName = "Managed HSM Data Decryptor",
+    Description = "Can only decrypt data using the private key stored in Managed HSM",
+    Permissions =
+    {
+        new KeyVaultPermission()
+        {
+            DataActions =
+            {
+                KeyVaultDataAction.DecryptHsmKey
+            }
+        }
+    }
+};
+KeyVaultRoleDefinition createdDefinition = await client.CreateOrUpdateRoleDefinitionAsync(options);
+```
+
+## Getting a Role Definition
+
+To get a role definition, you'll need to know the globally unique ID (GUID) instead of the name like with role assignments:
+
+```C# Snippet:GetRoleDefinitionAsync
+Guid roleDefinitionId = new Guid(createdDefinition.Name);
+KeyVaultRoleDefinition fetchedDefinition = await client.GetRoleDefinitionAsync(KeyVaultRoleScope.Global, roleDefinitionId);
+```
+
+## Deleting a Role Definition
+
+To delete a role definition, you'll need to know the globally unique ID (GUID) instead of the name like with role assignments:
+
+```C# Snippet:DeleteRoleDefinitionAsync
+await client.DeleteRoleDefinitionAsync(KeyVaultRoleScope.Global, roleDefinitionId);
+```
+
 <!-- LINKS -->
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential

@@ -5,47 +5,86 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the ApiKeyVaultReference data model. </summary>
-    public partial class ApiKeyVaultReferenceData : ProxyOnlyResource
+    /// <summary>
+    /// A class representing the ApiKeyVaultReference data model.
+    /// Description of site key vault references.
+    /// </summary>
+    public partial class ApiKeyVaultReferenceData : ResourceData
     {
-        /// <summary> Initializes a new instance of ApiKeyVaultReferenceData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiKeyVaultReferenceData"/>. </summary>
         public ApiKeyVaultReferenceData()
         {
-            Source = "KeyVault";
         }
 
-        /// <summary> Initializes a new instance of ApiKeyVaultReferenceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApiKeyVaultReferenceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="reference"></param>
         /// <param name="status"></param>
         /// <param name="vaultName"></param>
         /// <param name="secretName"></param>
         /// <param name="secretVersion"></param>
-        /// <param name="identityType"> Managed service identity. </param>
+        /// <param name="identity"> Managed service identity. </param>
         /// <param name="details"></param>
         /// <param name="source"></param>
         /// <param name="activeVersion"></param>
-        internal ApiKeyVaultReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string reference, ResolveStatus? status, string vaultName, string secretName, string secretVersion, ManagedServiceIdentity identityType, string details, string source, string activeVersion) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiKeyVaultReferenceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string reference, ResolveStatus? status, string vaultName, string secretName, string secretVersion, ManagedServiceIdentity identity, string details, ConfigReferenceSource? source, string activeVersion, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Reference = reference;
             Status = status;
             VaultName = vaultName;
             SecretName = secretName;
             SecretVersion = secretVersion;
-            IdentityType = identityType;
+            Identity = identity;
             Details = details;
             Source = source;
             ActiveVersion = activeVersion;
+            Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the reference. </summary>
@@ -59,12 +98,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Gets or sets the secret version. </summary>
         public string SecretVersion { get; set; }
         /// <summary> Managed service identity. </summary>
-        public ManagedServiceIdentity IdentityType { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Gets or sets the details. </summary>
         public string Details { get; set; }
         /// <summary> Gets or sets the source. </summary>
-        public string Source { get; set; }
+        public ConfigReferenceSource? Source { get; set; }
         /// <summary> Gets or sets the active version. </summary>
         public string ActiveVersion { get; set; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

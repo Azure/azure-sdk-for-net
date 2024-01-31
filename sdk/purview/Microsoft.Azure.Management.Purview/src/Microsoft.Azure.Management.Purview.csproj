@@ -5,7 +5,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Purview</PackageId>
     <Description>Azure Purview is a unified data governance service that helps you manage and govern your on-premises, multicloud, and software-as-a-service (SaaS) data. </Description>
-    <Version>1.0.1.0</Version>
+    <Version>1.0.2.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Purview</AssemblyName>
     <PackageTags>Microsoft Azure resource management;Purview;Goverance</PackageTags>
     <PackageReleaseNotes><![CDATA[

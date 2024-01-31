@@ -4,6 +4,9 @@
 using System;
 using System.Buffers;
 using System.IO;
+using System.IO.Hashing;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Azure.Storage
 {
@@ -14,35 +17,49 @@ namespace Azure.Storage
     {
         private const int _streamBufferSize = 4 * Constants.MB;
 
-        private readonly StorageCrc64HashAlgorithm _nonCryptographicHashAlgorithm;
+        private readonly NonCryptographicHashAlgorithm _nonCryptographicHashAlgorithm;
 
-        public NonCryptographicHashAlgorithmHasher(StorageCrc64HashAlgorithm nonCryptographicHashAlgorithm)
+        public int HashSizeInBytes => _nonCryptographicHashAlgorithm.HashLengthInBytes;
+
+        public NonCryptographicHashAlgorithmHasher(NonCryptographicHashAlgorithm nonCryptographicHashAlgorithm)
         {
             _nonCryptographicHashAlgorithm = nonCryptographicHashAlgorithm;
         }
 
-        public byte[] ComputeHash(Stream stream)
+        public async Task<byte[]> ComputeHashInternal(
+            Stream stream,
+            bool async,
+            CancellationToken cancellationToken)
         {
             if (stream is null)
                 throw new ArgumentNullException(nameof(stream));
 
-            byte[] buffer = ArrayPool<byte>.Shared.Rent(_streamBufferSize);
-
-            while (true)
+            if (async)
             {
-                int read = stream.Read(buffer, 0, buffer.Length);
-
-                if (read == 0)
-                {
-                    break;
-                }
-
-                _nonCryptographicHashAlgorithm.Append(new ReadOnlySpan<byte>(buffer, 0, read));
+                await _nonCryptographicHashAlgorithm.AppendAsync(stream, cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                _nonCryptographicHashAlgorithm.Append(stream);
             }
 
-            ArrayPool<byte>.Shared.Return(buffer);
-
             return _nonCryptographicHashAlgorithm.GetCurrentHash();
+        }
+
+        public void AppendHash(ReadOnlySpan<byte> content)
+        {
+            _nonCryptographicHashAlgorithm.Append(content);
+        }
+
+        public int GetFinalHash(Span<byte> hashDestination)
+        {
+            return _nonCryptographicHashAlgorithm.GetCurrentHash(hashDestination);
+        }
+
+        public void Dispose()
+        {
+            // NonCryptographicHashAlgorithm is not disposable
         }
     }
 }

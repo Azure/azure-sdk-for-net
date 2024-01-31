@@ -19,31 +19,35 @@ namespace Azure.Communication.NetworkTraversal
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("urls");
+            writer.WritePropertyName("urls"u8);
             writer.WriteStartArray();
             foreach (var item in Urls)
             {
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("username");
+            writer.WritePropertyName("username"u8);
             writer.WriteStringValue(Username);
-            writer.WritePropertyName("credential");
+            writer.WritePropertyName("credential"u8);
             writer.WriteStringValue(Credential);
-            writer.WritePropertyName("routeType");
+            writer.WritePropertyName("routeType"u8);
             writer.WriteStringValue(RouteType.ToString());
             writer.WriteEndObject();
         }
 
         internal static CommunicationIceServer DeserializeCommunicationIceServer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> urls = default;
             string username = default;
             string credential = default;
             RouteType routeType = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("urls"))
+                if (property.NameEquals("urls"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -53,17 +57,17 @@ namespace Azure.Communication.NetworkTraversal
                     urls = array;
                     continue;
                 }
-                if (property.NameEquals("username"))
+                if (property.NameEquals("username"u8))
                 {
                     username = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("credential"))
+                if (property.NameEquals("credential"u8))
                 {
                     credential = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("routeType"))
+                if (property.NameEquals("routeType"u8))
                 {
                     routeType = new RouteType(property.Value.GetString());
                     continue;

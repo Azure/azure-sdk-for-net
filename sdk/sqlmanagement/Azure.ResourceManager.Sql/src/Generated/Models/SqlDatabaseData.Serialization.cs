@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,177 +15,388 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlDatabaseData : IUtf8JsonSerializable
+    public partial class SqlDatabaseData : IUtf8JsonSerializable, IJsonModel<SqlDatabaseData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDatabaseData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SqlDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlDatabaseData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind);
             }
-            writer.WriteEndObject();
-            writer.WritePropertyName("location");
+            if (options.Format != "W" && Optional.IsDefined(ManagedBy))
+            {
+                writer.WritePropertyName("managedBy"u8);
+                writer.WriteStringValue(ManagedBy);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CreateMode))
             {
-                writer.WritePropertyName("createMode");
+                writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
             if (Optional.IsDefined(Collation))
             {
-                writer.WritePropertyName("collation");
+                writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
             if (Optional.IsDefined(MaxSizeBytes))
             {
-                writer.WritePropertyName("maxSizeBytes");
+                writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteNumberValue(MaxSizeBytes.Value);
             }
             if (Optional.IsDefined(SampleName))
             {
-                writer.WritePropertyName("sampleName");
+                writer.WritePropertyName("sampleName"u8);
                 writer.WriteStringValue(SampleName.Value.ToString());
             }
             if (Optional.IsDefined(ElasticPoolId))
             {
-                writer.WritePropertyName("elasticPoolId");
+                writer.WritePropertyName("elasticPoolId"u8);
                 writer.WriteStringValue(ElasticPoolId);
             }
             if (Optional.IsDefined(SourceDatabaseId))
             {
-                writer.WritePropertyName("sourceDatabaseId");
+                writer.WritePropertyName("sourceDatabaseId"u8);
                 writer.WriteStringValue(SourceDatabaseId);
             }
-            if (Optional.IsDefined(RestorePointInOn))
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("restorePointInTime");
-                writer.WriteStringValue(RestorePointInOn.Value, "O");
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(SourceDatabaseDeletionOn))
+            if (options.Format != "W" && Optional.IsDefined(DatabaseId))
             {
-                writer.WritePropertyName("sourceDatabaseDeletionDate");
-                writer.WriteStringValue(SourceDatabaseDeletionOn.Value, "O");
+                writer.WritePropertyName("databaseId"u8);
+                writer.WriteStringValue(DatabaseId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("creationDate"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(CurrentServiceObjectiveName))
+            {
+                writer.WritePropertyName("currentServiceObjectiveName"u8);
+                writer.WriteStringValue(CurrentServiceObjectiveName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RequestedServiceObjectiveName))
+            {
+                writer.WritePropertyName("requestedServiceObjectiveName"u8);
+                writer.WriteStringValue(RequestedServiceObjectiveName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DefaultSecondaryLocation))
+            {
+                writer.WritePropertyName("defaultSecondaryLocation"u8);
+                writer.WriteStringValue(DefaultSecondaryLocation.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FailoverGroupId))
+            {
+                writer.WritePropertyName("failoverGroupId"u8);
+                writer.WriteStringValue(FailoverGroupId);
+            }
+            if (Optional.IsDefined(RestorePointInTime))
+            {
+                writer.WritePropertyName("restorePointInTime"u8);
+                writer.WriteStringValue(RestorePointInTime.Value, "O");
+            }
+            if (Optional.IsDefined(SourceDatabaseDeletedOn))
+            {
+                writer.WritePropertyName("sourceDatabaseDeletionDate"u8);
+                writer.WriteStringValue(SourceDatabaseDeletedOn.Value, "O");
             }
             if (Optional.IsDefined(RecoveryServicesRecoveryPointId))
             {
-                writer.WritePropertyName("recoveryServicesRecoveryPointId");
+                writer.WritePropertyName("recoveryServicesRecoveryPointId"u8);
                 writer.WriteStringValue(RecoveryServicesRecoveryPointId);
             }
             if (Optional.IsDefined(LongTermRetentionBackupResourceId))
             {
-                writer.WritePropertyName("longTermRetentionBackupResourceId");
+                writer.WritePropertyName("longTermRetentionBackupResourceId"u8);
                 writer.WriteStringValue(LongTermRetentionBackupResourceId);
             }
             if (Optional.IsDefined(RecoverableDatabaseId))
             {
-                writer.WritePropertyName("recoverableDatabaseId");
+                writer.WritePropertyName("recoverableDatabaseId"u8);
                 writer.WriteStringValue(RecoverableDatabaseId);
             }
             if (Optional.IsDefined(RestorableDroppedDatabaseId))
             {
-                writer.WritePropertyName("restorableDroppedDatabaseId");
+                writer.WritePropertyName("restorableDroppedDatabaseId"u8);
                 writer.WriteStringValue(RestorableDroppedDatabaseId);
             }
             if (Optional.IsDefined(CatalogCollation))
             {
-                writer.WritePropertyName("catalogCollation");
+                writer.WritePropertyName("catalogCollation"u8);
                 writer.WriteStringValue(CatalogCollation.Value.ToString());
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
-                writer.WritePropertyName("zoneRedundant");
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WritePropertyName("zoneRedundant"u8);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (Optional.IsDefined(LicenseType))
             {
-                writer.WritePropertyName("licenseType");
+                writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaxLogSizeBytes))
+            {
+                writer.WritePropertyName("maxLogSizeBytes"u8);
+                writer.WriteNumberValue(MaxLogSizeBytes.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EarliestRestoreOn))
+            {
+                writer.WritePropertyName("earliestRestoreDate"u8);
+                writer.WriteStringValue(EarliestRestoreOn.Value, "O");
             }
             if (Optional.IsDefined(ReadScale))
             {
-                writer.WritePropertyName("readScale");
+                writer.WritePropertyName("readScale"u8);
                 writer.WriteStringValue(ReadScale.Value.ToString());
             }
             if (Optional.IsDefined(HighAvailabilityReplicaCount))
             {
-                writer.WritePropertyName("highAvailabilityReplicaCount");
+                writer.WritePropertyName("highAvailabilityReplicaCount"u8);
                 writer.WriteNumberValue(HighAvailabilityReplicaCount.Value);
             }
             if (Optional.IsDefined(SecondaryType))
             {
-                writer.WritePropertyName("secondaryType");
+                writer.WritePropertyName("secondaryType"u8);
                 writer.WriteStringValue(SecondaryType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(CurrentSku))
+            {
+                writer.WritePropertyName("currentSku"u8);
+                writer.WriteObjectValue(CurrentSku);
             }
             if (Optional.IsDefined(AutoPauseDelay))
             {
-                writer.WritePropertyName("autoPauseDelay");
+                writer.WritePropertyName("autoPauseDelay"u8);
                 writer.WriteNumberValue(AutoPauseDelay.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CurrentBackupStorageRedundancy))
+            {
+                writer.WritePropertyName("currentBackupStorageRedundancy"u8);
+                writer.WriteStringValue(CurrentBackupStorageRedundancy.Value.ToString());
             }
             if (Optional.IsDefined(RequestedBackupStorageRedundancy))
             {
-                writer.WritePropertyName("requestedBackupStorageRedundancy");
+                writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
                 writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
             }
             if (Optional.IsDefined(MinCapacity))
             {
-                writer.WritePropertyName("minCapacity");
+                writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PausedOn))
+            {
+                writer.WritePropertyName("pausedDate"u8);
+                writer.WriteStringValue(PausedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResumedOn))
+            {
+                writer.WritePropertyName("resumedDate"u8);
+                writer.WriteStringValue(ResumedOn.Value, "O");
             }
             if (Optional.IsDefined(MaintenanceConfigurationId))
             {
-                writer.WritePropertyName("maintenanceConfigurationId");
+                writer.WritePropertyName("maintenanceConfigurationId"u8);
                 writer.WriteStringValue(MaintenanceConfigurationId);
             }
             if (Optional.IsDefined(IsLedgerOn))
             {
-                writer.WritePropertyName("isLedgerOn");
+                writer.WritePropertyName("isLedgerOn"u8);
                 writer.WriteBooleanValue(IsLedgerOn.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(IsInfraEncryptionEnabled))
+            {
+                writer.WritePropertyName("isInfraEncryptionEnabled"u8);
+                writer.WriteBooleanValue(IsInfraEncryptionEnabled.Value);
+            }
+            if (Optional.IsDefined(FederatedClientId))
+            {
+                writer.WritePropertyName("federatedClientId"u8);
+                writer.WriteStringValue(FederatedClientId.Value);
+            }
+            if (Optional.IsCollectionDefined(Keys))
+            {
+                writer.WritePropertyName("keys"u8);
+                writer.WriteStartObject();
+                foreach (var item in Keys)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(EncryptionProtector))
+            {
+                writer.WritePropertyName("encryptionProtector"u8);
+                writer.WriteStringValue(EncryptionProtector);
+            }
+            if (Optional.IsDefined(PreferredEnclaveType))
+            {
+                writer.WritePropertyName("preferredEnclaveType"u8);
+                writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
+            }
+            if (Optional.IsDefined(UseFreeLimit))
+            {
+                writer.WritePropertyName("useFreeLimit"u8);
+                writer.WriteBooleanValue(UseFreeLimit.Value);
+            }
+            if (Optional.IsDefined(FreeLimitExhaustionBehavior))
+            {
+                writer.WritePropertyName("freeLimitExhaustionBehavior"u8);
+                writer.WriteStringValue(FreeLimitExhaustionBehavior.Value.ToString());
+            }
+            if (Optional.IsDefined(SourceResourceId))
+            {
+                writer.WritePropertyName("sourceResourceId"u8);
+                writer.WriteStringValue(SourceResourceId);
+            }
+            if (Optional.IsDefined(ManualCutover))
+            {
+                writer.WritePropertyName("manualCutover"u8);
+                writer.WriteBooleanValue(ManualCutover.Value);
+            }
+            if (Optional.IsDefined(PerformCutover))
+            {
+                writer.WritePropertyName("performCutover"u8);
+                writer.WriteBooleanValue(PerformCutover.Value);
+            }
+            if (Optional.IsDefined(AvailabilityZone))
+            {
+                writer.WritePropertyName("availabilityZone"u8);
+                writer.WriteStringValue(AvailabilityZone.Value.ToString());
+            }
+            if (Optional.IsDefined(EncryptionProtectorAutoRotation))
+            {
+                writer.WritePropertyName("encryptionProtectorAutoRotation"u8);
+                writer.WriteBooleanValue(EncryptionProtectorAutoRotation.Value);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlDatabaseData DeserializeSqlDatabaseData(JsonElement element)
+        SqlDatabaseData IJsonModel<SqlDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlDatabaseData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlDatabaseData(document.RootElement, options);
+        }
+
+        internal static SqlDatabaseData DeserializeSqlDatabaseData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlSku> sku = default;
             Optional<string> kind = default;
             Optional<string> managedBy = default;
-            IDictionary<string, string> tags = default;
+            Optional<DatabaseIdentity> identity = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
-            Optional<CreateMode> createMode = default;
+            Optional<SystemData> systemData = default;
+            Optional<SqlDatabaseCreateMode> createMode = default;
             Optional<string> collation = default;
             Optional<long> maxSizeBytes = default;
             Optional<SampleSchemaName> sampleName = default;
-            Optional<string> elasticPoolId = default;
-            Optional<string> sourceDatabaseId = default;
-            Optional<DatabaseStatus> status = default;
+            Optional<ResourceIdentifier> elasticPoolId = default;
+            Optional<ResourceIdentifier> sourceDatabaseId = default;
+            Optional<SqlDatabaseStatus> status = default;
             Optional<Guid> databaseId = default;
             Optional<DateTimeOffset> creationDate = default;
             Optional<string> currentServiceObjectiveName = default;
             Optional<string> requestedServiceObjectiveName = default;
-            Optional<string> defaultSecondaryLocation = default;
-            Optional<string> failoverGroupId = default;
+            Optional<AzureLocation> defaultSecondaryLocation = default;
+            Optional<ResourceIdentifier> failoverGroupId = default;
             Optional<DateTimeOffset> restorePointInTime = default;
             Optional<DateTimeOffset> sourceDatabaseDeletionDate = default;
-            Optional<string> recoveryServicesRecoveryPointId = default;
-            Optional<string> longTermRetentionBackupResourceId = default;
-            Optional<string> recoverableDatabaseId = default;
-            Optional<string> restorableDroppedDatabaseId = default;
+            Optional<ResourceIdentifier> recoveryServicesRecoveryPointId = default;
+            Optional<ResourceIdentifier> longTermRetentionBackupResourceId = default;
+            Optional<ResourceIdentifier> recoverableDatabaseId = default;
+            Optional<ResourceIdentifier> restorableDroppedDatabaseId = default;
             Optional<CatalogCollationType> catalogCollation = default;
             Optional<bool> zoneRedundant = default;
             Optional<DatabaseLicenseType> licenseType = default;
@@ -195,38 +407,63 @@ namespace Azure.ResourceManager.Sql
             Optional<SecondaryType> secondaryType = default;
             Optional<SqlSku> currentSku = default;
             Optional<int> autoPauseDelay = default;
-            Optional<CurrentBackupStorageRedundancy> currentBackupStorageRedundancy = default;
-            Optional<RequestedBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
+            Optional<SqlBackupStorageRedundancy> currentBackupStorageRedundancy = default;
+            Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
             Optional<double> minCapacity = default;
             Optional<DateTimeOffset> pausedDate = default;
             Optional<DateTimeOffset> resumedDate = default;
-            Optional<string> maintenanceConfigurationId = default;
+            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
             Optional<bool> isLedgerOn = default;
             Optional<bool> isInfraEncryptionEnabled = default;
+            Optional<Guid> federatedClientId = default;
+            Optional<IDictionary<string, SqlDatabaseKey>> keys = default;
+            Optional<string> encryptionProtector = default;
+            Optional<SqlAlwaysEncryptedEnclaveType> preferredEnclaveType = default;
+            Optional<bool> useFreeLimit = default;
+            Optional<FreeLimitExhaustionBehavior> freeLimitExhaustionBehavior = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
+            Optional<bool> manualCutover = default;
+            Optional<bool> performCutover = default;
+            Optional<SqlAvailabilityZoneType> availabilityZone = default;
+            Optional<bool> encryptionProtectorAutoRotation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"))
+                if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = SqlSku.DeserializeSqlSku(property.Value);
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("managedBy"))
+                if (property.NameEquals("managedBy"u8))
                 {
                     managedBy = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("identity"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = DatabaseIdentity.DeserializeDatabaseIdentity(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -235,32 +472,36 @@ namespace Azure.ResourceManager.Sql
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -269,321 +510,468 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("createMode"))
+                        if (property0.NameEquals("createMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            createMode = new CreateMode(property0.Value.GetString());
+                            createMode = new SqlDatabaseCreateMode(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("collation"))
+                        if (property0.NameEquals("collation"u8))
                         {
                             collation = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("maxSizeBytes"))
+                        if (property0.NameEquals("maxSizeBytes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxSizeBytes = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("sampleName"))
+                        if (property0.NameEquals("sampleName"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sampleName = new SampleSchemaName(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("elasticPoolId"))
-                        {
-                            elasticPoolId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sourceDatabaseId"))
-                        {
-                            sourceDatabaseId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("status"))
+                        if (property0.NameEquals("elasticPoolId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new DatabaseStatus(property0.Value.GetString());
+                            elasticPoolId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("databaseId"))
+                        if (property0.NameEquals("sourceDatabaseId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            sourceDatabaseId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("status"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            status = new SqlDatabaseStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("databaseId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             databaseId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("creationDate"))
+                        if (property0.NameEquals("creationDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("currentServiceObjectiveName"))
+                        if (property0.NameEquals("currentServiceObjectiveName"u8))
                         {
                             currentServiceObjectiveName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("requestedServiceObjectiveName"))
+                        if (property0.NameEquals("requestedServiceObjectiveName"u8))
                         {
                             requestedServiceObjectiveName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("defaultSecondaryLocation"))
-                        {
-                            defaultSecondaryLocation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("failoverGroupId"))
-                        {
-                            failoverGroupId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("restorePointInTime"))
+                        if (property0.NameEquals("defaultSecondaryLocation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            defaultSecondaryLocation = new AzureLocation(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("failoverGroupId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            failoverGroupId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("restorePointInTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             restorePointInTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("sourceDatabaseDeletionDate"))
+                        if (property0.NameEquals("sourceDatabaseDeletionDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sourceDatabaseDeletionDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("recoveryServicesRecoveryPointId"))
-                        {
-                            recoveryServicesRecoveryPointId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("longTermRetentionBackupResourceId"))
-                        {
-                            longTermRetentionBackupResourceId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("recoverableDatabaseId"))
-                        {
-                            recoverableDatabaseId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("restorableDroppedDatabaseId"))
-                        {
-                            restorableDroppedDatabaseId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("catalogCollation"))
+                        if (property0.NameEquals("recoveryServicesRecoveryPointId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            recoveryServicesRecoveryPointId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("longTermRetentionBackupResourceId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            longTermRetentionBackupResourceId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("recoverableDatabaseId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            recoverableDatabaseId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("restorableDroppedDatabaseId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            restorableDroppedDatabaseId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("catalogCollation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             catalogCollation = new CatalogCollationType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("zoneRedundant"))
+                        if (property0.NameEquals("zoneRedundant"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             zoneRedundant = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("licenseType"))
+                        if (property0.NameEquals("licenseType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             licenseType = new DatabaseLicenseType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("maxLogSizeBytes"))
+                        if (property0.NameEquals("maxLogSizeBytes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxLogSizeBytes = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("earliestRestoreDate"))
+                        if (property0.NameEquals("earliestRestoreDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             earliestRestoreDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("readScale"))
+                        if (property0.NameEquals("readScale"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             readScale = new DatabaseReadScale(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("highAvailabilityReplicaCount"))
+                        if (property0.NameEquals("highAvailabilityReplicaCount"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             highAvailabilityReplicaCount = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("secondaryType"))
+                        if (property0.NameEquals("secondaryType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             secondaryType = new SecondaryType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("currentSku"))
+                        if (property0.NameEquals("currentSku"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             currentSku = SqlSku.DeserializeSqlSku(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("autoPauseDelay"))
+                        if (property0.NameEquals("autoPauseDelay"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoPauseDelay = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("currentBackupStorageRedundancy"))
+                        if (property0.NameEquals("currentBackupStorageRedundancy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            currentBackupStorageRedundancy = new CurrentBackupStorageRedundancy(property0.Value.GetString());
+                            currentBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("requestedBackupStorageRedundancy"))
+                        if (property0.NameEquals("requestedBackupStorageRedundancy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            requestedBackupStorageRedundancy = new RequestedBackupStorageRedundancy(property0.Value.GetString());
+                            requestedBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("minCapacity"))
+                        if (property0.NameEquals("minCapacity"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             minCapacity = property0.Value.GetDouble();
                             continue;
                         }
-                        if (property0.NameEquals("pausedDate"))
+                        if (property0.NameEquals("pausedDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             pausedDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("resumedDate"))
+                        if (property0.NameEquals("resumedDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resumedDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("maintenanceConfigurationId"))
-                        {
-                            maintenanceConfigurationId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("isLedgerOn"))
+                        if (property0.NameEquals("maintenanceConfigurationId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            maintenanceConfigurationId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("isLedgerOn"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             isLedgerOn = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("isInfraEncryptionEnabled"))
+                        if (property0.NameEquals("isInfraEncryptionEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isInfraEncryptionEnabled = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("federatedClientId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            federatedClientId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("keys"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, SqlDatabaseKey> dictionary = new Dictionary<string, SqlDatabaseKey>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, SqlDatabaseKey.DeserializeSqlDatabaseKey(property1.Value));
+                            }
+                            keys = dictionary;
+                            continue;
+                        }
+                        if (property0.NameEquals("encryptionProtector"u8))
+                        {
+                            encryptionProtector = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("preferredEnclaveType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            preferredEnclaveType = new SqlAlwaysEncryptedEnclaveType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("useFreeLimit"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            useFreeLimit = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("freeLimitExhaustionBehavior"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            freeLimitExhaustionBehavior = new FreeLimitExhaustionBehavior(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("sourceResourceId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sourceResourceId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("manualCutover"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            manualCutover = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("performCutover"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            performCutover = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("availabilityZone"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            availabilityZone = new SqlAvailabilityZoneType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("encryptionProtectorAutoRotation"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryptionProtectorAutoRotation = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlDatabaseData(id, name, type, systemData, tags, location, sku.Value, kind.Value, managedBy.Value, Optional.ToNullable(createMode), collation.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Optional.ToNullable(status), Optional.ToNullable(databaseId), Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, defaultSecondaryLocation.Value, failoverGroupId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), Optional.ToNullable(maxLogSizeBytes), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(readScale), Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(secondaryType), currentSku.Value, Optional.ToNullable(autoPauseDelay), Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(minCapacity), Optional.ToNullable(pausedDate), Optional.ToNullable(resumedDate), maintenanceConfigurationId.Value, Optional.ToNullable(isLedgerOn), Optional.ToNullable(isInfraEncryptionEnabled));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlDatabaseData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, managedBy.Value, identity.Value, Optional.ToNullable(createMode), collation.Value, Optional.ToNullable(maxSizeBytes), Optional.ToNullable(sampleName), elasticPoolId.Value, sourceDatabaseId.Value, Optional.ToNullable(status), Optional.ToNullable(databaseId), Optional.ToNullable(creationDate), currentServiceObjectiveName.Value, requestedServiceObjectiveName.Value, Optional.ToNullable(defaultSecondaryLocation), failoverGroupId.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(sourceDatabaseDeletionDate), recoveryServicesRecoveryPointId.Value, longTermRetentionBackupResourceId.Value, recoverableDatabaseId.Value, restorableDroppedDatabaseId.Value, Optional.ToNullable(catalogCollation), Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), Optional.ToNullable(maxLogSizeBytes), Optional.ToNullable(earliestRestoreDate), Optional.ToNullable(readScale), Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(secondaryType), currentSku.Value, Optional.ToNullable(autoPauseDelay), Optional.ToNullable(currentBackupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), Optional.ToNullable(minCapacity), Optional.ToNullable(pausedDate), Optional.ToNullable(resumedDate), maintenanceConfigurationId.Value, Optional.ToNullable(isLedgerOn), Optional.ToNullable(isInfraEncryptionEnabled), Optional.ToNullable(federatedClientId), Optional.ToDictionary(keys), encryptionProtector.Value, Optional.ToNullable(preferredEnclaveType), Optional.ToNullable(useFreeLimit), Optional.ToNullable(freeLimitExhaustionBehavior), sourceResourceId.Value, Optional.ToNullable(manualCutover), Optional.ToNullable(performCutover), Optional.ToNullable(availabilityZone), Optional.ToNullable(encryptionProtectorAutoRotation), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlDatabaseData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SqlDatabaseData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SqlDatabaseData IPersistableModel<SqlDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlDatabaseData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlDatabaseData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

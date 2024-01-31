@@ -1,0 +1,58 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "TestApplicationId": {
+      "type": "string",
+      "metadata": {
+        "description": "The application client ID used to run tests."
+      }
+    }
+  },
+  "variables": {
+    "batch_account_name": "dotnotsdkbatchaccount1",
+    "location": "eastus",
+    "api_version": "2023-11-01"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Batch/batchAccounts",
+      "apiVersion": "[variables('api_version')]",
+      "name": "[variables('batch_account_name')]",
+      "location": "[variables('location')]",
+      "dependsOn": [],
+      "tags": {},
+      "identity": {
+        "type": "None"
+      },
+      "properties": {
+        "publicNetworkAccess": "Enabled",
+        "poolAllocationMode": "BatchService",
+        "allowedAuthenticationModes": [
+          "AAD",
+          "SharedKey",
+          "TaskAuthenticationToken"
+        ],
+        "networkProfile": {
+          "accountAccess": {
+            "defaultAction": "Allow"
+          }
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "batch_account_name": {
+      "type": "string",
+      "value": "[variables('batch_account_name')]"
+    },
+    "batch_account_uri": {
+      "type": "string",
+      "value": "[reference(variables('batch_account_name')).accountEndpoint]"
+    },
+    "batch_account_key": {
+      "type": "string",
+      "value": "[listKeys(resourceId('Microsoft.Batch/batchAccounts', variables('batch_account_name')), variables('api_version')).primary]"
+    }
+  }
+}

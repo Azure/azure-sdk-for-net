@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.ServiceBus.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -35,7 +36,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Possible values include: 'Basic', 'Standard', 'Premium'</param>
         /// <param name="capacity">The specified messaging units for the tier.
         /// For Premium tier, capacity are 1,2 and 4.</param>
-        public SBSku(SkuName name, SkuTier? tier = default(SkuTier?), int? capacity = default(int?))
+        public SBSku(string name, string tier = default(string), int? capacity = default(int?))
         {
             Name = name;
             Tier = tier;
@@ -53,14 +54,14 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// 'Standard', 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public SkuName Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the billing tier of this particular SKU. Possible
         /// values include: 'Basic', 'Standard', 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
-        public SkuTier? Tier { get; set; }
+        public string Tier { get; set; }
 
         /// <summary>
         /// Gets or sets the specified messaging units for the tier. For
@@ -72,11 +73,15 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
         }
     }
 }

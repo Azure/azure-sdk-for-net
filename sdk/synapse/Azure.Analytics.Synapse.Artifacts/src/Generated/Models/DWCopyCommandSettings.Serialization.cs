@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DefaultValues))
             {
-                writer.WritePropertyName("defaultValues");
+                writer.WritePropertyName("defaultValues"u8);
                 writer.WriteStartArray();
                 foreach (var item in DefaultValues)
                 {
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             if (Optional.IsCollectionDefined(AdditionalOptions))
             {
-                writer.WritePropertyName("additionalOptions");
+                writer.WritePropertyName("additionalOptions"u8);
                 writer.WriteStartObject();
                 foreach (var item in AdditionalOptions)
                 {
@@ -45,15 +45,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DWCopyCommandSettings DeserializeDWCopyCommandSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DWCopyCommandDefaultValue>> defaultValues = default;
             Optional<IDictionary<string, string>> additionalOptions = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("defaultValues"))
+                if (property.NameEquals("defaultValues"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DWCopyCommandDefaultValue> array = new List<DWCopyCommandDefaultValue>();
@@ -64,11 +67,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     defaultValues = array;
                     continue;
                 }
-                if (property.NameEquals("additionalOptions"))
+                if (property.NameEquals("additionalOptions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

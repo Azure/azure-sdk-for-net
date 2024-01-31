@@ -26,9 +26,11 @@ param (
     [string] $SubscriptionId,
 
     [Parameter()]
-    [ValidateRange(1, 7*24)]
+    [ValidateRange(1, 30*24)]
     [int] $DeleteAfterHours = 48
 )
+
+. $PSScriptRoot/SubConfig-Helpers.ps1
 
 # By default stop for any error.
 if (!$PSBoundParameters.ContainsKey('ErrorAction')) {
@@ -67,20 +69,13 @@ $exitActions = @({
     }
 })
 
-# Make sure $ResourceGroupName is set.
-if (!$ResourceGroupName) {
-    # Make sure $BaseName is set.
-    if (!$BaseName) {
-        $UserName = if ($env:USER) { $env:USER } else { "${env:USERNAME}" }
-        # Remove spaces, etc. that may be in $UserName
-        $UserName = $UserName -replace '\W'
-
-        $BaseName = "$UserName$ServiceDirectory"
-        Log "BaseName was not set. Using default base name '$BaseName'"
-    }
-
-    $ResourceGroupName = "rg-$BaseName"
-}
+$serviceName = GetServiceLeafDirectoryName $ServiceDirectory
+$BaseName, $ResourceGroupName = GetBaseAndResourceGroupNames `
+    -baseNameDefault $BaseName `
+    -resourceGroupNameDefault $ResourceGroupName `
+    -user (GetUserName) `
+    -serviceDirectoryName $serviceName `
+    -CI $false
 
 # This script is intended for interactive users. Make sure they are logged in or fail.
 $context = Get-AzContext
@@ -141,6 +136,9 @@ try {
 
     Log "Updating DeleteAfter to '$deleteAfter'"
     Write-Warning "Any clean-up scripts running against subscription '$SubscriptionId' may delete resource group '$ResourceGroupName' after $DeleteAfterHours hours."
+    if (!$resourceGroup.Tags) {
+        $resourceGroup.Tags = @{}
+    }
     $resourceGroup.Tags['DeleteAfter'] = $deleteAfter
 
     Log "Updating resource group '$ResourceGroupName'"

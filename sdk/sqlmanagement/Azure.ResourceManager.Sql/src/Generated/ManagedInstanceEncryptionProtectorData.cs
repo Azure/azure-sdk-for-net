@@ -6,52 +6,90 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ManagedInstanceEncryptionProtector data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedInstanceEncryptionProtector data model.
+    /// The managed instance encryption protector.
+    /// </summary>
     public partial class ManagedInstanceEncryptionProtectorData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedInstanceEncryptionProtectorData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceEncryptionProtectorData"/>. </summary>
         public ManagedInstanceEncryptionProtectorData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedInstanceEncryptionProtectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceEncryptionProtectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of encryption protector. This is metadata used for the Azure portal experience. </param>
         /// <param name="serverKeyName"> The name of the managed instance key. </param>
-        /// <param name="serverKeyType"> The encryption protector type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </param>
+        /// <param name="serverKeyType"> The encryption protector type like 'ServiceManaged', 'AzureKeyVault'. </param>
         /// <param name="uri"> The URI of the server key. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
-        /// <param name="autoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
-        internal ManagedInstanceEncryptionProtectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string serverKeyName, ServerKeyType? serverKeyType, Uri uri, string thumbprint, bool? autoRotationEnabled) : base(id, name, resourceType, systemData)
+        /// <param name="isAutoRotationEnabled"> Key auto rotation opt-in flag. Either true or false. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstanceEncryptionProtectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string serverKeyName, SqlServerKeyType? serverKeyType, Uri uri, string thumbprint, bool? isAutoRotationEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             ServerKeyName = serverKeyName;
             ServerKeyType = serverKeyType;
             Uri = uri;
             Thumbprint = thumbprint;
-            AutoRotationEnabled = autoRotationEnabled;
+            IsAutoRotationEnabled = isAutoRotationEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Kind of encryption protector. This is metadata used for the Azure portal experience. </summary>
         public string Kind { get; }
         /// <summary> The name of the managed instance key. </summary>
         public string ServerKeyName { get; set; }
-        /// <summary> The encryption protector type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </summary>
-        public ServerKeyType? ServerKeyType { get; set; }
+        /// <summary> The encryption protector type like 'ServiceManaged', 'AzureKeyVault'. </summary>
+        public SqlServerKeyType? ServerKeyType { get; set; }
         /// <summary> The URI of the server key. </summary>
         public Uri Uri { get; }
         /// <summary> Thumbprint of the server key. </summary>
         public string Thumbprint { get; }
         /// <summary> Key auto rotation opt-in flag. Either true or false. </summary>
-        public bool? AutoRotationEnabled { get; set; }
+        public bool? IsAutoRotationEnabled { get; set; }
     }
 }

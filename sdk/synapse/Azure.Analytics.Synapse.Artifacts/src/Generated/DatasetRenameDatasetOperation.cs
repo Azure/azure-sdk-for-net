@@ -17,7 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts
     /// <summary> Renames a dataset. </summary>
     public partial class DatasetRenameDatasetOperation : Operation
     {
-        private readonly OperationInternals _operation;
+        private readonly OperationInternal _operation;
 
         /// <summary> Initializes a new instance of DatasetRenameDatasetOperation for mocking. </summary>
         protected DatasetRenameDatasetOperation()
@@ -26,17 +26,20 @@ namespace Azure.Analytics.Synapse.Artifacts
 
         internal DatasetRenameDatasetOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
-            _operation = new OperationInternals(clientDiagnostics, pipeline, request, response, OperationFinalStateVia.Location, "DatasetRenameDatasetOperation");
+            IOperation nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
+            _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "DatasetRenameDatasetOperation");
         }
 
         /// <inheritdoc />
-        public override string Id => _operation.Id;
+#pragma warning disable CA1822
+        public override string Id => throw new NotImplementedException();
+#pragma warning restore CA1822
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
 
         /// <inheritdoc />
-        public override Response GetRawResponse() => _operation.GetRawResponse();
+        public override Response GetRawResponse() => _operation.RawResponse;
 
         /// <inheritdoc />
         public override Response UpdateStatus(CancellationToken cancellationToken = default) => _operation.UpdateStatus(cancellationToken);

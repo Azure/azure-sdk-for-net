@@ -152,24 +152,21 @@ if ($LASTEXITCODE -ne 0) {
   exit 1
 }
 
-# Check API status if version is GA
-if (!$newVersionParsed.IsPrerelease)
+# Check API status
+try
 {
-  try
-  {
-    az account show *> $null
-    if (!$?) {
-      Write-Host 'Running az login...'
-      az login *> $null
-    }
-    $url = az keyvault secret show --name "APIURL" --vault-name "AzureSDKPrepRelease-KV" --query "value" --output "tsv"
-    $apiKey = az keyvault secret show --name "APIKEY" --vault-name "AzureSDKPrepRelease-KV" --query "value" --output "tsv"
-    Check-ApiReviewStatus -PackageName $packageProperties.Name -packageVersion $newVersion -Language $LanguageDisplayName -url $url -apiKey $apiKey
+  az account show *> $null
+  if (!$?) {
+    Write-Host 'Running az login...'
+    az login *> $null
   }
-  catch
-  {
-    Write-Warning "Failed to get APIView URL and API Key from Keyvault AzureSDKPrepRelease-KV. Please check and ensure you have access to this Keyvault as reader."
-  }
+  $url = az keyvault secret show --name "APIURL" --vault-name "AzureSDKPrepRelease-KV" --query "value" --output "tsv"
+  $apiKey = az keyvault secret show --name "APIKEY" --vault-name "AzureSDKPrepRelease-KV" --query "value" --output "tsv"
+  Check-ApiReviewStatus -PackageName $packageProperties.Name -packageVersion $newVersion -Language $LanguageDisplayName -url $url -apiKey $apiKey
+}
+catch
+{
+  Write-Warning "Failed to get APIView URL and API Key from Keyvault AzureSDKPrepRelease-KV. Please check and ensure you have access to this Keyvault as reader."
 }
 
 if ($releaseTrackingOnly)
@@ -185,7 +182,7 @@ if (Test-Path "Function:SetPackageVersion")
 {
   $replaceLatestEntryTitle = $true
   $latestVersion = Get-LatestReleaseDateFromChangeLog -ChangeLogLocation $packageProperties.ChangeLogPath
-  if ($latestVersion)
+  if ($latestVersion -and $latestVersion -ne $ParsedReleaseDate)
   {
     $promptMessage = "The latest entry in the CHANGELOG.md already has a release date. Do you want to replace the latest entry title? Please enter (y or n)."
     while (($readInput = Read-Host -Prompt $promptMessage) -notmatch '^[yn]$'){ }

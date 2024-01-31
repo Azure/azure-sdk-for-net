@@ -6,21 +6,19 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.MixedReality.Authentication
 {
     /// <summary> Represents a token response message from the STS service. </summary>
     internal partial class StsTokenResponseMessage
     {
-        /// <summary> Initializes a new instance of StsTokenResponseMessage. </summary>
+        /// <summary> Initializes a new instance of <see cref="StsTokenResponseMessage"/>. </summary>
         /// <param name="accessToken"> An access token for the account. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessToken"/> is null. </exception>
         internal StsTokenResponseMessage(string accessToken)
         {
-            if (accessToken == null)
-            {
-                throw new ArgumentNullException(nameof(accessToken));
-            }
+            Argument.AssertNotNull(accessToken, nameof(accessToken));
 
             AccessToken = accessToken;
         }

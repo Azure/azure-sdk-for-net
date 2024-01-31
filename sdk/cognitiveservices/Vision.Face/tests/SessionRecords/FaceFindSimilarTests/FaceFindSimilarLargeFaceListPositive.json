@@ -10,10 +10,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.8.4515.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.4.0.0"
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -23,23 +23,11 @@
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 15 May 2019 09:57:36 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "x-envoy-upstream-service-time": [
+          "80"
         ],
         "apim-request-id": [
-          "343416ba-8c3c-41a6-8254-a3715d1d26d3"
+          "50cca418-70ca-4612-b79d-f09b72311a50"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -47,11 +35,17 @@
         "x-content-type-options": [
           "nosniff"
         ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Wed, 23 Nov 2022 01:35:39 GMT"
+        ],
         "Content-Length": [
           "0"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
       "ResponseBody": "",
@@ -67,10 +61,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.8.4515.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.4.0.0"
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -80,23 +74,11 @@
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 15 May 2019 09:57:38 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
         "apim-request-id": [
-          "8ca3c8d5-22c9-4d23-b3f3-cacb44eadc67"
+          "a3e598eb-016c-412e-8f47-5316fb92979b"
+        ],
+        "x-envoy-upstream-service-time": [
+          "380"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -104,17 +86,23 @@
         "x-content-type-options": [
           "nosniff"
         ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Wed, 23 Nov 2022 01:35:39 GMT"
+        ],
         "Content-Length": [
           "116"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"faceId\": \"30661965-7adc-4416-b7f9-4fd53217b603\",\r\n    \"faceRectangle\": {\r\n      \"top\": 263,\r\n      \"left\": 1127,\r\n      \"width\": 430,\r\n      \"height\": 430\r\n    }\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"faceId\": \"5a64c8ef-b208-4250-a593-741ba20f98af\",\r\n    \"faceRectangle\": {\r\n      \"top\": 263,\r\n      \"left\": 1127,\r\n      \"width\": 430,\r\n      \"height\": 430\r\n    }\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
@@ -127,10 +115,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.8.4515.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.4.0.0"
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -140,23 +128,11 @@
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 15 May 2019 09:57:39 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
         "apim-request-id": [
-          "d96a210b-bcf6-4f04-995b-657500b54e4d"
+          "eb1f87a7-3ea0-4cdd-9cb8-1df907358507"
+        ],
+        "x-envoy-upstream-service-time": [
+          "156"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -164,17 +140,23 @@
         "x-content-type-options": [
           "nosniff"
         ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Wed, 23 Nov 2022 01:35:40 GMT"
+        ],
         "Content-Length": [
           "228"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"faceId\": \"c84ca250-d1ce-4874-824e-5e4162059c4d\",\r\n    \"faceRectangle\": {\r\n      \"top\": 178,\r\n      \"left\": 146,\r\n      \"width\": 105,\r\n      \"height\": 105\r\n    }\r\n  },\r\n  {\r\n    \"faceId\": \"96dc5901-a5d1-41a4-a09a-864681fe677c\",\r\n    \"faceRectangle\": {\r\n      \"top\": 86,\r\n      \"left\": 141,\r\n      \"width\": 104,\r\n      \"height\": 104\r\n    }\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"faceId\": \"18183092-12bd-4ecb-b99c-2824a2fb04a9\",\r\n    \"faceRectangle\": {\r\n      \"top\": 178,\r\n      \"left\": 146,\r\n      \"width\": 105,\r\n      \"height\": 105\r\n    }\r\n  },\r\n  {\r\n    \"faceId\": \"97bdc134-c252-4113-8e72-a7941d8d85f8\",\r\n    \"faceRectangle\": {\r\n      \"top\": 86,\r\n      \"left\": 141,\r\n      \"width\": 104,\r\n      \"height\": 104\r\n    }\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
@@ -187,10 +169,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.8.4515.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.4.0.0"
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -200,23 +182,11 @@
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 15 May 2019 09:57:39 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
         "apim-request-id": [
-          "d3d1feb1-b8d6-42bb-8fe2-85a163fc8535"
+          "c61da329-270c-4f98-b79b-ab4f0840a70d"
+        ],
+        "x-envoy-upstream-service-time": [
+          "110"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -224,17 +194,23 @@
         "x-content-type-options": [
           "nosniff"
         ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Wed, 23 Nov 2022 01:35:40 GMT"
+        ],
         "Content-Length": [
           "112"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"faceId\": \"f2841b2c-f497-4045-ac79-2295d2702800\",\r\n    \"faceRectangle\": {\r\n      \"top\": 64,\r\n      \"left\": 190,\r\n      \"width\": 98,\r\n      \"height\": 98\r\n    }\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"faceId\": \"7710430f-9a57-46ac-a5d5-0ca866296f59\",\r\n    \"faceRectangle\": {\r\n      \"top\": 64,\r\n      \"left\": 190,\r\n      \"width\": 98,\r\n      \"height\": 98\r\n    }\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
@@ -247,10 +223,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.8.4515.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.4.0.0"
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -260,23 +236,11 @@
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 15 May 2019 09:57:40 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
         "apim-request-id": [
-          "3c67f25c-c1ba-4260-a719-96c9323b3e99"
+          "76caf2a6-d12c-412d-b5d5-60600f139bd2"
+        ],
+        "x-envoy-upstream-service-time": [
+          "107"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -284,17 +248,23 @@
         "x-content-type-options": [
           "nosniff"
         ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Wed, 23 Nov 2022 01:35:41 GMT"
+        ],
         "Content-Length": [
           "112"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"faceId\": \"a9aed076-336e-474e-8e27-c48c2206cb93\",\r\n    \"faceRectangle\": {\r\n      \"top\": 47,\r\n      \"left\": 113,\r\n      \"width\": 84,\r\n      \"height\": 84\r\n    }\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"faceId\": \"9afc97fc-bb05-468e-8c4e-7165002cdde3\",\r\n    \"faceRectangle\": {\r\n      \"top\": 47,\r\n      \"left\": 113,\r\n      \"width\": 84,\r\n      \"height\": 84\r\n    }\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
@@ -307,10 +277,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.8.4515.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.4.0.0"
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -320,23 +290,11 @@
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 15 May 2019 09:57:40 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
         "apim-request-id": [
-          "9b7dc3e7-ba25-48ff-b5c9-aa4d13d89c28"
+          "4ddcfbbc-7bf4-4d79-83cd-2749cebe02c6"
+        ],
+        "x-envoy-upstream-service-time": [
+          "135"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -344,17 +302,23 @@
         "x-content-type-options": [
           "nosniff"
         ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Wed, 23 Nov 2022 01:35:41 GMT"
+        ],
         "Content-Length": [
           "112"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"faceId\": \"5b9dd792-2903-4263-a954-fce15c88c31e\",\r\n    \"faceRectangle\": {\r\n      \"top\": 37,\r\n      \"left\": 139,\r\n      \"width\": 76,\r\n      \"height\": 76\r\n    }\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"faceId\": \"871a83cb-03c4-4a29-9ec4-225dcdf61441\",\r\n    \"faceRectangle\": {\r\n      \"top\": 37,\r\n      \"left\": 139,\r\n      \"width\": 76,\r\n      \"height\": 76\r\n    }\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
@@ -367,10 +331,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.8.4515.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.4.0.0"
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -380,23 +344,11 @@
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 15 May 2019 09:57:41 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
         "apim-request-id": [
-          "7658d73b-f74c-4c6e-8333-4c865f621e80"
+          "da44b68f-61b4-4d8c-bbc1-42d5ed7d412b"
+        ],
+        "x-envoy-upstream-service-time": [
+          "190"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -404,17 +356,23 @@
         "x-content-type-options": [
           "nosniff"
         ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Wed, 23 Nov 2022 01:35:41 GMT"
+        ],
         "Content-Length": [
           "115"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"faceId\": \"96017e42-b3fa-4480-b023-e325451d524b\",\r\n    \"faceRectangle\": {\r\n      \"top\": 160,\r\n      \"left\": 408,\r\n      \"width\": 255,\r\n      \"height\": 255\r\n    }\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"faceId\": \"fe7ebe5a-fb87-4b6d-814f-b6839cacb956\",\r\n    \"faceRectangle\": {\r\n      \"top\": 160,\r\n      \"left\": 408,\r\n      \"width\": 255,\r\n      \"height\": 255\r\n    }\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
@@ -427,10 +385,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.8.4515.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.4.0.0"
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -440,23 +398,11 @@
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 15 May 2019 09:57:43 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
         "apim-request-id": [
-          "aed95770-1586-4624-9f45-dabbb12a11f4"
+          "3de3d2e0-cfa7-4e7c-a4bd-129503a92930"
+        ],
+        "x-envoy-upstream-service-time": [
+          "143"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -464,17 +410,23 @@
         "x-content-type-options": [
           "nosniff"
         ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Wed, 23 Nov 2022 01:35:43 GMT"
+        ],
         "Content-Length": [
           "112"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"faceId\": \"2fe66895-f0ee-4dcf-ac05-a068e186efd7\",\r\n    \"faceRectangle\": {\r\n      \"top\": 29,\r\n      \"left\": 106,\r\n      \"width\": 51,\r\n      \"height\": 51\r\n    }\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"faceId\": \"2df727e2-a688-4981-8de7-55635ccd57e3\",\r\n    \"faceRectangle\": {\r\n      \"top\": 29,\r\n      \"left\": 106,\r\n      \"width\": 51,\r\n      \"height\": 51\r\n    }\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
@@ -487,10 +439,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.8.4515.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.4.0.0"
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -500,23 +452,11 @@
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 15 May 2019 09:57:38 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "x-envoy-upstream-service-time": [
+          "451"
         ],
         "apim-request-id": [
-          "7dfddf66-b6ca-4890-8aa0-f549603acc43"
+          "483964f9-8d9e-45c9-a9da-a911f8ad44f8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -524,17 +464,23 @@
         "x-content-type-options": [
           "nosniff"
         ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Wed, 23 Nov 2022 01:35:40 GMT"
+        ],
         "Content-Length": [
-          "74"
+          "58"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"persistedFaceId\": \"b5edfe4e-e9a3-4bce-acce-db540db84386\",\r\n  \"userData\": null\r\n}",
+      "ResponseBody": "{\r\n  \"persistedFaceId\": \"d77b91a7-1927-46fc-b04d-16fd680d1d83\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -547,10 +493,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.8.4515.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.4.0.0"
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -560,23 +506,11 @@
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 15 May 2019 09:57:39 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "x-envoy-upstream-service-time": [
+          "170"
         ],
         "apim-request-id": [
-          "5a17495b-f08b-411e-809e-a94cea81b44c"
+          "160d852f-b356-41b7-92c1-984fd4ea3b4f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -584,17 +518,23 @@
         "x-content-type-options": [
           "nosniff"
         ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Wed, 23 Nov 2022 01:35:40 GMT"
+        ],
         "Content-Length": [
-          "74"
+          "58"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"persistedFaceId\": \"e8da286d-655b-4b9b-8892-dc26d24d5b68\",\r\n  \"userData\": null\r\n}",
+      "ResponseBody": "{\r\n  \"persistedFaceId\": \"e11be760-abe6-4206-9d4f-2957d7b725c2\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -607,10 +547,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.8.4515.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.4.0.0"
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -620,23 +560,11 @@
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 15 May 2019 09:57:39 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "x-envoy-upstream-service-time": [
+          "334"
         ],
         "apim-request-id": [
-          "d14093ef-75ef-42e3-8ef5-5071df412667"
+          "ed3d74b1-78a0-4707-95f7-f050da55668f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -644,17 +572,23 @@
         "x-content-type-options": [
           "nosniff"
         ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Wed, 23 Nov 2022 01:35:41 GMT"
+        ],
         "Content-Length": [
-          "74"
+          "58"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"persistedFaceId\": \"64ff68bb-757e-4f9f-a5db-f123e6966372\",\r\n  \"userData\": null\r\n}",
+      "ResponseBody": "{\r\n  \"persistedFaceId\": \"54fd1e73-3a72-4345-ad77-62f37a0bfb26\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -667,10 +601,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.8.4515.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.4.0.0"
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -680,23 +614,11 @@
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 15 May 2019 09:57:40 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "x-envoy-upstream-service-time": [
+          "124"
         ],
         "apim-request-id": [
-          "a75374ff-33fa-4824-a595-f4efede4aa26"
+          "3e243c02-ec21-40b8-b20c-011ae4c60a7d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -704,17 +626,23 @@
         "x-content-type-options": [
           "nosniff"
         ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Wed, 23 Nov 2022 01:35:41 GMT"
+        ],
         "Content-Length": [
-          "74"
+          "58"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"persistedFaceId\": \"0ae05286-9b20-4a2c-8497-de9f26f8bfd4\",\r\n  \"userData\": null\r\n}",
+      "ResponseBody": "{\r\n  \"persistedFaceId\": \"b30bfaae-05cd-475d-8fdc-d3fa60e33718\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -727,10 +655,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.8.4515.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.4.0.0"
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -740,23 +668,11 @@
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 15 May 2019 09:57:40 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "x-envoy-upstream-service-time": [
+          "138"
         ],
         "apim-request-id": [
-          "90f3b6b0-b079-4eca-8d6a-317e848574af"
+          "10138c87-6a1c-4f27-842c-25370de7ab5a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -764,17 +680,23 @@
         "x-content-type-options": [
           "nosniff"
         ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Wed, 23 Nov 2022 01:35:41 GMT"
+        ],
         "Content-Length": [
-          "74"
+          "58"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"persistedFaceId\": \"8a04603f-96a1-4fef-8b45-ebcfee3ec87a\",\r\n  \"userData\": null\r\n}",
+      "ResponseBody": "{\r\n  \"persistedFaceId\": \"2dafa5c6-faab-45ff-b8e3-1f54af4957ca\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -787,10 +709,10 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.8.4515.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.4.0.0"
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
         ],
         "Content-Type": [
           "application/octet-stream"
@@ -800,23 +722,11 @@
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 15 May 2019 09:57:41 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "x-envoy-upstream-service-time": [
+          "179"
         ],
         "apim-request-id": [
-          "e134f276-7314-47ba-8949-d97e0433f85f"
+          "2aba079b-3bc1-4e82-bac2-621ba0b204d1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -824,17 +734,23 @@
         "x-content-type-options": [
           "nosniff"
         ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Wed, 23 Nov 2022 01:35:42 GMT"
+        ],
         "Content-Length": [
-          "74"
+          "58"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"persistedFaceId\": \"854162ea-f720-4bd1-bd8b-2ba2bd613a6b\",\r\n  \"userData\": null\r\n}",
+      "ResponseBody": "{\r\n  \"persistedFaceId\": \"af13479b-162f-4e0b-b370-ed8f75812aa6\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -847,33 +763,21 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.8.4515.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.4.0.0"
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
+        "operation-location": [
+          "https://yache-persondirectory-test-usw2.cognitiveservices.azure.com/face/v1.0/largefacelists/large-face-list-id/training"
         ],
-        "Date": [
-          "Wed, 15 May 2019 09:57:41 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Operation-Location": [
-          "http://facev1-cs-dev.cloudapp.net:8080/largefacelists/large-face-list-id/training"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "x-envoy-upstream-service-time": [
+          "24"
         ],
         "apim-request-id": [
-          "2856b84d-0c4f-4c8b-b111-6e5b1978751f"
+          "b3ad4f8d-b3b6-4922-af63-98bb23b2d5ce"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -881,14 +785,20 @@
         "x-content-type-options": [
           "nosniff"
         ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
         "Access-Control-Expose-Headers": [
           "Operation-Location"
         ],
+        "Date": [
+          "Wed, 23 Nov 2022 01:35:42 GMT"
+        ],
         "Content-Length": [
           "0"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
       "ResponseBody": "",
@@ -904,30 +814,18 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.8.4515.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.4.0.0"
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 15 May 2019 09:57:41 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "x-envoy-upstream-service-time": [
+          "7"
         ],
         "apim-request-id": [
-          "7888bc95-cdfd-42c9-b804-a81ec2938c63"
+          "252083ca-26e0-4bf5-b96f-44f6aee527b6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -935,17 +833,23 @@
         "x-content-type-options": [
           "nosniff"
         ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Wed, 23 Nov 2022 01:35:42 GMT"
+        ],
         "Content-Length": [
-          "136"
+          "121"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"running\",\r\n  \"createdDateTime\": \"2019-05-15T09:57:42.2483968Z\",\r\n  \"lastActionDateTime\": \"2019-05-15T09:57:42.2483968Z\",\r\n  \"message\": null\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"running\",\r\n  \"createdDateTime\": \"2022-11-23T01:35:42.6886827Z\",\r\n  \"lastActionDateTime\": \"2022-11-23T01:35:42.6886844Z\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -958,30 +862,18 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.8.4515.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.4.0.0"
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 15 May 2019 09:57:42 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "x-envoy-upstream-service-time": [
+          "6"
         ],
         "apim-request-id": [
-          "969f997b-604c-4ce2-8e1f-1a6b4a623cac"
+          "68b2ebfd-706f-486f-bbf1-945651d08e34"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -989,33 +881,39 @@
         "x-content-type-options": [
           "nosniff"
         ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Wed, 23 Nov 2022 01:35:43 GMT"
+        ],
         "Content-Length": [
-          "202"
+          "185"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdDateTime\": \"2019-05-15T09:57:42.2483968Z\",\r\n  \"lastActionDateTime\": \"2019-05-15T09:57:42.4202066Z\",\r\n  \"message\": null,\r\n  \"lastSuccessfulTrainingDateTime\": \"2019-05-15T09:57:42.4202066Z\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"succeeded\",\r\n  \"createdDateTime\": \"2022-11-23T01:35:42.6886827Z\",\r\n  \"lastActionDateTime\": \"2022-11-23T01:35:43.065722Z\",\r\n  \"lastSuccessfulTrainingDateTime\": \"2022-11-23T01:35:43.065722Z\"\r\n}",
       "StatusCode": 200
     },
     {
       "RequestUri": "/face/v1.0/findsimilars",
       "EncodedRequestUri": "L2ZhY2UvdjEuMC9maW5kc2ltaWxhcnM=",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"faceId\": \"2fe66895-f0ee-4dcf-ac05-a068e186efd7\",\r\n  \"largeFaceListId\": \"large-face-list-id\",\r\n  \"maxNumOfCandidatesReturned\": 20,\r\n  \"mode\": \"matchPerson\"\r\n}",
+      "RequestBody": "{\r\n  \"faceId\": \"2df727e2-a688-4981-8de7-55635ccd57e3\",\r\n  \"largeFaceListId\": \"large-face-list-id\",\r\n  \"maxNumOfCandidatesReturned\": 20,\r\n  \"mode\": \"matchPerson\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.8.4515.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.4.0.0"
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1025,23 +923,11 @@
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 15 May 2019 09:57:43 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ],
         "apim-request-id": [
-          "8e44eb56-35d9-4d38-83f9-36df647f46be"
+          "2d07133b-eff5-4257-bcb7-5a7a0aaff62e"
+        ],
+        "x-envoy-upstream-service-time": [
+          "104"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -1049,17 +935,23 @@
         "x-content-type-options": [
           "nosniff"
         ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Wed, 23 Nov 2022 01:35:43 GMT"
+        ],
         "Content-Length": [
           "161"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"persistedFaceId\": \"b5edfe4e-e9a3-4bce-acce-db540db84386\",\r\n    \"confidence\": 0.93078\r\n  },\r\n  {\r\n    \"persistedFaceId\": \"64ff68bb-757e-4f9f-a5db-f123e6966372\",\r\n    \"confidence\": 0.91251\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"persistedFaceId\": \"d77b91a7-1927-46fc-b04d-16fd680d1d83\",\r\n    \"confidence\": 0.93078\r\n  },\r\n  {\r\n    \"persistedFaceId\": \"54fd1e73-3a72-4345-ad77-62f37a0bfb26\",\r\n    \"confidence\": 0.91251\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
@@ -1072,30 +964,18 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.6.26614.01",
+          "FxVersion/4.8.4515.0",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.4.0.0"
+          "OSVersion/10.0.19045.0",
+          "Microsoft.Azure.CognitiveServices.Vision.Face.FaceClient/2.7.0.0"
         ]
       },
       "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Wed, 15 May 2019 09:57:43 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "x-envoy-upstream-service-time": [
+          "75"
         ],
         "apim-request-id": [
-          "71e9b89a-daf5-432a-92c4-fd2be00e7731"
+          "8964f569-9fb5-4f0b-bb21-53a3fefa4465"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -1103,11 +983,17 @@
         "x-content-type-options": [
           "nosniff"
         ],
+        "x-ms-region": [
+          "West US 2"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.Face.Transaction=1"
+        ],
+        "Date": [
+          "Wed, 23 Nov 2022 01:35:43 GMT"
+        ],
         "Content-Length": [
           "0"
-        ],
-        "Expires": [
-          "-1"
         ]
       },
       "ResponseBody": "",

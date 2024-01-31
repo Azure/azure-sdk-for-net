@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
@@ -20,6 +21,19 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             }
 
             Assert.AreEqual(expected, properties.RecoverableDays);
+        }
+
+        [TestCase(null, null)]
+        [TestCase("", "")]
+        [TestCase("dGVzdA==", "74657374")]
+        public void X509ThumbprintString(string base64source, string expected)
+        {
+            CertificateProperties properties = new()
+            {
+                X509Thumbprint = base64source is not null ? Convert.FromBase64String(base64source) : null,
+            };
+
+            Assert.AreEqual(expected, properties.X509ThumbprintString);
         }
     }
 }

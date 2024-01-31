@@ -42,7 +42,7 @@ namespace QnAMaker.Tests
                 // Loop while operation is success
                 updateOp = OperationHelper.MonitorOperation(updateOp, client);
 
-                Assert.Equal(updateOp.OperationState, OperationStateType.Succeeded);
+                Assert.Equal(OperationStateType.Succeeded, updateOp.OperationState);
 
                 kbdata = client.Knowledgebase.DownloadAsync(kbid, EnvironmentType.Test).Result;
                 Assert.Equal("goodbye", kbdata.QnaDocuments[1].Answer);

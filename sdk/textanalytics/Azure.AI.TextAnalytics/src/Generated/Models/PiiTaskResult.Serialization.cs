@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -15,21 +14,26 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static PiiTaskResult DeserializePiiTaskResult(JsonElement element)
         {
-            Optional<PiiEntitiesResult> results = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            PiiEntitiesResult results = default;
+            AnalyzeTextTaskResultsKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("results"))
+                if (property.NameEquals("results"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     results = PiiEntitiesResult.DeserializePiiEntitiesResult(property.Value);
                     continue;
                 }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new AnalyzeTextTaskResultsKind(property.Value.GetString());
+                    continue;
+                }
             }
-            return new PiiTaskResult(results.Value);
+            return new PiiTaskResult(kind, results);
         }
     }
 }

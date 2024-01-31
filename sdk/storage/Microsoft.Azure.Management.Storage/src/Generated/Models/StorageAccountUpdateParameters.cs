@@ -370,10 +370,6 @@ namespace Microsoft.Azure.Management.Storage.Models
             {
                 CustomDomain.Validate();
             }
-            if (Encryption != null)
-            {
-                Encryption.Validate();
-            }
             if (SasPolicy != null)
             {
                 SasPolicy.Validate();

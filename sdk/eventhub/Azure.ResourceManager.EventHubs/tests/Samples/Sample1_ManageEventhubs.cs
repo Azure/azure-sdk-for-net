@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.EventHubs.Tests.Samples
             #endregion
             #region Snippet:Managing_EventHubs_CreateNamespace
             string namespaceName = "myNamespace";
-            EventHubNamespaceCollection namespaceCollection = resourceGroup.GetEventHubNamespaces();
-            EventHubNamespaceResource eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubNamespaceData(location))).Value;
+            EventHubsNamespaceCollection namespaceCollection = resourceGroup.GetEventHubsNamespaces();
+            EventHubsNamespaceResource eHNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new EventHubsNamespaceData(location))).Value;
             EventHubCollection eventHubCollection = eHNamespace.GetEventHubs();
             #endregion
             this.eventHubCollection = eventHubCollection;

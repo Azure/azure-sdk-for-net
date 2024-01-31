@@ -10,7 +10,7 @@ namespace Azure.Core.Amqp
     /// Represents the AMQP message ID.
     /// <seealso href="http://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-message-id-ulong"/>.
     /// </summary>
-    public struct AmqpMessageId : IEquatable<AmqpMessageId>
+    public readonly struct AmqpMessageId : IEquatable<AmqpMessageId>
     {
         private readonly string _messageIdString;
 

@@ -39,12 +39,13 @@ namespace Azure.Analytics.Purview.Scanning.Tests
                     }
                 }
             };
-            Response createResponse = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data));
+            Response createResponse = await client.CreateOrUpdateFilterAsync(RequestContent.Create(data), new());
             Assert.AreEqual(200, createResponse.Status);
             //Get
             Response getResponse = await client.GetFilterAsync(new());
             Assert.AreEqual(200, getResponse.Status);
-            JsonElement fetchBodyJson = JsonDocument.Parse(GetContentFromResponse(getResponse)).RootElement;
+            using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(getResponse));
+            JsonElement fetchBodyJson = jsonDocument.RootElement;
             Assert.AreEqual("https://foo.file.core.windows.net/share1/user/temp", fetchBodyJson.GetProperty("properties").GetProperty("excludeUriPrefixes")[0].GetString());
         }
         [RecordedTest]
@@ -53,12 +54,13 @@ namespace Azure.Analytics.Purview.Scanning.Tests
             var client = GetPurviewScanClient("test-datasource1014", "test-scan1014");
             string runUUID = "32767c50-ccd7-c3fd-5aea-94abe54044de";
             //Run
-            Response runScanResponse = await client.RunScanAsync(runUUID);
+            Response runScanResponse = await client.RunScanAsync(runUUID, null, new());
             Assert.AreEqual(202, runScanResponse.Status);
             //Get list
             var getScanRunListResponseList = client.GetRunsAsync(new()).GetAsyncEnumerator();
             await getScanRunListResponseList.MoveNextAsync();
-            JsonElement getScanRunListBodyJson = JsonDocument.Parse(getScanRunListResponseList.Current).RootElement;
+            using var jsonDocument = JsonDocument.Parse(getScanRunListResponseList.Current);
+            JsonElement getScanRunListBodyJson = jsonDocument.RootElement;
             Assert.AreEqual(runUUID, getScanRunListBodyJson.GetProperty("id").GetString());
             //Cancel
             Response cancelScanResponse = await client.CancelScanAsync(runUUID, new());
@@ -94,7 +96,7 @@ namespace Azure.Analytics.Purview.Scanning.Tests
             Response createResponse = await client.CreateOrUpdateTriggerAsync(RequestContent.Create(data));
             Assert.AreEqual(201, createResponse.Status);
             //Delete
-            Response deleteResponse = await client.DeleteTriggerAsync();
+            Response deleteResponse = await client.DeleteTriggerAsync(new());
             Assert.AreEqual(200, deleteResponse.Status);
         }
         [RecordedTest]
@@ -127,10 +129,11 @@ namespace Azure.Analytics.Purview.Scanning.Tests
             //Get
             Response getResponse = await client.GetPropertiesAsync(new());
             Assert.AreEqual(200, getResponse.Status);
-            JsonElement getBodyJson = JsonDocument.Parse(GetContentFromResponse(getResponse)).RootElement;
+            using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(getResponse));
+            JsonElement getBodyJson = jsonDocument.RootElement;
             Assert.AreEqual("datasources/test-datasource1009/scans/test-scan1009-2", getBodyJson.GetProperty("id").GetString());
             //Delete
-            Response deleteResponse = await client.DeleteAsync();
+            Response deleteResponse = await client.DeleteAsync(new());
             Assert.AreEqual(200, deleteResponse.Status);
         }
 

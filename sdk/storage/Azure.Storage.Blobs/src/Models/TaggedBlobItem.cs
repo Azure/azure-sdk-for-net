@@ -26,8 +26,8 @@ namespace Azure.Storage.Blobs.Models
         public Tags Tags { get; internal set; }
 
         /// <summary>
-        /// Prevent direct instantiation of FilterBlobItem instances.
-        /// You can use BlobsModelFactory.FilterBlobItem instead.
+        /// Prevent direct instantiation of TaggedBlobItem instances.
+        /// You can use BlobsModelFactory.TaggedBlobItem instead.
         /// </summary>
         internal TaggedBlobItem() { }
     }

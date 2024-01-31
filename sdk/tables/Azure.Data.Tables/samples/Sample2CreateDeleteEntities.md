@@ -8,14 +8,13 @@ A `TableClient` is needed to perform table-level operations like inserting and d
 - Call `GetTableClient` from the `TableServiceClient` with the table name.
 
 ```C# Snippet:TablesSample1GetTableClient
-string tableName = "OfficeSupplies1p2";
-var tableClient = serviceClient.GetTableClient(tableName);
+var tableClient2 = serviceClient.GetTableClient(tableName);
 ```
 
 - Create a `TableClient` with a SAS URI, an endpoint and `TableSharedKeyCredential`, or a connection string.
 
 ```C# Snippet:TablesSample1CreateTableClient
-var tableClient = new TableClient(
+var tableClient3 = new TableClient(
     new Uri(storageUri),
     tableName,
     new TableSharedKeyCredential(accountName, storageAccountKey));
@@ -58,7 +57,7 @@ var strongEntity = new OfficeSupplyEntity
     Quantity = 50
 };
 
-Console.WriteLine($"{entity.RowKey}: {strongEntity.Product} costs ${strongEntity.Price}.");
+Console.WriteLine($"{tableEntity.RowKey}: {strongEntity.Product} costs ${strongEntity.Price}.");
 ```
 
 ### Dictionary entity
@@ -69,23 +68,23 @@ Properties accessed using the indexer `[]` will be typed as an `object`, but `Ta
 
 ```C# Snippet:TablesSample2CreateDictionaryEntity
 // Make a dictionary entity by defining a <see cref="TableEntity">.
-var entity = new TableEntity(partitionKey, rowKey)
+var tableEntity = new TableEntity(partitionKey, rowKey)
 {
     { "Product", "Marker Set" },
     { "Price", 5.00 },
     { "Quantity", 21 }
 };
 
-Console.WriteLine($"{entity.RowKey}: {entity["Product"]} costs ${entity.GetDouble("Price")}.");
+Console.WriteLine($"{tableEntity.RowKey}: {tableEntity["Product"]} costs ${tableEntity.GetDouble("Price")}.");
 ```
 
 ## Add an entity
 
-To add the entity to the table, invoke `CreateEntity` and pass in the newly created entity.
+To add the entity to the table, invoke `AddEntity` and pass in the newly created entity.
 
 ```C# Snippet:TablesSample2AddEntity
 // Add the newly created entity.
-tableClient.AddEntity(entity);
+tableClient.AddEntity(tableEntity);
 ```
 
 ## Delete an entity
@@ -96,8 +95,3 @@ To delete an entity, invoke `DeleteEntity` and pass in its partition and row key
 // Delete the entity given the partition and row key.
 tableClient.DeleteEntity(partitionKey, rowKey);
 ```
-
----
-To see the full example source files, see:
-- [Synchronous Create and Delete Entities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample2_CreateDeleteEntities.cs)
-- [Asynchronous Create and Delete Entities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample2_CreateDeleteEntitiesAsync.cs)

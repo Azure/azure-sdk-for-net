@@ -24,10 +24,10 @@ namespace Azure.ResourceManager
         private TenantResource _tenant;
         private SubscriptionResource _defaultSubscription;
         private readonly ClientDiagnostics _subscriptionClientDiagnostics;
+        private bool? _canUseTagResource;
 
-        private Dictionary<ResourceType, string> ApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
-
-        internal ConcurrentDictionary<string, Dictionary<string, string>> ResourceApiVersionCache { get; } = new ConcurrentDictionary<string, Dictionary<string, string>>();
+        internal virtual Dictionary<ResourceType, string> ApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
+        internal ConcurrentDictionary<string, Dictionary<string, string>> ResourceApiVersionCache { get; } = new ConcurrentDictionary<string, Dictionary<string, string>>(StringComparer.OrdinalIgnoreCase);
         internal ConcurrentDictionary<string, string> NamespaceVersionCache { get; } = new ConcurrentDictionary<string, string>();
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="defaultSubscriptionId"> The id of the default Azure subscription. </param>
         /// <exception cref="ArgumentNullException"> If <see cref="TokenCredential"/> is null. </exception>
-        public ArmClient(TokenCredential credential, string defaultSubscriptionId): this(credential, defaultSubscriptionId, default)
+        public ArmClient(TokenCredential credential, string defaultSubscriptionId) : this(credential, defaultSubscriptionId, default)
         {
         }
 
@@ -88,17 +88,31 @@ namespace Azure.ResourceManager
                 new SubscriptionResource(this, SubscriptionResource.CreateResourceIdentifier(defaultSubscriptionId));
         }
 
+        internal virtual bool CanUseTagResource(CancellationToken cancellationToken = default)
+        {
+            if (_canUseTagResource == null)
+            {
+                var tagRp = GetDefaultSubscription(cancellationToken).GetResourceProvider(TagResource.ResourceType.Namespace, cancellationToken: cancellationToken);
+                _canUseTagResource = tagRp.Value.Data.ResourceTypes.Any(rp => rp.ResourceType == TagResource.ResourceType.Type);
+            }
+            return _canUseTagResource.Value;
+        }
+
+        internal virtual async Task<bool> CanUseTagResourceAsync(CancellationToken cancellationToken = default)
+        {
+            if (_canUseTagResource == null)
+            {
+                var tagRp = await GetDefaultSubscription(cancellationToken).GetResourceProviderAsync(TagResource.ResourceType.Namespace, cancellationToken: cancellationToken).ConfigureAwait(false);
+                _canUseTagResource = tagRp.Value.Data.ResourceTypes.Any(rp => rp.ResourceType == TagResource.ResourceType.Type);
+            }
+            return _canUseTagResource.Value;
+        }
+
         private void CopyApiVersionOverrides(ArmClientOptions options)
         {
             foreach (var keyValuePair in options.ResourceApiVersionOverrides)
             {
                 ApiVersionOverrides.Add(keyValuePair.Key, keyValuePair.Value);
-                if (!ResourceApiVersionCache.TryGetValue(keyValuePair.Key.Namespace, out var apiVersionCache))
-                {
-                    apiVersionCache = new Dictionary<string, string>();
-                    ResourceApiVersionCache.TryAdd(keyValuePair.Key.Namespace, apiVersionCache);
-                }
-                apiVersionCache.Add(keyValuePair.Key.Type, keyValuePair.Value);
             }
         }
 
@@ -221,18 +235,34 @@ namespace Azure.ResourceManager
         public virtual GenericResourceCollection GetGenericResources() => _tenant.GetGenericResources();
 
         /// <summary> Gets all resource providers for a subscription. </summary>
-        /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
+        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Pageable<TenantResourceProvider> GetTenantResourceProviders(int? top = null, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantResourceProviders(top, expand, cancellationToken);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete as the `top` parameter is not supported by service and will be removed in a future release.", false)]
+        public virtual Pageable<TenantResourceProvider> GetTenantResourceProviders(int? top, string expand, CancellationToken cancellationToken = default) => _tenant.GetTenantResourceProviders(expand, cancellationToken);
 
         /// <summary> Gets all resource providers for a subscription. </summary>
-        /// <param name="top"> The number of results to return. If null is passed returns all deployments. </param>
+        /// <param name="top"> [This parameter is no longer supported.] The number of results to return. </param>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual AsyncPageable<TenantResourceProvider> GetTenantResourceProvidersAsync(int? top = null, string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantResourceProvidersAsync(top, expand, cancellationToken);
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete as the `top` parameter is not supported by service and will be removed in a future release.", false)]
+        public virtual AsyncPageable<TenantResourceProvider> GetTenantResourceProvidersAsync(int? top, string expand, CancellationToken cancellationToken = default) => _tenant.GetTenantResourceProvidersAsync(expand, cancellationToken);
+
+        /// <summary> Gets all resource providers for a subscription. </summary>
+        /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Pageable<TenantResourceProvider> GetTenantResourceProviders(string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantResourceProviders(expand, cancellationToken);
+
+        /// <summary> Gets all resource providers for a subscription. </summary>
+        /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<TenantResourceProvider> GetTenantResourceProvidersAsync(string expand = null, CancellationToken cancellationToken = default) => _tenant.GetTenantResourceProvidersAsync(expand, cancellationToken);
 
         /// <summary> Gets the specified resource provider at the tenant level. </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
@@ -266,6 +296,20 @@ namespace Azure.ResourceManager
             where T : ArmResource
         {
             return resourceFactory();
+        }
+
+        private readonly ConcurrentDictionary<Type, object> _clientCache = new ConcurrentDictionary<Type, object>();
+
+        /// <summary>
+        /// Gets a cached client to use for extension methods.
+        /// </summary>
+        /// <typeparam name="T"> The type of client to get. </typeparam>
+        /// <param name="clientFactory"> The constructor factory for the client. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual T GetCachedClient<T>(Func<ArmClient, T> clientFactory)
+            where T : class
+        {
+            return _clientCache.GetOrAdd(typeof(T), (type) => { return clientFactory(this); }) as T;
         }
     }
 }

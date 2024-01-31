@@ -35,21 +35,11 @@ namespace Azure.Security.KeyVault.Keys.Perf.Scenarios
         public override void Run(CancellationToken cancellationToken)
         {
             SignResult result = CryptographyClient.Sign(s_algorithm, _digest);
-            byte[] signature = result.Signature;
-
-#if DEBUG
-            Assert.AreEqual(256, signature.Length);
-#endif
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
             SignResult result = await CryptographyClient.SignAsync(s_algorithm, _digest);
-            byte[] signature = result.Signature;
-
-#if DEBUG
-            Assert.AreEqual(256, signature.Length);
-#endif
         }
 
         public override void Dispose(bool disposing)

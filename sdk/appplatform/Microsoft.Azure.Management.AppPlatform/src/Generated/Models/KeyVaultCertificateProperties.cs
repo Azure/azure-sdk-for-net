@@ -47,12 +47,15 @@ namespace Microsoft.Azure.Management.AppPlatform.Models
         /// certificate.</param>
         /// <param name="subjectName">The subject name of certificate.</param>
         /// <param name="dnsNames">The domain list of certificate.</param>
+        /// <param name="provisioningState">Provisioning state of the
+        /// Certificate. Possible values include: 'Creating', 'Updating',
+        /// 'Succeeded', 'Failed', 'Deleting'</param>
         /// <param name="certVersion">The certificate version of key
         /// vault.</param>
         /// <param name="excludePrivateKey">Optional. If set to true, it will
         /// not import private key from key vault.</param>
-        public KeyVaultCertificateProperties(string vaultUri, string keyVaultCertName, string thumbprint = default(string), string issuer = default(string), string issuedDate = default(string), string expirationDate = default(string), string activateDate = default(string), string subjectName = default(string), IList<string> dnsNames = default(IList<string>), string certVersion = default(string), bool? excludePrivateKey = default(bool?))
-            : base(thumbprint, issuer, issuedDate, expirationDate, activateDate, subjectName, dnsNames)
+        public KeyVaultCertificateProperties(string vaultUri, string keyVaultCertName, string thumbprint = default(string), string issuer = default(string), string issuedDate = default(string), string expirationDate = default(string), string activateDate = default(string), string subjectName = default(string), IList<string> dnsNames = default(IList<string>), string provisioningState = default(string), string certVersion = default(string), bool? excludePrivateKey = default(bool?))
+            : base(thumbprint, issuer, issuedDate, expirationDate, activateDate, subjectName, dnsNames, provisioningState)
         {
             VaultUri = vaultUri;
             KeyVaultCertName = keyVaultCertName;

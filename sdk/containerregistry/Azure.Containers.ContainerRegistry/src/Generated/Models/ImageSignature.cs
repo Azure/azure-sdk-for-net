@@ -10,12 +10,12 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Signature of a signed manifest. </summary>
     internal partial class ImageSignature
     {
-        /// <summary> Initializes a new instance of ImageSignature. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageSignature"/>. </summary>
         internal ImageSignature()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageSignature. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageSignature"/>. </summary>
         /// <param name="header"> A JSON web signature. </param>
         /// <param name="signature"> A signature for the image manifest, signed by a libtrust private key. </param>
         /// <param name="protected"> The signed protected header. </param>

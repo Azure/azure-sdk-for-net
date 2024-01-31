@@ -6,13 +6,14 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> Tag attribute details. </summary>
     internal partial class TagAttributesBase
     {
-        /// <summary> Initializes a new instance of TagAttributesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagAttributesBase"/>. </summary>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
         /// <param name="createdOn"> Tag created time. </param>
@@ -20,14 +21,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="digest"/> is null. </exception>
         internal TagAttributesBase(string name, string digest, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (digest == null)
-            {
-                throw new ArgumentNullException(nameof(digest));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(digest, nameof(digest));
 
             Name = name;
             Digest = digest;
@@ -35,7 +30,7 @@ namespace Azure.Containers.ContainerRegistry
             LastUpdatedOn = lastUpdatedOn;
         }
 
-        /// <summary> Initializes a new instance of TagAttributesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagAttributesBase"/>. </summary>
         /// <param name="name"> Tag name. </param>
         /// <param name="digest"> Tag digest. </param>
         /// <param name="createdOn"> Tag created time. </param>

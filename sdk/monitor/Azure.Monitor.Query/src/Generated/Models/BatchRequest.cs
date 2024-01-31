@@ -8,23 +8,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> An array of requests. </summary>
     internal partial class BatchRequest
     {
-        /// <summary> Initializes a new instance of BatchRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchRequest"/>. </summary>
         /// <param name="requests"> An single request in a batch. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requests"/> is null. </exception>
         public BatchRequest(IEnumerable<BatchQueryRequest> requests)
         {
-            if (requests == null)
-            {
-                throw new ArgumentNullException(nameof(requests));
-            }
+            Argument.AssertNotNull(requests, nameof(requests));
 
             Requests = requests.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchRequest"/>. </summary>
+        /// <param name="requests"> An single request in a batch. </param>
+        internal BatchRequest(IList<BatchQueryRequest> requests)
+        {
+            Requests = requests;
         }
 
         /// <summary> An single request in a batch. </summary>

@@ -15,14 +15,14 @@ Use the client library for App Configuration to:
 
 Install the Azure App Configuration client library for .NET with [NuGet][nuget]:
 
-```PowerShell
-Install-Package Azure.Data.AppConfiguration
+```dotnetcli
+dotnet add package Azure.Data.AppConfiguration
 ```
 
 ### Prerequisites
 
 * An [Azure subscription][azure_sub].
-* An existing [Configuration Store][configuration_store].  
+* An existing [Configuration Store][configuration_store].
 
 If you need to create a Configuration Store, you can use the Azure Portal or [Azure CLI][azure_cli].
 
@@ -60,8 +60,8 @@ var client = new ConfigurationClient(connectionString);
 Client subscription key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity]. To use the [DefaultAzureCredential][azure_identity_dac] provider shown below,
 or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
 
-```PowerShell
-Install-Package Azure.Identity
+```dotnetcli
+dotnet add package Azure.Identity
 ```
 
 You will also need to [register a new AAD application][aad_register_app] and [grant access][aad_grant_access] to Configuration Store by assigning the `"App Configuration Data Reader"` or `"App Configuration Data Owner"` role to your service principal.
@@ -83,6 +83,8 @@ The [Label][label_concept] property of a Configuration Setting provides a way to
 
 For example, MaxRequests may be 100 in "NorthAmerica" and 200 in "WestEurope". By creating a Configuration Setting named MaxRequests with a label of "NorthAmerica" and another, only with a different value, with a "WestEurope" label, an application can seamlessly retrieve Configuration Settings as it runs in these two dimensions.
 
+Azure App Configuration allows users to create a point-in-time snapshot of their configuration store, providing them with the ability to treat settings as one consistent version. This feature enables applications to hold a consistent view of configuration, ensuring that there are no version mismatches to individual settings due to reading as updates were made.  Snapshots are immutable, ensuring that configuration can confidently be rolled back to a last-known-good configuration in the event of a problem.
+
 ### Thread safety
 
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
@@ -94,7 +96,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -106,6 +108,11 @@ The following sections provide several code snippets covering some of the most c
 * [Retrieve a Configuration Setting](#retrieve-a-configuration-setting)
 * [Update an existing Configuration Setting](#update-an-existing-configuration-setting)
 * [Delete a Configuration Setting](#delete-a-configuration-setting)
+* [Create a Snapshot](#create-a-snapshot)
+* [Retrieve a Snapshot](#retrieve-a-snapshot)
+* [Archive a Snapshot](#archive-a-snapshot)
+* [Recover a snapshot](#recover-a-snapshot)
+* [Retrieve all Snapshots](#retrieve-all-snapshots)
 
 ### Create a Configuration Setting
 
@@ -151,33 +158,67 @@ var client = new ConfigurationClient(connectionString);
 client.DeleteConfigurationSetting("some_key");
 ```
 
+### Create a Snapshot
+
+To create a snapshot, you need to instantiate the `ConfigurationSnapshot` class and specify filters to determine which configuration settings should be included. The creation process is a Long-Running Operation (LRO) and can be achieved by calling the `CreateSnapshot` method.
+
+```C# Snippet:AzConfigSample11_CreateSnapshot_AutomaticPolling
+var settingsFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter("some_key") };
+var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
+
+var snapshotName = "some_snapshot";
+var operation = client.CreateSnapshot(WaitUntil.Completed, snapshotName, settingsSnapshot);
+var createdSnapshot = operation.Value;
+Console.WriteLine($"Created configuration snapshot: {createdSnapshot.Name}, Status: {createdSnapshot.Status}");
+```
+
+### Retrieve a Snapshot
+
+Once a configuration snapshot is created, you can retrieve it using the `GetSnapshot` method.
+
+```C# Snippet:AzConfigSample11_GetSnapshot
+var snapshotName = "some_snapshot";
+ConfigurationSnapshot retrievedSnapshot = client.GetSnapshot(snapshotName);
+Console.WriteLine($"Retrieved configuration snapshot: {retrievedSnapshot.Name}, status: {retrievedSnapshot.Status}");
+```
+
+### Archive a Snapshot
+
+To archive a snapshot, you can utilize the `ArchiveSnapshot` method. This operation updates the status of the snapshot to `archived`.
+
+```C# Snippet:AzConfigSample11_ArchiveSnapshot
+var snapshotName = "some_snapshot";
+ConfigurationSnapshot archivedSnapshot = client.ArchiveSnapshot(snapshotName);
+Console.WriteLine($"Archived configuration snapshot: {archivedSnapshot.Name}, status: {archivedSnapshot.Status}");
+```
+
+### Recover a snapshot
+
+You can recover an archived snapshot by using the `RecoverSnapshot` method. This operation updates the status of the snapshot to `ready`.
+
+```C# Snippet:AzConfigSample11_RecoverSnapshot
+var snapshotName = "some_snapshot";
+ConfigurationSnapshot recoveredSnapshot = client.RecoverSnapshot(snapshotName);
+Console.WriteLine($"Recovered configuration snapshot: {recoveredSnapshot.Name}, status: {recoveredSnapshot.Status}");
+```
+
+### Retrieve all Snapshots
+
+To retrieve all snapshots, you can use the `GetSnapshots` method.
+
+```C# Snippet:AzConfigSample11_GetSnapshots
+var count = 0;
+foreach (var item in client.GetSnapshots(new SnapshotSelector()))
+{
+    count++;
+    Console.WriteLine($"Retrieved configuration snapshot: {item.Name}, status {item.Status}");
+}
+Console.WriteLine($"Total number of snapshots retrieved: {count}");
+```
+
 ## Troubleshooting
 
-When you interact with Azure App Configuration using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for [REST API][azconfig_rest] requests.
-
-For example, if you try to retrieve a Configuration Setting that doesn't exist in your Configuration Store, a `404` error is returned, indicating `Not Found`.
-
-```C# Snippet:ThrowNotFoundError
-string connectionString = "<connection_string>";
-var client = new ConfigurationClient(connectionString);
-ConfigurationSetting setting = client.GetConfigurationSetting("nonexistent_key");
-```
-
-You will notice that additional information is logged, like the Client Request ID of the operation.
-
-```shell
-Message: Azure.RequestFailedException : StatusCode: 404, ReasonPhrase: 'Not Found', Version: 1.1, Content: System.Net.Http.NoWriteNoSeekStreamContent, Headers:
-{
-  Connection: keep-alive
-  Date: Thu, 11 Apr 2019 00:16:57 GMT
-  Server: nginx/1.13.9
-  x-ms-client-request-id: cc49570c-9143-411e-a6c8-3287dd114034
-  x-ms-request-id: 2ad025f7-1fe8-4da0-8648-8290e774ed61
-  x-ms-correlation-request-id: 2ad025f7-1fe8-4da0-8648-8290e774ed61
-  Strict-Transport-Security: max-age=15724800; includeSubDomains;
-  Content-Length: 0
-}
-```
+See our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/appconfiguration/Azure.Data.AppConfiguration/TROUBLESHOOTING.md) for details on how to diagnose various failure scenarios.
 
 ## Next steps
 
@@ -191,7 +232,8 @@ Several App Configuration client library samples are available to you in this Gi
 * [Read revision history](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample4_ReadRevisionHistory.md): Read the revision history of a configuration setting that has been changed.
 * [Get a setting if changed](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample5_GetSettingIfChanged.md): Save bandwidth by using a conditional request to retrieve a setting only if it is different from your local copy.
 * [Update a setting if it hasn't changed](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample6_UpdateSettingIfUnchanged.md): Prevent lost updates by using optimistic concurrency to update a setting only if your local updates were applied to the same version as the resource in the configuration store.
-* [Create a mock client](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample7_MockClient.md): Mock a client for testing using the [Moq library][moq].
+* [Configuration settings snapshot](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/Sample11_SettingsSnapshot.md): Create, retrieve and update status of a configuration settings snapshot.
+* [Create a mock client](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking): Mock a client for testing.
 
  For more details see the [samples README][samples_readme].
 
@@ -220,7 +262,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [source_root]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/src
 [source_samples]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples
 [reference_docs]: https://azure.github.io/azure-sdk-for-net/appconfiguration.html
-[azconfig_rest]: https://docs.microsoft.com/azure/azure-app-configuration/rest-api
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [configuration_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/src/ConfigurationClient.cs
@@ -229,7 +270,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [nuget]: https://www.nuget.org/
 [package]: https://www.nuget.org/packages/Azure.Data.AppConfiguration/
 [samples_readme]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/appconfiguration/Azure.Data.AppConfiguration/samples/README.md
-[moq]: https://github.com/Moq/moq4/
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/

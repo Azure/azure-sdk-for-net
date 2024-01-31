@@ -112,6 +112,16 @@ namespace Microsoft.Azure.Management.Maintenance
         public virtual IConfigurationAssignmentsWithinSubscriptionOperations ConfigurationAssignmentsWithinSubscription { get; private set; }
 
         /// <summary>
+        /// Gets the IConfigurationAssignmentsForSubscriptionsOperations.
+        /// </summary>
+        public virtual IConfigurationAssignmentsForSubscriptionsOperations ConfigurationAssignmentsForSubscriptions { get; private set; }
+
+        /// <summary>
+        /// Gets the IConfigurationAssignmentsForResourceGroupOperations.
+        /// </summary>
+        public virtual IConfigurationAssignmentsForResourceGroupOperations ConfigurationAssignmentsForResourceGroup { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -369,10 +379,12 @@ namespace Microsoft.Azure.Management.Maintenance
             MaintenanceConfigurationsForResourceGroup = new MaintenanceConfigurationsForResourceGroupOperations(this);
             ApplyUpdateForResourceGroup = new ApplyUpdateForResourceGroupOperations(this);
             ConfigurationAssignmentsWithinSubscription = new ConfigurationAssignmentsWithinSubscriptionOperations(this);
+            ConfigurationAssignmentsForSubscriptions = new ConfigurationAssignmentsForSubscriptionsOperations(this);
+            ConfigurationAssignmentsForResourceGroup = new ConfigurationAssignmentsForResourceGroupOperations(this);
             Operations = new Operations(this);
             Updates = new UpdatesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-09-01-preview";
+            ApiVersion = "2023-04-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

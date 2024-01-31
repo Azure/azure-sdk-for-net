@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -15,7 +15,13 @@ using Microsoft.Identity.Client;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using data from Visual Studio Code.
+    /// Enables authentication to Microsoft Entra ID as the user signed in to Visual Studio Code via
+    /// the 'Azure Account' extension.
+    ///
+    /// It's a <see href="https://github.com/Azure/azure-sdk-for-net/issues/27263">known issue</see> that `VisualStudioCodeCredential`
+    /// doesn't work with <see href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.azure-account">Azure Account extension</see>
+    /// versions newer than <b>0.9.11</b>. A long-term fix to this problem is in progress. In the meantime, consider authenticating
+    /// with <see cref="AzureCliCredential"/>.
     /// </summary>
     public class VisualStudioCodeCredential : TokenCredential
     {
@@ -24,10 +30,12 @@ namespace Azure.Identity
         private readonly IVisualStudioCodeAdapter _vscAdapter;
         private readonly IFileSystemService _fileSystem;
         private readonly CredentialPipeline _pipeline;
-        private readonly string _tenantId;
+        internal string TenantId { get; }
+        internal string[] AdditionallyAllowedTenantIds { get; }
         private const string _commonTenant = "common";
         private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/vscodecredential/troubleshoot";
         internal MsalPublicClient Client { get; }
+        internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
         /// Creates a new instance of the <see cref="VisualStudioCodeCredential"/>.
@@ -43,11 +51,13 @@ namespace Azure.Identity
         internal VisualStudioCodeCredential(VisualStudioCodeCredentialOptions options, CredentialPipeline pipeline, MsalPublicClient client, IFileSystemService fileSystem,
             IVisualStudioCodeAdapter vscAdapter)
         {
-            _tenantId = options?.TenantId ?? _commonTenant;
+            TenantId = options?.TenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
-            Client = client ?? new MsalPublicClient(_pipeline, options?.TenantId, ClientId, null, options);
+            Client = client ?? new MsalPublicClient(_pipeline, TenantId, ClientId, null, options);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _vscAdapter = vscAdapter ?? GetVscAdapter();
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 
         /// <inheritdoc />
@@ -65,7 +75,8 @@ namespace Azure.Identity
             try
             {
                 GetUserSettings(out var tenant, out var environmentName);
-                var tenantId = TenantIdResolver.Resolve(tenant, requestContext);
+
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, AdditionallyAllowedTenantIds) ?? tenant;
 
                 if (string.Equals(tenantId, Constants.AdfsTenantId, StringComparison.Ordinal))
                 {
@@ -76,7 +87,7 @@ namespace Azure.Identity
                 string storedCredentials = GetStoredCredentials(environmentName);
 
                 var result = await Client
-                    .AcquireTokenByRefreshTokenAsync(requestContext.Scopes, requestContext.Claims, storedCredentials, cloudInstance, tenantId, async, cancellationToken)
+                    .AcquireTokenByRefreshTokenAsync(requestContext.Scopes, requestContext.Claims, storedCredentials, cloudInstance, tenantId, requestContext.IsCaeEnabled, async, cancellationToken)
                     .ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
@@ -128,7 +139,7 @@ namespace Azure.Identity
         private void GetUserSettings(out string tenant, out string environmentName)
         {
             var path = _vscAdapter.GetUserSettingsPath();
-            tenant = _tenantId;
+            tenant = TenantId ?? _commonTenant;
             environmentName = "AzureCloud";
 
             try

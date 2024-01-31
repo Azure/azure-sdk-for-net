@@ -10,20 +10,34 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class HealthcareRelationEntity
+    internal partial class HealthcareRelationEntity : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("ref"u8);
+            writer.WriteStringValue(Ref);
+            writer.WritePropertyName("role"u8);
+            writer.WriteStringValue(Role);
+            writer.WriteEndObject();
+        }
+
         internal static HealthcareRelationEntity DeserializeHealthcareRelationEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string @ref = default;
             string role = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ref"))
+                if (property.NameEquals("ref"u8))
                 {
                     @ref = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("role"))
+                if (property.NameEquals("role"u8))
                 {
                     role = property.Value.GetString();
                     continue;

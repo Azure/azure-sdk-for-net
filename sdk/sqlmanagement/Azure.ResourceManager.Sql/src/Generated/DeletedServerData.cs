@@ -6,42 +6,80 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the DeletedServer data model. </summary>
+    /// <summary>
+    /// A class representing the DeletedServer data model.
+    /// A deleted server.
+    /// </summary>
     public partial class DeletedServerData : ResourceData
     {
-        /// <summary> Initializes a new instance of DeletedServerData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeletedServerData"/>. </summary>
         public DeletedServerData()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="version"> The version of the deleted server. </param>
-        /// <param name="deletionOn"> The deletion time of the deleted server. </param>
+        /// <param name="deletedOn"> The deletion time of the deleted server. </param>
         /// <param name="originalId"> The original ID of the server before deletion. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
-        internal DeletedServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, DateTimeOffset? deletionOn, string originalId, string fullyQualifiedDomainName) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeletedServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, DateTimeOffset? deletedOn, ResourceIdentifier originalId, string fullyQualifiedDomainName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Version = version;
-            DeletionOn = deletionOn;
+            DeletedOn = deletedOn;
             OriginalId = originalId;
             FullyQualifiedDomainName = fullyQualifiedDomainName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The version of the deleted server. </summary>
         public string Version { get; }
         /// <summary> The deletion time of the deleted server. </summary>
-        public DateTimeOffset? DeletionOn { get; }
+        public DateTimeOffset? DeletedOn { get; }
         /// <summary> The original ID of the server before deletion. </summary>
-        public string OriginalId { get; }
+        public ResourceIdentifier OriginalId { get; }
         /// <summary> The fully qualified domain name of the server. </summary>
         public string FullyQualifiedDomainName { get; }
     }

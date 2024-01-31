@@ -14,20 +14,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> DatabricksNotebook activity. </summary>
     public partial class DatabricksNotebookActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of DatabricksNotebookActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabricksNotebookActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="notebookPath"> The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="notebookPath"/> is null. </exception>
         public DatabricksNotebookActivity(string name, object notebookPath) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (notebookPath == null)
-            {
-                throw new ArgumentNullException(nameof(notebookPath));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(notebookPath, nameof(notebookPath));
 
             NotebookPath = notebookPath;
             BaseParameters = new ChangeTrackingDictionary<string, object>();
@@ -35,10 +29,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "DatabricksNotebook";
         }
 
-        /// <summary> Initializes a new instance of DatabricksNotebookActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabricksNotebookActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -47,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="notebookPath"> The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </param>
         /// <param name="baseParameters"> Base parameters to be used for each run of this job.If the notebook takes a parameter that is not specified, the default value from the notebook will be used. </param>
         /// <param name="libraries"> A list of libraries to be installed on the cluster that will execute the job. </param>
-        internal DatabricksNotebookActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, object notebookPath, IDictionary<string, object> baseParameters, IList<IDictionary<string, object>> libraries) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal DatabricksNotebookActivity(string name, string type, string description, ActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, object notebookPath, IDictionary<string, object> baseParameters, IList<IDictionary<string, object>> libraries) : base(name, type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             NotebookPath = notebookPath;
             BaseParameters = baseParameters;

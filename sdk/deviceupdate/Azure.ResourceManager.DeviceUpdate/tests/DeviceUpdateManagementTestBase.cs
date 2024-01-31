@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
         protected async Task<DeviceUpdateInstanceResource> CreateInstance(DeviceUpdateAccountResource account, string instanceName)
         {
             DeviceUpdateInstanceData input = ResourceDataHelper.CreateInstanceData();
-            input.IotHubs.Add(new IotHubSettings("/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/DeviceUpdateResourceGroup/providers/Microsoft.Devices/IotHubs/orange-aducpsdktestaccount-iothub"));
+            input.IotHubs.Add(new DeviceUpdateIotHubSettings(new ResourceIdentifier("/subscriptions/a645d3be-5a4a-40ef-82a1-d5f5358a424c/resourcegroups/mfrintu/providers/Microsoft.Devices/IotHubs/orange-aducpsdktestaccount-hub")));
             var lro = await account.GetDeviceUpdateInstances().CreateOrUpdateAsync(WaitUntil.Completed, instanceName, input);
             return lro.Value;
         }

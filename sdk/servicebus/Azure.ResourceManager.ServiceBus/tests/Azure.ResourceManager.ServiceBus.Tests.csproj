@@ -3,9 +3,13 @@
     <ProjectReference Include="..\src\Azure.ResourceManager.ServiceBus.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\resources\Azure.ResourceManager.Resources\src\Azure.ResourceManager.Resources.csproj" />
-    <ProjectReference Include="..\..\..\storage\Azure.ResourceManager.Storage\src\Azure.ResourceManager.Storage.csproj" />
-    <ProjectReference Include="..\..\..\network\Azure.ResourceManager.Network\src\Azure.ResourceManager.Network.csproj" />
+    <PackageReference Include="Azure.ResourceManager.Network" />
     <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="Azure.ResourceManager.KeyVault" VersionOverride="1.0.0" />
+    <PackageReference Include="Azure.ResourceManager.ManagedServiceIdentities" VersionOverride="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
+    <Compile Include="..\..\..\..\common\ManagementTestShared\Temp\*.cs" LinkBase="TestShared" />
   </ItemGroup>
 </Project>

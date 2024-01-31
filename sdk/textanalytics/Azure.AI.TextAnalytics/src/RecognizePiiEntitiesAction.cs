@@ -42,15 +42,15 @@ namespace Azure.AI.TextAnalytics
         }
 
         /// <summary>
-        /// Gets or sets a value that, if set, indicates the version of the text
-        /// analytics model that will be used to generate the result.  For supported
+        /// Gets or sets a value that, if set, indicates the version of the Language service
+        /// model that will be used to generate the result.  For supported
         /// model versions, see operation-specific documentation, for example:
-        /// <see href="https://docs.microsoft.com/azure/cognitive-services/text-analytics/concepts/model-versioning#available-versions"/>.
+        /// <see href="https://docs.microsoft.com/azure/cognitive-services/language-service/concepts/model-lifecycle#available-versions"/>.
         /// </summary>
         public string ModelVersion { get; set; }
 
         /// <summary>
-        /// The default value of this property is 'true'. This means, Text Analytics service won't log your input text.
+        /// The default value of this property is 'true'. This means, the Language service won't log your input text.
         /// Setting this property to 'false', enables logging your input text for 48 hours, solely to allow for troubleshooting issues.
         /// <para>
         /// Please see Cognitive Services Compliance and Privacy notes at <see href="https://aka.ms/cs-compliance"/> for additional details,
@@ -58,13 +58,13 @@ namespace Azure.AI.TextAnalytics
         /// </para>
         /// </summary>
         /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/> and up.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V3_1"/>, <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_05_01"/>, and newer.
         /// </remarks>
         public bool? DisableServiceLogs { get; set; }
 
         /// <summary>
         /// Filters the response entities to ones only included in the specified domain.
-        /// For more information see <see href="https://aka.ms/tanerpii"/>.
+        /// For more information see <see href="https://aka.ms/azsdk/language/pii"/>.
         /// </summary>
         public PiiEntityDomain DomainFilter { get; set; }
 

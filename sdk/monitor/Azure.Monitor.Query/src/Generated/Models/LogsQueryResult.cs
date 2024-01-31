@@ -9,27 +9,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
     /// <summary> Contains the tables, columns &amp; rows resulting from a query. </summary>
     public partial class LogsQueryResult
     {
-        /// <summary> Initializes a new instance of LogsQueryResult. </summary>
-        /// <param name="allTables"> The list of tables, columns and rows. </param>
+        /// <summary> Initializes a new instance of <see cref="LogsQueryResult"/>. </summary>
+        /// <param name="allTables"> The results of the query in tabular format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="allTables"/> is null. </exception>
         internal LogsQueryResult(IEnumerable<LogsTable> allTables)
         {
-            if (allTables == null)
-            {
-                throw new ArgumentNullException(nameof(allTables));
-            }
+            Argument.AssertNotNull(allTables, nameof(allTables));
 
             AllTables = allTables.ToList();
         }
 
-        /// <summary> Initializes a new instance of LogsQueryResult. </summary>
-        /// <param name="allTables"> The list of tables, columns and rows. </param>
+        /// <summary> Initializes a new instance of <see cref="LogsQueryResult"/>. </summary>
+        /// <param name="allTables"> The results of the query in tabular format. </param>
         /// <param name="statistics"> Any object. </param>
         /// <param name="visualization"> Any object. </param>
         /// <param name="error"> Any object. </param>

@@ -6,47 +6,81 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SyncAgent data model. </summary>
+    /// <summary>
+    /// A class representing the SyncAgent data model.
+    /// An Azure SQL Database sync agent.
+    /// </summary>
     public partial class SyncAgentData : ResourceData
     {
-        /// <summary> Initializes a new instance of SyncAgentData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SyncAgentData"/>. </summary>
         public SyncAgentData()
         {
         }
 
-        /// <summary> Initializes a new instance of SyncAgentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncAgentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="namePropertiesName"> Name of the sync agent. </param>
         /// <param name="syncDatabaseId"> ARM resource id of the sync database in the sync agent. </param>
         /// <param name="lastAliveOn"> Last alive time of the sync agent. </param>
         /// <param name="state"> State of the sync agent. </param>
         /// <param name="isUpToDate"> If the sync agent version is up to date. </param>
-        /// <param name="expiryOn"> Expiration time of the sync agent version. </param>
+        /// <param name="expireOn"> Expiration time of the sync agent version. </param>
         /// <param name="version"> Version of the sync agent. </param>
-        internal SyncAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string namePropertiesName, string syncDatabaseId, DateTimeOffset? lastAliveOn, SyncAgentState? state, bool? isUpToDate, DateTimeOffset? expiryOn, string version) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SyncAgentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier syncDatabaseId, DateTimeOffset? lastAliveOn, SyncAgentState? state, bool? isUpToDate, DateTimeOffset? expireOn, string version, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            NamePropertiesName = namePropertiesName;
             SyncDatabaseId = syncDatabaseId;
             LastAliveOn = lastAliveOn;
             State = state;
             IsUpToDate = isUpToDate;
-            ExpiryOn = expiryOn;
+            ExpireOn = expireOn;
             Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the sync agent. </summary>
-        public string NamePropertiesName { get; }
         /// <summary> ARM resource id of the sync database in the sync agent. </summary>
-        public string SyncDatabaseId { get; set; }
+        public ResourceIdentifier SyncDatabaseId { get; set; }
         /// <summary> Last alive time of the sync agent. </summary>
         public DateTimeOffset? LastAliveOn { get; }
         /// <summary> State of the sync agent. </summary>
@@ -54,7 +88,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> If the sync agent version is up to date. </summary>
         public bool? IsUpToDate { get; }
         /// <summary> Expiration time of the sync agent version. </summary>
-        public DateTimeOffset? ExpiryOn { get; }
+        public DateTimeOffset? ExpireOn { get; }
         /// <summary> Version of the sync agent. </summary>
         public string Version { get; }
     }

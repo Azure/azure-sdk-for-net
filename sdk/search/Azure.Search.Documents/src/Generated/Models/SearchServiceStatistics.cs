@@ -6,26 +6,21 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Response from a get service statistics request. If successful, it includes service level counters and limits. </summary>
     public partial class SearchServiceStatistics
     {
-        /// <summary> Initializes a new instance of SearchServiceStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchServiceStatistics"/>. </summary>
         /// <param name="counters"> Service level resource counters. </param>
         /// <param name="limits"> Service level general limits. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="counters"/> or <paramref name="limits"/> is null. </exception>
         internal SearchServiceStatistics(SearchServiceCounters counters, SearchServiceLimits limits)
         {
-            if (counters == null)
-            {
-                throw new ArgumentNullException(nameof(counters));
-            }
-            if (limits == null)
-            {
-                throw new ArgumentNullException(nameof(limits));
-            }
+            Argument.AssertNotNull(counters, nameof(counters));
+            Argument.AssertNotNull(limits, nameof(limits));
 
             Counters = counters;
             Limits = limits;

@@ -81,7 +81,7 @@ namespace Azure.Core
         public bool IsLoggingEnabled { get; set; } = true;
 
         /// <summary>
-        /// Gets or sets value indicating whether distributed tracing spans are going to be created for this clients methods calls and HTTP calls.
+        /// Gets or sets value indicating whether distributed tracing activities (<see cref="System.Diagnostics.Activity"/>) are going to be created for the clients methods calls and HTTP calls.
         /// </summary>
         public bool IsDistributedTracingEnabled { get; set; } = true;
 

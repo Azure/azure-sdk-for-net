@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2020_06_30, SearchClientOptions.ServiceVersion.V2021_04_30_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_11_01, SearchClientOptions.ServiceVersion.V2023_10_01_Preview)]
     public class SearchIndexClientTests : SearchTestBase
     {
         public SearchIndexClientTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -108,6 +108,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2023_10_01_Preview)]
         public async Task GetServiceStatistics()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
@@ -144,12 +145,14 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2023_10_01_Preview)]
         public async Task CreateIndex()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
 
             resources.IndexName = Recording.Random.GetName(8);
             SearchIndex expectedIndex = SearchResources.GetHotelIndex(resources.IndexName);
+            ((ISearchFieldAttribute)new SearchableFieldAttribute()).SetField(expectedIndex.Fields.Where(f => f.Name.Equals("descriptionVector")).FirstOrDefault());
 
             SearchIndexClient client = resources.GetIndexClient();
             SearchIndex actualIndex = await client.CreateIndexAsync(expectedIndex);
@@ -177,6 +180,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2023_10_01_Preview)]
         public async Task UpdateIndex()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -253,7 +257,7 @@ namespace Azure.Search.Documents.Tests
 
             // TODO: Replace with comparison of actual SearchIndex once test framework uses Azure.Search.Documents instead.
             Assert.AreEqual(resources.IndexName, index.Name);
-            Assert.AreEqual(14, index.Fields.Count);
+            Assert.AreEqual(15, index.Fields.Count);
         }
 
         [Test]
@@ -448,7 +452,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
-        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2021_04_30_Preview)]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2023_10_01_Preview)]
         public async Task AnalyzeTextWithNormalizer()
         {
             await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);

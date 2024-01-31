@@ -2,12 +2,6 @@ parameters:
 - name: SDKType
   type: string
   default: all
-- name: ServiceDirectory
-  type: string
-  default: not-specified
-- name: ServiceToTest
-  type: string
-  default: ''
 - name: TestSetupSteps
   type: stepList
   default: []
@@ -24,6 +18,12 @@ parameters:
 - name: CloudConfig
   type: object
   default: {}
+- name: ProjectListOverrideFilePropertyName
+  type: string
+  default: ''
+- name: ServiceDirectory
+  type: string
+  default: ''
 
 jobs:
   - job:
@@ -43,10 +43,23 @@ jobs:
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
           parameters:
+            ${{ if eq(parameters.ProjectListOverrideFilePropertyName, '') }}:
               Paths:
                 - "/*"
                 - "!SessionRecords"
-                - "/sdk/${{ parameters.ServiceToTest }}/**/SessionRecords"
+                - "/sdk/${{ parameters.ServiceDirectory }}/**/SessionRecords/*"
+            ${{ else }}:
+              Paths:
+                - "/*"
+                - "!SessionRecords"
+                - "/sdk/*/**/SessionRecords/*"
+      - ${{ if ne(parameters.ProjectListOverrideFilePropertyName, '') }}:
+        - task: DownloadPipelineArtifact@2
+          inputs:
+            artifact: DependencyTestProjectReferences
+            patterns: "**/$(${{ parameters.ProjectListOverrideFilePropertyName }})"
+            path: $(Build.SourcesDirectory)
+
       - pwsh: |
           $(Build.SourcesDirectory)/eng/common/scripts/trust-proxy-certificate.ps1
         displayName: 'Language Specific Certificate Trust'
@@ -63,17 +76,36 @@ jobs:
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
         parameters:
           NuGetCacheKey: Test
+      - pwsh: |
+          if ("${{ parameters.ProjectListOverrideFilePropertyName }}" -ne '') {
+            Write-Host "##vso[task.setvariable variable=ProjectListOverrideFileName]$(${{ parameters.ProjectListOverrideFilePropertyName }})"
+            Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(Build.SourcesDirectory)\sdk\**\coverage.cobertura.xml"
+          }
+          else
+          {
+            Write-Host "##vso[task.setvariable variable=ProjectListOverrideFileName]"
+            Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**\coverage.cobertura.xml"
+          }
+        displayName: Set variable for the project list file and coverage directory
+      - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
+        parameters:
+          LogFilePath: $(Build.ArtifactStagingDirectory)/test.binlog
       - script: >-
-          dotnet test eng/service.proj --filter "(TestCategory!=Manually) & (TestCategory!=Live)" --framework $(TestTargetFramework)
+          dotnet test eng/service.proj
+          --filter "(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))"
+          --framework $(TestTargetFramework)
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
+          --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TestTimeoutInMinutes}}minutes
           /p:SDKType=${{ parameters.SDKType }}
-          /p:ServiceDirectory=${{ parameters.ServiceToTest }}
+          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
           /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
           /p:RunApiCompat=false /p:InheritDocEnabled=false
           /p:Configuration=$(BuildConfiguration)
-          /p:CollectCoverage=$(CollectCoverage) /p:CodeCoverageDirectory=$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}
+          /p:CollectCoverage=$(CollectCoverage)
           /p:EnableSourceLink=false
+          /p:ProjectListOverrideFile=$(ProjectListOverrideFileName)
           $(AdditionalTestArguments)
+          $(DiagnosticArguments)
         displayName: "Build & Test ($(TestTargetFramework))"
       - task: PublishTestResults@2
         condition: always()
@@ -83,11 +115,22 @@ jobs:
           testRunTitle: "$(OSName) $(TestTargetFramework)"
           testResultsFormat: "VSTest"
           mergeTestResults: true
+      - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
+        parameters:
+          ArtifactPath: $(Build.ArtifactStagingDirectory)/test.binlog
+          ArtifactName: binlog_$(Agent.JobName)
+          CustomCondition: and(ne(variables['DiagnosticArguments'], ''), eq(variables['System.Debug'], 'true'))
+      - template: /eng/common/pipelines/templates/steps/publish-artifact.yml
+        parameters:
+          ArtifactPath: $(Build.SourcesDirectory)/artifacts
+          ArtifactName: artifacts_$(Agent.JobName)
+          CustomCondition: and(ne(variables['DiagnosticArguments'], ''), eq(variables['System.Debug'], 'true'))
+      - template: /eng/pipelines/templates/steps/upload-dumps.yml
       - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
         displayName: Generate Code Coverage Reports
         inputs:
-          reports: $(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**\coverage.cobertura.xml
+          reports: $(CodeCoverageFilePattern)
           targetdir: $(Build.ArtifactStagingDirectory)\coverage
           reporttypes: Cobertura
           filefilters: +$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**

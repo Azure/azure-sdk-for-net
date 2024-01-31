@@ -13,6 +13,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// </summary>
     public partial class MethodRequest
     {
+        /// <summary> Initializes a new instance of MethodRequest. </summary>
+        protected MethodRequest()
+        {
+            // restore the old behavior of optional constants
+            ApiVersion = "1.1";
+        }
+
         /// <summary>
         /// Gets or Sets The Method name.
         /// </summary>

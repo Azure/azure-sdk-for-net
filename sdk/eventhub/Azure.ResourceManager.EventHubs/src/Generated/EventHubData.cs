@@ -13,37 +13,75 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> A class representing the EventHub data model. </summary>
-    public partial class EventHubData : ProxyResource
+    /// <summary>
+    /// A class representing the EventHub data model.
+    /// Single item in List or Get Event Hub operation
+    /// </summary>
+    public partial class EventHubData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventHubData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EventHubData"/>. </summary>
         public EventHubData()
         {
             PartitionIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of EventHubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="partitionIds"> Current number of shards on the Event Hub. </param>
         /// <param name="createdOn"> Exact time the Event Hub was created. </param>
         /// <param name="updatedOn"> The exact time the message was updated. </param>
-        /// <param name="messageRetentionInDays"> Number of days to retain the events for this Event Hub, value should be 1 to 7 days. </param>
         /// <param name="partitionCount"> Number of partitions created for the Event Hub, allowed values are from 1 to 32 partitions. </param>
         /// <param name="status"> Enumerates the possible values for the status of the Event Hub. </param>
         /// <param name="captureDescription"> Properties of capture description. </param>
-        internal EventHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, IReadOnlyList<string> partitionIds, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, long? messageRetentionInDays, long? partitionCount, EntityStatus? status, CaptureDescription captureDescription) : base(id, name, resourceType, systemData, location)
+        /// <param name="retentionDescription"> Event Hub retention settings. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> partitionIds, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, long? partitionCount, EventHubEntityStatus? status, CaptureDescription captureDescription, RetentionDescription retentionDescription, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PartitionIds = partitionIds;
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
-            MessageRetentionInDays = messageRetentionInDays;
             PartitionCount = partitionCount;
             Status = status;
             CaptureDescription = captureDescription;
+            RetentionDescription = retentionDescription;
+            Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Current number of shards on the Event Hub. </summary>
@@ -52,13 +90,15 @@ namespace Azure.ResourceManager.EventHubs
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The exact time the message was updated. </summary>
         public DateTimeOffset? UpdatedOn { get; }
-        /// <summary> Number of days to retain the events for this Event Hub, value should be 1 to 7 days. </summary>
-        public long? MessageRetentionInDays { get; set; }
         /// <summary> Number of partitions created for the Event Hub, allowed values are from 1 to 32 partitions. </summary>
         public long? PartitionCount { get; set; }
         /// <summary> Enumerates the possible values for the status of the Event Hub. </summary>
-        public EntityStatus? Status { get; set; }
+        public EventHubEntityStatus? Status { get; set; }
         /// <summary> Properties of capture description. </summary>
         public CaptureDescription CaptureDescription { get; set; }
+        /// <summary> Event Hub retention settings. </summary>
+        public RetentionDescription RetentionDescription { get; set; }
+        /// <summary> The geo-location where the resource lives. </summary>
+        public AzureLocation? Location { get; }
     }
 }

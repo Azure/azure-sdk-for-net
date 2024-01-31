@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.EventHubs
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-11-01";
+            _apiVersion = apiVersion ?? "2022-10-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreatePatchRequest(string subscriptionId, string resourceGroupName, string clusterName, ClusterQuotaConfigurationProperties parameters)
+        internal HttpMessage CreatePatchRequest(string subscriptionId, string resourceGroupName, string clusterName, ClusterQuotaConfigurationProperties clusterQuotaConfigurationProperties)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EventHubs
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
+            content.JsonWriter.WriteObjectValue(clusterQuotaConfigurationProperties);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -66,18 +66,18 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
-        /// <param name="parameters"> Parameters for creating an Event Hubs Cluster resource. </param>
+        /// <param name="clusterQuotaConfigurationProperties"> Parameters for creating an Event Hubs Cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="clusterQuotaConfigurationProperties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ClusterQuotaConfigurationProperties>> PatchAsync(string subscriptionId, string resourceGroupName, string clusterName, ClusterQuotaConfigurationProperties parameters, CancellationToken cancellationToken = default)
+        public async Task<Response<ClusterQuotaConfigurationProperties>> PatchAsync(string subscriptionId, string resourceGroupName, string clusterName, ClusterQuotaConfigurationProperties clusterQuotaConfigurationProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(clusterQuotaConfigurationProperties, nameof(clusterQuotaConfigurationProperties));
 
-            using var message = CreatePatchRequest(subscriptionId, resourceGroupName, clusterName, parameters);
+            using var message = CreatePatchRequest(subscriptionId, resourceGroupName, clusterName, clusterQuotaConfigurationProperties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -100,18 +100,18 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> Name of the resource group within the azure subscription. </param>
         /// <param name="clusterName"> The name of the Event Hubs Cluster. </param>
-        /// <param name="parameters"> Parameters for creating an Event Hubs Cluster resource. </param>
+        /// <param name="clusterQuotaConfigurationProperties"> Parameters for creating an Event Hubs Cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="clusterQuotaConfigurationProperties"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ClusterQuotaConfigurationProperties> Patch(string subscriptionId, string resourceGroupName, string clusterName, ClusterQuotaConfigurationProperties parameters, CancellationToken cancellationToken = default)
+        public Response<ClusterQuotaConfigurationProperties> Patch(string subscriptionId, string resourceGroupName, string clusterName, ClusterQuotaConfigurationProperties clusterQuotaConfigurationProperties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(clusterQuotaConfigurationProperties, nameof(clusterQuotaConfigurationProperties));
 
-            using var message = CreatePatchRequest(subscriptionId, resourceGroupName, clusterName, parameters);
+            using var message = CreatePatchRequest(subscriptionId, resourceGroupName, clusterName, clusterQuotaConfigurationProperties);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

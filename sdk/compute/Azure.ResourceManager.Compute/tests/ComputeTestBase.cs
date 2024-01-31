@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Compute.Tests
 {
     public class ComputeTestBase : ManagementRecordedTestBase<ComputeTestEnvironment>
     {
-        protected AzureLocation DefaultLocation => AzureLocation.WestUS2;
+        protected AzureLocation DefaultLocation => AzureLocation.EastUS;
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
         public ComputeTestBase(bool isAsync) : base(isAsync)
@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.Compute.Tests
         }
 
         public ComputeTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        {
+        }
+
+        protected ComputeTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = null)
+            : base(isAsync, resourceType, apiVersion, mode)
         {
         }
 

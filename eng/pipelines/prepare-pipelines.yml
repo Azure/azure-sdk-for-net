@@ -1,13 +1,13 @@
 trigger: none
 
 variables:
-  NugetSecurityAnalysisWarningLevel: warn
+  nugetMultiFeedWarnLevel: warn
 
 extends:
-  template: /eng/common/pipelines/templates/steps/prepare-pipelines.yml
+  template: /eng/common/pipelines/templates/jobs/prepare-pipelines.yml
   parameters:
     Repository: $(Build.Repository.Name)
     Prefix: net
     CIConventionOptions: ''
-    UPConventionOptions: '--variablegroup 13 --variablegroup 58 --variablegroup 76 --variablegroup 56 --variablegroup 93'
-    TestsConventionOptions: '--variablegroup 64'
+    UPConventionOptions: '--variablegroups 13 58 76 56 93'
+    TestsConventionOptions: '--variablegroups 64'

@@ -15,7 +15,7 @@ namespace Azure.Storage.Shared
     /// Functions like a readable <see cref="MemoryStream"/> but uses an ArrayPool to supply the backing memory.
     /// This stream support buffering long sizes.
     /// </summary>
-    internal class PooledMemoryStream : SlicedStream
+    internal class PooledMemoryStream : Stream
     {
         private const int DefaultMaxArrayPoolRentalSize = 128 * Constants.MB;
 
@@ -43,20 +43,14 @@ namespace Azure.Storage.Shared
         public ArrayPool<byte> ArrayPool { get; }
 
         /// <summary>
-        /// Absolute position of this stream in the larger stream it was chunked from.
-        /// </summary>
-        public override long AbsolutePosition { get; }
-
-        /// <summary>
         /// List of arrays making up the overall buffer. Since ArrayPool may give us a larger array than needed,
         /// each array is paired with a count of the space actually used in the array. This <b>should</b> only
         /// be important for the final buffer.
         /// </summary>
         private List<BufferPartition> BufferSet { get; } = new List<BufferPartition>();
 
-        public PooledMemoryStream(ArrayPool<byte> arrayPool, long absolutePosition, int maxArraySize)
+        public PooledMemoryStream(ArrayPool<byte> arrayPool, int maxArraySize)
         {
-            AbsolutePosition = absolutePosition;
             ArrayPool = arrayPool;
             MaxArraySize = maxArraySize;
         }
@@ -67,19 +61,20 @@ namespace Azure.Storage.Shared
         public PooledMemoryStream() { }
 
         /// <summary>
-        /// Buffers a portion of the given stream, returning the buffered stream partition.
+        /// Buffers a portion of the given stream, starting at its current position,
+        /// returning the buffered stream partition. The provided stream position will
+        /// be incremented by the amount of bytes buffered.
         /// </summary>
         /// <param name="stream">
         /// Stream to buffer from.
         /// </param>
         /// <param name="minCount">
-        /// Minimum number of bytes to buffer. This method will not return until at least this many bytes have been read from <paramref name="stream"/> or the stream completes.
+        /// Minimum number of bytes to buffer. This method will not return until at
+        /// least this many bytes have been read from <paramref name="stream"/> or the
+        /// stream completes.
         /// </param>
         /// <param name="maxCount">
         /// Maximum number of bytes to buffer.
-        /// </param>
-        /// <param name="absolutePosition">
-        /// Current position of the stream, since <see cref="Stream.Position"/> throws if not seekable.
         /// </param>
         /// <param name="arrayPool">
         /// Pool to rent buffer space from.
@@ -100,14 +95,13 @@ namespace Azure.Storage.Shared
             Stream stream,
             long minCount,
             long maxCount,
-            long absolutePosition,
             ArrayPool<byte> arrayPool,
             int? maxArrayPoolRentalSize,
             bool async,
             CancellationToken cancellationToken)
         {
             long totalRead = 0;
-            var streamPartition = new PooledMemoryStream(arrayPool, absolutePosition, maxArrayPoolRentalSize ?? DefaultMaxArrayPoolRentalSize);
+            var streamPartition = new PooledMemoryStream(arrayPool, maxArrayPoolRentalSize ?? DefaultMaxArrayPoolRentalSize);
 
             // max count to write into a single array
             int maxCountIndividualBuffer;
@@ -263,6 +257,21 @@ namespace Azure.Storage.Shared
             }
 
             return read;
+        }
+
+        public override int ReadByte()
+        {
+            if (Position >= Length)
+            {
+                return -1;
+            }
+
+            (byte[] currentBuffer, int _, long offsetOfBuffer) = GetBufferFromPosition();
+
+            byte result = currentBuffer[Position - offsetOfBuffer];
+            Position += 1;
+
+            return result;
         }
 
         /// <summary>

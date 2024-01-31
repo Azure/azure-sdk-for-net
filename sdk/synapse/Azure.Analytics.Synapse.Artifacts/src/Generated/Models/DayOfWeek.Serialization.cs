@@ -25,13 +25,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         public static DayOfWeek ToDayOfWeek(this string value)
         {
-            if (string.Equals(value, "Sunday", StringComparison.InvariantCultureIgnoreCase)) return DayOfWeek.Sunday;
-            if (string.Equals(value, "Monday", StringComparison.InvariantCultureIgnoreCase)) return DayOfWeek.Monday;
-            if (string.Equals(value, "Tuesday", StringComparison.InvariantCultureIgnoreCase)) return DayOfWeek.Tuesday;
-            if (string.Equals(value, "Wednesday", StringComparison.InvariantCultureIgnoreCase)) return DayOfWeek.Wednesday;
-            if (string.Equals(value, "Thursday", StringComparison.InvariantCultureIgnoreCase)) return DayOfWeek.Thursday;
-            if (string.Equals(value, "Friday", StringComparison.InvariantCultureIgnoreCase)) return DayOfWeek.Friday;
-            if (string.Equals(value, "Saturday", StringComparison.InvariantCultureIgnoreCase)) return DayOfWeek.Saturday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sunday")) return DayOfWeek.Sunday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Monday")) return DayOfWeek.Monday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tuesday")) return DayOfWeek.Tuesday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wednesday")) return DayOfWeek.Wednesday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Thursday")) return DayOfWeek.Thursday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Friday")) return DayOfWeek.Friday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Saturday")) return DayOfWeek.Saturday;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DayOfWeek value.");
         }
     }

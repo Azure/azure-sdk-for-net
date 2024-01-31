@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the SlotConfigNamesResource data model. </summary>
-    public partial class SlotConfigNamesResourceData : ProxyOnlyResource
+    /// <summary>
+    /// A class representing the SlotConfigNamesResource data model.
+    /// Slot Config names azure resource.
+    /// </summary>
+    public partial class SlotConfigNamesResourceData : ResourceData
     {
-        /// <summary> Initializes a new instance of SlotConfigNamesResourceData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SlotConfigNamesResourceData"/>. </summary>
         public SlotConfigNamesResourceData()
         {
             ConnectionStringNames = new ChangeTrackingList<string>();
@@ -23,20 +58,23 @@ namespace Azure.ResourceManager.AppService
             AzureStorageConfigNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SlotConfigNamesResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SlotConfigNamesResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="connectionStringNames"> List of connection string names. </param>
         /// <param name="appSettingNames"> List of application settings names. </param>
         /// <param name="azureStorageConfigNames"> List of external Azure storage account identifiers. </param>
-        internal SlotConfigNamesResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, IList<string> connectionStringNames, IList<string> appSettingNames, IList<string> azureStorageConfigNames) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SlotConfigNamesResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> connectionStringNames, IList<string> appSettingNames, IList<string> azureStorageConfigNames, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ConnectionStringNames = connectionStringNames;
             AppSettingNames = appSettingNames;
             AzureStorageConfigNames = azureStorageConfigNames;
+            Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of connection string names. </summary>
@@ -45,5 +83,7 @@ namespace Azure.ResourceManager.AppService
         public IList<string> AppSettingNames { get; }
         /// <summary> List of external Azure storage account identifiers. </summary>
         public IList<string> AzureStorageConfigNames { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

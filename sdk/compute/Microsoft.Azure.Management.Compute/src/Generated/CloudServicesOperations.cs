@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2022-09-04";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -361,7 +361,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2022-09-04";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -544,7 +544,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2022-09-04";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -729,7 +729,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2022-09-04";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1082,7 +1082,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 parameters.Validate();
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2022-09-04";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1304,7 +1304,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2022-09-04";
             CloudServiceUpdate parameters = default(CloudServiceUpdate);
             if (tags != null)
             {
@@ -1508,7 +1508,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2022-09-04";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1681,7 +1681,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2022-09-04";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1855,7 +1855,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2022-09-04";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2036,7 +2036,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "roleInstancesProperty");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2022-09-04";
             RoleInstances parameters = default(RoleInstances);
             if (roleInstancesProperty != null)
             {
@@ -2231,7 +2231,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "roleInstancesProperty");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2022-09-04";
             RoleInstances parameters = default(RoleInstances);
             if (roleInstancesProperty != null)
             {
@@ -2428,7 +2428,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "roleInstancesProperty");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2022-09-04";
             RoleInstances parameters = default(RoleInstances);
             if (roleInstancesProperty != null)
             {
@@ -2622,7 +2622,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "roleInstancesProperty");
             }
-            string apiVersion = "2021-03-01";
+            string apiVersion = "2022-09-04";
             RoleInstances parameters = default(RoleInstances);
             if (roleInstancesProperty != null)
             {

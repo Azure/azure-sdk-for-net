@@ -3,8 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Tests;
@@ -22,6 +24,7 @@ namespace Azure.Core.TestFramework
             .GetMethod(nameof(WrapAsyncResultCore), BindingFlags.NonPublic | BindingFlags.Static)
             ?? throw new InvalidOperationException("Unable to find DiagnosticScopeValidatingInterceptor.WrapAsyncResultCore method");
 
+        private static Regex AttributeNameRegex = new Regex(@"^[a-z\._]+$", RegexOptions.Compiled);
         public void Intercept(IInvocation invocation)
         {
             var type = invocation.Method.ReturnType;
@@ -88,6 +91,35 @@ namespace Azure.Core.TestFramework
                 async ValueTask<T> Await()
                 {
                     invocation.Proceed();
+                    var signatureResponseType = typeof(T);
+                    if (signatureResponseType.IsGenericType && signatureResponseType.GetGenericTypeDefinition().Equals(typeof(Response<>)))
+                    {
+                        //guaranteed only one generic arg with Response<T>
+                        var signatureGenericType = signatureResponseType.GetGenericArguments()[0];
+                        var runtimeTaskType = invocation.ReturnValue.GetType();
+                        Type runtimeGenericType = null;
+                        if (runtimeTaskType.IsGenericType && runtimeTaskType.GetGenericTypeDefinition().Equals(typeof(Task<>)))
+                        {
+                            var runtimeResponseType = runtimeTaskType.GetGenericArguments()[0];
+                            if (!runtimeResponseType.Equals(signatureResponseType) && runtimeResponseType.IsGenericType && runtimeResponseType.GetGenericTypeDefinition().Equals(typeof(Response<>)))
+                            {
+                                runtimeGenericType = runtimeResponseType.GetGenericArguments()[0];
+                            }
+                        }
+                        if (runtimeGenericType is not null && runtimeGenericType.IsSubclassOf(signatureGenericType))
+                        {
+                            //keep async nature of the call and guaratee we are complete at this point
+                            await (Task)invocation.ReturnValue;
+                            var runtimeResponseObject = TaskExtensions.GetResultFromTask(invocation.ReturnValue);
+                            var runtimeRawResponse = runtimeResponseObject.GetType().GetMethod("GetRawResponse", BindingFlags.Instance | BindingFlags.Public).Invoke(runtimeResponseObject, null);
+                            var runtimeValue = runtimeResponseObject.GetType().GetProperty("Value", BindingFlags.Public | BindingFlags.Instance).GetValue(runtimeResponseObject);
+
+                            //reconstruct
+                            var signatureFromValueMethod = typeof(Response).GetMethod("FromValue", BindingFlags.Static | BindingFlags.Public).MakeGenericMethod(signatureGenericType);
+                            var convertedResponseObject = signatureFromValueMethod.Invoke(null, new object[] { runtimeValue, runtimeRawResponse });
+                            return (T)convertedResponseObject;
+                        }
+                    }
                     return await (Task<T>)invocation.ReturnValue;
                 }
 
@@ -152,6 +184,12 @@ namespace Azure.Core.TestFramework
                 methodName.Substring(0, methodName.Length - 5) :
                 methodName;
 
+            // check if this methodInfo is a "Core" method in mgmt plane, if it is, trim the Core suffix from the method name
+            if (methodInfo.IsFamily && methodNameWithoutSuffix.EndsWith("Core"))
+            {
+                methodNameWithoutSuffix = methodNameWithoutSuffix.Substring(0, methodNameWithoutSuffix.Length - 4);
+            }
+
             var expectedName = declaringType.Name + "." + methodNameWithoutSuffix;
             var forwardAttribute = methodInfo.GetCustomAttributes(true).FirstOrDefault(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
             bool strict = forwardAttribute is null;
@@ -161,8 +199,12 @@ namespace Azure.Core.TestFramework
             T result;
 
             using ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure."), asyncLocal: true);
+
             try
             {
+                // activities may be suppressed if they are called in scope of other activities create by other SDK methods.
+                // Let's unsuppress the so we are able to check all the attributes and properties regardless of the test setup.
+                Activity.Current?.SetCustomProperty("az.sdk.scope", null);
                 (result, skipChecks) = await action();
             }
             catch (Exception ex)
@@ -181,11 +223,14 @@ namespace Azure.Core.TestFramework
             {
                 // Remove subscribers before enumerating events.
                 diagnosticListener.Dispose();
+
                 var skipOverrideProperty = forwardAttribute is not null ? forwardAttribute.GetType().GetProperty("SkipChecks") : null;
                 bool skipOverride = skipOverrideProperty is not null ? (bool)skipOverrideProperty.GetValue(forwardAttribute) : false;
                 skipChecks |= skipOverride;
                 if (!skipChecks)
                 {
+                    diagnosticListener.Scopes.ForEach(s => CheckAttributes(s.Activity, strict));
+
                     if (strict)
                     {
                         ClientDiagnosticListener.ProducedDiagnosticScope e = diagnosticListener.Scopes.FirstOrDefault(e => e.Name == expectedName);
@@ -197,11 +242,6 @@ namespace Azure.Core.TestFramework
                                                                 $"    You may have forgotten to add clientDiagnostics.CreateScope(...), set your operationId to {expectedName} in {source} or applied the Azure.Core.ForwardsClientCallsAttribute to {source}.");
                         }
 
-                        if (!e.Activity.Tags.Any(tag => tag.Key == "az.namespace"))
-                        {
-                            throw new InvalidOperationException($"All diagnostic scopes should have 'az.namespace' attribute, make sure the assembly containing **ClientOptions type is marked with the AzureResourceProviderNamespace attribute specifying the appropriate provider. This attribute should be included in AssemblyInfo, and can be included by pulling in AzureResourceProviderNamespaceAttribute.cs using the AzureCoreSharedSources alias.");
-                        }
-
                         if (lastException != null && !e.IsFailed)
                         {
                             throw new InvalidOperationException($"Expected scope {expectedName} to be marked as failed but it succeeded{Environment.NewLine}Exception: {lastException}");
@@ -209,15 +249,73 @@ namespace Azure.Core.TestFramework
                     }
                     else
                     {
-                        if (!diagnosticListener.Scopes.Any())
+                        // If ForwardsClientCallsAttribute is being used on the method, we don't know what the name of the scope should be because there could be many
+                        // differently named methods sharing the same scope name, but we do know that there should be some scope created other than the Azure.Core scope.
+                        if (!diagnosticListener.Scopes.Any(e => !e.Name.StartsWith("Azure.Core")))
                         {
-                            throw new InvalidOperationException($"Expected some diagnostic scopes to be created, found none");
+                            throw new InvalidOperationException(
+                                "Expected some diagnostic scopes to be created other than the Azure.Core scopes, but no such scopes were present. " +
+                                $"Ensure that the inner method that client calls are being forwarded to from the '{source}' method has diagnostic scopes " +
+                                "defined by using clientDiagnostics.CreateScope(...).");
                         }
                     }
                 }
             }
 
             return result;
+        }
+
+        private static void CheckAttributes(Activity activity, bool strict)
+        {
+            foreach (var tag in activity.TagObjects)
+            {
+                if (tag.Key == "kind" || tag.Key.StartsWith("otel.") || tag.Key == "requestId" || tag.Key == "serviceRequestId")
+                {
+                    // TODO: these are populated on DiagnosticSource path. We should rewrite this to ActivitySource and remove those.
+                    continue;
+                }
+
+                if (!AttributeNameRegex.IsMatch(tag.Key))
+                {
+                    throw new InvalidOperationException("Attribute name can only have lowercase letters, dot (`.`), and underscore (`_`). " +
+                        "Use dot to separate namespaces and underscore to separate words (e.g. http.request.status_code). " + $"Attribute name: {tag.Key}");
+                }
+
+                int dot = tag.Key.IndexOf('.');
+                if (dot == -1)
+                {
+                    throw new InvalidOperationException("Attribute names must be namespaced. Use OpenTelemetry attributes whenever possible - https://github.com/open-telemetry/semantic-conventions/blob/main/docs/README.md. " +
+                        "Custom Azure-specific attributes must start with `az.` and should have library-specific namespaces (e.g. `az.digital_twin.twin_id`). " + $"Attribute name: {tag.Key}");
+                }
+
+                string ns = tag.Key.Substring(0, dot);
+                if ("az" != ns && "messaging" != ns && "http" != ns && "error" != ns && "url" != ns)
+                {
+                    throw new InvalidOperationException("Unknown attribute namespace. Use OpenTelemetry attributes whenever possible - https://github.com/open-telemetry/semantic-conventions/blob/main/docs/README.md." +
+                        "Custom Azure-specific attributes must start with `az.` and should have library-specific namespaces (e.g. `az.digital_twin.twin_id`). " + $"Attribute name: {tag.Key}");
+                }
+
+                string tagValueStr = tag.Value?.ToString();
+                if (string.IsNullOrEmpty(tagValueStr) || (tag.Key.StartsWith("az.") && tagValueStr.Length > 256))
+                {
+                    throw new InvalidOperationException("Attribute values must not be null, empty, or longer than 256 characters. "
+                        + $"Attribute name: `{tag.Key}`, value: `{tag.Value}`, activity name: `{activity.OperationName}`");
+                }
+            }
+
+            if (strict)
+            {
+                if (!activity.Tags.Any(tag => tag.Key == "az.namespace"))
+                {
+                    throw new InvalidOperationException($"All diagnostic scopes should have 'az.namespace' attribute, make sure the assembly containing **ClientOptions type is marked with the AzureResourceProviderNamespace attribute specifying the appropriate provider. This attribute should be included in AssemblyInfo, and can be included by pulling in AzureResourceProviderNamespaceAttribute.cs using the AzureCoreSharedSources alias. " +
+                                                        $"\nActivity name: {activity.OperationName}, Source name: {activity?.Source.Name}");
+                }
+            }
+
+            if (activity.Status == ActivityStatusCode.Error && activity.Source?.HasListeners() == true && !activity.TagObjects.Any(kvp => kvp.Key == "error.type"))
+            {
+                throw new InvalidOperationException("All failed activities must have `error.type` attribute set to known or documented error code or a full name of exception type");
+            }
         }
 
         internal class DiagnosticScopeValidatingAsyncEnumerable<T> : AsyncPageable<T>

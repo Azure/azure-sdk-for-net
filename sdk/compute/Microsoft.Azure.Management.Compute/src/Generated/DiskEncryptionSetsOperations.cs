@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "diskEncryptionSetName");
             }
-            string apiVersion = "2021-12-01";
+            string apiVersion = "2023-01-02";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -367,7 +367,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            string apiVersion = "2021-12-01";
+            string apiVersion = "2023-01-02";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -545,7 +545,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2021-12-01";
+            string apiVersion = "2023-01-02";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -738,7 +738,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "diskEncryptionSetName");
             }
-            string apiVersion = "2021-12-01";
+            string apiVersion = "2023-01-02";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -947,7 +947,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 diskEncryptionSet.Validate();
             }
-            string apiVersion = "2021-12-01";
+            string apiVersion = "2023-01-02";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1177,7 +1177,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "diskEncryptionSet");
             }
-            string apiVersion = "2021-12-01";
+            string apiVersion = "2023-01-02";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1396,7 +1396,7 @@ namespace Microsoft.Azure.Management.Compute
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "diskEncryptionSetName");
             }
-            string apiVersion = "2021-12-01";
+            string apiVersion = "2023-01-02";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

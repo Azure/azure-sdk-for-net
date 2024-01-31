@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -12,48 +13,109 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the ProximityPlacementGroup data model. </summary>
+    /// <summary>
+    /// A class representing the ProximityPlacementGroup data model.
+    /// Specifies information about the proximity placement group.
+    /// </summary>
     public partial class ProximityPlacementGroupData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ProximityPlacementGroupData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProximityPlacementGroupData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ProximityPlacementGroupData(AzureLocation location) : base(location)
         {
-            VirtualMachines = new ChangeTrackingList<SubResourceWithColocationStatus>();
-            VirtualMachineScaleSets = new ChangeTrackingList<SubResourceWithColocationStatus>();
-            AvailabilitySets = new ChangeTrackingList<SubResourceWithColocationStatus>();
+            Zones = new ChangeTrackingList<string>();
+            VirtualMachines = new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
+            VirtualMachineScaleSets = new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
+            AvailabilitySets = new ChangeTrackingList<ComputeSubResourceDataWithColocationStatus>();
         }
 
-        /// <summary> Initializes a new instance of ProximityPlacementGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProximityPlacementGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="proximityPlacementGroupType"> Specifies the type of the proximity placement group. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Standard** : Co-locate resources within an Azure region or Availability Zone. &lt;br&gt;&lt;br&gt; **Ultra** : For future use. </param>
+        /// <param name="zones"> Specifies the Availability Zone where virtual machine, virtual machine scale set or availability set associated with the  proximity placement group can be created. </param>
+        /// <param name="proximityPlacementGroupType"> Specifies the type of the proximity placement group. Possible values are: **Standard** : Co-locate resources within an Azure region or Availability Zone. **Ultra** : For future use. </param>
         /// <param name="virtualMachines"> A list of references to all virtual machines in the proximity placement group. </param>
         /// <param name="virtualMachineScaleSets"> A list of references to all virtual machine scale sets in the proximity placement group. </param>
         /// <param name="availabilitySets"> A list of references to all availability sets in the proximity placement group. </param>
         /// <param name="colocationStatus"> Describes colocation status of the Proximity Placement Group. </param>
-        internal ProximityPlacementGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProximityPlacementGroupType? proximityPlacementGroupType, IReadOnlyList<SubResourceWithColocationStatus> virtualMachines, IReadOnlyList<SubResourceWithColocationStatus> virtualMachineScaleSets, IReadOnlyList<SubResourceWithColocationStatus> availabilitySets, InstanceViewStatus colocationStatus) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="intent"> Specifies the user intent of the proximity placement group. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProximityPlacementGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<string> zones, ProximityPlacementGroupType? proximityPlacementGroupType, IReadOnlyList<ComputeSubResourceDataWithColocationStatus> virtualMachines, IReadOnlyList<ComputeSubResourceDataWithColocationStatus> virtualMachineScaleSets, IReadOnlyList<ComputeSubResourceDataWithColocationStatus> availabilitySets, InstanceViewStatus colocationStatus, ProximityPlacementGroupPropertiesIntent intent, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Zones = zones;
             ProximityPlacementGroupType = proximityPlacementGroupType;
             VirtualMachines = virtualMachines;
             VirtualMachineScaleSets = virtualMachineScaleSets;
             AvailabilitySets = availabilitySets;
             ColocationStatus = colocationStatus;
+            Intent = intent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies the type of the proximity placement group. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Standard** : Co-locate resources within an Azure region or Availability Zone. &lt;br&gt;&lt;br&gt; **Ultra** : For future use. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProximityPlacementGroupData"/> for deserialization. </summary>
+        internal ProximityPlacementGroupData()
+        {
+        }
+
+        /// <summary> Specifies the Availability Zone where virtual machine, virtual machine scale set or availability set associated with the  proximity placement group can be created. </summary>
+        public IList<string> Zones { get; }
+        /// <summary> Specifies the type of the proximity placement group. Possible values are: **Standard** : Co-locate resources within an Azure region or Availability Zone. **Ultra** : For future use. </summary>
         public ProximityPlacementGroupType? ProximityPlacementGroupType { get; set; }
         /// <summary> A list of references to all virtual machines in the proximity placement group. </summary>
-        public IReadOnlyList<SubResourceWithColocationStatus> VirtualMachines { get; }
+        public IReadOnlyList<ComputeSubResourceDataWithColocationStatus> VirtualMachines { get; }
         /// <summary> A list of references to all virtual machine scale sets in the proximity placement group. </summary>
-        public IReadOnlyList<SubResourceWithColocationStatus> VirtualMachineScaleSets { get; }
+        public IReadOnlyList<ComputeSubResourceDataWithColocationStatus> VirtualMachineScaleSets { get; }
         /// <summary> A list of references to all availability sets in the proximity placement group. </summary>
-        public IReadOnlyList<SubResourceWithColocationStatus> AvailabilitySets { get; }
+        public IReadOnlyList<ComputeSubResourceDataWithColocationStatus> AvailabilitySets { get; }
         /// <summary> Describes colocation status of the Proximity Placement Group. </summary>
         public InstanceViewStatus ColocationStatus { get; set; }
+        /// <summary> Specifies the user intent of the proximity placement group. </summary>
+        internal ProximityPlacementGroupPropertiesIntent Intent { get; set; }
+        /// <summary> Specifies possible sizes of virtual machines that can be created in the proximity placement group. </summary>
+        public IList<string> IntentVmSizes
+        {
+            get
+            {
+                if (Intent is null)
+                    Intent = new ProximityPlacementGroupPropertiesIntent();
+                return Intent.VmSizes;
+            }
+        }
     }
 }

@@ -3,15 +3,16 @@
 // license information.
 // using ApiManagement.Management.Tests;
 
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.ApiManagement;
 using Microsoft.Azure.Management.ApiManagement.Models;
-using Xunit;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
-using System.Net.Http;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace ApiManagement.Tests.ManagementApiTests
 {
@@ -36,7 +37,21 @@ namespace ApiManagement.Tests.ManagementApiTests
                     new Microsoft.Rest.Azure.OData.ODataQuery<SubscriptionContract> { Top = 1 });
                 Assert.NotNull(subscriptionList);
 
-                MakeAnalyticRequests(service.GatewayUrl, subscriptionList.First().PrimaryKey);
+                var byRequestResponse = EnsureTestData(
+                    () => testBase.client.Reports.ListByRequest(
+                    new Microsoft.Rest.Azure.OData.ODataQuery<RequestReportRecordContract>
+                    {
+                        Filter = "timestamp ge datetime'2017-06-22T00:00:00'"
+                    },
+                    testBase.rgName,
+                    testBase.serviceName),
+                    () => ProduceTestData(service.GatewayUrl, subscriptionList.First().PrimaryKey));
+
+                Assert.NotEmpty(byRequestResponse);
+                Assert.NotNull(byRequestResponse.First().RequestId);
+                Assert.NotNull(byRequestResponse.First().ApiId);
+                Assert.NotNull(byRequestResponse.First().OperationId);
+                Assert.NotNull(byRequestResponse.First().ProductId);
 
                 var byApiResponse = testBase.client.Reports.ListByApi(
                     new Microsoft.Rest.Azure.OData.ODataQuery<ReportRecordContract>
@@ -120,25 +135,32 @@ namespace ApiManagement.Tests.ManagementApiTests
                 Assert.NotNull(byUserResponse);
                 Assert.Equal(2, byUserResponse.Count());
                 Assert.NotNull(byUserResponse.First().UserId);
-
-                var byRequestResponse = testBase.client.Reports.ListByRequest(
-                    new Microsoft.Rest.Azure.OData.ODataQuery<RequestReportRecordContract>
-                    {
-                        Filter = "timestamp ge datetime'2017-06-22T00:00:00'"
-                    },
-                    testBase.rgName,
-                    testBase.serviceName);
-
-                Assert.NotNull(byRequestResponse);
-                Assert.NotEmpty(byRequestResponse);
-                Assert.NotNull(byRequestResponse.First().RequestId);
-                Assert.NotNull(byRequestResponse.First().ApiId);
-                Assert.NotNull(byRequestResponse.First().OperationId);
-                Assert.NotNull(byRequestResponse.First().ProductId);
             }
         }
 
-        void MakeAnalyticRequests(string proxyUrl, string subscriptionKey)
+        IEnumerable<T> EnsureTestData<T>(Func<IEnumerable<T>> getData, Action produceData)
+        {
+            IEnumerable<T> data = getData();
+            var testDataProduced = false;
+            var tryTill = DateTime.Now.AddMinutes(6); // Gateway aggregates and dumps data every 5 minutes, try for 6 minutes
+            while (DateTime.Now < tryTill && !data.Any())
+            {
+                if (!testDataProduced)
+                {
+                    produceData();
+                    testDataProduced = true;
+                }
+
+                Task.Delay(TimeSpan.FromSeconds(10)).GetAwaiter().GetResult();
+
+                data = getData();
+                Assert.NotNull(data);
+            }
+
+            return data;
+        }
+
+        void ProduceTestData(string proxyUrl, string subscriptionKey)
         {
             var httpClient = new HttpClient
             {

@@ -49,7 +49,7 @@ function Get-PurgeableResources {
   Write-Verbose "Retrieving deleted Managed HSMs from subscription $subscriptionId"
 
   # Get deleted Managed HSMs for the current subscription.
-  $response = Invoke-AzRestMethod -Method GET -Path "/subscriptions/$subscriptionId/providers/Microsoft.KeyVault/deletedManagedHSMs?api-version=2021-04-01-preview" -ErrorAction Ignore
+  $response = Invoke-AzRestMethod -Method GET -Path "/subscriptions/$subscriptionId/providers/Microsoft.KeyVault/deletedManagedHSMs?api-version=2023-02-01" -ErrorAction Ignore
   if ($response.StatusCode -ge 200 -and $response.StatusCode -lt 300 -and $response.Content) {
     $content = $response.Content | ConvertFrom-Json
 
@@ -75,15 +75,23 @@ function Get-PurgeableResources {
 
   Write-Verbose "Retrieving deleted Key Vaults from subscription $subscriptionId"
 
-  # Get deleted Key Vaults for the current subscription.
-  $deletedKeyVaults = @(Get-AzKeyVault -InRemovedState `
-    | Add-Member -MemberType NoteProperty -Name AzsdkResourceType -Value 'Key Vault' -PassThru `
-    | Add-Member -MemberType AliasProperty -Name AzsdkName -Value VaultName -PassThru)
+  # TODO: Remove try/catch handler for Get-AzKeyVault - https://github.com/Azure/azure-sdk-tools/issues/5315
+  # This is a temporary workaround since Az module >= 9.2.0 uses a more recent API
+  # version than is supported in the dogfood cloud environment:
+  #
+  #   | The resource type 'deletedVaults' could not be found in the namespace 'Microsoft.KeyVault' for api version '2022-07-01'. The supported api-versions are
+  #   | '2016-10-01,2018-02-14-preview,2018-02-14,2019-09-01,2021-04-01-preview,2021-06-01-preview,2021-10-01,2021-11-01-preview'.
+  try {
+    # Get deleted Key Vaults for the current subscription.
+    $deletedKeyVaults = @(Get-AzKeyVault -InRemovedState `
+      | Add-Member -MemberType NoteProperty -Name AzsdkResourceType -Value 'Key Vault' -PassThru `
+      | Add-Member -MemberType AliasProperty -Name AzsdkName -Value VaultName -PassThru)
 
-  if ($deletedKeyVaults) {
-    Write-Verbose "Found $($deletedKeyVaults.Count) deleted Key Vaults to potentially purge."
-    $purgeableResources += $deletedKeyVaults
-  }
+    if ($deletedKeyVaults) {
+      Write-Verbose "Found $($deletedKeyVaults.Count) deleted Key Vaults to potentially purge."
+      $purgeableResources += $deletedKeyVaults
+    }
+  } catch { }
 
   return $purgeableResources
 }
@@ -115,7 +123,7 @@ filter Remove-PurgeableResources {
       'Key Vault' {
         if ($r.EnablePurgeProtection) {
           # We will try anyway but will ignore errors.
-          Write-Warning "Key Vault '$($r.VaultName)' has purge protection enabled and may not be purged for $($r.SoftDeleteRetentionInDays) days"
+          Write-Warning "Key Vault '$($r.VaultName)' has purge protection enabled and may not be purged until $($r.ScheduledPurgeDate)"
         }
 
         # Use `-AsJob` to start a lightweight, cancellable job and pass to `Wait-PurgeableResoruceJob` for consistent behavior.
@@ -126,11 +134,11 @@ filter Remove-PurgeableResources {
       'Managed HSM' {
         if ($r.EnablePurgeProtection) {
           # We will try anyway but will ignore errors.
-          Write-Warning "Managed HSM '$($r.Name)' has purge protection enabled and may not be purged for $($r.SoftDeleteRetentionInDays) days"
+          Write-Warning "Managed HSM '$($r.Name)' has purge protection enabled and may not be purged until $($r.ScheduledPurgeDate)"
         }
 
         # Use `GetNewClosure()` on the `-Action` ScriptBlock to make sure variables are captured.
-        Invoke-AzRestMethod -Method POST -Path "/subscriptions/$subscriptionId/providers/Microsoft.KeyVault/locations/$($r.Location)/deletedManagedHSMs/$($r.Name)/purge?api-version=2021-04-01-preview" -ErrorAction Ignore -AsJob `
+        Invoke-AzRestMethod -Method POST -Path "/subscriptions/$subscriptionId/providers/Microsoft.KeyVault/locations/$($r.Location)/deletedManagedHSMs/$($r.Name)/purge?api-version=2023-02-01" -ErrorAction Ignore -AsJob `
           | Wait-PurgeableResourceJob -Resource $r -Timeout $Timeout -PassThru:$PassThru -Action {
               param ( $response )
               if ($response.StatusCode -ge 200 -and $response.StatusCode -lt 300) {

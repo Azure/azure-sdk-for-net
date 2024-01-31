@@ -22,12 +22,12 @@ pr:
     - sdk/identity/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: identity
     ArtifactName: packages
     Artifacts:
     - name: Azure.Identity
       safeName: AzureIdentity
-    - name: Azure.Identity.BrokeredAuthentication
-      safeName: AzureIdentityBrokeredAuthentication
+    - name: Azure.Identity.Broker
+      safeName: AzureIdentityBroker

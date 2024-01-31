@@ -8,32 +8,27 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Abstract for entries that can be listed from Directory. </summary>
     internal partial class FilesAndDirectoriesListSegment
     {
-        /// <summary> Initializes a new instance of FilesAndDirectoriesListSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilesAndDirectoriesListSegment"/>. </summary>
         /// <param name="directoryItems"></param>
         /// <param name="fileItems"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="directoryItems"/> or <paramref name="fileItems"/> is null. </exception>
         internal FilesAndDirectoriesListSegment(IEnumerable<DirectoryItem> directoryItems, IEnumerable<FileItem> fileItems)
         {
-            if (directoryItems == null)
-            {
-                throw new ArgumentNullException(nameof(directoryItems));
-            }
-            if (fileItems == null)
-            {
-                throw new ArgumentNullException(nameof(fileItems));
-            }
+            Argument.AssertNotNull(directoryItems, nameof(directoryItems));
+            Argument.AssertNotNull(fileItems, nameof(fileItems));
 
             DirectoryItems = directoryItems.ToList();
             FileItems = fileItems.ToList();
         }
 
-        /// <summary> Initializes a new instance of FilesAndDirectoriesListSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="FilesAndDirectoriesListSegment"/>. </summary>
         /// <param name="directoryItems"></param>
         /// <param name="fileItems"></param>
         internal FilesAndDirectoriesListSegment(IReadOnlyList<DirectoryItem> directoryItems, IReadOnlyList<FileItem> fileItems)

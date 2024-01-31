@@ -65,6 +65,8 @@ namespace Azure.Core.Pipeline
 
             ServicePointHelpers.SetLimits(request.ServicePoint);
 
+            message.ClearResponse();
+
             using var registration = message.CancellationToken.Register(state => ((HttpWebRequest)state).Abort(), request);
             try
             {
@@ -340,19 +342,19 @@ namespace Azure.Core.Pipeline
             private string? _clientRequestId;
             private readonly DictionaryHeaders _headers = new();
 
-        protected internal override void SetHeader(string name, string value) => _headers.SetHeader(name, value);
+            protected internal override void SetHeader(string name, string value) => _headers.SetHeader(name, value);
 
-        protected internal override void AddHeader(string name, string value) => _headers.AddHeader(name, value);
+            protected internal override void AddHeader(string name, string value) => _headers.AddHeader(name, value);
 
-        protected internal override bool TryGetHeader(string name, out string value) => _headers.TryGetHeader(name, out value);
+            protected internal override bool TryGetHeader(string name, out string value) => _headers.TryGetHeader(name, out value);
 
-        protected internal override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => _headers.TryGetHeaderValues(name, out values);
+            protected internal override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => _headers.TryGetHeaderValues(name, out values);
 
-        protected internal override bool ContainsHeader(string name) => _headers.TryGetHeaderValues(name, out _);
+            protected internal override bool ContainsHeader(string name) => _headers.TryGetHeaderValues(name, out _);
 
-        protected internal override bool RemoveHeader(string name) => _headers.RemoveHeader(name);
+            protected internal override bool RemoveHeader(string name) => _headers.RemoveHeader(name);
 
-        protected internal override IEnumerable<HttpHeader> EnumerateHeaders() => _headers.EnumerateHeaders();
+            protected internal override IEnumerable<HttpHeader> EnumerateHeaders() => _headers.EnumerateHeaders();
 
             public override string ClientRequestId
             {
@@ -368,7 +370,12 @@ namespace Azure.Core.Pipeline
 
             public override void Dispose()
             {
-                Content?.Dispose();
+                var content = Content;
+                if (content != null)
+                {
+                    Content = null;
+                    content.Dispose();
+                }
             }
         }
 
@@ -388,6 +395,11 @@ namespace Azure.Core.Pipeline
                             new X509Certificate2(certificate),
                             x509Chain,
                             sslPolicyErrors));
+            }
+            // Set ClientCertificates
+            foreach (var cert in options.ClientCertificates)
+            {
+                request.ClientCertificates.Add(cert);
             }
         }
     }

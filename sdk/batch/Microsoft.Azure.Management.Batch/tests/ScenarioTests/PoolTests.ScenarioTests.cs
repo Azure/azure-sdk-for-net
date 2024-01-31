@@ -87,6 +87,7 @@ namespace Batch.Tests.ScenarioTests
 
                     // Create IaaS pool
                     Pool iaasPool = new Pool();
+                    iaasPool.TargetNodeCommunicationMode = NodeCommunicationMode.Default;
                     iaasPool.DisplayName = displayName;
                     iaasPool.VmSize = "Standard_A1";
                     iaasPool.DeploymentConfiguration = new DeploymentConfiguration()
@@ -118,6 +119,8 @@ namespace Batch.Tests.ScenarioTests
                     referenceId =
                         $"/subscriptions/{BatchManagementClient.SubscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{batchAccountName}/pools/{iaasPoolName.ToLowerInvariant()}";
                     Assert.Equal(referenceId, iaasPoolResponse.Id);
+                    Assert.Equal(NodeCommunicationMode.Default, iaasPoolResponse.TargetNodeCommunicationMode);
+                    Assert.Null(iaasPoolResponse.CurrentNodeCommunicationMode);
 
                     // Verify list operation
                     var pools = await BatchManagementClient.Pool.ListByBatchAccountAsync(resourceGroupName, batchAccountName);

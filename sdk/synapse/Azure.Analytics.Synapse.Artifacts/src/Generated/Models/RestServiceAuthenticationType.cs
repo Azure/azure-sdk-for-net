@@ -26,6 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         private const string BasicValue = "Basic";
         private const string AadServicePrincipalValue = "AadServicePrincipal";
         private const string ManagedServiceIdentityValue = "ManagedServiceIdentity";
+        private const string OAuth2ClientCredentialValue = "OAuth2ClientCredential";
 
         /// <summary> Anonymous. </summary>
         public static RestServiceAuthenticationType Anonymous { get; } = new RestServiceAuthenticationType(AnonymousValue);
@@ -35,6 +36,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static RestServiceAuthenticationType AadServicePrincipal { get; } = new RestServiceAuthenticationType(AadServicePrincipalValue);
         /// <summary> ManagedServiceIdentity. </summary>
         public static RestServiceAuthenticationType ManagedServiceIdentity { get; } = new RestServiceAuthenticationType(ManagedServiceIdentityValue);
+        /// <summary> OAuth2ClientCredential. </summary>
+        public static RestServiceAuthenticationType OAuth2ClientCredential { get; } = new RestServiceAuthenticationType(OAuth2ClientCredentialValue);
         /// <summary> Determines if two <see cref="RestServiceAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(RestServiceAuthenticationType left, RestServiceAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RestServiceAuthenticationType"/> values are not the same. </summary>

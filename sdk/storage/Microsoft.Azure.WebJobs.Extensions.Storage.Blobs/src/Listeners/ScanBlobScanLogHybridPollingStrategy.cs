@@ -282,7 +282,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             containerScanInfo.ContinuationToken = page.ContinuationToken;
 
             // if ending a cycle then copy currentSweepCycleStartTime to lastSweepCycleStartTime, if changed
-            if (page.ContinuationToken == null &&
+            if (string.IsNullOrEmpty(page.ContinuationToken) &&
                 containerScanInfo.CurrentSweepCycleLatestModified > containerScanInfo.LastSweepCycleLatestModified)
             {
                 containerScanInfo.LastSweepCycleLatestModified = containerScanInfo.CurrentSweepCycleLatestModified;

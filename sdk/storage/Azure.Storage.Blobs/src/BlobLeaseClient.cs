@@ -141,9 +141,10 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region Acquire
         /// <summary>
-        /// The <see cref="Acquire"/> operation acquires a lease on
-        /// the blob or container.  The lease <paramref name="duration"/> must
-        /// be between 15 to 60 seconds, or infinite (-1).
+        /// The <see cref="Acquire(TimeSpan, RequestConditions, CancellationToken)"/>
+        /// operation acquires a lease on the blob or container. The lease
+        /// <paramref name="duration"/> must be between 15 to 60 seconds, or
+        /// infinite (-1).
         ///
         /// If the container does not have an active lease, the Blob service
         /// creates a lease on the blob or container and returns it.  If the
@@ -180,17 +181,18 @@ namespace Azure.Storage.Blobs.Specialized
             TimeSpan duration,
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            AcquireInternal(
+            ParseAcquireResponse(AcquireInternal(
                 duration,
                 conditions,
                 async: false,
-                cancellationToken)
-                .EnsureCompleted();
+                new RequestContext() { CancellationToken = cancellationToken })
+                .EnsureCompleted());
 
         /// <summary>
-        /// The <see cref="Acquire"/> operation acquires a lease on
-        /// the blob or container.  The lease <paramref name="duration"/> must
-        /// be between 15 to 60 seconds, or infinite (-1).
+        /// The <see cref="AcquireAsync(TimeSpan, RequestConditions, CancellationToken)"/>
+        /// operation acquires a lease on the blob or container. The lease
+        /// <paramref name="duration"/> must be between 15 to 60 seconds, or
+        /// infinite (-1).
         ///
         /// If the container does not have an active lease, the Blob service
         /// creates a lease on the blob or container and returns it.  If the
@@ -228,12 +230,125 @@ namespace Azure.Storage.Blobs.Specialized
             TimeSpan duration,
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await AcquireInternal(
+            ParseAcquireResponse(await AcquireInternal(
                 duration,
                 conditions,
                 async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+                new RequestContext() { CancellationToken = cancellationToken })
+                .ConfigureAwait(false));
+
+        private Response<BlobLease> ParseAcquireResponse(Response response)
+        {
+            if (BlobClient != null)
+            {
+                return Response.FromValue(
+                    ResponseWithHeaders.FromValue(new BlobAcquireLeaseHeaders(response), response).ToBlobLease(),
+                    response);
+            }
+            else
+            {
+                return Response.FromValue(
+                    ResponseWithHeaders.FromValue(new ContainerAcquireLeaseHeaders(response), response).ToBlobLease(),
+                    response);
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="Acquire(TimeSpan, RequestConditions, RequestContext)"/>
+        /// operation acquires a lease on the blob or container. The lease
+        /// <paramref name="duration"/> must be between 15 to 60 seconds, or
+        /// infinite (-1).
+        ///
+        /// If the container does not have an active lease, the Blob service
+        /// creates a lease on the blob or container and returns it.  If the
+        /// container has an active lease, you can only request a new lease
+        /// using the active lease ID as <see cref="LeaseId"/>, but you can
+        /// specify a new <paramref name="duration"/>.
+        ///
+        /// For more information, see <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
+        /// </summary>
+        /// <param name="duration">
+        /// Specifies the duration of the lease, in seconds, or specify
+        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
+        /// A non-infinite lease can be between 15 and 60 seconds.
+        /// A lease duration cannot be changed using <see cref="RenewAsync"/>
+        /// or <see cref="ChangeAsync"/>.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
+        /// conditions on acquiring a lease.
+        /// </param>
+        /// <param name="context">
+        /// Optional <see cref="RequestContext"/> for the operation.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> as returned by the Storage service.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response Acquire(
+            TimeSpan duration,
+            RequestConditions conditions,
+            RequestContext context) =>
+            AcquireInternal(
+                duration,
+                conditions,
+                async: false,
+                context)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="AcquireAsync(TimeSpan, RequestConditions, RequestContext)"/>
+        /// operation acquires a lease on the blob or container. The lease
+        /// <paramref name="duration"/> must be between 15 to 60 seconds, or
+        /// infinite (-1).
+        ///
+        /// If the container does not have an active lease, the Blob service
+        /// creates a lease on the blob or container and returns it.  If the
+        /// container has an active lease, you can only request a new lease
+        /// using the active lease ID as <see cref="LeaseId"/>, but you can
+        /// specify a new <paramref name="duration"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
+        /// </summary>
+        /// <param name="duration">
+        /// Specifies the duration of the lease, in seconds, or specify
+        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
+        /// A non-infinite lease can be between 15 and 60 seconds.
+        /// A lease duration cannot be changed using <see cref="RenewAsync"/>
+        /// or <see cref="ChangeAsync"/>.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobLeaseRequestConditions"/> to add
+        /// conditions on acquiring a lease.
+        /// </param>
+        /// <param name="context">
+        /// Optional <see cref="RequestContext"/> for the operation.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> as returned by the Storage service.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response> AcquireAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            TimeSpan duration,
+            RequestConditions conditions,
+            RequestContext context) =>
+            (await AcquireInternal(
+                duration,
+                conditions,
+                async: true,
+                context)
+                .ConfigureAwait(false));
 
         /// <summary>
         /// The <see cref="AcquireInternal"/> operation acquires a lease on
@@ -264,9 +379,8 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
-        /// <param name="cancellationToken">
-        /// Optional <see cref="CancellationToken"/> to propagate
-        /// notifications that the operation should be cancelled.
+        /// <param name="context">
+        /// Optional <see cref="RequestContext"/> for this operation.
         /// </param>
         /// <returns>
         /// A <see cref="Response{Lease}"/> describing the lease.
@@ -275,13 +389,16 @@ namespace Azure.Storage.Blobs.Specialized
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        private async Task<Response<BlobLease>> AcquireInternal(
+        private async Task<Response> AcquireInternal(
             TimeSpan duration,
             RequestConditions conditions,
             bool async,
-            CancellationToken cancellationToken)
+            RequestContext context)
         {
             EnsureClient();
+            // generated code needs nonnull values
+            conditions ??= new RequestConditions();
+            context ??= new RequestContext();
             // Int64 is an overflow safe cast relative to TimeSpan.MaxValue
             var serviceDuration = duration < TimeSpan.Zero ? Constants.Blob.Lease.InfiniteLeaseDuration : Convert.ToInt64(duration.TotalSeconds);
             using (Pipeline.BeginLoggingScope(nameof(BlobLeaseClient)))
@@ -304,40 +421,28 @@ namespace Azure.Storage.Blobs.Specialized
                         tagCondition = leaseConditions?.TagConditions;
                     }
 
-                    Response<BlobLease> response;
+                    Response response;
                     if (BlobClient != null)
                     {
-                        ResponseWithHeaders<BlobAcquireLeaseHeaders> blobClientResponse;
-
                         if (async)
                         {
-                            blobClientResponse = await BlobClient.BlobRestClient.AcquireLeaseAsync(
+                            response = await BlobClient.BlobRestClient.AcquireLeaseAsync(
                                 duration: serviceDuration,
                                 proposedLeaseId: LeaseId,
-                                ifModifiedSince: conditions?.IfModifiedSince,
-                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                                ifMatch: conditions?.IfMatch?.ToString(),
-                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                                requestConditions: conditions,
                                 ifTags: tagCondition,
-                                cancellationToken: cancellationToken)
+                                context: context)
                                 .ConfigureAwait(false);
                         }
                         else
                         {
-                            blobClientResponse = BlobClient.BlobRestClient.AcquireLease(
+                            response = BlobClient.BlobRestClient.AcquireLease(
                                 duration: serviceDuration,
                                 proposedLeaseId: LeaseId,
-                                ifModifiedSince: conditions?.IfModifiedSince,
-                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                                ifMatch: conditions?.IfMatch?.ToString(),
-                                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
+                                requestConditions: conditions,
                                 ifTags: tagCondition,
-                                cancellationToken: cancellationToken);
+                                context: context);
                         }
-
-                        response = Response.FromValue(
-                            blobClientResponse.ToBlobLease(),
-                            blobClientResponse.GetRawResponse());
                     }
                     else
                     {
@@ -348,33 +453,29 @@ namespace Azure.Storage.Blobs.Specialized
                             operationName: nameof(BlobLeaseClient.Acquire),
                             parameterName: nameof(conditions));
 
-                        ResponseWithHeaders<ContainerAcquireLeaseHeaders> containerClientResponse;
-
                         if (async)
                         {
-                            containerClientResponse = await BlobContainerClient.ContainerRestClient.AcquireLeaseAsync(
+                            response = await BlobContainerClient.ContainerRestClient.AcquireLeaseAsync(
                                 duration: serviceDuration,
                                 proposedLeaseId: LeaseId,
-                                ifModifiedSince: conditions?.IfModifiedSince,
-                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                                cancellationToken: cancellationToken)
+                                requestConditions: conditions,
+                                context: context)
                                 .ConfigureAwait(false);
                         }
                         else
                         {
-                            containerClientResponse = BlobContainerClient.ContainerRestClient.AcquireLease(
+                            response = BlobContainerClient.ContainerRestClient.AcquireLease(
                                 duration: serviceDuration,
                                 proposedLeaseId: LeaseId,
-                                ifModifiedSince: conditions?.IfModifiedSince,
-                                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                                cancellationToken: cancellationToken);
+                                requestConditions: conditions,
+                                context: context);
                         }
-
-                        response = Response.FromValue(
-                            containerClientResponse.ToBlobLease(),
-                            containerClientResponse.GetRawResponse());
                     }
-                    LeaseId = response.Value.LeaseId;
+
+                    if (response.Headers.TryGetValue(Constants.HeaderNames.LeaseId, out string value))
+                    {
+                        LeaseId = value;
+                    }
                     return response;
                 }
                 catch (Exception ex)
@@ -398,7 +499,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// container's previously-acquired lease.
         ///
         /// The lease can be renewed if the leaseId
-        /// matches that associated with the blob or container.  Note that the]
+        /// matches that associated with the blob or container.  Note that the
         /// lease may be renewed even if it has expired as long as the blob or
         /// container has not been leased again since the expiration of that
         /// lease.  When you renew a lease, the lease duration clock resets.
@@ -721,12 +822,14 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure occurs.
         /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         public virtual async Task<Response<ReleasedObjectInfo>> ReleaseInternal(
             RequestConditions conditions,
 #pragma warning disable AZC0105 // DO NOT add 'async' parameter to public methods. This method is published, so it can't be modified.
             bool async,
 #pragma warning restore AZC0105 // DO NOT add 'async' parameter to public methods.
             CancellationToken cancellationToken)
+#pragma warning restore AZC0002 // Client method should have an optional CancellationToken (both name and it being optional matters) or a RequestContext as the last parameter.
         {
             EnsureClient();
             using (Pipeline.BeginLoggingScope(nameof(BlobLeaseClient)))

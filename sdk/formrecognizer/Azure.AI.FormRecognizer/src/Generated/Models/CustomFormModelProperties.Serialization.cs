@@ -14,14 +14,17 @@ namespace Azure.AI.FormRecognizer.Training
     {
         internal static CustomFormModelProperties DeserializeCustomFormModelProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> isComposed = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("isComposed"))
+                if (property.NameEquals("isComposed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isComposed = property.Value.GetBoolean();

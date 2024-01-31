@@ -7,27 +7,22 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Trigger that runs every time the selected Blob container changes. </summary>
     public partial class BlobTrigger : MultiplePipelineTrigger
     {
-        /// <summary> Initializes a new instance of BlobTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobTrigger"/>. </summary>
         /// <param name="folderPath"> The path of the container/folder that will trigger the pipeline. </param>
         /// <param name="maxConcurrency"> The max number of parallel files to handle when it is triggered. </param>
         /// <param name="linkedService"> The Azure Storage linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="folderPath"/> or <paramref name="linkedService"/> is null. </exception>
         public BlobTrigger(string folderPath, int maxConcurrency, LinkedServiceReference linkedService)
         {
-            if (folderPath == null)
-            {
-                throw new ArgumentNullException(nameof(folderPath));
-            }
-            if (linkedService == null)
-            {
-                throw new ArgumentNullException(nameof(linkedService));
-            }
+            Argument.AssertNotNull(folderPath, nameof(folderPath));
+            Argument.AssertNotNull(linkedService, nameof(linkedService));
 
             FolderPath = folderPath;
             MaxConcurrency = maxConcurrency;
@@ -35,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "BlobTrigger";
         }
 
-        /// <summary> Initializes a new instance of BlobTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobTrigger"/>. </summary>
         /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>

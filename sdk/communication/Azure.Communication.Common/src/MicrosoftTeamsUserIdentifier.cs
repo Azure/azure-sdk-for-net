@@ -8,10 +8,40 @@ namespace Azure.Communication
     /// <summary>Represents a Microsoft Teams user.</summary>
     public class MicrosoftTeamsUserIdentifier : CommunicationIdentifier
     {
-        /// <summary>The optional raw id of the Microsoft Teams User identifier.</summary>
-        public string RawId { get; }
+        private string _rawId;
 
-        /// <summary>The id of the Microsoft Teams user. If the user isn't anonymous, the id is the AAD object id of the user.</summary>
+        /// <summary>
+        /// Returns the canonical string representation of the <see cref="MicrosoftTeamsUserIdentifier"/>.
+        /// You can use the <see cref="RawId"/> for encoding the identifier and then use it as a key in a database.
+        /// </summary>
+        public override string RawId
+        {
+            get
+            {
+                if (_rawId == null)
+                {
+                    if (IsAnonymous)
+                    {
+                        _rawId = $"{TeamUserAnonymous}{UserId}";
+                    }
+                    else if (Cloud == CommunicationCloudEnvironment.Dod)
+                    {
+                        _rawId = $"{TeamUserDodCloud}{UserId}";
+                    }
+                    else if (Cloud == CommunicationCloudEnvironment.Gcch)
+                    {
+                        _rawId = $"{TeamUserGcchCloud}{UserId}";
+                    }
+                    else
+                    {
+                        _rawId = $"{TeamUserPublicCloud}{UserId}";
+                    }
+                }
+                return _rawId;
+            }
+        }
+
+        /// <summary>The id of the Microsoft Teams user. If the user isn't anonymous, the id is the Azure AD object id of the user.</summary>
         public string UserId { get; }
 
         /// <summary>True if the user is anonymous, for example when joining a meeting with a share link.</summary>
@@ -23,7 +53,7 @@ namespace Azure.Communication
         /// <summary>
         /// Initializes a new instance of <see cref="MicrosoftTeamsUserIdentifier"/>.
         /// </summary>
-        /// <param name="userId">Id of the Microsoft Teams user. If the user isn't anonymous, the id is the AAD object id of the user.</param>
+        /// <param name="userId">Id of the Microsoft Teams user. If the user isn't anonymous, the id is the Azure AD object id of the user.</param>
         /// <param name="isAnonymous">Set this to true if the user is anonymous, for example when joining a meeting with a share link.</param>
         /// <param name="cloud">The cloud that the Microsoft Team user belongs to. A null value translates to the Public cloud.</param>
         /// <param name="rawId">Raw id of the Microsoft Teams user, optional.</param>
@@ -39,21 +69,15 @@ namespace Azure.Communication
             UserId = userId;
             IsAnonymous = isAnonymous;
             Cloud = cloud ?? CommunicationCloudEnvironment.Public;
-            RawId = rawId;
+            _rawId = rawId;
         }
 
         /// <inheritdoc />
         public override string ToString() => UserId;
 
         /// <inheritdoc />
-        public override int GetHashCode() => UserId.GetHashCode();
-
-        /// <inheritdoc />
         public override bool Equals(CommunicationIdentifier other)
             => other is MicrosoftTeamsUserIdentifier otherId
-            && otherId.UserId == UserId
-            && otherId.IsAnonymous == IsAnonymous
-            && otherId.Cloud == Cloud
-            && (RawId is null || otherId.RawId is null || RawId == otherId.RawId);
+            && otherId.RawId == RawId;
     }
 }

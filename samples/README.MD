@@ -22,15 +22,15 @@ Each package folder contains a package-specific `README.md` file. Most of these 
 Each package folder contains a subfolder called `samples` with additional code samples. These samples can be either short programs contained in `*.cs` files, or more complete how-to guides (code samples and some commentary) contained in `*.md` files. You can find shortcuts to main how-to guides in the [**How-To Guides List**](#how-to-guide-list) section below.
 
 ## Sample Applications
-Sometimes we want to illustrate how several APIs or even packages work together in a context of a more complete program. For these cases, we created sample applications that you can look at, download, compile, and execute. These application samples are located on 
+Sometimes we want to illustrate how several APIs or even packages work together in a context of a more complete program. For these cases, we created sample applications that you can look at, download, compile, and execute. These application samples are located on
 [https://docs.microsoft.com/samples/](https://docs.microsoft.com/samples/).
 
 ## How-To Guide List
-This section lists **main** how-to guides for the most commonly used APIs and most common scenarios, i.e. this section does not attempt to be a complete directory of guides contained in this repository. 
+This section lists **main** how-to guides for the most commonly used APIs and most common scenarios, i.e. this section does not attempt to be a complete directory of guides contained in this repository.
 
 #### General How-To Guides
 - [How to access **HTTP response details**](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Response.md)
-- [How to **mock**](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Mocking.md)
+- [How to **mock**](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking)
 - [How to configure **retries**](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Configuration.md)
 - [How to configure **proxies**](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Configuration.md)
 - How to configure, access, and analyze **logging** information (TODO)

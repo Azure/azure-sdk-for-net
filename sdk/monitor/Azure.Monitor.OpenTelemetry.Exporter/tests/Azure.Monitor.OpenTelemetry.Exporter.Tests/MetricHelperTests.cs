@@ -4,12 +4,16 @@
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
 using System.Linq;
+
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
+
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
+
 using Xunit;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     public class MetricHelperTests
     {
@@ -28,20 +32,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             doubleCounter.Add(123.45);
             provider.ForceFlush();
 
-            var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(new Batch<Metric>(metrics.ToArray(), 1), "testRoleName", "testRoleInstance", "00000000-0000-0000-0000-000000000000");
+            var metricResource = new AzureMonitorResource()
+            {
+                RoleName = "testRoleName",
+                RoleInstance = "testRoleInstance"
+            };
+            var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(new Batch<Metric>(metrics.ToArray(), 1), metricResource, "00000000-0000-0000-0000-000000000000");
             Assert.Single(telemetryItems);
             Assert.Equal("MetricData", telemetryItems[0].Data.BaseType);
             Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItems[0].InstrumentationKey);
-            Assert.Equal("testRoleName", telemetryItems[0].Tags[ContextTagKeys.AiCloudRole.ToString()]);
-            Assert.Equal("testRoleInstance", telemetryItems[0].Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+            Assert.Equal(metricResource.RoleName, telemetryItems[0].Tags[ContextTagKeys.AiCloudRole.ToString()]);
+            Assert.Equal(metricResource.RoleInstance, telemetryItems[0].Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
 
             var metricsData = (MetricsData)telemetryItems[0].Data.BaseData;
             Assert.Equal(2, metricsData.Version);
             Assert.Equal("TestDoubleCounter", metricsData.Metrics.First().Name);
             Assert.Equal(123.45, metricsData.Metrics.First().Value);
-            Assert.Equal(DataPointType.Aggregation, metricsData.Metrics.First().DataPointType);
-            Assert.Equal(1, metricsData.Properties.Count);
-            Assert.Equal("60000", metricsData.Properties["_MS.AggregationIntervalMs"]);
+            Assert.Null(metricsData.Metrics.First().DataPointType);
         }
     }
 }

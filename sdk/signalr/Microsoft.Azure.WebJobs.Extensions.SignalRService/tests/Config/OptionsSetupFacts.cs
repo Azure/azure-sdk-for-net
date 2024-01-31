@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Reflection;
 using Azure.Core.Serialization;
 using Microsoft.Azure.SignalR.Management;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
@@ -19,7 +20,7 @@ namespace SignalRServiceExtension.Tests.Config
             var sectionKey = "connection";
             var serviceUri = "http://localhost.signalr.com";
             configuration[$"{sectionKey}:serviceUri"] = serviceUri;
-            var optionsSetup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, sectionKey);
+            var optionsSetup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, sectionKey, new());
             var options = new ServiceManagerOptions();
             optionsSetup.Configure(options);
 
@@ -36,7 +37,7 @@ namespace SignalRServiceExtension.Tests.Config
             var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
             configuration[$"Azure:SignalR:Endpoints:{endpointNames[0]}:serviceUri"] = serviceUris[0];
             configuration[$"Azure:SignalR:Endpoints:{endpointNames[1]}:serviceUri"] = serviceUris[1];
-            var optionsSetup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, "does_not_matter");
+            var optionsSetup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, "does_not_matter", new());
             var options = new ServiceManagerOptions();
             optionsSetup.Configure(options);
 
@@ -58,7 +59,7 @@ namespace SignalRServiceExtension.Tests.Config
             configuration[$"Azure:SignalR:Endpoints:{endpointName}:serviceUri"] = serviceUris[0];
             configuration[$"{namelessEndpointKey}:serviceUri"] = serviceUris[1];
 
-            var optionsSetup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, namelessEndpointKey);
+            var optionsSetup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, namelessEndpointKey, new());
             var options = new ServiceManagerOptions();
             optionsSetup.Configure(options);
 
@@ -79,9 +80,73 @@ namespace SignalRServiceExtension.Tests.Config
             var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
             configuration[configKey] = configValue;
             var options = new ServiceManagerOptions();
-            var setup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, "key");
+            var setup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, "key", new());
             setup.Configure(options);
-            Assert.Equal(objectSerializerType, options.ObjectSerializer?.GetType());
+            // hack to access internal member
+            var serializer = typeof(ServiceManagerOptions).GetProperty("ObjectSerializer", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(options);
+            Assert.Equal(objectSerializerType, serializer?.GetType());
+        }
+
+        [Fact]
+        public void TestNullRetryOptions()
+        {
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            var options = new ServiceManagerOptions();
+            var setup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, "key", new());
+            setup.Configure(options);
+            Assert.Null(options.RetryOptions);
+        }
+
+        [Fact]
+        public void TestDefaultRetryOptions()
+        {
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            configuration[Constants.AzureSignalRRetry + ":Default"] = "";
+            var options = new ServiceManagerOptions();
+            var setup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, "key", new());
+            setup.Configure(options);
+            Assert.Equal(3, options.RetryOptions.MaxRetries);
+            Assert.Equal(TimeSpan.FromSeconds(0.8), options.RetryOptions.Delay);
+            Assert.Equal(TimeSpan.FromMinutes(1), options.RetryOptions.MaxDelay);
+            Assert.Equal(ServiceManagerRetryMode.Fixed, options.RetryOptions.Mode);
+        }
+
+        [Fact]
+        public void TestCustomizedRetryOptions()
+        {
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            configuration[Constants.AzureSignalRRetry + ":MaxRetries"] = "4";
+            configuration[Constants.AzureSignalRRetry + ":Delay"] = "00:00:1";
+            configuration[Constants.AzureSignalRRetry + ":MaxDelay"] = "00:02:00";
+            configuration[Constants.AzureSignalRRetry + ":Mode"] = "Exponential";
+            var options = new ServiceManagerOptions();
+            var setup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, "key", new());
+            setup.Configure(options);
+            Assert.Equal(4, options.RetryOptions.MaxRetries);
+            Assert.Equal(TimeSpan.FromSeconds(1), options.RetryOptions.Delay);
+            Assert.Equal(TimeSpan.FromMinutes(2), options.RetryOptions.MaxDelay);
+            Assert.Equal(ServiceManagerRetryMode.Exponential, options.RetryOptions.Mode);
+        }
+
+        [Fact]
+        public void TestConfigreHttpClientTimeoutViaCode()
+        {
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            var options = new ServiceManagerOptions();
+            var setup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, "key", new() { HttpClientTimeout = TimeSpan.FromSeconds(10) });
+            setup.Configure(options);
+            Assert.Equal(TimeSpan.FromSeconds(10), options.HttpClientTimeout);
+        }
+
+        [Fact]
+        public void TestConfigureHttpClientTimeoutViaConfiguration()
+        {
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            configuration[Constants.AzureSignalRHttpClientTimeout] = "00:00:10";
+            var options = new ServiceManagerOptions();
+            var setup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, "key", new());
+            setup.Configure(options);
+            Assert.Equal(TimeSpan.FromSeconds(10), options.HttpClientTimeout);
         }
     }
 }

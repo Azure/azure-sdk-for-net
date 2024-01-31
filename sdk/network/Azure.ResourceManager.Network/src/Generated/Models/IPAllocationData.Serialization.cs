@@ -5,32 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class IPAllocationData : IUtf8JsonSerializable
+    public partial class IPAllocationData : IUtf8JsonSerializable, IJsonModel<IPAllocationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPAllocationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IPAllocationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IPAllocationData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IPAllocationData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -39,23 +65,33 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(TypePropertiesType))
+            if (options.Format != "W" && Optional.IsDefined(Subnet))
             {
-                writer.WritePropertyName("type");
-                writer.WriteStringValue(TypePropertiesType.Value.ToString());
+                writer.WritePropertyName("subnet"u8);
+                JsonSerializer.Serialize(writer, Subnet);
+            }
+            if (options.Format != "W" && Optional.IsDefined(VirtualNetwork))
+            {
+                writer.WritePropertyName("virtualNetwork"u8);
+                JsonSerializer.Serialize(writer, VirtualNetwork);
+            }
+            if (Optional.IsDefined(IPAllocationType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(IPAllocationType.Value.ToString());
             }
             if (Optional.IsDefined(Prefix))
             {
-                writer.WritePropertyName("prefix");
+                writer.WritePropertyName("prefix"u8);
                 writer.WriteStringValue(Prefix);
             }
             if (Optional.IsDefined(PrefixLength))
             {
                 if (PrefixLength != null)
                 {
-                    writer.WritePropertyName("prefixLength");
+                    writer.WritePropertyName("prefixLength"u8);
                     writer.WriteNumberValue(PrefixLength.Value);
                 }
                 else
@@ -65,17 +101,17 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsDefined(PrefixType))
             {
-                writer.WritePropertyName("prefixType");
+                writer.WritePropertyName("prefixType"u8);
                 writer.WriteStringValue(PrefixType.Value.ToString());
             }
             if (Optional.IsDefined(IpamAllocationId))
             {
-                writer.WritePropertyName("ipamAllocationId");
+                writer.WritePropertyName("ipamAllocationId"u8);
                 writer.WriteStringValue(IpamAllocationId);
             }
             if (Optional.IsCollectionDefined(AllocationTags))
             {
-                writer.WritePropertyName("allocationTags");
+                writer.WritePropertyName("allocationTags"u8);
                 writer.WriteStartObject();
                 foreach (var item in AllocationTags)
                 {
@@ -85,57 +121,107 @@ namespace Azure.ResourceManager.Network
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IPAllocationData DeserializeIPAllocationData(JsonElement element)
+        IPAllocationData IJsonModel<IPAllocationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> etag = default;
-            Optional<string> id = default;
+            var format = options.Format == "W" ? ((IPersistableModel<IPAllocationData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IPAllocationData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIPAllocationData(document.RootElement, options);
+        }
+
+        internal static IPAllocationData DeserializeIPAllocationData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> location = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<WritableSubResource> subnet = default;
             Optional<WritableSubResource> virtualNetwork = default;
-            Optional<IPAllocationType> type0 = default;
+            Optional<NetworkIPAllocationType> type0 = default;
             Optional<string> prefix = default;
             Optional<int?> prefixLength = default;
-            Optional<IPVersion> prefixType = default;
+            Optional<NetworkIPVersion> prefixType = default;
             Optional<string> ipamAllocationId = default;
             Optional<IDictionary<string, string>> allocationTags = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -146,7 +232,7 @@ namespace Azure.ResourceManager.Network
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -155,42 +241,39 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("subnet"))
+                        if (property0.NameEquals("subnet"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            subnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            subnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("virtualNetwork"))
+                        if (property0.NameEquals("virtualNetwork"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            virtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("type"))
+                        if (property0.NameEquals("type"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            type0 = new IPAllocationType(property0.Value.GetString());
+                            type0 = new NetworkIPAllocationType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("prefix"))
+                        if (property0.NameEquals("prefix"u8))
                         {
                             prefix = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("prefixLength"))
+                        if (property0.NameEquals("prefixLength"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -200,26 +283,24 @@ namespace Azure.ResourceManager.Network
                             prefixLength = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("prefixType"))
+                        if (property0.NameEquals("prefixType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            prefixType = new IPVersion(property0.Value.GetString());
+                            prefixType = new NetworkIPVersion(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("ipamAllocationId"))
+                        if (property0.NameEquals("ipamAllocationId"u8))
                         {
                             ipamAllocationId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("allocationTags"))
+                        if (property0.NameEquals("allocationTags"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -233,8 +314,44 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IPAllocationData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, subnet, virtualNetwork, Optional.ToNullable(type0), prefix.Value, Optional.ToNullable(prefixLength), Optional.ToNullable(prefixType), ipamAllocationId.Value, Optional.ToDictionary(allocationTags));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IPAllocationData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), subnet, virtualNetwork, Optional.ToNullable(type0), prefix.Value, Optional.ToNullable(prefixLength), Optional.ToNullable(prefixType), ipamAllocationId.Value, Optional.ToDictionary(allocationTags));
         }
+
+        BinaryData IPersistableModel<IPAllocationData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IPAllocationData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IPAllocationData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        IPAllocationData IPersistableModel<IPAllocationData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IPAllocationData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIPAllocationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IPAllocationData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IPAllocationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

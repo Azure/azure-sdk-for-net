@@ -13,17 +13,17 @@ namespace Azure.ResourceManager.Sql.Models
     {
         public static string ToSerialString(this AutoExecuteStatus value) => value switch
         {
+            AutoExecuteStatus.Default => "Default",
             AutoExecuteStatus.Enabled => "Enabled",
             AutoExecuteStatus.Disabled => "Disabled",
-            AutoExecuteStatus.Default => "Default",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutoExecuteStatus value.")
         };
 
         public static AutoExecuteStatus ToAutoExecuteStatus(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return AutoExecuteStatus.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return AutoExecuteStatus.Disabled;
-            if (string.Equals(value, "Default", StringComparison.InvariantCultureIgnoreCase)) return AutoExecuteStatus.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return AutoExecuteStatus.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return AutoExecuteStatus.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return AutoExecuteStatus.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutoExecuteStatus value.");
         }
     }

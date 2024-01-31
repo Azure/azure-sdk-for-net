@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,16 +16,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaLiveEventChannelArchiveHeartbeatEventData DeserializeMediaLiveEventChannelArchiveHeartbeatEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string channelLatencyMs = default;
             string latencyResultCode = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("channelLatencyMs"))
+                if (property.NameEquals("channelLatencyMs"u8))
                 {
                     channelLatencyMs = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("latencyResultCode"))
+                if (property.NameEquals("latencyResultCode"u8))
                 {
                     latencyResultCode = property.Value.GetString();
                     continue;

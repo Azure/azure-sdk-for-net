@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Diagnostics.Tracing;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -11,7 +10,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Tests;
@@ -19,12 +17,19 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Secrets.Tests
 {
+    [NonParallelizable]
     public class ChallengeBasedAuthenticationPolicyTests
     {
         private const string TenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47";
         private const string VaultHost = "test.vault.azure.net";
 
         private static Uri VaultUri => new Uri("https://" + VaultHost);
+
+        [SetUp]
+        public void Setup()
+        {
+            ChallengeBasedAuthenticationPolicy.ClearCache();
+        }
 
         [Test]
         public async Task SingleRequest()
@@ -120,6 +125,78 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             catch (RequestFailedException ex) when (ex.Status == 401)
             {
             }
+        }
+
+        [Test]
+        public async Task ReauthenticatesWhenTenantChanged()
+        {
+            MockTransport transport = new(new[]
+            {
+                // Initial tenant.
+                new MockResponse(401)
+                    .WithHeader("WWW-Authenticate", @"Bearer authorization=""https://login.windows.net/de763a21-49f7-4b08-a8e1-52c8fbc103b4"", resource=""https://vault.azure.net"""),
+
+                new MockResponse(200)
+                    .WithJson("""
+                    {
+                        "token_type": "Bearer",
+                        "expires_in": 3599,
+                        "resource": "https://vault.azure.net",
+                        "access_token": "ZGU3NjNhMjEtNDlmNy00YjA4LWE4ZTEtNTJjOGZiYzEwM2I0"
+                    }
+                    """),
+
+                new MockResponse(200)
+                {
+                    ContentStream = new KeyVaultSecret("test-secret", "secret-value").ToStream(),
+                },
+
+                // Moved tenants.
+                new MockResponse(401)
+                    .WithHeader("WWW-Authenticate", @"Bearer authorization=""https://login.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47"", resource=""https://vault.azure.net""")
+                    .WithJson("""
+                    {
+                        "error": {
+                            "code": "Unauthorized",
+                            "message": "AKV10032: Invalid issuer. Expected one of https://sts.windows.net/72f988bf-86f1-41af-91ab-2d7cd011db47/, https://sts.windows.net/f8cdef31-a31e-4b4a-93e4-5f571e91255a/, https://sts.windows.net/e2d54eb5-3869-4f70-8578-dee5fc7331f4/, https://sts.windows.net/33e01921-4d64-4f8c-a055-5bdaffd5e33d/, https://sts.windows.net/975f013f-7f24-47e8-a7d3-abc4752bf346/, found https://sts.windows.net/96be4b7a-defb-4dc2-a31f-49ee6145d5ab/."
+                        }
+                    }
+                    """),
+
+                new MockResponse(200)
+                    .WithJson("""
+                    {
+                        "token_type": "Bearer",
+                        "expires_in": 3599,
+                        "resource": "https://vault.azure.net",
+                        "access_token": "NzJmOTg4YmYtODZmMS00MWFmLTkxYWItMmQ3Y2QwMTFkYjQ3"
+                    }
+                    """),
+
+                new MockResponse(200)
+                {
+                    ContentStream = new KeyVaultSecret("test-secret", "secret-value").ToStream(),
+                },
+            });
+
+            SecretClientOptions options = new()
+            {
+                Transport = transport,
+            };
+
+            SecretClient client = new(
+                VaultUri,
+                new MockCredential(transport),
+                options);
+
+            Response<KeyVaultSecret> response = await client.GetSecretAsync("test-secret");
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual("secret-value", response.Value.Value);
+
+            // Try it again now that the vault should have moved tenants.
+            response = await client.GetSecretAsync("test-secret");
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual("secret-value", response.Value.Value);
         }
 
         private class MockTransportBuilder

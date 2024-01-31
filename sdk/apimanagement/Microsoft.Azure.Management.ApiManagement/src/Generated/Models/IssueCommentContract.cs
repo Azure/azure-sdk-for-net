@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Issue Comment Contract details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class IssueCommentContract : Resource
+    public partial class IssueCommentContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the IssueCommentContract class.

@@ -21,9 +21,9 @@ namespace Azure.AI.FormRecognizer.Training
 
         public static TrainingStatus ToTrainingStatus(this string value)
         {
-            if (string.Equals(value, "succeeded", StringComparison.InvariantCultureIgnoreCase)) return TrainingStatus.Succeeded;
-            if (string.Equals(value, "partiallySucceeded", StringComparison.InvariantCultureIgnoreCase)) return TrainingStatus.PartiallySucceeded;
-            if (string.Equals(value, "failed", StringComparison.InvariantCultureIgnoreCase)) return TrainingStatus.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "succeeded")) return TrainingStatus.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "partiallySucceeded")) return TrainingStatus.PartiallySucceeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed")) return TrainingStatus.Failed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TrainingStatus value.");
         }
     }

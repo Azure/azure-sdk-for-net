@@ -43,21 +43,11 @@ namespace Azure.Security.KeyVault.Certificates.Perf.Scenarios
         public override void Run(CancellationToken cancellationToken)
         {
             using X509Certificate2 x509certificate = Client.DownloadCertificate(_certificateName);
-            string subject = x509certificate.Subject;
-
-#if DEBUG
-            Assert.AreEqual("CN=Azure SDK", subject);
-#endif
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
             using X509Certificate2 x509certificate = await Client.DownloadCertificateAsync(_certificateName);
-            string subject = x509certificate.Subject;
-
-#if DEBUG
-            Assert.AreEqual("CN=Azure SDK", subject);
-#endif
         }
     }
 }

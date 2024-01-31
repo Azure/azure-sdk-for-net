@@ -8,14 +8,13 @@ A `TableClient` is needed to perform table-level operations like inserting and d
 - Call `GetTableClient` from the `TableServiceClient` with the table name.
 
 ```C# Snippet:TablesSample1GetTableClient
-string tableName = "OfficeSupplies1p2";
-var tableClient = serviceClient.GetTableClient(tableName);
+var tableClient2 = serviceClient.GetTableClient(tableName);
 ```
 
 - Create a `TableClient` with a SAS URI, an endpoint and `TableSharedKeyCredential`, or a connection string.
 
 ```C# Snippet:TablesSample1CreateTableClient
-var tableClient = new TableClient(
+var tableClient3 = new TableClient(
     new Uri(storageUri),
     tableName,
     new TableSharedKeyCredential(accountName, storageAccountKey));
@@ -25,7 +24,7 @@ If you are not familiar with creating tables, refer to the sample on [creating a
 
 ## Upsert an entity
 
-The upsert operation combines the capabilities of insert and update unconditionally. 
+The upsert operation combines the capabilities of insert and update unconditionally.
 
 ```C# Snippet:TablesSample5UpsertEntityAsync
 var entity = new TableEntity(partitionKey, rowKey)
@@ -64,8 +63,3 @@ TableEntity updatedEntity = await tableClient.GetEntityAsync<TableEntity>(partit
 Console.WriteLine($"'Price' before updating: ${entity.GetDouble("Price")}");
 Console.WriteLine($"'Price' after updating: ${updatedEntity.GetDouble("Price")}");
 ```
-
----
-To see the full example source files, see:
-- [Synchronous Update and Upsert Entities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample5_UpdateUpsertEntities.cs)
-- [Asynchronous Update and Upsert Entities](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/tests/samples/Sample5_UpdateUpsertEntitiesAsync.cs)

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -12,37 +13,70 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the ActionGroup data model. </summary>
-    public partial class ActionGroupData : AzureResource
+    /// <summary>
+    /// A class representing the ActionGroup data model.
+    /// An action group resource.
+    /// </summary>
+    public partial class ActionGroupData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ActionGroupData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ActionGroupData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ActionGroupData(AzureLocation location) : base(location)
         {
-            EmailReceivers = new ChangeTrackingList<EmailReceiver>();
-            SmsReceivers = new ChangeTrackingList<SmsReceiver>();
-            WebhookReceivers = new ChangeTrackingList<WebhookReceiver>();
-            ItsmReceivers = new ChangeTrackingList<ItsmReceiver>();
-            AzureAppPushReceivers = new ChangeTrackingList<AzureAppPushReceiver>();
-            AutomationRunbookReceivers = new ChangeTrackingList<AutomationRunbookReceiver>();
-            VoiceReceivers = new ChangeTrackingList<VoiceReceiver>();
-            LogicAppReceivers = new ChangeTrackingList<LogicAppReceiver>();
-            AzureFunctionReceivers = new ChangeTrackingList<AzureFunctionReceiver>();
-            ArmRoleReceivers = new ChangeTrackingList<ArmRoleReceiver>();
-            EventHubReceivers = new ChangeTrackingList<EventHubReceiver>();
+            EmailReceivers = new ChangeTrackingList<MonitorEmailReceiver>();
+            SmsReceivers = new ChangeTrackingList<MonitorSmsReceiver>();
+            WebhookReceivers = new ChangeTrackingList<MonitorWebhookReceiver>();
+            ItsmReceivers = new ChangeTrackingList<MonitorItsmReceiver>();
+            AzureAppPushReceivers = new ChangeTrackingList<MonitorAzureAppPushReceiver>();
+            AutomationRunbookReceivers = new ChangeTrackingList<MonitorAutomationRunbookReceiver>();
+            VoiceReceivers = new ChangeTrackingList<MonitorVoiceReceiver>();
+            LogicAppReceivers = new ChangeTrackingList<MonitorLogicAppReceiver>();
+            AzureFunctionReceivers = new ChangeTrackingList<MonitorAzureFunctionReceiver>();
+            ArmRoleReceivers = new ChangeTrackingList<MonitorArmRoleReceiver>();
+            EventHubReceivers = new ChangeTrackingList<MonitorEventHubReceiver>();
         }
 
-        /// <summary> Initializes a new instance of ActionGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="kind"> Azure resource kind. </param>
-        /// <param name="identity"> Azure resource identity. </param>
         /// <param name="groupShortName"> The short name of the action group. This will be used in SMS messages. </param>
-        /// <param name="enabled"> Indicates whether this action group is enabled. If an action group is not enabled, then none of its receivers will receive communications. </param>
+        /// <param name="isEnabled"> Indicates whether this action group is enabled. If an action group is not enabled, then none of its receivers will receive communications. </param>
         /// <param name="emailReceivers"> The list of email receivers that are part of this action group. </param>
         /// <param name="smsReceivers"> The list of SMS receivers that are part of this action group. </param>
         /// <param name="webhookReceivers"> The list of webhook receivers that are part of this action group. </param>
@@ -54,10 +88,11 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="azureFunctionReceivers"> The list of azure function receivers that are part of this action group. </param>
         /// <param name="armRoleReceivers"> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </param>
         /// <param name="eventHubReceivers"> The list of event hub receivers that are part of this action group. </param>
-        internal ActionGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, string identity, string groupShortName, bool? enabled, IList<EmailReceiver> emailReceivers, IList<SmsReceiver> smsReceivers, IList<WebhookReceiver> webhookReceivers, IList<ItsmReceiver> itsmReceivers, IList<AzureAppPushReceiver> azureAppPushReceivers, IList<AutomationRunbookReceiver> automationRunbookReceivers, IList<VoiceReceiver> voiceReceivers, IList<LogicAppReceiver> logicAppReceivers, IList<AzureFunctionReceiver> azureFunctionReceivers, IList<ArmRoleReceiver> armRoleReceivers, IList<EventHubReceiver> eventHubReceivers) : base(id, name, resourceType, systemData, tags, location, kind, identity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ActionGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string groupShortName, bool? isEnabled, IList<MonitorEmailReceiver> emailReceivers, IList<MonitorSmsReceiver> smsReceivers, IList<MonitorWebhookReceiver> webhookReceivers, IList<MonitorItsmReceiver> itsmReceivers, IList<MonitorAzureAppPushReceiver> azureAppPushReceivers, IList<MonitorAutomationRunbookReceiver> automationRunbookReceivers, IList<MonitorVoiceReceiver> voiceReceivers, IList<MonitorLogicAppReceiver> logicAppReceivers, IList<MonitorAzureFunctionReceiver> azureFunctionReceivers, IList<MonitorArmRoleReceiver> armRoleReceivers, IList<MonitorEventHubReceiver> eventHubReceivers, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             GroupShortName = groupShortName;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             EmailReceivers = emailReceivers;
             SmsReceivers = smsReceivers;
             WebhookReceivers = webhookReceivers;
@@ -69,33 +104,39 @@ namespace Azure.ResourceManager.Monitor
             AzureFunctionReceivers = azureFunctionReceivers;
             ArmRoleReceivers = armRoleReceivers;
             EventHubReceivers = eventHubReceivers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ActionGroupData"/> for deserialization. </summary>
+        internal ActionGroupData()
+        {
         }
 
         /// <summary> The short name of the action group. This will be used in SMS messages. </summary>
         public string GroupShortName { get; set; }
         /// <summary> Indicates whether this action group is enabled. If an action group is not enabled, then none of its receivers will receive communications. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> The list of email receivers that are part of this action group. </summary>
-        public IList<EmailReceiver> EmailReceivers { get; }
+        public IList<MonitorEmailReceiver> EmailReceivers { get; }
         /// <summary> The list of SMS receivers that are part of this action group. </summary>
-        public IList<SmsReceiver> SmsReceivers { get; }
+        public IList<MonitorSmsReceiver> SmsReceivers { get; }
         /// <summary> The list of webhook receivers that are part of this action group. </summary>
-        public IList<WebhookReceiver> WebhookReceivers { get; }
+        public IList<MonitorWebhookReceiver> WebhookReceivers { get; }
         /// <summary> The list of ITSM receivers that are part of this action group. </summary>
-        public IList<ItsmReceiver> ItsmReceivers { get; }
+        public IList<MonitorItsmReceiver> ItsmReceivers { get; }
         /// <summary> The list of AzureAppPush receivers that are part of this action group. </summary>
-        public IList<AzureAppPushReceiver> AzureAppPushReceivers { get; }
+        public IList<MonitorAzureAppPushReceiver> AzureAppPushReceivers { get; }
         /// <summary> The list of AutomationRunbook receivers that are part of this action group. </summary>
-        public IList<AutomationRunbookReceiver> AutomationRunbookReceivers { get; }
+        public IList<MonitorAutomationRunbookReceiver> AutomationRunbookReceivers { get; }
         /// <summary> The list of voice receivers that are part of this action group. </summary>
-        public IList<VoiceReceiver> VoiceReceivers { get; }
+        public IList<MonitorVoiceReceiver> VoiceReceivers { get; }
         /// <summary> The list of logic app receivers that are part of this action group. </summary>
-        public IList<LogicAppReceiver> LogicAppReceivers { get; }
+        public IList<MonitorLogicAppReceiver> LogicAppReceivers { get; }
         /// <summary> The list of azure function receivers that are part of this action group. </summary>
-        public IList<AzureFunctionReceiver> AzureFunctionReceivers { get; }
+        public IList<MonitorAzureFunctionReceiver> AzureFunctionReceivers { get; }
         /// <summary> The list of ARM role receivers that are part of this action group. Roles are Azure RBAC roles and only built-in roles are supported. </summary>
-        public IList<ArmRoleReceiver> ArmRoleReceivers { get; }
+        public IList<MonitorArmRoleReceiver> ArmRoleReceivers { get; }
         /// <summary> The list of event hub receivers that are part of this action group. </summary>
-        public IList<EventHubReceiver> EventHubReceivers { get; }
+        public IList<MonitorEventHubReceiver> EventHubReceivers { get; }
     }
 }

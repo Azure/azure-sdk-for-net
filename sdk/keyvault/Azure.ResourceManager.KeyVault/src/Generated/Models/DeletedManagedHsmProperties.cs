@@ -14,35 +14,69 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Properties of the deleted managed HSM. </summary>
     public partial class DeletedManagedHsmProperties
     {
-        /// <summary> Initializes a new instance of DeletedManagedHsmProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeletedManagedHsmProperties"/>. </summary>
         internal DeletedManagedHsmProperties()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DeletedManagedHsmProperties. </summary>
-        /// <param name="mhsmId"> The resource id of the original managed HSM. </param>
+        /// <summary> Initializes a new instance of <see cref="DeletedManagedHsmProperties"/>. </summary>
+        /// <param name="managedHsmId"> The resource id of the original managed HSM. </param>
         /// <param name="location"> The location of the original managed HSM. </param>
-        /// <param name="deletionOn"> The deleted date. </param>
+        /// <param name="deletedOn"> The deleted date. </param>
         /// <param name="scheduledPurgeOn"> The scheduled purged date. </param>
         /// <param name="purgeProtectionEnabled"> Purge protection status of the original managed HSM. </param>
         /// <param name="tags"> Tags of the original managed HSM. </param>
-        internal DeletedManagedHsmProperties(string mhsmId, string location, DateTimeOffset? deletionOn, DateTimeOffset? scheduledPurgeOn, bool? purgeProtectionEnabled, IReadOnlyDictionary<string, string> tags)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeletedManagedHsmProperties(ResourceIdentifier managedHsmId, AzureLocation? location, DateTimeOffset? deletedOn, DateTimeOffset? scheduledPurgeOn, bool? purgeProtectionEnabled, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            MhsmId = mhsmId;
+            ManagedHsmId = managedHsmId;
             Location = location;
-            DeletionOn = deletionOn;
+            DeletedOn = deletedOn;
             ScheduledPurgeOn = scheduledPurgeOn;
             PurgeProtectionEnabled = purgeProtectionEnabled;
             Tags = tags;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource id of the original managed HSM. </summary>
-        public string MhsmId { get; }
+        public ResourceIdentifier ManagedHsmId { get; }
         /// <summary> The location of the original managed HSM. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
         /// <summary> The deleted date. </summary>
-        public DateTimeOffset? DeletionOn { get; }
+        public DateTimeOffset? DeletedOn { get; }
         /// <summary> The scheduled purged date. </summary>
         public DateTimeOffset? ScheduledPurgeOn { get; }
         /// <summary> Purge protection status of the original managed HSM. </summary>

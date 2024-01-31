@@ -41,12 +41,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="configurationReference">Optional, Specifies the uri to
         /// an azure blob that will replace the default configuration for the
         /// package if provided</param>
-        public VMGalleryApplication(string packageReferenceId, string tags = default(string), int? order = default(int?), string configurationReference = default(string))
+        /// <param name="treatFailureAsDeploymentFailure">Optional, If true,
+        /// any failure for any operation in the VmApplication will fail the
+        /// deployment</param>
+        /// <param name="enableAutomaticUpgrade">If set to true, when a new
+        /// Gallery Application version is available in PIR/SIG, it will be
+        /// automatically updated for the VM/VMSS</param>
+        public VMGalleryApplication(string packageReferenceId, string tags = default(string), int? order = default(int?), string configurationReference = default(string), bool? treatFailureAsDeploymentFailure = default(bool?), bool? enableAutomaticUpgrade = default(bool?))
         {
             Tags = tags;
             Order = order;
             PackageReferenceId = packageReferenceId;
             ConfigurationReference = configurationReference;
+            TreatFailureAsDeploymentFailure = treatFailureAsDeploymentFailure;
+            EnableAutomaticUpgrade = enableAutomaticUpgrade;
             CustomInit();
         }
 
@@ -83,6 +91,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "configurationReference")]
         public string ConfigurationReference { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional, If true, any failure for any operation in
+        /// the VmApplication will fail the deployment
+        /// </summary>
+        [JsonProperty(PropertyName = "treatFailureAsDeploymentFailure")]
+        public bool? TreatFailureAsDeploymentFailure { get; set; }
+
+        /// <summary>
+        /// Gets or sets if set to true, when a new Gallery Application version
+        /// is available in PIR/SIG, it will be automatically updated for the
+        /// VM/VMSS
+        /// </summary>
+        [JsonProperty(PropertyName = "enableAutomaticUpgrade")]
+        public bool? EnableAutomaticUpgrade { get; set; }
 
         /// <summary>
         /// Validate the object.

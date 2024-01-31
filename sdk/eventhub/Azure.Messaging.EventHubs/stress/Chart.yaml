@@ -1,0 +1,13 @@
+apiVersion: v2
+name: eventhub-net-stress
+version: 0.1.3
+description: Stress tests for Event Hubs for .NET
+
+dependencies:
+- name: stress-test-addons
+  version: ~0.3.0
+  repository: https://stresstestcharts.blob.core.windows.net/helm/
+
+annotations:
+  stressTest: 'true'
+  namespace: 'net'

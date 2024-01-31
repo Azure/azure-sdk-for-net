@@ -12,17 +12,17 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> The storage account management attributes. </summary>
     public partial class StorageAccountAttributes
     {
-        /// <summary> Initializes a new instance of StorageAccountAttributes. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountAttributes"/>. </summary>
         public StorageAccountAttributes()
         {
         }
 
-        /// <summary> Initializes a new instance of StorageAccountAttributes. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageAccountAttributes"/>. </summary>
         /// <param name="enabled"> the enabled state of the object. </param>
         /// <param name="created"> Creation time in UTC. </param>
         /// <param name="updated"> Last updated time in UTC. </param>
         /// <param name="recoverableDays"> softDelete data retention days. Value should be &gt;=7 and &lt;=90 when softDelete enabled, otherwise 0. </param>
-        /// <param name="recoveryLevel"> Reflects the deletion recovery level currently in effect for storage accounts in the current vault. If it contains &apos;Purgeable&apos; the storage account can be permanently deleted by a privileged user; otherwise, only the system can purge the storage account, at the end of the retention interval. </param>
+        /// <param name="recoveryLevel"> Reflects the deletion recovery level currently in effect for storage accounts in the current vault. If it contains 'Purgeable' the storage account can be permanently deleted by a privileged user; otherwise, only the system can purge the storage account, at the end of the retention interval. </param>
         internal StorageAccountAttributes(bool? enabled, DateTimeOffset? created, DateTimeOffset? updated, int? recoverableDays, DeletionRecoveryLevel? recoveryLevel)
         {
             Enabled = enabled;
@@ -40,7 +40,7 @@ namespace Azure.Security.KeyVault.Storage.Models
         public DateTimeOffset? Updated { get; }
         /// <summary> softDelete data retention days. Value should be &gt;=7 and &lt;=90 when softDelete enabled, otherwise 0. </summary>
         public int? RecoverableDays { get; }
-        /// <summary> Reflects the deletion recovery level currently in effect for storage accounts in the current vault. If it contains &apos;Purgeable&apos; the storage account can be permanently deleted by a privileged user; otherwise, only the system can purge the storage account, at the end of the retention interval. </summary>
+        /// <summary> Reflects the deletion recovery level currently in effect for storage accounts in the current vault. If it contains 'Purgeable' the storage account can be permanently deleted by a privileged user; otherwise, only the system can purge the storage account, at the end of the retention interval. </summary>
         public DeletionRecoveryLevel? RecoveryLevel { get; }
     }
 }

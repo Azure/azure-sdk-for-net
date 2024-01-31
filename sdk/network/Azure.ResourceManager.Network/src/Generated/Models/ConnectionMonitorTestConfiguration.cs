@@ -6,28 +6,59 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Describes a connection monitor test configuration. </summary>
     public partial class ConnectionMonitorTestConfiguration
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorTestConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTestConfiguration"/>. </summary>
         /// <param name="name"> The name of the connection monitor test configuration. </param>
         /// <param name="protocol"> The protocol to use in test evaluation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ConnectionMonitorTestConfiguration(string name, ConnectionMonitorTestConfigurationProtocol protocol)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             Protocol = protocol;
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorTestConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTestConfiguration"/>. </summary>
         /// <param name="name"> The name of the connection monitor test configuration. </param>
         /// <param name="testFrequencySec"> The frequency of test evaluation, in seconds. </param>
         /// <param name="protocol"> The protocol to use in test evaluation. </param>
@@ -36,7 +67,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="tcpConfiguration"> The parameters used to perform test evaluation over TCP. </param>
         /// <param name="icmpConfiguration"> The parameters used to perform test evaluation over ICMP. </param>
         /// <param name="successThreshold"> The threshold for declaring a test successful. </param>
-        internal ConnectionMonitorTestConfiguration(string name, int? testFrequencySec, ConnectionMonitorTestConfigurationProtocol protocol, PreferredIPVersion? preferredIPVersion, ConnectionMonitorHttpConfiguration httpConfiguration, ConnectionMonitorTcpConfiguration tcpConfiguration, ConnectionMonitorIcmpConfiguration icmpConfiguration, ConnectionMonitorSuccessThreshold successThreshold)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorTestConfiguration(string name, int? testFrequencySec, ConnectionMonitorTestConfigurationProtocol protocol, TestEvalPreferredIPVersion? preferredIPVersion, ConnectionMonitorHttpConfiguration httpConfiguration, ConnectionMonitorTcpConfiguration tcpConfiguration, ConnectionMonitorIcmpConfiguration icmpConfiguration, ConnectionMonitorSuccessThreshold successThreshold, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             TestFrequencySec = testFrequencySec;
@@ -46,6 +78,12 @@ namespace Azure.ResourceManager.Network.Models
             TcpConfiguration = tcpConfiguration;
             IcmpConfiguration = icmpConfiguration;
             SuccessThreshold = successThreshold;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorTestConfiguration"/> for deserialization. </summary>
+        internal ConnectionMonitorTestConfiguration()
+        {
         }
 
         /// <summary> The name of the connection monitor test configuration. </summary>
@@ -55,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> The protocol to use in test evaluation. </summary>
         public ConnectionMonitorTestConfigurationProtocol Protocol { get; set; }
         /// <summary> The preferred IP version to use in test evaluation. The connection monitor may choose to use a different version depending on other parameters. </summary>
-        public PreferredIPVersion? PreferredIPVersion { get; set; }
+        public TestEvalPreferredIPVersion? PreferredIPVersion { get; set; }
         /// <summary> The parameters used to perform test evaluation over HTTP. </summary>
         public ConnectionMonitorHttpConfiguration HttpConfiguration { get; set; }
         /// <summary> The parameters used to perform test evaluation over TCP. </summary>

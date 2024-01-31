@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Models
 {
@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Models
     [PropertyReferenceType]
     public partial class ArmPlan
     {
-        /// <summary> Initializes a new instance of ArmPlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmPlan"/>. </summary>
         /// <param name="name"> A user defined name of the 3rd Party Artifact that is being procured. </param>
         /// <param name="publisher"> The publisher of the 3rd Party Artifact that is being bought. E.g. NewRelic. </param>
         /// <param name="product"> The 3rd Party artifact that is being procured. E.g. NewRelic. Product maps to the OfferID specified for the artifact at the time of Data Market onboarding. </param>
@@ -22,25 +22,16 @@ namespace Azure.ResourceManager.Models
         [InitializationConstructor]
         public ArmPlan(string name, string publisher, string product)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (publisher == null)
-            {
-                throw new ArgumentNullException(nameof(publisher));
-            }
-            if (product == null)
-            {
-                throw new ArgumentNullException(nameof(product));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(publisher, nameof(publisher));
+            Argument.AssertNotNull(product, nameof(product));
 
             Name = name;
             Publisher = publisher;
             Product = product;
         }
 
-        /// <summary> Initializes a new instance of ArmPlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmPlan"/>. </summary>
         /// <param name="name"> A user defined name of the 3rd Party Artifact that is being procured. </param>
         /// <param name="publisher"> The publisher of the 3rd Party Artifact that is being bought. E.g. NewRelic. </param>
         /// <param name="product"> The 3rd Party artifact that is being procured. E.g. NewRelic. Product maps to the OfferID specified for the artifact at the time of Data Market onboarding. </param>
@@ -54,6 +45,11 @@ namespace Azure.ResourceManager.Models
             Product = product;
             PromotionCode = promotionCode;
             Version = version;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmPlan"/> for deserialization. </summary>
+        internal ArmPlan()
+        {
         }
 
         /// <summary> A user defined name of the 3rd Party Artifact that is being procured. </summary>

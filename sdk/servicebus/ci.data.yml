@@ -24,7 +24,7 @@ pr:
     - sdk/servicebus/Microsoft.Azure.ServiceBus
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     SdkType: data
     ServiceDirectory: servicebus

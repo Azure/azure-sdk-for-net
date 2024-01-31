@@ -1,0 +1,40 @@
+parameters:
+- name: LanguageVersion
+  displayName: LanguageVersion (6, 7)
+  type: string
+  default: '7'
+- name: packageVersions
+  displayName: PackageVersions (regex of package versions to run)
+  type: string
+  default: '12|source'
+- name: tests
+  displayName: Tests (regex of tests to run)
+  type: string
+  default: '^(download|upload)$'
+- name: arguments
+  displayName: Arguments (regex of arguments to run)
+  type: string
+  default: '(10240)|(10485760)|(1073741824)' 
+- name: iterations
+  displayName: Iterations (times to run each test)
+  type: number
+  default: '5'
+- name: Profile
+  type: boolean
+  default: false
+- name: additionalArguments
+  displayName: AdditionalArguments (passed to PerfAutomation)
+  type: string
+  default: ' '
+
+extends:
+  template: /eng/pipelines/templates/jobs/perf.yml
+  parameters:
+    LanguageVersion: ${{ parameters.LanguageVersion }}
+    ServiceDirectory: storage/Azure.Storage.Files.DataLake
+    PackageVersions: ${{ parameters.PackageVersions }}
+    Tests: ${{ parameters.Tests }}
+    Arguments: ${{ parameters.Arguments }}
+    Iterations: ${{ parameters.Iterations }}
+    Profile: ${{ parameters.Profile }}
+    AdditionalArguments: ${{ parameters.AdditionalArguments }}

@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
     /// A Class representing a DiagnosticSettingsCategory along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DiagnosticSettingsCategoryResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDiagnosticSettingsCategoryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetDiagnosticSettingsCategory method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DiagnosticSettingsCategoryResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDiagnosticSettingsCategoryResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetDiagnosticSettingsCategory method.
     /// </summary>
     public partial class DiagnosticSettingsCategoryResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DiagnosticSettingsCategoryResource"/> instance. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string name)
         {
             var resourceId = $"{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.Monitor
         private readonly DiagnosticSettingsCategoryRestOperations _diagnosticSettingsCategoryRestClient;
         private readonly DiagnosticSettingsCategoryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/diagnosticSettingsCategories";
+
         /// <summary> Initializes a new instance of the <see cref="DiagnosticSettingsCategoryResource"/> class for mocking. </summary>
         protected DiagnosticSettingsCategoryResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DiagnosticSettingsCategoryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DiagnosticSettingsCategoryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DiagnosticSettingsCategoryResource(ArmClient client, DiagnosticSettingsCategoryData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.Monitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/diagnosticSettingsCategories";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -88,8 +90,24 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Gets the diagnostic settings category for the specified resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
-        /// Operation Id: DiagnosticSettingsCategory_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiagnosticSettingsCategory_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiagnosticSettingsCategoryResource"/></description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DiagnosticSettingsCategoryResource>> GetAsync(CancellationToken cancellationToken = default)
@@ -112,8 +130,24 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary>
         /// Gets the diagnostic settings category for the specified resource.
-        /// Request Path: /{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}
-        /// Operation Id: DiagnosticSettingsCategory_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceUri}/providers/Microsoft.Insights/diagnosticSettingsCategories/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DiagnosticSettingsCategory_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiagnosticSettingsCategoryResource"/></description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DiagnosticSettingsCategoryResource> Get(CancellationToken cancellationToken = default)

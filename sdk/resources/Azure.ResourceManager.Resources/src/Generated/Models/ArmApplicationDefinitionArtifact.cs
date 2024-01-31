@@ -6,27 +6,76 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Application definition artifact. </summary>
     public partial class ArmApplicationDefinitionArtifact
     {
-        /// <summary> Initializes a new instance of ArmApplicationDefinitionArtifact. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationDefinitionArtifact"/>. </summary>
         /// <param name="name"> The managed application definition artifact name. </param>
         /// <param name="uri"> The managed application definition artifact blob uri. </param>
-        /// <param name="armApplicationArtifactType"> The managed application definition artifact type. </param>
+        /// <param name="artifactType"> The managed application definition artifact type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public ArmApplicationDefinitionArtifact(ArmApplicationDefinitionArtifactName name, Uri uri, ArmApplicationArtifactType armApplicationArtifactType)
+        public ArmApplicationDefinitionArtifact(ArmApplicationDefinitionArtifactName name, Uri uri, ArmApplicationArtifactType artifactType)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
+            Argument.AssertNotNull(uri, nameof(uri));
 
             Name = name;
             Uri = uri;
-            ArmApplicationArtifactType = armApplicationArtifactType;
+            ArtifactType = artifactType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationDefinitionArtifact"/>. </summary>
+        /// <param name="name"> The managed application definition artifact name. </param>
+        /// <param name="uri"> The managed application definition artifact blob uri. </param>
+        /// <param name="artifactType"> The managed application definition artifact type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ArmApplicationDefinitionArtifact(ArmApplicationDefinitionArtifactName name, Uri uri, ArmApplicationArtifactType artifactType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Uri = uri;
+            ArtifactType = artifactType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationDefinitionArtifact"/> for deserialization. </summary>
+        internal ArmApplicationDefinitionArtifact()
+        {
         }
 
         /// <summary> The managed application definition artifact name. </summary>
@@ -34,6 +83,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The managed application definition artifact blob uri. </summary>
         public Uri Uri { get; set; }
         /// <summary> The managed application definition artifact type. </summary>
-        public ArmApplicationArtifactType ArmApplicationArtifactType { get; set; }
+        public ArmApplicationArtifactType ArtifactType { get; set; }
     }
 }

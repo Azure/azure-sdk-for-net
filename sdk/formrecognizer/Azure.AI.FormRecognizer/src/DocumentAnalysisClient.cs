@@ -17,8 +17,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// documents with models built on custom document types.
     /// </summary>
     /// <remarks>
-    /// Client is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2022_01_30_preview"/> and higher.
-    /// If you want to use a lower version, please use the <see cref="FormRecognizer.FormRecognizerClient"/>.
+    /// This client only supports <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2022_08_31"/> and newer.
+    /// To use an older service version, see <see cref="FormRecognizerClient"/>.
     /// </remarks>
     public class DocumentAnalysisClient
     {
@@ -63,7 +63,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new AzureKeyCredentialPolicy(credential, Constants.AuthorizationHeader));
-            ServiceClient = new DocumentAnalysisRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
+            ServiceClient = new DocumentAnalysisRestClient(Diagnostics, pipeline, endpoint, options.VersionString);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
 
             Diagnostics = new ClientDiagnostics(options);
             var pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, defaultScope));
-            ServiceClient = new DocumentAnalysisRestClient(Diagnostics, pipeline, endpoint.AbsoluteUri);
+            ServiceClient = new DocumentAnalysisRestClient(Diagnostics, pipeline, endpoint, options.VersionString);
         }
 
         /// <summary>
@@ -111,10 +111,16 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
         }
 
+        #region Document Models
+
         /// <summary>
-        /// Analyzes pages from one or more documents, using a model built with custom forms or one of the prebuilt
+        /// Analyzes pages from one or more documents, using a model built with custom documents or one of the prebuilt
         /// models provided by the Form Recognizer service.
         /// </summary>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
         /// <param name="modelId">
         /// The ID of the model to use for analyzing the input documents. When using a custom built model
         /// for analysis, this parameter must be the ID attributed to the model during its creation. When
@@ -122,7 +128,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Prebuilt model IDs can be found at <see href="https://aka.ms/azsdk/formrecognizer/models"/>.
         /// </param>
         /// <param name="document">The stream containing one or more documents to analyze.</param>
-        /// <param name="analyzeDocumentOptions">
+        /// <param name="options">
         /// A set of options available for configuring the analyze request. For example, specify the locale of the
         /// document, or which pages to analyze.
         /// </param>
@@ -131,28 +137,36 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// An <see cref="AnalyzeDocumentOperation"/> to wait on this long-running operation. Its <see cref="AnalyzeDocumentOperation.Value"/> upon successful
         /// completion will contain analyzed pages from the input document.
         /// </returns>
-        public virtual async Task<AnalyzeDocumentOperation> StartAnalyzeDocumentAsync(string modelId, Stream document, AnalyzeDocumentOptions analyzeDocumentOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<AnalyzeDocumentOperation> AnalyzeDocumentAsync(WaitUntil waitUntil, string modelId, Stream document, AnalyzeDocumentOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(document, nameof(document));
 
-            analyzeDocumentOptions ??= new AnalyzeDocumentOptions();
+            options ??= new AnalyzeDocumentOptions();
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(StartAnalyzeDocument)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(AnalyzeDocument)}");
             scope.Start();
 
             try
             {
-                var response = await ServiceClient.AnalyzeDocumentAsync(
+                var response = await ServiceClient.DocumentModelsAnalyzeDocumentAsync(
                     modelId,
-                    ContentType1.ApplicationOctetStream,
-                    analyzeDocumentOptions.Pages.Count == 0 ? null : string.Join(",", analyzeDocumentOptions.Pages),
-                    analyzeDocumentOptions.Locale,
+                    InternalContentType.ApplicationOctetStream,
+                    options.Pages.Count == 0 ? null : string.Join(",", options.Pages),
+                    options.Locale,
                     Constants.DefaultStringIndexType,
+                    options.Features.Count == 0 ? null : options.Features,
                     document,
                     cancellationToken).ConfigureAwait(false);
 
-                return new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+                var operation = new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+
+                return operation;
             }
             catch (Exception e)
             {
@@ -162,9 +176,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary>
-        /// Analyzes pages from one or more documents, using a model built with custom forms or one of the prebuilt
+        /// Analyzes pages from one or more documents, using a model built with custom documents or one of the prebuilt
         /// models provided by the Form Recognizer service.
         /// </summary>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
         /// <param name="modelId">
         /// The ID of the model to use for analyzing the input documents. When using a custom built model
         /// for analysis, this parameter must be the ID attributed to the model during its creation. When
@@ -172,7 +190,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Prebuilt model IDs can be found at <see href="https://aka.ms/azsdk/formrecognizer/models"/>.
         /// </param>
         /// <param name="document">The stream containing one or more documents to analyze.</param>
-        /// <param name="analyzeDocumentOptions">
+        /// <param name="options">
         /// A set of options available for configuring the analyze request. For example, specify the locale of the
         /// document, or which pages to analyze.
         /// </param>
@@ -181,28 +199,258 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// An <see cref="AnalyzeDocumentOperation"/> to wait on this long-running operation. Its <see cref="AnalyzeDocumentOperation.Value"/> upon successful
         /// completion will contain analyzed pages from the input document.
         /// </returns>
-        public virtual AnalyzeDocumentOperation StartAnalyzeDocument(string modelId, Stream document, AnalyzeDocumentOptions analyzeDocumentOptions = default, CancellationToken cancellationToken = default)
+        public virtual AnalyzeDocumentOperation AnalyzeDocument(WaitUntil waitUntil, string modelId, Stream document, AnalyzeDocumentOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNull(document, nameof(document));
 
-            analyzeDocumentOptions ??= new AnalyzeDocumentOptions();
+            options ??= new AnalyzeDocumentOptions();
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(StartAnalyzeDocument)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(AnalyzeDocument)}");
             scope.Start();
 
             try
             {
-                var response = ServiceClient.AnalyzeDocument(
+                var response = ServiceClient.DocumentModelsAnalyzeDocument(
                     modelId,
-                    ContentType1.ApplicationOctetStream,
-                    analyzeDocumentOptions.Pages.Count == 0 ? null : string.Join(",", analyzeDocumentOptions.Pages),
-                    analyzeDocumentOptions.Locale,
+                    InternalContentType.ApplicationOctetStream,
+                    options.Pages.Count == 0 ? null : string.Join(",", options.Pages),
+                    options.Locale,
+                    Constants.DefaultStringIndexType,
+                    options.Features.Count == 0 ? null : options.Features,
+                    document,
+                    cancellationToken);
+
+                var operation = new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Analyzes pages from one or more documents, using a model built with custom documents or one of the prebuilt
+        /// models provided by the Form Recognizer service.
+        /// </summary>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="modelId">
+        /// The ID of the model to use for analyzing the input documents. When using a custom built model
+        /// for analysis, this parameter must be the ID attributed to the model during its creation. When
+        /// using one of the service's prebuilt models, one of the supported prebuilt model IDs must be passed.
+        /// Prebuilt model IDs can be found at <see href="https://aka.ms/azsdk/formrecognizer/models"/>.
+        /// </param>
+        /// <param name="documentUri">The absolute URI of the remote file to analyze documents from.</param>
+        /// <param name="options">
+        /// A set of options available for configuring the analyze request. For example, specify the locale of the
+        /// document, or which pages to analyze.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// An <see cref="AnalyzeDocumentOperation"/> to wait on this long-running operation. Its <see cref="AnalyzeDocumentOperation.Value"/> upon successful
+        /// completion will contain analyzed pages from the input document.
+        /// </returns>
+        public virtual async Task<AnalyzeDocumentOperation> AnalyzeDocumentFromUriAsync(WaitUntil waitUntil, string modelId, Uri documentUri, AnalyzeDocumentOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNull(documentUri, nameof(documentUri));
+
+            options ??= new AnalyzeDocumentOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(AnalyzeDocumentFromUri)}");
+            scope.Start();
+
+            try
+            {
+                var request = new AnalyzeDocumentRequest() { UrlSource = documentUri };
+                var response = await ServiceClient.DocumentModelsAnalyzeDocumentAsync(
+                    modelId,
+                    options.Pages.Count == 0 ? null : string.Join(",", options.Pages),
+                    options.Locale,
+                    Constants.DefaultStringIndexType,
+                    options.Features.Count == 0 ? null : options.Features,
+                    request,
+                    cancellationToken).ConfigureAwait(false);
+
+                var operation = new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Analyzes pages from one or more documents, using a model built with custom documents or one of the prebuilt
+        /// models provided by the Form Recognizer service.
+        /// </summary>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="modelId">
+        /// The ID of the model to use for analyzing the input documents. When using a custom built model
+        /// for analysis, this parameter must be the ID attributed to the model during its creation. When
+        /// using one of the service's prebuilt models, one of the supported prebuilt model IDs must be passed.
+        /// Prebuilt model IDs can be found at <see href="https://aka.ms/azsdk/formrecognizer/models"/>.
+        /// </param>
+        /// <param name="documentUri">The absolute URI of the remote file to analyze documents from.</param>
+        /// <param name="options">
+        /// A set of options available for configuring the analyze request. For example, specify the locale of the
+        /// document, or which pages to analyze.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// An <see cref="AnalyzeDocumentOperation"/> to wait on this long-running operation. Its <see cref="AnalyzeDocumentOperation.Value"/> upon successful
+        /// completion will contain analyzed pages from the input document.
+        /// </returns>
+        public virtual AnalyzeDocumentOperation AnalyzeDocumentFromUri(WaitUntil waitUntil, string modelId, Uri documentUri, AnalyzeDocumentOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNull(documentUri, nameof(documentUri));
+
+            options ??= new AnalyzeDocumentOptions();
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(AnalyzeDocumentFromUri)}");
+            scope.Start();
+
+            try
+            {
+                var request = new AnalyzeDocumentRequest() { UrlSource = documentUri };
+                var response = ServiceClient.DocumentModelsAnalyzeDocument(
+                    modelId,
+                    options.Pages.Count == 0 ? null : string.Join(",", options.Pages),
+                    options.Locale,
+                    Constants.DefaultStringIndexType,
+                    options.Features.Count == 0 ? null : options.Features,
+                    request,
+                    cancellationToken);
+
+                var operation = new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        #endregion Document Models
+
+        #region Document Classifiers
+
+        /// <summary>
+        /// Classifies one or more documents using a document classifier built with custom documents.
+        /// </summary>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="classifierId">The ID of the document classifier to use.</param>
+        /// <param name="document">The stream containing one or more documents to classify.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="ClassifyDocumentOperation"/> to wait on this long-running operation. Its <see cref="ClassifyDocumentOperation.Value"/> upon successful
+        /// completion will contain documents classified from the input.
+        /// </returns>
+        public virtual async Task<ClassifyDocumentOperation> ClassifyDocumentAsync(WaitUntil waitUntil, string classifierId, Stream document, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+            Argument.AssertNotNull(document, nameof(document));
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(ClassifyDocument)}");
+            scope.Start();
+
+            try
+            {
+                var response = await ServiceClient.DocumentClassifiersClassifyDocumentAsync(
+                    classifierId,
+                    InternalContentType.ApplicationOctetStream,
+                    Constants.DefaultStringIndexType,
+                    document,
+                    cancellationToken).ConfigureAwait(false);
+
+                var operation = new ClassifyDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Classifies one or more documents using a document classifier built with custom documents.
+        /// </summary>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="classifierId">The ID of the document classifier to use.</param>
+        /// <param name="document">The stream containing one or more documents to classify.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="ClassifyDocumentOperation"/> to wait on this long-running operation. Its <see cref="ClassifyDocumentOperation.Value"/> upon successful
+        /// completion will contain documents classified from the input.
+        /// </returns>
+        public virtual ClassifyDocumentOperation ClassifyDocument(WaitUntil waitUntil, string classifierId, Stream document, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+            Argument.AssertNotNull(document, nameof(document));
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(ClassifyDocument)}");
+            scope.Start();
+
+            try
+            {
+                var response = ServiceClient.DocumentClassifiersClassifyDocument(
+                    classifierId,
+                    InternalContentType.ApplicationOctetStream,
                     Constants.DefaultStringIndexType,
                     document,
                     cancellationToken);
 
-                return new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+                var operation = new ClassifyDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+
+                return operation;
             }
             catch (Exception e)
             {
@@ -212,47 +460,44 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary>
-        /// Analyzes pages from one or more documents, using a model built with custom forms or one of the prebuilt
-        /// models provided by the Form Recognizer service.
+        /// Classifies one or more documents using a document classifier built with custom documents.
         /// </summary>
-        /// <param name="modelId">
-        /// The ID of the model to use for analyzing the input documents. When using a custom built model
-        /// for analysis, this parameter must be the ID attributed to the model during its creation. When
-        /// using one of the service's prebuilt models, one of the supported prebuilt model IDs must be passed.
-        /// Prebuilt model IDs can be found at <see href="https://aka.ms/azsdk/formrecognizer/models"/>.
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// </param>
-        /// <param name="documentUri">The absolute URI of the remote file to analyze documents from.</param>
-        /// <param name="analyzeDocumentOptions">
-        /// A set of options available for configuring the analyze request. For example, specify the locale of the
-        /// document, or which pages to analyze.
-        /// </param>
+        /// <param name="classifierId">The ID of the document classifier to use.</param>
+        /// <param name="documentUri">The absolute URI of the remote file to classify documents from.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// An <see cref="AnalyzeDocumentOperation"/> to wait on this long-running operation. Its <see cref="AnalyzeDocumentOperation.Value"/> upon successful
-        /// completion will contain analyzed pages from the input document.
+        /// A <see cref="ClassifyDocumentOperation"/> to wait on this long-running operation. Its <see cref="ClassifyDocumentOperation.Value"/> upon successful
+        /// completion will contain documents classified from the input.
         /// </returns>
-        public virtual async Task<AnalyzeDocumentOperation> StartAnalyzeDocumentFromUriAsync(string modelId, Uri documentUri, AnalyzeDocumentOptions analyzeDocumentOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClassifyDocumentOperation> ClassifyDocumentFromUriAsync(WaitUntil waitUntil, string classifierId, Uri documentUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
             Argument.AssertNotNull(documentUri, nameof(documentUri));
 
-            analyzeDocumentOptions ??= new AnalyzeDocumentOptions();
-
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(StartAnalyzeDocumentFromUri)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(ClassifyDocumentFromUri)}");
             scope.Start();
 
             try
             {
-                var request = new AnalyzeDocumentRequest() { UrlSource = documentUri.AbsoluteUri };
-                var response = await ServiceClient.AnalyzeDocumentAsync(
-                    modelId,
-                    analyzeDocumentOptions.Pages.Count == 0 ? null : string.Join(",", analyzeDocumentOptions.Pages),
-                    analyzeDocumentOptions.Locale,
+                var request = new ClassifyDocumentRequest() { UrlSource = documentUri };
+                var response = await ServiceClient.DocumentClassifiersClassifyDocumentAsync(
+                    classifierId,
                     Constants.DefaultStringIndexType,
                     request,
                     cancellationToken).ConfigureAwait(false);
 
-                return new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+                var operation = new ClassifyDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+
+                return operation;
             }
             catch (Exception e)
             {
@@ -262,47 +507,44 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         }
 
         /// <summary>
-        /// Analyzes pages from one or more documents, using a model built with custom forms or one of the prebuilt
-        /// models provided by the Form Recognizer service.
+        /// Classifies one or more documents using a document classifier built with custom documents.
         /// </summary>
-        /// <param name="modelId">
-        /// The ID of the model to use for analyzing the input documents. When using a custom built model
-        /// for analysis, this parameter must be the ID attributed to the model during its creation. When
-        /// using one of the service's prebuilt models, one of the supported prebuilt model IDs must be passed.
-        /// Prebuilt model IDs can be found at <see href="https://aka.ms/azsdk/formrecognizer/models"/>.
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// </param>
-        /// <param name="documentUri">The absolute URI of the remote file to analyze documents from.</param>
-        /// <param name="analyzeDocumentOptions">
-        /// A set of options available for configuring the analyze request. For example, specify the locale of the
-        /// document, or which pages to analyze.
-        /// </param>
+        /// <param name="classifierId">The ID of the document classifier to use.</param>
+        /// <param name="documentUri">The absolute URI of the remote file to classify documents from.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>
-        /// An <see cref="AnalyzeDocumentOperation"/> to wait on this long-running operation. Its <see cref="AnalyzeDocumentOperation.Value"/> upon successful
-        /// completion will contain analyzed pages from the input document.
+        /// A <see cref="ClassifyDocumentOperation"/> to wait on this long-running operation. Its <see cref="ClassifyDocumentOperation.Value"/> upon successful
+        /// completion will contain documents classified from the input.
         /// </returns>
-        public virtual AnalyzeDocumentOperation StartAnalyzeDocumentFromUri(string modelId, Uri documentUri, AnalyzeDocumentOptions analyzeDocumentOptions = default, CancellationToken cancellationToken = default)
+        public virtual ClassifyDocumentOperation ClassifyDocumentFromUri(WaitUntil waitUntil, string classifierId, Uri documentUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
             Argument.AssertNotNull(documentUri, nameof(documentUri));
 
-            analyzeDocumentOptions ??= new AnalyzeDocumentOptions();
-
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(StartAnalyzeDocumentFromUri)}");
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentAnalysisClient)}.{nameof(ClassifyDocumentFromUri)}");
             scope.Start();
 
             try
             {
-                var request = new AnalyzeDocumentRequest() { UrlSource = documentUri.AbsoluteUri };
-                var response = ServiceClient.AnalyzeDocument(
-                    modelId,
-                    analyzeDocumentOptions.Pages.Count == 0 ? null : string.Join(",", analyzeDocumentOptions.Pages),
-                    analyzeDocumentOptions.Locale,
+                var request = new ClassifyDocumentRequest() { UrlSource = documentUri };
+                var response = ServiceClient.DocumentClassifiersClassifyDocument(
+                    classifierId,
                     Constants.DefaultStringIndexType,
                     request,
                     cancellationToken);
 
-                return new AnalyzeDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+                var operation = new ClassifyDocumentOperation(ServiceClient, Diagnostics, response.Headers.OperationLocation, response.GetRawResponse());
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+
+                return operation;
             }
             catch (Exception e)
             {
@@ -310,5 +552,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 throw;
             }
         }
+
+        #endregion Document Classifiers
     }
 }

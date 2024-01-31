@@ -10,6 +10,10 @@ an artifact name property is available in the package properties.
 Can optionally add a dev version property which can be used logic for daily 
 builds.
 
+In cases of collisions where track 2 packages (IsNewSdk = true) have the same 
+filename as track 1 packages (e.g. same artifact name or package name), the
+track 2 package properties will be written.
+
 .PARAMETER serviceDirectory
 Service directory in which to search for packages
 
@@ -87,6 +91,7 @@ function GetRelativePath($path) {
   return $relativePath
 }
 
+$exportedPaths = @{}
 $allPackageProperties = Get-AllPkgProperties $serviceDirectory
 if ($allPackageProperties)
 {
@@ -96,19 +101,36 @@ if ($allPackageProperties)
     }
     foreach($pkg in $allPackageProperties)
     {
-        Write-Host "Package Name: $($pkg.Name)"
-        Write-Host "Package Version: $($pkg.Version)"
-        Write-Host "Package SDK Type: $($pkg.SdkType)"
-        Write-Host "Artifact Name: $($pkg.ArtifactName)"
-        Write-Host "Release date: $($pkg.ReleaseStatus)"
-        $configFilePrefix = $pkg.Name
-        if ($pkg.ArtifactName)
-        {
-          $configFilePrefix = $pkg.ArtifactName
+        if ($pkg.Name) {
+          Write-Host "Package Name: $($pkg.Name)"
+          Write-Host "Package Version: $($pkg.Version)"
+          Write-Host "Package SDK Type: $($pkg.SdkType)"
+          Write-Host "Artifact Name: $($pkg.ArtifactName)"
+          Write-Host "Release date: $($pkg.ReleaseStatus)"
+          $configFilePrefix = $pkg.Name
+          if ($pkg.ArtifactName)
+          {
+            $configFilePrefix = $pkg.ArtifactName
+          }
+          $outputPath = Join-Path -Path $outDirectory "$configFilePrefix.json"
+          Write-Host "Output path of json file: $outputPath"
+          $outDir = Split-Path $outputPath -parent
+          if (-not (Test-Path -path $outDir))
+          {
+            Write-Host "Creating directory $($outDir) for json property file"
+            New-Item -ItemType Directory -Path $outDir
+          }
+
+          # If package properties for a track 2 (IsNewSdk = true) package has
+          # already been written, skip writing to that same path.
+          if ($exportedPaths.ContainsKey($outputPath) -and $exportedPaths[$outputPath].IsNewSdk -eq $true) {
+            Write-Host "Track 2 package info with file name $($outputPath) already exported. Skipping export."
+            continue
+          }
+          $exportedPaths[$outputPath] = $pkg
+
+          SetOutput $outputPath $pkg
         }
-        $outputPath = Join-Path -Path $outDirectory "$configFilePrefix.json"
-        Write-Host "Output path of json file: $outputPath"
-        SetOutput $outputPath $pkg
     }
 
     Get-ChildItem -Path $outDirectory

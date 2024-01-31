@@ -33,16 +33,16 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// network subnet which the compute nodes of the pool will join. This
         /// is of the form
         /// /subscriptions/{subscription}/resourceGroups/{group}/providers/{provider}/virtualNetworks/{network}/subnets/{subnet}.</param>
-        /// <param name="dynamicVNetAssignmentScope">The scope of dynamic vnet
+        /// <param name="dynamicVnetAssignmentScope">The scope of dynamic vnet
         /// assignment.</param>
         /// <param name="endpointConfiguration">The configuration for endpoints
         /// on compute nodes in the Batch pool.</param>
         /// <param name="publicIPAddressConfiguration">The Public IPAddress
         /// configuration for Compute Nodes in the Batch Pool.</param>
-        public NetworkConfiguration(string subnetId = default(string), DynamicVNetAssignmentScope? dynamicVNetAssignmentScope = default(DynamicVNetAssignmentScope?), PoolEndpointConfiguration endpointConfiguration = default(PoolEndpointConfiguration), PublicIPAddressConfiguration publicIPAddressConfiguration = default(PublicIPAddressConfiguration))
+        public NetworkConfiguration(string subnetId = default(string), DynamicVNetAssignmentScope? dynamicVnetAssignmentScope = default(DynamicVNetAssignmentScope?), PoolEndpointConfiguration endpointConfiguration = default(PoolEndpointConfiguration), PublicIPAddressConfiguration publicIPAddressConfiguration = default(PublicIPAddressConfiguration))
         {
             SubnetId = subnetId;
-            DynamicVNetAssignmentScope = dynamicVNetAssignmentScope;
+            DynamicVnetAssignmentScope = dynamicVnetAssignmentScope;
             EndpointConfiguration = endpointConfiguration;
             PublicIPAddressConfiguration = publicIPAddressConfiguration;
             CustomInit();
@@ -93,8 +93,8 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <remarks>
         /// Possible values include: 'none', 'job'
         /// </remarks>
-        [JsonProperty(PropertyName = "dynamicVNetAssignmentScope")]
-        public DynamicVNetAssignmentScope? DynamicVNetAssignmentScope { get; set; }
+        [JsonProperty(PropertyName = "dynamicVnetAssignmentScope")]
+        public DynamicVNetAssignmentScope? DynamicVnetAssignmentScope { get; set; }
 
         /// <summary>
         /// Gets or sets the configuration for endpoints on compute nodes in

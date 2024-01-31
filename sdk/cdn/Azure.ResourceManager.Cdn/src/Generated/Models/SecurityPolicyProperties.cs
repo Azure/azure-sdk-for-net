@@ -5,25 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The json object that contains properties required to create a security policy. </summary>
-    internal partial class SecurityPolicyProperties : AfdStateProperties
+    /// <summary>
+    /// The json object containing security policy parameters
+    /// Please note <see cref="SecurityPolicyProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="SecurityPolicyWebApplicationFirewall"/>.
+    /// </summary>
+    public abstract partial class SecurityPolicyProperties
     {
-        /// <summary> Initializes a new instance of SecurityPolicyProperties. </summary>
-        internal SecurityPolicyProperties()
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyProperties"/>. </summary>
+        protected SecurityPolicyProperties()
         {
         }
 
-        /// <summary> The name of the profile which holds the security policy. </summary>
-        public string ProfileName { get; }
-        /// <summary> object which contains security policy parameters. </summary>
-        internal SecurityPolicyPropertiesParameters Parameters { get; }
-        /// <summary> The type of the Security policy to create. </summary>
-        internal SecurityPolicyType ParametersSecurityPolicyType
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyProperties"/>. </summary>
+        /// <param name="policyType"> The type of the Security policy to create. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityPolicyProperties(SecurityPolicyType policyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            get => Parameters.SecurityPolicyType;
-            set => Parameters.SecurityPolicyType = value;
+            PolicyType = policyType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> The type of the Security policy to create. </summary>
+        internal SecurityPolicyType PolicyType { get; set; }
     }
 }

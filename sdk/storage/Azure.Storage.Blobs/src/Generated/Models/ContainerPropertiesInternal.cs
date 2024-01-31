@@ -6,28 +6,26 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Properties of a container. </summary>
     internal partial class ContainerPropertiesInternal
     {
-        /// <summary> Initializes a new instance of ContainerPropertiesInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerPropertiesInternal"/>. </summary>
         /// <param name="lastModified"></param>
         /// <param name="etag"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="etag"/> is null. </exception>
         internal ContainerPropertiesInternal(DateTimeOffset lastModified, string etag)
         {
-            if (etag == null)
-            {
-                throw new ArgumentNullException(nameof(etag));
-            }
+            Argument.AssertNotNull(etag, nameof(etag));
 
             LastModified = lastModified;
             Etag = etag;
         }
 
-        /// <summary> Initializes a new instance of ContainerPropertiesInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerPropertiesInternal"/>. </summary>
         /// <param name="lastModified"></param>
         /// <param name="etag"></param>
         /// <param name="leaseStatus"></param>

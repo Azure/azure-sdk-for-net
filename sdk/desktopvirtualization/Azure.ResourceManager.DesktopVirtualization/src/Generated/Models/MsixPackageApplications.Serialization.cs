@@ -6,112 +6,205 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class MsixPackageApplications : IUtf8JsonSerializable
+    public partial class MsixPackageApplications : IUtf8JsonSerializable, IJsonModel<MsixPackageApplications>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MsixPackageApplications>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MsixPackageApplications>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MsixPackageApplications>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AppId))
             {
-                writer.WritePropertyName("appId");
+                writer.WritePropertyName("appId"u8);
                 writer.WriteStringValue(AppId);
             }
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(AppUserModelId))
             {
-                writer.WritePropertyName("appUserModelID");
+                writer.WritePropertyName("appUserModelID"u8);
                 writer.WriteStringValue(AppUserModelId);
             }
             if (Optional.IsDefined(FriendlyName))
             {
-                writer.WritePropertyName("friendlyName");
+                writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(IconImageName))
             {
-                writer.WritePropertyName("iconImageName");
+                writer.WritePropertyName("iconImageName"u8);
                 writer.WriteStringValue(IconImageName);
             }
             if (Optional.IsDefined(RawIcon))
             {
-                writer.WritePropertyName("rawIcon");
-                writer.WriteBase64StringValue(RawIcon, "D");
+                writer.WritePropertyName("rawIcon"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RawIcon);
+#else
+                using (JsonDocument document = JsonDocument.Parse(RawIcon))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(RawPng))
             {
-                writer.WritePropertyName("rawPng");
-                writer.WriteBase64StringValue(RawPng, "D");
+                writer.WritePropertyName("rawPng"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(RawPng);
+#else
+                using (JsonDocument document = JsonDocument.Parse(RawPng))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static MsixPackageApplications DeserializeMsixPackageApplications(JsonElement element)
+        MsixPackageApplications IJsonModel<MsixPackageApplications>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MsixPackageApplications>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMsixPackageApplications(document.RootElement, options);
+        }
+
+        internal static MsixPackageApplications DeserializeMsixPackageApplications(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> appId = default;
             Optional<string> description = default;
-            Optional<string> appUserModelID = default;
+            Optional<string> appUserModelId = default;
             Optional<string> friendlyName = default;
             Optional<string> iconImageName = default;
-            Optional<byte[]> rawIcon = default;
-            Optional<byte[]> rawPng = default;
+            Optional<BinaryData> rawIcon = default;
+            Optional<BinaryData> rawPng = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("appId"))
+                if (property.NameEquals("appId"u8))
                 {
                     appId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appUserModelID"))
+                if (property.NameEquals("appUserModelID"u8))
                 {
-                    appUserModelID = property.Value.GetString();
+                    appUserModelId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("friendlyName"))
+                if (property.NameEquals("friendlyName"u8))
                 {
                     friendlyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("iconImageName"))
+                if (property.NameEquals("iconImageName"u8))
                 {
                     iconImageName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rawIcon"))
+                if (property.NameEquals("rawIcon"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rawIcon = property.Value.GetBytesFromBase64("D");
+                    rawIcon = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("rawPng"))
+                if (property.NameEquals("rawPng"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rawPng = property.Value.GetBytesFromBase64("D");
+                    rawPng = BinaryData.FromString(property.Value.GetRawText());
                     continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new MsixPackageApplications(appId.Value, description.Value, appUserModelID.Value, friendlyName.Value, iconImageName.Value, rawIcon.Value, rawPng.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MsixPackageApplications(appId.Value, description.Value, appUserModelId.Value, friendlyName.Value, iconImageName.Value, rawIcon.Value, rawPng.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MsixPackageApplications>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MsixPackageApplications>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MsixPackageApplications IPersistableModel<MsixPackageApplications>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MsixPackageApplications>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMsixPackageApplications(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MsixPackageApplications>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

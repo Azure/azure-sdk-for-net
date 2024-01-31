@@ -48,5 +48,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// resiliency against zone failures.
         /// </summary>
         public const string StandardSSDZRS = "StandardSSD_ZRS";
+        /// <summary>
+        /// Premium SSD v2 locally redundant storage. Best for production and
+        /// performance-sensitive workloads that consistently require low
+        /// latency and high IOPS and throughput.
+        /// </summary>
+        public const string PremiumV2LRS = "PremiumV2_LRS";
     }
 }

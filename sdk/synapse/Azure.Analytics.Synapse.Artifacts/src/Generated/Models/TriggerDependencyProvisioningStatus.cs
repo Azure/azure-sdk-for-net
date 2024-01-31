@@ -6,26 +6,21 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Defines the response of a provision trigger dependency operation. </summary>
     public partial class TriggerDependencyProvisioningStatus
     {
-        /// <summary> Initializes a new instance of TriggerDependencyProvisioningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerDependencyProvisioningStatus"/>. </summary>
         /// <param name="triggerName"> Trigger name. </param>
         /// <param name="provisioningStatus"> Provisioning status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="provisioningStatus"/> is null. </exception>
         public TriggerDependencyProvisioningStatus(string triggerName, string provisioningStatus)
         {
-            if (triggerName == null)
-            {
-                throw new ArgumentNullException(nameof(triggerName));
-            }
-            if (provisioningStatus == null)
-            {
-                throw new ArgumentNullException(nameof(provisioningStatus));
-            }
+            Argument.AssertNotNull(triggerName, nameof(triggerName));
+            Argument.AssertNotNull(provisioningStatus, nameof(provisioningStatus));
 
             TriggerName = triggerName;
             ProvisioningStatus = provisioningStatus;

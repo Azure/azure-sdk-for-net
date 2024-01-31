@@ -18,6 +18,14 @@ namespace Azure.Messaging.ServiceBus
     /// property. The error handler is specified with the <see cref="ProcessErrorAsync"/> property.
     /// To start processing after the handlers have been specified, call <see cref="StartProcessingAsync"/>.
     /// </summary>
+    /// <remarks>
+    /// The <see cref="ServiceBusSessionProcessor" /> is safe to cache and use for the lifetime of an application
+    /// or until the <see cref="ServiceBusClient" /> that it was created by is disposed. Caching the processor
+    /// is recommended when the application is processing messages regularly.  The sender is responsible for
+    /// ensuring efficient network, CPU, and memory use. Calling <see cref="DisposeAsync" /> on the
+    /// associated <see cref="ServiceBusClient" /> as the application is shutting down will ensure that
+    /// network resources and other unmanaged objects used by the processor are properly cleaned up.
+    /// </remarks>
     public class ServiceBusSessionProcessor : IAsyncDisposable
     {
         /// <summary>
@@ -30,10 +38,9 @@ namespace Azure.Messaging.ServiceBus
         public virtual string EntityPath => InnerProcessor.EntityPath;
 
         /// <summary>
-        /// Gets the ID to identify this processor. This can be used to correlate logs and exceptions.
+        /// Gets the Identifier used to identify this processor client.  If <c>null</c> or empty, a random unique value will be will be used.
         /// </summary>
-        /// <remarks>Every new processor has a unique ID.</remarks>
-        internal string Identifier => InnerProcessor.Identifier;
+        public virtual string Identifier => InnerProcessor.Identifier;
 
         /// <inheritdoc cref="ServiceBusProcessor.ReceiveMode"/>
         public virtual ServiceBusReceiveMode ReceiveMode => InnerProcessor.ReceiveMode;
@@ -180,7 +187,6 @@ namespace Azure.Messaging.ServiceBus
         /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
         /// a deadlock scenario.
         /// </remarks>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<ProcessSessionMessageEventArgs, Task> ProcessMessageAsync
         {
@@ -203,7 +209,6 @@ namespace Azure.Messaging.ServiceBus
         /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
         /// a deadlock scenario.
         /// </remarks>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<ProcessErrorEventArgs, Task> ProcessErrorAsync
         {
@@ -225,7 +230,6 @@ namespace Azure.Messaging.ServiceBus
         /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
         /// a deadlock scenario.
         /// </remarks>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<ProcessSessionEventArgs, Task> SessionInitializingAsync
         {
@@ -249,7 +253,6 @@ namespace Azure.Messaging.ServiceBus
         /// It is not recommended that the state of the processor be managed directly from within this handler; requesting to start or stop the processor may result in
         /// a deadlock scenario.
         /// </remarks>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.", Justification = "Guidance does not apply; this is an event.")]
         [SuppressMessage("Usage", "AZC0003:DO make service methods virtual.", Justification = "This member follows the standard .NET event pattern; override via the associated On<<EVENT>> method.")]
         public event Func<ProcessSessionEventArgs, Task> SessionClosingAsync
         {
@@ -329,6 +332,16 @@ namespace Azure.Messaging.ServiceBus
         public void UpdateConcurrency(int maxConcurrentSessions, int maxConcurrentCallsPerSession)
         {
             InnerProcessor.UpdateConcurrency(maxConcurrentSessions, maxConcurrentCallsPerSession);
+        }
+
+        /// <summary>
+        /// Updates the prefetch count for the processor. This method can be used to dynamically change the prefetch count of a running processor.
+        /// </summary>
+        /// <param name="prefetchCount">The new prefetch count value. This will be reflected in the <see cref="ServiceBusProcessor.PrefetchCount"/>
+        /// property.</param>
+        public void UpdatePrefetchCount(int prefetchCount)
+        {
+            InnerProcessor.UpdatePrefetchCount(prefetchCount);
         }
     }
 }

@@ -7,27 +7,25 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Trigger that creates pipeline runs periodically, on schedule. </summary>
     public partial class ScheduleTrigger : MultiplePipelineTrigger
     {
-        /// <summary> Initializes a new instance of ScheduleTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleTrigger"/>. </summary>
         /// <param name="recurrence"> Recurrence schedule configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recurrence"/> is null. </exception>
         public ScheduleTrigger(ScheduleTriggerRecurrence recurrence)
         {
-            if (recurrence == null)
-            {
-                throw new ArgumentNullException(nameof(recurrence));
-            }
+            Argument.AssertNotNull(recurrence, nameof(recurrence));
 
             Recurrence = recurrence;
             Type = "ScheduleTrigger";
         }
 
-        /// <summary> Initializes a new instance of ScheduleTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleTrigger"/>. </summary>
         /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>

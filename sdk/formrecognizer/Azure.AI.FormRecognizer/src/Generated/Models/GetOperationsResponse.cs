@@ -8,37 +8,35 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> List Operations response object. </summary>
     internal partial class GetOperationsResponse
     {
-        /// <summary> Initializes a new instance of GetOperationsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetOperationsResponse"/>. </summary>
         /// <param name="value"> List of operations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal GetOperationsResponse(IEnumerable<ModelOperationInfo> value)
+        internal GetOperationsResponse(IEnumerable<OperationSummary> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of GetOperationsResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetOperationsResponse"/>. </summary>
         /// <param name="value"> List of operations. </param>
         /// <param name="nextLink"> Link to the next page of operations. </param>
-        internal GetOperationsResponse(IReadOnlyList<ModelOperationInfo> value, string nextLink)
+        internal GetOperationsResponse(IReadOnlyList<OperationSummary> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of operations. </summary>
-        public IReadOnlyList<ModelOperationInfo> Value { get; }
+        public IReadOnlyList<OperationSummary> Value { get; }
         /// <summary> Link to the next page of operations. </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

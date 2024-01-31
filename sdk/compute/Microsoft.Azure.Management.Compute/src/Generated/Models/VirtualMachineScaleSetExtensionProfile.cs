@@ -38,8 +38,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="extensionsTimeBudget">Specifies the time alloted for
         /// all extensions to start. The time duration should be between 15
         /// minutes and 120 minutes (inclusive) and should be specified in ISO
-        /// 8601 format. The default value is 90 minutes (PT1H30M).
-        /// &lt;br&gt;&lt;br&gt; Minimum api-version: 2020-06-01</param>
+        /// 8601 format. The default value is 90 minutes (PT1H30M). Minimum
+        /// api-version: 2020-06-01.</param>
         public VirtualMachineScaleSetExtensionProfile(IList<VirtualMachineScaleSetExtension> extensions = default(IList<VirtualMachineScaleSetExtension>), string extensionsTimeBudget = default(string))
         {
             Extensions = extensions;
@@ -63,9 +63,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets specifies the time alloted for all extensions to
         /// start. The time duration should be between 15 minutes and 120
         /// minutes (inclusive) and should be specified in ISO 8601 format. The
-        /// default value is 90 minutes (PT1H30M).
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Minimum api-version:
-        /// 2020-06-01
+        /// default value is 90 minutes (PT1H30M). Minimum api-version:
+        /// 2020-06-01.
         /// </summary>
         [JsonProperty(PropertyName = "extensionsTimeBudget")]
         public string ExtensionsTimeBudget { get; set; }

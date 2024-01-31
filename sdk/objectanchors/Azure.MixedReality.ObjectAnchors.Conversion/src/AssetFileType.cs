@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using Azure.Core;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
@@ -19,13 +20,22 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         internal const string ObjValue = ".obj";
         internal const string PlyValue = ".ply";
 
+        internal string Value => _value ?? string.Empty;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AssetFileType"/> struct.
         /// </summary>
         /// <param name="value">The asset file type.</param>
         public AssetFileType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNullOrWhiteSpace(value, nameof(value));
+
+            if (!value.StartsWith(".", StringComparison.Ordinal))
+            {
+                throw new ArgumentException("The value must start with a '.' character.", nameof(value));
+            }
+
+            _value = value.ToLowerInvariant();
         }
 
         /// <summary>
@@ -35,7 +45,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <returns>The AssetFileType derived from the extension of a provided file name.</returns>
         public static AssetFileType FromFilePath(string assetFilePath)
         {
-            return new AssetFileType(Path.GetExtension(assetFilePath));
+            Argument.AssertNotNullOrWhiteSpace(assetFilePath, nameof(assetFilePath));
+
+            return new AssetFileType(Path.GetExtension(assetFilePath).ToLowerInvariant());
         }
 
         /// <summary>
@@ -85,24 +97,29 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <inheritdoc/>
         public bool Equals(AssetFileType other)
         {
-            return this._value == other._value;
+            return Value.Equals(other._value, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
         {
-            return obj is AssetFileType && Equals((AssetFileType)obj);
+            if (obj is AssetFileType otherFileType)
+            {
+                return Equals(otherFileType);
+            }
+
+            return false;
         }
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
-            return _value.GetHashCode();
+            return Value.GetHashCode();
         }
 
         /// <inheritdoc/>
-        public override string ToString() => _value;
+        public override string ToString() => Value;
     }
 }

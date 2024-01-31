@@ -21,7 +21,7 @@ namespace Compute.Tests
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
             using (MockContext context = MockContext.Start(this.GetType()))
             {
-                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "centraluseuap");
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2");
                 EnsureClientsInitialized(context);
 
                 ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
@@ -43,7 +43,8 @@ namespace Compute.Tests
                         // when re-recording the test ensure that you use a valid packageReferenceId
                         // refer to https://microsoft.sharepoint.com/:w:/t/ComputeVM/EcYeD-HHrLZHpYyxo3iRCtkB-VeO8BuWE4dq4hoX9tlzEg?e=nOTgTu
                         // for how to create a valid VMApplication
-                        new VMGalleryApplication("/subscriptions/a53f7094-a16c-47af-abe4-b05c05d0d79a/resourceGroups/bhbrahma/providers/Microsoft.Compute/galleries/bhbrahmaGallery/applications/go/versions/1.15.8")
+                        // * VMGalleryApplication resource is not created in the test because it needs Storage Account access. *
+                        new VMGalleryApplication("/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/rgforsdktestresources/providers/Microsoft.Compute/galleries/gallerysdktest/applications/vmapplication/versions/0.0.1", treatFailureAsDeploymentFailure: true, enableAutomaticUpgrade: true)
                     };
 
                     var vm1 = CreateVM(rgName, asName, storageAccountOutput, imageRef, out inputVM, (vm) =>
@@ -57,6 +58,9 @@ namespace Compute.Tests
                     Assert.NotNull(getVMResponse.ApplicationProfile);
                     Assert.NotNull(getVMResponse.ApplicationProfile.GalleryApplications);
                     Assert.Equal(1, getVMResponse.ApplicationProfile.GalleryApplications.Count);
+                    VMGalleryApplication vmGalleryApplication = getVMResponse.ApplicationProfile.GalleryApplications[0];
+                    Assert.True(vmGalleryApplication.TreatFailureAsDeploymentFailure);
+                    Assert.True(vmGalleryApplication.EnableAutomaticUpgrade);
                 }
                 finally
                 {

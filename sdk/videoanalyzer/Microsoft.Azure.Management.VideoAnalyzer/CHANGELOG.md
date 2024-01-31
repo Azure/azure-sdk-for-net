@@ -1,5 +1,9 @@
 # Microsoft.Azure.Management.VideoAnalyzer release notes
 
+## Changes in 1.0.0-beta.3
+
+We're retiring the Azure Video Analyzer preview service, you're advised to transition your applications off of Video Analyzer by 01 December 2022. This SDK is no longer maintained or supported.
+
 ## Changes in 1.0.0-beta.2
 
 This SDK is using 2021-11-01-preview version fo the Azure Video Analyzer API

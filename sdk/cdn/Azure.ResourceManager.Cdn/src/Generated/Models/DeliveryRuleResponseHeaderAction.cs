@@ -6,36 +6,41 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the response header action for the delivery rule. </summary>
     public partial class DeliveryRuleResponseHeaderAction : DeliveryRuleAction
     {
-        /// <summary> Initializes a new instance of DeliveryRuleResponseHeaderAction. </summary>
-        /// <param name="parameters"> Defines the parameters for the action. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleResponseHeaderAction(HeaderActionParameters parameters)
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleResponseHeaderAction"/>. </summary>
+        /// <param name="properties"> Defines the parameters for the action. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public DeliveryRuleResponseHeaderAction(HeaderActionProperties properties)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            Parameters = parameters;
+            Properties = properties;
             Name = DeliveryRuleActionType.ModifyResponseHeader;
         }
 
-        /// <summary> Initializes a new instance of DeliveryRuleResponseHeaderAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleResponseHeaderAction"/>. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
-        /// <param name="parameters"> Defines the parameters for the action. </param>
-        internal DeliveryRuleResponseHeaderAction(DeliveryRuleActionType name, HeaderActionParameters parameters) : base(name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Defines the parameters for the action. </param>
+        internal DeliveryRuleResponseHeaderAction(DeliveryRuleActionType name, IDictionary<string, BinaryData> serializedAdditionalRawData, HeaderActionProperties properties) : base(name, serializedAdditionalRawData)
         {
-            Parameters = parameters;
+            Properties = properties;
             Name = name;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleResponseHeaderAction"/> for deserialization. </summary>
+        internal DeliveryRuleResponseHeaderAction()
+        {
+        }
+
         /// <summary> Defines the parameters for the action. </summary>
-        public HeaderActionParameters Parameters { get; set; }
+        public HeaderActionProperties Properties { get; set; }
     }
 }

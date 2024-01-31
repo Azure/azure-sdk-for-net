@@ -6,30 +6,28 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> Properties of a share. </summary>
     internal partial class SharePropertiesInternal
     {
-        /// <summary> Initializes a new instance of SharePropertiesInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharePropertiesInternal"/>. </summary>
         /// <param name="lastModified"></param>
         /// <param name="etag"></param>
         /// <param name="quota"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="etag"/> is null. </exception>
         internal SharePropertiesInternal(DateTimeOffset lastModified, string etag, int quota)
         {
-            if (etag == null)
-            {
-                throw new ArgumentNullException(nameof(etag));
-            }
+            Argument.AssertNotNull(etag, nameof(etag));
 
             LastModified = lastModified;
             Etag = etag;
             Quota = quota;
         }
 
-        /// <summary> Initializes a new instance of SharePropertiesInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharePropertiesInternal"/>. </summary>
         /// <param name="lastModified"></param>
         /// <param name="etag"></param>
         /// <param name="quota"></param>

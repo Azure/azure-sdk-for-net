@@ -19,13 +19,16 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// </summary>
         /// <param name="gravity">Gravity vector with respect to object's nominal position.</param>
         /// <param name="scale">Scale of transformation of asset units into meter space.</param>
-        internal AssetConversionConfiguration(System.Numerics.Vector3 gravity, float scale)
+        /// <param name="disableDetectScaleUnits">Whether or not disable automatic detection of FBX scale units.</param>
+        internal AssetConversionConfiguration(System.Numerics.Vector3 gravity, float scale, bool disableDetectScaleUnits)
             : this(new Vector3(gravity), scale)
         {
             if (!gravity.IsNormalized())
             {
                 throw new ArgumentException("The value must be normalized.", nameof(gravity));
             }
+
+            DisableDetectScaleUnits = disableDetectScaleUnits;
         }
 
         /// <summary>
@@ -44,6 +47,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             KeyFrameIndexes = new ChangeTrackingList<int>();
             GroundTruthTrajectoryCameraPoses = new List<TrajectoryPose>();
             Scale = scale;
+            DisableDetectScaleUnits = false;
             TestTrajectoryCameraPoses = new List<TrajectoryPose>();
         }
 
@@ -51,6 +55,9 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// Scale of transformation of asset units into meter space.
         /// </summary>
         public float Scale { get; internal set; }
+
+        /// <summary> Whether or not disable the scale units in the model metadata. </summary>
+        public bool DisableDetectScaleUnits { get; internal set; }
 
         /// <summary>
         /// Ground truth trajectory.
@@ -61,17 +68,17 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <summary>
         /// Dimensions of the asset.
         /// </summary>
-        public System.Numerics.Vector3? AssetDimensions { get => AssetDimensionsWrapper == null ? null : AssetDimensionsWrapper; }
+        public System.Numerics.Vector3? AssetDimensions { get => AssetDimensionsWrapper == null ? null : (System.Numerics.Vector3)AssetDimensionsWrapper; }
 
         /// <summary>
         /// BoundingBoxCenter of the asset.
         /// </summary>
-        public System.Numerics.Vector3? BoundingBoxCenter { get => BoundingBoxCenterWrapper == null ? null : BoundingBoxCenterWrapper; }
+        public System.Numerics.Vector3? BoundingBoxCenter { get => BoundingBoxCenterWrapper == null ? null : (System.Numerics.Vector3)BoundingBoxCenterWrapper; }
 
         /// <summary>
         /// Gravity vector with respect to object's nominal position.
         /// </summary>
-        public System.Numerics.Vector3 Gravity { get => GravityWrapper; internal set => GravityWrapper = value; }
+        public System.Numerics.Vector3 Gravity { get => (System.Numerics.Vector3)GravityWrapper; internal set => GravityWrapper = (Vector3)value; }
 
         /// <summary>
         /// Orientation of model's bounding box.

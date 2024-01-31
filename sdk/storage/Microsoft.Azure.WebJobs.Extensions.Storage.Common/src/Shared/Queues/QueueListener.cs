@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Threading;
@@ -25,10 +24,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 {
-    internal sealed partial class QueueListener : IListener, ITaskSeriesCommand, INotificationCommand, IScaleMonitor<QueueTriggerMetrics>
+    internal sealed partial class QueueListener : IListener, ITaskSeriesCommand, INotificationCommand, ITargetScalerProvider, IScaleMonitorProvider
     {
-        private const int NumberOfSamplesToConsider = 5;
-
         private readonly ITaskSeriesTimer _timer;
         private readonly IDelayStrategy _delayStrategy;
         private readonly QueueClient _queue;
@@ -44,18 +41,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         private readonly ILogger<QueueListener> _logger;
         private readonly FunctionDescriptor _functionDescriptor;
         private readonly string _functionId;
-        private readonly ScaleMonitorDescriptor _scaleMonitorDescriptor;
         private readonly CancellationTokenSource _shutdownCancellationTokenSource;
+        private readonly CancellationTokenSource _executionCancellationTokenSource;
+        private readonly Lazy<QueueTargetScaler> _targetScaler;
+        private readonly Lazy<QueueScaleMonitor> _scaleMonitor;
+        private readonly IDrainModeManager _drainModeManager;
 
         private bool? _queueExists;
         private bool _foundMessageSinceLastDelay;
         private bool _disposed;
         private TaskCompletionSource<object> _stopWaitingTaskSource;
         private ConcurrencyManager _concurrencyManager;
+        private string _details;
 
         // for mock testing only
         internal QueueListener()
         {
+            _scaleMonitor = new Lazy<QueueScaleMonitor>(() => new QueueScaleMonitor());
+            _targetScaler = new Lazy<QueueTargetScaler>(() => new QueueTargetScaler());
         }
 
         public QueueListener(QueueClient queue,
@@ -69,7 +72,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             FunctionDescriptor functionDescriptor,
             ConcurrencyManager concurrencyManager = null,
             string functionId = null,
-            TimeSpan? maxPollingInterval = null)
+            TimeSpan? maxPollingInterval = null,
+            IDrainModeManager drainModeManager = null)
         {
             if (queueOptions == null)
             {
@@ -105,6 +109,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             _logger = loggerFactory.CreateLogger<QueueListener>();
             _functionDescriptor = functionDescriptor ?? throw new ArgumentNullException(nameof(functionDescriptor));
             _functionId = functionId ?? _functionDescriptor.Id;
+            _details = $"queue name='{_queue.Name}', storage account name='{_queue.AccountName}'";
 
             // if the function runs longer than this, the invisibility will be updated
             // on a timer periodically for the duration of the function execution
@@ -128,10 +133,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
             _delayStrategy = new RandomizedExponentialBackoffStrategy(QueuePollingIntervals.Minimum, maximumInterval);
 
-            _scaleMonitorDescriptor = new ScaleMonitorDescriptor($"{_functionId}-QueueTrigger-{_queue.Name}".ToLower(CultureInfo.InvariantCulture));
             _shutdownCancellationTokenSource = new CancellationTokenSource();
+            _executionCancellationTokenSource = new CancellationTokenSource();
 
             _concurrencyManager = concurrencyManager;
+
+            _targetScaler = new Lazy<QueueTargetScaler>(
+                    () => new QueueTargetScaler(
+                        _functionId,
+                        queue,
+                        queueOptions,
+                        loggerFactory
+                        ));
+
+            _scaleMonitor = new Lazy<QueueScaleMonitor>(() => new QueueScaleMonitor(_functionId, _queue, loggerFactory));
+            _drainModeManager = drainModeManager;
         }
 
         // for testing
@@ -147,17 +163,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         {
             ThrowIfDisposed();
             _timer.Start();
+            _logger.LogDebug($"Storage queue listener started ({_details})");
             return Task.FromResult(0);
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
+            if (_drainModeManager?.IsDrainModeEnabled ?? false)
+            {
+                _executionCancellationTokenSource.Cancel();
+            }
             using (cancellationToken.Register(() => _shutdownCancellationTokenSource.Cancel()))
             {
                 ThrowIfDisposed();
                 _timer.Cancel();
                 await Task.WhenAll(_processing).ConfigureAwait(false);
                 await _timer.StopAsync(cancellationToken).ConfigureAwait(false);
+                _logger.LogDebug($"Storage queue listener stopped ({_details})");
             }
         }
 
@@ -166,7 +188,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             if (!_disposed)
             {
                 _timer.Dispose();
+                _shutdownCancellationTokenSource.Cancel();
+                _executionCancellationTokenSource.Cancel();
                 _shutdownCancellationTokenSource.Dispose();
+                _executionCancellationTokenSource.Dispose();
                 _disposed = true;
             }
         }
@@ -212,11 +237,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                         }
 
                         sw = Stopwatch.StartNew();
-                        Response<QueueMessage[]> response = await _queue.ReceiveMessagesAsync(numMessagesToReceive, _visibilityTimeout, cancellationToken).ConfigureAwait(false);
-                        batch = response.Value;
+                        using (CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _shutdownCancellationTokenSource.Token))
+                        {
+                            Response<QueueMessage[]> response = await _queue.ReceiveMessagesAsync(numMessagesToReceive, _visibilityTimeout, linkedCts.Token).ConfigureAwait(false);
+                            batch = response.Value;
 
-                        int count = batch?.Length ?? -1;
-                        Logger.GetMessages(_logger, _functionDescriptor.LogName, _queue.Name, response.GetRawResponse().ClientRequestId, count, sw.ElapsedMilliseconds);
+                            int count = batch?.Length ?? -1;
+                            Logger.GetMessages(_logger, _functionDescriptor.LogName, _queue.Name, response.GetRawResponse().ClientRequestId, count, sw.ElapsedMilliseconds);
+                        }
                     }
                 }
                 catch (RequestFailedException exception)
@@ -368,26 +396,29 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         {
             try
             {
-                if (!await _queueProcessor.BeginProcessingMessageAsync(message, cancellationToken).ConfigureAwait(false))
+                using (CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _shutdownCancellationTokenSource.Token))
                 {
-                    return;
+                    if (!await _queueProcessor.BeginProcessingMessageAsync(message, linkedCts.Token).ConfigureAwait(false))
+                    {
+                        return;
+                    }
+
+                    FunctionResult result = null;
+                    Action<UpdateReceipt> onUpdateReceipt = updateReceipt => { message = message.Update(updateReceipt); };
+                    using (ITaskSeriesTimer timer = CreateUpdateMessageVisibilityTimer(_queue, message, visibilityTimeout, _exceptionHandler, onUpdateReceipt))
+                    {
+                        timer.Start();
+
+                        result = await _triggerExecutor.ExecuteAsync(message, _executionCancellationTokenSource.Token).ConfigureAwait(false);
+
+                        await timer.StopAsync(linkedCts.Token).ConfigureAwait(false);
+                    }
+
+                    // Use a different cancellation token for shutdown to allow graceful shutdown.
+                    // Specifically, don't cancel the completion or update of the message itself during graceful shutdown.
+                    // Only cancel completion or update of the message if a non-graceful shutdown is requested via _shutdownCancellationTokenSource.
+                    await _queueProcessor.CompleteProcessingMessageAsync(message, result, linkedCts.Token).ConfigureAwait(false);
                 }
-
-                FunctionResult result = null;
-                Action<UpdateReceipt> onUpdateReceipt = updateReceipt => { message = message.Update(updateReceipt); };
-                using (ITaskSeriesTimer timer = CreateUpdateMessageVisibilityTimer(_queue, message, visibilityTimeout, _exceptionHandler, onUpdateReceipt))
-                {
-                    timer.Start();
-
-                    result = await _triggerExecutor.ExecuteAsync(message, cancellationToken).ConfigureAwait(false);
-
-                    await timer.StopAsync(cancellationToken).ConfigureAwait(false);
-                }
-
-                // Use a different cancellation token for shutdown to allow graceful shutdown.
-                // Specifically, don't cancel the completion or update of the message itself during graceful shutdown.
-                // Only cancel completion or update of the message if a non-graceful shutdown is requested via _shutdownCancellationTokenSource.
-                await _queueProcessor.CompleteProcessingMessageAsync(message, result, _shutdownCancellationTokenSource.Token).ConfigureAwait(false);
             }
             catch (TaskCanceledException)
             {
@@ -440,185 +471,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             }
         }
 
-        public ScaleMonitorDescriptor Descriptor
+        public ITargetScaler GetTargetScaler()
         {
-            get
-            {
-                return _scaleMonitorDescriptor;
-            }
+            return _targetScaler.Value;
         }
 
-        async Task<ScaleMetrics> IScaleMonitor.GetMetricsAsync()
+        public IScaleMonitor GetMonitor()
         {
-            return await GetMetricsAsync().ConfigureAwait(false);
-        }
-
-        public async Task<QueueTriggerMetrics> GetMetricsAsync()
-        {
-            int queueLength = 0;
-            TimeSpan queueTime = TimeSpan.Zero;
-
-            try
-            {
-                QueueProperties queueProperties = await _queue.GetPropertiesAsync().ConfigureAwait(false);
-                queueLength = queueProperties.ApproximateMessagesCount;
-
-                if (queueLength > 0)
-                {
-                    PeekedMessage message = (await _queue.PeekMessagesAsync(1).ConfigureAwait(false)).Value.FirstOrDefault();
-                    if (message != null)
-                    {
-                        if (message.InsertedOn.HasValue)
-                        {
-                            queueTime = DateTime.UtcNow.Subtract(message.InsertedOn.Value.DateTime);
-                        }
-                    }
-                    else
-                    {
-                        // ApproximateMessageCount often returns a stale value,
-                        // especially when the queue is empty.
-                        queueLength = 0;
-                    }
-                }
-            }
-            catch (RequestFailedException ex)
-            {
-                if (ex.IsNotFoundQueueNotFound() ||
-                    ex.IsConflictQueueBeingDeletedOrDisabled() ||
-                    ex.IsServerSideError())
-                {
-                    // ignore transient errors, and return default metrics
-                    // E.g. if the queue doesn't exist, we'll return a zero queue length
-                    // and scale in
-                    _logger.LogWarning($"Error querying for queue scale status: {ex.Message}");
-                }
-            }
-
-            return new QueueTriggerMetrics
-            {
-                QueueLength = queueLength,
-                QueueTime = queueTime,
-                Timestamp = DateTime.UtcNow
-            };
-        }
-
-        ScaleStatus IScaleMonitor.GetScaleStatus(ScaleStatusContext context)
-        {
-            return GetScaleStatusCore(context.WorkerCount, context.Metrics?.Cast<QueueTriggerMetrics>().ToArray());
-        }
-
-        public ScaleStatus GetScaleStatus(ScaleStatusContext<QueueTriggerMetrics> context)
-        {
-            return GetScaleStatusCore(context.WorkerCount, context.Metrics?.ToArray());
-        }
-
-        private ScaleStatus GetScaleStatusCore(int workerCount, QueueTriggerMetrics[] metrics)
-        {
-            ScaleStatus status = new ScaleStatus
-            {
-                Vote = ScaleVote.None
-            };
-
-            // verify we have enough samples to make a scale decision.
-            if (metrics == null || (metrics.Length < NumberOfSamplesToConsider))
-            {
-                return status;
-            }
-
-            // Maintain a minimum ratio of 1 worker per 1,000 queue messages.
-            long latestQueueLength = metrics.Last().QueueLength;
-            if (latestQueueLength > workerCount * 1000)
-            {
-                status.Vote = ScaleVote.ScaleOut;
-                _logger.LogInformation($"QueueLength ({latestQueueLength}) > workerCount ({workerCount}) * 1,000");
-                _logger.LogInformation($"Length of queue ({_queue.Name}, {latestQueueLength}) is too high relative to the number of instances ({workerCount}).");
-                return status;
-            }
-
-            // Check to see if the queue has been empty for a while.
-            bool queueIsIdle = metrics.All(p => p.QueueLength == 0);
-            if (queueIsIdle)
-            {
-                status.Vote = ScaleVote.ScaleIn;
-                _logger.LogInformation($"Queue '{_queue.Name}' is idle");
-                return status;
-            }
-
-            // Samples are in chronological order. Check for a continuous increase in time or length.
-            // If detected, this results in an automatic scale out.
-            if (metrics[0].QueueLength > 0)
-            {
-                bool queueLengthIncreasing =
-                IsTrueForLastN(
-                    metrics,
-                    NumberOfSamplesToConsider,
-                    (prev, next) => prev.QueueLength < next.QueueLength);
-                if (queueLengthIncreasing)
-                {
-                    status.Vote = ScaleVote.ScaleOut;
-                    _logger.LogInformation($"Queue length is increasing for '{_queue.Name}'");
-                    return status;
-                }
-            }
-
-            if (metrics[0].QueueTime > TimeSpan.Zero && metrics[0].QueueTime < metrics[NumberOfSamplesToConsider - 1].QueueTime)
-            {
-                bool queueTimeIncreasing =
-                    IsTrueForLastN(
-                        metrics,
-                        NumberOfSamplesToConsider,
-                        (prev, next) => prev.QueueTime <= next.QueueTime);
-                if (queueTimeIncreasing)
-                {
-                    status.Vote = ScaleVote.ScaleOut;
-                    _logger.LogInformation($"Queue time is increasing for '{_queue.Name}'");
-                    return status;
-                }
-            }
-
-            bool queueLengthDecreasing =
-                IsTrueForLastN(
-                    metrics,
-                    NumberOfSamplesToConsider,
-                    (prev, next) => prev.QueueLength > next.QueueLength);
-            if (queueLengthDecreasing)
-            {
-                status.Vote = ScaleVote.ScaleIn;
-                _logger.LogInformation($"Queue length is decreasing for '{_queue.Name}'");
-                return status;
-            }
-
-            bool queueTimeDecreasing = IsTrueForLastN(
-                metrics,
-                NumberOfSamplesToConsider,
-                (prev, next) => prev.QueueTime > next.QueueTime);
-            if (queueTimeDecreasing)
-            {
-                status.Vote = ScaleVote.ScaleIn;
-                _logger.LogInformation($"Queue time is decreasing for '{_queue.Name}'");
-                return status;
-            }
-
-            _logger.LogInformation($"Queue '{_queue.Name}' is steady");
-
-            return status;
-        }
-
-        private static bool IsTrueForLastN(IList<QueueTriggerMetrics> samples, int count, Func<QueueTriggerMetrics, QueueTriggerMetrics, bool> predicate)
-        {
-            Debug.Assert(count > 1, "count must be greater than 1.");
-            Debug.Assert(count <= samples.Count, "count must be less than or equal to the list size.");
-
-            // Walks through the list from left to right starting at len(samples) - count.
-            for (int i = samples.Count - count; i < samples.Count - 1; i++)
-            {
-                if (!predicate(samples[i], samples[i + 1]))
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return _scaleMonitor.Value;
         }
     }
 }

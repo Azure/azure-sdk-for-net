@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -14,21 +13,26 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static EntitiesTaskResult DeserializeEntitiesTaskResult(JsonElement element)
         {
-            Optional<EntitiesResult> results = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            EntitiesResult results = default;
+            AnalyzeTextTaskResultsKind kind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("results"))
+                if (property.NameEquals("results"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
                     results = EntitiesResult.DeserializeEntitiesResult(property.Value);
                     continue;
                 }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = new AnalyzeTextTaskResultsKind(property.Value.GetString());
+                    continue;
+                }
             }
-            return new EntitiesTaskResult(results.Value);
+            return new EntitiesTaskResult(kind, results);
         }
     }
 }

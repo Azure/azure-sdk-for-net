@@ -8,34 +8,29 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Represents the current status and execution history of an indexer. </summary>
     public partial class SearchIndexerStatus
     {
-        /// <summary> Initializes a new instance of SearchIndexerStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerStatus"/>. </summary>
         /// <param name="status"> Overall indexer status. </param>
         /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
         /// <param name="limits"> The execution limits for the indexer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="executionHistory"/> or <paramref name="limits"/> is null. </exception>
         internal SearchIndexerStatus(IndexerStatus status, IEnumerable<IndexerExecutionResult> executionHistory, SearchIndexerLimits limits)
         {
-            if (executionHistory == null)
-            {
-                throw new ArgumentNullException(nameof(executionHistory));
-            }
-            if (limits == null)
-            {
-                throw new ArgumentNullException(nameof(limits));
-            }
+            Argument.AssertNotNull(executionHistory, nameof(executionHistory));
+            Argument.AssertNotNull(limits, nameof(limits));
 
             Status = status;
             ExecutionHistory = executionHistory.ToList();
             Limits = limits;
         }
 
-        /// <summary> Initializes a new instance of SearchIndexerStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerStatus"/>. </summary>
         /// <param name="status"> Overall indexer status. </param>
         /// <param name="lastResult"> The result of the most recent or an in-progress indexer execution. </param>
         /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>

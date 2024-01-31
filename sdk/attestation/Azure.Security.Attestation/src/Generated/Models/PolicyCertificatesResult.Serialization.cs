@@ -17,14 +17,17 @@ namespace Azure.Security.Attestation
     {
         internal static PolicyCertificatesResult DeserializePolicyCertificatesResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<JsonWebKeySet> xMsPolicyCertificates = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("x-ms-policy-certificates"))
+                if (property.NameEquals("x-ms-policy-certificates"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     xMsPolicyCertificates = JsonWebKeySet.DeserializeJsonWebKeySet(property.Value);

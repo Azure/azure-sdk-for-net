@@ -21,9 +21,9 @@ namespace Azure.Storage.Files.Shares.Models
 
         public static ShareRootSquash ToShareRootSquash(this string value)
         {
-            if (string.Equals(value, "NoRootSquash", StringComparison.InvariantCultureIgnoreCase)) return ShareRootSquash.NoRootSquash;
-            if (string.Equals(value, "RootSquash", StringComparison.InvariantCultureIgnoreCase)) return ShareRootSquash.RootSquash;
-            if (string.Equals(value, "AllSquash", StringComparison.InvariantCultureIgnoreCase)) return ShareRootSquash.AllSquash;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoRootSquash")) return ShareRootSquash.NoRootSquash;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RootSquash")) return ShareRootSquash.RootSquash;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AllSquash")) return ShareRootSquash.AllSquash;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ShareRootSquash value.");
         }
     }

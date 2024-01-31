@@ -14,15 +14,15 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Event availability information when environment contains events. Contains time range of events and approximate distribution of events over time. </summary>
     internal partial class Availability
     {
-        /// <summary> Initializes a new instance of Availability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Availability"/>. </summary>
         internal Availability()
         {
             Distribution = new ChangeTrackingDictionary<string, int>();
         }
 
-        /// <summary> Initializes a new instance of Availability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Availability"/>. </summary>
         /// <param name="range"> Minimum and maximum values of event timestamp ($ts) property. </param>
-        /// <param name="intervalSize"> Interval size for the returned distribution of the events. Returned interval is selected to return a reasonable number of points. All intervals are the same size. On the wire interval is specified in ISO-8601 duration format. One month is always converted to 30 days, and one year is always 365 days. Examples: 1 minute is &quot;PT1M&quot;, 1 millisecond is &quot;PT0.001S&quot;. For more information, see https://www.w3.org/TR/xmlschema-2/#duration. </param>
+        /// <param name="intervalSize"> Interval size for the returned distribution of the events. Returned interval is selected to return a reasonable number of points. All intervals are the same size. On the wire interval is specified in ISO-8601 duration format. One month is always converted to 30 days, and one year is always 365 days. Examples: 1 minute is "PT1M", 1 millisecond is "PT0.001S". For more information, see https://www.w3.org/TR/xmlschema-2/#duration. </param>
         /// <param name="distribution"> Dictionary of &lt;integer&gt;. </param>
         internal Availability(DateTimeRange range, TimeSpan? intervalSize, IReadOnlyDictionary<string, int> distribution)
         {
@@ -33,7 +33,7 @@ namespace Azure.IoT.TimeSeriesInsights
 
         /// <summary> Minimum and maximum values of event timestamp ($ts) property. </summary>
         public DateTimeRange Range { get; }
-        /// <summary> Interval size for the returned distribution of the events. Returned interval is selected to return a reasonable number of points. All intervals are the same size. On the wire interval is specified in ISO-8601 duration format. One month is always converted to 30 days, and one year is always 365 days. Examples: 1 minute is &quot;PT1M&quot;, 1 millisecond is &quot;PT0.001S&quot;. For more information, see https://www.w3.org/TR/xmlschema-2/#duration. </summary>
+        /// <summary> Interval size for the returned distribution of the events. Returned interval is selected to return a reasonable number of points. All intervals are the same size. On the wire interval is specified in ISO-8601 duration format. One month is always converted to 30 days, and one year is always 365 days. Examples: 1 minute is "PT1M", 1 millisecond is "PT0.001S". For more information, see https://www.w3.org/TR/xmlschema-2/#duration. </summary>
         public TimeSpan? IntervalSize { get; }
         /// <summary> Dictionary of &lt;integer&gt;. </summary>
         public IReadOnlyDictionary<string, int> Distribution { get; }

@@ -5,27 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Configuration for intrusion detection mode and rules. </summary>
     public partial class FirewallPolicyIntrusionDetection
     {
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetection. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetection"/>. </summary>
         public FirewallPolicyIntrusionDetection()
         {
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyIntrusionDetection. </summary>
-        /// <param name="mode"> Intrusion detection general state. </param>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetection"/>. </summary>
+        /// <param name="mode"> Intrusion detection general state. When attached to a parent policy, the firewall's effective IDPS mode is the stricter mode of the two. </param>
+        /// <param name="profile"> IDPS profile name. When attached to a parent policy, the firewall's effective profile is the profile name of the parent policy. </param>
         /// <param name="configuration"> Intrusion detection configuration properties. </param>
-        internal FirewallPolicyIntrusionDetection(FirewallPolicyIntrusionDetectionStateType? mode, FirewallPolicyIntrusionDetectionConfiguration configuration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallPolicyIntrusionDetection(FirewallPolicyIntrusionDetectionStateType? mode, FirewallPolicyIntrusionDetectionProfileType? profile, FirewallPolicyIntrusionDetectionConfiguration configuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mode = mode;
+            Profile = profile;
             Configuration = configuration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Intrusion detection general state. </summary>
+        /// <summary> Intrusion detection general state. When attached to a parent policy, the firewall's effective IDPS mode is the stricter mode of the two. </summary>
         public FirewallPolicyIntrusionDetectionStateType? Mode { get; set; }
+        /// <summary> IDPS profile name. When attached to a parent policy, the firewall's effective profile is the profile name of the parent policy. </summary>
+        public FirewallPolicyIntrusionDetectionProfileType? Profile { get; set; }
         /// <summary> Intrusion detection configuration properties. </summary>
         public FirewallPolicyIntrusionDetectionConfiguration Configuration { get; set; }
     }

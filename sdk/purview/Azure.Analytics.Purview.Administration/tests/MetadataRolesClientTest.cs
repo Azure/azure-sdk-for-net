@@ -23,8 +23,9 @@ namespace Azure.Analytics.Purview.Administration.Tests
             AsyncPageable<BinaryData> fetchResponse = client.GetMetadataRolesAsync(new());
             await foreach (BinaryData item in fetchResponse)
             {
-                JsonElement fetchBodyJson = JsonDocument.Parse(item).RootElement;
-                Assert.Equals(fetchBodyJson.GetProperty("id").ToString().StartsWith("purviewmetadatarole"), true);
+                using var jsonDocument = JsonDocument.Parse(item);
+                JsonElement fetchBodyJson = jsonDocument.RootElement;
+                Assert.AreEqual(fetchBodyJson.GetProperty("id").ToString().StartsWith("purviewmetadatarole"), true);
             }
         }
 

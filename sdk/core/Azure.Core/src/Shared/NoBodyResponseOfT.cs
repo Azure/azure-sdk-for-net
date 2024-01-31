@@ -5,6 +5,9 @@ using System;
 
 namespace Azure
 {
+    /// <summary>
+    /// NOTE: This type should not be used going forward. Use NoValueResponse{T} instead.
+    /// </summary>
 #pragma warning disable SA1649 // File name should match first type name
     internal class NoBodyResponse<T> : Response<T>
 #pragma warning restore SA1649 // File name should match first type name
@@ -15,6 +18,9 @@ namespace Azure
         {
             _response = response;
         }
+
+        /// <inheritdoc />
+        public override bool HasValue => false;
 
         public override T Value
         {

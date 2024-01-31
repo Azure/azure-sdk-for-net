@@ -15,7 +15,10 @@ namespace Azure.AI.TextAnalytics
     {
         private readonly PiiEntityCollection _entities;
 
-        internal RecognizePiiEntitiesResult(string id, TextDocumentStatistics statistics, PiiEntityCollection entities)
+        internal RecognizePiiEntitiesResult(
+            string id,
+            TextDocumentStatistics statistics,
+            PiiEntityCollection entities)
             : base(id, statistics)
         {
             _entities = entities;

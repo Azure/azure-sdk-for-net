@@ -10,10 +10,10 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Represents all of the state that defines and dictates the indexer&apos;s current execution. </summary>
+    /// <summary> Represents all of the state that defines and dictates the indexer's current execution. </summary>
     public partial class IndexerState
     {
-        /// <summary> Initializes a new instance of IndexerState. </summary>
+        /// <summary> Initializes a new instance of <see cref="IndexerState"/>. </summary>
         internal IndexerState()
         {
             ResetDocumentKeys = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> The mode the indexer is running in. </summary>
         public IndexingMode? Mode { get; }
-        /// <summary> The list of document keys that have been reset. The document key is the document&apos;s unique identifier for the data in the search index. The indexer will prioritize selectively re-ingesting these keys. </summary>
+        /// <summary> The list of document keys that have been reset. The document key is the document's unique identifier for the data in the search index. The indexer will prioritize selectively re-ingesting these keys. </summary>
         public IReadOnlyList<string> ResetDocumentKeys { get; }
     }
 }

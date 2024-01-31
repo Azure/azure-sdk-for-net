@@ -6,38 +6,30 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Custom script action to run on HDI ondemand cluster once it&apos;s up. </summary>
+    /// <summary> Custom script action to run on HDI ondemand cluster once it's up. </summary>
     public partial class ScriptAction
     {
-        /// <summary> Initializes a new instance of ScriptAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptAction"/>. </summary>
         /// <param name="name"> The user provided name of the script action. </param>
         /// <param name="uri"> The URI for the script action. </param>
         /// <param name="roles"> The node types on which the script action should be executed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="uri"/> or <paramref name="roles"/> is null. </exception>
         public ScriptAction(string name, string uri, object roles)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
-            if (roles == null)
-            {
-                throw new ArgumentNullException(nameof(roles));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNull(roles, nameof(roles));
 
             Name = name;
             Uri = uri;
             Roles = roles;
         }
 
-        /// <summary> Initializes a new instance of ScriptAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptAction"/>. </summary>
         /// <param name="name"> The user provided name of the script action. </param>
         /// <param name="uri"> The URI for the script action. </param>
         /// <param name="roles"> The node types on which the script action should be executed. </param>

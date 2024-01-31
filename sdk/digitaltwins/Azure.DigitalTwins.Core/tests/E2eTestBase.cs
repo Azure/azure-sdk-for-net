@@ -70,6 +70,11 @@ namespace Azure.DigitalTwins.Core.Tests
             return await GetUniqueIdAsync(baseName, (twinId) => dtClient.GetDigitalTwinAsync<BasicDigitalTwin>(twinId)).ConfigureAwait(false);
         }
 
+        public async Task<string> GetUniqueJobIdAsync(DigitalTwinsClient dtClient, string baseName)
+        {
+            return await GetUniqueIdAsync(baseName, (jobId) => dtClient.GetImportJobAsync(jobId)).ConfigureAwait(false);
+        }
+
         private async Task<string> GetUniqueIdAsync(string baseName, Func<string, Task> getResource)
         {
             var id = Recording.GenerateId(baseName, MaxIdLength);
@@ -117,7 +122,7 @@ namespace Azure.DigitalTwins.Core.Tests
         /// <param name="delayDuration">Delay duration.</param>
         protected async Task WaitIfLiveAsync(TimeSpan delayDuration)
         {
-            if (TestEnvironment.Mode == RecordedTestMode.Live)
+            if (TestEnvironment.Mode == RecordedTestMode.Live || TestEnvironment.Mode == RecordedTestMode.Record)
             {
                 await Task.Delay(delayDuration);
             }

@@ -95,5 +95,66 @@
             SupportsHibernation = supportsHibernation;
             CustomInit();
         }
+
+        public Snapshot(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), SnapshotSku sku = default(SnapshotSku), ExtendedLocation extendedLocation = default(ExtendedLocation), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), PurchasePlan purchasePlan = default(PurchasePlan), SupportedCapabilities supportedCapabilities = default(SupportedCapabilities), int? diskSizeGB = default(int?), long? diskSizeBytes = default(long?), string diskState = default(string), string uniqueId = default(string), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), bool? incremental = default(bool?), Encryption encryption = default(Encryption), string networkAccessPolicy = default(string), string diskAccessId = default(string), DiskSecurityProfile securityProfile = default(DiskSecurityProfile), bool? supportsHibernation = default(bool?), string publicNetworkAccess = default(string), double? completionPercent = default(double?), string dataAccessAuthMode = default(string))
+            : base(location, id, name, type, tags)
+        {
+            ManagedBy = managedBy;
+            Sku = sku;
+            ExtendedLocation = extendedLocation;
+            TimeCreated = timeCreated;
+            OsType = osType;
+            HyperVGeneration = hyperVGeneration;
+            PurchasePlan = purchasePlan;
+            SupportedCapabilities = supportedCapabilities;
+            CreationData = creationData;
+            DiskSizeGB = diskSizeGB;
+            DiskSizeBytes = diskSizeBytes;
+            DiskState = diskState;
+            UniqueId = uniqueId;
+            EncryptionSettingsCollection = encryptionSettingsCollection;
+            ProvisioningState = provisioningState;
+            Incremental = incremental;
+            Encryption = encryption;
+            NetworkAccessPolicy = networkAccessPolicy;
+            DiskAccessId = diskAccessId;
+            SecurityProfile = securityProfile;
+            SupportsHibernation = supportsHibernation;
+            PublicNetworkAccess = publicNetworkAccess;
+            CompletionPercent = completionPercent;
+            DataAccessAuthMode = dataAccessAuthMode;
+            CustomInit();
+        }
+
+        public Snapshot(string location, CreationData creationData, string id , string name , string type , IDictionary<string, string> tags , string managedBy , SnapshotSku sku , ExtendedLocation extendedLocation , System.DateTime? timeCreated , OperatingSystemTypes? osType , string hyperVGeneration , PurchasePlan purchasePlan , SupportedCapabilities supportedCapabilities , int? diskSizeGB , long? diskSizeBytes , string diskState , string uniqueId , EncryptionSettingsCollection encryptionSettingsCollection , string provisioningState , bool? incremental , Encryption encryption , string networkAccessPolicy = default(string), string diskAccessId = default(string), DiskSecurityProfile securityProfile = default(DiskSecurityProfile), bool? supportsHibernation = default(bool?), string publicNetworkAccess = default(string), double? completionPercent = default(double?), CopyCompletionError copyCompletionError = default(CopyCompletionError), string dataAccessAuthMode = default(string))
+    : base(location, id, name, type, tags)
+        {
+            ManagedBy = managedBy;
+            Sku = sku;
+            ExtendedLocation = extendedLocation;
+            TimeCreated = timeCreated;
+            OsType = osType;
+            HyperVGeneration = hyperVGeneration;
+            PurchasePlan = purchasePlan;
+            SupportedCapabilities = supportedCapabilities;
+            CreationData = creationData;
+            DiskSizeGB = diskSizeGB;
+            DiskSizeBytes = diskSizeBytes;
+            DiskState = diskState;
+            UniqueId = uniqueId;
+            EncryptionSettingsCollection = encryptionSettingsCollection;
+            ProvisioningState = provisioningState;
+            Incremental = incremental;
+            Encryption = encryption;
+            NetworkAccessPolicy = networkAccessPolicy;
+            DiskAccessId = diskAccessId;
+            SecurityProfile = securityProfile;
+            SupportsHibernation = supportsHibernation;
+            PublicNetworkAccess = publicNetworkAccess;
+            CompletionPercent = completionPercent;
+            CopyCompletionError = copyCompletionError;
+            DataAccessAuthMode = dataAccessAuthMode;
+            CustomInit();
+        }
     }
 }

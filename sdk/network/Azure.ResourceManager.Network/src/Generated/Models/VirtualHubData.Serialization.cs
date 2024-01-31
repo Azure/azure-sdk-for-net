@@ -5,32 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VirtualHubData : IUtf8JsonSerializable
+    public partial class VirtualHubData : IUtf8JsonSerializable, IJsonModel<VirtualHubData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualHubData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VirtualHubData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualHubData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualHubData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind);
+            }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -39,56 +70,61 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualWan))
             {
-                writer.WritePropertyName("virtualWan");
+                writer.WritePropertyName("virtualWan"u8);
                 JsonSerializer.Serialize(writer, VirtualWan);
             }
             if (Optional.IsDefined(VpnGateway))
             {
-                writer.WritePropertyName("vpnGateway");
+                writer.WritePropertyName("vpnGateway"u8);
                 JsonSerializer.Serialize(writer, VpnGateway);
             }
             if (Optional.IsDefined(P2SVpnGateway))
             {
-                writer.WritePropertyName("p2SVpnGateway");
+                writer.WritePropertyName("p2SVpnGateway"u8);
                 JsonSerializer.Serialize(writer, P2SVpnGateway);
             }
             if (Optional.IsDefined(ExpressRouteGateway))
             {
-                writer.WritePropertyName("expressRouteGateway");
+                writer.WritePropertyName("expressRouteGateway"u8);
                 JsonSerializer.Serialize(writer, ExpressRouteGateway);
             }
             if (Optional.IsDefined(AzureFirewall))
             {
-                writer.WritePropertyName("azureFirewall");
+                writer.WritePropertyName("azureFirewall"u8);
                 JsonSerializer.Serialize(writer, AzureFirewall);
             }
             if (Optional.IsDefined(SecurityPartnerProvider))
             {
-                writer.WritePropertyName("securityPartnerProvider");
+                writer.WritePropertyName("securityPartnerProvider"u8);
                 JsonSerializer.Serialize(writer, SecurityPartnerProvider);
             }
             if (Optional.IsDefined(AddressPrefix))
             {
-                writer.WritePropertyName("addressPrefix");
+                writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
             if (Optional.IsDefined(RouteTable))
             {
-                writer.WritePropertyName("routeTable");
+                writer.WritePropertyName("routeTable"u8);
                 writer.WriteObjectValue(RouteTable);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(SecurityProviderName))
             {
-                writer.WritePropertyName("securityProviderName");
+                writer.WritePropertyName("securityProviderName"u8);
                 writer.WriteStringValue(SecurityProviderName);
             }
             if (Optional.IsCollectionDefined(VirtualHubRouteTableV2S))
             {
-                writer.WritePropertyName("virtualHubRouteTableV2s");
+                writer.WritePropertyName("virtualHubRouteTableV2s"u8);
                 writer.WriteStartArray();
                 foreach (var item in VirtualHubRouteTableV2S)
                 {
@@ -98,17 +134,52 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RoutingState))
+            {
+                writer.WritePropertyName("routingState"u8);
+                writer.WriteStringValue(RoutingState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(BgpConnections))
+            {
+                writer.WritePropertyName("bgpConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in BgpConnections)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
+            {
+                writer.WritePropertyName("ipConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPConfigurations)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(RouteMaps))
+            {
+                writer.WritePropertyName("routeMaps"u8);
+                writer.WriteStartArray();
+                foreach (var item in RouteMaps)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(VirtualRouterAsn))
             {
-                writer.WritePropertyName("virtualRouterAsn");
+                writer.WritePropertyName("virtualRouterAsn"u8);
                 writer.WriteNumberValue(VirtualRouterAsn.Value);
             }
             if (Optional.IsCollectionDefined(VirtualRouterIPs))
             {
-                writer.WritePropertyName("virtualRouterIps");
+                writer.WritePropertyName("virtualRouterIps"u8);
                 writer.WriteStartArray();
                 foreach (var item in VirtualRouterIPs)
                 {
@@ -118,77 +189,146 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsDefined(AllowBranchToBranchTraffic))
             {
-                writer.WritePropertyName("allowBranchToBranchTraffic");
+                writer.WritePropertyName("allowBranchToBranchTraffic"u8);
                 writer.WriteBooleanValue(AllowBranchToBranchTraffic.Value);
             }
             if (Optional.IsDefined(PreferredRoutingGateway))
             {
-                writer.WritePropertyName("preferredRoutingGateway");
+                writer.WritePropertyName("preferredRoutingGateway"u8);
                 writer.WriteStringValue(PreferredRoutingGateway.Value.ToString());
             }
+            if (Optional.IsDefined(HubRoutingPreference))
+            {
+                writer.WritePropertyName("hubRoutingPreference"u8);
+                writer.WriteStringValue(HubRoutingPreference.Value.ToString());
+            }
+            if (Optional.IsDefined(VirtualRouterAutoScaleConfiguration))
+            {
+                writer.WritePropertyName("virtualRouterAutoScaleConfiguration"u8);
+                writer.WriteObjectValue(VirtualRouterAutoScaleConfiguration);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualHubData DeserializeVirtualHubData(JsonElement element)
+        VirtualHubData IJsonModel<VirtualHubData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<string> etag = default;
-            Optional<string> id = default;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualHubData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualHubData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualHubData(document.RootElement, options);
+        }
+
+        internal static VirtualHubData DeserializeVirtualHubData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ETag> etag = default;
+            Optional<string> kind = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> location = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
             Optional<WritableSubResource> virtualWan = default;
             Optional<WritableSubResource> vpnGateway = default;
-            Optional<WritableSubResource> p2SVpnGateway = default;
+            Optional<WritableSubResource> p2sVpnGateway = default;
             Optional<WritableSubResource> expressRouteGateway = default;
             Optional<WritableSubResource> azureFirewall = default;
             Optional<WritableSubResource> securityPartnerProvider = default;
             Optional<string> addressPrefix = default;
             Optional<VirtualHubRouteTable> routeTable = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<string> securityProviderName = default;
             Optional<IList<VirtualHubRouteTableV2Data>> virtualHubRouteTableV2s = default;
             Optional<string> sku = default;
             Optional<RoutingState> routingState = default;
             Optional<IReadOnlyList<WritableSubResource>> bgpConnections = default;
             Optional<IReadOnlyList<WritableSubResource>> ipConfigurations = default;
+            Optional<IReadOnlyList<WritableSubResource>> routeMaps = default;
             Optional<long> virtualRouterAsn = default;
-            Optional<IList<string>> virtualRouterIps = default;
+            Optional<IList<string>> virtualRouterIPs = default;
             Optional<bool> allowBranchToBranchTraffic = default;
             Optional<PreferredRoutingGateway> preferredRoutingGateway = default;
+            Optional<HubRoutingPreference> hubRoutingPreference = default;
+            Optional<VirtualRouterAutoScaleConfiguration> virtualRouterAutoScaleConfiguration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("kind"u8))
                 {
-                    id = property.Value.GetString();
+                    kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("id"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -199,7 +339,7 @@ namespace Azure.ResourceManager.Network
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -208,101 +348,92 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("virtualWan"))
+                        if (property0.NameEquals("virtualWan"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualWan = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            virtualWan = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("vpnGateway"))
+                        if (property0.NameEquals("vpnGateway"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            vpnGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            vpnGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("p2SVpnGateway"))
+                        if (property0.NameEquals("p2SVpnGateway"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            p2SVpnGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            p2sVpnGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("expressRouteGateway"))
+                        if (property0.NameEquals("expressRouteGateway"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            expressRouteGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            expressRouteGateway = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("azureFirewall"))
+                        if (property0.NameEquals("azureFirewall"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            azureFirewall = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            azureFirewall = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("securityPartnerProvider"))
+                        if (property0.NameEquals("securityPartnerProvider"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            securityPartnerProvider = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            securityPartnerProvider = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("addressPrefix"))
+                        if (property0.NameEquals("addressPrefix"u8))
                         {
                             addressPrefix = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("routeTable"))
+                        if (property0.NameEquals("routeTable"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             routeTable = VirtualHubRouteTable.DeserializeVirtualHubRouteTable(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("securityProviderName"))
+                        if (property0.NameEquals("securityProviderName"u8))
                         {
                             securityProviderName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("virtualHubRouteTableV2s"))
+                        if (property0.NameEquals("virtualHubRouteTableV2s"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<VirtualHubRouteTableV2Data> array = new List<VirtualHubRouteTableV2Data>();
@@ -313,66 +444,75 @@ namespace Azure.ResourceManager.Network
                             virtualHubRouteTableV2s = array;
                             continue;
                         }
-                        if (property0.NameEquals("sku"))
+                        if (property0.NameEquals("sku"u8))
                         {
                             sku = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("routingState"))
+                        if (property0.NameEquals("routingState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             routingState = new RoutingState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("bgpConnections"))
+                        if (property0.NameEquals("bgpConnections"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             bgpConnections = array;
                             continue;
                         }
-                        if (property0.NameEquals("ipConfigurations"))
+                        if (property0.NameEquals("ipConfigurations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             ipConfigurations = array;
                             continue;
                         }
-                        if (property0.NameEquals("virtualRouterAsn"))
+                        if (property0.NameEquals("routeMaps"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<WritableSubResource> array = new List<WritableSubResource>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                            }
+                            routeMaps = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("virtualRouterAsn"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             virtualRouterAsn = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("virtualRouterIps"))
+                        if (property0.NameEquals("virtualRouterIps"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -380,34 +520,86 @@ namespace Azure.ResourceManager.Network
                             {
                                 array.Add(item.GetString());
                             }
-                            virtualRouterIps = array;
+                            virtualRouterIPs = array;
                             continue;
                         }
-                        if (property0.NameEquals("allowBranchToBranchTraffic"))
+                        if (property0.NameEquals("allowBranchToBranchTraffic"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             allowBranchToBranchTraffic = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("preferredRoutingGateway"))
+                        if (property0.NameEquals("preferredRoutingGateway"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             preferredRoutingGateway = new PreferredRoutingGateway(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("hubRoutingPreference"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            hubRoutingPreference = new HubRoutingPreference(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("virtualRouterAutoScaleConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            virtualRouterAutoScaleConfiguration = VirtualRouterAutoScaleConfiguration.DeserializeVirtualRouterAutoScaleConfiguration(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualHubData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), etag.Value, virtualWan, vpnGateway, p2SVpnGateway, expressRouteGateway, azureFirewall, securityPartnerProvider, addressPrefix.Value, routeTable.Value, Optional.ToNullable(provisioningState), securityProviderName.Value, Optional.ToList(virtualHubRouteTableV2s), sku.Value, Optional.ToNullable(routingState), Optional.ToList(bgpConnections), Optional.ToList(ipConfigurations), Optional.ToNullable(virtualRouterAsn), Optional.ToList(virtualRouterIps), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(preferredRoutingGateway));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualHubData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), kind.Value, virtualWan, vpnGateway, p2sVpnGateway, expressRouteGateway, azureFirewall, securityPartnerProvider, addressPrefix.Value, routeTable.Value, Optional.ToNullable(provisioningState), securityProviderName.Value, Optional.ToList(virtualHubRouteTableV2s), sku.Value, Optional.ToNullable(routingState), Optional.ToList(bgpConnections), Optional.ToList(ipConfigurations), Optional.ToList(routeMaps), Optional.ToNullable(virtualRouterAsn), Optional.ToList(virtualRouterIPs), Optional.ToNullable(allowBranchToBranchTraffic), Optional.ToNullable(preferredRoutingGateway), Optional.ToNullable(hubRoutingPreference), virtualRouterAutoScaleConfiguration.Value);
         }
+
+        BinaryData IPersistableModel<VirtualHubData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualHubData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualHubData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VirtualHubData IPersistableModel<VirtualHubData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualHubData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualHubData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualHubData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualHubData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

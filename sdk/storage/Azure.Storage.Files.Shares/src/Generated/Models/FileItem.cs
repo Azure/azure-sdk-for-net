@@ -6,38 +6,33 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
     /// <summary> A listed file item. </summary>
     internal partial class FileItem
     {
-        /// <summary> Initializes a new instance of FileItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileItem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="properties"> File properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
-        internal FileItem(string name, FileProperty properties)
+        internal FileItem(StringEncoded name, FileProperty properties)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Name = name;
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of FileItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileItem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="fileId"></param>
         /// <param name="properties"> File properties. </param>
         /// <param name="attributes"></param>
         /// <param name="permissionKey"></param>
-        internal FileItem(string name, string fileId, FileProperty properties, string attributes, string permissionKey)
+        internal FileItem(StringEncoded name, string fileId, FileProperty properties, string attributes, string permissionKey)
         {
             Name = name;
             FileId = fileId;
@@ -47,7 +42,7 @@ namespace Azure.Storage.Files.Shares.Models
         }
 
         /// <summary> Gets the name. </summary>
-        public string Name { get; }
+        public StringEncoded Name { get; }
         /// <summary> Gets the file id. </summary>
         public string FileId { get; }
         /// <summary> File properties. </summary>

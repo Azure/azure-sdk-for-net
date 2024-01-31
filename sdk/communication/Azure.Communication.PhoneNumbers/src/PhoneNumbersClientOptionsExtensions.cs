@@ -14,23 +14,46 @@ namespace Azure.Communication.PhoneNumbers
     {
         public static HttpPipeline BuildPhoneNumbersHttpPipeline(this ClientOptions options, ConnectionString connectionString)
         {
-            var authPolicy = new HMACAuthenticationPolicy(new AzureKeyCredential(connectionString.GetRequired("accesskey")));
-            var msUserAgentPolicy = new MSUserAgentPolicy();
-            return HttpPipelineBuilder.Build(options, authPolicy, msUserAgentPolicy);
+            var pipelineOptions = new HttpPipelineOptions(options)
+            {
+                RequestFailedDetailsParser = new CommunicationRequestFailedDetailsParser(),
+                PerRetryPolicies =
+                {
+                    new HMACAuthenticationPolicy(new AzureKeyCredential(connectionString.GetRequired("accesskey"))),
+                    new MSUserAgentPolicy()
+                }
+            };
+            HttpPipelineTransportOptions httpPipelineTransportOptions = new() { IsClientRedirectEnabled = true };
+            return HttpPipelineBuilder.Build(pipelineOptions, httpPipelineTransportOptions);
         }
 
         public static HttpPipeline BuildPhoneNumbersHttpPipeline(this ClientOptions options, AzureKeyCredential keyCredential)
         {
-            var authPolicy = new HMACAuthenticationPolicy(keyCredential);
-            var msUserAgentPolicy = new MSUserAgentPolicy();
-            return HttpPipelineBuilder.Build(options, authPolicy, msUserAgentPolicy);
+            var pipelineOptions = new HttpPipelineOptions(options)
+            {
+                RequestFailedDetailsParser = new CommunicationRequestFailedDetailsParser(),
+                PerRetryPolicies =
+                {
+                    new HMACAuthenticationPolicy(keyCredential),
+                    new MSUserAgentPolicy()
+                }
+            };
+            HttpPipelineTransportOptions httpPipelineTransportOptions = new() { IsClientRedirectEnabled = true };
+            return HttpPipelineBuilder.Build(pipelineOptions, httpPipelineTransportOptions);
         }
 
         public static HttpPipeline BuildPhoneNumbersHttpPipeline(this ClientOptions options, TokenCredential tokenCredential)
         {
-            var authPolicy = new BearerTokenAuthenticationPolicy(tokenCredential, "https://communication.azure.com//.default");
-            var msUserAgentPolicy = new MSUserAgentPolicy();
-            return HttpPipelineBuilder.Build(options, authPolicy, msUserAgentPolicy);
+            var pipelineOptions = new HttpPipelineOptions(options)
+            {
+                RequestFailedDetailsParser = new CommunicationRequestFailedDetailsParser(),
+                PerRetryPolicies =
+                {
+                    new BearerTokenAuthenticationPolicy(tokenCredential, "https://communication.azure.com//.default"),
+                    new MSUserAgentPolicy()
+                }
+            };
+            return HttpPipelineBuilder.Build(pipelineOptions);
         }
     }
 }

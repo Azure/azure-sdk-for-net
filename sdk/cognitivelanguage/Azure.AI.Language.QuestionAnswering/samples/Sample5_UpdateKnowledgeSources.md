@@ -2,13 +2,13 @@
 
 This sample demonstrates how to update knowledge sources, question and answer pairs, synonyms, and add feedback for active learning for Question Answering projects. To get started, you'll need to create a Question Answering service endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/README.md) for links and instructions.
 
-To add knowledge sources, update question and answer pairs, or perform any other authoring actions for Question Answering projects, you need to first create a `QuestionAnsweringProjectsClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
+To add knowledge sources, update question and answer pairs, or perform any other authoring actions for Question Answering projects, you need to first create a `QuestionAnsweringAuthoringClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 
-```C# Snippet:QuestionAnsweringProjectsClient_Create
-Uri endpoint = new Uri("{LanguageEndpoint}");
-AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
+```C# Snippet:QuestionAnsweringAuthoringClient_Create
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
-QuestionAnsweringProjectsClient client = new QuestionAnsweringProjectsClient(endpoint, credential);
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 ```
 
 Once you have created a client, you can call synchronous or asynchronous methods.
@@ -19,7 +19,7 @@ Once you have created a client, you can call synchronous or asynchronous methods
 
 To add a new knowledge source to your project, you can set up a `RequestContent` instance with the appropriate parameters and call the `UpdateSources` method. In the following example, a source of type "url" is being added to our project.
 
-```C# Snippet:QuestionAnsweringProjectsClient_UpdateSources_UpdateSample
+```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSources_UpdateSample
 // Set request content parameters for updating our new project's sources
 string sourceUri = "{KnowledgeSourceUri}";
 string testProjectName = "{ProjectName}";
@@ -39,11 +39,11 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = client.UpdateSources(waitForCompletion: false, testProjectName, updateSourcesRequestContent);
-updateSourcesOperation.WaitForCompletion();
+Operation<Pageable<BinaryData>> updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
 
-// Knowledge Sources can be retrieved as follows
-Pageable<BinaryData> sources = client.GetSources(testProjectName);
+// Updated Knowledge Sources can be retrieved as follows
+Pageable<BinaryData> sources = updateSourcesOperation.Value;
+
 Console.WriteLine("Sources: ");
 foreach (BinaryData source in sources)
 {
@@ -55,7 +55,7 @@ foreach (BinaryData source in sources)
 
 Similarily, you can use the `UpdateQnas` method to add new question and answer pairs as follows:
 
-```C# Snippet:QuestionAnsweringProjectsClient_UpdateQnas
+```C# Snippet:QuestionAnsweringAuthoringClient_UpdateQnas
 string question = "{NewQuestion}";
 string answer = "{NewAnswer}";
 RequestContent updateQnasRequestContent = RequestContent.Create(
@@ -73,10 +73,10 @@ RequestContent updateQnasRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateQnasOperation = Client.UpdateQnas(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
+Operation<Pageable<BinaryData>> updateQnasOperation = Client.UpdateQnas(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
 
 // QnAs can be retrieved as follows
-Pageable<BinaryData> qnas = Client.GetQnas(testProjectName);
+Pageable<BinaryData> qnas = updateQnasOperation.Value;
 
 Console.WriteLine("Qnas: ");
 foreach (var qna in qnas)
@@ -87,7 +87,7 @@ foreach (var qna in qnas)
 
 ### Updating synonyms
 
-```C# Snippet:QuestionAnsweringProjectsClient_UpdateSynonyms
+```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSynonyms
 RequestContent updateSynonymsRequestContent = RequestContent.Create(
     new
     {
@@ -125,7 +125,7 @@ foreach (BinaryData synonym in synonyms)
 
 If active learning is being used, the `AddFeedback` can be used to specify a user's feedback to a specific question as follows:
 
-```C# Snippet:QuestionAnsweringProjectsClient_AddFeedback
+```C# Snippet:QuestionAnsweringAuthoringClient_AddFeedback
 RequestContent addFeedbackRequestContent = RequestContent.Create(
     new
     {
@@ -147,7 +147,7 @@ Response addFeedbackResponse = Client.AddFeedback(testProjectName, addFeedbackRe
 
 ### Adding a knowledge base source
 
-```C# Snippet:QuestionAnsweringProjectsClient_UpdateSourcesAsync_UpdateSample
+```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSourcesAsync_UpdateSample
 // Set request content parameters for updating our new project's sources
 string sourceUri = "{KnowledgeSourceUri}";
 string testProjectName = "{ProjectName}";
@@ -167,16 +167,11 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Started, testProjectName, updateSourcesRequestContent);
-await updateSourcesOperation.WaitForCompletionAsync();
+Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
 
-// Wait for operation completion
-Response<BinaryData> updateSourcesOperationResult = await updateSourcesOperation.WaitForCompletionAsync();
+// Updated Knowledge Sources can be retrieved as follows
+AsyncPageable<BinaryData> sources = updateSourcesOperation.Value;
 
-Console.WriteLine($"Update Sources operation result: \n{updateSourcesOperationResult}");
-
-// Knowledge Sources can be retrieved as follows
-AsyncPageable<BinaryData> sources = client.GetSourcesAsync(testProjectName);
 Console.WriteLine("Sources: ");
 await foreach (BinaryData source in sources)
 {
@@ -186,7 +181,7 @@ await foreach (BinaryData source in sources)
 
 ### Adding a qna pair
 
-```C# Snippet:QuestionAnsweringProjectsClient_UpdateQnasAsync
+```C# Snippet:QuestionAnsweringAuthoringClient_UpdateQnasAsync
 string question = "{NewQuestion}";
 string answer = "{NewAnswer}";
 RequestContent updateQnasRequestContent = RequestContent.Create(
@@ -204,11 +199,10 @@ RequestContent updateQnasRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
-await updateQnasOperation.WaitForCompletionAsync();
+Operation<AsyncPageable<BinaryData>> updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
 
 // QnAs can be retrieved as follows
-AsyncPageable<BinaryData> qnas = Client.GetQnasAsync(testProjectName);
+AsyncPageable<BinaryData> qnas = updateQnasOperation.Value;
 
 Console.WriteLine("Qnas: ");
 await foreach (var qna in qnas)
@@ -219,7 +213,7 @@ await foreach (var qna in qnas)
 
 ### Updating synonyms
 
-```C# Snippet:QuestionAnsweringProjectsClient_UpdateSynonymsAsync
+```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSynonymsAsync
 RequestContent updateSynonymsRequestContent = RequestContent.Create(
     new
     {
@@ -255,7 +249,7 @@ await foreach (BinaryData synonym in synonyms)
 
 ### Add active learning feedback
 
-```C# Snippet:QuestionAnsweringProjectsClient_AddFeedbackAsync
+```C# Snippet:QuestionAnsweringAuthoringClient_AddFeedbackAsync
 RequestContent addFeedbackRequestContent = RequestContent.Create(
     new
     {

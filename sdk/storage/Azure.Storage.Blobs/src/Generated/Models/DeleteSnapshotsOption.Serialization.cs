@@ -20,8 +20,8 @@ namespace Azure.Storage.Blobs.Models
 
         public static DeleteSnapshotsOption ToDeleteSnapshotsOption(this string value)
         {
-            if (string.Equals(value, "include", StringComparison.InvariantCultureIgnoreCase)) return DeleteSnapshotsOption.IncludeSnapshots;
-            if (string.Equals(value, "only", StringComparison.InvariantCultureIgnoreCase)) return DeleteSnapshotsOption.OnlySnapshots;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "include")) return DeleteSnapshotsOption.IncludeSnapshots;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "only")) return DeleteSnapshotsOption.OnlySnapshots;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DeleteSnapshotsOption value.");
         }
     }

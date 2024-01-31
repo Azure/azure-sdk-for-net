@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,54 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Describes the HTTP configuration. </summary>
     public partial class ConnectionMonitorHttpConfiguration
     {
-        /// <summary> Initializes a new instance of ConnectionMonitorHttpConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorHttpConfiguration"/>. </summary>
         public ConnectionMonitorHttpConfiguration()
         {
-            RequestHeaders = new ChangeTrackingList<HttpHeader>();
+            RequestHeaders = new ChangeTrackingList<NetworkWatcherHttpHeader>();
             ValidStatusCodeRanges = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ConnectionMonitorHttpConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectionMonitorHttpConfiguration"/>. </summary>
         /// <param name="port"> The port to connect to. </param>
         /// <param name="method"> The HTTP method to use. </param>
-        /// <param name="path"> The path component of the URI. For instance, &quot;/dir1/dir2&quot;. </param>
+        /// <param name="path"> The path component of the URI. For instance, "/dir1/dir2". </param>
         /// <param name="requestHeaders"> The HTTP headers to transmit with the request. </param>
-        /// <param name="validStatusCodeRanges"> HTTP status codes to consider successful. For instance, &quot;2xx,301-304,418&quot;. </param>
+        /// <param name="validStatusCodeRanges"> HTTP status codes to consider successful. For instance, "2xx,301-304,418". </param>
         /// <param name="preferHttps"> Value indicating whether HTTPS is preferred over HTTP in cases where the choice is not explicit. </param>
-        internal ConnectionMonitorHttpConfiguration(int? port, HttpConfigurationMethod? method, string path, IList<HttpHeader> requestHeaders, IList<string> validStatusCodeRanges, bool? preferHttps)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorHttpConfiguration(int? port, NetworkHttpConfigurationMethod? method, string path, IList<NetworkWatcherHttpHeader> requestHeaders, IList<string> validStatusCodeRanges, bool? preferHttps, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Port = port;
             Method = method;
@@ -35,17 +69,18 @@ namespace Azure.ResourceManager.Network.Models
             RequestHeaders = requestHeaders;
             ValidStatusCodeRanges = validStatusCodeRanges;
             PreferHttps = preferHttps;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The port to connect to. </summary>
         public int? Port { get; set; }
         /// <summary> The HTTP method to use. </summary>
-        public HttpConfigurationMethod? Method { get; set; }
-        /// <summary> The path component of the URI. For instance, &quot;/dir1/dir2&quot;. </summary>
+        public NetworkHttpConfigurationMethod? Method { get; set; }
+        /// <summary> The path component of the URI. For instance, "/dir1/dir2". </summary>
         public string Path { get; set; }
         /// <summary> The HTTP headers to transmit with the request. </summary>
-        public IList<HttpHeader> RequestHeaders { get; }
-        /// <summary> HTTP status codes to consider successful. For instance, &quot;2xx,301-304,418&quot;. </summary>
+        public IList<NetworkWatcherHttpHeader> RequestHeaders { get; }
+        /// <summary> HTTP status codes to consider successful. For instance, "2xx,301-304,418". </summary>
         public IList<string> ValidStatusCodeRanges { get; }
         /// <summary> Value indicating whether HTTPS is preferred over HTTP in cases where the choice is not explicit. </summary>
         public bool? PreferHttps { get; set; }

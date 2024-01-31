@@ -15,7 +15,7 @@ The Digital Twins performance tests will be plugged into performance automation 
 
 ### QueryDigitalTwins
 
-This scenario tests API calls to the DigitalTwins service to query for Twins and Relationships. 
+This scenario tests API calls to the DigitalTwins service to query for Twins and Relationships.
 The `GlobalTestSetupAsync` method override will create a single model that is used for all instances of the parallel test runs. This method is only invoked once and will not be called during the parallel test run across all instances of the test.
 The `SetupAsync` method override will create multiple Twins that is configurable using the input options. Each test will create Twins using a unique test Id and will only query that subset during each run.
 
@@ -31,11 +31,11 @@ Run the executable output of a project
 dotnet run -c Release -f <supported-framework> --no-build -p <path/to/project/file> -- [parameters needed for the test]
 ```
 
-\<supported-framework\> can be one of netcoreapp3.1, netcoreapp3.1, net461 or net5.0. Note the -- before any custom parameters to pass. This prevents dotnet from trying to handle any ambiguous command line switches.
+\<supported-framework\> can be one of net7.0, net6.0, or net462. Note the -- before any custom parameters to pass. This prevents dotnet from trying to handle any ambiguous command line switches.
 
 You should use the scenario test class names as the first parameter that is needed for running the test.
 
-## Contributing  
+## Contributing
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
 
 When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.

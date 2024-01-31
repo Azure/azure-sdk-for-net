@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     /// Description of a namespace authorization rule.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class SBAuthorizationRule : Resource
+    public partial class SBAuthorizationRule : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the SBAuthorizationRule class.
@@ -35,13 +35,18 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Initializes a new instance of the SBAuthorizationRule class.
         /// </summary>
         /// <param name="rights">The rights associated with the rule.</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
+        /// <param name="id">Fully qualified resource ID for the resource. Ex -
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
+        /// <param name="name">The name of the resource</param>
+        /// <param name="type">The type of the resource. E.g.
+        /// "Microsoft.EventHub/Namespaces" or
+        /// "Microsoft.EventHub/Namespaces/EventHubs"</param>
+        /// <param name="location">The geo-location where the resource
+        /// lives</param>
         /// <param name="systemData">The system meta data relating to this
         /// resource.</param>
-        public SBAuthorizationRule(IList<AccessRights?> rights, string id = default(string), string name = default(string), string type = default(string), SystemData systemData = default(SystemData))
-            : base(id, name, type)
+        public SBAuthorizationRule(IList<string> rights, string id = default(string), string name = default(string), string type = default(string), string location = default(string), SystemData systemData = default(SystemData))
+            : base(id, name, type, location)
         {
             Rights = rights;
             SystemData = systemData;
@@ -57,7 +62,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Gets or sets the rights associated with the rule.
         /// </summary>
         [JsonProperty(PropertyName = "properties.rights")]
-        public IList<AccessRights?> Rights { get; set; }
+        public IList<string> Rights { get; set; }
 
         /// <summary>
         /// Gets the system meta data relating to this resource.

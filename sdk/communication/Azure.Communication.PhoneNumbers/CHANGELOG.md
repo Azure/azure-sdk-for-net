@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,29 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.1 (2023-08-08)
+
+### Features Added
+- Added custom page sizes to PurchasedPhoneNumbers, Countries, Localities, AreaCodes and Offerings. 
+
+## 1.1.0 (2023-03-28)
+
+### Features Added
+- Added support for SIP routing API version `2023-03-01`, releasing SIP routing functionality from public preview to GA.
+- Added environment variable `AZURE_TEST_DOMAIN` for SIP routing tests to support domain verification.
+
+## 1.1.0-beta.3 (2023-01-10)
+- Adds support for Azure Communication Services Phone Numbers Browse API Methods.
+
+### Features Added
+- Added support for API version `2022-12-01`, giving users the ability to: 
+  - Get all supported countries
+  - Get all supported localities given a country code.
+  - Get all Toll-Free area codes from a given country code.
+  - Get all Geographic area codes from a given country code / locality.
+  - Get all offerings from a given country code.
+- Added new SIP routing client for handling Direct routing numbers.
 
 ## 1.1.0-beta.2 (2022-03-30)
 ### Features Added

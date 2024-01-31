@@ -23,9 +23,12 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         private const string DisabledValue = "Disabled";
+        private const string EnabledValue = "Enabled";
 
         /// <summary> Disabled. </summary>
         public static ManagedRuleEnabledState Disabled { get; } = new ManagedRuleEnabledState(DisabledValue);
+        /// <summary> Enabled. </summary>
+        public static ManagedRuleEnabledState Enabled { get; } = new ManagedRuleEnabledState(EnabledValue);
         /// <summary> Determines if two <see cref="ManagedRuleEnabledState"/> values are the same. </summary>
         public static bool operator ==(ManagedRuleEnabledState left, ManagedRuleEnabledState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedRuleEnabledState"/> values are not the same. </summary>

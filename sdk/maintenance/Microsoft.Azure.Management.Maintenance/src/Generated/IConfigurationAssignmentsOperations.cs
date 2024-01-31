@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Maintenance
         /// Get configuration assignment
         /// </summary>
         /// <remarks>
-        /// Get configuration for resource.
+        /// Get configuration assignment for resource..
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Resource group name
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.Maintenance
         /// Get configuration assignment
         /// </summary>
         /// <remarks>
-        /// Get configuration for resource.
+        /// Get configuration assignment for resource..
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Resource group name

@@ -25,13 +25,13 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
                 var sqlRuleName = "sqlRule";
                 var correlationRuleName = "correlationRule";
 
-                var rules = await ruleManager.GetRulesAsync();
+                var rules = await GetAllRulesAsync(ruleManager);
                 Assert.AreEqual(1, rules.Count());
                 var firstRule = rules[0];
                 Assert.AreEqual(RuleProperties.DefaultRuleName, firstRule.Name);
                 Assert.Null(firstRule.Action);
 
-                await ruleManager.AddRuleAsync(sqlRuleName, new SqlRuleFilter("price > 10"));
+                await ruleManager.CreateRuleAsync(sqlRuleName, new SqlRuleFilter("price > 10"));
 
                 var ruleOptions = new CreateRuleOptions(correlationRuleName)
                 {
@@ -51,9 +51,9 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
                     },
                     Action = new SqlRuleAction("Set CorrelationId = 'newValue'")
                 };
-                await ruleManager.AddRuleAsync(ruleOptions);
+                await ruleManager.CreateRuleAsync(ruleOptions);
 
-                rules = await ruleManager.GetRulesAsync();
+                rules = await GetAllRulesAsync(ruleManager);
                 Assert.AreEqual(3, rules.Count);
 
                 var sqlRule = rules.FirstOrDefault(rule => rule.Name.Equals(sqlRuleName));
@@ -81,12 +81,23 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
                 Assert.NotNull(correlationRuleFilter.ApplicationProperties);
                 Assert.AreEqual("value1", correlationRuleFilter.ApplicationProperties["key1"]);
 
-                await ruleManager.RemoveRuleAsync(RuleProperties.DefaultRuleName);
-                await ruleManager.RemoveRuleAsync(sqlRuleName);
-                await ruleManager.RemoveRuleAsync(correlationRuleName);
-                rules = (await ruleManager.GetRulesAsync()).ToList();
+                await ruleManager.DeleteRuleAsync(RuleProperties.DefaultRuleName);
+                await ruleManager.DeleteRuleAsync(sqlRuleName);
+                await ruleManager.DeleteRuleAsync(correlationRuleName);
+                rules = await GetAllRulesAsync(ruleManager);
                 Assert.AreEqual(0, rules.Count);
             }
+        }
+
+        private async Task<List<RuleProperties>> GetAllRulesAsync(ServiceBusRuleManager ruleManager)
+        {
+            var rules = new List<RuleProperties>();
+            await foreach (var rule in ruleManager.GetRulesAsync())
+            {
+                rules.Add(rule);
+            }
+
+            return rules;
         }
 
         [Test]
@@ -98,13 +109,13 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
 
                 ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
 
-                await ruleManager.AddRuleAsync(new CreateRuleOptions
+                await ruleManager.CreateRuleAsync(new CreateRuleOptions
                 {
                     Filter = new CorrelationRuleFilter { Subject = "yellow" },
                     Name = "CorrelationRuleFilter"
                 });
 
-                Assert.That(async () => await ruleManager.AddRuleAsync(new CreateRuleOptions
+                Assert.That(async () => await ruleManager.CreateRuleAsync(new CreateRuleOptions
                 {
                     Filter = new CorrelationRuleFilter { Subject = "red" },
                     Name = "CorrelationRuleFilter"
@@ -124,7 +135,7 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
 
                 ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
 
-                IEnumerable<RuleProperties> rulesProperties = await ruleManager.GetRulesAsync();
+                IEnumerable<RuleProperties> rulesProperties = await GetAllRulesAsync(ruleManager);
                 Assert.AreEqual(1, rulesProperties.Count());
                 Assert.AreEqual(RuleProperties.DefaultRuleName, rulesProperties.First().Name);
 
@@ -150,21 +161,23 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
                 await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
 
                 ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
-                IEnumerable<RuleProperties> ruleProperties;
 
-                ruleProperties = await ruleManager.GetRulesAsync();
+                List<RuleProperties> ruleProperties = await GetAllRulesAsync(ruleManager);
                 Assert.AreEqual(1, ruleProperties.Count());
                 Assert.AreEqual(RuleProperties.DefaultRuleName, ruleProperties.First().Name);
 
-                await ruleManager.RemoveRuleAsync(RuleProperties.DefaultRuleName);
+                await ruleManager.DeleteRuleAsync(RuleProperties.DefaultRuleName);
 
-                await ruleManager.AddRuleAsync(new CreateRuleOptions
+                ruleProperties = await GetAllRulesAsync(ruleManager);
+                Assert.AreEqual(0, ruleProperties.Count());
+
+                await ruleManager.CreateRuleAsync(new CreateRuleOptions
                 {
                     Filter = new TrueRuleFilter(),
                     Name = "BooleanFilter"
                 });
 
-                ruleProperties = await ruleManager.GetRulesAsync();
+                ruleProperties = await GetAllRulesAsync(ruleManager);
                 Assert.True(ruleProperties.Count() == 1);
                 Assert.AreEqual("BooleanFilter", ruleProperties.First().Name);
 
@@ -191,21 +204,24 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
 
                 ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
 
-                IEnumerable<RuleProperties> rulesProperties = await ruleManager.GetRulesAsync();
-                Assert.AreEqual(1, rulesProperties.Count());
-                Assert.AreEqual(RuleProperties.DefaultRuleName, rulesProperties.First().Name);
+                List<RuleProperties> ruleProperties = await GetAllRulesAsync(ruleManager);
+                Assert.AreEqual(1, ruleProperties.Count());
+                Assert.AreEqual(RuleProperties.DefaultRuleName, ruleProperties.First().Name);
 
-                await ruleManager.RemoveRuleAsync(RuleProperties.DefaultRuleName);
+                await ruleManager.DeleteRuleAsync(RuleProperties.DefaultRuleName);
 
-                await ruleManager.AddRuleAsync(new CreateRuleOptions
+                ruleProperties = await GetAllRulesAsync(ruleManager);
+                Assert.AreEqual(0, ruleProperties.Count());
+
+                await ruleManager.CreateRuleAsync(new CreateRuleOptions
                 {
                     Filter = new FalseRuleFilter(),
                     Name = "BooleanFilter"
                 });
 
-                rulesProperties = await ruleManager.GetRulesAsync();
-                Assert.AreEqual(1, rulesProperties.Count());
-                Assert.AreEqual("BooleanFilter", rulesProperties.First().Name);
+                ruleProperties = await GetAllRulesAsync(ruleManager);
+                Assert.AreEqual(1, ruleProperties.Count());
+                Assert.AreEqual("BooleanFilter", ruleProperties.First().Name);
 
                 await SendMessages(client, scope.TopicName);
 
@@ -224,20 +240,20 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
 
                 ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
 
-                IEnumerable<RuleProperties> rulesProperties = await ruleManager.GetRulesAsync();
+                IEnumerable<RuleProperties> rulesProperties = await GetAllRulesAsync(ruleManager);
                 Assert.AreEqual(1, rulesProperties.Count());
 
                 Assert.AreEqual(RuleProperties.DefaultRuleName, rulesProperties.First().Name);
 
-                await ruleManager.RemoveRuleAsync(RuleProperties.DefaultRuleName);
+                await ruleManager.DeleteRuleAsync(RuleProperties.DefaultRuleName);
 
-                await ruleManager.AddRuleAsync(new CreateRuleOptions
+                await ruleManager.CreateRuleAsync(new CreateRuleOptions
                 {
                     Filter = new CorrelationRuleFilter { Subject = "red" },
                     Name = "CorrelationMsgPropertyRule"
                 });
 
-                rulesProperties = await ruleManager.GetRulesAsync();
+                rulesProperties = await GetAllRulesAsync(ruleManager);
                 Assert.AreEqual(1, rulesProperties.Count());
                 Assert.AreEqual("CorrelationMsgPropertyRule", rulesProperties.First().Name);
 
@@ -261,19 +277,19 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
 
                 ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
 
-                IEnumerable<RuleProperties> rulesProperties = await ruleManager.GetRulesAsync();
+                IEnumerable<RuleProperties> rulesProperties = await GetAllRulesAsync(ruleManager);
                 Assert.AreEqual(1, rulesProperties.Count());
                 Assert.AreEqual(RuleProperties.DefaultRuleName, rulesProperties.First().Name);
 
-                await ruleManager.RemoveRuleAsync(RuleProperties.DefaultRuleName);
+                await ruleManager.DeleteRuleAsync(RuleProperties.DefaultRuleName);
 
-                await ruleManager.AddRuleAsync(new CreateRuleOptions
+                await ruleManager.CreateRuleAsync(new CreateRuleOptions
                 {
                     Filter = new CorrelationRuleFilter { ApplicationProperties = { { "color", "red" } } },
                     Name = "CorrelationUserPropertyRule"
                 });
 
-                rulesProperties = await ruleManager.GetRulesAsync();
+                rulesProperties = await GetAllRulesAsync(ruleManager);
                 Assert.AreEqual(1, rulesProperties.Count());
                 Assert.AreEqual("CorrelationUserPropertyRule", rulesProperties.First().Name);
 
@@ -297,20 +313,20 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
 
                 ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
 
-                IEnumerable<RuleProperties> rulesProperties = await ruleManager.GetRulesAsync();
+                IEnumerable<RuleProperties> rulesProperties = await GetAllRulesAsync(ruleManager);
                 Assert.AreEqual(1, rulesProperties.Count());
                 Assert.AreEqual(RuleProperties.DefaultRuleName, rulesProperties.First().Name);
 
-                await ruleManager.RemoveRuleAsync(RuleProperties.DefaultRuleName);
+                await ruleManager.DeleteRuleAsync(RuleProperties.DefaultRuleName);
 
-                await ruleManager.AddRuleAsync(new CreateRuleOptions
+                await ruleManager.CreateRuleAsync(new CreateRuleOptions
                 {
                     Filter = new CorrelationRuleFilter { ApplicationProperties = { { "Color", "blue" } } },
                     Action = new SqlRuleAction("Set Priority = 'high'"),
                     Name = "CorrelationRuleWithAction"
                 });
 
-                rulesProperties = await ruleManager.GetRulesAsync();
+                rulesProperties = await GetAllRulesAsync(ruleManager);
                 Assert.AreEqual(1, rulesProperties.Count());
                 Assert.AreEqual("CorrelationRuleWithAction", rulesProperties.First().Name);
 
@@ -338,20 +354,20 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
 
                 ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
 
-                IEnumerable<RuleProperties> rulesProperties = await ruleManager.GetRulesAsync();
+                IEnumerable<RuleProperties> rulesProperties = await GetAllRulesAsync(ruleManager);
                 Assert.AreEqual(1, rulesProperties.Count());
                 Assert.AreEqual(RuleProperties.DefaultRuleName, rulesProperties.First().Name);
 
-                await ruleManager.RemoveRuleAsync(RuleProperties.DefaultRuleName);
+                await ruleManager.DeleteRuleAsync(RuleProperties.DefaultRuleName);
 
-                await ruleManager.AddRuleAsync(new CreateRuleOptions
+                await ruleManager.CreateRuleAsync(new CreateRuleOptions
                 {
                     Filter = new SqlRuleFilter("sys.Label = 'yellow'"),
                     Name = "SqlMsgPropertyRule"
                 });
                 ;
 
-                rulesProperties = await ruleManager.GetRulesAsync();
+                rulesProperties = await GetAllRulesAsync(ruleManager);
                 Assert.AreEqual(1, rulesProperties.Count());
                 Assert.AreEqual("SqlMsgPropertyRule", rulesProperties.First().Name);
 
@@ -375,19 +391,19 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
 
                 ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
 
-                IEnumerable<RuleProperties> rulesProperties = await ruleManager.GetRulesAsync();
+                IEnumerable<RuleProperties> rulesProperties = await GetAllRulesAsync(ruleManager);
                 Assert.AreEqual(1, rulesProperties.Count());
                 Assert.AreEqual(RuleProperties.DefaultRuleName, rulesProperties.First().Name);
 
-                await ruleManager.RemoveRuleAsync(RuleProperties.DefaultRuleName);
+                await ruleManager.DeleteRuleAsync(RuleProperties.DefaultRuleName);
 
-                await ruleManager.AddRuleAsync(new CreateRuleOptions
+                await ruleManager.CreateRuleAsync(new CreateRuleOptions
                 {
                     Filter = new SqlRuleFilter("Color = 'yellow'"),
                     Name = "SqlUserPropertyRule"
                 });
 
-                rulesProperties = await ruleManager.GetRulesAsync();
+                rulesProperties = await GetAllRulesAsync(ruleManager);
                 Assert.AreEqual(1, rulesProperties.Count());
                 Assert.AreEqual("SqlUserPropertyRule", rulesProperties.First().Name);
 
@@ -411,20 +427,20 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
 
                 ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
 
-                IEnumerable<RuleProperties> rulesProperties = await ruleManager.GetRulesAsync();
+                IEnumerable<RuleProperties> rulesProperties = await GetAllRulesAsync(ruleManager);
                 Assert.AreEqual(1, rulesProperties.Count());
                 Assert.AreEqual(RuleProperties.DefaultRuleName, rulesProperties.First().Name);
 
-                await ruleManager.RemoveRuleAsync(RuleProperties.DefaultRuleName);
+                await ruleManager.DeleteRuleAsync(RuleProperties.DefaultRuleName);
 
-                await ruleManager.AddRuleAsync(new CreateRuleOptions
+                await ruleManager.CreateRuleAsync(new CreateRuleOptions
                 {
                     Filter = new SqlRuleFilter("Color = 'blue'"),
                     Action = new SqlRuleAction("SET Priority = 'high'"),
                     Name = "SqlRuleWithAction"
                 });
 
-                rulesProperties = await ruleManager.GetRulesAsync();
+                rulesProperties = await GetAllRulesAsync(ruleManager);
                 Assert.AreEqual(1, rulesProperties.Count());
                 Assert.AreEqual("SqlRuleWithAction", rulesProperties.First().Name);
 
@@ -452,19 +468,19 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
 
                 ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
 
-                IEnumerable<RuleProperties> rulesProperties = await ruleManager.GetRulesAsync();
+                IEnumerable<RuleProperties> rulesProperties = await GetAllRulesAsync(ruleManager);
                 Assert.AreEqual(1, rulesProperties.Count());
                 Assert.AreEqual(RuleProperties.DefaultRuleName, rulesProperties.First().Name);
 
-                await ruleManager.RemoveRuleAsync(RuleProperties.DefaultRuleName);
+                await ruleManager.DeleteRuleAsync(RuleProperties.DefaultRuleName);
 
-                await ruleManager.AddRuleAsync(new CreateRuleOptions
+                await ruleManager.CreateRuleAsync(new CreateRuleOptions
                 {
                     Filter = new SqlRuleFilter("Color = 'blue' and Quantity = 10"),
                     Name = "SqlRuleUsingOperator"
                 });
 
-                rulesProperties = await ruleManager.GetRulesAsync();
+                rulesProperties = await GetAllRulesAsync(ruleManager);
                 Assert.AreEqual(1, rulesProperties.Count());
                 Assert.AreEqual("SqlRuleUsingOperator", rulesProperties.First().Name);
 
@@ -488,25 +504,76 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
 
                 ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
 
-                IEnumerable<RuleProperties> rulesProperties = await ruleManager.GetRulesAsync();
+                IEnumerable<RuleProperties> rulesProperties = await GetAllRulesAsync(ruleManager);
                 Assert.AreEqual(1, rulesProperties.Count());
                 Assert.AreEqual(RuleProperties.DefaultRuleName, rulesProperties.First().Name);
 
-                await ruleManager.RemoveRuleAsync(RuleProperties.DefaultRuleName);
+                await ruleManager.DeleteRuleAsync(RuleProperties.DefaultRuleName);
 
-                await ruleManager.AddRuleAsync(new CreateRuleOptions
+                await ruleManager.CreateRuleAsync(new CreateRuleOptions
                 {
                     Filter = new SqlRuleFilter("Color = 'blue' or Quantity = 10"),
                     Name = "SqlRuleUsingOperator"
                 });
 
-                rulesProperties = await ruleManager.GetRulesAsync();
+                rulesProperties = await GetAllRulesAsync(ruleManager);
                 Assert.AreEqual(1, rulesProperties.Count());
                 Assert.AreEqual("SqlRuleUsingOperator", rulesProperties.First().Name);
 
                 await SendMessages(client, scope.TopicName);
 
                 var expectedOrders = Orders.Where(c => c.Color == "blue" || c.Quantity == 10).ToList();
+                await ReceiveAndAssertMessages(
+                    client,
+                    scope.TopicName,
+                    scope.SubscriptionNames.First(),
+                    expectedOrders);
+            }
+        }
+
+        [Test]
+        [TestCase(100)]
+        [TestCase(150)]
+        [TestCase(200)]
+        [TestCase(201)]
+        public async Task ManyRulesOnSubscription(int count)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithTopic(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+
+                ServiceBusRuleManager ruleManager = client.CreateRuleManager(scope.TopicName, scope.SubscriptionNames.First());
+
+                List<RuleProperties> rulesProperties = await GetAllRulesAsync(ruleManager);
+                Assert.AreEqual(1, rulesProperties.Count());
+                Assert.AreEqual(RuleProperties.DefaultRuleName, rulesProperties.First().Name);
+
+                await ruleManager.DeleteRuleAsync(RuleProperties.DefaultRuleName);
+                List<string> ruleNames = new();
+                for (int i = 0; i < count; i++)
+                {
+                    var ruleName = $"CorrelationUserPropertyRule-{i}";
+                    ruleNames.Add(ruleName);
+                    await ruleManager.CreateRuleAsync(new CreateRuleOptions
+                    {
+                        Filter = new CorrelationRuleFilter { ApplicationProperties = { { "color", "red" } } },
+                        Name = ruleName
+                    });
+                }
+
+                ruleNames.Sort();
+                rulesProperties = await GetAllRulesAsync(ruleManager);
+                Assert.AreEqual(count, rulesProperties.Count);
+
+                // the rules are returned in name order
+                for (int i = 0; i < count; i++)
+                {
+                    Assert.AreEqual(ruleNames[i], rulesProperties[i].Name);
+                }
+
+                await SendMessages(client, scope.TopicName);
+
+                var expectedOrders = Orders.Where(c => c.Color == "red").ToList();
                 await ReceiveAndAssertMessages(
                     client,
                     scope.TopicName,
@@ -564,13 +631,11 @@ namespace Azure.Messaging.ServiceBus.Tests.RuleManager
             var remainingMessages = expectedOrders.Count();
             while (remainingMessages > 0)
             {
-                foreach (var item in await receiver.ReceiveMessagesAsync(Orders.Length).ConfigureAwait(false))
-                {
-                    receivedMessages.Add(item);
-                    messageEnum.MoveNext();
-                    Assert.AreEqual(messageEnum.Current.Color, item.Subject);
-                    remainingMessages--;
-                }
+                var item = await receiver.ReceiveMessageAsync();
+                receivedMessages.Add(item);
+                messageEnum.MoveNext();
+                Assert.AreEqual(messageEnum.Current.Color, item.Subject);
+                remainingMessages--;
             }
             Assert.AreEqual(0, remainingMessages);
 

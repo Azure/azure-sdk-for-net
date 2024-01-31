@@ -11,16 +11,16 @@ namespace Azure.Analytics.Synapse.Monitoring
     }
     public partial class MonitoringClientOptions : Azure.Core.ClientOptions
     {
-        public MonitoringClientOptions(Azure.Analytics.Synapse.Monitoring.MonitoringClientOptions.ServiceVersion version = Azure.Analytics.Synapse.Monitoring.MonitoringClientOptions.ServiceVersion.V2019_11_01_preview) { }
+        public MonitoringClientOptions(Azure.Analytics.Synapse.Monitoring.MonitoringClientOptions.ServiceVersion version = Azure.Analytics.Synapse.Monitoring.MonitoringClientOptions.ServiceVersion.V2019_11_01_Preview) { }
         public enum ServiceVersion
         {
-            V2019_11_01_preview = 1,
+            V2019_11_01_Preview = 1,
         }
     }
 }
 namespace Azure.Analytics.Synapse.Monitoring.Models
 {
-    public static partial class MonitoringModelFactory
+    public static partial class AnalyticsSynapseMonitoringModelFactory
     {
         public static Azure.Analytics.Synapse.Monitoring.Models.SparkJob SparkJob(string state = null, string name = null, string submitter = null, string compute = null, string sparkApplicationId = null, string livyId = null, System.Collections.Generic.IEnumerable<string> timing = null, string sparkJobDefinition = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.Monitoring.Models.SparkJob> pipeline = null, string jobType = null, System.DateTimeOffset? submitTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string queuedDuration = null, string runningDuration = null, string totalDuration = null) { throw null; }
         public static Azure.Analytics.Synapse.Monitoring.Models.SparkJobListViewResponse SparkJobListViewResponse(int? nJobs = default(int?), System.Collections.Generic.IEnumerable<Azure.Analytics.Synapse.Monitoring.Models.SparkJob> sparkJobs = null) { throw null; }

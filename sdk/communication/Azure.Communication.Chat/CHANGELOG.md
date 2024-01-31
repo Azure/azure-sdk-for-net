@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,25 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2023-12-04)
+
+### Features Added
+
+- Added `ChatAttachment` object that contains properties for inline images incoming from Teams Chat Threads.
+
+## 1.2.0-beta.1 (2023-08-15)
+
+## 1.1.2 (2023-06-19)
+
+### Features Added
+- Optimized the logic for deserializing types derived from the `CommunicationIdentifier`.
+- Added factory methods for `public` models in `ChatModelFactory`.
+
+## 1.1.1 (2022-09-16)
+
+### Features Added
+Updated `Azure.Communication.Common` version.
 
 ## 1.1.0 (2021-09-15)
 Updated `Azure.Communication.Chat` version.

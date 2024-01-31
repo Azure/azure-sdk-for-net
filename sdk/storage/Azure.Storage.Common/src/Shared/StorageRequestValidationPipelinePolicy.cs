@@ -14,15 +14,10 @@ namespace Azure.Storage
     /// </summary>
     internal class StorageRequestValidationPipelinePolicy : HttpPipelineSynchronousPolicy
     {
-        private readonly ClientDiagnostics _clientDiagnostics;
-
         /// <summary>
         /// Create a new StorageRequestValidationPipelinePolicy
         /// </summary>
-        public StorageRequestValidationPipelinePolicy(ClientOptions options)
-        {
-            _clientDiagnostics = new StorageClientDiagnostics(options);
-        }
+        public StorageRequestValidationPipelinePolicy() { }
 
         /// <summary>
         /// Verify x-ms-client-request-id and x-ms-client-return-request-id headers matches as
@@ -34,9 +29,9 @@ namespace Azure.Storage
             if (message.HasResponse &&
                 message.Request.Headers.TryGetValue(Constants.HeaderNames.ClientRequestId, out var original) &&
                 message.Response.Headers.TryGetValues(Constants.HeaderNames.ClientRequestId, out var echo) &&
-                !String.Equals(original, echo.First(), StringComparison.OrdinalIgnoreCase))
+                !string.Equals(original, echo.First(), StringComparison.OrdinalIgnoreCase))
             {
-                throw Errors.ClientRequestIdMismatch(_clientDiagnostics, message.Response, echo.First(), original);
+                throw Errors.ClientRequestIdMismatch(message.Response, echo.First(), original);
             }
         }
     }

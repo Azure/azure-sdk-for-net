@@ -31,6 +31,7 @@
   <ItemGroup>
 		<PackageReference Include="Azure.Storage.Blobs" />
 		<PackageReference Include="Microsoft.Azure.Management.Batch" />
+		<PackageReference Include="Microsoft.Identity.Client" VersionOverride="4.59.0" />
 		<PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" VersionOverride="[3.14.2, 4.0.0)" />
   </ItemGroup>
 

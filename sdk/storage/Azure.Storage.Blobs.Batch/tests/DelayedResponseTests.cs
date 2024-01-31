@@ -19,10 +19,10 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [Test]
-        public async Task CompletedDelayedResponseToStringCallsBase()
+        public void CompletedDelayedResponseToStringCallsBase()
         {
             DelayedResponse delayedResponse = new DelayedResponse(new HttpMessage(new MockRequest(), new ResponseClassifier()));
-            await delayedResponse.SetLiveResponse(new MockResponse(200, "Yay"), false);
+            delayedResponse.SetLiveResponse(new MockResponse(200, "Yay"), false);
             Assert.AreEqual("Status: 200, ReasonPhrase: Yay", delayedResponse.ToString());
         }
     }

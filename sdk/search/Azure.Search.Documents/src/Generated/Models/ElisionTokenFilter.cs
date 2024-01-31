@@ -11,25 +11,22 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Removes elisions. For example, &quot;l&apos;avion&quot; (the plane) will be converted to &quot;avion&quot; (plane). This token filter is implemented using Apache Lucene. </summary>
+    /// <summary> Removes elisions. For example, "l'avion" (the plane) will be converted to "avion" (plane). This token filter is implemented using Apache Lucene. </summary>
     public partial class ElisionTokenFilter : TokenFilter
     {
-        /// <summary> Initializes a new instance of ElisionTokenFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElisionTokenFilter"/>. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ElisionTokenFilter(string name) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Articles = new ChangeTrackingList<string>();
             ODataType = "#Microsoft.Azure.Search.ElisionTokenFilter";
         }
 
-        /// <summary> Initializes a new instance of ElisionTokenFilter. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>
+        /// <summary> Initializes a new instance of <see cref="ElisionTokenFilter"/>. </summary>
+        /// <param name="oDataType"> A URI fragment specifying the type of token filter. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="articles"> The set of articles to remove. </param>
         internal ElisionTokenFilter(string oDataType, string name, IList<string> articles) : base(oDataType, name)

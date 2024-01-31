@@ -52,11 +52,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             var resolvedAttribute = GetParameterResolvedAttribute(attribute, parameterInfo);
             ValidateSignalRTriggerAttributeBinding(resolvedAttribute);
 
-            var accessKeys = _managerStore.GetOrAddByConnectionStringKey(resolvedAttribute.ConnectionStringSetting).AccessKeys;
+            var hubContextStore = _managerStore.GetOrAddByConnectionStringKey(resolvedAttribute.ConnectionStringSetting);
 
-            var hubContext = await _managerStore.GetOrAddByConnectionStringKey(resolvedAttribute.ConnectionStringSetting).GetAsync(resolvedAttribute.HubName).ConfigureAwait(false);
+            var hubContext = await hubContextStore.GetAsync(resolvedAttribute.HubName).ConfigureAwait(false);
 
-            return new SignalRTriggerBinding(parameterInfo, resolvedAttribute, _dispatcher, accessKeys, hubContext as ServiceHubContext);
+            return new SignalRTriggerBinding(parameterInfo, resolvedAttribute, _dispatcher, hubContextStore.SignatureValidationOptions, hubContext as ServiceHubContext);
         }
 
         internal SignalRTriggerAttribute GetParameterResolvedAttribute(SignalRTriggerAttribute attribute, ParameterInfo parameterInfo)

@@ -7,35 +7,66 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The response to a list recoverable databases request. </summary>
+    /// <summary> A list of recoverable databases. </summary>
     internal partial class RecoverableDatabaseListResult
     {
-        /// <summary> Initializes a new instance of RecoverableDatabaseListResult. </summary>
-        /// <param name="value"> A list of recoverable databases. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal RecoverableDatabaseListResult(IEnumerable<RecoverableDatabaseData> value)
-        {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-            Value = value.ToList();
+        /// <summary> Initializes a new instance of <see cref="RecoverableDatabaseListResult"/>. </summary>
+        internal RecoverableDatabaseListResult()
+        {
+            Value = new ChangeTrackingList<RecoverableDatabaseData>();
         }
 
-        /// <summary> Initializes a new instance of RecoverableDatabaseListResult. </summary>
-        /// <param name="value"> A list of recoverable databases. </param>
-        internal RecoverableDatabaseListResult(IReadOnlyList<RecoverableDatabaseData> value)
+        /// <summary> Initializes a new instance of <see cref="RecoverableDatabaseListResult"/>. </summary>
+        /// <param name="value"> Array of results. </param>
+        /// <param name="nextLink"> Link to retrieve next page of results. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoverableDatabaseListResult(IReadOnlyList<RecoverableDatabaseData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of recoverable databases. </summary>
+        /// <summary> Array of results. </summary>
         public IReadOnlyList<RecoverableDatabaseData> Value { get; }
+        /// <summary> Link to retrieve next page of results. </summary>
+        public string NextLink { get; }
     }
 }

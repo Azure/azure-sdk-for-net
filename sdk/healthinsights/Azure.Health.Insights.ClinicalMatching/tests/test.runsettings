@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- File name extension must be .runsettings -->
+<RunSettings>
+    <RunConfiguration>
+        <EnvironmentVariables>
+            <!-- List of environment variables we want to set-->
+            <!--<AZURE_TEST_MODE>Record</AZURE_TEST_MODE>
+            <AZURE_HEALTH_INSIGHTS_ENDPOINT>https://sanitized.azure-api.net/</AZURE_HEALTH_INSIGHTS_ENDPOINT>
+            <AZURE_HEALTH_INSIGHTS_API_KEY>000000000000000000000000</AZURE_HEALTH_INSIGHTS_API_KEY>-->
+        </EnvironmentVariables>
+    </RunConfiguration>
+</RunSettings>

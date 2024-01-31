@@ -4,10 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-#if NET5_0_OR_GREATER
     public class TestActivitySourceListener: IDisposable
     {
         private readonly ActivityListener _listener;
@@ -15,11 +16,11 @@ namespace Azure.Core.Tests
         public Queue<Activity> Activities { get; } =
             new Queue<Activity>();
 
-        public TestActivitySourceListener(string name) : this(source => source.Name == name)
+        public TestActivitySourceListener(string name, Action<Activity> activityStartedCallback = default) : this(source => source.Name.Equals(name), activityStartedCallback)
         {
         }
 
-        public TestActivitySourceListener(Func<ActivitySource, bool> sourceSelector)
+        public TestActivitySourceListener(Func<ActivitySource, bool> sourceSelector, Action<Activity> activityStartedCallback = default)
         {
             _listener = new ActivityListener
             {
@@ -30,11 +31,27 @@ namespace Azure.Core.Tests
                     {
                         Activities.Enqueue(activity);
                     }
+                    activityStartedCallback?.Invoke(activity);
                 },
-                Sample = (ref ActivityCreationOptions<ActivityContext> options) => ActivitySamplingResult.AllDataAndRecorded
+                Sample = (ref ActivityCreationOptions<ActivityContext> options) =>
+                {
+                    if (options.Tags.Any(t => t.Key == "sampled-out" && bool.TrueString == t.Value.ToString()))
+                    {
+                        return ActivitySamplingResult.None;
+                    }
+
+                    return ActivitySamplingResult.AllDataAndRecorded;
+                }
             };
 
             ActivitySource.AddActivityListener(_listener);
+        }
+
+        public Activity AssertAndRemoveActivity(string name)
+        {
+            var activity = Activities.Dequeue();
+            Assert.AreEqual(name, activity.OperationName);
+            return activity;
         }
 
         public void Dispose()
@@ -42,5 +59,4 @@ namespace Azure.Core.Tests
             _listener?.Dispose();
         }
     }
-#endif
 }

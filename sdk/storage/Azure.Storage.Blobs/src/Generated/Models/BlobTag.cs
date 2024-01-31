@@ -6,26 +6,21 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The BlobTag. </summary>
     internal partial class BlobTag
     {
-        /// <summary> Initializes a new instance of BlobTag. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobTag"/>. </summary>
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public BlobTag(string key, string value)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             Key = key;
             Value = value;

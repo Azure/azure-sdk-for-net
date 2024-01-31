@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -15,18 +14,22 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static IncidentRootCause DeserializeIncidentRootCause(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DimensionKey rootCause = default;
             IReadOnlyList<string> path = default;
             double score = default;
             string description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rootCause"))
+                if (property.NameEquals("rootCause"u8))
                 {
                     rootCause = DimensionKey.DeserializeDimensionKey(property.Value);
                     continue;
                 }
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -36,12 +39,12 @@ namespace Azure.AI.MetricsAdvisor.Models
                     path = array;
                     continue;
                 }
-                if (property.NameEquals("score"))
+                if (property.NameEquals("score"u8))
                 {
                     score = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;

@@ -23,18 +23,10 @@ Azure Object Anchors enables an application to detect an object in the physical 
 
 ### Install the package
 
-Install the Azure Object Anchors client library for .NET using one of the following methods.
-
-From Visual Studio Package Manager:
-
-```powershell
-Install-Package Azure.MixedReality.ObjectAnchors.Conversion
-```
-
-From .NET CLI
+Install the Azure Object Anchors client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.MixedReality.ObjectAnchors.Conversion
+dotnet add package Azure.MixedReality.ObjectAnchors.Conversion --prerelease
 ```
 
 Add a package reference:
@@ -99,6 +91,10 @@ using (FileStream fs = File.OpenRead(localFilePath))
 
 ```csharp
 AssetConversionOptions assetConversionOptions = new AssetConversionOptions(uploadedInputAssetUri, AssetFileType.FromFilePath(localFilePath), assetGravity, scale);
+
+// Or you can pass in an optional parameter DisableDetectScaleUnits if you are converting a FBX, specifying whether or not you want to disable automatic detection of the embedded scale units. 
+// The detection is enabled by default.
+AssetConversionOptions assetConversionOptions = new AssetConversionOptions(uploadedInputAssetUri, AssetFileType.FromFilePath(localFilePath), assetGravity, scale, disableDetectScaleUnits: true);
 
 AssetConversionOperation operation = await client.StartAssetConversionAsync(assetConversionOptions);
 

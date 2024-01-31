@@ -2,6 +2,23 @@
 
 This sample demonstrates reading events from an Event Hub.  To begin, please ensure that you're familiar with the items discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples#getting-started) section of the README, and have the prerequisites and connection string information available.
 
+## Table of contents
+
+- [Client types](#client-types)
+- [Event lifetime](#event-lifetime)
+- [Reading and consumer groups](#reading-and-consumer-groups)
+- [Reading and partitions](#reading-and-partitions)
+- [Read events from all partitions](#read-events-from-all-partitions)
+- [Read events from all partitions with a maximum wait time](#read-events-from-all-partitions-with-a-maximum-wait-time)
+- [Read events from all partitions, starting at the end](#read-events-from-all-partitions-starting-at-the-end)
+- [Read events from a partition](#read-events-from-a-partition)
+- [Read events from a partition with a maximum wait time](#read-events-from-a-partition-with-a-maximum-wait-time)
+- [Read events from a partition, starting from a specific date and time](#read-events-from-a-partition-starting-from-a-specific-date-and-time)
+- [Read events from a partition, starting from a specific offset](#read-events-from-a-partition-starting-from-a-specific-offset)
+- [Read events from a partition, starting from a specific sequence number](#read-events-from-a-partition-starting-from-a-specific-sequence-number)
+- [Query partition information while reading](#query-partition-information-while-reading)
+- [Read events from a partition using the `PartitionReceiver`](#read-events-from-a-partition-using-the-partitionreceiver)
+
 ## Client types
 
 Reading events is the responsibility of an event consumer.  The client library offers several different consumers, each intended to support a specific set of scenarios.  The `EventHubConsumerClient` will be the focal point of the samples, as it offers an approachable onboarding experience for exploring Event Hubs as well as supporting some production scenarios.  More detail about the available event consumers, including those with more specialized uses, can be found in [Sample02_EventHubsClients](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample02_EventHubsClients.md).
@@ -176,7 +193,7 @@ The `ReadEventsFromPartitionAsync` method of the `EventHubConsumerClient` allows
 
 Because an Event Hub represents a potentially infinite series of events, the enumerator will not exit when no further events are available in the Event Hub partitions.  Instead, it will wait for more events to be published.  To stop reading, applications will need to either signal a [CancellationToken](https://docs.microsoft.com/dotnet/api/system.threading.cancellationtoken?view=netcore-3.1) or call `break` from the body of the loop.  
 
-This example illustrates the `CancellationToeken` approach, reading from the beginning of the partition for only 30 seconds, regardless of how many events are read.
+This example illustrates the `CancellationToken` approach, reading from the beginning of the partition for only 30 seconds, regardless of how many events are read.
 
 ```C# Snippet:EventHubs_Sample05_ReadPartition
 var connectionString = "<< CONNECTION STRING FOR THE EVENT HUBS NAMESPACE >>";

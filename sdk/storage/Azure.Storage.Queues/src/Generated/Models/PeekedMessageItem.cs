@@ -6,13 +6,14 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> The object returned in the QueueMessageList array when calling Peek Messages on a Queue. </summary>
     internal partial class PeekedMessageItem
     {
-        /// <summary> Initializes a new instance of PeekedMessageItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeekedMessageItem"/>. </summary>
         /// <param name="messageId"> The Id of the Message. </param>
         /// <param name="insertionTime"> The time the Message was inserted into the Queue. </param>
         /// <param name="expirationTime"> The time that the Message will expire and be automatically deleted. </param>
@@ -21,14 +22,8 @@ namespace Azure.Storage.Queues.Models
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/> or <paramref name="messageText"/> is null. </exception>
         internal PeekedMessageItem(string messageId, DateTimeOffset insertionTime, DateTimeOffset expirationTime, long dequeueCount, string messageText)
         {
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (messageText == null)
-            {
-                throw new ArgumentNullException(nameof(messageText));
-            }
+            Argument.AssertNotNull(messageId, nameof(messageId));
+            Argument.AssertNotNull(messageText, nameof(messageText));
 
             MessageId = messageId;
             InsertionTime = insertionTime;

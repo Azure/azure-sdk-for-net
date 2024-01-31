@@ -8,27 +8,36 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The DetectionSeriesQuery. </summary>
     internal partial class DetectionSeriesQuery
     {
-        /// <summary> Initializes a new instance of DetectionSeriesQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectionSeriesQuery"/>. </summary>
         /// <param name="startTime"> This is inclusive. The maximum number of data points (series number * time range) is 10000. </param>
         /// <param name="endTime"> This is exclusive. The maximum number of data points (series number * time range) is 10000. </param>
         /// <param name="series"> The series to be queried. The identity must be able to define one single time series instead of a group of time series. The maximum number of series is 100. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="series"/> is null. </exception>
         public DetectionSeriesQuery(DateTimeOffset startTime, DateTimeOffset endTime, IEnumerable<SeriesIdentity> series)
         {
-            if (series == null)
-            {
-                throw new ArgumentNullException(nameof(series));
-            }
+            Argument.AssertNotNull(series, nameof(series));
 
             StartTime = startTime;
             EndTime = endTime;
             Series = series.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DetectionSeriesQuery"/>. </summary>
+        /// <param name="startTime"> This is inclusive. The maximum number of data points (series number * time range) is 10000. </param>
+        /// <param name="endTime"> This is exclusive. The maximum number of data points (series number * time range) is 10000. </param>
+        /// <param name="series"> The series to be queried. The identity must be able to define one single time series instead of a group of time series. The maximum number of series is 100. </param>
+        internal DetectionSeriesQuery(DateTimeOffset startTime, DateTimeOffset endTime, IList<SeriesIdentity> series)
+        {
+            StartTime = startTime;
+            EndTime = endTime;
+            Series = series;
         }
 
         /// <summary> This is inclusive. The maximum number of data points (series number * time range) is 10000. </summary>

@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.Capacity/calculatePrice?api-version=2019-04-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvY2FsY3VsYXRlUHJpY2U/YXBpLXZlcnNpb249MjAxOS0wNC0wMQ==",
+      "RequestUri": "/providers/Microsoft.Capacity/calculatePrice?api-version=2022-03-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvY2FsY3VsYXRlUHJpY2U/YXBpLXZlcnNpb249MjAyMi0wMy0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_D1\"\r\n  },\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"reservedResourceType\": \"VirtualMachines\",\r\n    \"billingScopeId\": \"/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80\",\r\n    \"term\": \"P1Y\",\r\n    \"billingPlan\": \"Monthly\",\r\n    \"quantity\": 3,\r\n    \"displayName\": \"TestPurchaseBillingPlanReservation\",\r\n    \"appliedScopeType\": \"Single\",\r\n    \"appliedScopes\": [\r\n      \"/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80\"\r\n    ],\r\n    \"renew\": false,\r\n    \"reservedResourceProperties\": {\r\n      \"instanceFlexibility\": \"On\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
@@ -76,8 +76,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/086641e5-3de5-41a3-acdd-1ca40b1e88f1?api-version=2019-04-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvMDg2NjQxZTUtM2RlNS00MWEzLWFjZGQtMWNhNDBiMWU4OGYxP2FwaS12ZXJzaW9uPTIwMTktMDQtMDE=",
+      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/086641e5-3de5-41a3-acdd-1ca40b1e88f1?api-version=2022-03-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvMDg2NjQxZTUtM2RlNS00MWEzLWFjZGQtMWNhNDBiMWU4OGYxP2FwaS12ZXJzaW9uPTIwMjItMDMtMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"Standard_D1\"\r\n  },\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"reservedResourceType\": \"VirtualMachines\",\r\n    \"billingScopeId\": \"/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80\",\r\n    \"term\": \"P1Y\",\r\n    \"billingPlan\": \"Monthly\",\r\n    \"quantity\": 3,\r\n    \"displayName\": \"TestPurchaseBillingPlanReservation\",\r\n    \"appliedScopeType\": \"Single\",\r\n    \"appliedScopes\": [\r\n      \"/subscriptions/d3ae48e5-dbb2-4618-afd4-fb1b8559cb80\"\r\n    ],\r\n    \"renew\": false,\r\n    \"reservedResourceProperties\": {\r\n      \"instanceFlexibility\": \"On\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
@@ -111,7 +111,7 @@
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/086641e5-3de5-41a3-acdd-1ca40b1e88f1?api-version=2019-04-01-preview"
+          "https://management.azure.com/providers/Microsoft.Capacity/reservationOrders/086641e5-3de5-41a3-acdd-1ca40b1e88f1?api-version=2022-03-01"
         ],
         "Retry-After": [
           "120"
@@ -154,8 +154,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/086641e5-3de5-41a3-acdd-1ca40b1e88f1?api-version=2019-04-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvMDg2NjQxZTUtM2RlNS00MWEzLWFjZGQtMWNhNDBiMWU4OGYxP2FwaS12ZXJzaW9uPTIwMTktMDQtMDE=",
+      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/086641e5-3de5-41a3-acdd-1ca40b1e88f1?api-version=2022-03-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvMDg2NjQxZTUtM2RlNS00MWEzLWFjZGQtMWNhNDBiMWU4OGYxP2FwaS12ZXJzaW9uPTIwMjItMDMtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -214,8 +214,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/086641e5-3de5-41a3-acdd-1ca40b1e88f1?api-version=2019-04-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvMDg2NjQxZTUtM2RlNS00MWEzLWFjZGQtMWNhNDBiMWU4OGYxP2FwaS12ZXJzaW9uPTIwMTktMDQtMDE=",
+      "RequestUri": "/providers/Microsoft.Capacity/reservationOrders/086641e5-3de5-41a3-acdd-1ca40b1e88f1?api-version=2022-03-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2FwYWNpdHkvcmVzZXJ2YXRpb25PcmRlcnMvMDg2NjQxZTUtM2RlNS00MWEzLWFjZGQtMWNhNDBiMWU4OGYxP2FwaS12ZXJzaW9uPTIwMjItMDMtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

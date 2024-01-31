@@ -5,35 +5,139 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class DeletedSiteData : IUtf8JsonSerializable
+    public partial class DeletedSiteData : IUtf8JsonSerializable, IJsonModel<DeletedSiteData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeletedSiteData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DeletedSiteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DeletedSiteData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeletedSiteData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(DeletedSiteId))
+            {
+                writer.WritePropertyName("deletedSiteId"u8);
+                writer.WriteNumberValue(DeletedSiteId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeletedTimestamp))
+            {
+                writer.WritePropertyName("deletedTimestamp"u8);
+                writer.WriteStringValue(DeletedTimestamp);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Subscription))
+            {
+                writer.WritePropertyName("subscription"u8);
+                writer.WriteStringValue(Subscription);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
+            {
+                writer.WritePropertyName("resourceGroup"u8);
+                writer.WriteStringValue(ResourceGroup);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeletedSiteName))
+            {
+                writer.WritePropertyName("deletedSiteName"u8);
+                writer.WriteStringValue(DeletedSiteName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Slot))
+            {
+                writer.WritePropertyName("slot"u8);
+                writer.WriteStringValue(Slot);
+            }
+            if (options.Format != "W" && Optional.IsDefined(KindPropertiesKind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(KindPropertiesKind);
+            }
+            if (options.Format != "W" && Optional.IsDefined(GeoRegionName))
+            {
+                writer.WritePropertyName("geoRegionName"u8);
+                writer.WriteStringValue(GeoRegionName);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DeletedSiteData DeserializeDeletedSiteData(JsonElement element)
+        DeletedSiteData IJsonModel<DeletedSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DeletedSiteData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeletedSiteData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeletedSiteData(document.RootElement, options);
+        }
+
+        internal static DeletedSiteData DeserializeDeletedSiteData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<int> deletedSiteId = default;
             Optional<string> deletedTimestamp = default;
             Optional<string> subscription = default;
@@ -42,34 +146,40 @@ namespace Azure.ResourceManager.AppService
             Optional<string> slot = default;
             Optional<string> kind0 = default;
             Optional<string> geoRegionName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -78,47 +188,46 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("deletedSiteId"))
+                        if (property0.NameEquals("deletedSiteId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deletedSiteId = property0.Value.GetInt32();
                             continue;
                         }
-                        if (property0.NameEquals("deletedTimestamp"))
+                        if (property0.NameEquals("deletedTimestamp"u8))
                         {
                             deletedTimestamp = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("subscription"))
+                        if (property0.NameEquals("subscription"u8))
                         {
                             subscription = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("resourceGroup"))
+                        if (property0.NameEquals("resourceGroup"u8))
                         {
                             resourceGroup = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("deletedSiteName"))
+                        if (property0.NameEquals("deletedSiteName"u8))
                         {
                             deletedSiteName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("slot"))
+                        if (property0.NameEquals("slot"u8))
                         {
                             slot = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("kind"))
+                        if (property0.NameEquals("kind"u8))
                         {
                             kind0 = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("geoRegionName"))
+                        if (property0.NameEquals("geoRegionName"u8))
                         {
                             geoRegionName = property0.Value.GetString();
                             continue;
@@ -126,8 +235,44 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DeletedSiteData(id, name, type, systemData, kind.Value, Optional.ToNullable(deletedSiteId), deletedTimestamp.Value, subscription.Value, resourceGroup.Value, deletedSiteName.Value, slot.Value, kind0.Value, geoRegionName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DeletedSiteData(id, name, type, systemData.Value, Optional.ToNullable(deletedSiteId), deletedTimestamp.Value, subscription.Value, resourceGroup.Value, deletedSiteName.Value, slot.Value, kind0.Value, geoRegionName.Value, kind.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DeletedSiteData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeletedSiteData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DeletedSiteData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DeletedSiteData IPersistableModel<DeletedSiteData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeletedSiteData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDeletedSiteData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeletedSiteData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DeletedSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -14,27 +14,21 @@ namespace Azure.MixedReality.RemoteRendering
     /// <summary> The error object containing details of why the request failed. </summary>
     public partial class RemoteRenderingServiceError
     {
-        /// <summary> Initializes a new instance of RemoteRenderingServiceError. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteRenderingServiceError"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         internal RemoteRenderingServiceError(string code, string message)
         {
-            if (code == null)
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
+            Argument.AssertNotNull(code, nameof(code));
+            Argument.AssertNotNull(message, nameof(message));
 
             Code = code;
             Message = message;
             Details = new ChangeTrackingList<RemoteRenderingServiceError>();
         }
 
-        /// <summary> Initializes a new instance of RemoteRenderingServiceError. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteRenderingServiceError"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> A human-readable representation of the error. </param>
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>

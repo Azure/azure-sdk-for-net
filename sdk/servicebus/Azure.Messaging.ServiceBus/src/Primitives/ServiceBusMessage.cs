@@ -117,18 +117,15 @@ namespace Azure.Messaging.ServiceBus
             {
                 if (kvp.Key == AmqpMessageConstants.LockedUntilName || kvp.Key == AmqpMessageConstants.SequenceNumberName ||
                     kvp.Key == AmqpMessageConstants.DeadLetterSourceName || kvp.Key == AmqpMessageConstants.EnqueueSequenceNumberName ||
-                    kvp.Key == AmqpMessageConstants.EnqueuedTimeUtcName || kvp.Key == AmqpMessageConstants.MessageStateName)
+                    kvp.Key == AmqpMessageConstants.EnqueuedTimeUtcName || kvp.Key == AmqpMessageConstants.MessageStateName ||
+                    kvp.Key == AmqpMessageConstants.PartitionIdName)
                 {
                     continue;
                 }
                 AmqpMessage.MessageAnnotations.Add(kvp.Key, kvp.Value);
             }
 
-            // copy delivery annotations
-            foreach (KeyValuePair<string, object> kvp in receivedMessage.AmqpMessage.DeliveryAnnotations)
-            {
-                AmqpMessage.DeliveryAnnotations.Add(kvp.Key, kvp.Value);
-            }
+            // delivery annotations should not be copied as they only apply to a single hop
 
             // copy footer
             foreach (KeyValuePair<string, object> kvp in receivedMessage.AmqpMessage.Footer)
@@ -145,6 +142,15 @@ namespace Azure.Messaging.ServiceBus
                 }
                 AmqpMessage.ApplicationProperties.Add(kvp.Key, kvp.Value);
             }
+        }
+
+        /// <summary>
+        /// Creates a new message from the specified <see cref="AmqpAnnotatedMessage"/> instance.
+        /// </summary>
+        /// <param name="message">The AMQP message.</param>
+        public ServiceBusMessage(AmqpAnnotatedMessage message)
+        {
+            AmqpMessage = message;
         }
 
         /// <summary>
@@ -297,7 +303,7 @@ namespace Azure.Messaging.ServiceBus
             }
         }
 
-        /// <summary>Gets or sets the a correlation identifier.</summary>
+        /// <summary>Gets or sets the correlation identifier.</summary>
         /// <value>Correlation identifier.</value>
         /// <remarks>
         /// Allows an application to specify a context for the message for the purposes of correlation,
@@ -384,17 +390,13 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Gets or sets the date and time in UTC at which the message will be enqueued. This
-        /// property returns the time in UTC; when setting the property, the supplied DateTime value must also be in UTC.
+        /// Gets or sets the date and time, in UTC, at which the message should be made available to receivers. This property does not control when a message is sent by the
+        /// client. Sending happens immediately when `SendAsync` is called.  Service Bus will hide the message from receivers until the the requested time.
         /// </summary>
         /// <value>
-        /// The scheduled enqueue time in UTC. This value is for delayed message sending.
-        /// It is utilized to delay messages sending to a specific time in the future.
+        /// The date and time, in UTC, at which the message should be available to receivers. This time may not be exact; the actual time depends on the entity's workload and state.
         /// </value>
-        /// <remarks>
-        /// Message enqueuing time does not mean that the message will be sent at the same time. It will get enqueued, but the actual sending time
-        /// depends on the queue's workload and its state.
-        /// </remarks>
+        /// <seealso href="https://learn.microsoft.com/azure/service-bus-messaging/message-sequencing#scheduled-messages">Scheduled messages</seealso>
         public DateTimeOffset ScheduledEnqueueTime
         {
             get
@@ -415,7 +417,7 @@ namespace Azure.Messaging.ServiceBus
         internal AmqpAnnotatedMessage AmqpMessage { get; set; }
 
         /// <summary>
-        /// Gets the raw Amqp message data that will be transmitted over the wire.
+        /// Gets the raw AMQP message data that will be transmitted over the wire.
         /// This can be used to enable scenarios that require setting AMQP header, footer, property, or annotation
         /// data that is not exposed as top level properties in the <see cref="ServiceBusMessage"/>.
         /// </summary>
@@ -426,10 +428,33 @@ namespace Azure.Messaging.ServiceBus
         /// Gets the application properties bag, which can be used for custom message metadata.
         /// </summary>
         /// <remarks>
-        /// Only following value types are supported:
-        /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal,
-        /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan
+        ///   <list type="bullet">
+        ///     <listheader><description>The following types are supported:</description></listheader>
+        ///     <item><description>string</description></item>
+        ///     <item><description>bool</description></item>
+        ///     <item><description>byte</description></item>
+        ///     <item><description>sbyte</description></item>
+        ///     <item><description>short</description></item>
+        ///     <item><description>ushort</description></item>
+        ///     <item><description>int</description></item>
+        ///     <item><description>uint</description></item>
+        ///     <item><description>long</description></item>
+        ///     <item><description>ulong</description></item>
+        ///     <item><description>float</description></item>
+        ///     <item><description>decimal</description></item>
+        ///     <item><description>double</description></item>
+        ///     <item><description>char</description></item>
+        ///     <item><description>Guid</description></item>
+        ///     <item><description>DateTime</description></item>
+        ///     <item><description>DateTimeOffset</description></item>
+        ///     <item><description>Stream</description></item>
+        ///     <item><description>Uri</description></item>
+        ///     <item><description>TimeSpan</description></item>
+        ///   </list>
         /// </remarks>
+        /// <exception cref="System.Runtime.Serialization.SerializationException">
+        ///   Occurs when the <see cref="ServiceBusMessage" /> is serialized for transport when an unsupported type is used as a property.
+        /// </exception>
         public IDictionary<string, object> ApplicationProperties
         {
             get

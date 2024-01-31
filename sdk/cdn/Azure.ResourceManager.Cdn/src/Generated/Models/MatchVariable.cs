@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string RequestHeaderValue = "RequestHeader";
         private const string RequestBodyValue = "RequestBody";
         private const string RequestSchemeValue = "RequestScheme";
-        private const string UrlPathValue = "UrlPath";
-        private const string UrlFileExtensionValue = "UrlFileExtension";
-        private const string UrlFileNameValue = "UrlFileName";
+        private const string UriPathValue = "UrlPath";
+        private const string UriFileExtensionValue = "UrlFileExtension";
+        private const string UriFileNameValue = "UrlFileName";
         private const string HttpVersionValue = "HttpVersion";
         private const string CookiesValue = "Cookies";
         private const string IsDeviceValue = "IsDevice";
@@ -59,11 +59,11 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> RequestScheme. </summary>
         public static MatchVariable RequestScheme { get; } = new MatchVariable(RequestSchemeValue);
         /// <summary> UrlPath. </summary>
-        public static MatchVariable UrlPath { get; } = new MatchVariable(UrlPathValue);
+        public static MatchVariable UriPath { get; } = new MatchVariable(UriPathValue);
         /// <summary> UrlFileExtension. </summary>
-        public static MatchVariable UrlFileExtension { get; } = new MatchVariable(UrlFileExtensionValue);
+        public static MatchVariable UriFileExtension { get; } = new MatchVariable(UriFileExtensionValue);
         /// <summary> UrlFileName. </summary>
-        public static MatchVariable UrlFileName { get; } = new MatchVariable(UrlFileNameValue);
+        public static MatchVariable UriFileName { get; } = new MatchVariable(UriFileNameValue);
         /// <summary> HttpVersion. </summary>
         public static MatchVariable HttpVersion { get; } = new MatchVariable(HttpVersionValue);
         /// <summary> Cookies. </summary>

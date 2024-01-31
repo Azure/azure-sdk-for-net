@@ -4,11 +4,11 @@
 
 Most client methods return one of the following types:
 
- - `Response` - An HTTP response.
- - `Response<T>` - A value and HTTP response.
- - `Pageable<T>` - A collection of values retrieved synchronously in pages. See [Pagination with the Azure SDK for .NET](https://docs.microsoft.com/dotnet/azure/sdk/pagination).
- - `AsyncPageable<T>` - A collection of values retrieved asynchronously in pages. See [Pagination with the Azure SDK for .NET](https://docs.microsoft.com/dotnet/azure/sdk/pagination).
- - `*Operation<T>` - A long-running operation. See [long running operation samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md).
+- `Response` - An HTTP response.
+- `Response<T>` - A value and HTTP response.
+- `Pageable<T>` - A collection of values retrieved synchronously in pages. See [Pagination with the Azure SDK for .NET](https://docs.microsoft.com/dotnet/azure/sdk/pagination).
+- `AsyncPageable<T>` - A collection of values retrieved asynchronously in pages. See [Pagination with the Azure SDK for .NET](https://docs.microsoft.com/dotnet/azure/sdk/pagination).
+- `*Operation<T>` - A long-running operation. See [long running operation samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md).
 
 ## Accessing HTTP response properties
 
@@ -36,7 +36,19 @@ foreach (HttpHeader header in http.Headers)
 }
 ```
 
-## Accessing HTTP response content
+## Accessing HTTP response content with dynamic
+
+If a service method does not return `Response<T>`, JSON content can be accessed using `dynamic`.
+
+```C# Snippet:AzureCoreGetDynamicJsonProperty
+Response response = client.GetWidget();
+dynamic widget = response.Content.ToDynamicFromJson();
+string name = widget.name;
+```
+
+See [dynamic content samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/DynamicContent.md) for more details.
+
+## Accessing HTTP response content with ContentStream
 
 ```C# Snippet:ResponseTContent
 // call a service method, which returns Response<T>

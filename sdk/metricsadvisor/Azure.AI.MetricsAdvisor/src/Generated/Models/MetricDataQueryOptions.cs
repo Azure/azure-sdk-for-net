@@ -8,27 +8,36 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The MetricDataQueryOptions. </summary>
     internal partial class MetricDataQueryOptions
     {
-        /// <summary> Initializes a new instance of MetricDataQueryOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDataQueryOptions"/>. </summary>
         /// <param name="startTime"> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. The maximum number of data points (series number * time range) is 10000. </param>
         /// <param name="endTime"> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. The maximum number of data points (series number * time range) is 10000. </param>
         /// <param name="series"> query specific series. The maximum number of series is 100. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="series"/> is null. </exception>
         public MetricDataQueryOptions(DateTimeOffset startTime, DateTimeOffset endTime, IEnumerable<IDictionary<string, string>> series)
         {
-            if (series == null)
-            {
-                throw new ArgumentNullException(nameof(series));
-            }
+            Argument.AssertNotNull(series, nameof(series));
 
             StartTime = startTime;
             EndTime = endTime;
             Series = series.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MetricDataQueryOptions"/>. </summary>
+        /// <param name="startTime"> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. The maximum number of data points (series number * time range) is 10000. </param>
+        /// <param name="endTime"> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. The maximum number of data points (series number * time range) is 10000. </param>
+        /// <param name="series"> query specific series. The maximum number of series is 100. </param>
+        internal MetricDataQueryOptions(DateTimeOffset startTime, DateTimeOffset endTime, IList<IDictionary<string, string>> series)
+        {
+            StartTime = startTime;
+            EndTime = endTime;
+            Series = series;
         }
 
         /// <summary> start time of query a time series data, and format should be yyyy-MM-ddThh:mm:ssZ. The maximum number of data points (series number * time range) is 10000. </summary>

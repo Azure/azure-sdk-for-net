@@ -6,13 +6,13 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> signed identifier. </summary>
     public partial class BlobSignedIdentifier
     {
-
         /// <summary> a unique id. </summary>
         public string Id { get; set; }
         /// <summary> An Access policy. </summary>

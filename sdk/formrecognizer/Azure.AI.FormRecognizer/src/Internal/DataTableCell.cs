@@ -5,14 +5,18 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-// TODO: this file can be completely removed once we solve:
-// https://github.com/Azure/azure-sdk-for-net/issues/11487
-
 namespace Azure.AI.FormRecognizer.Models
 {
-    [CodeGenModel("DataTableCell")]
     internal partial class DataTableCell
     {
+        // We're ovewriting the generated deserialization method to fix two service behaviors:
+        // 1. The 'elements' JSON property is sometimes returned as 'null', which makes the generated
+        //    code throw in debug mode.
+        // 2. The 'confidence' property sometimes is not returned, which makes it default to '0'.
+        //    The overwritten method uses our 'DefaultConfidenceValue'.
+        //
+        // There's no intent to change these behaviors on the service side so we must keep this workaround.
+
         internal static DataTableCell DeserializeDataTableCell(JsonElement element)
         {
             int rowIndex = default;

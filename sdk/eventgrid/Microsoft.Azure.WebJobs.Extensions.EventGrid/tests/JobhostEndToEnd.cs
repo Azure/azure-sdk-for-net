@@ -7,13 +7,17 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Messaging;
 using Azure.Messaging.EventGrid;
+using Microsoft.Azure.WebJobs.Extensions.EventGrid.Config;
 using Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests.Common;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Indexers;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
@@ -47,7 +51,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             Assert.AreEqual(_functionOut, expectOut);
 
             var categories = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.Category);
-            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.Extensions.EventGrid.EventGridExtensionConfigProvider");
+            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.Extensions.EventGrid.Config.EventGridExtensionConfigProvider");
             _functionOut = null;
         }
 
@@ -159,6 +163,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         }
 
         [Theory]
+        [TestCase("DirectInvocation.TestString", "StringDataEvent")]
+        [TestCase("DirectInvocation.TestEventGridEvent", "EventGridEvent")]
+        public async Task ConsumeDirectInvocation(string functionName, string argument)
+        {
+            string value = (string)(typeof(FakeData)).GetField(argument).GetValue(null);
+
+            JObject eve = JObject.Parse(value);
+            var args = new Dictionary<string, object>{
+                { "value", value }
+            };
+
+            var expectOut = (string)eve["subject"];
+            var host = TestHelpers.NewHost<DirectInvocation>();
+
+            await host.GetJobHost().CallAsync(functionName, args);
+            Assert.AreEqual(_functionOut, expectOut);
+            _functionOut = null;
+        }
+
+        [Theory]
         [TestCase("TriggerParamResolve.TestJObject", "EventGridEvent", @"https://shunsouthcentralus.blob.core.windows.net/debugging/shunBlob.txt")]
         [TestCase("TriggerParamResolve.TestString", "StringDataEvent", "goodBye world")]
         [TestCase("TriggerParamResolve.TestArray", "ArrayDataEvent", "ConfusedDev")]
@@ -205,12 +229,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             var configuration = new Dictionary<string, string>
                 {
                     { "eventGridUri" , "this could be anything...so lets try yolo" },
-                    { "eventgridKey" , "thisismagic" }
+                    { "eventgridKey" , "thisismagic" },
                 };
 
             host = TestHelpers.NewHost<OutputBindingParams>(configuration: configuration);
             indexException = Assert.ThrowsAsync<FunctionIndexingException>(() => host.StartAsync());
-            Assert.AreEqual($"The '{nameof(EventGridAttribute.TopicEndpointUri)}' property must be a valid absolute Uri", indexException.InnerException.Message);
+            Assert.AreEqual($"The '{nameof(EventGridAttribute.TopicEndpointUri)}' property must be a valid absolute Uri.", indexException.InnerException.Message);
 
             configuration = new Dictionary<string, string>
                 {
@@ -221,11 +245,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
 
             host = TestHelpers.NewHost<OutputBindingParams>(configuration: configuration);
             indexException = Assert.ThrowsAsync<FunctionIndexingException>(() => host.StartAsync());
-            Assert.AreEqual($"The '{nameof(EventGridAttribute.TopicKeySetting)}' property must be the name of an application setting containing the Topic Key", indexException.InnerException.Message);
+            Assert.AreEqual($"The '{nameof(EventGridAttribute.TopicKeySetting)}' property must be the name of an application setting containing the Topic Key.", indexException.InnerException.Message);
         }
 
         [Theory]
         [TestCase("SingleEvent", "0")]
+        [TestCase("SingleEventWithConnection", "0")]
         [TestCase("SingleEventString", "0")]
         [TestCase("SingleEventBinaryData", "0")]
         [TestCase("SingleEventJObject", "0")]
@@ -242,32 +267,38 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         {
             List<EventGridEvent> egOutput = new List<EventGridEvent>();
 
-            Func<EventGridAttribute, IAsyncCollector<object>> objectEventConverter = (attr =>
-            {
-                var mockClient = new Mock<EventGridPublisherClient>();
-                mockClient.Setup(x => x.SendEventsAsync(It.IsAny<IEnumerable<EventGridEvent>>(), It.IsAny<CancellationToken>()))
-                    .Returns((IEnumerable<EventGridEvent> events, CancellationToken cancel) =>
-                    {
-                        foreach (EventGridEvent eve in events)
-                        {
-                            egOutput.Add(eve);
-                        }
-
-                        return Task.FromResult<Response>(new MockResponse(200));
-                    });
-                return new EventGridAsyncCollector(mockClient.Object);
-            });
-
             ILoggerFactory loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(new TestLoggerProvider());
-            // use moq eventgridclient for test extension
-            var customExtension = new EventGridExtensionConfigProvider(objectEventConverter, new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), loggerFactory);
 
             var configuration = new Dictionary<string, string>
                 {
                     { "eventGridUri" , "https://pccode.westus2-1.eventgrid.azure.net/api/events" },
-                    { "eventgridKey" , "thisismagic" }
+                    { "eventgridKey" , "thisismagic" },
+                    { "eventGridConnection:topicEndpointUri" , "https://pccode.westus2-1.eventgrid.azure.net/api/events" },
                 };
+
+            // use moq eventgridclient for test extension
+            var configSection = new ConfigurationBuilder().AddInMemoryCollection(configuration).Build();
+
+            var mockFactory = new Mock<EventGridAsyncCollectorFactory>(configSection, new MockComponentFactory());
+
+            mockFactory.Setup(x => x.CreateCollector(It.IsAny<EventGridAttribute>()))
+                .Returns((EventGridAttribute attr) =>
+                {
+                    var mockClient = new Mock<EventGridPublisherClient>();
+                    mockClient.Setup(x => x.SendEventsAsync(It.IsAny<IEnumerable<EventGridEvent>>(), It.IsAny<CancellationToken>()))
+                        .Returns((IEnumerable<EventGridEvent> events, CancellationToken cancel) =>
+                        {
+                            foreach (EventGridEvent eve in events)
+                            {
+                                egOutput.Add(eve);
+                            }
+
+                            return Task.FromResult<Response>(new MockResponse(200));
+                        });
+                    return new EventGridAsyncCollector(mockClient.Object);
+                });
+            var customExtension = new EventGridExtensionConfigProvider(mockFactory.Object, new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), loggerFactory);
 
             var host = TestHelpers.NewHost<OutputBindingParams>(customExtension, configuration: configuration);
 
@@ -279,6 +310,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                 Assert.True(expectedEvents.Remove(eve.Data.ToObjectFromJson<string>()));
             }
             Assert.True(expectedEvents.Count == 0);
+        }
+
+        private class MockComponentFactory : AzureComponentFactory
+        {
+            public override TokenCredential CreateTokenCredential(IConfiguration configuration)
+            {
+                return new MockCredential();
+            }
+
+            public override object CreateClientOptions(Type optionsType, object serviceVersion, IConfiguration configuration)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override object CreateClient(Type clientType, IConfiguration configuration, TokenCredential credential, object clientOptions)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         public class EventGridParams
@@ -360,27 +409,29 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         {
             List<CloudEvent> cloudEvents = new List<CloudEvent>();
 
-            Func<EventGridAttribute, IAsyncCollector<object>> eventConverter = (attr =>
-            {
-                var mockClient = new Mock<EventGridPublisherClient>();
-                mockClient.Setup(x => x.SendEventsAsync(It.IsAny<IEnumerable<CloudEvent>>(), It.IsAny<CancellationToken>()))
-                    .Returns((IEnumerable<CloudEvent> events, CancellationToken cancel) =>
-                    {
-                        foreach (CloudEvent eve in events)
+            var mockFactory = new Mock<EventGridAsyncCollectorFactory>();
+            mockFactory.Setup(x => x.CreateCollector(It.IsAny<EventGridAttribute>()))
+                .Returns((EventGridAttribute attr) =>
+                {
+                    var mockClient = new Mock<EventGridPublisherClient>();
+                    mockClient.Setup(x => x.SendEventsAsync(It.IsAny<IEnumerable<CloudEvent>>(), It.IsAny<CancellationToken>()))
+                        .Returns((IEnumerable<CloudEvent> events, CancellationToken cancel) =>
                         {
-                            cloudEvents.Add(eve);
-                        }
+                            foreach (CloudEvent eve in events)
+                            {
+                                cloudEvents.Add(eve);
+                            }
 
-                        return Task.FromResult<Response>(new MockResponse(200));
-                    });
-                return new EventGridAsyncCollector(mockClient.Object);
-            });
+                            return Task.FromResult<Response>(new MockResponse(200));
+                        });
+                    return new EventGridAsyncCollector(mockClient.Object);
+                });
 
             ILoggerFactory loggerFactory = new LoggerFactory();
             var provider = new TestLoggerProvider();
             loggerFactory.AddProvider(provider);
             // use moq eventgridclient for test extension
-            var customExtension = new EventGridExtensionConfigProvider(eventConverter, new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), loggerFactory);
+            var customExtension = new EventGridExtensionConfigProvider(mockFactory.Object, new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), loggerFactory);
 
             var configuration = new Dictionary<string, string>
                 {
@@ -393,7 +444,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
             await host.GetJobHost().CallAsync($"OutputCloudEventBindingParams.{functionName}");
 
             var categories = provider.GetAllLogMessages().Select(p => p.Category);
-            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.Extensions.EventGrid.EventGridExtensionConfigProvider");
+            CollectionAssert.Contains(categories, "Microsoft.Azure.WebJobs.Extensions.EventGrid.Config.EventGridExtensionConfigProvider");
 
             var expectedEvents = new HashSet<string>(expectedCollection.Split(' '));
             foreach (CloudEvent eve in cloudEvents)
@@ -406,16 +457,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         [Test]
         public void InvalidOutputEvent()
         {
-            Func<EventGridAttribute, IAsyncCollector<object>> eventConverter = (attr =>
-            {
-                var mockClient = new Mock<EventGridPublisherClient>();
-                return new EventGridAsyncCollector(mockClient.Object);
-            });
+            var mockFactory = new Mock<EventGridAsyncCollectorFactory>();
+            mockFactory.Setup(x => x.CreateCollector(It.IsAny<EventGridAttribute>()))
+                .Returns((EventGridAttribute attr) =>
+                {
+                    var mockClient = new Mock<EventGridPublisherClient>();
+                    return new EventGridAsyncCollector(mockClient.Object);
+                });
 
             ILoggerFactory loggerFactory = new LoggerFactory();
             loggerFactory.AddProvider(new TestLoggerProvider());
             // use moq eventgridclient for test extension
-            var customExtension = new EventGridExtensionConfigProvider(eventConverter, new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), loggerFactory);
+            var customExtension = new EventGridExtensionConfigProvider(mockFactory.Object, new HttpRequestProcessor(NullLoggerFactory.Instance.CreateLogger<HttpRequestProcessor>()), loggerFactory);
 
             var configuration = new Dictionary<string, string>
                 {
@@ -580,6 +633,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
         public class OutputBindingParams
         {
             public void SingleEvent([EventGrid(TopicEndpointUri = "eventgridUri", TopicKeySetting = "eventgridKey")] out EventGridEvent single)
+            {
+                single = new EventGridEvent("", "", "", data: "0");
+            }
+
+            public void SingleEventWithConnection([EventGrid(Connection = "eventGridConnection")] out EventGridEvent single)
             {
                 single = new EventGridEvent("", "", "", data: "0");
             }
@@ -876,6 +934,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Tests
                         new JProperty("specversion", "1.0")
                     );
                 }
+            }
+        }
+
+        public class DirectInvocation
+        {
+            public static void TestString([EventGridTrigger] string value)
+            {
+                _functionOut = (string)JObject.Parse(value)["subject"];
+            }
+
+            public static void TestEventGridEvent([EventGridTrigger] EventGridEvent value)
+            {
+                _functionOut = value.Subject;
             }
         }
     }

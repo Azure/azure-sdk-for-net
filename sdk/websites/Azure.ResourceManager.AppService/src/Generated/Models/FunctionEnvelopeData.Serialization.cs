@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,65 +14,96 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class FunctionEnvelopeData : IUtf8JsonSerializable
+    public partial class FunctionEnvelopeData : IUtf8JsonSerializable, IJsonModel<FunctionEnvelopeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionEnvelopeData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FunctionEnvelopeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FunctionEnvelopeData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FunctionEnvelopeData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(FunctionAppId))
             {
-                writer.WritePropertyName("function_app_id");
+                writer.WritePropertyName("function_app_id"u8);
                 writer.WriteStringValue(FunctionAppId);
             }
             if (Optional.IsDefined(ScriptRootPathHref))
             {
-                writer.WritePropertyName("script_root_path_href");
+                writer.WritePropertyName("script_root_path_href"u8);
                 writer.WriteStringValue(ScriptRootPathHref);
             }
             if (Optional.IsDefined(ScriptHref))
             {
-                writer.WritePropertyName("script_href");
+                writer.WritePropertyName("script_href"u8);
                 writer.WriteStringValue(ScriptHref);
             }
             if (Optional.IsDefined(ConfigHref))
             {
-                writer.WritePropertyName("config_href");
+                writer.WritePropertyName("config_href"u8);
                 writer.WriteStringValue(ConfigHref);
             }
             if (Optional.IsDefined(TestDataHref))
             {
-                writer.WritePropertyName("test_data_href");
+                writer.WritePropertyName("test_data_href"u8);
                 writer.WriteStringValue(TestDataHref);
             }
             if (Optional.IsDefined(SecretsFileHref))
             {
-                writer.WritePropertyName("secrets_file_href");
+                writer.WritePropertyName("secrets_file_href"u8);
                 writer.WriteStringValue(SecretsFileHref);
             }
             if (Optional.IsDefined(Href))
             {
-                writer.WritePropertyName("href");
+                writer.WritePropertyName("href"u8);
                 writer.WriteStringValue(Href);
             }
             if (Optional.IsDefined(Config))
             {
-                writer.WritePropertyName("config");
+                writer.WritePropertyName("config"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Config);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Config.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Config))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsCollectionDefined(Files))
             {
-                writer.WritePropertyName("files");
+                writer.WritePropertyName("files"u8);
                 writer.WriteStartObject();
                 foreach (var item in Files)
                 {
@@ -82,35 +114,68 @@ namespace Azure.ResourceManager.AppService
             }
             if (Optional.IsDefined(TestData))
             {
-                writer.WritePropertyName("test_data");
+                writer.WritePropertyName("test_data"u8);
                 writer.WriteStringValue(TestData);
             }
             if (Optional.IsDefined(InvokeUrlTemplate))
             {
-                writer.WritePropertyName("invoke_url_template");
+                writer.WritePropertyName("invoke_url_template"u8);
                 writer.WriteStringValue(InvokeUrlTemplate);
             }
             if (Optional.IsDefined(Language))
             {
-                writer.WritePropertyName("language");
+                writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
             if (Optional.IsDefined(IsDisabled))
             {
-                writer.WritePropertyName("isDisabled");
+                writer.WritePropertyName("isDisabled"u8);
                 writer.WriteBooleanValue(IsDisabled.Value);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FunctionEnvelopeData DeserializeFunctionEnvelopeData(JsonElement element)
+        FunctionEnvelopeData IJsonModel<FunctionEnvelopeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FunctionEnvelopeData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FunctionEnvelopeData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFunctionEnvelopeData(document.RootElement, options);
+        }
+
+        internal static FunctionEnvelopeData DeserializeFunctionEnvelopeData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> functionAppId = default;
             Optional<string> scriptRootPathHref = default;
             Optional<string> scriptHref = default;
@@ -124,34 +189,40 @@ namespace Azure.ResourceManager.AppService
             Optional<string> invokeUrlTemplate = default;
             Optional<string> language = default;
             Optional<bool> isDisabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -160,56 +231,54 @@ namespace Azure.ResourceManager.AppService
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("function_app_id"))
+                        if (property0.NameEquals("function_app_id"u8))
                         {
                             functionAppId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("script_root_path_href"))
+                        if (property0.NameEquals("script_root_path_href"u8))
                         {
                             scriptRootPathHref = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("script_href"))
+                        if (property0.NameEquals("script_href"u8))
                         {
                             scriptHref = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("config_href"))
+                        if (property0.NameEquals("config_href"u8))
                         {
                             configHref = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("test_data_href"))
+                        if (property0.NameEquals("test_data_href"u8))
                         {
                             testDataHref = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("secrets_file_href"))
+                        if (property0.NameEquals("secrets_file_href"u8))
                         {
                             secretsFileHref = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("href"))
+                        if (property0.NameEquals("href"u8))
                         {
                             href = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("config"))
+                        if (property0.NameEquals("config"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             config = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("files"))
+                        if (property0.NameEquals("files"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -220,26 +289,25 @@ namespace Azure.ResourceManager.AppService
                             files = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("test_data"))
+                        if (property0.NameEquals("test_data"u8))
                         {
                             testData = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("invoke_url_template"))
+                        if (property0.NameEquals("invoke_url_template"u8))
                         {
                             invokeUrlTemplate = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("language"))
+                        if (property0.NameEquals("language"u8))
                         {
                             language = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("isDisabled"))
+                        if (property0.NameEquals("isDisabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isDisabled = property0.Value.GetBoolean();
@@ -248,8 +316,44 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FunctionEnvelopeData(id, name, type, systemData, kind.Value, functionAppId.Value, scriptRootPathHref.Value, scriptHref.Value, configHref.Value, testDataHref.Value, secretsFileHref.Value, href.Value, config.Value, Optional.ToDictionary(files), testData.Value, invokeUrlTemplate.Value, language.Value, Optional.ToNullable(isDisabled));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FunctionEnvelopeData(id, name, type, systemData.Value, functionAppId.Value, scriptRootPathHref.Value, scriptHref.Value, configHref.Value, testDataHref.Value, secretsFileHref.Value, href.Value, config.Value, Optional.ToDictionary(files), testData.Value, invokeUrlTemplate.Value, language.Value, Optional.ToNullable(isDisabled), kind.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FunctionEnvelopeData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FunctionEnvelopeData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FunctionEnvelopeData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        FunctionEnvelopeData IPersistableModel<FunctionEnvelopeData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FunctionEnvelopeData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFunctionEnvelopeData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FunctionEnvelopeData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FunctionEnvelopeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

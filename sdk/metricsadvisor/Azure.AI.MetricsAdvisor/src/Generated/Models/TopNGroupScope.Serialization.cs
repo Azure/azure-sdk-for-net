@@ -15,33 +15,37 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("top");
+            writer.WritePropertyName("top"u8);
             writer.WriteNumberValue(Top);
-            writer.WritePropertyName("period");
+            writer.WritePropertyName("period"u8);
             writer.WriteNumberValue(Period);
-            writer.WritePropertyName("minTopCount");
+            writer.WritePropertyName("minTopCount"u8);
             writer.WriteNumberValue(MinimumTopCount);
             writer.WriteEndObject();
         }
 
         internal static TopNGroupScope DeserializeTopNGroupScope(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int top = default;
             int period = default;
             int minTopCount = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("top"))
+                if (property.NameEquals("top"u8))
                 {
                     top = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("period"))
+                if (property.NameEquals("period"u8))
                 {
                     period = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minTopCount"))
+                if (property.NameEquals("minTopCount"u8))
                 {
                     minTopCount = property.Value.GetInt32();
                     continue;

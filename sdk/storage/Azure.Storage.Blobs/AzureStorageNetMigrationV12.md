@@ -681,7 +681,16 @@ V12 does not currently provide this functionality. Users who manage their own in
 await blockBlobClient.StageBlockAsync(
     blockId,
     blockContentStream,
-    transactionalContentHash: precalculatedBlockHash);
+    new BlockBlobStageBlockOptions
+    {
+        TransferValidation = new UploadTransferValidationOptions
+        {
+            ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
+            // a precalculated hash can be provided as follows,
+            // the sdk will calculate one for you otherwise
+            PrecalculatedChecksum = precalculatedBlockHash
+        }
+    });
 
 // upload more blocks as needed
 
@@ -690,12 +699,22 @@ await blockBlobClient.CommitBlockListAsync(blockList);
 
 // download any range of blob with transactional MD5 requested (maximum 4 MB for downloads)
 Response<BlobDownloadStreamingResult> response = await blockBlobClient.DownloadStreamingAsync(
-    range: new HttpRange(length: 4 * Constants.MB), // a range must be provided; here we use transactional download max size
-    rangeGetContentHash: true);
+    new BlobDownloadOptions
+    {
+        // a range must be provided when requesting checksums; here we use transactional download max size
+        Range = new HttpRange(length: 4 * Constants.MB),
+        TransferValidation = new DownloadTransferValidationOptions
+        {
+            ChecksumAlgorithm = StorageChecksumAlgorithm.MD5,
+            // SDK will validate against checksum for you
+            // to disable this and check in your own workflow, uncomment the below
+            //Validate = false,
+        },
+    });
 
 Stream downloadStream = response.Value.Content;
-byte[] transactionalMD5 = response.Value.Details.ContentHash;
-// validate stream against hash in your workflow
+// uncomment below to retrieve checksum for validating in your own workflow
+//byte[] transactionalMD5 = response.Value.Details.ContentHash;
 ```
 
 ### Resiliency

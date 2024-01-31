@@ -7,26 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A file in an HTTP web server. </summary>
     public partial class HttpDataset : Dataset
     {
-        /// <summary> Initializes a new instance of HttpDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public HttpDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
             Type = "HttpFile";
         }
 
-        /// <summary> Initializes a new instance of HttpDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -44,7 +42,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// ...
         /// request-header-name-n:request-header-value-n Type: string (or Expression with resultType string).
         /// </param>
-        /// <param name="format"> The format of files. </param>
+        /// <param name="format">
+        /// The format of files.
+        /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AvroFormat"/>, <see cref="JsonFormat"/>, <see cref="OrcFormat"/>, <see cref="ParquetFormat"/> and <see cref="TextFormat"/>.
+        /// </param>
         /// <param name="compression"> The data compression method used on files. </param>
         internal HttpDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, object relativeUrl, object requestMethod, object requestBody, object additionalHeaders, DatasetStorageFormat format, DatasetCompression compression) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
@@ -69,7 +71,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// request-header-name-n:request-header-value-n Type: string (or Expression with resultType string).
         /// </summary>
         public object AdditionalHeaders { get; set; }
-        /// <summary> The format of files. </summary>
+        /// <summary>
+        /// The format of files.
+        /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AvroFormat"/>, <see cref="JsonFormat"/>, <see cref="OrcFormat"/>, <see cref="ParquetFormat"/> and <see cref="TextFormat"/>.
+        /// </summary>
         public DatasetStorageFormat Format { get; set; }
         /// <summary> The data compression method used on files. </summary>
         public DatasetCompression Compression { get; set; }

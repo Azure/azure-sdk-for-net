@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
@@ -13,15 +14,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
     /// </summary>
     public class DocumentAnalysisTestEnvironment : TestEnvironment
     {
-        public DocumentAnalysisTestEnvironment()
-        {
-        }
-
-        /// <summary>The name of the environment variable from which the Form Recognizer resource's endpoint will be extracted for the live tests.</summary>
-        internal const string EndpointEnvironmentVariableName = "FORM_RECOGNIZER_ENDPOINT";
-
-        /// <summary>The name of the environment variable from which the Form Recognizer resource's API key will be extracted for the live tests.</summary>
-        internal const string ApiKeyEnvironmentVariableName = "FORM_RECOGNIZER_API_KEY";
+        private const string SanitizedSasUrl = "https://sanitized.blob.core.windows.net";
 
         /// <summary>The name of the folder in which test assets are stored.</summary>
         private const string AssetsFolderName = "Assets";
@@ -29,35 +22,77 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// <summary>The format to generate the GitHub URIs of the files to be used for tests.</summary>
         private const string FileUriFormat = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/{0}/{1}";
 
-        /// <summary>The name of the environment variable for the Blob Container SAS URL to use for storing documents used for live tests.</summary>
-        internal const string BlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL";
-
-        /// <summary>The name of the environment variable for the multipage Blob Container SAS URL to use for storing documents used for live tests.</summary>
-        internal const string MultipageBlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_MULTIPAGE_BLOB_CONTAINER_SAS_URL";
-
-        /// <summary>The name of the environment variable for the Blob Container SAS URL to use for storing documents that have selection marks used for live tests.</summary>
-        internal const string SelectionMarkBlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_SELECTION_MARK_BLOB_CONTAINER_SAS_URL";
-
-        /// <summary>The name of the environment variable for the Blob Container SAS URL to use for storing documents that have tables with dynamic rows used for live tests.</summary>
-        internal const string TableDynamicRowsBlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_TABLE_VARIABLE_ROWS_BLOB_CONTAINER_SAS_URL";
-
-        /// <summary>The name of the environment variable for the Blob Container SAS URL to use for storing documents that have tables with fixed rows used for live tests.</summary>
-        internal const string TableFixedRowsBlobContainerSasUrlEnvironmentVariableName = "FORM_RECOGNIZER_TABLE_FIXED_ROWS_BLOB_CONTAINER_SAS_URL";
-
-        public string ApiKey => GetRecordedVariable(ApiKeyEnvironmentVariableName, options => options.IsSecret());
-        public string Endpoint => GetRecordedVariable(EndpointEnvironmentVariableName);
-
-        public string BlobContainerSasUrl => GetRecordedVariable(BlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
-        public string SelectionMarkBlobContainerSasUrl => GetRecordedVariable(SelectionMarkBlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
-        public string MultipageBlobContainerSasUrl => GetRecordedVariable(MultipageBlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
-        public string TableDynamicRowsContainerSasUrl => GetRecordedVariable(TableDynamicRowsBlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
-        public string TableFixedRowsContainerSasUrl => GetRecordedVariable(TableFixedRowsBlobContainerSasUrlEnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
+        private static readonly string s_currentWorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         /// <summary>
-        /// The absolute path of the directory where the running assembly is located.
+        /// The endpoint of the Form Recognizer resource used in live tests.
         /// </summary>
-        /// <value>The absolute path of the current working directory.</value>
-        private static string CurrentWorkingDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        public string Endpoint => GetRecordedVariable("ENDPOINT");
+
+        /// <summary>
+        /// The API key to access the Form Recognizer resource used in live tests.
+        /// </summary>
+        public string ApiKey => GetRecordedVariable("API_KEY", options => options.IsSecret());
+
+        /// <summary>
+        /// The ID of the Form Recognizer resource used in live tests.
+        /// </summary>
+        public string ResourceId => GetRecordedVariable("RESOURCE_ID");
+
+        /// <summary>
+        /// The region of the Form Recognizer resource used in live tests.
+        /// </summary>
+        public string ResourceRegion => GetRecordedVariable("RESOURCE_REGION");
+
+        /// <summary>
+        /// A Blob Container SAS URL used to build document models in live tests. Used when analyzing single-paged documents.
+        /// </summary>
+        public string BlobContainerSasUrl => GetRecordedVariable("SINGLEPAGE_BLOB_CONTAINER_SAS_URL", options => options.IsSecret(SanitizedSasUrl));
+
+        /// <summary>
+        /// A Blob Container SAS URL used to build document models in live tests. Used when analyzing multi-paged documents.
+        /// </summary>
+        public string MultipageBlobContainerSasUrl => GetRecordedVariable("MULTIPAGE_BLOB_CONTAINER_SAS_URL", options => options.IsSecret(SanitizedSasUrl));
+
+        /// <summary>
+        /// A Blob Container SAS URL used to build document models in live tests. Used when analyzing documents with selection marks.
+        /// </summary>
+        public string SelectionMarkBlobContainerSasUrl => GetRecordedVariable("SELECTION_MARK_BLOB_CONTAINER_SAS_URL", options => options.IsSecret(SanitizedSasUrl));
+
+        /// <summary>
+        /// A Blob Container SAS URL used to build document models in live tests. Used when analyzing documents with tables with dynamic rows.
+        /// </summary>
+        public string TableDynamicRowsContainerSasUrl => GetRecordedVariable("TABLE_DYNAMIC_ROWS_BLOB_CONTAINER_SAS_URL", options => options.IsSecret(SanitizedSasUrl));
+
+        /// <summary>
+        /// A Blob Container SAS URL used to build document models in live tests. Used when analyzing documents with tables with fixed rows.
+        /// </summary>
+        public string TableFixedRowsContainerSasUrl => GetRecordedVariable("TABLE_FIXED_ROWS_BLOB_CONTAINER_SAS_URL", options => options.IsSecret(SanitizedSasUrl));
+
+        /// <summary>
+        /// A Blob Container SAS URL used to build document classifiers in live tests.
+        /// </summary>
+        public string ClassifierTrainingSasUrl => GetRecordedVariable("CLASSIFIER_BLOB_CONTAINER_SAS_URL", options => options.IsSecret(SanitizedSasUrl));
+
+        protected override async ValueTask<bool> IsEnvironmentReadyAsync()
+        {
+            var endpoint = new Uri(Endpoint);
+            var keyCredential = new AzureKeyCredential(ApiKey);
+            var keyCredentialClient = new DocumentModelAdministrationClient(endpoint, keyCredential);
+            var tokenCredentialClient = new DocumentModelAdministrationClient(endpoint, Credential);
+
+            try
+            {
+                await keyCredentialClient.GetResourceDetailsAsync();
+                await tokenCredentialClient.GetResourceDetailsAsync();
+            }
+            catch (RequestFailedException e) when (e.Status == 401)
+            {
+                return false;
+            }
+
+            return true;
+        }
 
         /// <summary>
         /// Creates an absolute path to a file contained in the local test assets folder.
@@ -65,20 +100,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// <param name="filename">The name of the file to create a path to.</param>
         /// <returns>An absolute path to the specified file.</returns>
         public static string CreatePath(string filename) =>
-            Path.Combine(CurrentWorkingDirectory, AssetsFolderName, filename);
+            Path.Combine(s_currentWorkingDirectory, AssetsFolderName, filename);
 
         /// <summary>
-        /// Creates a URI string to a file contained in the test assets folder stored in
-        /// the azure-sdk-for-net GitHub repo.
-        /// </summary>
-        /// <param name="filename">The name of the file to create a URI string to.</param>
-        /// <returns>A URI string to the specified file.</returns>
-        public static string CreateUriString(string filename) =>
-            string.Format(FileUriFormat, AssetsFolderName, filename);
-
-        /// <summary>
-        /// Creates a <see cref="FileStream"/> to read file contained in the local test
-        /// assets folder.
+        /// Creates a <see cref="FileStream"/> to read file contained in the local test assets folder.
         /// </summary>
         /// <param name="filename">The name of the file to read with the stream.</param>
         /// <returns>A <see cref="FileStream"/> to read the specified file.</returns>
@@ -89,12 +114,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             new FileStream(CreatePath(filename), FileMode.Open);
 
         /// <summary>
-        /// Creates a URI to a file contained in the test assets folder stored in the
-        /// azure-sdk-for-net GitHub repo.
+        /// Creates a URI to a file contained in the test assets folder stored in the azure-sdk-for-net GitHub repo.
         /// </summary>
         /// <param name="filename">The name of the file to create a URI to.</param>
         /// <returns>A URI to the specified file.</returns>
-        public static Uri CreateUri(string filename) =>
-            new Uri(CreateUriString(filename));
+        public static Uri CreateUri(string filename)
+        {
+            var uriString = string.Format(FileUriFormat, AssetsFolderName, filename);
+
+            return new Uri(uriString);
+        }
     }
 }

@@ -18,11 +18,17 @@
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.Containers.*\**\*.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(SDKType)' == 'data'">
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.ContainerRegistry*\**\*.csproj" />
+  <ItemGroup Condition="'$(SDKType)' == 'mgmtclient'">
+    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.*\**\*.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(SDKType)' == 'mgmt'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.Management.ContainerRegistry*\**\*.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Update="$(MSBuildThisFileDirectory)Azure.Containers.ContainerRegistry\tests\*.csproj">
+      <TestInParallel>false</TestInParallel>
+    </ProjectReference>
   </ItemGroup>
 </Project>

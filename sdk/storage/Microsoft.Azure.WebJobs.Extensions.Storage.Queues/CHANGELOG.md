@@ -1,5 +1,43 @@
 # Release History
 
+## 5.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+- When binding to a CancellationToken, the token will no longer be signaled when in Drain Mode. To detect if the function app is in Drain Mode, use dependency injection to inject the IDrainModeManager, and check the IsDrainModeEnabled property.
+
+### Other Changes
+
+## 5.2.1 (2023-12-12)
+### Other Changes
+- This release contains bug fixes to improve quality.
+
+## 5.2.0 (2023-09-25)
+### Other Changes
+- This release contains bug fixes to improve quality.
+
+## 5.1.3 (2023-06-26)
+- Trigger binding support for ParameterBindingData reference type
+
+## 5.1.2 (2023-04-27)
+- Bumped Azure.Storage.Queue depedency to 12.14.0
+
+## 5.1.1 (2023-03-24)
+- Bumped Azure.Core dependency from 1.28 and 1.30, fixing issue with headers being non-resilient to double dispose of the request.
+
+## 5.1.0 (2023-02-21)
+- Includes all features from 5.1.0-beta.1.
+- Added Target Based Scaling support for Storage Queues and Blobs
+
+## 5.1.0-beta.1 (2023-02-07)
+- Added logging for details of a storage queue listener on start/stop operations.
+
+## 5.0.1 (2022-05-02)
+- Fixed queue message is not removed from the queue after stopping QueueListener. (#28156)
+
 ## 5.0.0 (2021-10-26)
 - General availability of Microsoft.Azure.WebJobs.Extensions.Storage.Queues 5.0.0.
 - Change `QueueProcessor.MessageAddedToPoisonQueue` to async event and rename to `QueueProcessor.MessageAddedToPoisonQueueAsync`.

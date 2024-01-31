@@ -16,36 +16,37 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static Availability DeserializeAvailability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeRange> range = default;
             Optional<TimeSpan> intervalSize = default;
             Optional<IReadOnlyDictionary<string, int>> distribution = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("range"))
+                if (property.NameEquals("range"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     range = DateTimeRange.DeserializeDateTimeRange(property.Value);
                     continue;
                 }
-                if (property.NameEquals("intervalSize"))
+                if (property.NameEquals("intervalSize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     intervalSize = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("distribution"))
+                if (property.NameEquals("distribution"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, int> dictionary = new Dictionary<string, int>();

@@ -1,0 +1,14 @@
+﻿<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    Force project references to Azure clients.  This is necessary because the stress project
+    uses a project reference to the Event Hubs core library and the processor library.  The
+    processor library takes a package reference on the Event Hubs core library, leading versioning
+    to get confused in some scenarios.
+  -->
+  <PropertyGroup Condition="'$(UseProjectReferenceToAzureClients)' == ''">
+    <UseProjectReferenceToAzureClients>true</UseProjectReferenceToAzureClients>
+  </PropertyGroup>
+
+  <!-- Import the common SDK build properties. -->
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory)../.., Directory.Build.props))\Directory.Build.props" />
+</Project>

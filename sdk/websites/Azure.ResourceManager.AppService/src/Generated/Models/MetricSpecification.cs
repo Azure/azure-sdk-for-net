@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,55 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Definition of a single resource metric. </summary>
     public partial class MetricSpecification
     {
-        /// <summary> Initializes a new instance of MetricSpecification. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MetricSpecification"/>. </summary>
         internal MetricSpecification()
         {
-            Dimensions = new ChangeTrackingList<Dimension>();
+            Dimensions = new ChangeTrackingList<MetricDimension>();
             Availabilities = new ChangeTrackingList<MetricAvailability>();
             SupportedTimeGrainTypes = new ChangeTrackingList<string>();
             SupportedAggregationTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MetricSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricSpecification"/>. </summary>
         /// <param name="name"></param>
         /// <param name="displayName"></param>
         /// <param name="displayDescription"></param>
         /// <param name="unit"></param>
         /// <param name="aggregationType"></param>
-        /// <param name="supportsInstanceLevelAggregation"></param>
-        /// <param name="enableRegionalMdmAccount"></param>
+        /// <param name="isInstanceLevelAggregationSupported"></param>
+        /// <param name="isRegionalMdmAccountEnabled"></param>
         /// <param name="sourceMdmAccount"></param>
         /// <param name="sourceMdmNamespace"></param>
         /// <param name="metricFilterPattern"></param>
@@ -40,15 +73,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="availabilities"></param>
         /// <param name="supportedTimeGrainTypes"></param>
         /// <param name="supportedAggregationTypes"></param>
-        internal MetricSpecification(string name, string displayName, string displayDescription, string unit, string aggregationType, bool? supportsInstanceLevelAggregation, bool? enableRegionalMdmAccount, string sourceMdmAccount, string sourceMdmNamespace, string metricFilterPattern, bool? fillGapWithZero, bool? isInternal, IReadOnlyList<Dimension> dimensions, string category, IReadOnlyList<MetricAvailability> availabilities, IReadOnlyList<string> supportedTimeGrainTypes, IReadOnlyList<string> supportedAggregationTypes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricSpecification(string name, string displayName, string displayDescription, string unit, string aggregationType, bool? isInstanceLevelAggregationSupported, bool? isRegionalMdmAccountEnabled, string sourceMdmAccount, string sourceMdmNamespace, string metricFilterPattern, bool? fillGapWithZero, bool? isInternal, IReadOnlyList<MetricDimension> dimensions, string category, IReadOnlyList<MetricAvailability> availabilities, IReadOnlyList<string> supportedTimeGrainTypes, IReadOnlyList<string> supportedAggregationTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DisplayName = displayName;
             DisplayDescription = displayDescription;
             Unit = unit;
             AggregationType = aggregationType;
-            SupportsInstanceLevelAggregation = supportsInstanceLevelAggregation;
-            EnableRegionalMdmAccount = enableRegionalMdmAccount;
+            IsInstanceLevelAggregationSupported = isInstanceLevelAggregationSupported;
+            IsRegionalMdmAccountEnabled = isRegionalMdmAccountEnabled;
             SourceMdmAccount = sourceMdmAccount;
             SourceMdmNamespace = sourceMdmNamespace;
             MetricFilterPattern = metricFilterPattern;
@@ -59,6 +93,7 @@ namespace Azure.ResourceManager.AppService.Models
             Availabilities = availabilities;
             SupportedTimeGrainTypes = supportedTimeGrainTypes;
             SupportedAggregationTypes = supportedAggregationTypes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the name. </summary>
@@ -71,10 +106,10 @@ namespace Azure.ResourceManager.AppService.Models
         public string Unit { get; }
         /// <summary> Gets the aggregation type. </summary>
         public string AggregationType { get; }
-        /// <summary> Gets the supports instance level aggregation. </summary>
-        public bool? SupportsInstanceLevelAggregation { get; }
-        /// <summary> Gets the enable regional mdm account. </summary>
-        public bool? EnableRegionalMdmAccount { get; }
+        /// <summary> Gets the is instance level aggregation supported. </summary>
+        public bool? IsInstanceLevelAggregationSupported { get; }
+        /// <summary> Gets the is regional mdm account enabled. </summary>
+        public bool? IsRegionalMdmAccountEnabled { get; }
         /// <summary> Gets the source mdm account. </summary>
         public string SourceMdmAccount { get; }
         /// <summary> Gets the source mdm namespace. </summary>
@@ -86,7 +121,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Gets the is internal. </summary>
         public bool? IsInternal { get; }
         /// <summary> Gets the dimensions. </summary>
-        public IReadOnlyList<Dimension> Dimensions { get; }
+        public IReadOnlyList<MetricDimension> Dimensions { get; }
         /// <summary> Gets the category. </summary>
         public string Category { get; }
         /// <summary> Gets the availabilities. </summary>

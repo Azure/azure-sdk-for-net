@@ -31,11 +31,11 @@ namespace Azure.DigitalTwins.Core
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public DigitalTwinModelsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2020-10-31")
+        public DigitalTwinModelsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2023-06-30")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://digitaltwins-name.digitaltwins.azure.net");
+            _endpoint = endpoint ?? new Uri("https://digitaltwins-hostname");
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
@@ -50,18 +50,20 @@ namespace Azure.DigitalTwins.Core
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (models != null)
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteStartArray();
+            foreach (var item in models)
             {
-                request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteStartArray();
-                foreach (var item in models)
+                if (item == null)
                 {
-                    content.JsonWriter.WriteObjectValue(item);
+                    content.JsonWriter.WriteNullValue();
+                    continue;
                 }
-                content.JsonWriter.WriteEndArray();
-                request.Content = content;
+                content.JsonWriter.WriteObjectValue(item);
             }
+            content.JsonWriter.WriteEndArray();
+            request.Content = content;
             return message;
         }
 
@@ -72,7 +74,7 @@ namespace Azure.DigitalTwins.Core
         /// * 400 Bad Request
         ///   * DTDLParserError - The models provided are not valid DTDL.
         ///   * InvalidArgument - The model id is invalid.
-        ///   * LimitExceeded - The maximum number of model ids allowed in &apos;dependenciesFor&apos; has been reached.
+        ///   * LimitExceeded - The maximum number of model ids allowed in 'dependenciesFor' has been reached.
         ///   * ModelVersionNotSupported - The version of DTDL used is not supported.
         /// * 409 Conflict
         ///   * ModelAlreadyExists - The model provided already exists.
@@ -80,8 +82,14 @@ namespace Azure.DigitalTwins.Core
         /// <param name="models"> An array of models to add. </param>
         /// <param name="digitalTwinModelsAddOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<IReadOnlyList<DigitalTwinsModelData>>> AddAsync(IEnumerable<object> models = null, CreateModelsOptions digitalTwinModelsAddOptions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="models"/> is null. </exception>
+        public async Task<Response<IReadOnlyList<DigitalTwinsModelData>>> AddAsync(IEnumerable<object> models, CreateModelsOptions digitalTwinModelsAddOptions = null, CancellationToken cancellationToken = default)
         {
+            if (models == null)
+            {
+                throw new ArgumentNullException(nameof(models));
+            }
+
             using var message = CreateAddRequest(models, digitalTwinModelsAddOptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
@@ -99,7 +107,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -110,7 +118,7 @@ namespace Azure.DigitalTwins.Core
         /// * 400 Bad Request
         ///   * DTDLParserError - The models provided are not valid DTDL.
         ///   * InvalidArgument - The model id is invalid.
-        ///   * LimitExceeded - The maximum number of model ids allowed in &apos;dependenciesFor&apos; has been reached.
+        ///   * LimitExceeded - The maximum number of model ids allowed in 'dependenciesFor' has been reached.
         ///   * ModelVersionNotSupported - The version of DTDL used is not supported.
         /// * 409 Conflict
         ///   * ModelAlreadyExists - The model provided already exists.
@@ -118,8 +126,14 @@ namespace Azure.DigitalTwins.Core
         /// <param name="models"> An array of models to add. </param>
         /// <param name="digitalTwinModelsAddOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<IReadOnlyList<DigitalTwinsModelData>> Add(IEnumerable<object> models = null, CreateModelsOptions digitalTwinModelsAddOptions = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="models"/> is null. </exception>
+        public Response<IReadOnlyList<DigitalTwinsModelData>> Add(IEnumerable<object> models, CreateModelsOptions digitalTwinModelsAddOptions = null, CancellationToken cancellationToken = default)
         {
+            if (models == null)
+            {
+                throw new ArgumentNullException(nameof(models));
+            }
+
             using var message = CreateAddRequest(models, digitalTwinModelsAddOptions);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
@@ -137,7 +151,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -149,7 +163,7 @@ namespace Azure.DigitalTwins.Core
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/models", false);
-            if (dependenciesFor != null)
+            if (dependenciesFor != null && Optional.IsCollectionDefined(dependenciesFor))
             {
                 foreach (var param in dependenciesFor)
                 {
@@ -176,11 +190,11 @@ namespace Azure.DigitalTwins.Core
         /// * 200 OK
         /// * 400 Bad Request
         ///   * InvalidArgument - The model id is invalid.
-        ///   * LimitExceeded - The maximum number of model ids allowed in &apos;dependenciesFor&apos; has been reached.
+        ///   * LimitExceeded - The maximum number of model ids allowed in 'dependenciesFor' has been reached.
         /// * 404 Not Found
         ///   * ModelNotFound - The model was not found.
         /// </summary>
-        /// <param name="dependenciesFor"> The set of the models which will have their dependencies retrieved. If omitted, all models are retrieved. </param>
+        /// <param name="dependenciesFor"> If specified, only return the set of the specified models along with their dependencies. If omitted, all models are retrieved. </param>
         /// <param name="includeModelDefinition"> When true the model definition will be returned as part of the result. </param>
         /// <param name="digitalTwinModelsListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -198,7 +212,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -208,11 +222,11 @@ namespace Azure.DigitalTwins.Core
         /// * 200 OK
         /// * 400 Bad Request
         ///   * InvalidArgument - The model id is invalid.
-        ///   * LimitExceeded - The maximum number of model ids allowed in &apos;dependenciesFor&apos; has been reached.
+        ///   * LimitExceeded - The maximum number of model ids allowed in 'dependenciesFor' has been reached.
         /// * 404 Not Found
         ///   * ModelNotFound - The model was not found.
         /// </summary>
-        /// <param name="dependenciesFor"> The set of the models which will have their dependencies retrieved. If omitted, all models are retrieved. </param>
+        /// <param name="dependenciesFor"> If specified, only return the set of the specified models along with their dependencies. If omitted, all models are retrieved. </param>
         /// <param name="includeModelDefinition"> When true the model definition will be returned as part of the result. </param>
         /// <param name="digitalTwinModelsListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -230,7 +244,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -287,7 +301,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -325,7 +339,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -346,6 +360,11 @@ namespace Azure.DigitalTwins.Core
             content.JsonWriter.WriteStartArray();
             foreach (var item in updateModel)
             {
+                if (item == null)
+                {
+                    content.JsonWriter.WriteNullValue();
+                    continue;
+                }
                 content.JsonWriter.WriteObjectValue(item);
             }
             content.JsonWriter.WriteEndArray();
@@ -389,7 +408,7 @@ namespace Azure.DigitalTwins.Core
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -429,7 +448,7 @@ namespace Azure.DigitalTwins.Core
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -478,7 +497,7 @@ namespace Azure.DigitalTwins.Core
                 case 204:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -512,7 +531,7 @@ namespace Azure.DigitalTwins.Core
                 case 204:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -539,12 +558,12 @@ namespace Azure.DigitalTwins.Core
         /// * 200 OK
         /// * 400 Bad Request
         ///   * InvalidArgument - The model id is invalid.
-        ///   * LimitExceeded - The maximum number of model ids allowed in &apos;dependenciesFor&apos; has been reached.
+        ///   * LimitExceeded - The maximum number of model ids allowed in 'dependenciesFor' has been reached.
         /// * 404 Not Found
         ///   * ModelNotFound - The model was not found.
         /// </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="dependenciesFor"> The set of the models which will have their dependencies retrieved. If omitted, all models are retrieved. </param>
+        /// <param name="dependenciesFor"> If specified, only return the set of the specified models along with their dependencies. If omitted, all models are retrieved. </param>
         /// <param name="includeModelDefinition"> When true the model definition will be returned as part of the result. </param>
         /// <param name="digitalTwinModelsListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -568,7 +587,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -578,12 +597,12 @@ namespace Azure.DigitalTwins.Core
         /// * 200 OK
         /// * 400 Bad Request
         ///   * InvalidArgument - The model id is invalid.
-        ///   * LimitExceeded - The maximum number of model ids allowed in &apos;dependenciesFor&apos; has been reached.
+        ///   * LimitExceeded - The maximum number of model ids allowed in 'dependenciesFor' has been reached.
         /// * 404 Not Found
         ///   * ModelNotFound - The model was not found.
         /// </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="dependenciesFor"> The set of the models which will have their dependencies retrieved. If omitted, all models are retrieved. </param>
+        /// <param name="dependenciesFor"> If specified, only return the set of the specified models along with their dependencies. If omitted, all models are retrieved. </param>
         /// <param name="includeModelDefinition"> When true the model definition will be returned as part of the result. </param>
         /// <param name="digitalTwinModelsListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -607,7 +626,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

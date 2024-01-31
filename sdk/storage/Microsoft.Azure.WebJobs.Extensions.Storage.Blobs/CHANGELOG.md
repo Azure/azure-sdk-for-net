@@ -1,5 +1,52 @@
 # Release History
 
+## 5.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.2.2 (2023-12-12)
+### Other Changes
+- This release contains bug fixes to improve quality.
+
+## 5.2.1 (2023-09-25)
+### Other Changes
+- This release contains bug fixes to improve quality.
+
+## 5.2.0 (2023-08-29)
+
+### Bugs Fixed
+- Updating ParameterBindingData  "Connection" value to the full connection name instead of the connection section key
+
+### Features Added
+- Added support for `BlobsOptions.PoisonBlobThreshold`
+
+## 5.1.3 (2023-06-26)
+- Loosen parameter binding data parsing and validation to allow binding BlobContainerClient without blob name. (#37124)
+
+## 5.1.2 (2023-04-27)
+- Fixed bug where the blob container would scan from the beginning due not correctly updating the latest scan time. (#35145)
+
+## 5.1.1 (2023-03-24)
+- Bumped Azure.Core dependency from 1.28 and 1.30, fixing issue with headers being non-resilient to double dispose of the request.
+
+## 5.1.0 (2023-02-21)
+- Includes all features from 5.1.0-beta.1.
+- Added Target Based Scaling support for Storage Queues and Blobs
+
+## 5.1.0-beta.1 (2023-02-07)
+- Added logging for details of a storage blob listener on start/stop operations.
+- Updated BlobNameValidationAttribute to allow $web as a container name.
+- Added Blob storage support for ParameterBindingData reference type.
+
+## 5.0.1 (2022-05-02)
+- Implemented caching blobs in shared memory for faster I/O.
+
 ## 5.0.0 (2021-10-26)
 - General availability of Microsoft.Azure.WebJobs.Extensions.Storage.Blobs 5.0.0.
 - Fixed bug where internal message format of blob trigger didn't interop with previous major versions of the extension.

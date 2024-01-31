@@ -201,5 +201,10 @@ namespace Azure.Storage.Blobs.Models
         /// Indicates if the blob has a legal hold.
         /// </summary>
         public bool HasLegalHold { get; internal set; }
+
+        /// <summary>
+        /// Returns the date and time the blob was created on.
+        /// </summary>
+        public DateTimeOffset CreatedOn { get; internal set; }
     }
 }

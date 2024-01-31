@@ -6,36 +6,41 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the PostArgs condition for the delivery rule. </summary>
     public partial class DeliveryRulePostArgsCondition : DeliveryRuleCondition
     {
-        /// <summary> Initializes a new instance of DeliveryRulePostArgsCondition. </summary>
-        /// <param name="parameters"> Defines the parameters for the condition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRulePostArgsCondition(PostArgsMatchConditionParameters parameters)
+        /// <summary> Initializes a new instance of <see cref="DeliveryRulePostArgsCondition"/>. </summary>
+        /// <param name="properties"> Defines the parameters for the condition. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public DeliveryRulePostArgsCondition(PostArgsMatchCondition properties)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            Parameters = parameters;
+            Properties = properties;
             Name = MatchVariable.PostArgs;
         }
 
-        /// <summary> Initializes a new instance of DeliveryRulePostArgsCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRulePostArgsCondition"/>. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
-        /// <param name="parameters"> Defines the parameters for the condition. </param>
-        internal DeliveryRulePostArgsCondition(MatchVariable name, PostArgsMatchConditionParameters parameters) : base(name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Defines the parameters for the condition. </param>
+        internal DeliveryRulePostArgsCondition(MatchVariable name, IDictionary<string, BinaryData> serializedAdditionalRawData, PostArgsMatchCondition properties) : base(name, serializedAdditionalRawData)
         {
-            Parameters = parameters;
+            Properties = properties;
             Name = name;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DeliveryRulePostArgsCondition"/> for deserialization. </summary>
+        internal DeliveryRulePostArgsCondition()
+        {
+        }
+
         /// <summary> Defines the parameters for the condition. </summary>
-        public PostArgsMatchConditionParameters Parameters { get; set; }
+        public PostArgsMatchCondition Properties { get; set; }
     }
 }

@@ -7,16 +7,17 @@
 
 using System;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
     /// <summary> Document Status Response. </summary>
     public partial class DocumentStatusResult
     {
-        /// <summary> Initializes a new instance of DocumentStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentStatusResult"/>. </summary>
         /// <param name="sourceDocumentUri"> Location of the source document. </param>
         /// <param name="createdOn"> Operation created date time. </param>
-        /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
+        /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
         /// <param name="translatedToLanguageCode"> To language. </param>
         /// <param name="progress"> Progress of the translation if available. </param>
@@ -24,18 +25,9 @@ namespace Azure.AI.Translation.Document
         /// <exception cref="ArgumentNullException"> <paramref name="sourceDocumentUri"/>, <paramref name="translatedToLanguageCode"/> or <paramref name="id"/> is null. </exception>
         internal DocumentStatusResult(Uri sourceDocumentUri, DateTimeOffset createdOn, DateTimeOffset lastModified, DocumentTranslationStatus status, string translatedToLanguageCode, float progress, string id)
         {
-            if (sourceDocumentUri == null)
-            {
-                throw new ArgumentNullException(nameof(sourceDocumentUri));
-            }
-            if (translatedToLanguageCode == null)
-            {
-                throw new ArgumentNullException(nameof(translatedToLanguageCode));
-            }
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(sourceDocumentUri, nameof(sourceDocumentUri));
+            Argument.AssertNotNull(translatedToLanguageCode, nameof(translatedToLanguageCode));
+            Argument.AssertNotNull(id, nameof(id));
 
             SourceDocumentUri = sourceDocumentUri;
             CreatedOn = createdOn;
@@ -46,11 +38,11 @@ namespace Azure.AI.Translation.Document
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of DocumentStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentStatusResult"/>. </summary>
         /// <param name="translatedDocumentUri"> Location of the document or folder. </param>
         /// <param name="sourceDocumentUri"> Location of the source document. </param>
         /// <param name="createdOn"> Operation created date time. </param>
-        /// <param name="lastModified"> Date time in which the operation&apos;s status has been updated. </param>
+        /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
         /// <param name="translatedToLanguageCode"> To language. </param>
         /// <param name="error"> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </param>

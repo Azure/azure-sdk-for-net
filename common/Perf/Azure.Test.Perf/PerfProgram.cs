@@ -47,12 +47,12 @@ namespace Azure.Test.Perf
 
             if (testTypes.Any())
             {
-                var optionTypes = PerfStressUtilities.GetOptionTypes(testTypes);
-                await PerfStressUtilities.Parser.ParseArguments(args, optionTypes).MapResult<PerfOptions, Task>(
+                var optionTypes = PerfUtilities.GetOptionTypes(testTypes);
+                await PerfUtilities.Parser.ParseArguments(args, optionTypes).MapResult<PerfOptions, Task>(
                     async o =>
                     {
                         var verbName = o.GetType().GetCustomAttribute<VerbAttribute>().Name;
-                        var testType = testTypes.Where(t => PerfStressUtilities.GetVerbName(t.Name) == verbName).Single();
+                        var testType = testTypes.Where(t => PerfUtilities.GetVerbName(t.Name) == verbName).Single();
                         await Run(testType, o);
                     },
                     errors => Task.CompletedTask
@@ -91,7 +91,7 @@ namespace Azure.Test.Perf
             PrintEnvironment();
 
             using var setupStatusCts = new CancellationTokenSource();
-            var setupStatusThread = PerfStressUtilities.PrintStatus("=== Setup ===", () => ".", newLine: false, setupStatusCts.Token);
+            var setupStatusThread = PerfUtilities.PrintStatus("=== Setup ===", () => ".", newLine: false, setupStatusCts.Token);
 
             using var cleanupStatusCts = new CancellationTokenSource();
             Thread cleanupStatusThread = null;
@@ -117,7 +117,7 @@ namespace Azure.Test.Perf
                         setupStatusThread.Join();
 
                         using var postSetupStatusCts = new CancellationTokenSource();
-                        var postSetupStatusThread = PerfStressUtilities.PrintStatus("=== Post Setup ===", () => ".", newLine: false, postSetupStatusCts.Token);
+                        var postSetupStatusThread = PerfUtilities.PrintStatus("=== Post Setup ===", () => ".", newLine: false, postSetupStatusCts.Token);
 
                         await Task.WhenAll(tests.Select(t => t.PostSetupAsync()));
 
@@ -157,7 +157,7 @@ namespace Azure.Test.Perf
                         try
                         {
                             using var preCleanupStatusCts = new CancellationTokenSource();
-                            var preCleanupStatusThread = PerfStressUtilities.PrintStatus("=== Pre Cleanup ===", () => ".", newLine: false, preCleanupStatusCts.Token);
+                            var preCleanupStatusThread = PerfUtilities.PrintStatus("=== Pre Cleanup ===", () => ".", newLine: false, preCleanupStatusCts.Token);
                             await Task.WhenAll(tests.Select(t => t.PreCleanupAsync()));
                             preCleanupStatusCts.Cancel();
                             preCleanupStatusThread.Join();
@@ -168,7 +168,7 @@ namespace Azure.Test.Perf
                             {
                                 if (cleanupStatusThread == null)
                                 {
-                                    cleanupStatusThread = PerfStressUtilities.PrintStatus("=== Cleanup ===", () => ".", newLine: false, cleanupStatusCts.Token);
+                                    cleanupStatusThread = PerfUtilities.PrintStatus("=== Cleanup ===", () => ".", newLine: false, cleanupStatusCts.Token);
                                 }
 
                                 await Task.WhenAll(tests.Select(t => t.CleanupAsync()));
@@ -187,7 +187,7 @@ namespace Azure.Test.Perf
                     {
                         if (cleanupStatusThread == null)
                         {
-                            cleanupStatusThread = PerfStressUtilities.PrintStatus("=== Cleanup ===", () => ".", newLine: false, cleanupStatusCts.Token);
+                            cleanupStatusThread = PerfUtilities.PrintStatus("=== Cleanup ===", () => ".", newLine: false, cleanupStatusCts.Token);
                         }
 
                         await tests[0].GlobalCleanupAsync();
@@ -313,7 +313,7 @@ namespace Azure.Test.Perf
             long lastCompleted = 0;
 
             using var progressStatusCts = new CancellationTokenSource();
-            var progressStatusThread = PerfStressUtilities.PrintStatus(
+            var progressStatusThread = PerfUtilities.PrintStatus(
                 $"=== {title} ===" + Environment.NewLine +
                 $"{"Current",11}   {"Total",15}   {"Average",14}   {"CPU",7}    {"WorkingSet",10}    {"PrivateMemory",13}",
                 () =>
@@ -378,7 +378,7 @@ namespace Azure.Test.Perf
                         }
                         catch (Exception e)
                         {
-                            if (cancellationToken.IsCancellationRequested && PerfStressUtilities.ContainsOperationCanceledException(e))
+                            if (cancellationToken.IsCancellationRequested && PerfUtilities.ContainsOperationCanceledException(e))
                             {
                                 // If the test has been canceled, ignore if any part of the exception chain is OperationCanceledException.
                             }
@@ -411,7 +411,7 @@ namespace Azure.Test.Perf
                         }
                         catch (Exception e)
                         {
-                            if (cancellationToken.IsCancellationRequested && PerfStressUtilities.ContainsOperationCanceledException(e))
+                            if (cancellationToken.IsCancellationRequested && PerfUtilities.ContainsOperationCanceledException(e))
                             {
                                 // If the test has been canceled, ignore if any part of the exception chain is OperationCanceledException.
                             }
@@ -444,8 +444,9 @@ namespace Azure.Test.Perf
             var cpuTime = (Process.GetCurrentProcess().TotalProcessorTime - startCpuTime).TotalMilliseconds;
             var cpuPercentage = (cpuTime / cpuElapsed) / Environment.ProcessorCount;
 
-            Console.WriteLine($"Completed {totalOperations:N0} operations in a weighted-average of {weightedAverageSeconds:N2}s " +
-                $"({operationsPerSecond:N2} ops/s, {secondsPerOperation:N3} s/op, {cpuPercentage * 100:N2}% CPU)");
+            Console.WriteLine($"Completed {totalOperations:N0} operations in a weighted-average of {NumberFormatter.Format(weightedAverageSeconds, 4)}s " +
+                $"({NumberFormatter.Format(operationsPerSecond, 4)} ops/s, {NumberFormatter.Format(secondsPerOperation, 4)} s/op, " +
+                $"{NumberFormatter.Format(cpuPercentage * 100, 2)}% CPU)");
             Console.WriteLine();
 
             if (latency)

@@ -1,7 +1,36 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## Unreleased
 
+### Breaking changes
+
+- Renamed tags reported on `DigitalTwinsClient` activities to follow OpenTelemetry attribute naming conventions:
+  - `digitalTwinId` to `az.digitaltwins.twin.id`
+  - `componentName` to `az.digitaltwins.component.name`
+  - `relationshipName` to `az.digitaltwins.relationship.name`
+  - `modelId` to `az.digitaltwins.model.id`
+  - `jobId` to `az.digitaltwins.job.id`
+  - `query` to `az.digitaltwins.query`
+  - `eventRouteId` to `az.digitaltwins.event_route.id`
+  - `messageId` to `az.digitaltwins.message.id`
+
+## 1.5.0 (2023-09-07)
+
+### New Features
+- Updated service API version to use API version 2023-06-30 by default.
+- Added support for the new import job. You can now use a blob file in your storage account to import multiple models, twins and relationships at once.
+
+## 1.4.0 (2022-06-30)
+
+### New Features
+
+- Updated service API version to use API version 2022-05-31 by default.
+- Added support for the new, writeable property metadata `SourceTime` to `DigitalTwinPropertyMetadata`.
+- Added support for `LastUpdatedOn` for digital twins and components.
+
+### Fixes and improvements
+
+- Updated samples to illustrate usage of `SourceTime`, `LastUpdatedOn` at digital twin and component metadata level, and use of `DigitalTwinComponentMetadata`.
 
 ## 1.2.2 (2021-04-12)
 

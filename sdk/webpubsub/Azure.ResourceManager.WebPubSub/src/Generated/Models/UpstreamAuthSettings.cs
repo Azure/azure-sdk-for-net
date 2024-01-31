@@ -5,28 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    /// <summary> Upstream auth settings. </summary>
+    /// <summary> Upstream auth settings. If not set, no auth is used for upstream messages. </summary>
     public partial class UpstreamAuthSettings
     {
-        /// <summary> Initializes a new instance of UpstreamAuthSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UpstreamAuthSettings"/>. </summary>
         public UpstreamAuthSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of UpstreamAuthSettings. </summary>
-        /// <param name="upstreamAuthType"> Gets or sets the type of auth. None or ManagedIdentity is supported now. </param>
-        /// <param name="managedIdentity"> Gets or sets the managed identity settings. It&apos;s required if the auth type is set to ManagedIdentity. </param>
-        internal UpstreamAuthSettings(UpstreamAuthType? upstreamAuthType, ManagedIdentitySettings managedIdentity)
+        /// <summary> Initializes a new instance of <see cref="UpstreamAuthSettings"/>. </summary>
+        /// <param name="authType"> Upstream auth type enum. </param>
+        /// <param name="managedIdentity"> Managed identity settings for upstream. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UpstreamAuthSettings(UpstreamAuthType? authType, ManagedIdentitySettings managedIdentity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            UpstreamAuthType = upstreamAuthType;
+            AuthType = authType;
             ManagedIdentity = managedIdentity;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the type of auth. None or ManagedIdentity is supported now. </summary>
-        public UpstreamAuthType? UpstreamAuthType { get; set; }
-        /// <summary> Gets or sets the managed identity settings. It&apos;s required if the auth type is set to ManagedIdentity. </summary>
+        /// <summary> Upstream auth type enum. </summary>
+        public UpstreamAuthType? AuthType { get; set; }
+        /// <summary> Managed identity settings for upstream. </summary>
         internal ManagedIdentitySettings ManagedIdentity { get; set; }
         /// <summary>
         /// The Resource indicating the App ID URI of the target resource.

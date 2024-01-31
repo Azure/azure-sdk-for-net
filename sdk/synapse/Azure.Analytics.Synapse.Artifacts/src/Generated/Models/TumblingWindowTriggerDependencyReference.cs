@@ -6,26 +6,24 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Referenced tumbling window trigger dependency. </summary>
     public partial class TumblingWindowTriggerDependencyReference : TriggerDependencyReference
     {
-        /// <summary> Initializes a new instance of TumblingWindowTriggerDependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="TumblingWindowTriggerDependencyReference"/>. </summary>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceTrigger"/> is null. </exception>
         public TumblingWindowTriggerDependencyReference(TriggerReference referenceTrigger) : base(referenceTrigger)
         {
-            if (referenceTrigger == null)
-            {
-                throw new ArgumentNullException(nameof(referenceTrigger));
-            }
+            Argument.AssertNotNull(referenceTrigger, nameof(referenceTrigger));
 
             Type = "TumblingWindowTriggerDependencyReference";
         }
 
-        /// <summary> Initializes a new instance of TumblingWindowTriggerDependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="TumblingWindowTriggerDependencyReference"/>. </summary>
         /// <param name="type"> The type of dependency reference. </param>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
         /// <param name="offset"> Timespan applied to the start time of a tumbling window when evaluating dependency. </param>

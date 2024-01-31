@@ -1,17 +1,6 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
-trigger:
-  branches:
-    include:
-    - main
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/eventhub/ci.mgmt.yml
-    - sdk/eventhub/service.projects
-    - sdk/eventhub/Azure.ResourceManager.EventHubs
-
+trigger: none
 pr:
   branches:
     include:
@@ -22,16 +11,14 @@ pr:
   paths:
     include:
     - sdk/eventhub/ci.mgmt.yml
-    - sdk/eventhub/service.projects
-    - sdk/eventhub/Azure.ResourceManager.EventHubs
-    - sdk/resourcemanager/
+    - sdk/eventhub/Azure.ResourceManager.EventHubs/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     SdkType: mgmtclient
     ServiceDirectory: eventhub
-    ArtifactName: packages
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.EventHubs
       safeName: AzureResourceManagerEventHubs

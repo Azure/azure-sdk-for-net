@@ -15,23 +15,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Linked service reference type. </summary>
     public partial class LinkedServiceReference
     {
-        /// <summary> Initializes a new instance of LinkedServiceReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedServiceReference"/>. </summary>
         /// <param name="type"> Linked service reference type. </param>
         /// <param name="referenceName"> Reference LinkedService name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public LinkedServiceReference(LinkedServiceReferenceType type, string referenceName)
         {
-            if (referenceName == null)
-            {
-                throw new ArgumentNullException(nameof(referenceName));
-            }
+            Argument.AssertNotNull(referenceName, nameof(referenceName));
 
             Type = type;
             ReferenceName = referenceName;
             Parameters = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of LinkedServiceReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedServiceReference"/>. </summary>
         /// <param name="type"> Linked service reference type. </param>
         /// <param name="referenceName"> Reference LinkedService name. </param>
         /// <param name="parameters"> Arguments for LinkedService. </param>

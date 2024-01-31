@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,23 +15,23 @@ namespace Azure.AI.MetricsAdvisor.Administration
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("hookType");
+            writer.WritePropertyName("hookType"u8);
             writer.WriteStringValue(HookKind.ToString());
-            writer.WritePropertyName("hookName");
+            writer.WritePropertyName("hookName"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(InternalExternalLink))
             {
-                writer.WritePropertyName("externalLink");
+                writer.WritePropertyName("externalLink"u8);
                 writer.WriteStringValue(InternalExternalLink);
             }
             if (Optional.IsCollectionDefined(Administrators))
             {
-                writer.WritePropertyName("admins");
+                writer.WritePropertyName("admins"u8);
                 writer.WriteStartArray();
                 foreach (var item in Administrators)
                 {

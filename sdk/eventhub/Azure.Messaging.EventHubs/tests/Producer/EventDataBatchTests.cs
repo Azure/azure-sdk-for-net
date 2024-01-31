@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Azure.Core.Shared;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
 using NUnit.Framework;
@@ -19,6 +20,11 @@ namespace Azure.Messaging.EventHubs.Tests
     public class EventDataBatchTests
     {
         /// <summary>
+        /// Mock client diagnostics instance to pass through to EventDataBatch constructor.
+        /// </summary>
+        private static MessagingClientDiagnostics MockClientDiagnostics { get; } = new("mock", "mock", "mock", "mock", "mock");
+
+        /// <summary>
         ///   Verifies property accessors for the <see cref="EventDataBatch" />
         ///   constructor.
         /// </summary>
@@ -26,7 +32,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorVerifiesTheTransportBatch()
         {
-            Assert.That(() => new EventDataBatch(null, "ns", "eh", new SendEventOptions()), Throws.ArgumentNullException);
+            Assert.That(() => new EventDataBatch(null, "ns", "eh", new SendEventOptions(), MockClientDiagnostics), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -39,7 +45,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorVerifiesTheFullyQualifiedNamespace(string fullyQualifiedNamespace)
         {
-            Assert.That(() => new EventDataBatch(new MockTransportBatch(), fullyQualifiedNamespace, "eh", new SendEventOptions()), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventDataBatch(new MockTransportBatch(), fullyQualifiedNamespace, "eh", new SendEventOptions(), MockClientDiagnostics), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -52,7 +58,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void ConstructorVerifiesTheEventHubName(string eventHubName)
         {
-            Assert.That(() => new EventDataBatch(new MockTransportBatch(), "ns", eventHubName, new SendEventOptions()), Throws.InstanceOf<ArgumentException>());
+            Assert.That(() => new EventDataBatch(new MockTransportBatch(), "ns", eventHubName, new SendEventOptions(), MockClientDiagnostics), Throws.InstanceOf<ArgumentException>());
         }
 
         /// <summary>
@@ -63,7 +69,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void ConstructorVerifiesTheSendOptions()
         {
-            Assert.That(() => new EventDataBatch(new MockTransportBatch(), "ns", "eh", null), Throws.ArgumentNullException);
+            Assert.That(() => new EventDataBatch(new MockTransportBatch(), "ns", "eh", null, MockClientDiagnostics), Throws.ArgumentNullException);
         }
 
         /// <summary>
@@ -76,7 +82,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var sendOptions = new SendEventOptions();
             var mockBatch = new MockTransportBatch();
-            var batch = new EventDataBatch(mockBatch, "ns", "eh", sendOptions);
+            var batch = new EventDataBatch(mockBatch, "ns", "eh", sendOptions, MockClientDiagnostics);
 
             Assert.That(batch.SendOptions, Is.SameAs(sendOptions), "The send options should have been set.");
             Assert.That(GetInnerBatch(batch), Is.SameAs(mockBatch), "The inner transport batch should have been set.");
@@ -91,7 +97,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void PropertyAccessIsDelegatedToTheTransportClient()
         {
             var mockBatch = new MockTransportBatch();
-            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
+            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions(), MockClientDiagnostics);
 
             Assert.That(batch.MaximumSizeInBytes, Is.EqualTo(mockBatch.MaximumSizeInBytes), "The maximum size should have been delegated.");
             Assert.That(batch.SizeInBytes, Is.EqualTo(mockBatch.SizeInBytes), "The size should have been delegated.");
@@ -107,28 +113,11 @@ namespace Azure.Messaging.EventHubs.Tests
         public void TryAddIsDelegatedToTheTransportClient()
         {
             var mockBatch = new MockTransportBatch();
-            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
+            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions(), MockClientDiagnostics);
             var eventData = new EventData(new byte[] { 0x21 });
 
             Assert.That(batch.TryAdd(eventData), Is.True, "The event should have been accepted.");
             Assert.That(mockBatch.TryAddCalledWith.IsEquivalentTo(eventData), Is.True, "The event data should have been passed with delegation.");
-        }
-
-        /// <summary>
-        ///   Verifies property accessors for the <see cref="EventDataBatch.TryAdd" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        public void TryAddClonesTheEvent()
-        {
-            var mockBatch = new MockTransportBatch();
-            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
-            var eventData = new EventData(new byte[] { 0x21 });
-
-            Assert.That(batch.TryAdd(eventData), Is.True, "The event should have been accepted.");
-            Assert.That(mockBatch.TryAddCalledWith.IsEquivalentTo(eventData), Is.True, "The event data should have been passed with delegation.");
-            Assert.That(mockBatch.TryAddCalledWith, Is.Not.SameAs(eventData), "The event data should have been cloned.");
         }
 
         /// <summary>
@@ -137,10 +126,10 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void AsEnumerableIsDelegatedToTheTransportClient()
+        public void AsReadOnlyCollectionIsDelegatedToTheTransportClient()
         {
             var mockBatch = new MockTransportBatch();
-            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
+            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions(), MockClientDiagnostics);
 
             batch.AsReadOnlyCollection<string>();
             Assert.That(mockBatch.AsReadOnlyCollectionCalledWith, Is.EqualTo(typeof(string)), "The enumerable should delegated the requested type parameter.");
@@ -155,7 +144,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void DisposeIsDelegatedToTheTransportClient()
         {
             var mockBatch = new MockTransportBatch();
-            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
+            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions(), MockClientDiagnostics);
 
             batch.Dispose();
             Assert.That(mockBatch.DisposeInvoked, Is.True);
@@ -170,7 +159,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ClearIsDelegatedToTheTransportClient()
         {
             var mockBatch = new MockTransportBatch();
-            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
+            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions(), MockClientDiagnostics);
 
             batch.Clear();
             Assert.That(mockBatch.ClearInvoked, Is.True);
@@ -185,7 +174,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void TryAddRespectsTheBatchLock()
         {
             var mockBatch = new MockTransportBatch();
-            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
+            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions(), MockClientDiagnostics);
             var eventData = new EventData(new byte[] { 0x21 });
 
             Assert.That(batch.TryAdd(new EventData(new byte[] { 0x21 })), Is.True, "The event should have been accepted before locking.");
@@ -206,7 +195,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void ClearRespectsTheBatchLock()
         {
             var mockBatch = new MockTransportBatch();
-            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
+            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions(), MockClientDiagnostics);
             var eventData = new EventData(new byte[] { 0x21 });
 
             Assert.That(batch.TryAdd(new EventData(new byte[] { 0x21 })), Is.True, "The event should have been accepted before locking.");
@@ -230,7 +219,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public void DisposeRespectsTheBatchLock()
         {
             var mockBatch = new MockTransportBatch();
-            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions());
+            var batch = new EventDataBatch(mockBatch, "ns", "eh", new SendEventOptions(), MockClientDiagnostics);
             var eventData = new EventData(new byte[] { 0x21 });
 
             Assert.That(batch.TryAdd(new EventData(new byte[] { 0x21 })), Is.True, "The event should have been accepted before locking.");
@@ -279,6 +268,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             public override int Count { get; } = 400;
 
+            public override int? StartingSequenceNumber => 0;
+
             public override void Clear() => ClearInvoked = true;
 
             public override void Dispose() => DisposeInvoked = true;
@@ -293,6 +284,12 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 AsReadOnlyCollectionCalledWith = typeof(T);
                 return default;
+            }
+
+            public override int ApplyBatchSequencing(int lastSequenceNumber, long? producerGroupId, short? ownerLevel) => (lastSequenceNumber + 1);
+
+            public override void ResetBatchSequencing()
+            {
             }
         }
     }

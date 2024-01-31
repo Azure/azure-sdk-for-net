@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/qumulo/Azure.ResourceManager.Qumulo",
+  "Tag": "net/qumulo/Azure.ResourceManager.Qumulo_3a03d27a31"
+}

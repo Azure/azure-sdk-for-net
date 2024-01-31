@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Azure Maps Azure.Maps.Geolocation</Description>
+    <AssemblyTitle>Azure Maps Azure.Maps.Geolocation</AssemblyTitle>
+    <Version>1.0.0-beta.3</Version>
+    <PackageTags>Azure;Azure Maps;Maps Azure.Maps.Geolocation</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>$(NoWarn);AZC0001;AZC0012</NoWarn>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+  <!-- Shared source from Azure.Core -->
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" Link="Shared%(RecursiveDir)%(Filename)%(Extension)" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
+  </ItemGroup>
+
+  <!-- Shared source from Azure.Maps -->
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Maps.Common\src\MapsSasCredentialPolicy.cs" LinkBase="Shared" />
+  </ItemGroup>
+</Project>

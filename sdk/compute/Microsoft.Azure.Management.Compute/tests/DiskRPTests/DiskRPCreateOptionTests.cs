@@ -146,7 +146,7 @@ namespace Compute.Tests.DiskRPTests
         /// <summary>
         /// positive test for testing UploadPreparedSecure disk
         /// </summary>
-        [Fact]
+        [Fact (Skip = "DiskEncryptionSet belongs to different sub")]
         public void DiskWithUploadPreparedSecureCreateOptionTest()
         {
             using (MockContext context = MockContext.Start(this.GetType()))

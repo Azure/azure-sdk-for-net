@@ -6,38 +6,76 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> The action to be executed by a job step. </summary>
     public partial class JobStepAction
     {
-        /// <summary> Initializes a new instance of JobStepAction. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobStepAction"/>. </summary>
         /// <param name="value"> The action value, for example the text of the T-SQL script to execute. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public JobStepAction(string value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of JobStepAction. </summary>
-        /// <param name="jobStepActionType"> Type of action being executed by the job step. </param>
+        /// <summary> Initializes a new instance of <see cref="JobStepAction"/>. </summary>
+        /// <param name="actionType"> Type of action being executed by the job step. </param>
         /// <param name="source"> The source of the action to execute. </param>
         /// <param name="value"> The action value, for example the text of the T-SQL script to execute. </param>
-        internal JobStepAction(JobStepActionType? jobStepActionType, JobStepActionSource? source, string value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobStepAction(JobStepActionType? actionType, JobStepActionSource? source, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            JobStepActionType = jobStepActionType;
+            ActionType = actionType;
             Source = source;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobStepAction"/> for deserialization. </summary>
+        internal JobStepAction()
+        {
         }
 
         /// <summary> Type of action being executed by the job step. </summary>
-        public JobStepActionType? JobStepActionType { get; set; }
+        public JobStepActionType? ActionType { get; set; }
         /// <summary> The source of the action to execute. </summary>
         public JobStepActionSource? Source { get; set; }
         /// <summary> The action value, for example the text of the T-SQL script to execute. </summary>

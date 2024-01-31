@@ -10,12 +10,12 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Suggested search string to be used for further search for time series instances. </summary>
     internal partial class InstancesSearchStringSuggestion
     {
-        /// <summary> Initializes a new instance of InstancesSearchStringSuggestion. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancesSearchStringSuggestion"/>. </summary>
         internal InstancesSearchStringSuggestion()
         {
         }
 
-        /// <summary> Initializes a new instance of InstancesSearchStringSuggestion. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancesSearchStringSuggestion"/>. </summary>
         /// <param name="searchString"> Suggested search string. Can be used for further search for time series instances. </param>
         /// <param name="highlightedSearchString"> Highlighted suggested search string to be displayed to the user. Highlighting inserts &lt;hit&gt; and &lt;/hit&gt; tags in the portions of text that matched the search string. Do not use highlighted search string to do further search calls. </param>
         internal InstancesSearchStringSuggestion(string searchString, string highlightedSearchString)

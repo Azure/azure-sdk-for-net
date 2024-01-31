@@ -1,73 +1,75 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/securityContacts/default2?api-version=2017-08-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvc2VjdXJpdHlDb250YWN0cy9kZWZhdWx0Mj9hcGktdmVyc2lvbj0yMDE3LTA4LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/securityContacts/default?api-version=2020-01-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDg3YmI0ODUtYjViMC00NzFlLTljMGQtMTA3MTc2MTJmODY5L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VjdXJpdHkvc2VjdXJpdHlDb250YWN0cy9kZWZhdWx0P2FwaS12ZXJzaW9uPTIwMjAtMDEtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"email\": \"barbra@contoso.com\",\r\n    \"phone\": \"\",\r\n    \"alertNotifications\": \"Off\",\r\n    \"alertsToAdmins\": \"Off\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"emails\": \"barbra2@contoso.com\",\r\n    \"alertNotifications\": {},\r\n    \"notificationsByRole\": {}\r\n  }\r\n}",
       "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "b66b0613-3b43-41fb-aa08-5acc2e703a3c"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.700.22.47601",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22621",
+          "Microsoft.Azure.Management.Security.SecurityCenterClient/3.0.0.0"
+        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "145"
-        ],
-        "x-ms-client-request-id": [
-          "dc9cd1c9-c5b8-4464-8a68-36cf5642d933"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Security.SecurityCenterClient/0.1.0.0"
+          "128"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/securityContacts/default2\",\r\n  \"name\": \"default2\",\r\n  \"type\": \"Microsoft.Security/securityContacts\",\r\n  \"properties\": {\r\n    \"email\": \"barbra@contoso.com\",\r\n    \"alertNotifications\": \"Off\",\r\n    \"alertsToAdmins\": \"Off\"\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Sun, 22 Jul 2018 12:52:26 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "833f31a7-48bb-4f5e-b7b3-07bb39647121"
-        ],
         "x-ms-ratelimit-remaining-subscription-resource-requests": [
           "249"
         ],
+        "api-supported-versions": [
+          "2020-01-01-preview"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "x-ms-request-id": [
+          "7a3b6764-7b78-4501-9982-4efcb250538a"
+        ],
         "x-ms-correlation-request-id": [
-          "5bd227d6-f2b7-402c-9b42-7944febf67de"
+          "7a3b6764-7b78-4501-9982-4efcb250538a"
         ],
         "x-ms-routing-request-id": [
-          "UKSOUTH:20180722T125227Z:5bd227d6-f2b7-402c-9b42-7944febf67de"
+          "GERMANYWESTCENTRAL:20221027T100211Z:7a3b6764-7b78-4501-9982-4efcb250538a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Thu, 27 Oct 2022 10:02:11 GMT"
+        ],
+        "Content-Length": [
+          "415"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"notificationsByRole\": {\r\n      \"state\": \"Off\",\r\n      \"roles\": []\r\n    },\r\n    \"emails\": \"barbra2@contoso.com\",\r\n    \"phone\": \"\",\r\n    \"alertNotifications\": {\r\n      \"state\": \"Off\",\r\n      \"minimalSeverity\": \"\"\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/487bb485-b5b0-471e-9c0d-10717612f869/providers/Microsoft.Security/securityContacts/default\",\r\n  \"name\": \"default\",\r\n  \"type\": \"Microsoft.Security/securityContacts\",\r\n  \"etag\": \"\\\"fa0070a3-0000-0d00-0000-635a57230000\\\"\",\r\n  \"location\": \"West Europe\"\r\n}",
       "StatusCode": 200
     }
   ],

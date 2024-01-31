@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 
 namespace Azure.Core.Tests
 {
@@ -208,6 +210,49 @@ namespace Azure.Core.Tests
             Assert.AreEqual(30, hangingStream.ReadTimeout);
         }
 
+        private static IEnumerable<object[]> GetExceptionCases()
+        {
+            yield return new object[] { new IOException(), TimeoutPolicy};
+            yield return new object[] { new IOException(), NoTimeoutPolicy};
+            yield return new object[] { new ObjectDisposedException("test"), TimeoutPolicy};
+            yield return new object[] { new ObjectDisposedException("test"), NoTimeoutPolicy};
+            yield return new object[] { new OperationCanceledException(), TimeoutPolicy};
+            yield return new object[] { new OperationCanceledException(), NoTimeoutPolicy};
+            yield return new object[] { new NotSupportedException(), TimeoutPolicy};
+            yield return new object[] { new NotSupportedException(), NoTimeoutPolicy};
+        }
+
+        [TestCaseSource(nameof(GetExceptionCases))]
+        public void ExceptionsTranslatedCorrectlyWhenCanceled(Exception exception, HttpPipelinePolicy policy)
+        {
+            var cts = new CancellationTokenSource();
+            var stream = new CancelingStream(cts, exception);
+            MockResponse mockResponse = new MockResponse(200)
+            {
+                ContentStream = stream
+            };
+
+            MockTransport mockTransport = CreateMockTransport(mockResponse);
+            Assert.ThrowsAsync<TaskCanceledException>(async () => await SendGetRequest(mockTransport, policy, cancellationToken: cts.Token));
+            Assert.IsTrue(stream.IsClosed);
+        }
+
+        [TestCaseSource(nameof(GetExceptionCases))]
+        public void ExceptionsNotTranslatedWhenNotCanceled(Exception exception, HttpPipelinePolicy policy)
+        {
+            var cts = new CancellationTokenSource();
+            var stream = new CancelingStream(cts, exception, false);
+            MockResponse mockResponse = new MockResponse(200)
+            {
+                ContentStream = stream
+            };
+
+            MockTransport mockTransport = CreateMockTransport(mockResponse);
+            var thrown = Assert.CatchAsync(async () => await SendGetRequest(mockTransport, policy, cancellationToken: cts.Token));
+            Assert.AreSame(exception, thrown);
+            Assert.IsFalse(stream.IsClosed);
+        }
+
         private class SlowReadStream : TestReadStream
         {
             public readonly TaskCompletionSource<object> StartedReader = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -283,6 +328,35 @@ namespace Azure.Core.Tests
                 }
 
                 return left;
+            }
+
+            public override void Close()
+            {
+                IsClosed = true;
+                base.Close();
+            }
+
+            public bool IsClosed { get; set; }
+        }
+
+        private class CancelingStream : TestReadStream
+        {
+            private readonly Exception _exceptionToThrow;
+            private readonly CancellationTokenSource _cancellationTokenSource;
+            private readonly bool _cancel;
+
+            public CancelingStream(CancellationTokenSource cancellationTokenSource, Exception exceptionToThrow, bool cancel = true)
+            {
+                _exceptionToThrow = exceptionToThrow;
+                _cancellationTokenSource = cancellationTokenSource;
+                _cancel = cancel;
+            }
+
+            public override int Read(byte[] buffer, int offset, int count)
+            {
+                if (_cancel)
+                    _cancellationTokenSource.Cancel();
+                throw _exceptionToThrow;
             }
 
             public override void Close()

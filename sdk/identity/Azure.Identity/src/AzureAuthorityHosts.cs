@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -15,22 +15,22 @@ namespace Azure.Identity
         private const string AzureGermanyHostUrl = "https://login.microsoftonline.de/";
         private const string AzureGovernmentHostUrl = "https://login.microsoftonline.us/";
         /// <summary>
-        /// The host of the Azure Active Directory authority for tenants in the Azure Public Cloud.
+        /// The host of the Microsoft Entra authority for tenants in the Azure Public Cloud.
         /// </summary>
         public static Uri AzurePublicCloud { get; } = new Uri(AzurePublicCloudHostUrl);
 
         /// <summary>
-        /// The host of the Azure Active Directory authority for tenants in the Azure China Cloud.
+        /// The host of the Microsoft Entra authority for tenants in the Azure China Cloud.
         /// </summary>
         public static Uri AzureChina { get; } = new Uri(AzureChinaHostUrl);
 
         /// <summary>
-        /// The host of the Azure Active Directory authority for tenants in the Azure German Cloud.
+        /// The host of the Microsoft Entra authority for tenants in the Azure German Cloud.
         /// </summary>
         public static Uri AzureGermany { get; } = new Uri(AzureGermanyHostUrl);
 
         /// <summary>
-        /// The host of the Azure Active Directory authority for tenants in the Azure US Government Cloud.
+        /// The host of the Microsoft Entra authority for tenants in the Azure US Government Cloud.
         /// </summary>
         public static Uri AzureGovernment { get; } = new Uri(AzureGovernmentHostUrl);
 
@@ -49,13 +49,14 @@ namespace Azure.Identity
             switch (authorityHost.AbsoluteUri)
             {
                 case AzurePublicCloudHostUrl:
-                    return "https://management.core.windows.net//.default";
+                    // The double slash is intentional for public cloud.
+                    return "https://management.azure.com//.default";
                 case AzureChinaHostUrl:
-                    return "https://management.core.chinacloudapi.cn//.default";
+                    return "https://management.chinacloudapi.cn/.default";
                 case AzureGermanyHostUrl:
-                    return "https://management.core.cloudapi.de//.default";
+                    return "https://management.microsoftazure.de/.default";
                 case AzureGovernmentHostUrl:
-                    return "https://management.core.usgovcloudapi.net//.default";
+                    return "https://management.usgovcloudapi.net/.default";
                 default:
                     return null;
             }

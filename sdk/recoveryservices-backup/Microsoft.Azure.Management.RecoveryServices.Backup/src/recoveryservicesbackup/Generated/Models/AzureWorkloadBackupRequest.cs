@@ -31,7 +31,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// </summary>
         /// <param name="backupType">Type of backup, viz. Full, Differential,
         /// Log or CopyOnlyFull. Possible values include: 'Invalid', 'Full',
-        /// 'Differential', 'Log', 'CopyOnlyFull', 'Incremental'</param>
+        /// 'Differential', 'Log', 'CopyOnlyFull', 'Incremental',
+        /// 'SnapshotFull', 'SnapshotCopyOnlyFull'</param>
         /// <param name="enableCompression">Bool for Compression
         /// setting</param>
         /// <param name="recoveryPointExpiryTimeInUTC">Backup copy will expire
@@ -52,7 +53,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <summary>
         /// Gets or sets type of backup, viz. Full, Differential, Log or
         /// CopyOnlyFull. Possible values include: 'Invalid', 'Full',
-        /// 'Differential', 'Log', 'CopyOnlyFull', 'Incremental'
+        /// 'Differential', 'Log', 'CopyOnlyFull', 'Incremental',
+        /// 'SnapshotFull', 'SnapshotCopyOnlyFull'
         /// </summary>
         [JsonProperty(PropertyName = "backupType")]
         public string BackupType { get; set; }

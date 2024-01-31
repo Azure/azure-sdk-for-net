@@ -6,26 +6,24 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Deletes an existing live pipeline. </summary>
     public partial class LivePipelineDeleteRequest : MethodRequestEmptyBodyBase
     {
-        /// <summary> Initializes a new instance of LivePipelineDeleteRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="LivePipelineDeleteRequest"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public LivePipelineDeleteRequest(string name) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             MethodName = "livePipelineDelete";
         }
 
-        /// <summary> Initializes a new instance of LivePipelineDeleteRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="LivePipelineDeleteRequest"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
         /// <param name="name"> Resource name. </param>

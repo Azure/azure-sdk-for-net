@@ -12,21 +12,26 @@ using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the SharedGalleryImage data model. </summary>
-    public partial class SharedGalleryImageData : PirSharedGalleryResource
+    /// <summary>
+    /// A class representing the SharedGalleryImage data model.
+    /// Specifies information about the gallery image definition that you want to create or update.
+    /// </summary>
+    public partial class SharedGalleryImageData : PirSharedGalleryResourceData
     {
-        /// <summary> Initializes a new instance of SharedGalleryImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryImageData"/>. </summary>
         internal SharedGalleryImageData()
         {
             Features = new ChangeTrackingList<GalleryImageFeature>();
+            ArtifactTags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SharedGalleryImageData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedGalleryImageData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uniqueId"> The unique id of this shared gallery. </param>
-        /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </param>
-        /// <param name="osState"> This property allows the user to specify whether the virtual machines created under this image are &apos;Generalized&apos; or &apos;Specialized&apos;. </param>
+        /// <param name="osType"> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: **Windows,** **Linux.**. </param>
+        /// <param name="osState"> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="identifier"> This is the gallery image definition identifier. </param>
         /// <param name="recommended"> The properties describe the recommended machine configuration for this Image Definition. These properties are updatable. </param>
@@ -34,7 +39,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </param>
         /// <param name="features"> A list of gallery image features. </param>
         /// <param name="purchasePlan"> Describes the gallery image definition purchase plan. This is used by marketplace images. </param>
-        internal SharedGalleryImageData(string name, string location, string uniqueId, OperatingSystemTypes? osType, OperatingSystemStateTypes? osState, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IReadOnlyList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan) : base(name, location, uniqueId)
+        /// <param name="architecture"> The architecture of the image. Applicable to OS disks only. </param>
+        /// <param name="privacyStatementUri"> Privacy statement uri for the current community gallery image. </param>
+        /// <param name="eula"> End-user license agreement for the current community gallery image. </param>
+        /// <param name="artifactTags"> The artifact tags of a shared gallery resource. </param>
+        internal SharedGalleryImageData(string name, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, string uniqueId, SupportedOperatingSystemType? osType, OperatingSystemStateType? osState, DateTimeOffset? endOfLifeOn, GalleryImageIdentifier identifier, RecommendedMachineConfiguration recommended, Disallowed disallowed, HyperVGeneration? hyperVGeneration, IReadOnlyList<GalleryImageFeature> features, ImagePurchasePlan purchasePlan, ArchitectureType? architecture, Uri privacyStatementUri, string eula, IReadOnlyDictionary<string, string> artifactTags) : base(name, location, serializedAdditionalRawData, uniqueId)
         {
             OSType = osType;
             OSState = osState;
@@ -45,12 +54,16 @@ namespace Azure.ResourceManager.Compute
             HyperVGeneration = hyperVGeneration;
             Features = features;
             PurchasePlan = purchasePlan;
+            Architecture = architecture;
+            PrivacyStatementUri = privacyStatementUri;
+            Eula = eula;
+            ArtifactTags = artifactTags;
         }
 
-        /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </summary>
-        public OperatingSystemTypes? OSType { get; }
-        /// <summary> This property allows the user to specify whether the virtual machines created under this image are &apos;Generalized&apos; or &apos;Specialized&apos;. </summary>
-        public OperatingSystemStateTypes? OSState { get; }
+        /// <summary> This property allows you to specify the type of the OS that is included in the disk when creating a VM from a managed image. Possible values are: **Windows,** **Linux.**. </summary>
+        public SupportedOperatingSystemType? OSType { get; }
+        /// <summary> This property allows the user to specify whether the virtual machines created under this image are 'Generalized' or 'Specialized'. </summary>
+        public OperatingSystemStateType? OSState { get; }
         /// <summary> The end of life date of the gallery image definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
         public DateTimeOffset? EndOfLifeOn { get; }
         /// <summary> This is the gallery image definition identifier. </summary>
@@ -62,7 +75,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> A list of disk types. </summary>
         public IList<string> DisallowedDiskTypes
         {
-            get => Disallowed.DiskTypes;
+            get => Disallowed?.DiskTypes;
         }
 
         /// <summary> The hypervisor generation of the Virtual Machine. Applicable to OS disks only. </summary>
@@ -71,6 +84,14 @@ namespace Azure.ResourceManager.Compute
         public IReadOnlyList<GalleryImageFeature> Features { get; }
         /// <summary> Describes the gallery image definition purchase plan. This is used by marketplace images. </summary>
         public ImagePurchasePlan PurchasePlan { get; }
+        /// <summary> The architecture of the image. Applicable to OS disks only. </summary>
+        public ArchitectureType? Architecture { get; }
+        /// <summary> Privacy statement uri for the current community gallery image. </summary>
+        public Uri PrivacyStatementUri { get; }
+        /// <summary> End-user license agreement for the current community gallery image. </summary>
+        public string Eula { get; }
+        /// <summary> The artifact tags of a shared gallery resource. </summary>
+        public IReadOnlyDictionary<string, string> ArtifactTags { get; }
         /// <summary> The resource identifier. </summary>
         public ResourceIdentifier Id { get; internal set; }
     }

@@ -82,7 +82,7 @@ namespace Azure.Storage.Blobs.ChangeFeed
                 PreviousInfo = previousInfo,
                 Snapshot = snapshot,
                 UpdatedBlobProperties = updatedBlobProperties,
-                AsyncOperationInfo = asyncOperationInfo,
+                LongRunningOperationInfo = asyncOperationInfo,
                 UpdatedBlobTags = updatedBlobTags
             };
 

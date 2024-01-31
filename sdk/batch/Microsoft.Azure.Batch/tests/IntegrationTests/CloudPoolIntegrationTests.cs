@@ -876,7 +876,7 @@ namespace BatchClientIntegrationTests
                         {
                             DataDisks = new List<DataDisk>
                             {
-                                    new DataDisk(lun, diskSizeGB)
+                                new DataDisk(lun, diskSizeGB)
                             }
                         },
                         targetDedicated);
@@ -936,6 +936,158 @@ namespace BatchClientIntegrationTests
             }
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
+        }
+
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task TestPoolCreatedTrustedLaunch()
+        {
+            static async Task test()
+            {
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
+                string poolId = TestUtilities.GenerateResourceId();
+
+                try
+                {
+                    var imageDetails = IaasLinuxPoolFixture.GetUbuntuServerImageDetails(batchCli);
+
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(
+                        poolId,
+                        "standard_d2s_v3",
+                         new VirtualMachineConfiguration(
+                            imageDetails.ImageReference,
+                            imageDetails.NodeAgentSkuId)
+                         {
+                             SecurityProfile = new SecurityProfile()
+                             {
+                                 SecurityType = SecurityTypes.TrustedLaunch,
+                                 EncryptionAtHost = true,
+                                 UefiSettings = new UefiSettings()
+                                 {
+                                     SecureBootEnabled = true,
+                                     VTpmEnabled = true
+                                 }
+                             }
+                         }
+
+                         );
+
+
+
+                    await pool.CommitAsync().ConfigureAwait(false);
+                    await pool.RefreshAsync().ConfigureAwait(false);
+
+                    Assert.NotNull(pool.VirtualMachineConfiguration.SecurityProfile);
+                    Assert.Equal(SecurityTypes.TrustedLaunch, pool.VirtualMachineConfiguration.SecurityProfile.SecurityType);
+                    Assert.True(pool.VirtualMachineConfiguration.SecurityProfile.EncryptionAtHost);
+                    Assert.True(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.SecureBootEnabled);
+                    Assert.True(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.VTpmEnabled);
+                }
+                finally
+                {
+                    await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
+                }
+            }
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
+        }
+
+
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task TestPoolCreatedOsDisk()
+        {
+            static async Task test()
+            {
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
+                string poolId = TestUtilities.GenerateResourceId();
+
+                try
+                {
+                    var imageDetails = IaasLinuxPoolFixture.GetUbuntuServerImageDetails(batchCli);
+
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(
+                        poolId,
+                        "standard_d2s_v3",
+                         new VirtualMachineConfiguration(
+                            imageDetails.ImageReference,
+                            imageDetails.NodeAgentSkuId)
+                         {
+                             OSDisk = new OSDisk()
+                             {
+                                 Caching = CachingType.ReadOnly,
+                                 ManagedDisk = new ManagedDisk()
+                                 {
+                                     StorageAccountType = StorageAccountType.PremiumLrs
+                                 },
+                                 DiskSizeGB = 10
+                             }
+                         }
+                         );
+
+
+
+
+                    await pool.CommitAsync().ConfigureAwait(false);
+                    await pool.RefreshAsync().ConfigureAwait(false);
+
+                    Assert.NotNull(pool.VirtualMachineConfiguration.OSDisk);
+                    Assert.Equal(CachingType.ReadOnly, pool.VirtualMachineConfiguration.OSDisk.Caching);
+                    Assert.Equal(10, pool.VirtualMachineConfiguration.OSDisk.DiskSizeGB);
+                    Assert.Equal(StorageAccountType.PremiumLrs, pool.VirtualMachineConfiguration.OSDisk.ManagedDisk.StorageAccountType);
+                }
+                finally
+                {
+                    await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
+                }
+            }
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
+        }
+
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task TestPoolCreateResourceTags()
+        {
+            static async Task test()
+            {
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientServicePrincipal().ConfigureAwait(false);
+
+                string poolId = TestUtilities.GenerateResourceId();
+
+                try
+                {
+                    var imageDetails = IaasLinuxPoolFixture.GetUbuntuServerImageDetails(batchCli);
+
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(
+                        poolId,
+                        "standard_d2s_v3",
+                         new VirtualMachineConfiguration(
+                            imageDetails.ImageReference,
+                            imageDetails.NodeAgentSkuId)
+                         );
+                    pool.ResourceTags = new Dictionary<string, string>()
+                    {
+                        {"TagName1","TagValue1"},
+                        {"TagName2","TagValue2"},
+                    };
+
+
+                    await pool.CommitAsync().ConfigureAwait(false);
+                    await pool.RefreshAsync().ConfigureAwait(false);
+
+                    Assert.NotNull(pool.ResourceTags);
+                    Assert.Equal("TagValue1", pool.ResourceTags["TagName1"]);
+                    Assert.Equal("TagValue2", pool.ResourceTags["TagName2"]);
+                }
+                finally
+                {
+                    await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
+                }
+            }
+
+            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
         }
 
         [Theory]
@@ -1133,6 +1285,177 @@ namespace BatchClientIntegrationTests
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
 
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongDuration)]
+        public async Task TestNodeCommunicationMode()
+        {
+            async Task test()
+            {
+                using BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false);
+                string poolId = "TestNodeCommunicationMode-" + TestUtilities.GetMyName();
+
+                try
+                {
+                    var imageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+                    var targetDedicatedNodeNum = 1;
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(
+                      poolId,
+                      PoolFixture.VMSize,
+                      new VirtualMachineConfiguration(
+                          imageDetails.ImageReference,
+                          imageDetails.NodeAgentSkuId),
+                      targetDedicatedNodeNum);
+
+                    //Set NodeCommunicationMode to Default
+                    pool.TargetNodeCommunicationMode = NodeCommunicationMode.Default;
+                    await pool.CommitAsync().ConfigureAwait(false);
+                    await pool.RefreshAsync().ConfigureAwait(false);
+                    var allocationState = batchCli.PoolOperations.GetPool(poolId).AllocationState;
+                    do
+                    {
+                        if (allocationState != AllocationState.Steady)
+                        {
+                            await Task.Delay(new TimeSpan(0, 0, 10));
+                            testOutputHelper.WriteLine($"waiting for pool {poolId} to be steady...");
+                            allocationState = batchCli.PoolOperations.GetPool(poolId).AllocationState;
+                        }
+                    }
+                    while (allocationState != AllocationState.Steady);
+
+                    if (allocationState == AllocationState.Steady)
+                    {
+                        await pool.RefreshAsync().ConfigureAwait(false);
+                        testOutputHelper.WriteLine($"pool state is {pool.AllocationState}");
+                        Assert.NotNull(pool.CurrentNodeCommunicationMode);
+                        Assert.Equal(NodeCommunicationMode.Default, pool.TargetNodeCommunicationMode);
+
+                        //Then to Simplified
+                        pool.TargetNodeCommunicationMode = NodeCommunicationMode.Simplified;
+                        await pool.CommitAsync().ConfigureAwait(false);
+                        pool = batchCli.PoolOperations.GetPool(poolId);
+                        Assert.NotNull(pool.CurrentNodeCommunicationMode);
+                        Assert.Equal(NodeCommunicationMode.Simplified, pool.TargetNodeCommunicationMode);
+
+                        //Then to Classic
+                        pool.TargetNodeCommunicationMode = NodeCommunicationMode.Classic;
+                        await pool.CommitChangesAsync().ConfigureAwait(false);
+                        await pool.RefreshAsync().ConfigureAwait(false);
+                        Assert.NotNull(pool.CurrentNodeCommunicationMode);
+                        Assert.Equal(NodeCommunicationMode.Classic, pool.TargetNodeCommunicationMode);
+                    }
+                }
+                finally
+                {
+                    await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
+                }
+            }
+
+            await SynchronizationContextHelper.RunTestAsync(test, LongTestTimeout);
+        }
+
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongDuration)]
+        public void TestPoolCreatedAcceleratedNetworkingSucceeds()
+        {
+            static void test()
+            {
+                using BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result;
+                string poolId = nameof(TestPoolCreatedDataDiskSucceeds) + TestUtilities.GetMyName();
+                const int targetDedicated = 0;
+                try
+                {
+                    var imageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+
+                    //Create a pool
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(
+                        poolId,
+                        PoolFixture.VMSize,
+                        new VirtualMachineConfiguration(
+                            imageDetails.ImageReference,
+                            imageDetails.NodeAgentSkuId),
+                        targetDedicated);
+                    pool.NetworkConfiguration = new NetworkConfiguration() { EnableAcceleratedNetworking = true };
+                    pool.Commit();
+                    pool.Refresh();
+
+                    Assert.True(pool.NetworkConfiguration.EnableAcceleratedNetworking);
+                }
+                finally
+                {
+                    //Delete the pool
+                    TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).Wait();
+                }
+            }
+
+            SynchronizationContextHelper.RunTest(test, TestTimeout);
+        }
+
+        [Fact]
+        [LiveTest]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongDuration)]
+        public async Task TestPoolCreatedExtensionWithAutomaticUpgradeSucceeds()
+        {
+            async Task test()
+            {
+                using BatchClient batchCli = TestUtilities.OpenBatchClientFromEnvironmentAsync().Result;
+                string poolId = nameof(TestPoolCreatedExtensionWithAutomaticUpgradeSucceeds) + TestUtilities.GetMyName();
+                const int targetDedicated = 1;
+                try
+                {
+                    var imageDetails = IaasLinuxPoolFixture.GetUbuntuImageDetails(batchCli);
+                    var testExtension = new VMExtension("test", "Microsoft.Azure.KeyVault", "KeyVaultForLinux");
+                    testExtension.EnableAutomaticUpgrade = true;
+                    testExtension.TypeHandlerVersion = "2.0";
+
+                    //Create a pool
+                    CloudPool pool = batchCli.PoolOperations.CreatePool(
+                        poolId,
+                        PoolFixture.VMSize,
+                        new VirtualMachineConfiguration(
+                            imageDetails.ImageReference,
+                            imageDetails.NodeAgentSkuId)
+                        {
+                            Extensions = new List<VMExtension>() { testExtension }
+                        },
+                        targetDedicated);
+                    await pool.CommitAsync().ConfigureAwait(false);
+                    await pool.RefreshAsync().ConfigureAwait(false);
+                    var allocationState = batchCli.PoolOperations.GetPool(poolId).AllocationState;
+                    do
+                    {
+                        if (allocationState != AllocationState.Steady)
+                        {
+                            await Task.Delay(new TimeSpan(0, 0, 10));
+                            testOutputHelper.WriteLine($"waiting for pool {poolId} to be steady...");
+                            allocationState = batchCli.PoolOperations.GetPool(poolId).AllocationState;
+                        }
+                    }
+                    while (allocationState != AllocationState.Steady);
+
+                    if (allocationState == AllocationState.Steady)
+                    {
+                        await pool.RefreshAsync().ConfigureAwait(false);
+                        testOutputHelper.WriteLine($"pool state is {pool.AllocationState}");
+                        var node = pool.ListComputeNodes().First();
+                        testOutputHelper.WriteLine($"Try to get node {node.Id} extentions...");
+                        var extensions = batchCli.PoolOperations.ListComputeNodeExtensions(poolId, node.Id);
+                        testOutputHelper.WriteLine($"Extentions size is {extensions.Count()}...");
+                        var keyvalutExtension = extensions.Single(extension => extension.VmExtension.Publisher.Contains("KeyVault"));
+                        Assert.True(keyvalutExtension.VmExtension.EnableAutomaticUpgrade);
+                    }
+                }
+                finally
+                {
+                    //Delete the pool
+                    await TestUtilities.DeletePoolIfExistsAsync(batchCli, poolId).ConfigureAwait(false);
+                }
+            }
+
+            await SynchronizationContextHelper.RunTestAsync(test, LongTestTimeout);
+        }
+
         #region Test helpers
 
         /// <summary>
@@ -1147,12 +1470,12 @@ namespace BatchClientIntegrationTests
             private Task<AzureOperationResponse<IPage<Protocol.Models.PoolUsageMetrics>, Protocol.Models.PoolListUsageMetricsHeaders>> NewFunc(CancellationToken token)
             {
                 var response = new AzureOperationResponse<IPage<Protocol.Models.PoolUsageMetrics>, Protocol.Models.PoolListUsageMetricsHeaders>()
-                    {
+                {
 
-                        Body = new FakePage<Protocol.Models.PoolUsageMetrics>(_poolUsageMetricsList)
-                    };
+                    Body = new FakePage<Protocol.Models.PoolUsageMetrics>(_poolUsageMetricsList)
+                };
 
-                return System.Threading.Tasks.Task.FromResult(response);
+                return Task.FromResult(response);
             }
 
             // replaces the func with our own func

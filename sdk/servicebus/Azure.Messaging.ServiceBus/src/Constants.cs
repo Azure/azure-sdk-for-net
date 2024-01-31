@@ -49,5 +49,12 @@ namespace Azure.Messaging.ServiceBus
         public const int WellKnownPublicPortsLimit = 1023;
 
         public const string DefaultScope = "https://servicebus.azure.net/.default";
+
+        /// <summary>
+        /// The message appended to exceptions returned from the service that contains a link to the troubleshooting guide.
+        /// Usage errors with obvious causes do not contain this message.
+        /// </summary>
+        public const string TroubleshootingMessage =
+            "For troubleshooting information, see https://aka.ms/azsdk/net/servicebus/exceptions/troubleshoot.";
     }
 }

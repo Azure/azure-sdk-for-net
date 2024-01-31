@@ -125,6 +125,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
             var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
             var client = new ServiceBusClient(connString);
+            var identifier = "MyProcessor";
             var options = new ServiceBusProcessorOptions
             {
                 AutoCompleteMessages = false,
@@ -133,12 +134,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete,
                 MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(60),
                 MaxReceiveWaitTime = TimeSpan.FromSeconds(10),
-                SubQueue = SubQueue.DeadLetter
+                SubQueue = SubQueue.DeadLetter,
+                Identifier = identifier
             };
             var processor = client.CreateProcessor("queueName", options);
             Assert.AreEqual(options.AutoCompleteMessages, processor.AutoCompleteMessages);
             Assert.AreEqual(options.MaxConcurrentCalls, processor.MaxConcurrentCalls);
             Assert.AreEqual(options.PrefetchCount, processor.PrefetchCount);
+            Assert.AreEqual(options.Identifier, processor.Identifier);
             Assert.AreEqual(options.ReceiveMode, processor.ReceiveMode);
             Assert.AreEqual(options.MaxAutoLockRenewalDuration, processor.MaxAutoLockRenewalDuration);
             Assert.AreEqual(options.MaxReceiveWaitTime, processor.MaxReceiveWaitTime);
@@ -175,6 +178,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             options.PrefetchCount = 0;
             options.MaxReceiveWaitTime = TimeSpan.FromSeconds(1);
             options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(0);
+            options.MaxAutoLockRenewalDuration = Timeout.InfiniteTimeSpan;
         }
 
         [Test]
@@ -320,10 +324,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             var mockProcessor = new MockProcessor();
             bool processMessageCalled = false;
             bool processErrorCalled = false;
+            var mockReceiver = new Mock<ServiceBusReceiver>();
+            mockReceiver.Setup(r => r.FullyQualifiedNamespace).Returns("namespace");
+            mockReceiver.Setup(r => r.EntityPath).Returns("entityPath");
 
             var processArgs = new ProcessMessageEventArgs(
                 ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "1"),
-                new Mock<ServiceBusReceiver>().Object,
+                mockReceiver.Object,
                 CancellationToken.None);
 
             var errorArgs = new ProcessErrorEventArgs(
@@ -337,6 +344,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             {
                 processMessageCalled = true;
                 Assert.AreEqual("1", args.Message.MessageId);
+                Assert.AreEqual("namespace", args.FullyQualifiedNamespace);
+                Assert.AreEqual("entityPath", args.EntityPath);
                 return Task.CompletedTask;
             };
 
@@ -357,6 +366,43 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
             Assert.IsTrue(processMessageCalled);
             Assert.IsTrue(processErrorCalled);
+        }
+
+        [Test]
+        public async Task CanRaiseLockLostOnMockProcessor()
+        {
+            var mockProcessor = new MockProcessor();
+            bool processMessageCalled = false;
+            var mockReceiver = new Mock<ServiceBusReceiver>();
+            mockReceiver.Setup(r => r.FullyQualifiedNamespace).Returns("namespace");
+            mockReceiver.Setup(r => r.EntityPath).Returns("entityPath");
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(messageId: "1");
+            var processArgs = new ProcessMessageEventArgs(
+                message,
+                mockReceiver.Object,
+                CancellationToken.None);
+
+            bool lockLostEventRaised = false;
+            mockProcessor.ProcessMessageAsync += args =>
+            {
+                args.MessageLockLostAsync += (lockLostArgs) =>
+                {
+                    lockLostEventRaised = true;
+                    Assert.IsNull(lockLostArgs.Exception);
+                    return Task.CompletedTask;
+                };
+                processMessageCalled = true;
+                return Task.CompletedTask;
+            };
+
+            mockProcessor.ProcessErrorAsync += _ => Task.CompletedTask;
+
+            await mockProcessor.OnProcessMessageAsync(processArgs);
+            Assert.IsFalse(lockLostEventRaised);
+            await processArgs.OnMessageLockLostAsync(new MessageLockLostEventArgs(message, null));
+            Assert.IsTrue(lockLostEventRaised);
+
+            Assert.IsTrue(processMessageCalled);
         }
 
         [Test]
@@ -414,6 +460,22 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Throws.InstanceOf<ObjectDisposedException>().And.Property(nameof(ObjectDisposedException.ObjectName)).EqualTo(nameof(ServiceBusConnection)));
 
             await processor.DisposeAsync();
+        }
+
+        [Test]
+        public void CanUpdateConcurrencyOnMockProcessor()
+        {
+            var mockProcessor = new Mock<ServiceBusProcessor> { CallBase = true };
+            mockProcessor.Object.UpdateConcurrency(5);
+            Assert.AreEqual(5, mockProcessor.Object.MaxConcurrentCalls);
+        }
+
+        [Test]
+        public void CanUpdatePrefetchOnMockProcessor()
+        {
+            var mockProcessor = new Mock<ServiceBusProcessor>() { CallBase = true };
+            mockProcessor.Object.UpdatePrefetchCount(10);
+            Assert.AreEqual(10, mockProcessor.Object.PrefetchCount);
         }
 
         [Test]

@@ -8,26 +8,24 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Blob tags. </summary>
     internal partial class BlobTags
     {
-        /// <summary> Initializes a new instance of BlobTags. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobTags"/>. </summary>
         /// <param name="blobTagSet"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobTagSet"/> is null. </exception>
         public BlobTags(IEnumerable<BlobTag> blobTagSet)
         {
-            if (blobTagSet == null)
-            {
-                throw new ArgumentNullException(nameof(blobTagSet));
-            }
+            Argument.AssertNotNull(blobTagSet, nameof(blobTagSet));
 
             BlobTagSet = blobTagSet.ToList();
         }
 
-        /// <summary> Initializes a new instance of BlobTags. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobTags"/>. </summary>
         /// <param name="blobTagSet"></param>
         internal BlobTags(IList<BlobTag> blobTagSet)
         {

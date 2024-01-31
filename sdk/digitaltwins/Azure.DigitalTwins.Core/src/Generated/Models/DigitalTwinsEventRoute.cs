@@ -6,32 +6,27 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> A route which directs notification and telemetry events to an endpoint. Endpoints are a destination outside of Azure Digital Twins such as an EventHub. </summary>
     public partial class DigitalTwinsEventRoute
     {
-        /// <summary> Initializes a new instance of DigitalTwinsEventRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEventRoute"/>. </summary>
         /// <param name="endpointName"> The name of the endpoint this event route is bound to. </param>
         /// <param name="filter"> An expression which describes the events which are routed to the endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="filter"/> is null. </exception>
         public DigitalTwinsEventRoute(string endpointName, string filter)
         {
-            if (endpointName == null)
-            {
-                throw new ArgumentNullException(nameof(endpointName));
-            }
-            if (filter == null)
-            {
-                throw new ArgumentNullException(nameof(filter));
-            }
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(filter, nameof(filter));
 
             EndpointName = endpointName;
             Filter = filter;
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsEventRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="DigitalTwinsEventRoute"/>. </summary>
         /// <param name="id"> The id of the event route. </param>
         /// <param name="endpointName"> The name of the endpoint this event route is bound to. </param>
         /// <param name="filter"> An expression which describes the events which are routed to the endpoint. </param>

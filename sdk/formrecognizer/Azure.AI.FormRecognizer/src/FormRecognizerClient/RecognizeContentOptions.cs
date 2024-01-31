@@ -34,7 +34,7 @@ namespace Azure.AI.FormRecognizer
         /// business logic should be built upon the actual line location instead of order.
         /// </summary>
         /// <remarks>
-        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and newer.
         /// </remarks>
         public FormReadingOrder? ReadingOrder { get; set; }
 
@@ -45,7 +45,7 @@ namespace Azure.AI.FormRecognizer
         /// that specific language.
         /// </summary>
         /// <remarks>
-        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and newer.
         /// </remarks>
         public FormRecognizerLanguage? Language { get; set; }
 
@@ -57,11 +57,11 @@ namespace Azure.AI.FormRecognizer
         /// </para>
         /// <para>
         /// Although this collection cannot be set, it can be modified.
-        /// See <see href="https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/object-and-collection-initializers#collection-initializers">collection initializer</see>.
+        /// See <see href="https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/object-and-collection-initializers#object-initializers-with-collection-read-only-property-initialization">Object initializers with collection read-only property initialization</see>.
         /// </para>
         /// </summary>
         /// <remarks>
-        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and newer.
         /// </remarks>
         public IList<string> Pages { get; } = new List<string>();
     }

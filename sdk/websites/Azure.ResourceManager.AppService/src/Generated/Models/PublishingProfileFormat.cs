@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary>
-    /// Name of the format. Valid values are: 
+    /// Name of the format. Valid values are:
     /// FileZilla3
     /// WebDeploy -- default
     /// Ftp

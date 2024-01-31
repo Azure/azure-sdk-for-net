@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
@@ -15,10 +14,14 @@ namespace Azure.AI.Translation.Document.Models
     {
         internal static SupportedStorageSources DeserializeSupportedStorageSources(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<StorageSource> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<StorageSource> array = new List<StorageSource>();
                     foreach (var item in property.Value.EnumerateArray())

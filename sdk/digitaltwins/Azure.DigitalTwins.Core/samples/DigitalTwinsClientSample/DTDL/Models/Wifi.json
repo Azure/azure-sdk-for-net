@@ -13,6 +13,11 @@
             "@type": "Property",
             "name": "Network",
             "schema": "string"
+        },
+        {
+            "@type": "Property",
+            "name": "TransmissionPower",
+            "schema": "double"
         }
     ]
 }

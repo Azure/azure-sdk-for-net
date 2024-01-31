@@ -5,74 +5,138 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class DdosSettings : IUtf8JsonSerializable
+    public partial class DdosSettings : IUtf8JsonSerializable, IJsonModel<DdosSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DdosSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DdosSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DdosSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DdosSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            if (Optional.IsDefined(DdosCustomPolicy))
+            if (Optional.IsDefined(ProtectionMode))
             {
-                writer.WritePropertyName("ddosCustomPolicy");
-                JsonSerializer.Serialize(writer, DdosCustomPolicy);
+                writer.WritePropertyName("protectionMode"u8);
+                writer.WriteStringValue(ProtectionMode.Value.ToString());
             }
-            if (Optional.IsDefined(ProtectionCoverage))
+            if (Optional.IsDefined(DdosProtectionPlan))
             {
-                writer.WritePropertyName("protectionCoverage");
-                writer.WriteStringValue(ProtectionCoverage.Value.ToString());
+                writer.WritePropertyName("ddosProtectionPlan"u8);
+                JsonSerializer.Serialize(writer, DdosProtectionPlan);
             }
-            if (Optional.IsDefined(ProtectedIP))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("protectedIP");
-                writer.WriteBooleanValue(ProtectedIP.Value);
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static DdosSettings DeserializeDdosSettings(JsonElement element)
+        DdosSettings IJsonModel<DdosSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<WritableSubResource> ddosCustomPolicy = default;
-            Optional<DdosSettingsProtectionCoverage> protectionCoverage = default;
-            Optional<bool> protectedIP = default;
+            var format = options.Format == "W" ? ((IPersistableModel<DdosSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DdosSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDdosSettings(document.RootElement, options);
+        }
+
+        internal static DdosSettings DeserializeDdosSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DdosSettingsProtectionMode> protectionMode = default;
+            Optional<WritableSubResource> ddosProtectionPlan = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ddosCustomPolicy"))
+                if (property.NameEquals("protectionMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ddosCustomPolicy = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    protectionMode = new DdosSettingsProtectionMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("protectionCoverage"))
+                if (property.NameEquals("ddosProtectionPlan"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    protectionCoverage = new DdosSettingsProtectionCoverage(property.Value.GetString());
+                    ddosProtectionPlan = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("protectedIP"))
+                if (options.Format != "W")
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    protectedIP = property.Value.GetBoolean();
-                    continue;
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new DdosSettings(ddosCustomPolicy, Optional.ToNullable(protectionCoverage), Optional.ToNullable(protectedIP));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DdosSettings(Optional.ToNullable(protectionMode), ddosProtectionPlan, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DdosSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DdosSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DdosSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DdosSettings IPersistableModel<DdosSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DdosSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDdosSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DdosSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DdosSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

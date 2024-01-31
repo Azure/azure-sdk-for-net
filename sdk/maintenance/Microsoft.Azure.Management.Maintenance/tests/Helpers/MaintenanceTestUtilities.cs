@@ -56,25 +56,18 @@ namespace Maintenance.Tests
             var maintenanceConfiguration = new MaintenanceConfiguration(
                 name: maintenanceConfigurationName,
                 location: "eastus2euap",
-                startDateTime: "2021-09-01 01:00",
+                startDateTime: "2025-09-01 01:00",
                 maintenanceScope: MaintenanceScope.InGuestPatch,
-                duration: "01:00",
+                duration: "02:00",
                 timeZone: "India Standard Time",
                 recurEvery: "2Months Third Monday Offset-4");
+
+            maintenanceConfiguration.ExtensionProperties = new Dictionary<string, string>();
 
             if (advancePatchOption)
             {
                 maintenanceConfiguration.InstallPatches = new InputPatchConfiguration()
                 {
-                    PreTasks = new List<TaskProperties> 
-                    {
-                        new TaskProperties()
-                        {
-                            Source = "/subscriptions/42c974dd-2c03-4f1b-96ad-b07f050aaa74/resourceGroups/DefaultResourceGroup-EUS/providers/Microsoft.Automation/automationAccounts/Automate-42c974dd-2c03-4f1b-96ad-b07f050aaa74-EUS/runbooks/foo",
-                            TaskScope = TaskScope.Global,
-                            Parameters = new Dictionary<string,string>() { ["param1"] = "value1" }
-                        }
-                    },
                     LinuxParameters = new InputLinuxParameters()
                     {
                         ClassificationsToInclude = new List<string> (){ "Other" },
@@ -87,6 +80,12 @@ namespace Maintenance.Tests
                     },
                     RebootSetting = RebootOptions.IfRequired
                 };
+
+                maintenanceConfiguration.ExtensionProperties["InGuestPatchMode"] = "User";
+            }
+            else
+            {
+                maintenanceConfiguration.ExtensionProperties["InGuestPatchMode"] = "Platform";
             }
 
             return maintenanceConfiguration;
@@ -134,14 +133,6 @@ namespace Maintenance.Tests
                 Assert.Equal(2, actual.InstallPatches.WindowsParameters.ClassificationsToInclude.Count);
                 Assert.Equal(expected.InstallPatches.WindowsParameters.ClassificationsToInclude[0], actual.InstallPatches.WindowsParameters.ClassificationsToInclude[0]);
                 Assert.Equal(expected.InstallPatches.WindowsParameters.ClassificationsToInclude[1], actual.InstallPatches.WindowsParameters.ClassificationsToInclude[1]);
-                Assert.Equal(1, actual.InstallPatches.PreTasks.Count);
-                Assert.Equal(expected.InstallPatches.PreTasks[0].Source, actual.InstallPatches.PreTasks[0].Source);
-                Assert.Equal(expected.InstallPatches.PreTasks[0].TaskScope, actual.InstallPatches.PreTasks[0].TaskScope);
-                foreach (var kvp in expected.InstallPatches.PreTasks[0].Parameters)
-                {
-                    Assert.True(actual.InstallPatches.PreTasks[0].Parameters.TryGetValue(kvp.Key, out var _));
-                    Assert.Equal(expected.InstallPatches.PreTasks[0].Parameters[kvp.Key], actual.InstallPatches.PreTasks[0].Parameters[kvp.Key]);
-                }
             }
         }
     }

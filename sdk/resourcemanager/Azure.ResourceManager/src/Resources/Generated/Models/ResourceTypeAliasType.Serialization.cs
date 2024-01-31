@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Resources.Models
 
         public static ResourceTypeAliasType ToResourceTypeAliasType(this string value)
         {
-            if (string.Equals(value, "NotSpecified", StringComparison.InvariantCultureIgnoreCase)) return ResourceTypeAliasType.NotSpecified;
-            if (string.Equals(value, "PlainText", StringComparison.InvariantCultureIgnoreCase)) return ResourceTypeAliasType.PlainText;
-            if (string.Equals(value, "Mask", StringComparison.InvariantCultureIgnoreCase)) return ResourceTypeAliasType.Mask;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSpecified")) return ResourceTypeAliasType.NotSpecified;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PlainText")) return ResourceTypeAliasType.PlainText;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Mask")) return ResourceTypeAliasType.Mask;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResourceTypeAliasType value.");
         }
     }

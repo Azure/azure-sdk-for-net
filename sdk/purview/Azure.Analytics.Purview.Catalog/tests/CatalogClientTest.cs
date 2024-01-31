@@ -26,7 +26,8 @@ namespace Azure.Analytics.Purview.Catalog.Tests
                 keywords = "myPurview"
             };
             Response fetchResponse = await client.SearchAsync(RequestContent.Create(data));
-            JsonElement fetchBodyJson = JsonDocument.Parse(GetContentFromResponse(fetchResponse)).RootElement;
+            using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(fetchResponse));
+            JsonElement fetchBodyJson = jsonDocument.RootElement;
             Assert.AreEqual(0, fetchBodyJson.GetProperty("@search.count").GetInt16());
         }
 
@@ -40,7 +41,8 @@ namespace Azure.Analytics.Purview.Catalog.Tests
             };
             Response fetchResponse = await client.SuggestAsync(RequestContent.Create(data));
             Assert.AreEqual(fetchResponse.Status, 200);
-            JsonElement fetchBodyJson = JsonDocument.Parse(GetContentFromResponse(fetchResponse)).RootElement;
+            using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(fetchResponse));
+            JsonElement fetchBodyJson = jsonDocument.RootElement;
             Assert.AreEqual("s3://testpurview/sampledata.csv", fetchBodyJson.GetProperty("value")[0].GetProperty("qualifiedName").GetString());
         }
 
@@ -54,7 +56,8 @@ namespace Azure.Analytics.Purview.Catalog.Tests
             };
             Response fetchResponse = await client.AutoCompleteAsync(RequestContent.Create(data));
             Assert.AreEqual(fetchResponse.Status, 200);
-            JsonElement fetchBodyJson = JsonDocument.Parse(GetContentFromResponse(fetchResponse)).RootElement;
+            using var jsonDocument = JsonDocument.Parse(GetContentFromResponse(fetchResponse));
+            JsonElement fetchBodyJson = jsonDocument.RootElement;
             Assert.AreEqual("sampledata csv", fetchBodyJson.GetProperty("value")[0].GetProperty("queryPlusText").GetString());
         }
 

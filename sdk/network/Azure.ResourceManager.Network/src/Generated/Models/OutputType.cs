@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Connection monitor output destination type. Currently, only &quot;Workspace&quot; is supported. </summary>
+    /// <summary> Connection monitor output destination type. Currently, only "Workspace" is supported. </summary>
     public readonly partial struct OutputType : IEquatable<OutputType>
     {
         private readonly string _value;

@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Automation
                 new Tuple<string, string, string>("Automation", "DscNode", "2020-01-13-preview"),
                 new Tuple<string, string, string>("Automation", "DscNodeConfiguration", "2020-01-13-preview"),
                 new Tuple<string, string, string>("Automation", "Fields", "2020-01-13-preview"),
-                new Tuple<string, string, string>("Automation", "HybridRunbookWorkerGroup", "2021-06-22"),
+                new Tuple<string, string, string>("Automation", "HybridRunbookWorkerGroup", "2022-02-22"),
                 new Tuple<string, string, string>("Automation", "HybridRunbookWorkers", "2021-06-22"),
                 new Tuple<string, string, string>("Automation", "Job", "2019-06-01"),
                 new Tuple<string, string, string>("Automation", "JobSchedule", "2020-01-13-preview"),
@@ -64,8 +64,11 @@ namespace Microsoft.Azure.Management.Automation
                 new Tuple<string, string, string>("Automation", "Watcher", "2020-01-13-preview"),
                 new Tuple<string, string, string>("Automation", "Webhook", "2015-10-31"),
                 new Tuple<string, string, string>("Automation", "convertGraphRunbookContent", "2021-06-22"),
+                new Tuple<string, string, string>("Automation", "deletedAutomationAccounts", "2022-01-31"),
               }.AsEnumerable();
           }
       }
   }
 }
+
+

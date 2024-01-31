@@ -29,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         public async Task TestProcessRequest_ValidRequest()
         {
             var dispatcher = SetupDispatcher(connectionString: TestConnectionString);
-            var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, ValidSignature, origin: TestOrigin);
+            var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, ValidSignature, origin: new string[] { TestOrigin });
             var response = await dispatcher.ExecuteAsync(request);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         public async Task TestProcessRequest_AllowNullUserId()
         {
             var dispatcher = SetupDispatcher();
-            var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, ValidSignature, userId: null, origin: TestOrigin);
+            var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, ValidSignature, userId: null, origin: new string[] { TestOrigin });
             var response = await dispatcher.ExecuteAsync(request);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         public async Task TestProcessRequest_RouteNotFound()
         {
             var dispatcher = SetupDispatcher(connectionString: TestConnectionString);
-            var request = TestHelpers.CreateHttpRequestMessage("hub1", TestType, TestEvent, TestKey.ConnectionId, ValidSignature, origin: TestOrigin);
+            var request = TestHelpers.CreateHttpRequestMessage("hub1", TestType, TestEvent, TestKey.ConnectionId, ValidSignature, origin: new string[] { TestOrigin });
             var response = await dispatcher.ExecuteAsync(request);
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
         }
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         public async Task TestProcessRequest_SignatureInvalid()
         {
             var dispatcher = SetupDispatcher(connectionString: TestConnectionString);
-            var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, new string[] { "abc" }, origin: TestOrigin);
+            var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, new string[] { "abc" }, origin: new string[] { TestOrigin });
             var response = await dispatcher.ExecuteAsync(request);
             Assert.AreEqual(HttpStatusCode.Unauthorized, response.StatusCode);
         }
@@ -74,18 +74,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         public async Task TestProcessRequest_DeleteMethodBadRequest()
         {
             var dispatcher = SetupDispatcher(connectionString: TestConnectionString);
-            var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, ValidSignature, httpMethod: "Delete", origin: TestOrigin);
+            var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, ValidSignature, httpMethod: "Delete", origin: new string[] { TestOrigin });
             var response = await dispatcher.ExecuteAsync(request);
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
-        [TestCase("OPTIONS", "abc.com")]
-        [TestCase("GET", "abc.com")]
-        public async Task TestProcessRequest_AbuseProtectionValidOK(string method, string host)
+        [TestCase("OPTIONS", "abc.com", new string[] { "abc.com" })]
+        [TestCase("GET", "abc.com", new string[] { "abc.com" })]
+        [TestCase("GET", "abc.com", new string[] { "ddd.com", "abc.com" })]
+        public async Task TestProcessRequest_AbuseProtectionValidOK(string method, string allowHost, string[] requestHost)
         {
             ;
-            var dispatcher = SetupDispatcher(connectionString: $"Endpoint=http://{host};Port=8080;AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
-            var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, new string[] { TestKey.Signature }, httpMethod: method, origin: host);
+            var dispatcher = SetupDispatcher(connectionString: $"Endpoint=http://{allowHost};Port=8080;AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
+            var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, new string[] { TestKey.Signature }, httpMethod: method, origin: requestHost);
             var response = await dispatcher.ExecuteAsync(request);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
@@ -96,9 +97,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
         {
             var testhost = "def.com";
             var dispatcher = SetupDispatcher(connectionString: $"Endpoint=http://{allowedHost};Port=8080;AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
-            var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, new string[] { TestKey.Signature }, httpMethod: method, origin: testhost);
+            var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, new string[] { TestKey.Signature }, httpMethod: method, origin: new string[] { testhost });
             var response = await dispatcher.ExecuteAsync(request);
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        }
+
+        [TestCase("sha256=something,sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561")]
+        [TestCase("sha256=something, sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561")]
+        [TestCase("sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561, sha256=something")]
+        [TestCase("sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561,sha256=something")]
+        public async Task TestProcessRequest_MultiSignaturesSuccess(string signatures)
+        {
+            var dispatcher = SetupDispatcher(connectionString: $"Endpoint=http://{TestOrigin};Port=8080;AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;");
+            var request = TestHelpers.CreateHttpRequestMessage(TestHub, TestType, TestEvent, TestKey.ConnectionId, new string[] { signatures }, httpMethod: "GET", origin: new string[] { TestOrigin });
+            var response = await dispatcher.ExecuteAsync(request);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [TestCase("application/xml", HttpStatusCode.BadRequest)]

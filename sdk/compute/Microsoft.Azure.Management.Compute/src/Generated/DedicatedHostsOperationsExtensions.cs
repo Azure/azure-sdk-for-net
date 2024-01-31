@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Compute
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -74,7 +76,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Update an dedicated host .
+            /// Update a dedicated host .
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -97,7 +99,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Update an dedicated host .
+            /// Update a dedicated host .
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -275,7 +277,7 @@ namespace Microsoft.Azure.Management.Compute
             /// the dedicated host has restarted and is running. To determine the health of
             /// VMs deployed on the dedicated host after the restart check the Resource
             /// Health Center in the Azure Portal. Please refer to
-            /// https://docs.microsoft.com/en-us/azure/service-health/resource-health-overview
+            /// https://docs.microsoft.com/azure/service-health/resource-health-overview
             /// for more details.
             /// </summary>
             /// <param name='operations'>
@@ -300,7 +302,7 @@ namespace Microsoft.Azure.Management.Compute
             /// the dedicated host has restarted and is running. To determine the health of
             /// VMs deployed on the dedicated host after the restart check the Resource
             /// Health Center in the Azure Portal. Please refer to
-            /// https://docs.microsoft.com/en-us/azure/service-health/resource-health-overview
+            /// https://docs.microsoft.com/azure/service-health/resource-health-overview
             /// for more details.
             /// </summary>
             /// <param name='operations'>
@@ -321,6 +323,56 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task RestartAsync(this IDedicatedHostsOperations operations, string resourceGroupName, string hostGroupName, string hostName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.RestartWithHttpMessagesAsync(resourceGroupName, hostGroupName, hostName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Lists all available dedicated host sizes to which the specified dedicated
+            /// host can be resized. NOTE: The dedicated host sizes provided can be used to
+            /// only scale up the existing dedicated host.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hostGroupName'>
+            /// The name of the dedicated host group.
+            /// </param>
+            /// <param name='hostName'>
+            /// The name of the dedicated host.
+            /// </param>
+            public static IEnumerable<string> ListAvailableSizes(this IDedicatedHostsOperations operations, string resourceGroupName, string hostGroupName, string hostName)
+            {
+                return operations.ListAvailableSizesAsync(resourceGroupName, hostGroupName, hostName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all available dedicated host sizes to which the specified dedicated
+            /// host can be resized. NOTE: The dedicated host sizes provided can be used to
+            /// only scale up the existing dedicated host.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hostGroupName'>
+            /// The name of the dedicated host group.
+            /// </param>
+            /// <param name='hostName'>
+            /// The name of the dedicated host.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IEnumerable<string>> ListAvailableSizesAsync(this IDedicatedHostsOperations operations, string resourceGroupName, string hostGroupName, string hostName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAvailableSizesWithHttpMessagesAsync(resourceGroupName, hostGroupName, hostName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -376,7 +428,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Update an dedicated host .
+            /// Update a dedicated host .
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -399,7 +451,7 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
-            /// Update an dedicated host .
+            /// Update a dedicated host .
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -475,7 +527,7 @@ namespace Microsoft.Azure.Management.Compute
             /// the dedicated host has restarted and is running. To determine the health of
             /// VMs deployed on the dedicated host after the restart check the Resource
             /// Health Center in the Azure Portal. Please refer to
-            /// https://docs.microsoft.com/en-us/azure/service-health/resource-health-overview
+            /// https://docs.microsoft.com/azure/service-health/resource-health-overview
             /// for more details.
             /// </summary>
             /// <param name='operations'>
@@ -500,7 +552,7 @@ namespace Microsoft.Azure.Management.Compute
             /// the dedicated host has restarted and is running. To determine the health of
             /// VMs deployed on the dedicated host after the restart check the Resource
             /// Health Center in the Azure Portal. Please refer to
-            /// https://docs.microsoft.com/en-us/azure/service-health/resource-health-overview
+            /// https://docs.microsoft.com/azure/service-health/resource-health-overview
             /// for more details.
             /// </summary>
             /// <param name='operations'>

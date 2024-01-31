@@ -670,6 +670,45 @@ namespace Compute.Tests
                 Assert.Equal(vmScaleSetOut.AutomaticRepairsPolicy.RepairAction, expectedAutomaticRepairsRepairActionValue, ignoreCase: true);
             }
 
+            if (vmScaleSet.UpgradePolicy?.RollingUpgradePolicy != null)
+            {
+                if (vmScaleSet.UpgradePolicy.RollingUpgradePolicy.MaxBatchInstancePercent != null)
+                {
+                    Assert.True(vmScaleSetOut.UpgradePolicy.RollingUpgradePolicy.MaxBatchInstancePercent
+                                == vmScaleSet.UpgradePolicy.RollingUpgradePolicy.MaxBatchInstancePercent, "MaxBatchInstancePercent value is unexpected.");
+                }
+
+                if (vmScaleSet.UpgradePolicy.RollingUpgradePolicy.MaxUnhealthyInstancePercent != null)
+                {
+                    Assert.True(vmScaleSetOut.UpgradePolicy.RollingUpgradePolicy.MaxUnhealthyInstancePercent
+                                == vmScaleSet.UpgradePolicy.RollingUpgradePolicy.MaxUnhealthyInstancePercent, "MaxUnhealthyInstancePercent value is unexpected.");
+                }
+
+                if (vmScaleSet.UpgradePolicy.RollingUpgradePolicy.MaxUnhealthyUpgradedInstancePercent != null)
+                {
+                    Assert.True(vmScaleSetOut.UpgradePolicy.RollingUpgradePolicy.MaxUnhealthyUpgradedInstancePercent
+                                == vmScaleSet.UpgradePolicy.RollingUpgradePolicy.MaxUnhealthyUpgradedInstancePercent, "MaxUnhealthyUpgradedInstancePercent value is unexpected.");
+                }
+
+                if (vmScaleSet.UpgradePolicy.RollingUpgradePolicy.EnableCrossZoneUpgrade != null)
+                {
+                    Assert.True(vmScaleSetOut.UpgradePolicy.RollingUpgradePolicy.EnableCrossZoneUpgrade
+                        == vmScaleSet.UpgradePolicy.RollingUpgradePolicy.EnableCrossZoneUpgrade, "EnableCrossZoneUpgrade value does not match");
+                }
+
+                if (vmScaleSet.UpgradePolicy.RollingUpgradePolicy.PrioritizeUnhealthyInstances != null)
+                {
+                    Assert.True(vmScaleSetOut.UpgradePolicy.RollingUpgradePolicy.PrioritizeUnhealthyInstances
+                        == vmScaleSet.UpgradePolicy.RollingUpgradePolicy.PrioritizeUnhealthyInstances, "PrioritizeUnhealthyInstances value does not match");
+                }
+
+                if (vmScaleSet.UpgradePolicy.RollingUpgradePolicy.RollbackFailedInstancesOnPolicyBreach != null)
+                {
+                    Assert.True(vmScaleSetOut.UpgradePolicy.RollingUpgradePolicy.RollbackFailedInstancesOnPolicyBreach
+                        == vmScaleSet.UpgradePolicy.RollingUpgradePolicy.RollbackFailedInstancesOnPolicyBreach, "RollbackFailedInstancesOnPolicyBreach value does not match");
+                }
+            }
+
             if (vmScaleSet.VirtualMachineProfile.OsProfile.Secrets != null &&
                vmScaleSet.VirtualMachineProfile.OsProfile.Secrets.Any())
             {

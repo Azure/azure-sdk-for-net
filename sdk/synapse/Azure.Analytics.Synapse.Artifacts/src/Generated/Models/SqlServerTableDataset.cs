@@ -7,26 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The on-premises SQL Server dataset. </summary>
     public partial class SqlServerTableDataset : Dataset
     {
-        /// <summary> Initializes a new instance of SqlServerTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public SqlServerTableDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
             Type = "SqlServerTable";
         }
 
-        /// <summary> Initializes a new instance of SqlServerTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerTableDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

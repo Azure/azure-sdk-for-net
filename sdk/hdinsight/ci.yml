@@ -9,6 +9,9 @@ trigger:
   paths:
     include:
     - sdk/hdinsight/
+    exclude:
+    - sdk/hdinsight/Azure.ResourceManager.HDInsight/
+    - sdk/hdinsight/Azure.ResourceManager.HDInsight.Containers/
 
 pr:
   branches:
@@ -20,9 +23,12 @@ pr:
   paths:
     include:
     - sdk/hdinsight/
+    exclude:
+    - sdk/hdinsight/Azure.ResourceManager.HDInsight/
+    - sdk/hdinsight/Azure.ResourceManager.HDInsight.Containers/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: hdinsight
     ArtifactName: packages

@@ -33,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
     /// work correctly together in addition to DiagnosticScope logic inside Azure.Messaging.EventHubs
     /// </summary>
     [NonParallelizable]
-    [LiveOnly]
+    [LiveOnly(true)]
     public class EventHubApplicationInsightsTests : WebJobsEventHubTestBase
     {
         private static EventWaitHandle _eventWait;
@@ -47,6 +47,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             EventHubTestMultipleDispatchJobs.LinksCount.Clear();
             EventHubTestMultipleDispatchJobs.MessagesCount = 0;
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _eventWait.Dispose();
+            _channel.Dispose();
         }
 
         private readonly JsonSerializerSettings jsonSettingThrowOnError = new JsonSerializerSettings
@@ -72,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             List<DependencyTelemetry> dependencies = _channel.Telemetries.OfType<DependencyTelemetry>().ToList();
 
             // We expect 1 message span and 1 send span
-            var messageDependencies = dependencies.Where(d => d.Name == "EventHubs.Message").ToList();
+            var messageDependencies = dependencies.Where(d => d.Name == "Message").ToList();
             var sendDependency = dependencies.Single(d => d.Name == "EventHubProducerClient.Send");
 
             var sendRequest = requests.Single(r => r.Context.Operation.Name == nameof(EventHubTestSingleDispatchJobs.SendEvent_TestHub));
@@ -105,13 +112,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreEqual(sendRequestOperationId, messageDependency.Context.Operation.Id);
             }
 
-            Assert.True(processRequest.Properties.TryGetValue("_MS.links", out var linksStr));
-            var links = JsonConvert.DeserializeObject<TestLink[]>(linksStr, jsonSettingThrowOnError).ToArray();
-            Assert.AreEqual(1, links.Length);
-            foreach (var link in links)
-            {
-                Assert.True(messageDependencies.Any(m => m.Id == link.id && m.Context.Operation.Id == link.operation_Id));
-            }
+            Assert.AreEqual(messageDependencies.Single().Id, processRequest.Context.Operation.ParentId);
         }
 
         [Test]
@@ -130,7 +131,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             List<DependencyTelemetry> dependencies = _channel.Telemetries.OfType<DependencyTelemetry>().ToList();
 
             // We expect 5 message spans and 1 send span
-            var messageDependencies = dependencies.Where(d => d.Name == "EventHubs.Message").ToList();
+            var messageDependencies = dependencies.Where(d => d.Name == "Message").ToList();
             var sendDependency = dependencies.Single(d => d.Name == "EventHubProducerClient.Send");
 
             Assert.AreEqual(5, messageDependencies.Count);
@@ -258,7 +259,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             Assert.True(request.Properties.ContainsKey(LogConstants.FunctionExecutionTimeKey));
             Assert.True(double.TryParse(request.Properties[LogConstants.FunctionExecutionTimeKey], out double functionDuration));
-            Assert.True(request.Duration.TotalMilliseconds >= functionDuration);
+
+            // Allow a margin of error of ~125 milliseconds, as timing is not precise.
+            functionDuration -= 125;
+            Assert.GreaterOrEqual(request.Duration.TotalMilliseconds, functionDuration);
 
             Assert.AreEqual(LogCategories.Results, request.Properties[LogConstants.CategoryNameKey]);
             Assert.AreEqual((success ? LogLevel.Information : LogLevel.Error).ToString(), request.Properties[LogConstants.LogLevelKey]);

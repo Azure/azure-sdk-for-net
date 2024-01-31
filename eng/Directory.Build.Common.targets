@@ -12,6 +12,11 @@
     <Error Condition="'@(RequiredTargetFrameworks)' == ''" Text="List of required target frameworks is empty something must have messed up property RequiredTargetFrameworks[$(RequiredTargetFrameworks)]." />
     <Error Condition="'@(MissingTargetFrameworks)' != ''" Text="Missing required target frameworks '@(MissingTargetFrameworks)'. Please ensure you add those frameworks." />
   </Target>
+  
+  <Target Name="ValidateRunApiCompat" BeforeTargets="Build" Condition="'$(ValidateRunApiCompat)' == 'true'">
+    <Error Condition="'$(RunApiCompat)' == 'false' and '$(IncludeBuildOutput)' != 'false'" 
+           Text="Api Compat cannot be disabled."/>
+  </Target>
 
   <!-- Set PackageProjectUrl and PackageReleaseNotes to the package README.md and CHANGELOG.md respectively for DataPlane Libraries -->
   <Target Name="SetPackageProjectUrlandReleaseNotes" BeforeTargets="GenerateNuspec" DependsOnTargets="InitializeSourceControlInformationFromSourceControlManager" Condition="'$(IsShippingLibrary)' == 'true' and '$(SourceRevisionId)' != ''">
@@ -32,10 +37,10 @@
       <ValidateReleaseNotesScriptPath Condition=" '$(ValidateReleaseNotesScriptPath)'=='' ">$(MSBuildThisFileDirectory)common/scripts/Verify-ChangeLog.ps1</ValidateReleaseNotesScriptPath>
       <ChangeLogPath>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../))CHANGELOG.md</ChangeLogPath>
     </PropertyGroup>
-    <Exec ContinueOnError="true" ConsoleToMSBuild="true" StandardOutputImportance="Low" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(ValidateReleaseNotesScriptPath) -ChangeLogLocation $(ChangeLogPath) -VersionString $(_VersionInProject)">
+    <Exec ContinueOnError="true" ConsoleToMSBuild="true" StandardOutputImportance="High" Command="$(PowerShellExe) -NoProfile -NonInteractive -executionpolicy Unrestricted -File $(ValidateReleaseNotesScriptPath) -ChangeLogLocation $(ChangeLogPath) -VersionString $(_VersionInProject)">
       <Output TaskParameter="ExitCode" PropertyName="SetReleaseNotesErrorCode" />
     </Exec>
-    <Error Condition="'$(SetReleaseNotesErrorCode)' != '0'" Text="No entry for version [$(_VersionInProject)] found in the ChangeLog [$(ChangeLogPath)]. " />
+    <Error Condition="'$(SetReleaseNotesErrorCode)' != '0'" Text="ChangeLog verification failed for [$(ChangeLogPath)]." />
   </Target>
 
   <!--Run Aggregate Updates to Source -->
@@ -87,7 +92,7 @@
 
     <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" PrivateAssets="All" />
 
-    <PackageReference Condition="'$(EnableFxCopAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.FxCopAnalyzers" PrivateAssets="All" />
+    <PackageReference Condition="'$(EnableMicrosoftCodeAnalysisNetAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.NetAnalyzers" PrivateAssets="All" />
 
     <PackageReference Condition="'$(EnableBannedApiAnalyzers)' == 'true'" Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="All" />
 
@@ -99,9 +104,9 @@
     <None Condition="Exists('$(MSBuildProjectDirectory)/../CHANGELOG.md')" Include="$(MSBuildProjectDirectory)/../CHANGELOG.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 
-  <!-- Add App.config to enable server GC in net461 perf and stress projects -->
-  <ItemGroup Condition="('$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true') and '$(TargetFramework)' == 'net461'">
-    <None Include="$(RepoRoot)/common/PerfStressShared/App.config" />
+  <!-- Add App.config to enable server GC in net462 perf and stress projects -->
+  <ItemGroup Condition="('$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true') and '$(TargetFramework)' == 'net462'">
+    <None Include="$(RepoRoot)/common/Perf/App.config" />
   </ItemGroup>
 
   <!-- Add StyleCop Analyzers -->
@@ -119,6 +124,11 @@
     <AdditionalFiles Include="$(RepoEngPath)\BannedSymbols.txt">
       <Visible>false</Visible>
     </AdditionalFiles>
+  </ItemGroup>
+
+  <!-- disable enhanced analysis-->
+  <ItemGroup Condition="'$(DisableEnhancedAnalysis)' == 'true'">
+    <EditorConfigFiles Include="$(RepoEngPath)/globalconfigs/disable_enhanced_analysis.globalconfig" />
   </ItemGroup>
 
   <!-- Enable SourceLink -->
@@ -145,7 +155,7 @@
 
   <Import Project="ApiListing.targets" />
 
-  <Import Project="CodeCoverage.targets" />
+  <Import Project="CodeCoverage.targets" Condition="'$(CollectCoverage)' == 'true'" />
 
   <Import Project="CodeGeneration.targets" Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'" />
 
@@ -174,7 +184,7 @@
     <!-- Add ProjectReferences -->
     <ProjectReference Include="@(ProjectsToConvert -> '%(ProjectPath)')" />
   </ItemGroup>
-  
+
   <!--TODO: update build targets - ADO 5668-->
   <PropertyGroup>
     <MgmtCoreShared>$(MSBuildThisFileDirectory)/../sdk/resourcemanager/Azure.ResourceManager/src/Shared</MgmtCoreShared>
@@ -185,45 +195,82 @@
     <Compile Include="$(MgmtCoreShared)/**/*.cs"
                  LinkBase="Shared/Management" />
   </ItemGroup>
-  
+
   <!--TODO: end-->
 
   <!-- *********** Files needed for LRO ************* -->
   <ItemGroup Condition="'$(IncludeOperationsSharedSource)' == 'true'">
+    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)AsyncLockWithValue.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ChangeTrackingDictionary.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ChangeTrackingList.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)FixedDelayWithNoJitterStrategy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)FormUrlEncodedContent.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)HttpPipelineExtensions.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)IOperationSource.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)IUtf8JsonSerializable.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)IXmlSerializable.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)JsonElementExtensions.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)NextLinkOperationImplementation.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)OperationFinalStateVia.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternal.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)DelayStrategy.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)ConstantDelayStrategy.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)ExponentialDelayStrategy.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)RetryAfterDelayStrategy.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationPoller.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)Optional.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)Page.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)PageableHelpers.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ProtocolOperation.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ProtocolOperationHelpers.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)RawRequestUriBuilder.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)RequestContentHelper.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)RequestHeaderExtensions.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)RequestUriBuilderExtensions.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ResponseHeadersExtensions.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ResponseWithHeaders.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ResponseWithHeadersOfTHeaders.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)ResponseWithHeadersOfTOfTHeaders.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)SequentialDelayStrategy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)StringRequestContent.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)TypeFormatters.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)Utf8JsonRequestContent.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)Utf8JsonWriterExtensions.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)VoidValue.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)XElementExtensions.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)XmlWriterContent.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)XmlWriterExtensions.cs" LinkBase="Shared/Core" />
   </ItemGroup>
-    
+
     <!-- *********** Management Client Library Override section ************* -->
   <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true'">
 
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
-    
+    <PackageReference Include="System.ClientModel" />
+
     <!-- TODO: Review these file references-->
+    <Compile Include="$(AzureCoreSharedSources)NoValueResponseOfT.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared/Core" />
+  </ItemGroup>
+
+  <!-- DataFactory Project Specific Overrides-->
+  <ItemGroup Condition="$(MSBuildProjectName) == 'Azure.ResourceManager.DataFactory'">
+    <PackageReference Include="Azure.Core.Expressions.DataFactory"/>
   </ItemGroup>
 
   <!-- Management Client TEST Project Specific Overrides -->
-  <ItemGroup Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true'">
-    <ProjectReference Include="$(AzureCoreTestFramework)" />
-    <PackageReference Include="Azure.Identity" />
+  <ItemGroup Condition="('$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true') or '$(IsStorageTest)' == 'true'">
+    <ProjectReference Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true'" Include="$(AzureCoreTestFramework)" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
@@ -269,6 +316,17 @@
     <Error Condition="'@(PreviewPackageReferences)' != ''" Text="When the project has a release version it shouldn't reference any pre-release libraries. Found the following pre-release references: @(PreviewPackageReferences, ', ')" />
   </Target>
 
+  <!-- Validates that all the mgmt libraries have a trigger path in the core resourcemanager pipeline -->
+  <Target Name="ValidateResourceManagerPipelineTriggers" AfterTargets="Build" Condition="'$(IsMgmtSubLibrary)' == 'true' and '$(IsShippingLibrary)' == 'true'" >
+    <PropertyGroup>
+      <_ResourceManagerCIFile>$(RepoRoot)/sdk/resourcemanager/ci.mgmt.yml</_ResourceManagerCIFile>
+      <_ResourceManagerCIFileContents>$([System.IO.File]::ReadAllText($(_ResourceManagerCIFile)))</_ResourceManagerCIFileContents>
+      <_ContainsTrigger>$([System.Text.RegularExpressions.Regex]::IsMatch($(_ResourceManagerCIFileContents), `- sdk/.*/$(MSBuildProjectName)\W+`))</_ContainsTrigger>
+    </PropertyGroup>
+
+    <Error Condition="'$(_ContainsTrigger)' != 'true'" Text="The core resourcemanager pipeline ['$(_ResourceManagerCIFile)'] does not contain a trigger path for your library please run 'eng/scripts/Update-Mgmt-CI.ps1' to add the correct trigger paths." />
+  </Target>
+
   <!-- InheritDoc-->
   <ItemGroup Condition="'$(InheritDocEnabled)' != 'false'">
     <PackageReference Include="SauceControl.InheritDoc" PrivateAssets="all" />
@@ -292,7 +350,7 @@
   <Target Name="_ResolveResolvedMatchingContract" BeforeTargets="ValidateApiCompatForSrc" Condition="'$(ApiCompatVersion)' != ''">
     <ItemGroup>
       <_ReferencePathDirectories Include="@(ReferencePath -> '%(RootDir)%(Directory)')"  />
-      <ResolvedMatchingContract Include="$(NuGetPackageRoot)\$(PackageId.ToLower())\$(ApiCompatVersion)\lib\$(TargetFramework)\$(TargetFileName)">
+      <ResolvedMatchingContract Include="$(NuGetPackageRoot)\$(PackageId.ToLower())\$(ApiCompatVersion)\lib\$([MSBuild]::ValueOrDefault('$(ApiCompatBaselineTargetFramework)', '$(TargetFramework)'))\$(TargetFileName)">
         <DependencyPaths>@(_ReferencePathDirectories->Distinct(), ',')</DependencyPaths>
       </ResolvedMatchingContract>
     </ItemGroup>
@@ -308,10 +366,11 @@
   <Target Name="GetPackageInfo">
     <PropertyGroup>
       <PackageIsNewSdk>false</PackageIsNewSdk>
-      <PackageIsNewSdk Condition="'$(IsClientLibrary)' == 'true'">true</PackageIsNewSdk>
+      <PackageIsNewSdk Condition="'$(IsClientLibrary)' == 'true' or '$(IsFunctionsLibrary)' == 'true'">true</PackageIsNewSdk>
 
       <PackageSdkType>data</PackageSdkType>
       <PackageSdkType Condition="'$(IsClientLibrary)' == 'true'">client</PackageSdkType>
+      <PackageSdkType Condition="'$(IsFunctionsLibrary)' == 'true'">functions</PackageSdkType>
       <PackageSdkType Condition="'$(IsMgmtLibrary)' == 'true'">mgmt</PackageSdkType>
 
       <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).TrimEnd("/").TrimEnd("\\"))</PackageRootDirectory>
@@ -324,7 +383,41 @@
       <ServiceDirectory><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace($(PackageRootDirectory), '^.*[\\/]+sdk[\\/]+([^\\/]+).*$', '$1'))]]></ServiceDirectory>
     </PropertyGroup>
 
-    <Message Condition="'$(IsShippingLibrary)' == 'true'" Text="'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)'" Importance="High" />
+    <Message Condition="'$(IsShippingLibrary)' == 'true'" Text="'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)'" Importance="High" />
+  </Target>
+
+  <Target Name="GetCodeGenProjects" Returns="@(ProjectsToInclude)">
+    <ItemGroup Condition="'$(_GenerateCode)' == 'true'">
+      <ProjectsToInclude Include="$(MSBuildProjectFullPath)" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="_SetProjectDependsOnInnerTarget">
+    <PropertyGroup>
+      <InnerTargets>ProjectDependsOnInner</InnerTargets>
+    </PropertyGroup>
+  </Target>
+
+  <Target
+    Name="ProjectDependsOn"
+    DependsOnTargets="_SetProjectDependsOnInnerTarget;DispatchToInnerBuilds"
+    Condition="'$(IsCrossTargetingBuild)' == 'true'"
+    Returns="@(ProjectsToInclude)">
+
+    <RemoveDuplicates Inputs="@(InnerOutput)">
+      <Output TaskParameter="Filtered" ItemName="ProjectsToInclude"/>
+    </RemoveDuplicates>
+  </Target>
+
+  <Target Name="ProjectDependsOnInner" DependsOnTargets="ResolveReferences" Returns="@(ProjectsToInclude)">
+    <ItemGroup>
+      <_LibrariesReferenced Include="@(ReferencePath -> '%(Filename)')"/>
+      <_DependsOnGiven Include="@(_LibrariesReferenced)" Condition="'%(Identity)' == '$(TestDependsOnDependency)'" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'@(_DependsOnGiven)' != '' and '$(IsClientLibrary)' == 'true'" >
+      <ProjectsToInclude Include="$(MSBuildProjectFullPath)" />
+    </ItemGroup>
   </Target>
 
   <Import Project="$(CentralPackageVersionPackagePath)\Sdk.targets" />

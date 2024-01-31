@@ -49,16 +49,14 @@ namespace Microsoft.Azure.Management.ApiManagement
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Version of the API to be used with the client request.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
-        /// Subscription credentials which uniquely identify Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every service
-        /// call.
+        /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        public string ApiVersion { get; private set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -109,6 +107,16 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual ITagOperations Tag { get; private set; }
 
         /// <summary>
+        /// Gets the IGraphQLApiResolverOperations.
+        /// </summary>
+        public virtual IGraphQLApiResolverOperations GraphQLApiResolver { get; private set; }
+
+        /// <summary>
+        /// Gets the IGraphQLApiResolverPolicyOperations.
+        /// </summary>
+        public virtual IGraphQLApiResolverPolicyOperations GraphQLApiResolverPolicy { get; private set; }
+
+        /// <summary>
         /// Gets the IApiProductOperations.
         /// </summary>
         public virtual IApiProductOperations ApiProduct { get; private set; }
@@ -154,6 +162,16 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual IOperationOperations Operation { get; private set; }
 
         /// <summary>
+        /// Gets the IApiWikiOperations.
+        /// </summary>
+        public virtual IApiWikiOperations ApiWiki { get; private set; }
+
+        /// <summary>
+        /// Gets the IApiWikisOperations.
+        /// </summary>
+        public virtual IApiWikisOperations ApiWikis { get; private set; }
+
+        /// <summary>
         /// Gets the IApiVersionSetOperations.
         /// </summary>
         public virtual IApiVersionSetOperations ApiVersionSet { get; private set; }
@@ -162,6 +180,26 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IAuthorizationServerOperations.
         /// </summary>
         public virtual IAuthorizationServerOperations AuthorizationServer { get; private set; }
+
+        /// <summary>
+        /// Gets the IAuthorizationProviderOperations.
+        /// </summary>
+        public virtual IAuthorizationProviderOperations AuthorizationProvider { get; private set; }
+
+        /// <summary>
+        /// Gets the IAuthorizationOperations.
+        /// </summary>
+        public virtual IAuthorizationOperations Authorization { get; private set; }
+
+        /// <summary>
+        /// Gets the IAuthorizationLoginLinksOperations.
+        /// </summary>
+        public virtual IAuthorizationLoginLinksOperations AuthorizationLoginLinks { get; private set; }
+
+        /// <summary>
+        /// Gets the IAuthorizationAccessPolicyOperations.
+        /// </summary>
+        public virtual IAuthorizationAccessPolicyOperations AuthorizationAccessPolicy { get; private set; }
 
         /// <summary>
         /// Gets the IBackendOperations.
@@ -309,6 +347,16 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual IPolicyDescriptionOperations PolicyDescription { get; private set; }
 
         /// <summary>
+        /// Gets the IPolicyFragmentOperations.
+        /// </summary>
+        public virtual IPolicyFragmentOperations PolicyFragment { get; private set; }
+
+        /// <summary>
+        /// Gets the IPortalConfigOperations.
+        /// </summary>
+        public virtual IPortalConfigOperations PortalConfig { get; private set; }
+
+        /// <summary>
         /// Gets the IPortalRevisionOperations.
         /// </summary>
         public virtual IPortalRevisionOperations PortalRevision { get; private set; }
@@ -362,6 +410,16 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IProductPolicyOperations.
         /// </summary>
         public virtual IProductPolicyOperations ProductPolicy { get; private set; }
+
+        /// <summary>
+        /// Gets the IProductWikiOperations.
+        /// </summary>
+        public virtual IProductWikiOperations ProductWiki { get; private set; }
+
+        /// <summary>
+        /// Gets the IProductWikisOperations.
+        /// </summary>
+        public virtual IProductWikisOperations ProductWikis { get; private set; }
 
         /// <summary>
         /// Gets the IQuotaByCounterKeysOperations.
@@ -447,6 +505,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IUserConfirmationPasswordOperations.
         /// </summary>
         public virtual IUserConfirmationPasswordOperations UserConfirmationPassword { get; private set; }
+
+        /// <summary>
+        /// Gets the IDocumentationOperations.
+        /// </summary>
+        public virtual IDocumentationOperations Documentation { get; private set; }
 
         /// <summary>
         /// Gets the IApiExportOperations.
@@ -700,6 +763,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             ApiOperation = new ApiOperationOperations(this);
             ApiOperationPolicy = new ApiOperationPolicyOperations(this);
             Tag = new TagOperations(this);
+            GraphQLApiResolver = new GraphQLApiResolverOperations(this);
+            GraphQLApiResolverPolicy = new GraphQLApiResolverPolicyOperations(this);
             ApiProduct = new ApiProductOperations(this);
             ApiPolicy = new ApiPolicyOperations(this);
             ApiSchema = new ApiSchemaOperations(this);
@@ -709,8 +774,14 @@ namespace Microsoft.Azure.Management.ApiManagement
             ApiIssueAttachment = new ApiIssueAttachmentOperations(this);
             ApiTagDescription = new ApiTagDescriptionOperations(this);
             Operation = new OperationOperations(this);
+            ApiWiki = new ApiWikiOperations(this);
+            ApiWikis = new ApiWikisOperations(this);
             ApiVersionSet = new ApiVersionSetOperations(this);
             AuthorizationServer = new AuthorizationServerOperations(this);
+            AuthorizationProvider = new AuthorizationProviderOperations(this);
+            Authorization = new AuthorizationOperations(this);
+            AuthorizationLoginLinks = new AuthorizationLoginLinksOperations(this);
+            AuthorizationAccessPolicy = new AuthorizationAccessPolicyOperations(this);
             Backend = new BackendOperations(this);
             Cache = new CacheOperations(this);
             Certificate = new CertificateOperations(this);
@@ -740,6 +811,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             OutboundNetworkDependenciesEndpoints = new OutboundNetworkDependenciesEndpointsOperations(this);
             Policy = new PolicyOperations(this);
             PolicyDescription = new PolicyDescriptionOperations(this);
+            PolicyFragment = new PolicyFragmentOperations(this);
+            PortalConfig = new PortalConfigOperations(this);
             PortalRevision = new PortalRevisionOperations(this);
             PortalSettings = new PortalSettingsOperations(this);
             SignInSettings = new SignInSettingsOperations(this);
@@ -751,6 +824,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             ProductGroup = new ProductGroupOperations(this);
             ProductSubscriptions = new ProductSubscriptionsOperations(this);
             ProductPolicy = new ProductPolicyOperations(this);
+            ProductWiki = new ProductWikiOperations(this);
+            ProductWikis = new ProductWikisOperations(this);
             QuotaByCounterKeys = new QuotaByCounterKeysOperations(this);
             QuotaByPeriodKeys = new QuotaByPeriodKeysOperations(this);
             Region = new RegionOperations(this);
@@ -768,9 +843,10 @@ namespace Microsoft.Azure.Management.ApiManagement
             UserSubscription = new UserSubscriptionOperations(this);
             UserIdentities = new UserIdentitiesOperations(this);
             UserConfirmationPassword = new UserConfirmationPasswordOperations(this);
+            Documentation = new DocumentationOperations(this);
             ApiExport = new ApiExportOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2021-08-01";
+            ApiVersion = "2022-08-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -810,7 +886,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// errors encountered while trying to establish it.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -837,7 +913,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// errors encountered while trying to establish it.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -872,6 +948,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (serviceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "serviceName");
@@ -895,9 +982,23 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
             }
+            if (ApiVersion != null)
+            {
+                if (ApiVersion.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ApiVersion", 1);
+                }
+            }
             if (SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
+            }
+            if (SubscriptionId != null)
+            {
+                if (SubscriptionId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "SubscriptionId", 1);
+                }
             }
             if (connectivityCheckRequestParams == null)
             {

@@ -42,6 +42,16 @@ namespace Azure.IoT.TimeSeriesInsights
         public static bool operator !=(Azure.IoT.TimeSeriesInsights.InterpolationKind left, Azure.IoT.TimeSeriesInsights.InterpolationKind right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public static partial class IoTTimeSeriesInsightsModelFactory
+    {
+        public static Azure.IoT.TimeSeriesInsights.InstancesOperationResult InstancesOperationResult(Azure.IoT.TimeSeriesInsights.TimeSeriesInstance instance = null, Azure.IoT.TimeSeriesInsights.TimeSeriesOperationError error = null) { throw null; }
+        public static Azure.IoT.TimeSeriesInsights.TimeSeriesHierarchyOperationResult TimeSeriesHierarchyOperationResult(Azure.IoT.TimeSeriesInsights.TimeSeriesHierarchy hierarchy = null, Azure.IoT.TimeSeriesInsights.TimeSeriesOperationError error = null) { throw null; }
+        public static Azure.IoT.TimeSeriesInsights.TimeSeriesIdProperty TimeSeriesIdProperty(string name = null, Azure.IoT.TimeSeriesInsights.TimeSeriesIdPropertyType? type = default(Azure.IoT.TimeSeriesInsights.TimeSeriesIdPropertyType?)) { throw null; }
+        public static Azure.IoT.TimeSeriesInsights.TimeSeriesModelSettings TimeSeriesModelSettings(string name = null, System.Collections.Generic.IEnumerable<Azure.IoT.TimeSeriesInsights.TimeSeriesIdProperty> timeSeriesIdProperties = null, string defaultTypeId = null) { throw null; }
+        public static Azure.IoT.TimeSeriesInsights.TimeSeriesOperationError TimeSeriesOperationError(string code = null, string message = null, string target = null, Azure.IoT.TimeSeriesInsights.TimeSeriesOperationError innerError = null, System.Collections.Generic.IEnumerable<Azure.IoT.TimeSeriesInsights.TimeSeriesOperationErrorDetails> details = null, System.Collections.Generic.IReadOnlyDictionary<string, object> additionalProperties = null) { throw null; }
+        public static Azure.IoT.TimeSeriesInsights.TimeSeriesOperationErrorDetails TimeSeriesOperationErrorDetails(string code = null, string message = null, System.Collections.Generic.IReadOnlyDictionary<string, object> additionalProperties = null) { throw null; }
+        public static Azure.IoT.TimeSeriesInsights.TimeSeriesTypeOperationResult TimeSeriesTypeOperationResult(Azure.IoT.TimeSeriesInsights.TimeSeriesType timeSeriesType = null, Azure.IoT.TimeSeriesInsights.TimeSeriesOperationError error = null) { throw null; }
+    }
     public partial class NumericVariable : Azure.IoT.TimeSeriesInsights.TimeSeriesVariable
     {
         public NumericVariable(Azure.IoT.TimeSeriesInsights.TimeSeriesExpression value, Azure.IoT.TimeSeriesInsights.TimeSeriesExpression aggregation) { }
@@ -218,16 +228,6 @@ namespace Azure.IoT.TimeSeriesInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.IoT.TimeSeriesInsights.InstancesOperationResult[]>> GetByNameAsync(System.Collections.Generic.IEnumerable<string> timeSeriesNames, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.IoT.TimeSeriesInsights.InstancesOperationResult[]> Replace(System.Collections.Generic.IEnumerable<Azure.IoT.TimeSeriesInsights.TimeSeriesInstance> timeSeriesInstances, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.IoT.TimeSeriesInsights.InstancesOperationResult[]>> ReplaceAsync(System.Collections.Generic.IEnumerable<Azure.IoT.TimeSeriesInsights.TimeSeriesInstance> timeSeriesInstances, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public static partial class TimeSeriesInsightsModelFactory
-    {
-        public static Azure.IoT.TimeSeriesInsights.InstancesOperationResult InstancesOperationResult(Azure.IoT.TimeSeriesInsights.TimeSeriesInstance instance = null, Azure.IoT.TimeSeriesInsights.TimeSeriesOperationError error = null) { throw null; }
-        public static Azure.IoT.TimeSeriesInsights.TimeSeriesHierarchyOperationResult TimeSeriesHierarchyOperationResult(Azure.IoT.TimeSeriesInsights.TimeSeriesHierarchy hierarchy = null, Azure.IoT.TimeSeriesInsights.TimeSeriesOperationError error = null) { throw null; }
-        public static Azure.IoT.TimeSeriesInsights.TimeSeriesIdProperty TimeSeriesIdProperty(string name = null, Azure.IoT.TimeSeriesInsights.TimeSeriesIdPropertyType? type = default(Azure.IoT.TimeSeriesInsights.TimeSeriesIdPropertyType?)) { throw null; }
-        public static Azure.IoT.TimeSeriesInsights.TimeSeriesModelSettings TimeSeriesModelSettings(string name = null, System.Collections.Generic.IEnumerable<Azure.IoT.TimeSeriesInsights.TimeSeriesIdProperty> timeSeriesIdProperties = null, string defaultTypeId = null) { throw null; }
-        public static Azure.IoT.TimeSeriesInsights.TimeSeriesOperationError TimeSeriesOperationError(string code = null, string message = null, string target = null, Azure.IoT.TimeSeriesInsights.TimeSeriesOperationError innerError = null, System.Collections.Generic.IEnumerable<Azure.IoT.TimeSeriesInsights.TimeSeriesOperationErrorDetails> details = null, System.Collections.Generic.IReadOnlyDictionary<string, object> additionalProperties = null) { throw null; }
-        public static Azure.IoT.TimeSeriesInsights.TimeSeriesOperationErrorDetails TimeSeriesOperationErrorDetails(string code = null, string message = null, System.Collections.Generic.IReadOnlyDictionary<string, object> additionalProperties = null) { throw null; }
-        public static Azure.IoT.TimeSeriesInsights.TimeSeriesTypeOperationResult TimeSeriesTypeOperationResult(Azure.IoT.TimeSeriesInsights.TimeSeriesType timeSeriesType = null, Azure.IoT.TimeSeriesInsights.TimeSeriesOperationError error = null) { throw null; }
     }
     public partial class TimeSeriesInsightsModelSettings
     {
@@ -417,9 +417,9 @@ namespace Azure.IoT.TimeSeriesInsights
         public static implicit operator Azure.IoT.TimeSeriesInsights.TimeSeriesValue (string value) { throw null; }
         public static implicit operator Azure.IoT.TimeSeriesInsights.TimeSeriesValue (System.TimeSpan value) { throw null; }
     }
-    public partial class TimeSeriesVariable
+    public abstract partial class TimeSeriesVariable
     {
-        public TimeSeriesVariable() { }
+        protected TimeSeriesVariable() { }
         public Azure.IoT.TimeSeriesInsights.TimeSeriesExpression Filter { get { throw null; } set { } }
     }
 }

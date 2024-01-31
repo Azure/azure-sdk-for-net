@@ -102,8 +102,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// These headers will be specified when uploading files to Azure
-        /// Storage. For more information, see [Request Headers (All Blob
-        /// Types)](https://docs.microsoft.com/rest/api/storageservices/put-blob#request-headers-all-blob-types).
+        /// Storage. Official document on allowed headers when uploading blobs:
+        /// https://docs.microsoft.com/en-us/rest/api/storageservices/put-blob#request-headers-all-blob-types
         /// </remarks>
         [JsonProperty(PropertyName = "uploadHeaders")]
         public IList<HttpHeader> UploadHeaders { get; set; }

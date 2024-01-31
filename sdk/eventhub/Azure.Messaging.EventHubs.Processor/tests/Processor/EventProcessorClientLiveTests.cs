@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
@@ -607,7 +608,8 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies that the <see cref="EventProcessorClient" /> can read a set of published events.
+        ///   Verifies that the <see cref="EventProcessorClient" /> detects an invalid
+        ///   consumer group when starting up.
         /// </summary>
         ///
         [Test]
@@ -618,13 +620,16 @@ namespace Azure.Messaging.EventHubs.Tests
             // Setup the environment.
 
             await using EventHubScope scope = await EventHubScope.CreateAsync(2);
+            await using StorageScope storageScope = await StorageScope.CreateAsync();
 
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             // Create the processor and attempt to start.
 
-            var processor = new EventProcessorClient(Mock.Of<BlobContainerClient>(), "fake", EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName);
+            var containerClient = new BlobContainerClient(StorageTestEnvironment.Instance.StorageConnectionString, storageScope.ContainerName);
+            var processor = new EventProcessorClient(containerClient, "fake", EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName);
+
             processor.ProcessErrorAsync += _ => Task.CompletedTask;
             processor.ProcessEventAsync += _ => Task.CompletedTask;
 
@@ -855,6 +860,145 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> no longer dispatches events for
+        ///   processing once it has been stopped.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessorClientCeasesProcessingWhenStopping()
+        {
+            // Setup the environment.
+
+            await using EventHubScope scope = await EventHubScope.CreateAsync(4);
+            var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            // Publish some events
+
+            var sentCount = await SendEvents(connectionString, EventGenerator.CreateSmallEvents(400), cancellationSource.Token);
+            Assert.That(sentCount, Is.EqualTo(400), "All generated  events should have been published.");
+
+            // Attempt to read events using the longest possible TryTimeout.
+
+            var options = new EventProcessorOptions { LoadBalancingStrategy = LoadBalancingStrategy.Greedy, MaximumWaitTime = null };
+            options.RetryOptions.TryTimeout = EventHubsTestEnvironment.Instance.TestExecutionTimeLimit.Add(TimeSpan.FromSeconds(30));
+
+            var processorStopped = false;
+            var eventsProcessedAfterStop = false;
+            var readCount = 0;
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var processor = CreateProcessor(scope.ConsumerGroups.First(), connectionString, options: options);
+
+            processor.ProcessEventAsync += args =>
+            {
+                if (args.HasEvent)
+                {
+                    if (processorStopped)
+                    {
+                        eventsProcessedAfterStop = true;
+                    }
+
+                    // Set the completion source once half of our published events
+                    // have been read.
+
+                    if (++readCount >= (sentCount / 2))
+                    {
+                        completionSource.TrySetResult(true);
+                    }
+                }
+
+                return Task.CompletedTask;
+            };
+
+            processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+            await processor.StartProcessingAsync(cancellationSource.Token);
+
+            // Once enough events have been confirmed to have been read, stop the processor and validate that no
+            // additional events dispatched for processing.
+
+            await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
+            await processor.StopProcessingAsync(cancellationSource.Token);
+            processorStopped = true;
+
+            Assert.That(processor.IsRunning, Is.False, "The processor should have stopped.");
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+            Assert.That(eventsProcessedAfterStop, Is.False, "Events should not have been dispatched for processing after the processor has stopped.");
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventProcessorClient" /> can read a set of published events.
+        /// </summary>
+        ///
+        [Test]
+        public async Task ProcessorClientCanCheckpointAfterStoppping()
+        {
+            // Setup the environment.
+
+            await using EventHubScope scope = await EventHubScope.CreateAsync(1);
+            var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            // Send a set of events.
+
+            var partitions = new HashSet<string>();
+            var segmentEventCount = 25;
+            var beforeCheckpointEvents = EventGenerator.CreateEvents(segmentEventCount).ToList();
+            var afterCheckpointEvents = EventGenerator.CreateEvents(segmentEventCount).ToList();
+            var sourceEvents = Enumerable.Concat(beforeCheckpointEvents, afterCheckpointEvents).ToList();
+            var checkpointEvent = beforeCheckpointEvents.Last();
+            var checkpointArgs = default(ProcessEventArgs);
+            var sentCount = await SendEvents(connectionString, sourceEvents, cancellationSource.Token);
+
+            Assert.That(sentCount, Is.EqualTo(sourceEvents.Count), "Not all of the source events were sent.");
+
+            // Attempt to read back the first half of the events and checkpoint.
+
+            Func<ProcessEventArgs, Task> processedEventCallback = args =>
+            {
+                if (args.Data.IsEquivalentTo(checkpointEvent))
+                {
+                    partitions.Add(args.Partition.PartitionId);
+                    checkpointArgs = args;
+                }
+
+                return Task.CompletedTask;
+            };
+
+            var processedEvents = new ConcurrentDictionary<string, EventData>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var beforeCheckpointProcessHandler = CreateEventTrackingHandler(segmentEventCount, processedEvents, completionSource, cancellationSource.Token, processedEventCallback);
+            var options = new EventProcessorOptions { LoadBalancingUpdateInterval = TimeSpan.FromMilliseconds(250) };
+            var checkpointStore = new InMemoryCheckpointStore(_ => { });
+            var processor = CreateProcessor(scope.ConsumerGroups.First(), connectionString, checkpointStore, options);
+
+            processor.ProcessErrorAsync += CreateAssertingErrorHandler();
+            processor.ProcessEventAsync += beforeCheckpointProcessHandler;
+
+            await processor.StartProcessingAsync(cancellationSource.Token);
+
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            await processor.StopProcessingAsync(cancellationSource.Token);
+
+            // Validate that a single partition was processed and a checkpoint can be written.
+
+            Assert.That(partitions.Count, Is.EqualTo(1), "All events should have been processed from a single partition.");
+            Assert.That(checkpointArgs, Is.Not.Null, "The checkpoint arguments should have been captured.");
+            Assert.That(async () => await checkpointArgs.UpdateCheckpointAsync(cancellationSource.Token), Throws.Nothing, "Checkpointing should be safe after stopping.");
+
+            // Validate a checkpoint was created and that events were processed.
+
+            var checkpoint = await checkpointStore.GetCheckpointAsync(processor.FullyQualifiedNamespace, processor.EventHubName, processor.ConsumerGroup, partitions.First(), cancellationSource.Token);
+            Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been created.");
+            Assert.That(processedEvents.Count, Is.AtLeast(beforeCheckpointEvents.Count), "All events before the checkpoint should have been processed.");
+        }
+
+        /// <summary>
         ///   Creates an <see cref="EventProcessorClient" /> that uses mock storage and
         ///   a connection based on a connection string.
         /// </summary>
@@ -1049,7 +1193,11 @@ namespace Azure.Messaging.EventHubs.Tests
         private Func<ProcessErrorEventArgs, Task> CreateAssertingErrorHandler() =>
             args =>
             {
-                Assert.Fail($"Processor Error Surfaced: ({ args.Exception.GetType().Name })[{ args.Exception.Message }]");
+                // If there is an inner exception, it will have more interesting details for investigation.
+
+                var ex = args.Exception.InnerException ?? args.Exception;
+
+                Assert.Fail($"Processor Error Surfaced ({ ex.GetType().Name }): {Environment.NewLine}\t{ args.Exception }");
                 return Task.CompletedTask;
             };
 
@@ -1096,6 +1244,7 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             protected override EventHubConnection CreateConnection() => InjectedConnectionFactory();
+            protected override Task ValidateProcessingPreconditions(CancellationToken cancellationToken = default) => Task.CompletedTask;
         }
     }
 }

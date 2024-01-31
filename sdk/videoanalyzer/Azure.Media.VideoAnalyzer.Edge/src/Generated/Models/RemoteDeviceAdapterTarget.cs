@@ -6,21 +6,19 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Properties of the remote device adapter target. </summary>
     public partial class RemoteDeviceAdapterTarget
     {
-        /// <summary> Initializes a new instance of RemoteDeviceAdapterTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteDeviceAdapterTarget"/>. </summary>
         /// <param name="host"> Hostname or IP address of the remote device. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public RemoteDeviceAdapterTarget(string host)
         {
-            if (host == null)
-            {
-                throw new ArgumentNullException(nameof(host));
-            }
+            Argument.AssertNotNull(host, nameof(host));
 
             Host = host;
         }

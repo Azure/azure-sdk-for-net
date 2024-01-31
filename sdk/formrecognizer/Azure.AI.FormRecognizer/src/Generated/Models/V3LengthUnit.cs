@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    /// <summary> The unit used by the width, height, and boundingBox properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;. </summary>
+    /// <summary> The unit used by the width, height, and polygon properties. For images, the unit is "pixel". For PDF, the unit is "inch". </summary>
     internal readonly partial struct V3LengthUnit : IEquatable<V3LengthUnit>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         private const string PixelValue = "pixel";
         private const string InchValue = "inch";
 
-        /// <summary> pixel. </summary>
+        /// <summary> Length unit for image files. </summary>
         public static V3LengthUnit Pixel { get; } = new V3LengthUnit(PixelValue);
-        /// <summary> inch. </summary>
+        /// <summary> Length unit for PDF files. </summary>
         public static V3LengthUnit Inch { get; } = new V3LengthUnit(InchValue);
         /// <summary> Determines if two <see cref="V3LengthUnit"/> values are the same. </summary>
         public static bool operator ==(V3LengthUnit left, V3LengthUnit right) => left.Equals(right);

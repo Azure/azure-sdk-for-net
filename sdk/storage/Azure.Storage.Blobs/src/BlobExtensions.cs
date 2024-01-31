@@ -11,6 +11,7 @@ using Tags = System.Collections.Generic.IDictionary<string, string>;
 using Azure.Core;
 using System.IO;
 using System.Globalization;
+using System.ComponentModel;
 
 namespace Azure.Storage.Blobs
 {
@@ -889,7 +890,8 @@ namespace Azure.Storage.Blobs
                     ObjectReplicationDestinationPolicyId = response.Headers.ObjectReplicationPolicyId,
                     LastAccessed = response.Headers.LastAccessed.GetValueOrDefault(),
                     ImmutabilityPolicy = immutabilityPolicy,
-                    HasLegalHold = response.Headers.LegalHold.GetValueOrDefault()
+                    HasLegalHold = response.Headers.LegalHold.GetValueOrDefault(),
+                    CreatedOn = response.Headers.CreationTime.GetValueOrDefault()
                 }
             };
         }
@@ -1311,7 +1313,7 @@ namespace Azure.Storage.Blobs
                 LeaseStatus = response.Headers.LeaseStatus,
                 LeaseState = response.Headers.LeaseState,
                 LeaseDuration = response.Headers.LeaseDuration ?? LeaseDurationType.Infinite,
-                PublicAccess = response.Headers.BlobPublicAccess,
+                PublicAccess = response.Headers.BlobPublicAccess ?? PublicAccessType.None,
                 HasImmutabilityPolicy = response.Headers.HasImmutabilityPolicy,
                 HasLegalHold = response.Headers.HasLegalHold,
                 DefaultEncryptionScope = response.Headers.DefaultEncryptionScope,
@@ -1390,8 +1392,19 @@ namespace Azure.Storage.Blobs
         }
         #endregion
 
+        #region ToEncryptionAlgorithmString
+        internal static string ToEncryptionAlgorithmString(this EncryptionAlgorithmType type)
+        {
+            return type switch
+            {
+                EncryptionAlgorithmType.Aes256 => EncryptionAlgorithmTypeInternal.AES256.ToSerialString(),
+                _ => throw new InvalidEnumArgumentException(),
+            };
+        }
+        #endregion
+
         #region ToPageBlobRanges
-        internal static PageBlobRange[] ToPageBlobRanges(this ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> response)
+        internal static PageRangeItem[] ToPageBlobRanges(this ResponseWithHeaders<PageList, PageBlobGetPageRangesHeaders> response)
         {
             if (response == null)
             {
@@ -1401,7 +1414,7 @@ namespace Azure.Storage.Blobs
             return ToPageBlobRanges(response.Value.PageRange, response.Value.ClearRange);
         }
 
-        internal static PageBlobRange[] ToPageBlobRanges(this ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> response)
+        internal static PageRangeItem[] ToPageBlobRanges(this ResponseWithHeaders<PageList, PageBlobGetPageRangesDiffHeaders> response)
         {
             if (response == null)
             {
@@ -1411,11 +1424,11 @@ namespace Azure.Storage.Blobs
             return ToPageBlobRanges(response.Value.PageRange, response.Value.ClearRange);
         }
 
-        internal static PageBlobRange[] ToPageBlobRanges(
+        internal static PageRangeItem[] ToPageBlobRanges(
             IReadOnlyList<PageRange> pageRanges,
             IReadOnlyList<ClearRange> clearRanges)
         {
-            List<PageBlobRange> pageBlobRangeList = new List<PageBlobRange>();
+            List<PageRangeItem> pageBlobRangeList = new List<PageRangeItem>();
 
             int pageRangeIndex = 0;
             int clearRangeIndex = 0;
@@ -1430,7 +1443,7 @@ namespace Azure.Storage.Blobs
                     // Next page range starts before next clear range.
                     if (pageRanges[pageRangeIndex].Start <= clearRanges[clearRangeIndex].Start)
                     {
-                        pageBlobRangeList.Add(new PageBlobRange
+                        pageBlobRangeList.Add(new PageRangeItem
                         {
                             IsClear = false,
                             Range = pageRanges[pageRangeIndex].ToHttpRange()
@@ -1440,7 +1453,7 @@ namespace Azure.Storage.Blobs
                     // Next clear range starts before next page range.
                     else
                     {
-                        pageBlobRangeList.Add(new PageBlobRange
+                        pageBlobRangeList.Add(new PageRangeItem
                         {
                             IsClear = true,
                             Range = clearRanges[clearRangeIndex].ToHttpRange()
@@ -1451,7 +1464,7 @@ namespace Azure.Storage.Blobs
                 // We ran out of clear ranges.
                 else if (pageRangeIndex < pageRanges.Count)
                 {
-                    pageBlobRangeList.Add(new PageBlobRange
+                    pageBlobRangeList.Add(new PageRangeItem
                     {
                         IsClear = false,
                         Range = pageRanges[pageRangeIndex].ToHttpRange()
@@ -1461,7 +1474,7 @@ namespace Azure.Storage.Blobs
                 // we ran out of filled ranges.
                 else
                 {
-                    pageBlobRangeList.Add(new PageBlobRange
+                    pageBlobRangeList.Add(new PageRangeItem
                     {
                         IsClear = true,
                         Range = clearRanges[clearRangeIndex].ToHttpRange()
@@ -1481,9 +1494,7 @@ namespace Azure.Storage.Blobs
             string operationName,
             string parameterName)
         {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
+            if (CompatSwitches.DisableRequestConditionsValidation)
             {
                 return;
             }
@@ -1513,9 +1524,7 @@ namespace Azure.Storage.Blobs
             string operationName,
             string parameterName)
         {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
+            if (CompatSwitches.DisableRequestConditionsValidation)
             {
                 return;
             }
@@ -1545,9 +1554,7 @@ namespace Azure.Storage.Blobs
             string operationName,
             string parameterName)
         {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
+            if (CompatSwitches.DisableRequestConditionsValidation)
             {
                 return;
             }
@@ -1576,9 +1583,7 @@ namespace Azure.Storage.Blobs
             string operationName,
             string parameterName)
         {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
+            if (CompatSwitches.DisableRequestConditionsValidation)
             {
                 return;
             }
@@ -1624,9 +1629,7 @@ namespace Azure.Storage.Blobs
             string operationName,
             string parameterName)
         {
-            if (AppContextSwitchHelper.GetConfigValue(
-                Constants.DisableRequestConditionsValidationSwitchName,
-                Constants.DisableRequestConditionsValidationEnvVar))
+            if (CompatSwitches.DisableRequestConditionsValidation)
             {
                 return;
             }

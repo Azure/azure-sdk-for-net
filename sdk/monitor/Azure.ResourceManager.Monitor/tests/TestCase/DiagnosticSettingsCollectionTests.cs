@@ -15,14 +15,14 @@ namespace Azure.ResourceManager.Monitor.Tests
     public class DiagnosticSettingsCollectionTests : MonitorTestBase
     {
         public DiagnosticSettingsCollectionTests(bool isAsync)
-           : base(isAsync)
+           : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
-        private async Task<DiagnosticSettingsCollection> GetDiagnosticSettingsCollectionAsync()
+        private async Task<DiagnosticSettingCollection> GetDiagnosticSettingsCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            return DefaultSubscription.GetDiagnosticSettings();
+            return Client.GetDiagnosticSettings(DefaultSubscription.Id);
         }
 
         [Ignore("Need to Update cleanup")]
@@ -45,8 +45,8 @@ namespace Azure.ResourceManager.Monitor.Tests
             var actionGroupName = Recording.GenerateAssetName("testDiagnosticSettings-");
             var input = ResourceDataHelper.GetBasicDiagnosticSettingsData();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, actionGroupName, input);
-            DiagnosticSettingsResource setting1 = lro.Value;
-            DiagnosticSettingsResource setting2 = await collection.GetAsync(actionGroupName);
+            DiagnosticSettingResource setting1 = lro.Value;
+            DiagnosticSettingResource setting2 = await collection.GetAsync(actionGroupName);
             ResourceDataHelper.AssertDiagnosticSetting(setting1.Data, setting2.Data);
         }
 

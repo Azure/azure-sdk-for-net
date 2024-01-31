@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Hci.Models
         private const string NotConnectedRecentlyValue = "NotConnectedRecently";
         private const string DisconnectedValue = "Disconnected";
         private const string ErrorValue = "Error";
+        private const string NotSpecifiedValue = "NotSpecified";
+        private const string SucceededValue = "Succeeded";
+        private const string FailedValue = "Failed";
+        private const string InProgressValue = "InProgress";
 
         /// <summary> NotYetRegistered. </summary>
         public static HciClusterStatus NotYetRegistered { get; } = new HciClusterStatus(NotYetRegisteredValue);
@@ -38,6 +42,14 @@ namespace Azure.ResourceManager.Hci.Models
         public static HciClusterStatus Disconnected { get; } = new HciClusterStatus(DisconnectedValue);
         /// <summary> Error. </summary>
         public static HciClusterStatus Error { get; } = new HciClusterStatus(ErrorValue);
+        /// <summary> NotSpecified. </summary>
+        public static HciClusterStatus NotSpecified { get; } = new HciClusterStatus(NotSpecifiedValue);
+        /// <summary> Succeeded. </summary>
+        public static HciClusterStatus Succeeded { get; } = new HciClusterStatus(SucceededValue);
+        /// <summary> Failed. </summary>
+        public static HciClusterStatus Failed { get; } = new HciClusterStatus(FailedValue);
+        /// <summary> InProgress. </summary>
+        public static HciClusterStatus InProgress { get; } = new HciClusterStatus(InProgressValue);
         /// <summary> Determines if two <see cref="HciClusterStatus"/> values are the same. </summary>
         public static bool operator ==(HciClusterStatus left, HciClusterStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HciClusterStatus"/> values are not the same. </summary>

@@ -1,7 +1,7 @@
 $DefaultPSRepositoryUrl = "https://www.powershellgallery.com/api/v2"
 $global:CurrentUserModulePath = ""
 
-function Update-PSModulePath()
+function Update-PSModulePathForCI()
 {
   # Information on PSModulePath taken from docs
   # https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_psmodulepath
@@ -22,9 +22,9 @@ function Update-PSModulePath()
   $modulePaths = $modulePaths.Where({ !$_.StartsWith($hostedAgentModulePath) })
 
   # Add any "az_" paths from the agent which is the lastest set of azure modules
-  $AzModuleCachPath = (Get-ChildItem "$hostedAgentModulePath/az_*" -Attributes Directory) -join $moduleSeperator
-  if ($AzModuleCachPath -and $env.PSModulePath -notcontains $AzModuleCachPath) {
-    $modulePaths += $AzModuleCachPath
+  $AzModuleCachePath = (Get-ChildItem "$hostedAgentModulePath/az_*" -Attributes Directory) -join $moduleSeperator
+  if ($AzModuleCachePath -and $env:PSModulePath -notcontains $AzModuleCachePath) {
+    $modulePaths += $AzModuleCachePath
   }
 
   $env:PSModulePath = $modulePaths -join $moduleSeperator
@@ -47,9 +47,17 @@ function Update-PSModulePath()
   }
 }
 
+# Manual test at eng/common-tests/psmodule-helpers/Install-Module-Parallel.ps1
 # If we want to use another default repository other then PSGallery we can update the default parameters
-function Install-ModuleIfNotInstalled($moduleName, $version, $repositoryUrl = $DefaultPSRepositoryUrl)
+function Install-ModuleIfNotInstalled()
 {
+  [CmdletBinding(SupportsShouldProcess = $true)]
+  param(
+    [string]$moduleName,
+    [string]$version,
+    [string]$repositoryUrl = $DefaultPSRepositoryUrl
+  )
+
   # Check installed modules
   $modules = (Get-Module -ListAvailable $moduleName)
   if ($version -as [Version]) {
@@ -58,35 +66,53 @@ function Install-ModuleIfNotInstalled($moduleName, $version, $repositoryUrl = $D
 
   if ($modules.Count -eq 0)
   {
-    $repositories = (Get-PSRepository).Where({ $_.SourceLocation -eq $repositoryUrl })
-    if ($repositories.Count -eq 0)
-    {
-      Register-PSRepository -Name $repositoryUrl -SourceLocation $repositoryUrl -InstallationPolicy Trusted
-      $repositories = (Get-PSRepository).Where({ $_.SourceLocation -eq $repositoryUrl })
-      if ($repositories.Count -eq 0) {
-        Write-Error "Failed to registory package repository $repositoryUrl."
-        return
+    # Use double-checked locking to avoid locking when module is already installed
+    $mutex = New-Object System.Threading.Mutex($false, "Install-ModuleIfNotInstalled")
+    $null = $mutex.WaitOne()
+
+    try {
+      # Check installed modules again after acquiring lock
+      $modules = (Get-Module -ListAvailable $moduleName)
+      if ($version -as [Version]) {
+        $modules = $modules.Where({ [Version]$_.Version -ge [Version]$version })
+      }
+
+      if ($modules.Count -eq 0)
+      {
+        $repositories = (Get-PSRepository).Where({ $_.SourceLocation -eq $repositoryUrl })
+        if ($repositories.Count -eq 0)
+        {
+          Register-PSRepository -Name $repositoryUrl -SourceLocation $repositoryUrl -InstallationPolicy Trusted
+          $repositories = (Get-PSRepository).Where({ $_.SourceLocation -eq $repositoryUrl })
+          if ($repositories.Count -eq 0) {
+            Write-Error "Failed to register package repository $repositoryUrl."
+            return
+          }
+        }
+        $repository = $repositories[0]
+
+        if ($repository.InstallationPolicy -ne "Trusted") {
+          Set-PSRepository -Name $repository.Name -InstallationPolicy "Trusted"
+        }
+
+        Write-Host "Installing module $moduleName with min version $version from $repositoryUrl"
+        # Install under CurrentUser scope so that the end up under $CurrentUserModulePath for caching
+        Install-Module $moduleName -MinimumVersion $version -Repository $repository.Name -Scope CurrentUser -Force
+
+        # Ensure module installed
+        $modules = (Get-Module -ListAvailable $moduleName)
+        if ($version -as [Version]) {
+          $modules = $modules.Where({ [Version]$_.Version -ge [Version]$version })
+        }
+
+        if ($modules.Count -eq 0) {
+          Write-Error "Failed to install module $moduleName with version $version"
+          return
+        }
       }
     }
-    $repository = $repositories[0]
-
-    if ($repository.InstallationPolicy -ne "Trusted") {
-      Set-PSRepository -Name $repository.Name -InstallationPolicy "Trusted"
-    }
-
-    Write-Host "Installing module $moduleName with min version $version from $repositoryUrl"
-    # Install under CurrentUser scope so that the end up under $CurrentUserModulePath for caching
-    Install-Module $moduleName -MinimumVersion $version -Repository $repository.Name -Scope CurrentUser -Force
-
-    # Ensure module installed
-    $modules = (Get-Module -ListAvailable $moduleName)
-    if ($version -as [Version]) {
-      $modules = $modules.Where({ [Version]$_.Version -ge [Version]$version })
-    }
-
-    if ($modules.Count -eq 0) {
-      Write-Error "Failed to install module $moduleName with version $version"
-      return
+    finally {
+      $mutex.ReleaseMutex()
     }
   }
 
@@ -94,4 +120,6 @@ function Install-ModuleIfNotInstalled($moduleName, $version, $repositoryUrl = $D
   return $modules[0]
 }
 
-Update-PSModulePath
+if ($null -ne $env:SYSTEM_TEAMPROJECTID) {
+    Update-PSModulePathForCI
+}

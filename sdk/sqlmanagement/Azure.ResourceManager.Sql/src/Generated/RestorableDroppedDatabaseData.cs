@@ -13,63 +13,100 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the RestorableDroppedDatabase data model. </summary>
-    public partial class RestorableDroppedDatabaseData : ResourceData
+    /// <summary>
+    /// A class representing the RestorableDroppedDatabase data model.
+    /// A restorable dropped database resource.
+    /// </summary>
+    public partial class RestorableDroppedDatabaseData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of RestorableDroppedDatabaseData. </summary>
-        public RestorableDroppedDatabaseData()
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RestorableDroppedDatabaseData"/>. </summary>
+        /// <param name="location"> The location. </param>
+        public RestorableDroppedDatabaseData(AzureLocation location) : base(location)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Keys = new ChangeTrackingDictionary<string, SqlDatabaseKey>();
         }
 
-        /// <summary> Initializes a new instance of RestorableDroppedDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableDroppedDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="sku"> The name and tier of the SKU. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="maxSizeBytes"> The max size of the database expressed in bytes. </param>
-        /// <param name="elasticPoolId"> DEPRECATED: The resource name of the elastic pool containing this database. This property is deprecated and the value will always be null. </param>
-        /// <param name="creationOn"> The creation date of the database (ISO8601 format). </param>
-        /// <param name="deletionOn"> The deletion date of the database (ISO8601 format). </param>
+        /// <param name="createdOn"> The creation date of the database (ISO8601 format). </param>
+        /// <param name="deletedOn"> The deletion date of the database (ISO8601 format). </param>
         /// <param name="earliestRestoreOn"> The earliest restore date of the database (ISO8601 format). </param>
         /// <param name="backupStorageRedundancy"> The storage account type used to store backups for this database. </param>
-        internal RestorableDroppedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlSku sku, string location, IDictionary<string, string> tags, string databaseName, long? maxSizeBytes, string elasticPoolId, DateTimeOffset? creationOn, DateTimeOffset? deletionOn, DateTimeOffset? earliestRestoreOn, RestorableDroppedDatabasePropertiesBackupStorageRedundancy? backupStorageRedundancy) : base(id, name, resourceType, systemData)
+        /// <param name="keys"> The resource ids of the user assigned identities to use. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestorableDroppedDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string databaseName, long? maxSizeBytes, DateTimeOffset? createdOn, DateTimeOffset? deletedOn, DateTimeOffset? earliestRestoreOn, SqlBackupStorageRedundancy? backupStorageRedundancy, IDictionary<string, SqlDatabaseKey> keys, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
-            Location = location;
-            Tags = tags;
             DatabaseName = databaseName;
             MaxSizeBytes = maxSizeBytes;
-            ElasticPoolId = elasticPoolId;
-            CreationOn = creationOn;
-            DeletionOn = deletionOn;
+            CreatedOn = createdOn;
+            DeletedOn = deletedOn;
             EarliestRestoreOn = earliestRestoreOn;
             BackupStorageRedundancy = backupStorageRedundancy;
+            Keys = keys;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RestorableDroppedDatabaseData"/> for deserialization. </summary>
+        internal RestorableDroppedDatabaseData()
+        {
         }
 
         /// <summary> The name and tier of the SKU. </summary>
         public SqlSku Sku { get; set; }
-        /// <summary> Resource location. </summary>
-        public string Location { get; set; }
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary> The name of the database. </summary>
         public string DatabaseName { get; }
         /// <summary> The max size of the database expressed in bytes. </summary>
         public long? MaxSizeBytes { get; }
-        /// <summary> DEPRECATED: The resource name of the elastic pool containing this database. This property is deprecated and the value will always be null. </summary>
-        public string ElasticPoolId { get; }
         /// <summary> The creation date of the database (ISO8601 format). </summary>
-        public DateTimeOffset? CreationOn { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The deletion date of the database (ISO8601 format). </summary>
-        public DateTimeOffset? DeletionOn { get; }
+        public DateTimeOffset? DeletedOn { get; }
         /// <summary> The earliest restore date of the database (ISO8601 format). </summary>
         public DateTimeOffset? EarliestRestoreOn { get; }
         /// <summary> The storage account type used to store backups for this database. </summary>
-        public RestorableDroppedDatabasePropertiesBackupStorageRedundancy? BackupStorageRedundancy { get; }
+        public SqlBackupStorageRedundancy? BackupStorageRedundancy { get; }
+        /// <summary> The resource ids of the user assigned identities to use. </summary>
+        public IDictionary<string, SqlDatabaseKey> Keys { get; }
     }
 }

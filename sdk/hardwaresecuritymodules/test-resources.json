@@ -1,0 +1,183 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "baseName": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().name]",
+      "metadata": {
+        "description": "The base resource name."
+      }
+    },
+    "tenantId": {
+      "type": "string",
+      "metadata": {
+        "description": "The tenant ID to which the application and resources belong."
+      }
+    },
+    "testApplicationId": {
+      "type": "string",
+      "metadata": {
+        "description": "The application client ID used to run tests."
+      }
+    },
+    "testApplicationOid": {
+      "type": "string",
+      "metadata": {
+        "description": "The client OID to grant access to test resources."
+      }
+    },
+    "chsmLocation": {
+      "type": "string",
+      "defaultValue": "ukwest",
+      "allowedValues": [
+        "ukwest",
+        "centraluseuap",
+        "eastus"
+      ],
+      "metadata": {
+        "description": "The location of the resource. The default is ukwest."
+      }
+    },
+    "dhsmLocation": {
+      "type": "string",
+      "defaultValue": "ukwest",
+      "allowedValues": [
+        "EastUS",
+        "WestUS",
+        "SouthCentralUS",
+        "CentralUS",
+        "NorthEurope",
+        "WestEurope"
+      ],
+      "metadata": {
+        "description": "The location of the resource. The default is eastus."
+      }
+    },
+    "cloudHsmSkuFamily": {
+      "type": "string",
+      "defaultValue": "B",
+      "metadata": {
+        "description": "Cloud HSM SKU Family. The default is 'B'"
+      }
+    },
+    "cloudHsmSkuName": {
+      "type": "string",
+      "defaultValue": "Standard_B1",
+      "metadata": {
+        "description": "Cloud HSM SKU to deploy. The default is 'Standard_B1'"
+      }
+    },
+    "dedicatedHsmSkuName": {
+      "type": "string",
+      "defaultValue": "Standard_B1",
+      "metadata": {
+        "description": "Dedicated HSM SKU to deploy. The default is 'payShield10K_LMK1_CPS60'"
+      }
+    },
+    "provisionerApplicationOid": {
+      "type": "string",
+      "metadata": {
+        "description": "The provisioner OID to grant access to test resources."
+      }
+    }
+  },
+  "variables": {
+    "cloudHsmApiVersion": "2023-12-10-preview",
+    "cloudHsmName": "sdk-test-chsm",
+    "dedicatedhsmApiVersion": "2021-11-30",
+    "dedicatedHsmName": "sdk-test-dhsm",
+    "contributorRoleId": "b24988ac-6180-42a0-ab88-20f7382dd24c",
+    "vmName": "dhsm-vnet"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.HardwareSecurityModules/cloudHsmClusters",
+      "apiVersion": "[variables('cloudHsmApiVersion')]",
+      "name": "[variables('cloudHsmName')]",
+      "location": "[parameters('chsmLocation')]",
+      "Sku": {
+        "Family": "[parameters('cloudHsmSkuFamily')]",
+        "Name": "[parameters('cloudHsmSkuName')]"
+      }
+    },
+    {
+      "type": "Microsoft.HardwareSecurityModules/dedicatedhsms",
+      "apiVersion": "[variables('dedicatedhsmApiVersion')]",
+      "name": "[variables('cloudHsmName')]",
+      "location": "[parameters('dhsmLocation')]",
+      "Sku": {
+        "Name": "[parameters('dedicatedHsmSkuName')]"
+      },
+      "networkProfiles": [
+        {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', 'host-nic')]"
+            },
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', 'mgmt-nic')]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2018-09-01-preview",
+      "name": "[guid(resourceGroup().id)]",
+      "properties": {
+        "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', variables('contributorRoleId'))]",
+        "principalId": "[parameters('testApplicationOid')]",
+        "scope": "[resourceGroup().id]"
+      }
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2023-02-01",
+      "name": "vnet_name",
+      "location": "[parameters('dhsmLocation')]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "10.0.0.0/16"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "default",
+            "properties": {
+              "addressPrefix": "10.0.0.0/24",
+              "delegations": [
+                {
+                  "name": "myDelegation",
+                  "properties": {
+                    "serviceName": "Microsoft.HardwareSecurityModules/dedicatedHSMs"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "outputs": {
+    "AZURE_TENANT_ID": {
+      "type": "string",
+      "value": "[parameters('tenantId')]"
+    },
+    "AZURE_CLIENT_ID": {
+      "type": "string",
+      "value": "[parameters('testApplicationId')]"
+    },
+    "RESOURCE_GROUP_NAME": {
+      "type": "string",
+      "value": "[resourceGroup().Name]"
+    },
+    "VM_NAME": {
+      "type": "string",
+      "value": "[variables('vmName')]"
+    }
+  }
+}

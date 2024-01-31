@@ -10,15 +10,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Staging info for execute data flow activity. </summary>
     public partial class DataFlowStagingInfo
     {
-        /// <summary> Initializes a new instance of DataFlowStagingInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowStagingInfo"/>. </summary>
         public DataFlowStagingInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFlowStagingInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowStagingInfo"/>. </summary>
         /// <param name="linkedService"> Staging linked service reference. </param>
         /// <param name="folderPath"> Folder path for staging blob. </param>
-        internal DataFlowStagingInfo(LinkedServiceReference linkedService, string folderPath)
+        internal DataFlowStagingInfo(LinkedServiceReference linkedService, object folderPath)
         {
             LinkedService = linkedService;
             FolderPath = folderPath;
@@ -27,6 +27,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Staging linked service reference. </summary>
         public LinkedServiceReference LinkedService { get; set; }
         /// <summary> Folder path for staging blob. </summary>
-        public string FolderPath { get; set; }
+        public object FolderPath { get; set; }
     }
 }

@@ -13,17 +13,17 @@ namespace Azure.ResourceManager.Sql.Models
     {
         public static string ToSerialString(this AutomaticTuningOptionModeDesired value) => value switch
         {
+            AutomaticTuningOptionModeDesired.Default => "Default",
             AutomaticTuningOptionModeDesired.Off => "Off",
             AutomaticTuningOptionModeDesired.On => "On",
-            AutomaticTuningOptionModeDesired.Default => "Default",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutomaticTuningOptionModeDesired value.")
         };
 
         public static AutomaticTuningOptionModeDesired ToAutomaticTuningOptionModeDesired(this string value)
         {
-            if (string.Equals(value, "Off", StringComparison.InvariantCultureIgnoreCase)) return AutomaticTuningOptionModeDesired.Off;
-            if (string.Equals(value, "On", StringComparison.InvariantCultureIgnoreCase)) return AutomaticTuningOptionModeDesired.On;
-            if (string.Equals(value, "Default", StringComparison.InvariantCultureIgnoreCase)) return AutomaticTuningOptionModeDesired.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return AutomaticTuningOptionModeDesired.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Off")) return AutomaticTuningOptionModeDesired.Off;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "On")) return AutomaticTuningOptionModeDesired.On;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutomaticTuningOptionModeDesired value.");
         }
     }

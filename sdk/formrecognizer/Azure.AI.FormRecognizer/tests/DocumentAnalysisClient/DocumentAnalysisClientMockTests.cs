@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -52,7 +53,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         #region Analyze Document
 
         [Test]
-        public async Task StartAnalyzeDocumentSendsContentType()
+        public async Task AnalyzeDocumentSendsContentType()
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -62,7 +63,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var client = CreateInstrumentedClient(options);
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.InvoiceLeTiff);
-            await client.StartAnalyzeDocumentAsync(FakeGuid, stream);
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream);
 
             var request = mockTransport.Requests.Single();
 
@@ -73,7 +74,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         [TestCase("")]
         [TestCase("en-US")]
-        public async Task StartAnalyzeDocumentSendsUserSpecifiedLocale(string locale)
+        public async Task AnalyzeDocumentSendsUserSpecifiedLocale(string locale)
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -84,7 +85,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
             var analyzeOptions = new AnalyzeDocumentOptions { Locale = locale };
-            await client.StartAnalyzeDocumentAsync(FakeGuid, stream, analyzeOptions);
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"locale={locale}";
@@ -95,7 +96,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         [TestCase("")]
         [TestCase("en-US")]
-        public async Task StartAnalyzeDocumentFromUriSendsUserSpecifiedLocale(string locale)
+        public async Task AnalyzeDocumentFromUriSendsUserSpecifiedLocale(string locale)
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -106,7 +107,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var uri = new Uri("https://fakeuri.com/");
             var analyzeOptions = new AnalyzeDocumentOptions { Locale = locale };
-            await client.StartAnalyzeDocumentFromUriAsync(FakeGuid, uri, analyzeOptions);
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"locale={locale}";
@@ -117,7 +118,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         [TestCase("1")]
         [TestCase("1-2")]
-        public async Task StartAnalyzeDocumentSendsOnePageArgument(string pages)
+        public async Task AnalyzeDocumentSendsOnePageArgument(string pages)
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -128,7 +129,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
             var analyzeOptions = new AnalyzeDocumentOptions { Pages = { pages } };
-            await client.StartAnalyzeDocumentAsync(FakeGuid, stream, analyzeOptions);
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={pages}";
@@ -139,7 +140,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         [TestCase("1")]
         [TestCase("1-2")]
-        public async Task StartAnalyzeDocumentFromUriSendsOnePageArgument(string pages)
+        public async Task AnalyzeDocumentFromUriSendsOnePageArgument(string pages)
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -150,7 +151,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var uri = new Uri("https://fakeuri.com/");
             var analyzeOptions = new AnalyzeDocumentOptions { Pages = { pages } };
-            await client.StartAnalyzeDocumentFromUriAsync(FakeGuid, uri, analyzeOptions);
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={pages}";
@@ -161,7 +162,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         [TestCase("1", "3")]
         [TestCase("1-2", "3")]
-        public async Task StartAnalyzeDocumentSendsMultiplePageArgument(string page1, string page2)
+        public async Task AnalyzeDocumentSendsMultiplePageArgument(string page1, string page2)
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -172,7 +173,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
             var analyzeOptions = new AnalyzeDocumentOptions { Pages = { page1, page2 } };
-            await client.StartAnalyzeDocumentAsync(FakeGuid, stream, analyzeOptions);
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={page1}%2C{page2}";
@@ -183,7 +184,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         [Test]
         [TestCase("1", "3")]
         [TestCase("1-2", "3")]
-        public async Task StartAnalyzeDocumentFromUriSendsMultiplePageArgument(string page1, string page2)
+        public async Task AnalyzeDocumentFromUriSendsMultiplePageArgument(string page1, string page2)
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -194,7 +195,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
 
             var uri = new Uri("https://fakeuri.com/");
             var analyzeOptions = new AnalyzeDocumentOptions { Pages = { page1, page2 } };
-            await client.StartAnalyzeDocumentFromUriAsync(FakeGuid, uri, analyzeOptions);
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
 
             var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
             var expectedSubstring = $"pages={page1}%2C{page2}";
@@ -203,7 +204,87 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public async Task StartAnalyzeDocumentFromUriEncodesBlankSpaces()
+        public async Task AnalyzeDocumentSendsSingleFeature()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
+            var analyzeOptions = new AnalyzeDocumentOptions { Features = { DocumentAnalysisFeature.Formulas } };
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"features=formulas";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentFromUriSendsSingleFeature()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var analyzeOptions = new AnalyzeDocumentOptions { Features = { DocumentAnalysisFeature.Formulas } };
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"features=formulas";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentSendsMultipleFeatures()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            using var stream = DocumentAnalysisTestEnvironment.CreateStream(TestFile.ReceiptJpg);
+            var analyzeOptions = new AnalyzeDocumentOptions { Features = { DocumentAnalysisFeature.Formulas, DocumentAnalysisFeature.FontStyling } };
+            await client.AnalyzeDocumentAsync(WaitUntil.Started, FakeGuid, stream, analyzeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"features=formulas%2CstyleFont";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentFromUriSendsMultipleFeatures()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var uri = new Uri("https://fakeuri.com/");
+            var analyzeOptions = new AnalyzeDocumentOptions { Features = { DocumentAnalysisFeature.Formulas, DocumentAnalysisFeature.FontStyling } };
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, uri, analyzeOptions);
+
+            var requestUriQuery = mockTransport.Requests.Single().Uri.Query;
+            var expectedSubstring = $"features=formulas%2CstyleFont";
+
+            Assert.True(requestUriQuery.Contains(expectedSubstring));
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentFromUriEncodesBlankSpaces()
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
@@ -215,8 +296,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var encodedUriString = "https://fakeuri.com/blank%20space";
             var decodedUriString = "https://fakeuri.com/blank space";
 
-            await client.StartAnalyzeDocumentFromUriAsync(FakeGuid, new Uri(encodedUriString));
-            await client.StartAnalyzeDocumentFromUriAsync(FakeGuid, new Uri(decodedUriString));
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, new Uri(encodedUriString));
+            await client.AnalyzeDocumentFromUriAsync(WaitUntil.Started, FakeGuid, new Uri(decodedUriString));
 
             Assert.AreEqual(2, mockTransport.Requests.Count);
 
@@ -229,7 +310,272 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             }
         }
 
+        [Test]
+        public async Task ClassifyDocumentFromUriEncodesBlankSpaces()
+        {
+            var mockResponse = new MockResponse(202);
+            mockResponse.AddHeader(new HttpHeader(Constants.OperationLocationHeader, OperationId));
+
+            var mockTransport = new MockTransport(new[] { mockResponse, mockResponse });
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateInstrumentedClient(options);
+
+            var encodedUriString = "https://fakeuri.com/blank%20space";
+            var decodedUriString = "https://fakeuri.com/blank space";
+
+            await client.ClassifyDocumentFromUriAsync(WaitUntil.Started, FakeGuid, new Uri(encodedUriString));
+            await client.ClassifyDocumentFromUriAsync(WaitUntil.Started, FakeGuid, new Uri(decodedUriString));
+
+            Assert.AreEqual(2, mockTransport.Requests.Count);
+
+            foreach (var request in mockTransport.Requests)
+            {
+                var requestBody = GetString(request.Content);
+
+                Assert.True(requestBody.Contains(encodedUriString));
+                Assert.False(requestBody.Contains(decodedUriString));
+            }
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentCanParseDocumentFieldWithBooleanValue()
+        {
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("""
+                {
+                    "status": "succeeded",
+                    "analyzeResult": {
+                        "documents": [
+                            {
+                                "fields": {
+                                    "booleanField": {
+                                        "type": "boolean",
+                                        "valueBoolean": true
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+                """));
+
+            var mockResponse = new MockResponse(200) { ContentStream = stream };
+            var mockTransport = new MockTransport(mockResponse);
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateDocumentAnalysisClient(options);
+            var operation = new AnalyzeDocumentOperation(OperationId, client);
+
+            await operation.UpdateStatusAsync();
+
+            var result = operation.Value;
+            var field = result.Documents[0].Fields["booleanField"];
+
+            Assert.AreEqual(DocumentFieldType.Boolean, field.FieldType);
+            Assert.AreEqual(DocumentFieldType.Boolean, field.ExpectedFieldType);
+
+            var fieldValue = field.Value.AsBoolean();
+
+            Assert.True(fieldValue);
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentCanParseDocumentFieldWithAddressValueAndV410Properties()
+        {
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("""
+                {
+                    "status": "succeeded",
+                    "analyzeResult": {
+                        "documents": [
+                            {
+                                "fields": {
+                                    "addressField": {
+                                        "type": "address",
+                                        "valueAddress": {
+                                            "unit": "unitValue",
+                                            "cityDistrict": "cityDistrictValue",
+                                            "stateDistrict": "stateDistrictValue",
+                                            "suburb": "suburbValue",
+                                            "house": "houseValue",
+                                            "level": "levelValue"
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+                """));
+
+            var mockResponse = new MockResponse(200) { ContentStream = stream };
+            var mockTransport = new MockTransport(mockResponse);
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateDocumentAnalysisClient(options);
+            var operation = new AnalyzeDocumentOperation(OperationId, client);
+
+            await operation.UpdateStatusAsync();
+
+            var result = operation.Value;
+            var field = result.Documents[0].Fields["addressField"];
+
+            Assert.AreEqual(DocumentFieldType.Address, field.FieldType);
+            Assert.AreEqual(DocumentFieldType.Address, field.ExpectedFieldType);
+
+            var fieldValue = field.Value.AsAddress();
+
+            Assert.AreEqual("unitValue", fieldValue.Unit);
+            Assert.AreEqual("cityDistrictValue", fieldValue.CityDistrict);
+            Assert.AreEqual("stateDistrictValue", fieldValue.StateDistrict);
+            Assert.AreEqual("suburbValue", fieldValue.Suburb);
+            Assert.AreEqual("houseValue", fieldValue.House);
+            Assert.AreEqual("levelValue", fieldValue.Level);
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentCanParseDocumentStyleWithV410Properties()
+        {
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("""
+                {
+                    "status": "succeeded",
+                    "analyzeResult": {
+                        "styles": [
+                            {
+                                "similarFontFamily": "similarFontFamilyValue",
+                                "fontStyle": "italic",
+                                "fontWeight": "bold",
+                                "color": "colorValue",
+                                "backgroundColor": "backgroundColorValue"
+                            }
+                        ]
+                    }
+                }
+                """));
+
+            var mockResponse = new MockResponse(200) { ContentStream = stream };
+            var mockTransport = new MockTransport(mockResponse);
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateDocumentAnalysisClient(options);
+            var operation = new AnalyzeDocumentOperation(OperationId, client);
+
+            await operation.UpdateStatusAsync();
+
+            var result = operation.Value;
+            var style = result.Styles[0];
+
+            Assert.AreEqual("similarFontFamilyValue", style.SimilarFontFamily);
+            Assert.AreEqual(DocumentFontStyle.Italic, style.FontStyle);
+            Assert.AreEqual(DocumentFontWeight.Bold, style.FontWeight);
+            Assert.AreEqual("colorValue", style.Color);
+            Assert.AreEqual("backgroundColorValue", style.BackgroundColor);
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentCanParseDocumentBarcode()
+        {
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("""
+                {
+                    "status": "succeeded",
+                    "analyzeResult": {
+                        "pages": [
+                            {
+                                "barcodes": [
+                                    {
+                                        "kind": "QRCode",
+                                        "value": "barcodeValue",
+                                        "polygon": [1, 2, 3, 4, 5, 6, 7, 8],
+                                        "span": {
+                                            "offset": 10,
+                                            "length": 12
+                                        },
+                                        "confidence": 0.75
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+                """));
+
+            var mockResponse = new MockResponse(200) { ContentStream = stream };
+            var mockTransport = new MockTransport(mockResponse);
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateDocumentAnalysisClient(options);
+            var operation = new AnalyzeDocumentOperation(OperationId, client);
+
+            await operation.UpdateStatusAsync();
+
+            var result = operation.Value;
+            var barcode = result.Pages[0].Barcodes[0];
+            var expectedPolygon = new PointF[] { new(1, 2), new(3, 4), new(5, 6), new(7, 8) };
+
+            Assert.AreEqual(DocumentBarcodeKind.QrCode, barcode.Kind);
+            Assert.AreEqual("barcodeValue", barcode.Value);
+            CollectionAssert.AreEqual(expectedPolygon, barcode.BoundingPolygon);
+            Assert.AreEqual(10, barcode.Span.Index);
+            Assert.AreEqual(12, barcode.Span.Length);
+            Assert.AreEqual(0.75f, barcode.Confidence);
+        }
+
+        [Test]
+        public async Task AnalyzeDocumentCanParseDocumentFormula()
+        {
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes("""
+                {
+                    "status": "succeeded",
+                    "analyzeResult": {
+                        "pages": [
+                            {
+                                "formulas": [
+                                    {
+                                        "kind": "display",
+                                        "value": "formulaValue",
+                                        "polygon": [1, 2, 3, 4, 5, 6, 7, 8],
+                                        "span": {
+                                            "offset": 10,
+                                            "length": 12
+                                        },
+                                        "confidence": 0.75
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+                """));
+
+            var mockResponse = new MockResponse(200) { ContentStream = stream };
+            var mockTransport = new MockTransport(mockResponse);
+            var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
+            var client = CreateDocumentAnalysisClient(options);
+            var operation = new AnalyzeDocumentOperation(OperationId, client);
+
+            await operation.UpdateStatusAsync();
+
+            var result = operation.Value;
+            var formula = result.Pages[0].Formulas[0];
+            var expectedPolygon = new PointF[] { new(1, 2), new(3, 4), new(5, 6), new(7, 8) };
+
+            Assert.AreEqual(DocumentFormulaKind.Display, formula.Kind);
+            Assert.AreEqual("formulaValue", formula.Value);
+            CollectionAssert.AreEqual(expectedPolygon, formula.BoundingPolygon);
+            Assert.AreEqual(10, formula.Span.Index);
+            Assert.AreEqual(12, formula.Span.Length);
+            Assert.AreEqual(0.75f, formula.Confidence);
+        }
+
         #endregion
+
+        /// <summary>
+        /// Creates a fake <see cref="DocumentAnalysisClient" /> with the specified set of options.
+        /// </summary>
+        /// <param name="options">A set of options to apply when configuring the client.</param>
+        /// <returns>The fake <see cref="DocumentAnalysisClient" />.</returns>
+        private DocumentAnalysisClient CreateDocumentAnalysisClient(DocumentAnalysisClientOptions options = default)
+        {
+            var fakeEndpoint = new Uri("http://localhost");
+            var fakeCredential = new AzureKeyCredential("fakeKey");
+            options ??= new DocumentAnalysisClientOptions();
+
+            return new DocumentAnalysisClient(fakeEndpoint, fakeCredential, options);
+        }
 
         private static string GetString(RequestContent content)
         {

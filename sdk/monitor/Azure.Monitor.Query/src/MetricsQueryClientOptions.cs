@@ -30,7 +30,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// The versions of Azure Monitor Query service supported by this client
+        /// The versions of Azure Monitor Metrics service supported by this client
         /// library.
         /// </summary>
         public enum ServiceVersion

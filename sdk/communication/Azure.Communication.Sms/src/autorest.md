@@ -11,4 +11,5 @@ model-namespace: false
 require:
     -  https://raw.githubusercontent.com/Azure/azure-rest-api-specs/896d05e37dbb00712726620b8d679cc3c3be09fb/specification/communication/data-plane/Sms/readme.md
 payload-flattening-threshold: 10
+generation1-convenience-client: true
 ```

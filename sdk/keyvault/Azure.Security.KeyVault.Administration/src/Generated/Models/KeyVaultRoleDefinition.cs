@@ -13,14 +13,14 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary> Role definition. </summary>
     public partial class KeyVaultRoleDefinition
     {
-        /// <summary> Initializes a new instance of KeyVaultRoleDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleDefinition"/>. </summary>
         public KeyVaultRoleDefinition()
         {
             Permissions = new ChangeTrackingList<KeyVaultPermission>();
             AssignableScopes = new ChangeTrackingList<KeyVaultRoleScope>();
         }
 
-        /// <summary> Initializes a new instance of KeyVaultRoleDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleDefinition"/>. </summary>
         /// <param name="id"> The role definition ID. </param>
         /// <param name="name"> The role definition name. </param>
         /// <param name="type"> The role definition type. </param>

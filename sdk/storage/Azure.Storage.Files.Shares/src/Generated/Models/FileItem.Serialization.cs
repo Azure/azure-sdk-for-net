@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Xml.Linq;
-using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -14,14 +13,14 @@ namespace Azure.Storage.Files.Shares.Models
     {
         internal static FileItem DeserializeFileItem(XElement element)
         {
-            string name = default;
+            StringEncoded name = default;
             string fileId = default;
             FileProperty properties = default;
             string attributes = default;
             string permissionKey = default;
             if (element.Element("Name") is XElement nameElement)
             {
-                name = (string)nameElement;
+                name = StringEncoded.DeserializeStringEncoded(nameElement);
             }
             if (element.Element("FileId") is XElement fileIdElement)
             {

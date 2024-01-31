@@ -14,33 +14,36 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static AnomalyProperty DeserializeAnomalyProperty(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AnomalySeverity anomalySeverity = default;
             Optional<AnomalyStatus> anomalyStatus = default;
             double value = default;
             Optional<double?> expectedValue = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("anomalySeverity"))
+                if (property.NameEquals("anomalySeverity"u8))
                 {
                     anomalySeverity = new AnomalySeverity(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("anomalyStatus"))
+                if (property.NameEquals("anomalyStatus"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     anomalyStatus = new AnomalyStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("expectedValue"))
+                if (property.NameEquals("expectedValue"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

@@ -25,6 +25,12 @@ namespace Azure.ResourceManager.Network.Models
         private const string RequestHeaderNamesValue = "RequestHeaderNames";
         private const string RequestCookieNamesValue = "RequestCookieNames";
         private const string RequestArgNamesValue = "RequestArgNames";
+        private const string RequestHeaderKeysValue = "RequestHeaderKeys";
+        private const string RequestHeaderValuesValue = "RequestHeaderValues";
+        private const string RequestCookieKeysValue = "RequestCookieKeys";
+        private const string RequestCookieValuesValue = "RequestCookieValues";
+        private const string RequestArgKeysValue = "RequestArgKeys";
+        private const string RequestArgValuesValue = "RequestArgValues";
 
         /// <summary> RequestHeaderNames. </summary>
         public static OwaspCrsExclusionEntryMatchVariable RequestHeaderNames { get; } = new OwaspCrsExclusionEntryMatchVariable(RequestHeaderNamesValue);
@@ -32,6 +38,18 @@ namespace Azure.ResourceManager.Network.Models
         public static OwaspCrsExclusionEntryMatchVariable RequestCookieNames { get; } = new OwaspCrsExclusionEntryMatchVariable(RequestCookieNamesValue);
         /// <summary> RequestArgNames. </summary>
         public static OwaspCrsExclusionEntryMatchVariable RequestArgNames { get; } = new OwaspCrsExclusionEntryMatchVariable(RequestArgNamesValue);
+        /// <summary> RequestHeaderKeys. </summary>
+        public static OwaspCrsExclusionEntryMatchVariable RequestHeaderKeys { get; } = new OwaspCrsExclusionEntryMatchVariable(RequestHeaderKeysValue);
+        /// <summary> RequestHeaderValues. </summary>
+        public static OwaspCrsExclusionEntryMatchVariable RequestHeaderValues { get; } = new OwaspCrsExclusionEntryMatchVariable(RequestHeaderValuesValue);
+        /// <summary> RequestCookieKeys. </summary>
+        public static OwaspCrsExclusionEntryMatchVariable RequestCookieKeys { get; } = new OwaspCrsExclusionEntryMatchVariable(RequestCookieKeysValue);
+        /// <summary> RequestCookieValues. </summary>
+        public static OwaspCrsExclusionEntryMatchVariable RequestCookieValues { get; } = new OwaspCrsExclusionEntryMatchVariable(RequestCookieValuesValue);
+        /// <summary> RequestArgKeys. </summary>
+        public static OwaspCrsExclusionEntryMatchVariable RequestArgKeys { get; } = new OwaspCrsExclusionEntryMatchVariable(RequestArgKeysValue);
+        /// <summary> RequestArgValues. </summary>
+        public static OwaspCrsExclusionEntryMatchVariable RequestArgValues { get; } = new OwaspCrsExclusionEntryMatchVariable(RequestArgValuesValue);
         /// <summary> Determines if two <see cref="OwaspCrsExclusionEntryMatchVariable"/> values are the same. </summary>
         public static bool operator ==(OwaspCrsExclusionEntryMatchVariable left, OwaspCrsExclusionEntryMatchVariable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OwaspCrsExclusionEntryMatchVariable"/> values are not the same. </summary>

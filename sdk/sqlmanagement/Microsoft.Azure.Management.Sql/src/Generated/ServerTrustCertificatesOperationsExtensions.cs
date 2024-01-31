@@ -22,6 +22,50 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class ServerTrustCertificatesOperationsExtensions
     {
             /// <summary>
+            /// Gets a list of server trust certificates that were uploaded from box to the
+            /// given Sql Managed Instance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='managedInstanceName'>
+            /// The name of the managed instance.
+            /// </param>
+            public static IPage<ServerTrustCertificate> ListByInstance(this IServerTrustCertificatesOperations operations, string resourceGroupName, string managedInstanceName)
+            {
+                return operations.ListByInstanceAsync(resourceGroupName, managedInstanceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of server trust certificates that were uploaded from box to the
+            /// given Sql Managed Instance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='managedInstanceName'>
+            /// The name of the managed instance.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ServerTrustCertificate>> ListByInstanceAsync(this IServerTrustCertificatesOperations operations, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByInstanceWithHttpMessagesAsync(resourceGroupName, managedInstanceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets a server trust certificate that was uploaded from box to Sql Managed
             /// Instance.
             /// </summary>
@@ -173,52 +217,6 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets a list of the server trust certificates which are used for secure
-            /// communication between SQL On-Prem instance and the given Sql Managed
-            /// Instance
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='managedInstanceName'>
-            /// The name of the managed instance.
-            /// </param>
-            public static IPage<ServerTrustCertificate> ListByInstance(this IServerTrustCertificatesOperations operations, string resourceGroupName, string managedInstanceName)
-            {
-                return operations.ListByInstanceAsync(resourceGroupName, managedInstanceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of the server trust certificates which are used for secure
-            /// communication between SQL On-Prem instance and the given Sql Managed
-            /// Instance
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group that contains the resource. You can obtain
-            /// this value from the Azure Resource Manager API or the portal.
-            /// </param>
-            /// <param name='managedInstanceName'>
-            /// The name of the managed instance.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<ServerTrustCertificate>> ListByInstanceAsync(this IServerTrustCertificatesOperations operations, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByInstanceWithHttpMessagesAsync(resourceGroupName, managedInstanceName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Uploads a server trust certificate from box to Sql Managed Instance.
             /// </summary>
             /// <param name='operations'>
@@ -320,9 +318,8 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets a list of the server trust certificates which are used for secure
-            /// communication between SQL On-Prem instance and the given Sql Managed
-            /// Instance
+            /// Gets a list of server trust certificates that were uploaded from box to the
+            /// given Sql Managed Instance.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -336,9 +333,8 @@ namespace Microsoft.Azure.Management.Sql
             }
 
             /// <summary>
-            /// Gets a list of the server trust certificates which are used for secure
-            /// communication between SQL On-Prem instance and the given Sql Managed
-            /// Instance
+            /// Gets a list of server trust certificates that were uploaded from box to the
+            /// given Sql Managed Instance.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

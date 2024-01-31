@@ -6,29 +6,12 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics
 {
     /// <summary> The HealthcareEntityLink. </summary>
     public partial class EntityDataSource
     {
-        /// <summary> Initializes a new instance of EntityDataSource. </summary>
-        /// <param name="name"> Entity Catalog. Examples include: UMLS, CHV, MSH, etc. </param>
-        /// <param name="entityId"> Entity id in the given source catalog. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="entityId"/> is null. </exception>
-        internal EntityDataSource(string name, string entityId)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (entityId == null)
-            {
-                throw new ArgumentNullException(nameof(entityId));
-            }
-
-            Name = name;
-            EntityId = entityId;
-        }
     }
 }

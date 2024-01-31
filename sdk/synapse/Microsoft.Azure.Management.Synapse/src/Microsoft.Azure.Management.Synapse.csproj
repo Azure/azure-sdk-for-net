@@ -7,12 +7,11 @@
 		<PackageId>Microsoft.Azure.Management.Synapse</PackageId>
 		<Description>Azure Synapse Management SDK Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Synapse</AssemblyName>
-		<Version>2.5.0-preview</Version>
+		<Version>2.6.0-preview</Version>
 		<PackageTags>Microsoft Azure Synapse Management;Synapse;Synapse Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-			- Add ReadOnlyDatabase object to Synapse kusto pool model
-			- Some Azure Synapse Correctnesses
+			- Some changes for workspace managed sql server's minimal tls settings.
       ]]>
 		</PackageReleaseNotes>
     

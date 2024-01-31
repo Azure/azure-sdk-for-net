@@ -6,26 +6,24 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureEventHubsParameter. </summary>
     internal partial class AzureEventHubsParameter
     {
-        /// <summary> Initializes a new instance of AzureEventHubsParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureEventHubsParameter"/>. </summary>
         /// <param name="consumerGroup"> The consumer group to be used in this data feed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="consumerGroup"/> is null. </exception>
         public AzureEventHubsParameter(string consumerGroup)
         {
-            if (consumerGroup == null)
-            {
-                throw new ArgumentNullException(nameof(consumerGroup));
-            }
+            Argument.AssertNotNull(consumerGroup, nameof(consumerGroup));
 
             ConsumerGroup = consumerGroup;
         }
 
-        /// <summary> Initializes a new instance of AzureEventHubsParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureEventHubsParameter"/>. </summary>
         /// <param name="connectionString"> The connection string of this Azure Event Hubs. </param>
         /// <param name="consumerGroup"> The consumer group to be used in this data feed. </param>
         internal AzureEventHubsParameter(string connectionString, string consumerGroup)

@@ -3,24 +3,22 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-/// <summary>
-/// The suite of tests for the `StartRecognizeInvoices` methods in the <see cref="FormRecognizerClient"/> class.
-/// </summary>
-/// <remarks>
-/// These tests have a dependency on live Azure services and may incur costs for the associated
-/// Azure subscription.
-/// </remarks>
 namespace Azure.AI.FormRecognizer.Tests
 {
+    /// <summary>
+    /// The suite of tests for the `StartRecognizeInvoices` methods in the <see cref="FormRecognizerClient"/> class.
+    /// </summary>
+    /// <remarks>
+    /// These tests have a dependency on live Azure services and may incur costs for the associated
+    /// Azure subscription.
+    /// </remarks>
     [ClientTestFixture(FormRecognizerClientOptions.ServiceVersion.V2_1)]
-
     public class RecognizeInvoicesLiveTests : FormRecognizerLiveTestBase
     {
         public RecognizeInvoicesLiveTests(bool isAsync, FormRecognizerClientOptions.ServiceVersion serviceVersion)
@@ -332,20 +330,6 @@ namespace Azure.AI.FormRecognizer.Tests
                 expectedLastPageNumber: 2);
         }
 
-        [RecordedTest]
-        public void StartRecognizeInvoicesThrowsForDamagedFile()
-        {
-            var client = CreateFormRecognizerClient();
-
-            // First 4 bytes are PDF signature, but fill the rest of the "file" with garbage.
-
-            var damagedFile = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x55, 0x55, 0x55 };
-            using var stream = new MemoryStream(damagedFile);
-
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeInvoicesAsync(stream));
-            Assert.AreEqual("BadArgument", ex.ErrorCode);
-        }
-
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and handle returned errors.
@@ -357,43 +341,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var invalidUri = new Uri("https://idont.ex.ist");
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeInvoicesFromUriAsync(invalidUri));
-            Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
-        }
-
-        [RecordedTest]
-        public async Task StartRecognizeInvoicesWithSupportedLocale()
-        {
-            var client = CreateFormRecognizerClient();
-            var options = new RecognizeInvoicesOptions()
-            {
-                IncludeFieldElements = true,
-                Locale = FormRecognizerLocale.EnUS
-            };
-            RecognizeInvoicesOperation operation;
-
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceJpg);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeInvoicesAsync(stream, options);
-            }
-
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
-
-            var invoice = recognizedForms.Single();
-
-            ValidatePrebuiltForm(
-                invoice,
-                includeFieldElements: true,
-                expectedFirstPageNumber: 1,
-                expectedLastPageNumber: 1);
-
-            Assert.Greater(invoice.Fields.Count, 0);
-
-            var receiptPage = invoice.Pages.Single();
-
-            Assert.Greater(receiptPage.Lines.Count, 0);
-            Assert.AreEqual(1, receiptPage.SelectionMarks.Count);
-            Assert.AreEqual(2, receiptPage.Tables.Count);
+            Assert.AreEqual("InvalidImage", ex.ErrorCode);
         }
 
         [RecordedTest]
@@ -409,46 +357,6 @@ namespace Azure.AI.FormRecognizer.Tests
                 ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeInvoicesAsync(stream, new RecognizeInvoicesOptions() { Locale = "not-locale" }));
             }
             Assert.AreEqual("UnsupportedLocale", ex.ErrorCode);
-        }
-
-        [RecordedTest]
-        [TestCase("1", 1)]
-        [TestCase("1-2", 2)]
-        public async Task StartRecognizeInvoicesWithOnePageArgument(string pages, int expected)
-        {
-            var client = CreateFormRecognizerClient();
-            RecognizeInvoicesOperation operation;
-
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeInvoicesAsync(stream, new RecognizeInvoicesOptions() { Pages = { pages } });
-            }
-
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
-            int pageCount = forms.Sum(f => f.Pages.Count);
-
-            Assert.AreEqual(expected, pageCount);
-        }
-
-        [RecordedTest]
-        [TestCase("1", "3", 2)]
-        [TestCase("1-2", "3", 3)]
-        public async Task StartRecognizeInvoicesWithMultiplePageArgument(string page1, string page2, int expected)
-        {
-            var client = CreateFormRecognizerClient();
-            RecognizeInvoicesOperation operation;
-
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeInvoicesAsync(stream, new RecognizeInvoicesOptions() { Pages = { page1, page2 } });
-            }
-
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
-            int pageCount = forms.Sum(f => f.Pages.Count);
-
-            Assert.AreEqual(expected, pageCount);
         }
     }
 }

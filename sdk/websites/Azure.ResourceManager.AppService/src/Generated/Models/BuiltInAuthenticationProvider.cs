@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary>
     /// The default authentication provider to use when multiple providers are configured.
     /// This setting is only needed if multiple providers are configured and the unauthenticated client
-    /// action is set to &quot;RedirectToLoginPage&quot;.
+    /// action is set to "RedirectToLoginPage".
     /// </summary>
     public enum BuiltInAuthenticationProvider
     {

@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// invalid credentials. This includes calls returning
         /// HttpStatusCode.Unauthorized and HttpStatusCode.Forbidden and
         /// HttpStatusCode.TooManyRequests</param>
-        /// <param name="callCountFailed">Number of calls failed due to proxy
+        /// <param name="callCountFailed">Number of calls failed due to gateway
         /// or backend errors. This includes calls returning
         /// HttpStatusCode.BadRequest(400) and any Code between
         /// HttpStatusCode.InternalServerError (500) and 600</param>
@@ -218,9 +218,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public int? CallCountBlocked { get; set; }
 
         /// <summary>
-        /// Gets or sets number of calls failed due to proxy or backend errors.
-        /// This includes calls returning HttpStatusCode.BadRequest(400) and
-        /// any Code between HttpStatusCode.InternalServerError (500) and 600
+        /// Gets or sets number of calls failed due to gateway or backend
+        /// errors. This includes calls returning
+        /// HttpStatusCode.BadRequest(400) and any Code between
+        /// HttpStatusCode.InternalServerError (500) and 600
         /// </summary>
         [JsonProperty(PropertyName = "callCountFailed")]
         public int? CallCountFailed { get; set; }

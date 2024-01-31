@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sql.Models
         public static DiffBackupIntervalInHours Twelve { get; } = new DiffBackupIntervalInHours(TwelveValue);
         /// <summary> 24. </summary>
         public static DiffBackupIntervalInHours TwentyFour { get; } = new DiffBackupIntervalInHours(TwentyFourValue);
+
+        internal int ToSerialInt32() => _value;
+
         /// <summary> Determines if two <see cref="DiffBackupIntervalInHours"/> values are the same. </summary>
         public static bool operator ==(DiffBackupIntervalInHours left, DiffBackupIntervalInHours right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiffBackupIntervalInHours"/> values are not the same. </summary>

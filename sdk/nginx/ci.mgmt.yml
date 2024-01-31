@@ -1,0 +1,24 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/nginx/ci.mgmt.yml
+    - sdk/nginx/Azure.ResourceManager.Nginx/
+
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: nginx
+    ArtifactName: packages
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.Nginx
+      safeName: AzureResourceManagerNginx

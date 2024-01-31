@@ -22,6 +22,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="groundTruthTrajectoryCameraPoses"> Ground truth trajectory. </param>
         /// <param name="principalAxis"> Orientation of model's bounding box. </param>
         /// <param name="scale"> Scale of transformation of asset units into meter space. </param>
+        /// <param name="disableDetectScaleUnits">Whether or not disable automatic detection of FBX scale units.</param>
         /// <param name="supportingPlane"> Definition of supporting plane. </param>
         /// <param name="testTrajectoryCameraPoses"> Test Trajectory. </param>
         /// <returns> A new instance of the <see cref="AssetConversionConfiguration"/> for mocking purposes. </returns>
@@ -33,10 +34,11 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             IReadOnlyList<TrajectoryPose> groundTruthTrajectoryCameraPoses,
             System.Numerics.Quaternion principalAxis,
             float scale,
+            bool disableDetectScaleUnits,
             System.Numerics.Vector4 supportingPlane,
             IReadOnlyList<TrajectoryPose> testTrajectoryCameraPoses)
         {
-            return new AssetConversionConfiguration(new Vector3(assetDimensions), new Vector3(boundingBoxCenter), new Vector3(gravity), keyFrameIndexes, groundTruthTrajectoryCameraPoses, new Quaternion(principalAxis), scale, new Vector4(supportingPlane), testTrajectoryCameraPoses);
+            return new AssetConversionConfiguration(new Vector3(assetDimensions), new Vector3(boundingBoxCenter), new Vector3(gravity), keyFrameIndexes, groundTruthTrajectoryCameraPoses, new Quaternion(principalAxis), scale, disableDetectScaleUnits, new Vector4(supportingPlane), testTrajectoryCameraPoses);
         }
 
         /// <summary>
@@ -52,6 +54,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// <param name="uploadedInputAssetUri"> The Uri to the Asset to be ingested by the AOA Asset Conversion Service. This asset needs to have been uploaded to the service using an endpoint provided from a call to the GetUploadUri API. </param>
         /// <param name="accountId"> Identifier for the Account owning the AOA asset conversion Job. </param>
         /// <param name="assetConversionConfiguration"> The configuration of the AOA asset conversion job. </param>
+        /// <param name="scaledAssetDimensions">The scaled dimensions of the asset.</param>
         /// <returns> A new instance of the <see cref="AssetConversionProperties"/> for mocking purposes. </returns>
         public static AssetConversionProperties AssetConversionProperties(
             string clientErrorDetails,
@@ -63,7 +66,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             AssetFileType assetFileType,
             Uri uploadedInputAssetUri,
             Guid? accountId,
-            AssetConversionConfiguration assetConversionConfiguration)
+            AssetConversionConfiguration assetConversionConfiguration,
+            System.Numerics.Vector3 scaledAssetDimensions)
         {
             return new AssetConversionProperties(
             clientErrorDetails,
@@ -75,7 +79,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             assetFileType.ToString(),
             uploadedInputAssetUri.AbsoluteUri,
             accountId,
-            assetConversionConfiguration);
+            assetConversionConfiguration,
+            new Vector3(scaledAssetDimensions));
         }
 
         /// <summary>

@@ -330,6 +330,103 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task Ctor_DefaultAudience()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            BlobClientOptions options = GetOptionsWithAudience(BlobAudience.DefaultAudience);
+
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
+            {
+                BlobContainerName = test.Container.Name,
+            };
+
+            BlobContainerClient aadContainer = InstrumentClient(new BlobContainerClient(
+                uriBuilder.ToUri(),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            bool exists = await aadContainer.ExistsAsync();
+            Assert.IsTrue(exists);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_CustomAudience()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            BlobClientOptions options = GetOptionsWithAudience(new BlobAudience($"https://{test.Container.AccountName}.blob.core.windows.net/"));
+
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
+            {
+                BlobContainerName = test.Container.Name,
+            };
+
+            BlobContainerClient aadContainer = InstrumentClient(new BlobContainerClient(
+                uriBuilder.ToUri(),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            bool exists = await aadContainer.ExistsAsync();
+            Assert.IsTrue(exists);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_StorageAccountAudience()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            BlobClientOptions options = GetOptionsWithAudience(BlobAudience.CreateBlobServiceAccountAudience(test.Container.AccountName));
+
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
+            {
+                BlobContainerName = test.Container.Name,
+            };
+
+            BlobContainerClient aadContainer = InstrumentClient(new BlobContainerClient(
+                uriBuilder.ToUri(),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            bool exists = await aadContainer.ExistsAsync();
+            Assert.IsTrue(exists);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_AudienceError()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            BlobClientOptions options = GetOptionsWithAudience(new BlobAudience("https://badaudience.blob.core.windows.net"));
+
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
+            {
+                BlobContainerName = test.Container.Name,
+            };
+
+            BlobContainerClient aadContainer = InstrumentClient(new BlobContainerClient(
+                uriBuilder.ToUri(),
+                new MockCredential(),
+                options));
+
+            // Assert
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                aadContainer.ExistsAsync(),
+                e => Assert.AreEqual(BlobErrorCode.InvalidAuthenticationInfo.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
         public async Task CreateAsync_WithSharedKey()
         {
             // Arrange
@@ -548,6 +645,24 @@ namespace Azure.Storage.Blobs.Test
             // Assert
             Response<BlobContainerProperties> response = await container.GetPropertiesAsync();
             Assert.AreEqual(PublicAccessType.Blob, response.Value.PublicAccess);
+
+            // Cleanup
+            await container.DeleteIfExistsAsync();
+        }
+
+        [RecordedTest]
+        public async Task CreateAsync_PublicAccess_None()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_SharedKey();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+
+            // Act
+            await container.CreateAsync(publicAccessType: PublicAccessType.None);
+
+            // Assert
+            Response<BlobContainerProperties> response = await container.GetPropertiesAsync();
+            Assert.AreEqual(PublicAccessType.None, response.Value.PublicAccess);
 
             // Cleanup
             await container.DeleteIfExistsAsync();
@@ -2911,6 +3026,41 @@ namespace Azure.Storage.Blobs.Test
                 Assert.IsTrue(item.IsPrefix);
                 Assert.AreEqual("dir1/dir2/file\uffff.b", item.Prefix);
             }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_12_02)]
+        public async Task ListBlobsHierarchySegmentAsync_VersionPrefixDelimiter()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+            await SetUpContainerForListing(test.Container);
+
+            var blobs = new List<BlobItem>();
+            var prefixes = new List<string>();
+
+            await foreach (BlobHierarchyItem blobItem in test.Container.GetBlobsByHierarchyAsync(
+                states: BlobStates.Version,
+                delimiter: "/",
+                prefix: "baz"))
+            {
+                if (blobItem.IsBlob)
+                {
+                    blobs.Add(blobItem.Blob);
+                }
+                else
+                {
+                    prefixes.Add(blobItem.Prefix);
+                }
+            }
+
+            Assert.AreEqual(1, blobs.Count);
+            Assert.AreEqual(1, prefixes.Count);
+
+            Assert.AreEqual("baz", blobs[0].Name);
+            Assert.IsNotNull(blobs[0].VersionId);
+
+            Assert.AreEqual("baz/", prefixes[0]);
         }
 
         [RecordedTest]

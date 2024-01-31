@@ -1,9 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable // TODO: remove and fix errors
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+
+using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+
 using BenchmarkDotNet.Attributes;
 
 /*
@@ -94,29 +99,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
         [Benchmark]
         public void Enumerate_TagObjects_NoItem()
         {
-            var monitorTags = TraceHelper.EnumerateActivityTags(_noItemActivity);
-            monitorTags.Return();
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(_noItemActivity);
+            activityTagsProcessor.Return();
         }
 
         [Benchmark]
         public void Enumerate_TagObjects_PartB()
         {
-            var monitorTags = TraceHelper.EnumerateActivityTags(_partBActivity);
-            monitorTags.Return();
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(_partBActivity);
+            activityTagsProcessor.Return();
         }
 
         [Benchmark]
         public void Enumerate_TagObjects_PartC()
         {
-            var monitorTags = TraceHelper.EnumerateActivityTags(_partCActivity);
-            monitorTags.Return();
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(_partCActivity);
+            activityTagsProcessor.Return();
         }
 
         [Benchmark]
         public void Enumerate_TagObjects_PartB_And_C()
         {
-            var monitorTags = TraceHelper.EnumerateActivityTags(_partBAndCActivity);
-            monitorTags.Return();
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(_partBAndCActivity);
+            activityTagsProcessor.Return();
         }
 
         private static Activity CreateTestActivity(IEnumerable<KeyValuePair<string, object>> additionalAttributes = null)

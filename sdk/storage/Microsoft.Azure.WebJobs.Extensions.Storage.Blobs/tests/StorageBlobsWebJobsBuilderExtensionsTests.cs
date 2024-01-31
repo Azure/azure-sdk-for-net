@@ -18,6 +18,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             var values = new Dictionary<string, string>
             {
                 { $"{extensionPath}:MaxDegreeOfParallelism", "2" },
+                { $"{extensionPath}:PoisonBlobThreshold", "3" },
             };
 
             BlobsOptions options = TestHelpers.GetConfiguredOptions<BlobsOptions>(b =>
@@ -26,6 +27,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
             }, values);
 
             Assert.AreEqual(2, options.MaxDegreeOfParallelism);
+            Assert.AreEqual(3, options.PoisonBlobThreshold);
         }
     }
 }

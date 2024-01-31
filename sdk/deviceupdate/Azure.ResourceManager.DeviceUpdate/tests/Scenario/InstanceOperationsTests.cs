@@ -32,10 +32,12 @@ namespace Azure.ResourceManager.DeviceUpdate.Tests
             Assert.AreEqual(404, ex.Status);
         }
 
-        [TestCase]
-        [RecordedTest]
-        public async Task AddTag()
+        //[TestCase(null)] Need to re-record
+        [TestCase(true)]
+        //[TestCase(false)] Need to re-record
+        public async Task AddTag(bool? useTragResource)
         {
+            SetTagResourceUsage(Client, useTragResource);
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg-");
             string accountName = Recording.GenerateAssetName("Account-");

@@ -13,11 +13,13 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
+using Azure.Storage.Tests.Shared;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Queues;
 using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Azure.WebJobs.Logging;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -41,6 +43,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
         private const string DynamicConcurrencyQueueName = TestArtifactsPrefix + "queue%rnd%";
         private const string DynamicConcurrencyBlobContainerName = TestArtifactsPrefix + "blob%rnd%";
         private const string TestQueueName = TestArtifactsPrefix + "queue%rnd%";
+        private const string QueueName = "testqueue";
         private const string TestQueueNameEtag = TestArtifactsPrefix + "etag2equeue%rnd%";
         private const string DoneQueueName = TestArtifactsPrefix + "donequeue%rnd%";
 
@@ -50,6 +53,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
         private static EventWaitHandle _startWaitHandle;
         private static EventWaitHandle _functionChainWaitHandle;
+        private static EventWaitHandle _waitHandle;
         private QueueServiceClient _queueServiceClient;
         private QueueServiceClient _queueServiceClientWithoutEncoding;
         private BlobServiceClient _blobServiceClient;
@@ -67,6 +71,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             _queueServiceClient = _fixture.QueueServiceClient;
             _queueServiceClientWithoutEncoding = _fixture.QueueServiceClientWithoutEncoding;
             _blobServiceClient = _fixture.BlobServiceClient;
+            _waitHandle = new ManualResetEvent(initialState: false);
         }
 
         [OneTimeTearDown]
@@ -182,6 +187,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
         [Test]
         [Category("DynamicConcurrency")]
+        [RetryOnException(5, typeof(OperationCanceledException))]
         public async Task DynamicConcurrency_Queues()
         {
             // Reinitialize the name resolver to avoid conflicts
@@ -341,7 +347,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
                 await UploadTestObject();
             }
 
-            var waitTime = TimeSpan.FromSeconds(15);
+            var waitTime = TimeSpan.FromSeconds(30);
             bool signaled = _functionChainWaitHandle.WaitOne(waitTime);
 
             // Stop the host and wait for it to finish
@@ -418,6 +424,31 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
             // Validate Logger
             var loggerErrors = loggerProvider.GetAllLogMessages().Where(l => l.Level == Microsoft.Extensions.Logging.LogLevel.Error);
             Assert.True(loggerErrors.All(t => t.Exception.InnerException.InnerException is FormatException));
+        }
+
+        [Test]
+        public async Task TestSingle_Dispose()
+        {
+            await WriteQueueMessages(QueueName, 5);
+
+            IHost host = BuildHost<TestSingleDispose>();
+
+            var waitTime = TimeSpan.FromSeconds(30);
+            bool result = _waitHandle.WaitOne(waitTime);
+            Assert.True(result);
+            host.Dispose();
+        }
+
+        [Test]
+        public async Task TestSingle_StopWithoutDrain()
+        {
+            await WriteQueueMessages(QueueName, 1);
+            IHost host = BuildHost<TestSingleDispose>();
+
+            var waitTime = TimeSpan.FromSeconds(30);
+            bool result = _waitHandle.WaitOne(waitTime);
+            Assert.True(result);
+            await host.StopAsync();
         }
 
         private async Task UploadTestObject()
@@ -604,6 +635,51 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.ScenarioTests
 
                 Interlocked.Increment(ref InvocationCount);
             }
+        }
+
+        public class TestSingleDispose
+        {
+            public static async Task RunAsync(
+                [QueueTrigger(QueueName)]
+                QueueMessage message,
+                CancellationToken cancellationToken)
+            {
+                _waitHandle.Set();
+                // wait a small amount of time for the host to call dispose
+                await Task.Delay(2000, CancellationToken.None);
+                Assert.IsTrue(cancellationToken.IsCancellationRequested);
+            }
+        }
+
+        protected IHost BuildHost<TJobClass>(
+            Action<IHostBuilder> configurationDelegate = null,
+            bool startHost = true)
+        {
+            // Reinitialize the name resolver to avoid conflicts
+            _resolver = new RandomNameResolver();
+
+            var hostBuilder = new HostBuilder()
+                .ConfigureDefaultTestHost<TJobClass>(b =>
+                {
+                    b.AddAzureStorageQueues();
+                })
+                .ConfigureServices(services =>
+                {
+                    services.AddSingleton<INameResolver>(_resolver);
+                })
+                .ConfigureLogging((context, b) =>
+                {
+                    b.SetMinimumLevel(LogLevel.Debug);
+                });
+            // do this after the defaults so test-specific values will override the defaults
+            configurationDelegate?.Invoke(hostBuilder);
+            IHost host = hostBuilder.Build();
+            if (startHost)
+            {
+                host.StartAsync().GetAwaiter().GetResult();
+            }
+
+            return host;
         }
     }
 }

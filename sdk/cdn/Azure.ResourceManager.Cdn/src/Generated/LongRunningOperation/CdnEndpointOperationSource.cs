@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn
                 data.ProbePath,
                 data.GeoFilters,
                 data.DefaultOriginGroup,
-                data.UrlSigningKeys,
+                data.UriSigningKeys,
                 data.DeliveryPolicy,
                 data.WebApplicationFirewallPolicyLink,
                 data.HostName,
@@ -82,7 +82,8 @@ namespace Azure.ResourceManager.Cdn
                 data.OriginGroups,
                 data.CustomDomains,
                 data.ResourceState,
-                data.ProvisioningState);
+                data.ProvisioningState,
+                null);
         }
 
         private string GetName(string param, ResourceIdentifier id)

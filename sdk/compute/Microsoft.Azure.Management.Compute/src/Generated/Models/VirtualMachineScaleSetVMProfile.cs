@@ -40,8 +40,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="securityProfile">Specifies the Security related
         /// profile settings for the virtual machines in the scale set.</param>
         /// <param name="diagnosticsProfile">Specifies the boot diagnostic
-        /// settings state. &lt;br&gt;&lt;br&gt;Minimum api-version:
-        /// 2015-06-15.</param>
+        /// settings state. Minimum api-version: 2015-06-15.</param>
         /// <param name="extensionProfile">Specifies a collection of settings
         /// for extensions installed on virtual machines in the scale
         /// set.</param>
@@ -59,35 +58,38 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux)
         /// &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15</param>
         /// <param name="priority">Specifies the priority for the virtual
-        /// machines in the scale set. &lt;br&gt;&lt;br&gt;Minimum api-version:
-        /// 2017-10-30-preview. Possible values include: 'Regular', 'Low',
-        /// 'Spot'</param>
+        /// machines in the scale set. Minimum api-version: 2017-10-30-preview.
+        /// Possible values include: 'Regular', 'Low', 'Spot'</param>
         /// <param name="evictionPolicy">Specifies the eviction policy for the
-        /// Azure Spot virtual machine and Azure Spot scale set.
-        /// &lt;br&gt;&lt;br&gt;For Azure Spot virtual machines, both
-        /// 'Deallocate' and 'Delete' are supported and the minimum api-version
-        /// is 2019-03-01. &lt;br&gt;&lt;br&gt;For Azure Spot scale sets, both
-        /// 'Deallocate' and 'Delete' are supported and the minimum api-version
-        /// is 2017-10-30-preview. Possible values include: 'Deallocate',
-        /// 'Delete'</param>
+        /// Azure Spot virtual machine and Azure Spot scale set. For Azure Spot
+        /// virtual machines, both 'Deallocate' and 'Delete' are supported and
+        /// the minimum api-version is 2019-03-01. For Azure Spot scale sets,
+        /// both 'Deallocate' and 'Delete' are supported and the minimum
+        /// api-version is 2017-10-30-preview. Possible values include:
+        /// 'Deallocate', 'Delete'</param>
         /// <param name="billingProfile">Specifies the billing related details
-        /// of a Azure Spot VMSS. &lt;br&gt;&lt;br&gt;Minimum api-version:
-        /// 2019-03-01.</param>
+        /// of a Azure Spot VMSS. Minimum api-version: 2019-03-01.</param>
         /// <param name="scheduledEventsProfile">Specifies Scheduled Event
         /// related configurations.</param>
         /// <param name="userData">UserData for the virtual machines in the
         /// scale set, which must be base-64 encoded. Customer should not pass
-        /// any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version:
-        /// 2021-03-01</param>
+        /// any secrets in here. Minimum api-version: 2021-03-01.</param>
         /// <param name="capacityReservation">Specifies the capacity
-        /// reservation related details of a scale set.
-        /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-04-01.</param>
+        /// reservation related details of a scale set. Minimum api-version:
+        /// 2021-04-01.</param>
         /// <param name="applicationProfile">Specifies the gallery applications
         /// that should be made available to the VM/VMSS</param>
         /// <param name="hardwareProfile">Specifies the hardware profile
-        /// related details of a scale set. &lt;br&gt;&lt;br&gt;Minimum
-        /// api-version: 2021-11-01.</param>
-        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile), string userData = default(string), CapacityReservationProfile capacityReservation = default(CapacityReservationProfile), ApplicationProfile applicationProfile = default(ApplicationProfile), VirtualMachineScaleSetHardwareProfile hardwareProfile = default(VirtualMachineScaleSetHardwareProfile))
+        /// related details of a scale set. Minimum api-version:
+        /// 2021-11-01.</param>
+        /// <param name="serviceArtifactReference">Specifies the service
+        /// artifact reference id used to set same image version for all
+        /// virtual machines in the scale set when using 'latest' image
+        /// version. Minimum api-version: 2022-11-01</param>
+        /// <param name="securityPostureReference">Specifies the security
+        /// posture to be used for all virtual machines in the scale set.
+        /// Minimum api-version: 2023-03-01</param>
+        public VirtualMachineScaleSetVMProfile(VirtualMachineScaleSetOSProfile osProfile = default(VirtualMachineScaleSetOSProfile), VirtualMachineScaleSetStorageProfile storageProfile = default(VirtualMachineScaleSetStorageProfile), VirtualMachineScaleSetNetworkProfile networkProfile = default(VirtualMachineScaleSetNetworkProfile), SecurityProfile securityProfile = default(SecurityProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), VirtualMachineScaleSetExtensionProfile extensionProfile = default(VirtualMachineScaleSetExtensionProfile), string licenseType = default(string), string priority = default(string), string evictionPolicy = default(string), BillingProfile billingProfile = default(BillingProfile), ScheduledEventsProfile scheduledEventsProfile = default(ScheduledEventsProfile), string userData = default(string), CapacityReservationProfile capacityReservation = default(CapacityReservationProfile), ApplicationProfile applicationProfile = default(ApplicationProfile), VirtualMachineScaleSetHardwareProfile hardwareProfile = default(VirtualMachineScaleSetHardwareProfile), ServiceArtifactReference serviceArtifactReference = default(ServiceArtifactReference), SecurityPostureReference securityPostureReference = default(SecurityPostureReference))
         {
             OsProfile = osProfile;
             StorageProfile = storageProfile;
@@ -104,6 +106,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             CapacityReservation = capacityReservation;
             ApplicationProfile = applicationProfile;
             HardwareProfile = hardwareProfile;
+            ServiceArtifactReference = serviceArtifactReference;
+            SecurityPostureReference = securityPostureReference;
             CustomInit();
         }
 
@@ -141,9 +145,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public SecurityProfile SecurityProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the boot diagnostic settings state.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2015-06-15.
+        /// Gets or sets specifies the boot diagnostic settings state. Minimum
+        /// api-version: 2015-06-15.
         /// </summary>
         [JsonProperty(PropertyName = "diagnosticsProfile")]
         public DiagnosticsProfile DiagnosticsProfile { get; set; }
@@ -178,20 +181,17 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies the priority for the virtual machines in the
-        /// scale set. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2017-10-30-preview. Possible values include: 'Regular', 'Low',
-        /// 'Spot'
+        /// scale set. Minimum api-version: 2017-10-30-preview. Possible values
+        /// include: 'Regular', 'Low', 'Spot'
         /// </summary>
         [JsonProperty(PropertyName = "priority")]
         public string Priority { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the eviction policy for the Azure Spot
-        /// virtual machine and Azure Spot scale set.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For Azure Spot virtual
+        /// virtual machine and Azure Spot scale set. For Azure Spot virtual
         /// machines, both 'Deallocate' and 'Delete' are supported and the
-        /// minimum api-version is 2019-03-01.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For Azure Spot scale sets, both
+        /// minimum api-version is 2019-03-01. For Azure Spot scale sets, both
         /// 'Deallocate' and 'Delete' are supported and the minimum api-version
         /// is 2017-10-30-preview. Possible values include: 'Deallocate',
         /// 'Delete'
@@ -201,8 +201,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies the billing related details of a Azure Spot
-        /// VMSS. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2019-03-01.
+        /// VMSS. Minimum api-version: 2019-03-01.
         /// </summary>
         [JsonProperty(PropertyName = "billingProfile")]
         public BillingProfile BillingProfile { get; set; }
@@ -216,16 +215,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets userData for the virtual machines in the scale set,
         /// which must be base-64 encoded. Customer should not pass any secrets
-        /// in here. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2021-03-01
+        /// in here. Minimum api-version: 2021-03-01.
         /// </summary>
         [JsonProperty(PropertyName = "userData")]
         public string UserData { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the capacity reservation related details of
-        /// a scale set. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum
-        /// api-version: 2021-04-01.
+        /// a scale set. Minimum api-version: 2021-04-01.
         /// </summary>
         [JsonProperty(PropertyName = "capacityReservation")]
         public CapacityReservationProfile CapacityReservation { get; set; }
@@ -239,11 +236,25 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies the hardware profile related details of a
-        /// scale set. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2021-11-01.
+        /// scale set. Minimum api-version: 2021-11-01.
         /// </summary>
         [JsonProperty(PropertyName = "hardwareProfile")]
         public VirtualMachineScaleSetHardwareProfile HardwareProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the service artifact reference id used to
+        /// set same image version for all virtual machines in the scale set
+        /// when using 'latest' image version. Minimum api-version: 2022-11-01
+        /// </summary>
+        [JsonProperty(PropertyName = "serviceArtifactReference")]
+        public ServiceArtifactReference ServiceArtifactReference { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the security posture to be used for all
+        /// virtual machines in the scale set. Minimum api-version: 2023-03-01
+        /// </summary>
+        [JsonProperty(PropertyName = "securityPostureReference")]
+        public SecurityPostureReference SecurityPostureReference { get; set; }
 
         /// <summary>
         /// Validate the object.

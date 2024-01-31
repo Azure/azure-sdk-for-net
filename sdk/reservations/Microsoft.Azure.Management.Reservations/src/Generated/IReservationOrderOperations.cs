@@ -129,6 +129,35 @@ namespace Microsoft.Azure.Management.Reservations
         /// </exception>
         Task<AzureOperationResponse<ReservationOrderResponse>> GetWithHttpMessagesAsync(string reservationOrderId, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Change directory of `ReservationOrder`.
+        /// </summary>
+        /// <remarks>
+        /// Change directory (tenant) of `ReservationOrder` and all
+        /// `Reservation` under it to specified tenant id
+        /// </remarks>
+        /// <param name='reservationOrderId'>
+        /// Order Id of the reservation
+        /// </param>
+        /// <param name='body'>
+        /// Information needed to change directory of reservation order
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ChangeDirectoryResponse>> ChangeDirectoryWithHttpMessagesAsync(string reservationOrderId, ChangeDirectoryRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Purchase `ReservationOrder`
         /// </summary>
         /// <remarks>

@@ -19,31 +19,58 @@ namespace Azure.Search.Documents.Tests
         private static readonly TimeSpan s_timeout = TimeSpan.FromMinutes(1);
 
         /// <summary>
-        /// The shared hotels search index.
+        /// The shared hotels search index for tests.
         /// </summary>
-        public static SearchResources Search { get; private set; }
+        public static SearchResources SearchResourcesForTests { get; private set; }
+
+        /// <summary>
+        /// The shared hotels search index for samples.
+        /// </summary>
+        public static SearchResources SearchResourcesForSamples { get; private set; }
 
         /// <summary>
         /// Initializes the <see cref="Search"/> shared index if necessary.
         /// </summary>
         /// <param name="factory">The method to create the shared search index if necessary.</param>
         /// <returns>A <see cref="ValueTask"/> that the method has completed.</returns>
-        public static async ValueTask EnsureInitialized(Func<Task<SearchResources>> factory)
+        public static async ValueTask EnsureInitialized(Func<Task<SearchResources>> factory, bool isSample)
         {
-            if (Search is null)
+            if (isSample)
             {
-                // Use AutoResetEvents around async tasks since lock() doesn't work and Monitor.Pulse can deadlock.
-                s_event.WaitOne(s_timeout);
-                try
+                if (SearchResourcesForSamples is null)
                 {
-                    if (Search is null)
+                    // Use AutoResetEvents around async tasks since lock() doesn't work and Monitor.Pulse can deadlock.
+                    s_event.WaitOne(s_timeout);
+                    try
                     {
-                        Search = await factory();
+                        if (SearchResourcesForSamples is null)
+                        {
+                            SearchResourcesForSamples = await factory();
+                        }
+                    }
+                    finally
+                    {
+                        s_event.Set();
                     }
                 }
-                finally
+            }
+            else
+            {
+                if (SearchResourcesForTests is null)
                 {
-                    s_event.Set();
+                    // Use AutoResetEvents around async tasks since lock() doesn't work and Monitor.Pulse can deadlock.
+                    s_event.WaitOne(s_timeout);
+                    try
+                    {
+                        if (SearchResourcesForTests is null)
+                        {
+                            SearchResourcesForTests = await factory();
+                        }
+                    }
+                    finally
+                    {
+                        s_event.Set();
+                    }
                 }
             }
         }
@@ -62,10 +89,15 @@ namespace Azure.Search.Documents.Tests
         [OneTimeTearDown]
         public static async Task DeleteSharedSearchResources()
         {
-            if (Search != null)
+            if (SearchResourcesForSamples != null)
             {
-                await Search.DisposeAsync();
-                Search = null;
+                await SearchResourcesForSamples.DisposeAsync();
+                SearchResourcesForSamples = null;
+            }
+            if (SearchResourcesForTests != null)
+            {
+                await SearchResourcesForTests.DisposeAsync();
+                SearchResourcesForTests = null;
             }
         }
     }

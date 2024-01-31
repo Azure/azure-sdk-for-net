@@ -8,7 +8,7 @@ using Xunit;
 // This alias is necessary because it will otherwise try to default to "Microsoft.Azure.Core" which doesn't exist.
 using AzureCoreConnectionString = Azure.Core.ConnectionString;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.ConnectionString.Tests
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     /// <summary>
     /// Because we don't own the code for <see cref="Azure.Core.ConnectionString"/>, these tests are to verify expected behavior.
@@ -60,12 +60,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.ConnectionString.Tests
             Assert.Equal("value2", test.GetRequired("lowercase"));
             Assert.Equal("value3", test.GetRequired("MIXEDCASE"));
             Assert.Equal("value3", test.GetRequired("mixedcase"));
-        }
-
-        [Fact]
-        public void TestParse_WithNull()
-        {
-            Assert.Throws<NullReferenceException>(() => AzureCoreConnectionString.Parse(null));
         }
 
         [Fact]

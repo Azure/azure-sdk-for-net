@@ -5,6 +5,8 @@ using System;
 using System.IO;
 using Azure.Core;
 
+// suppress the generated type for the property `Format`
+[assembly: CodeGenSuppressType("SynonymMapFormat")]
 namespace Azure.Search.Documents.Indexes.Models
 {
     [CodeGenSuppress(nameof(SynonymMap), typeof(string), typeof(string))]
@@ -12,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         private const string DefaultFormat = "solr";
 
-        [CodeGenMember("etag")]
+        [CodeGenMember("ETag")]
         private string _etag;
 
         // TODO: Replace constructor and read-only properties when https://github.com/Azure/autorest.csharp/issues/554 is fixed.

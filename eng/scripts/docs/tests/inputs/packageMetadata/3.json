@@ -1,0 +1,23 @@
+{
+    "Package": "Microsoft.Rest.ClientRuntime",
+    "VersionGA": "2.3.24",
+    "VersionPreview": "",
+    "DisplayName": "Client Runtime",
+    "ServiceName": "AutoRest",
+    "RepoPath": "",
+    "MSDocs": "NA",
+    "GHDocs": "NA",
+    "Type": "client",
+    "New": "False",
+    "PlannedVersions": "",
+    "LatestGADate": "",
+    "FirstGADate": "",
+    "Support": "active",
+    "EOLDate": "",
+    "Hide": "",
+    "Replace": "",
+    "ReplaceGuide": "",
+    "MSDocService": "",
+    "ServiceId": "",
+    "Notes": ""
+  }

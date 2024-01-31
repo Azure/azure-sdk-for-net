@@ -15,6 +15,10 @@ namespace Azure.AI.Translation.Document
     {
         internal static DocumentStatusResult DeserializeDocumentStatusResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> path = default;
             Uri sourcePath = default;
             DateTimeOffset createdDateTimeUtc = default;
@@ -27,61 +31,59 @@ namespace Azure.AI.Translation.Document
             Optional<long> characterCharged = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("path"))
+                if (property.NameEquals("path"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     path = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourcePath"))
+                if (property.NameEquals("sourcePath"u8))
                 {
                     sourcePath = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("createdDateTimeUtc"))
+                if (property.NameEquals("createdDateTimeUtc"u8))
                 {
                     createdDateTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastActionDateTimeUtc"))
+                if (property.NameEquals("lastActionDateTimeUtc"u8))
                 {
                     lastActionDateTimeUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("status"))
+                if (property.NameEquals("status"u8))
                 {
                     status = new DocumentTranslationStatus(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("to"))
+                if (property.NameEquals("to"u8))
                 {
                     to = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("error"))
+                if (property.NameEquals("error"u8))
                 {
                     error = property.Value.Clone();
                     continue;
                 }
-                if (property.NameEquals("progress"))
+                if (property.NameEquals("progress"u8))
                 {
                     progress = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("characterCharged"))
+                if (property.NameEquals("characterCharged"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     characterCharged = property.Value.GetInt64();

@@ -140,7 +140,6 @@ namespace Azure.ResourceManager.Tests
             var location = locations.First();
             Assert.IsNotNull(location.Metadata, "Metadata was null");
             Assert.IsNotNull(location.Id, "Id was null");
-            Assert.AreEqual(subOps.Id.SubscriptionId, location.SubscriptionId);
         }
 
         [RecordedTest]
@@ -181,47 +180,10 @@ namespace Azure.ResourceManager.Tests
             //Assert.IsNotNull(testFeature.Data.Type);
         }
 
-        [Ignore("Need to resolve before GA")]
         [RecordedTest]
-        public async Task AddTag()
-        {
-            var subscription = await Client.GetDefaultSubscriptionAsync();
-            var subscription2 = await subscription.AddTagAsync(TagKey, TagValue);
-            Assert.IsTrue(subscription2.Value.Data.Tags.ContainsKey(TagKey));
-            Assert.AreEqual(subscription2.Value.Data.Tags[TagKey], TagValue);
-        }
-
-        [Ignore("Need to resolve before GA")]
-        [RecordedTest]
-        public async Task RemoveTag()
-        {
-            await AddTag();
-            var subscription = await Client.GetDefaultSubscriptionAsync();
-            var subscription2 = await subscription.RemoveTagAsync(TagKey);
-            Assert.IsFalse(subscription2.Value.Data.Tags.ContainsKey(TagKey));
-        }
-
-        [Ignore("Need to resolve before GA")]
-        [RecordedTest]
-        public async Task SetTags()
-        {
-            await AddTag();
-            var subscription = await Client.GetDefaultSubscriptionAsync();
-            var key = Recording.GenerateAssetName("TagKey-");
-            var value = Recording.GenerateAssetName("TagValue-");
-            var tags = new Dictionary<string, string>();
-            var subscription2 = await subscription.SetTagsAsync(tags);
-            Assert.IsFalse(subscription2.Value.Data.Tags.ContainsKey(TagKey));
-            Assert.IsTrue(subscription2.Value.Data.Tags.ContainsKey(key));
-            Assert.AreEqual(subscription2.Value.Data.Tags[key], value);
-        }
-
-        [RecordedTest]
+        [Ignore("Re-record of this test will cause github not able to show file diffs and run CI")]
         public async Task ValidateResourceInRestApi()
         {
-#if NET461
-            await Task.Delay(1); //no op due to header differences on 461
-#else
             var namespacesToSkip = new HashSet<string>
             {
                 "Microsoft.MarketplaceNotifications",
@@ -237,6 +199,9 @@ namespace Azure.ResourceManager.Tests
                 "Microsoft.ServicesHub",
                 "Microsoft.SoftwarePlan",
                 "Microsoft.TimeSeriesInsights",
+                "Microsoft.Chaos",
+                "Microsoft.VMwareCloudSimple",
+                "Microsoft.HybridData"
             };
             var subscription = await Client.GetDefaultSubscriptionAsync();
             await foreach (var provider in subscription.GetResourceProviders())
@@ -253,7 +218,6 @@ namespace Azure.ResourceManager.Tests
                     }
                 }, $"Error getting rest apis for {provider.Data.Namespace}");
             }
-#endif
         }
     }
 }

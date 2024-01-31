@@ -13,7 +13,7 @@ namespace Azure.Messaging.ServiceBus.Administration
 {
     internal static class TopicPropertiesExtensions
     {
-        public static async Task<TopicProperties> ParseResponseAsync(Response response, ClientDiagnostics diagnostics)
+        public static async Task<TopicProperties> ParseResponseAsync(Response response)
         {
             try
             {
@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 {
                     if (xDoc.Name.LocalName == "entry")
                     {
-                        return await ParseFromEntryElementAsync(xDoc, response, diagnostics).ConfigureAwait(false);
+                        return ParseFromEntryElement(xDoc, response);
                     }
                 }
             }
@@ -35,10 +35,10 @@ namespace Azure.Messaging.ServiceBus.Administration
             throw new ServiceBusException(
                 "Topic was not found",
                 ServiceBusFailureReason.MessagingEntityNotFound,
-                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                innerException: new RequestFailedException(response));
         }
 
-        public static async Task<List<TopicProperties>> ParsePagedResponseAsync(Response response, ClientDiagnostics diagnostics)
+        public static async Task<List<TopicProperties>> ParsePagedResponseAsync(Response response)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                         var entryList = xDoc.Elements(XName.Get("entry", AdministrationClientConstants.AtomNamespace));
                         foreach (var entry in entryList)
                         {
-                            topicList.Add(await ParseFromEntryElementAsync(entry, response, diagnostics).ConfigureAwait(false));
+                            topicList.Add(ParseFromEntryElement(entry, response));
                         }
 
                         return topicList;
@@ -68,10 +68,10 @@ namespace Azure.Messaging.ServiceBus.Administration
             throw new ServiceBusException(
                 "No topics were found",
                 ServiceBusFailureReason.MessagingEntityNotFound,
-                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                innerException: new RequestFailedException(response));
         }
 
-        private static async Task<TopicProperties> ParseFromEntryElementAsync(XElement xEntry, Response response, ClientDiagnostics diagnostics)
+        private static TopicProperties ParseFromEntryElement(XElement xEntry, Response response)
         {
             var name = xEntry.Element(XName.Get("title", AdministrationClientConstants.AtomNamespace)).Value;
             var topicXml = xEntry.Element(XName.Get("content", AdministrationClientConstants.AtomNamespace))?
@@ -82,7 +82,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 throw new ServiceBusException(
                     "Topic was not found",
                     ServiceBusFailureReason.MessagingEntityNotFound,
-                    innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                    innerException: new RequestFailedException(response));
             }
 
             var topicProperties = new TopicProperties(name);

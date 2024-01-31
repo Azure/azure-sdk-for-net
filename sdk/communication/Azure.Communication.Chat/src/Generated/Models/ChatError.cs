@@ -14,27 +14,21 @@ namespace Azure.Communication.Chat
     /// <summary> The Communication Services error. </summary>
     public partial class ChatError
     {
-        /// <summary> Initializes a new instance of ChatError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatError"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="code"/> or <paramref name="message"/> is null. </exception>
         internal ChatError(string code, string message)
         {
-            if (code == null)
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
+            Argument.AssertNotNull(code, nameof(code));
+            Argument.AssertNotNull(message, nameof(message));
 
             Code = code;
             Message = message;
             Details = new ChangeTrackingList<ChatError>();
         }
 
-        /// <summary> Initializes a new instance of ChatError. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatError"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="target"> The error target. </param>

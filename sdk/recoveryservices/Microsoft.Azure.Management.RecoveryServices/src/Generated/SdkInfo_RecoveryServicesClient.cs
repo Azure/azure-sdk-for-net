@@ -19,27 +19,27 @@ namespace Microsoft.Azure.Management.RecoveryServices
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("RecoveryServices", "GetOperationResult", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "GetOperationStatus", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "Operations", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "PrivateLinkResources", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "RecoveryServices", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "RegisteredIdentities", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "ReplicationUsages", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "Usages", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "VaultCertificates", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "VaultExtendedInfo", "2021-06-01"),
-                new Tuple<string, string, string>("RecoveryServices", "Vaults", "2021-06-01"),
+                new Tuple<string, string, string>("RecoveryServices", "GetOperationResult", "2022-10-01"),
+                new Tuple<string, string, string>("RecoveryServices", "GetOperationStatus", "2022-10-01"),
+                new Tuple<string, string, string>("RecoveryServices", "Operations", "2022-10-01"),
+                new Tuple<string, string, string>("RecoveryServices", "PrivateLinkResources", "2022-10-01"),
+                new Tuple<string, string, string>("RecoveryServices", "RecoveryServices", "2022-10-01"),
+                new Tuple<string, string, string>("RecoveryServices", "RegisteredIdentities", "2022-10-01"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationUsages", "2022-10-01"),
+                new Tuple<string, string, string>("RecoveryServices", "Usages", "2022-10-01"),
+                new Tuple<string, string, string>("RecoveryServices", "VaultCertificates", "2022-10-01"),
+                new Tuple<string, string, string>("RecoveryServices", "VaultExtendedInfo", "2022-10-01"),
+                new Tuple<string, string, string>("RecoveryServices", "Vaults", "2022-10-01"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "V2";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@3.1.5";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/recoveryservices/resource-manager/readme.md --csharp --version=V2 --reflect-api-versions --csharp-sdks-folder=C:\\azure-sdk-for-net\\sdk";
+      public static readonly String AutoRestVersion = "2.0.4421";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/recoveryservices/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=D:\\code\\azure-sdk-for-net-1\\sdk";
       public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "70626b932d16a97361673e0bcba7570284fe0813";
+      public static readonly String GithubBranchName = "main";
+      public static readonly String GithubCommidId = "1114a5b1f0831d8b3de07db7248c8a4f38c5bbb7";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

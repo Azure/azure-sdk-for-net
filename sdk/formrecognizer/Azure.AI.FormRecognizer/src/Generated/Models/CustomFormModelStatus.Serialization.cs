@@ -21,9 +21,9 @@ namespace Azure.AI.FormRecognizer.Training
 
         public static CustomFormModelStatus ToCustomFormModelStatus(this string value)
         {
-            if (string.Equals(value, "creating", StringComparison.InvariantCultureIgnoreCase)) return CustomFormModelStatus.Creating;
-            if (string.Equals(value, "ready", StringComparison.InvariantCultureIgnoreCase)) return CustomFormModelStatus.Ready;
-            if (string.Equals(value, "invalid", StringComparison.InvariantCultureIgnoreCase)) return CustomFormModelStatus.Invalid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "creating")) return CustomFormModelStatus.Creating;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ready")) return CustomFormModelStatus.Ready;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "invalid")) return CustomFormModelStatus.Invalid;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CustomFormModelStatus value.");
         }
     }

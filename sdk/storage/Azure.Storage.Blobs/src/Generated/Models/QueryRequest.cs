@@ -6,24 +6,35 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Groups the set of query request settings. </summary>
     internal partial class QueryRequest
     {
-        /// <summary> Initializes a new instance of QueryRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryRequest"/>. </summary>
         /// <param name="expression"> The query expression in SQL. The maximum size of the query expression is 256KiB. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
         public QueryRequest(string expression)
         {
-            if (expression == null)
-            {
-                throw new ArgumentNullException(nameof(expression));
-            }
+            Argument.AssertNotNull(expression, nameof(expression));
 
             QueryType = "SQL";
             Expression = expression;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryRequest"/>. </summary>
+        /// <param name="queryType"> Required. The type of the provided query expression. </param>
+        /// <param name="expression"> The query expression in SQL. The maximum size of the query expression is 256KiB. </param>
+        /// <param name="inputSerialization"></param>
+        /// <param name="outputSerialization"></param>
+        internal QueryRequest(string queryType, string expression, QuerySerialization inputSerialization, QuerySerialization outputSerialization)
+        {
+            QueryType = queryType;
+            Expression = expression;
+            InputSerialization = inputSerialization;
+            OutputSerialization = outputSerialization;
         }
         /// <summary> Gets or sets the input serialization. </summary>
         public QuerySerialization InputSerialization { get; set; }

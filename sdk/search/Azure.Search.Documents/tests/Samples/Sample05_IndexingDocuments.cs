@@ -89,7 +89,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
             #region Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_CreateIndex_Create
             // Create the search index
-            string indexName = "Products";
+            string indexName = "products";
 #if !SNIPPET
             indexName = Recording.Random.GetName();
 #endif
@@ -175,17 +175,18 @@ namespace Azure.Search.Documents.Tests.Samples
                         new SearchIndexingBufferedSender<Product>(searchClient);
                     await indexer.UploadDocumentsAsync(GenerateCatalog(count: 100000));
                     #endregion
+#if SNIPPET
+                    #region Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_BufferedSender2
+                    await indexer.FlushAsync();
+                    Assert.AreEqual(100000, (int)await searchClient.GetDocumentCountAsync());
+                    #endregion
+#endif
                 }
 
                 await WaitForDocumentCountAsync(searchClient, 100000);
 
                 // Check
-                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample05_IndexingDocuments_BufferedSender2
-#if SNIPPET
-                await indexer.FlushAsync();
-#endif
                 Assert.AreEqual(100000, (int)await searchClient.GetDocumentCountAsync());
-                #endregion
             }
             finally
             {

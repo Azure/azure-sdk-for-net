@@ -17,22 +17,22 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartObject();
             if (Optional.IsDefined(Recursive))
             {
-                writer.WritePropertyName("recursive");
+                writer.WritePropertyName("recursive"u8);
                 writer.WriteBooleanValue(Recursive.Value);
             }
             if (Optional.IsDefined(Sort))
             {
-                writer.WritePropertyName("sort");
+                writer.WritePropertyName("sort"u8);
                 writer.WriteObjectValue(Sort);
             }
             if (Optional.IsDefined(Highlights))
             {
-                writer.WritePropertyName("highlights");
+                writer.WritePropertyName("highlights"u8);
                 writer.WriteBooleanValue(Highlights.Value);
             }
             if (Optional.IsDefined(PageSize))
             {
-                writer.WritePropertyName("pageSize");
+                writer.WritePropertyName("pageSize"u8);
                 writer.WriteNumberValue(PageSize.Value);
             }
             writer.WriteEndObject();

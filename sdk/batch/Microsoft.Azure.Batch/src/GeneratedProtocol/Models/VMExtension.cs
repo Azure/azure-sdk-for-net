@@ -43,6 +43,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// deployment time. Once deployed, however, the extension will not
         /// upgrade minor versions unless redeployed, even with this property
         /// set to true.</param>
+        /// <param name="enableAutomaticUpgrade">Indicates whether the
+        /// extension should be automatically upgraded by the platform if there
+        /// is a newer version of the extension available.</param>
         /// <param name="settings">JSON formatted public settings for the
         /// extension.</param>
         /// <param name="protectedSettings">The extension can contain either
@@ -50,13 +53,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// settings at all. </param>
         /// <param name="provisionAfterExtensions">The collection of extension
         /// names.</param>
-        public VMExtension(string name, string publisher, string type, string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), IList<string> provisionAfterExtensions = default(IList<string>))
+        public VMExtension(string name, string publisher, string type, string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), object settings = default(object), object protectedSettings = default(object), IList<string> provisionAfterExtensions = default(IList<string>))
         {
             Name = name;
             Publisher = publisher;
             Type = type;
             TypeHandlerVersion = typeHandlerVersion;
             AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
+            EnableAutomaticUpgrade = enableAutomaticUpgrade;
             Settings = settings;
             ProtectedSettings = protectedSettings;
             ProvisionAfterExtensions = provisionAfterExtensions;
@@ -100,6 +104,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [JsonProperty(PropertyName = "autoUpgradeMinorVersion")]
         public bool? AutoUpgradeMinorVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether the extension should be
+        /// automatically upgraded by the platform if there is a newer version
+        /// of the extension available.
+        /// </summary>
+        [JsonProperty(PropertyName = "enableAutomaticUpgrade")]
+        public bool? EnableAutomaticUpgrade { get; set; }
 
         /// <summary>
         /// Gets or sets JSON formatted public settings for the extension.

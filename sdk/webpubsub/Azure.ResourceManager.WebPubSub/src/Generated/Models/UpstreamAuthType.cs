@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    /// <summary> Gets or sets the type of auth. None or ManagedIdentity is supported now. </summary>
+    /// <summary> Upstream auth type enum. </summary>
     public readonly partial struct UpstreamAuthType : IEquatable<UpstreamAuthType>
     {
         private readonly string _value;

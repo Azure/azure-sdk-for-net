@@ -13,16 +13,52 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the GalleryApplication data model. </summary>
+    /// <summary>
+    /// A class representing the GalleryApplication data model.
+    /// Specifies information about the gallery Application Definition that you want to create or update.
+    /// </summary>
     public partial class GalleryApplicationData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of GalleryApplicationData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationData"/>. </summary>
         /// <param name="location"> The location. </param>
         public GalleryApplicationData(AzureLocation location) : base(location)
         {
+            CustomActions = new ChangeTrackingList<GalleryApplicationCustomAction>();
         }
 
-        /// <summary> Initializes a new instance of GalleryApplicationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,8 +70,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="privacyStatementUri"> The privacy statement uri. </param>
         /// <param name="releaseNoteUri"> The release note uri. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery Application Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
-        /// <param name="supportedOSType"> This property allows you to specify the supported type of the OS that application is built for. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </param>
-        internal GalleryApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, DateTimeOffset? endOfLifeOn, OperatingSystemTypes? supportedOSType) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="supportedOSType"> This property allows you to specify the supported type of the OS that application is built for. Possible values are: **Windows,** **Linux.**. </param>
+        /// <param name="customActions"> A list of custom actions that can be performed with all of the Gallery Application Versions within this Gallery Application. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string eula, Uri privacyStatementUri, Uri releaseNoteUri, DateTimeOffset? endOfLifeOn, SupportedOperatingSystemType? supportedOSType, IList<GalleryApplicationCustomAction> customActions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Description = description;
             Eula = eula;
@@ -43,6 +81,13 @@ namespace Azure.ResourceManager.Compute
             ReleaseNoteUri = releaseNoteUri;
             EndOfLifeOn = endOfLifeOn;
             SupportedOSType = supportedOSType;
+            CustomActions = customActions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GalleryApplicationData"/> for deserialization. </summary>
+        internal GalleryApplicationData()
+        {
         }
 
         /// <summary> The description of this gallery Application Definition resource. This property is updatable. </summary>
@@ -55,7 +100,9 @@ namespace Azure.ResourceManager.Compute
         public Uri ReleaseNoteUri { get; set; }
         /// <summary> The end of life date of the gallery Application Definition. This property can be used for decommissioning purposes. This property is updatable. </summary>
         public DateTimeOffset? EndOfLifeOn { get; set; }
-        /// <summary> This property allows you to specify the supported type of the OS that application is built for. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </summary>
-        public OperatingSystemTypes? SupportedOSType { get; set; }
+        /// <summary> This property allows you to specify the supported type of the OS that application is built for. Possible values are: **Windows,** **Linux.**. </summary>
+        public SupportedOperatingSystemType? SupportedOSType { get; set; }
+        /// <summary> A list of custom actions that can be performed with all of the Gallery Application Versions within this Gallery Application. </summary>
+        public IList<GalleryApplicationCustomAction> CustomActions { get; }
     }
 }

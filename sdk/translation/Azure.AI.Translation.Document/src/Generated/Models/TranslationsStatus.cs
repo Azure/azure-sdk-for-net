@@ -9,26 +9,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.Translation.Document;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
     /// <summary> Translation job Status Response. </summary>
     internal partial class TranslationsStatus
     {
-        /// <summary> Initializes a new instance of TranslationsStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationsStatus"/>. </summary>
         /// <param name="value"> The summary status of individual operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal TranslationsStatus(IEnumerable<TranslationStatusResult> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of TranslationsStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="TranslationsStatus"/>. </summary>
         /// <param name="value"> The summary status of individual operation. </param>
         /// <param name="nextLink"> Url for the next page.  Null if no more pages available. </param>
         internal TranslationsStatus(IReadOnlyList<TranslationStatusResult> value, string nextLink)

@@ -19,6 +19,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// </summary>
     public class KeyResolver : IKeyEncryptionKeyResolver
     {
+        private const string OTelKeyIdKey = "az.keyvault.key.id";
         private readonly HttpPipeline  _pipeline;
         private readonly string _apiVersion;
 
@@ -56,7 +57,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             _apiVersion = options.GetVersionString();
 
             _pipeline = HttpPipelineBuilder.Build(options,
-                    new ChallengeBasedAuthenticationPolicy(credential));
+                    new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
 
             _clientDiagnostics = new ClientDiagnostics(options);
         }
@@ -64,7 +65,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// Retrieves a <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specified <paramref name="keyId"/>.
         /// </summary>
-        /// <param name="keyId">The key identifier of the key used by the created <see cref="CryptographyClient"/>.</param>
+        /// <param name="keyId">The key identifier of the key used by the created <see cref="CryptographyClient"/>. You should validate that this URI references a valid Key Vault or Managed HSM resource. See <see href="https://aka.ms/azsdk/blog/vault-uri"/> for details.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A new <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specified <paramref name="keyId"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="keyId"/> is null.</exception>
@@ -73,7 +74,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             Argument.AssertNotNull(keyId, nameof(keyId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(KeyResolver)}.{nameof(Resolve)}");
-            scope.AddAttribute("key", keyId);
+            scope.AddAttribute(OTelKeyIdKey, keyId.OriginalString);
             scope.Start();
 
             try
@@ -97,7 +98,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// Retrieves a <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specified <paramref name="keyId"/>.
         /// </summary>
-        /// <param name="keyId">The key identifier of the key used by the created <see cref="CryptographyClient"/>.</param>
+        /// <param name="keyId">The key identifier of the key used by the created <see cref="CryptographyClient"/>. You should validate that this URI references a valid Key Vault or Managed HSM resource. See <see href="https://aka.ms/azsdk/blog/vault-uri"/> for details.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A new <see cref="CryptographyClient"/> capable of performing cryptographic operations with the key represented by the specified <paramref name="keyId"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="keyId"/> is null.</exception>
@@ -106,7 +107,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             Argument.AssertNotNull(keyId, nameof(keyId));
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(KeyResolver)}.{nameof(Resolve)}");
-            scope.AddAttribute("key", keyId);
+            scope.AddAttribute(OTelKeyIdKey, keyId.OriginalString);
             scope.Start();
 
             try
@@ -173,7 +174,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                     // To use a key contained within a secret, the "get" permission is required to retrieve the key material.
                     return Response.FromValue<T>(default, response);
                 default:
-                    throw _clientDiagnostics.CreateRequestFailedException(response);
+                    throw new RequestFailedException(response);
             }
         }
 

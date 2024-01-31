@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         public static EncodingCaptureDescription ToEncodingCaptureDescription(this string value)
         {
-            if (string.Equals(value, "Avro", StringComparison.InvariantCultureIgnoreCase)) return EncodingCaptureDescription.Avro;
-            if (string.Equals(value, "AvroDeflate", StringComparison.InvariantCultureIgnoreCase)) return EncodingCaptureDescription.AvroDeflate;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Avro")) return EncodingCaptureDescription.Avro;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AvroDeflate")) return EncodingCaptureDescription.AvroDeflate;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EncodingCaptureDescription value.");
         }
     }

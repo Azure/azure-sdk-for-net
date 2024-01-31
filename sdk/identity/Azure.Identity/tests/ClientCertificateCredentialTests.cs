@@ -9,23 +9,49 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
+using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ClientCertificateCredentialTests : CredentialTestBase
+    public class ClientCertificateCredentialTests : CredentialTestBase<ClientCertificateCredentialOptions>
     {
         public ClientCertificateCredentialTests(bool isAsync) : base(isAsync)
         { }
 
         public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
         {
-            var context = new TokenRequestContext(new[] { Scope });
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var mockCert = new X509Certificate2(certificatePath);
 
             return InstrumentClient(
                 new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, mockConfidentialMsalClient)
+            );
+        }
+
+        public override TokenCredential GetTokenCredential(CommonCredentialTestConfig config)
+        {
+            if (config.TenantId == null)
+            {
+                Assert.Ignore("Null TenantId test does not apply to this credential");
+            }
+
+            var options = new ClientCertificateCredentialOptions
+            {
+                DisableInstanceDiscovery = config.DisableInstanceDiscovery,
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+            };
+            if (config.Transport != null)
+            {
+                options.Transport = config.Transport;
+            }
+            var pipeline = CredentialPipeline.GetInstance(options);
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+            var mockCert = new X509Certificate2(certificatePath);
+
+            return InstrumentClient(
+                new ClientCertificateCredential(config.TenantId, ClientId, mockCert, options, pipeline, config.MockConfidentialMsalClient)
             );
         }
 
@@ -154,7 +180,7 @@ namespace Azure.Identity.Tests
 
             ClientCertificateCredential credential = InstrumentClient(
                 usePemFile
-                    ? new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePathPem, default, default, mockMsalClient)
+                    ? new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePathPem, default, default, default, mockMsalClient)
                     : new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, default, default, mockMsalClient)
             );
 
@@ -175,14 +201,15 @@ namespace Azure.Identity.Tests
         {
             TestSetup();
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
+            var options = new ClientCertificateCredentialOptions { AdditionallyAllowedTenants = { TenantIdHint } };
+            expectedTenantId = TenantIdResolverBase.Default.Resolve(TenantId, context, TenantIdResolverBase.AllTenants);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
             var mockCert = new X509Certificate2(certificatePath);
 
             ClientCertificateCredential credential = InstrumentClient(
                 usePemFile
-                    ? new ClientCertificateCredential(TenantId, ClientId, certificatePathPem, options, default, mockConfidentialMsalClient)
+                    ? new ClientCertificateCredential(TenantId, ClientId, certificatePathPem, default, options, default, mockConfidentialMsalClient)
                     : new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, mockConfidentialMsalClient)
             );
 
@@ -195,27 +222,49 @@ namespace Azure.Identity.Tests
         public async Task SendCertificateChain([Values(true, false)] bool usePemFile, [Values(true)] bool sendCertChain)
         {
             TestSetup();
-            var _transport = Createx5cValidatingTransport(sendCertChain);
-            var _pipeline = new HttpPipeline(_transport, new[] {new BearerTokenAuthenticationPolicy(new MockCredential(), "scope")});
+            var _transport = CredentialTestHelpers.Createx5cValidatingTransport(sendCertChain, expectedToken);
+            var _pipeline = new HttpPipeline(_transport, new[] { new BearerTokenAuthenticationPolicy(new MockCredential(), "scope") });
             var context = new TokenRequestContext(new[] { Scope }, tenantId: TenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
+            expectedTenantId = TenantIdResolverBase.Default.Resolve(TenantId, context, TenantIdResolverBase.AllTenants);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
             var mockCert = new X509Certificate2(certificatePath);
-            options = new ClientCertificateCredentialOptions();
+            options = new ClientCertificateCredentialOptions
+            {
+                AuthorityHost = new Uri("https://localhost")
+            };
             ((ClientCertificateCredentialOptions)options).SendCertificateChain = sendCertChain;
 
             ClientCertificateCredential credential = InstrumentClient(
                 usePemFile
-                    ? new ClientCertificateCredential(TenantId, ClientId, certificatePathPem, options,
-                        new CredentialPipeline(new Uri("https://localhost"), _pipeline, new ClientDiagnostics(options)), null)
+                    ? new ClientCertificateCredential(TenantId, ClientId, certificatePathPem, default, options,
+                        new CredentialPipeline(_pipeline, new ClientDiagnostics(options)), null)
                     : new ClientCertificateCredential(TenantId, ClientId, mockCert, options,
-                        new CredentialPipeline(new Uri("https://localhost"), _pipeline, new ClientDiagnostics(options)), null)
+                        new CredentialPipeline(_pipeline, new ClientDiagnostics(options)), null)
             );
 
             var token = await credential.GetTokenAsync(context);
 
             Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
+        }
+
+        [Test]
+        public void VerifyMsalClientRegionalAuthority()
+        {
+            string[] authorities = { null, ConfidentialClientApplication.AttemptRegionDiscovery, "westus" };
+
+            foreach (string regionalAuthority in authorities)
+            {
+                using (new TestEnvVar("AZURE_REGIONAL_AUTHORITY_NAME", regionalAuthority))
+                {
+                    var expectedTenantId = Guid.NewGuid().ToString();
+                    var expectedClientId = Guid.NewGuid().ToString();
+                    var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+
+                    var cred = new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePath);
+                    Assert.AreEqual(regionalAuthority, cred.Client.RegionalAuthority);
+                }
+            }
         }
     }
 }

@@ -6,27 +6,25 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The role based access control (RBAC) authorization type integration runtime. </summary>
     public partial class LinkedIntegrationRuntimeRbacAuthorization : LinkedIntegrationRuntimeType
     {
-        /// <summary> Initializes a new instance of LinkedIntegrationRuntimeRbacAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeRbacAuthorization"/>. </summary>
         /// <param name="resourceId"> The resource identifier of the integration runtime to be shared. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
         public LinkedIntegrationRuntimeRbacAuthorization(string resourceId)
         {
-            if (resourceId == null)
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
+            Argument.AssertNotNull(resourceId, nameof(resourceId));
 
             ResourceId = resourceId;
             AuthorizationType = "RBAC";
         }
 
-        /// <summary> Initializes a new instance of LinkedIntegrationRuntimeRbacAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeRbacAuthorization"/>. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
         /// <param name="resourceId"> The resource identifier of the integration runtime to be shared. </param>
         internal LinkedIntegrationRuntimeRbacAuthorization(string authorizationType, string resourceId) : base(authorizationType)

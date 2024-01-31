@@ -9,6 +9,8 @@ trigger:
   paths:
     include:
     - sdk/attestation/
+    exclude:
+    - sdk/attestation/Azure.ResourceManager.Attestation/
 
 pr:
   branches:
@@ -20,14 +22,14 @@ pr:
   paths:
     include:
     - sdk/attestation/
+    exclude:
+    - sdk/attestation/Azure.ResourceManager.Attestation/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: attestation
     ArtifactName: packages
     Artifacts:
-    - name: Microsoft.Azure.Attestation
-      safeName: MicrosoftAzureAttestation
     - name: Azure.Security.Attestation
       safeName: AzureSecurityAttestation

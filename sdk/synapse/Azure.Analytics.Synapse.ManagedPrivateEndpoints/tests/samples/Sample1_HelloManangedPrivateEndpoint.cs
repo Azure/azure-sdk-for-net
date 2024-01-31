@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Samples
             string fakedStorageAccountName = "myStorageAccount";
             string privateLinkResourceId = $"/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/myResourceGroup/providers/Microsoft.Storage/accounts/{fakedStorageAccountName}";
             string groupId = "blob";
-            client.Create(managedVnetName, new ManagedPrivateEndpoint
+            client.Create("default", managedVnetName, new ManagedPrivateEndpoint
             {
                 Properties = new ManagedPrivateEndpointProperties
                 {

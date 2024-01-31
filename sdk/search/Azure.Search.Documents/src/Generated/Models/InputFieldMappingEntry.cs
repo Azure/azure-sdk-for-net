@@ -14,21 +14,18 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Input field mapping for a skill. </summary>
     public partial class InputFieldMappingEntry
     {
-        /// <summary> Initializes a new instance of InputFieldMappingEntry. </summary>
+        /// <summary> Initializes a new instance of <see cref="InputFieldMappingEntry"/>. </summary>
         /// <param name="name"> The name of the input. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public InputFieldMappingEntry(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             Inputs = new ChangeTrackingList<InputFieldMappingEntry>();
         }
 
-        /// <summary> Initializes a new instance of InputFieldMappingEntry. </summary>
+        /// <summary> Initializes a new instance of <see cref="InputFieldMappingEntry"/>. </summary>
         /// <param name="name"> The name of the input. </param>
         /// <param name="source"> The source of the input. </param>
         /// <param name="sourceContext"> The source context used for selecting recursive inputs. </param>

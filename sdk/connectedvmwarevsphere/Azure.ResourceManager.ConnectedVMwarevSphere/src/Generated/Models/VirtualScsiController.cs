@@ -5,29 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
     /// <summary> This data object type contains the properties of a SCSI controller device attached to a virtual machine that is reported by the controller. </summary>
     public partial class VirtualScsiController
     {
-        /// <summary> Initializes a new instance of VirtualScsiController. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualScsiController"/>. </summary>
         internal VirtualScsiController()
         {
         }
 
-        /// <summary> Initializes a new instance of VirtualScsiController. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualScsiController"/>. </summary>
         /// <param name="scsiControllerType"> Gets or sets the controller type. </param>
         /// <param name="controllerKey"> Gets or sets the key of the controller. </param>
         /// <param name="busNumber"> Gets or sets the bus number of the controller. </param>
         /// <param name="scsiCtlrUnitNumber"> Gets or sets the SCSI controller unit number. </param>
         /// <param name="sharing"> Gets or sets the sharing mode. </param>
-        internal VirtualScsiController(ScsiControllerType? scsiControllerType, int? controllerKey, int? busNumber, int? scsiCtlrUnitNumber, VirtualScsiSharing? sharing)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualScsiController(ScsiControllerType? scsiControllerType, int? controllerKey, int? busNumber, int? scsiCtlrUnitNumber, VirtualScsiSharing? sharing, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ScsiControllerType = scsiControllerType;
             ControllerKey = controllerKey;
             BusNumber = busNumber;
             ScsiCtlrUnitNumber = scsiCtlrUnitNumber;
             Sharing = sharing;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the controller type. </summary>

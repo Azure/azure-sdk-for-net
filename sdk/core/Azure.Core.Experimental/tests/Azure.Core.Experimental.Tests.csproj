@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +16,7 @@
   
   <ItemGroup>
     <Compile Remove="perf/**/*.*" />
+    <Compile Remove="public/**" />
   </ItemGroup>
   
   <!-- Shared source from Azure.Core -->

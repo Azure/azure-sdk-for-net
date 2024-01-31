@@ -139,5 +139,46 @@
             SecurityProfile = securityProfile;
             CustomInit();
         }
+
+        public Disk(string location, CreationData creationData, string id, string name, string type, IDictionary<string, string> tags, string managedBy, IList<string> managedByExtended, DiskSku sku, IList<string> zones, ExtendedLocation extendedLocation, System.DateTime? timeCreated, OperatingSystemTypes? osType, string hyperVGeneration, PurchasePlan purchasePlan, SupportedCapabilities supportedCapabilities, int? diskSizeGB, long? diskSizeBytes, string uniqueId, EncryptionSettingsCollection encryptionSettingsCollection, string provisioningState, long? diskIOPSReadWrite, long? diskMBpsReadWrite, long? diskIOPSReadOnly, long? diskMBpsReadOnly, string diskState, Encryption encryption, int? maxShares, IList<ShareInfoElement> shareInfo, string networkAccessPolicy, string diskAccessId, string tier, bool? burstingEnabled = default(bool?), PropertyUpdatesInProgress propertyUpdatesInProgress = default(PropertyUpdatesInProgress), bool? supportsHibernation = default(bool?), DiskSecurityProfile securityProfile = default(DiskSecurityProfile), double? completionPercent = default(double?), string publicNetworkAccess = default(string), string dataAccessAuthMode = default(string), bool? optimizedForFrequentAttach = default(bool?))
+            : base(location, id, name, type, tags)
+        {
+            ManagedBy = managedBy;
+            ManagedByExtended = managedByExtended;
+            Sku = sku;
+            Zones = zones;
+            ExtendedLocation = extendedLocation;
+            TimeCreated = timeCreated;
+            OsType = osType;
+            HyperVGeneration = hyperVGeneration;
+            PurchasePlan = purchasePlan;
+            SupportedCapabilities = supportedCapabilities;
+            CreationData = creationData;
+            DiskSizeGB = diskSizeGB;
+            DiskSizeBytes = diskSizeBytes;
+            UniqueId = uniqueId;
+            EncryptionSettingsCollection = encryptionSettingsCollection;
+            ProvisioningState = provisioningState;
+            DiskIOPSReadWrite = diskIOPSReadWrite;
+            DiskMBpsReadWrite = diskMBpsReadWrite;
+            DiskIOPSReadOnly = diskIOPSReadOnly;
+            DiskMBpsReadOnly = diskMBpsReadOnly;
+            DiskState = diskState;
+            Encryption = encryption;
+            MaxShares = maxShares;
+            ShareInfo = shareInfo;
+            NetworkAccessPolicy = networkAccessPolicy;
+            DiskAccessId = diskAccessId;
+            Tier = tier;
+            BurstingEnabled = burstingEnabled;
+            PropertyUpdatesInProgress = propertyUpdatesInProgress;
+            SupportsHibernation = supportsHibernation;
+            SecurityProfile = securityProfile;
+            CompletionPercent = completionPercent;
+            PublicNetworkAccess = publicNetworkAccess;
+            DataAccessAuthMode = dataAccessAuthMode;
+            OptimizedForFrequentAttach = optimizedForFrequentAttach;
+            CustomInit();
+        }
     }
 }

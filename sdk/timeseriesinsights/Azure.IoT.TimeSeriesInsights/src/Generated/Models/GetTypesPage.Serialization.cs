@@ -15,15 +15,18 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static GetTypesPage DeserializeGetTypesPage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<TimeSeriesType>> types = default;
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("types"))
+                if (property.NameEquals("types"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TimeSeriesType> array = new List<TimeSeriesType>();
@@ -34,7 +37,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     types = array;
                     continue;
                 }
-                if (property.NameEquals("continuationToken"))
+                if (property.NameEquals("continuationToken"u8))
                 {
                     continuationToken = property.Value.GetString();
                     continue;

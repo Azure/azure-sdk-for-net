@@ -7,15 +7,19 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Base class for Azure Cognitive Services Spatial Analysis operations. </summary>
-    public partial class SpatialAnalysisOperationBase
+    /// <summary>
+    /// Base class for Azure Cognitive Services Spatial Analysis operations.
+    /// Please note <see cref="SpatialAnalysisOperationBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="SpatialAnalysisCustomOperation"/>, <see cref="SpatialAnalysisPersonCountOperation"/>, <see cref="SpatialAnalysisPersonDistanceOperation"/>, <see cref="SpatialAnalysisPersonLineCrossingOperation"/>, <see cref="SpatialAnalysisPersonZoneCrossingOperation"/> and <see cref="SpatialAnalysisTypedOperationBase"/>.
+    /// </summary>
+    public abstract partial class SpatialAnalysisOperationBase
     {
-        /// <summary> Initializes a new instance of SpatialAnalysisOperationBase. </summary>
-        public SpatialAnalysisOperationBase()
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisOperationBase"/>. </summary>
+        protected SpatialAnalysisOperationBase()
         {
         }
 
-        /// <summary> Initializes a new instance of SpatialAnalysisOperationBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisOperationBase"/>. </summary>
         /// <param name="type"> The Type discriminator for the derived types. </param>
         internal SpatialAnalysisOperationBase(string type)
         {

@@ -7,32 +7,27 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The dataset points to a HTML table in the web page. </summary>
     public partial class WebTableDataset : Dataset
     {
-        /// <summary> Initializes a new instance of WebTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="index"> The zero-based index of the table in the web page. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="index"/> is null. </exception>
         public WebTableDataset(LinkedServiceReference linkedServiceName, object index) : base(linkedServiceName)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (index == null)
-            {
-                throw new ArgumentNullException(nameof(index));
-            }
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(index, nameof(index));
 
             Index = index;
             Type = "WebTable";
         }
 
-        /// <summary> Initializes a new instance of WebTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebTableDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

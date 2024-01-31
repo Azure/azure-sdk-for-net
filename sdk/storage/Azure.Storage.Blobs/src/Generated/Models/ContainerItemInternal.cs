@@ -14,27 +14,21 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> An Azure Storage container. </summary>
     internal partial class ContainerItemInternal
     {
-        /// <summary> Initializes a new instance of ContainerItemInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerItemInternal"/>. </summary>
         /// <param name="name"></param>
         /// <param name="properties"> Properties of a container. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
         internal ContainerItemInternal(string name, ContainerPropertiesInternal properties)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Name = name;
             Properties = properties;
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ContainerItemInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerItemInternal"/>. </summary>
         /// <param name="name"></param>
         /// <param name="deleted"></param>
         /// <param name="version"></param>

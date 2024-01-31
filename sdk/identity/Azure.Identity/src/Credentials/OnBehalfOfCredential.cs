@@ -12,16 +12,18 @@ using Microsoft.Identity.Client;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using an On-Behalf-Of flow.
+    /// Enables authentication to Microsoft Entra ID using an On-Behalf-Of flow.
     /// </summary>
     public class OnBehalfOfCredential : TokenCredential
     {
-        internal readonly MsalConfidentialClient _client;
+        internal MsalConfidentialClient Client { get; }
         private readonly string _tenantId;
         private readonly CredentialPipeline _pipeline;
         private readonly string _clientId;
         private readonly string _clientSecret;
         private readonly UserAssertion _userAssertion;
+        internal readonly string[] AdditionallyAllowedTenantIds;
+        internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -30,9 +32,9 @@ namespace Azure.Identity
         { }
 
         /// <summary>
-        /// Creates an instance of the OnBehalfOfCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
+        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate against Microsoft Entra ID with the specified certificate.
         /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
         /// <param name="userAssertion">The access token that will be used by <see cref="OnBehalfOfCredential"/> as the user assertion when requesting On-Behalf-Of tokens.</param>
@@ -41,21 +43,21 @@ namespace Azure.Identity
         { }
 
         /// <summary>
-        /// Creates an instance of the OnBehalfOfCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
+        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate against Microsoft Entra ID with the specified certificate.
         /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
         /// <param name="userAssertion">The access token that will be used by <see cref="OnBehalfOfCredential"/> as the user assertion when requesting On-Behalf-Of tokens.</param>
-        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         public OnBehalfOfCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, string userAssertion, OnBehalfOfCredentialOptions options)
             : this(tenantId, clientId, clientCertificate, userAssertion, options, null, null)
         { }
 
         /// <summary>
-        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate with Azure Active Directory.
+        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate with Microsoft Entra ID.
         /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
         /// <param name="userAssertion">The access token that will be used by <see cref="OnBehalfOfCredential"/> as the user assertion when requesting On-Behalf-Of tokens.</param>
@@ -68,13 +70,13 @@ namespace Azure.Identity
         { }
 
         /// <summary>
-        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate with Azure Active Directory.
+        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate with Microsoft Entra ID.
         /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
         /// <param name="userAssertion">The access token that will be used by <see cref="OnBehalfOfCredential"/> as the user assertion when requesting On-Behalf-Of tokens.</param>
-        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         public OnBehalfOfCredential(
             string tenantId,
             string clientId,
@@ -117,15 +119,17 @@ namespace Azure.Identity
             options ??= new OnBehalfOfCredentialOptions();
             _userAssertion = new UserAssertion(userAssertion);
 
-            _client = client ??
+            Client = client ??
                       new MsalConfidentialClient(
                           _pipeline,
                           tenantId,
                           clientId,
                           certificateProvider,
                           options.SendCertificateChain,
-                          options,
-                          options.RegionalAuthority);
+                          options);
+
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 
         internal OnBehalfOfCredential(
@@ -146,14 +150,33 @@ namespace Azure.Identity
             _clientId = clientId;
             _clientSecret = clientSecret;
             _userAssertion = new UserAssertion(userAssertion);
-            _client = client ?? new MsalConfidentialClient(_pipeline, _tenantId, _clientId, _clientSecret, null, options);
+            Client = client ?? new MsalConfidentialClient(_pipeline, _tenantId, _clientId, _clientSecret, null, options);
+
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenants);
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Authenticates with Microsoft Entra ID and returns an access token if successful.
+        /// Acquired tokens are cached by the credential instance. Token lifetime and refreshing is
+        /// handled automatically. Where possible, reuse credential instances to optimize cache
+        /// effectiveness.
+        /// </summary>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
             GetTokenInternalAsync(requestContext, false, cancellationToken).EnsureCompleted();
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Authenticates with Microsoft Entra ID and returns an access token if successful.
+        /// Acquired tokens are cached by the credential instance. Token lifetime and refreshing is
+        /// handled automatically. Where possible, reuse credential instances to optimize cache
+        /// effectiveness.
+        /// </summary>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
         public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
             GetTokenInternalAsync(requestContext, true, cancellationToken);
 
@@ -163,10 +186,10 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext);
+                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
 
-                AuthenticationResult result = await _client
-                    .AcquireTokenOnBehalfOfAsync(requestContext.Scopes, tenantId, _userAssertion, async, cancellationToken)
+                AuthenticationResult result = await Client
+                    .AcquireTokenOnBehalfOfAsync(requestContext.Scopes, tenantId, _userAssertion, requestContext.Claims, requestContext.IsCaeEnabled, async, cancellationToken)
                     .ConfigureAwait(false);
 
                 return new AccessToken(result.AccessToken, result.ExpiresOn);

@@ -14,14 +14,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AppEventTypeDetail DeserializeAppEventTypeDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppAction> action = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("action"))
+                if (property.NameEquals("action"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     action = new AppAction(property.Value.GetString());

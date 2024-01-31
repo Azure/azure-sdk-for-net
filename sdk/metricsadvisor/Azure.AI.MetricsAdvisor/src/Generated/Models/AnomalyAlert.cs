@@ -6,13 +6,14 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AlertResult. </summary>
     public partial class AnomalyAlert
     {
-        /// <summary> Initializes a new instance of AnomalyAlert. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyAlert"/>. </summary>
         /// <param name="id"> alert id. </param>
         /// <param name="timestamp"> anomaly time. </param>
         /// <param name="createdOn"> created time. </param>
@@ -20,10 +21,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         internal AnomalyAlert(string id, DateTimeOffset timestamp, DateTimeOffset createdOn, DateTimeOffset lastModified)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
             Timestamp = timestamp;

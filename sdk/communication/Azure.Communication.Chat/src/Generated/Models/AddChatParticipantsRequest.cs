@@ -8,23 +8,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
     /// <summary> Participants to be added to the thread. </summary>
     internal partial class AddChatParticipantsRequest
     {
-        /// <summary> Initializes a new instance of AddChatParticipantsRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddChatParticipantsRequest"/>. </summary>
         /// <param name="participants"> Participants to add to a chat thread. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="participants"/> is null. </exception>
         public AddChatParticipantsRequest(IEnumerable<ChatParticipantInternal> participants)
         {
-            if (participants == null)
-            {
-                throw new ArgumentNullException(nameof(participants));
-            }
+            Argument.AssertNotNull(participants, nameof(participants));
 
             Participants = participants.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AddChatParticipantsRequest"/>. </summary>
+        /// <param name="participants"> Participants to add to a chat thread. </param>
+        internal AddChatParticipantsRequest(IList<ChatParticipantInternal> participants)
+        {
+            Participants = participants;
         }
 
         /// <summary> Participants to add to a chat thread. </summary>

@@ -293,6 +293,48 @@ namespace Azure.ResourceManager.Tests
             Assert.Throws<ArgumentNullException>(() => { Client.GetGenericResource(x); });
         }
 
+        [RecordedTest]
+        public async Task SetApiVersionsFromProfile()
+        {
+            var options = new ArmClientOptions();
+            options.SetApiVersionsFromProfile(AzureStackProfile.Profile20200901Hybrid);
+            var client = GetArmClient(options);
+
+            var subscription = await client.GetDefaultSubscriptionAsync();
+            var resourceProviders = subscription.GetResourceProviders();
+            var subscriptionApiVersion = await resourceProviders.GetApiVersionAsync(SubscriptionResource.ResourceType);
+            var resourceGroupApiVersion = await resourceProviders.GetApiVersionAsync("microsoft.Resources/resourcegroups");
+            Assert.AreEqual(subscriptionApiVersion, "2016-06-01");
+            Assert.AreEqual(resourceGroupApiVersion, "2019-10-01");
+
+            client.TryGetApiVersion("Microsoft.resources/subscriptions", out subscriptionApiVersion);
+            client.TryGetApiVersion("mIcrOsoft.resources/ResourceGroups", out resourceGroupApiVersion);
+            Assert.AreEqual(subscriptionApiVersion, "2016-06-01");
+            Assert.AreEqual(resourceGroupApiVersion, "2019-10-01");
+        }
+
+        [RecordedTest]
+        public async Task SetApiVersionsFromProfileWithApiVersionOverride()
+        {
+            var options = new ArmClientOptions();
+            options.SetApiVersion(SubscriptionResource.ResourceType, "2021-01-01");
+            options.SetApiVersionsFromProfile(AzureStackProfile.Profile20200901Hybrid);
+            options.SetApiVersion("microsoft.resources/resourceGroups", "2021-01-01");
+            var client = GetArmClient(options);
+
+            client.TryGetApiVersion("Microsoft.resources/subscriptions", out var subscriptionApiVersion);
+            client.TryGetApiVersion("mIcrOsoft.resources/ResourceGroups", out var resourceGroupApiVersion);
+            Assert.AreEqual(subscriptionApiVersion, "2016-06-01");
+            Assert.AreEqual(resourceGroupApiVersion, "2021-01-01");
+
+            var subscription = await client.GetDefaultSubscriptionAsync();
+            var resourceProviders = subscription.GetResourceProviders();
+            subscriptionApiVersion = await resourceProviders.GetApiVersionAsync(SubscriptionResource.ResourceType);
+            resourceGroupApiVersion = await resourceProviders.GetApiVersionAsync("microsoft.Resources/resourcegroups");
+            Assert.AreEqual(subscriptionApiVersion, "2016-06-01");
+            Assert.AreEqual(resourceGroupApiVersion, "2021-01-01");
+        }
+
         private static HttpPipeline GetPipelineFromClient(ArmClient client)
         {
             var pipelineProperty = client.GetType().GetProperty("Pipeline", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.GetProperty);

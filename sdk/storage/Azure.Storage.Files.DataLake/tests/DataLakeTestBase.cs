@@ -4,10 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
@@ -63,14 +63,17 @@ namespace Azure.Storage.Files.DataLake.Tests
         public string GetNewNonAsciiDirectoryName() => DataLakeClientBuilder.GetNewNonAsciiDirectoryName();
         public string GetNewFileName() => DataLakeClientBuilder.GetNewFileName();
         public string GetNewNonAsciiFileName() => DataLakeClientBuilder.GetNewNonAsciiFileName();
+        public Uri GetDefaultPrimaryEndpoint() => new Uri(DataLakeClientBuilder.Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint);
 
         public async Task<DisposingFileSystem> GetNewFileSystem(
             DataLakeServiceClient service = default,
             string fileSystemName = default,
             IDictionary<string, string> metadata = default,
             PublicAccessType? publicAccessType = default,
-            bool premium = default)
-            => await DataLakeClientBuilder.GetNewFileSystem(service, fileSystemName, metadata, publicAccessType, premium);
+            bool premium = default,
+            bool hnsEnabled = true,
+            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = default)
+            => await DataLakeClientBuilder.GetNewFileSystem(service, fileSystemName, metadata, publicAccessType, premium, hnsEnabled, encryptionScopeOptions);
 
         public DataLakeClientOptions GetOptions(bool parallelRange = false)
             => DataLakeClientBuilder.GetOptions(parallelRange);
@@ -83,6 +86,13 @@ namespace Azure.Storage.Files.DataLake.Tests
             raise = raise ?? new IOException("Simulated connection fault");
             DataLakeClientOptions options = GetOptions();
             options.AddPolicy(new FaultyDownloadPipelinePolicy(raiseAt, raise, onFault), HttpPipelinePosition.PerCall);
+            return options;
+        }
+
+        public DataLakeClientOptions GetOptionsWithAudience(DataLakeAudience audience)
+        {
+            DataLakeClientOptions options = DataLakeClientBuilder.GetOptions(false);
+            options.Audience = audience;
             return options;
         }
 
@@ -100,6 +110,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             => new StorageSharedKeyCredential(
                 TestConfigHierarchicalNamespace.AccountName,
                 TestConfigHierarchicalNamespace.AccountKey);
+
+        public TokenCredential GetOAuthHnsCredential()
+            => Tenants.GetOAuthCredential(Tenants.TestConfigHierarchicalNamespace);
 
         public static void AssertValidStoragePathInfo(PathInfo pathInfo)
         {
@@ -132,6 +145,31 @@ namespace Azure.Storage.Files.DataLake.Tests
                     Assert.Fail($"Expected key <{kvp.Key}> with value <{kvp.Value}> not found");
                 }
             }
+        }
+
+        public void AssertAccessControlListEquality(
+            IList<PathAccessControlItem> expected,
+             IList<PathAccessControlItem> actual)
+        {
+            Assert.AreEqual(expected.Count, actual.Count);
+            foreach (PathAccessControlItem expectedItem in expected)
+            {
+                PathAccessControlItem actualItem = actual.Where(
+                    r => r.AccessControlType == expectedItem.AccessControlType).FirstOrDefault();
+                if (actualItem == null)
+                {
+                    Assert.Fail("AccessControlItem not found");
+                }
+                AssertPathAccessControlItemEquality(expectedItem, actualItem);
+            }
+        }
+
+        public void AssertPathAccessControlItemEquality(PathAccessControlItem expected, PathAccessControlItem actual)
+        {
+            Assert.AreEqual(expected.DefaultScope, actual.DefaultScope);
+            Assert.AreEqual(expected.AccessControlType, actual.AccessControlType);
+            Assert.AreEqual(expected.EntityId, actual.EntityId);
+            Assert.AreEqual(expected.Permissions, actual.Permissions);
         }
 
         public DataLakeCustomerProvidedKey GetCustomerProvidedKey()
@@ -245,11 +283,12 @@ namespace Azure.Storage.Files.DataLake.Tests
             return builder.ToSasQueryParameters(userDelegationKey, accountName);
         }
 
-        public DataLakeSasQueryParameters GetNewDataLakeServiceSasCredentialsPath(string fileSystemName, string path, StorageSharedKeyCredential sharedKeyCredentials = default)
+        public DataLakeSasQueryParameters GetNewDataLakeServiceSasCredentialsPath(string fileSystemName, string path, bool isDirectory = false, StorageSharedKeyCredential sharedKeyCredentials = default)
         {
             var builder = new DataLakeSasBuilder
             {
                 FileSystemName = fileSystemName,
+                IsDirectory = isDirectory,
                 Path = path,
                 Protocol = SasProtocol.None,
                 StartsOn = Recording.UtcNow.AddHours(-1),
@@ -348,6 +387,26 @@ namespace Azure.Storage.Files.DataLake.Tests
                 lease = await InstrumentClient(fileSystem.GetDataLakeLeaseClient(Recording.Random.NewGuid().ToString())).AcquireAsync(DataLakeLeaseClient.InfiniteLeaseDuration);
             }
             return leaseId == ReceivedLeaseId ? lease.LeaseId : leaseId;
+        }
+
+        /// <summary>
+        /// Gets a custom account SAS where the permissions, services and resourceType
+        /// comes back in the string character order that the user inputs it as.
+        /// </summary>
+        /// <param name="permissions"></param>
+        /// <param name="services"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="sharedKeyCredential"></param>
+        /// <returns></returns>
+        public override string GetCustomAccountSas(
+            string permissions = default,
+            string services = default,
+            string resourceType = default,
+            StorageSharedKeyCredential sharedKeyCredential = default)
+        {
+            // Default to the HNS credentials instead of the primary credentials in the base method
+            sharedKeyCredential ??= Tenants.GetNewHnsSharedKeyCredentials();
+            return base.GetCustomAccountSas(permissions, services, resourceType, sharedKeyCredential);
         }
 
         public DataLakeSignedIdentifier[] BuildSignedIdentifiers() =>

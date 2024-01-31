@@ -177,7 +177,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 $"</entry>";
             MockResponse response = new MockResponse(200);
             response.SetContent(subscriptionDescriptionXml);
-            SubscriptionProperties subscriptionDesc = await SubscriptionPropertiesExtensions.ParseResponseAsync("abcd", response, new ClientDiagnostics(new ServiceBusAdministrationClientOptions()));
+            SubscriptionProperties subscriptionDesc = await SubscriptionPropertiesExtensions.ParseResponseAsync("abcd", response);
             Assert.NotNull(subscriptionDesc.UnknownProperties);
             XDocument doc = SubscriptionPropertiesExtensions.Serialize(subscriptionDesc);
 

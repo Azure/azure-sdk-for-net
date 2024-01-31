@@ -55,7 +55,8 @@ namespace Azure.Batch.Unit.Tests
                     Publisher = "Microsoft.Azure.Extensions",
                     Type = "CustomScript",
                     TypeHandlerVersion = "2.0",
-                    AutoUpgradeMinorVersion = true
+                    AutoUpgradeMinorVersion = true,
+                    EnableAutomaticUpgrade = true
                 },
                 InstanceView = new Models.VMExtensionInstanceView
                 {
@@ -120,6 +121,7 @@ namespace Azure.Batch.Unit.Tests
             Assert.Equal("CustomScript", extension.VmExtension.Type);
             Assert.Equal("2.0", extension.VmExtension.TypeHandlerVersion);
             Assert.True(extension.VmExtension.AutoUpgradeMinorVersion);
+            Assert.True(extension.VmExtension.EnableAutomaticUpgrade);
 
             Assert.NotNull(extension.InstanceView);
             Assert.Equal(name, extension.InstanceView.Name);

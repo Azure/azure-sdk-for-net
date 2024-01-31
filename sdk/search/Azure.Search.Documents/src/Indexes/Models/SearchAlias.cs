@@ -9,7 +9,7 @@ namespace Azure.Search.Documents.Indexes.Models
 {
     public partial class SearchAlias
     {
-        [CodeGenMember("etag")]
+        [CodeGenMember("ETag")]
         private readonly string _etag;
 
         /// <summary>

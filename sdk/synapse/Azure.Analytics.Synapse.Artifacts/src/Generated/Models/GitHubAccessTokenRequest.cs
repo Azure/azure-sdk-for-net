@@ -6,31 +6,23 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The GitHubAccessTokenRequest. </summary>
     public partial class GitHubAccessTokenRequest
     {
-        /// <summary> Initializes a new instance of GitHubAccessTokenRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="GitHubAccessTokenRequest"/>. </summary>
         /// <param name="gitHubClientId"> The GitHub Client Id. </param>
         /// <param name="gitHubAccessCode"> The GitHub Access code. </param>
         /// <param name="gitHubAccessTokenBaseUrl"> The GitHub access token base URL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubClientId"/>, <paramref name="gitHubAccessCode"/> or <paramref name="gitHubAccessTokenBaseUrl"/> is null. </exception>
         public GitHubAccessTokenRequest(string gitHubClientId, string gitHubAccessCode, string gitHubAccessTokenBaseUrl)
         {
-            if (gitHubClientId == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubClientId));
-            }
-            if (gitHubAccessCode == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubAccessCode));
-            }
-            if (gitHubAccessTokenBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(gitHubAccessTokenBaseUrl));
-            }
+            Argument.AssertNotNull(gitHubClientId, nameof(gitHubClientId));
+            Argument.AssertNotNull(gitHubAccessCode, nameof(gitHubAccessCode));
+            Argument.AssertNotNull(gitHubAccessTokenBaseUrl, nameof(gitHubAccessTokenBaseUrl));
 
             GitHubClientId = gitHubClientId;
             GitHubAccessCode = gitHubAccessCode;

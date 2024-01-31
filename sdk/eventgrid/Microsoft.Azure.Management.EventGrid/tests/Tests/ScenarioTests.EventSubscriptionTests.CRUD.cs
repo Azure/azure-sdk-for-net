@@ -13,9 +13,8 @@ namespace EventGrid.Tests.ScenarioTests
 {
     public partial class ScenarioTests
     {
-        const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=<HIDDEN>";
+        const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=PASSWORDCODE";
         const string AzureFunctionArmId = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/DevExpRg/providers/Microsoft.Web/sites/devexpfuncappdestination/functions/EventGridTrigger1";
-
         const string SampleAzureActiveDirectoryTenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47";
         const string SampleAzureActiveDirectoryApplicationIdOrUri = "03d47d4a-7c50-43e0-ba90-89d090cc4582";
 
@@ -272,6 +271,13 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.Equal("TestPrefix", eventSubscriptionResponse.Filter.SubjectBeginsWith, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal("TestSuffix", eventSubscriptionResponse.Filter.SubjectEndsWith, StringComparer.CurrentCultureIgnoreCase);
 
+                // Get the created event subscription using nested API
+                eventSubscriptionResponse = EventGridManagementClient.DomainEventSubscriptions.Get(resourceGroup, domainName, eventSubscriptionName);
+                Assert.NotNull(eventSubscriptionResponse);
+                Assert.Equal("Succeeded", eventSubscriptionResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
+                Assert.Equal("TestPrefix", eventSubscriptionResponse.Filter.SubjectBeginsWith, StringComparer.CurrentCultureIgnoreCase);
+                Assert.Equal("TestSuffix", eventSubscriptionResponse.Filter.SubjectEndsWith, StringComparer.CurrentCultureIgnoreCase);
+
                 // Update the event subscription
                 var eventSubscriptionUpdateParameters = new EventSubscriptionUpdateParameters()
                 {
@@ -362,13 +368,14 @@ namespace EventGrid.Tests.ScenarioTests
 
                 // Delete the event subscription
                 EventGridManagementClient.EventSubscriptions.DeleteAsync(scope, eventSubscriptionName).Wait();
+                //EventGridManagementClient.DomainEventSubscriptions.DeleteAsync(resourceGroup, domainName, eventSubscriptionName).Wait();
 
                 // Delete the Domain
                 EventGridManagementClient.Domains.DeleteAsync(resourceGroup, domainName).Wait();
             }
         }
 
-        [Fact(Skip = "Stop this test until ARM manifest deployment in all regions to tesh this global resource.")]
+        [Fact]
         public void EventSubscriptionToAzureSubscriptionCreateGetUpdateDelete()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -426,7 +433,7 @@ namespace EventGrid.Tests.ScenarioTests
             }
         }
 
-        [Fact(Skip = "Stop this test until ARM manifest deployment in all regions to test this global resource.")]
+        [Fact]
         public void EventSubscriptionToResourceGroupCreateGetUpdateDelete()
         {
             using (MockContext context = MockContext.Start(this.GetType()))
@@ -703,6 +710,7 @@ namespace EventGrid.Tests.ScenarioTests
                 EventGridManagementClient.Topics.DeleteAsync(resourceGroup, topicName).Wait();
             }
         }
+
 
         [Fact(Skip = "Skip temportarily.")]
         public void EventSubscriptionToCustomTopicCreateGetUpdateDeleteWithEventDeliverySchema()

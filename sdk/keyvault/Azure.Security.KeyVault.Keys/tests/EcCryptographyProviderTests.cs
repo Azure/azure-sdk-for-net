@@ -10,7 +10,7 @@ using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
-#if !NET461
+#if !NET462
 
     public class EcCryptographyProviderTests
     {

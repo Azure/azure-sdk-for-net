@@ -1,0 +1,55 @@
+parameters:
+- name: LanguageVersion
+  type: string
+  default: '7'
+- name: ServiceDirectory
+  type: string
+  default: ''
+- name: PackageVersions
+  type: string
+  default: '.*'
+- name: Tests
+  type: string
+  default: '.*'
+- name: Arguments
+  type: string
+  default: '.*'
+- name: Iterations
+  type: number
+  default: '5'
+- name: Profile
+  type: boolean
+  default: false
+- name: AdditionalArguments
+  type: string
+  default: ''
+- name: EnvVars
+  type: object
+  default: {}
+
+extends:
+  template: /eng/common/pipelines/templates/jobs/perf.yml
+  parameters:
+    Variables:
+    - template: /eng/pipelines/templates/variables/globals.yml
+    Language: Net
+    LanguageVersion: ${{ parameters.LanguageVersion }}
+    InstallLanguageSteps:
+    - template: /eng/pipelines/templates/steps/install-dotnet.yml
+      parameters:
+        EnableNuGetCache: false
+    - ${{ if parameters.Profile }}:
+      - task: PowerShell@2
+        displayName: 'Install dotnet-trace'
+        inputs:
+          targetType: 'inline'
+          script: 'dotnet tool install -g dotnet-trace'
+          workingDirectory: '$(Build.SourcesDirectory)/sdk'
+    ServiceDirectory: ${{ parameters.ServiceDirectory }}
+    PackageVersions: ${{ parameters.PackageVersions }}
+    Tests: ${{ parameters.Tests }}
+    Arguments: ${{ parameters.Arguments }}
+    Iterations: ${{ parameters.Iterations }}
+    Profile: ${{ parameters.Profile }}
+    AdditionalArguments: ${{ parameters.AdditionalArguments }}
+    EnvVars: ${{ parameters.EnvVars}}

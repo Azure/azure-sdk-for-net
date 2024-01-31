@@ -7,13 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AzureDataLakeStorageGen2DataFeed. </summary>
     internal partial class AzureDataLakeStorageGen2DataFeed : DataFeedDetail
     {
-        /// <summary> Initializes a new instance of AzureDataLakeStorageGen2DataFeed. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStorageGen2DataFeed"/>. </summary>
         /// <param name="dataFeedName"> data feed name. </param>
         /// <param name="granularityName"> granularity of the time series. </param>
         /// <param name="metrics"> measure list. </param>
@@ -22,24 +23,15 @@ namespace Azure.AI.MetricsAdvisor.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dataFeedName"/>, <paramref name="metrics"/> or <paramref name="dataSourceParameter"/> is null. </exception>
         public AzureDataLakeStorageGen2DataFeed(string dataFeedName, DataFeedGranularityType granularityName, IEnumerable<DataFeedMetric> metrics, DateTimeOffset dataStartFrom, AzureDataLakeStorageGen2Parameter dataSourceParameter) : base(dataFeedName, granularityName, metrics, dataStartFrom)
         {
-            if (dataFeedName == null)
-            {
-                throw new ArgumentNullException(nameof(dataFeedName));
-            }
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-            if (dataSourceParameter == null)
-            {
-                throw new ArgumentNullException(nameof(dataSourceParameter));
-            }
+            Argument.AssertNotNull(dataFeedName, nameof(dataFeedName));
+            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(dataSourceParameter, nameof(dataSourceParameter));
 
             DataSourceParameter = dataSourceParameter;
             DataSourceType = DataFeedSourceKind.AzureDataLakeStorage;
         }
 
-        /// <summary> Initializes a new instance of AzureDataLakeStorageGen2DataFeed. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStorageGen2DataFeed"/>. </summary>
         /// <param name="dataSourceType"> data source type. </param>
         /// <param name="dataFeedId"> data feed unique id. </param>
         /// <param name="dataFeedName"> data feed name. </param>

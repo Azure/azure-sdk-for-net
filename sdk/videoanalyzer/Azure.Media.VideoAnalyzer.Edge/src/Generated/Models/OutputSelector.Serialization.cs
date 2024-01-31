@@ -17,17 +17,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Property))
             {
-                writer.WritePropertyName("property");
+                writer.WritePropertyName("property"u8);
                 writer.WriteStringValue(Property.Value.ToString());
             }
             if (Optional.IsDefined(Operator))
             {
-                writer.WritePropertyName("operator");
+                writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
             }
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value");
+                writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
             writer.WriteEndObject();
@@ -35,32 +35,34 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static OutputSelector DeserializeOutputSelector(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<OutputSelectorProperty> property = default;
             Optional<OutputSelectorOperator> @operator = default;
             Optional<string> value = default;
             foreach (var property0 in element.EnumerateObject())
             {
-                if (property0.NameEquals("property"))
+                if (property0.NameEquals("property"u8))
                 {
                     if (property0.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property0.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     property = new OutputSelectorProperty(property0.Value.GetString());
                     continue;
                 }
-                if (property0.NameEquals("operator"))
+                if (property0.NameEquals("operator"u8))
                 {
                     if (property0.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property0.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     @operator = new OutputSelectorOperator(property0.Value.GetString());
                     continue;
                 }
-                if (property0.NameEquals("value"))
+                if (property0.NameEquals("value"u8))
                 {
                     value = property0.Value.GetString();
                     continue;

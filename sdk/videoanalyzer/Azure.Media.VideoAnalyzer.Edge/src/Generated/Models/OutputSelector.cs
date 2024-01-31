@@ -10,12 +10,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Allows for the selection of particular streams from another node. </summary>
     public partial class OutputSelector
     {
-        /// <summary> Initializes a new instance of OutputSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutputSelector"/>. </summary>
         public OutputSelector()
         {
         }
 
-        /// <summary> Initializes a new instance of OutputSelector. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutputSelector"/>. </summary>
         /// <param name="property"> The property of the data stream to be used as the selection criteria. </param>
         /// <param name="operator"> The operator to compare properties by. </param>
         /// <param name="value"> Value to compare against. </param>

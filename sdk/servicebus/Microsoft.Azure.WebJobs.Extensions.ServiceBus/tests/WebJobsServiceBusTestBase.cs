@@ -14,6 +14,7 @@ using Azure.Messaging.ServiceBus;
 using Azure.Messaging.ServiceBus.Administration;
 using Azure.Messaging.ServiceBus.Tests;
 using Microsoft.Azure.WebJobs.Host.TestCommon;
+using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,7 +25,7 @@ using static Azure.Messaging.ServiceBus.Tests.ServiceBusScope;
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
     [NonParallelizable]
-    [LiveOnly]
+    [LiveOnly(alwaysRunLocally: true)]
     public class WebJobsServiceBusTestBase
     {
         // surrounding with % indicates that this is used as a pointer to an app setting rather than
@@ -55,15 +56,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         protected const int SBTimeoutMills = 120 * 1000;
         protected const int DrainWaitTimeoutMills = 120 * 1000;
-        protected const int DrainSleepMills = 5 * 1000;
         internal const int MaxAutoRenewDurationMin = 5;
-        internal static TimeSpan HostShutdownTimeout = TimeSpan.FromSeconds(120);
+        protected static TimeSpan HostShutdownTimeout = TimeSpan.FromSeconds(120);
 
-        internal static QueueScope _firstQueueScope;
-        protected static QueueScope _secondaryNamespaceQueueScope;
-        protected static QueueScope _secondQueueScope;
+        protected static QueueScope FirstQueueScope { get; private set; }
+        protected static QueueScope SecondaryNamespaceQueueScope { get; private set; }
+        protected static QueueScope SecondQueueScope { get; private set; }
         private QueueScope _thirdQueueScope;
-        protected static TopicScope _topicScope;
+        protected static TopicScope TopicScope { get; private set; }
 
         private readonly bool _isSession;
         protected static EventWaitHandle _topicSubscriptionCalled1;
@@ -73,6 +73,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         protected static EventWaitHandle _drainValidationPreDelay;
         protected static EventWaitHandle _drainValidationPostDelay;
 
+        protected static int ExpectedRemainingMessages { get; set; }
+
         protected WebJobsServiceBusTestBase(bool isSession)
         {
             _isSession = isSession;
@@ -80,23 +82,24 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
         /// <summary>
         ///   Performs the tasks needed to initialize the test.  This
-        ///   method runs once for for each test.
+        ///   method runs once for each test.
         /// </summary>
         ///
         [SetUp]
         public async Task FixtureSetUp()
         {
-            _firstQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession, lockDuration: TimeSpan.FromSeconds(15));
-            _secondQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession, lockDuration: TimeSpan.FromSeconds(15));
+            ExpectedRemainingMessages = 0;
+            FirstQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession, lockDuration: TimeSpan.FromSeconds(15));
+            SecondQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession, lockDuration: TimeSpan.FromSeconds(15));
             _thirdQueueScope = await CreateWithQueue(enablePartitioning: false, enableSession: _isSession, lockDuration: TimeSpan.FromSeconds(15));
-            _topicScope = await CreateWithTopic(
+            TopicScope = await CreateWithTopic(
                 enablePartitioning: false,
                 enableSession: _isSession,
                 topicSubscriptions: new string[] { "sub1", "sub2" });
-            _secondaryNamespaceQueueScope = await CreateWithQueue(
+            SecondaryNamespaceQueueScope = await CreateWithQueue(
                 enablePartitioning: false,
                 enableSession: _isSession,
-                overrideNamespace: ServiceBusTestEnvironment.Instance.ServiceBusSecondaryNamespace,
+                useSecondaryNamespace: true,
                 lockDuration: TimeSpan.FromSeconds(15));
             _topicSubscriptionCalled1 = new ManualResetEvent(initialState: false);
             _topicSubscriptionCalled2 = new ManualResetEvent(initialState: false);
@@ -114,27 +117,28 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         [TearDown]
         public async Task FixtureTearDown()
         {
-            await _firstQueueScope.DisposeAsync();
-            await _secondQueueScope.DisposeAsync();
+            await FirstQueueScope.DisposeAsync();
+            await SecondQueueScope.DisposeAsync();
             await _thirdQueueScope.DisposeAsync();
-            await _secondaryNamespaceQueueScope.DisposeAsync();
-            await _topicScope.DisposeAsync();
+            await SecondaryNamespaceQueueScope.DisposeAsync();
+            await TopicScope.DisposeAsync();
         }
 
         protected IHost BuildHost<TJobClass>(
             Action<IHostBuilder> configurationDelegate = null,
             bool startHost = true,
-            bool useTokenCredential = false)
+            bool useTokenCredential = false,
+            bool skipValidation = false)
         {
             var settings = new Dictionary<string, string>
             {
-                {_firstQueueNameKey, _firstQueueScope.QueueName},
-                {_secondQueueNameKey, _secondQueueScope.QueueName},
+                {_firstQueueNameKey, FirstQueueScope.QueueName},
+                {_secondQueueNameKey, SecondQueueScope.QueueName},
                 {_thirdQueueNameKey, _thirdQueueScope.QueueName},
-                {_topicNameKey, _topicScope.TopicName},
-                {_firstSubscriptionNameKey, _topicScope.SubscriptionNames[0]},
-                {_secondSubscriptionNameKey, _topicScope.SubscriptionNames[1]},
-                {_secondaryNamespaceQueueKey, _secondaryNamespaceQueueScope.QueueName},
+                {_topicNameKey, TopicScope.TopicName},
+                {_firstSubscriptionNameKey, TopicScope.SubscriptionNames[0]},
+                {_secondSubscriptionNameKey, TopicScope.SubscriptionNames[1]},
+                {_secondaryNamespaceQueueKey, SecondaryNamespaceQueueScope.QueueName},
                 {SecondaryConnectionStringKey, ServiceBusTestEnvironment.Instance.ServiceBusSecondaryNamespaceConnectionString}
             };
             if (useTokenCredential)
@@ -156,7 +160,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     // Configure ServiceBusEndToEndTestService before WebJobs stuff so that the ServiceBusEndToEndTestService.StopAsync will be called after
                     // the WebJobsHost.StopAsync (service that is started first will be stopped last by the IHost).
                     // This will allow the logs captured in StopAsync to include everything from WebJobs.
-                    s.AddHostedService<ServiceBusEndToEndTestService>();
+                    if (!skipValidation)
+                    {
+                        s.AddHostedService<ServiceBusEndToEndTestService>();
+                    }
                 })
                 .ConfigureAppConfiguration(builder =>
                 {
@@ -180,7 +187,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         internal async Task WriteQueueMessage(string message, string sessionId = null, string connectionString = default, string queueName = default)
         {
             await using ServiceBusClient client = new ServiceBusClient(connectionString ?? ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
-            var sender = client.CreateSender(queueName ?? _firstQueueScope.QueueName);
+            var sender = client.CreateSender(queueName ?? FirstQueueScope.QueueName);
             ServiceBusMessage messageObj = new ServiceBusMessage(message)
             {
                 ContentType = "application/json",
@@ -188,11 +195,13 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Subject = "subject",
                 To = "to",
                 ReplyTo = "replyTo",
-                ApplicationProperties = {{ "key", "value"}}
+                ApplicationProperties = {{ "key", "value"}},
+                PartitionKey = "partitionKey"
             };
             if (!string.IsNullOrEmpty(sessionId))
             {
                 messageObj.SessionId = sessionId;
+                messageObj.ReplyToSessionId = sessionId;
             }
             await sender.SendMessageAsync(messageObj);
         }
@@ -200,7 +209,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         internal async Task WriteQueueMessages(string[] messages, string[] sessionIds = null, string connectionString = default, string queueName = default)
         {
             await using ServiceBusClient client = new ServiceBusClient(connectionString ?? ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
-            var sender = client.CreateSender(queueName ?? _firstQueueScope.QueueName);
+            var sender = client.CreateSender(queueName ?? FirstQueueScope.QueueName);
 
             ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
             int sessionCounter = 0;
@@ -213,6 +222,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 {
                     // evenly distribute the messages across sessions
                     message.SessionId = sessionIds[sessionCounter++ % sessionIds.Length];
+                    message.ReplyToSessionId = message.SessionId;
                 }
 
                 if (!batch.TryAddMessage(message))
@@ -239,11 +249,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
 
             await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
-            var sender = client.CreateSender(_firstQueueScope.QueueName);
+            var sender = client.CreateSender(FirstQueueScope.QueueName);
             ServiceBusMessage messageObj = new ServiceBusMessage(payload);
             if (!string.IsNullOrEmpty(sessionId))
             {
                 messageObj.SessionId = sessionId;
+                messageObj.ReplyToSessionId = sessionId;
             }
             await sender.SendMessageAsync(messageObj);
         }
@@ -251,11 +262,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         internal async Task WriteTopicMessage(string message, string sessionId = null)
         {
             await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
-            var sender = client.CreateSender(_topicScope.TopicName);
+            var sender = client.CreateSender(TopicScope.TopicName);
             ServiceBusMessage messageObj = new ServiceBusMessage(message);
             if (!string.IsNullOrEmpty(sessionId))
             {
                 messageObj.SessionId = sessionId;
+                messageObj.ReplyToSessionId = sessionId;
             }
             await sender.SendMessageAsync(messageObj);
         }
@@ -275,40 +287,81 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     sbOptions.MaxAutoLockRenewalDuration = TimeSpan.Zero;
                     sbOptions.MaxConcurrentCalls = 1;
                 }));
-    }
 
-#pragma warning disable SA1402 // File may only contain a single type
-    public class ServiceBusEndToEndTestService : IHostedService
-#pragma warning restore SA1402 // File may only contain a single type
-    {
-        private readonly IHost _host;
-
-        public ServiceBusEndToEndTestService(IHost host)
+        protected static class DrainModeHelper
         {
-            _host = host;
+            public static async Task WaitForCancellationAsync(CancellationToken cancellationToken)
+            {
+                // Wait until the drain operation begins, signalled by the cancellation token
+                int elapsedTimeMills = 0;
+                while (elapsedTimeMills < DrainWaitTimeoutMills && !cancellationToken.IsCancellationRequested)
+                {
+                    try
+                    {
+                        await Task.Delay(elapsedTimeMills += 500, cancellationToken);
+                    }
+                    catch (TaskCanceledException)
+                    {
+                    }
+                }
+            }
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        private class ServiceBusEndToEndTestService : IHostedService
         {
-            return Task.CompletedTask;
-        }
+            private readonly IHost _host;
 
-        public async Task StopAsync(CancellationToken cancellationToken)
-        {
-            var logs = _host.GetTestLoggerProvider().GetAllLogMessages();
-            var errors = logs.Where(
-                p => p.Level == LogLevel.Error &&
-                // Ignore this error that the SDK logs when cancelling batch receive
-                !p.FormattedMessage.Contains("ReceiveBatchAsync Exception: System.Threading.Tasks.TaskCanceledException"));
-            Assert.IsEmpty(errors, string.Join(",", errors.Select(e => e.FormattedMessage)));
+            public ServiceBusEndToEndTestService(IHost host)
+            {
+                _host = host;
+            }
 
-            var client = new ServiceBusAdministrationClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+            public Task StartAsync(CancellationToken cancellationToken)
+            {
+                return Task.CompletedTask;
+            }
 
-            // wait for a few seconds to allow updated counts to propagate
-            await Task.Delay(TimeSpan.FromSeconds(2));
+            public async Task StopAsync(CancellationToken cancellationToken)
+            {
+                var logs = _host.GetTestLoggerProvider().GetAllLogMessages();
+                var errors = logs.Where(IsError);
+                Assert.IsEmpty(errors, string.Join(
+                    ",",
+                    errors.Select(e => e.Exception != null ? e.Exception.StackTrace : e.FormattedMessage)));
 
-            QueueRuntimeProperties properties = await client.GetQueueRuntimePropertiesAsync(WebJobsServiceBusTestBase._firstQueueScope.QueueName, CancellationToken.None);
-            Assert.AreEqual(0, properties.TotalMessageCount);
+                var client = new ServiceBusAdministrationClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+
+                // wait for a few seconds to allow updated counts to propagate
+                await Task.Delay(TimeSpan.FromSeconds(2));
+
+                QueueRuntimeProperties properties = await client.GetQueueRuntimePropertiesAsync(FirstQueueScope.QueueName, CancellationToken.None);
+                Assert.AreEqual(ExpectedRemainingMessages, properties.ActiveMessageCount);
+            }
+
+            private static bool IsError(LogMessage logMessage)
+            {
+                if (logMessage.Level < LogLevel.Error)
+                {
+                    return false;
+                }
+                // if the inner exception message contains "Test exception" then it's an expected exception
+                if (logMessage.Exception != null && logMessage.Exception.InnerException != null &&
+                    logMessage.Exception.InnerException.Message.Contains("Test exception"))
+                {
+                    return false;
+                }
+                // if the formatted message is not null and it contains "ReceiveBatchAsync Exception: System.Threading.Tasks.TaskCanceledException"
+                // then it's an expected exception
+                if (logMessage.FormattedMessage != null &&
+                    (logMessage.FormattedMessage.Contains("ReceiveBatchAsync Exception: System.Threading.Tasks.TaskCanceledException") ||
+                     // this condition can be removed when https://github.com/Azure/azure-sdk-for-net/issues/37713 is fixed
+                     logMessage.FormattedMessage.Contains("Put token failed. status-code: 404, status-description: The messaging entity")))
+                {
+                    return false;
+                }
+
+                return true;
+            }
         }
     }
 }

@@ -32,11 +32,12 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// <param name="format">Deployment model format.</param>
         /// <param name="name">Deployment model name.</param>
         /// <param name="version">Deployment model version.</param>
-        public DeploymentModel(string format = default(string), string name = default(string), string version = default(string))
+        public DeploymentModel(string format = default(string), string name = default(string), string version = default(string), CallRateLimit callRateLimit = default(CallRateLimit))
         {
             Format = format;
             Name = name;
             Version = version;
+            CallRateLimit = callRateLimit;
             CustomInit();
         }
 
@@ -62,6 +63,11 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "version")]
         public string Version { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "callRateLimit")]
+        public CallRateLimit CallRateLimit { get; private set; }
 
     }
 }

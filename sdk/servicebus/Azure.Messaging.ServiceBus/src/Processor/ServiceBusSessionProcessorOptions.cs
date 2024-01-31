@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using Azure.Core;
 
 namespace Azure.Messaging.ServiceBus
@@ -32,6 +33,9 @@ namespace Azure.Messaging.ServiceBus
         /// <inheritdoc cref="ServiceBusProcessorOptions.ReceiveMode"/>
         public ServiceBusReceiveMode ReceiveMode { get; set; } = ServiceBusReceiveMode.PeekLock;
 
+        /// <inheritdoc cref="ServiceBusProcessorOptions.Identifier"/>
+        public string Identifier { get; set; }
+
         /// <summary>Gets or sets a value that indicates whether the processor
         /// should automatically complete messages after the <see cref="ServiceBusSessionProcessor.ProcessMessageAsync"/>
         /// handler has completed processing. If the message handler triggers an exception,
@@ -48,7 +52,7 @@ namespace Azure.Messaging.ServiceBus
 
         /// <summary>
         /// Gets or sets the maximum duration within which the session lock will be renewed automatically. This value
-        /// should be greater than the queue's LockDuration Property.
+        /// should be greater than the queue's LockDuration Property. To specify an infinite duration, use <see cref="Timeout.InfiniteTimeSpan"/>.
         /// </summary>
         ///
         /// <value>The maximum duration during which session locks are automatically renewed. The default value is 5 minutes.</value>
@@ -63,7 +67,10 @@ namespace Azure.Messaging.ServiceBus
 
             set
             {
-                Argument.AssertNotNegative(value, nameof(MaxAutoLockRenewalDuration));
+                if (value != Timeout.InfiniteTimeSpan)
+                {
+                    Argument.AssertNotNegative(value, nameof(MaxAutoLockRenewalDuration));
+                }
                 _maxAutoRenewDuration = value;
             }
         }
@@ -184,6 +191,7 @@ namespace Azure.Messaging.ServiceBus
                 AutoCompleteMessages = AutoCompleteMessages,
                 MaxAutoLockRenewalDuration = MaxAutoLockRenewalDuration,
                 MaxReceiveWaitTime = SessionIdleTimeout,
+                Identifier = Identifier,
             };
     }
 }

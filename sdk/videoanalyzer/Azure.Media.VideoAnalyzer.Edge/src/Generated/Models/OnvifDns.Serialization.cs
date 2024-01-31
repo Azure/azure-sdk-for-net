@@ -18,12 +18,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(FromDhcp))
             {
-                writer.WritePropertyName("fromDhcp");
+                writer.WritePropertyName("fromDhcp"u8);
                 writer.WriteBooleanValue(FromDhcp.Value);
             }
             if (Optional.IsCollectionDefined(Ipv4Address))
             {
-                writer.WritePropertyName("ipv4Address");
+                writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStartArray();
                 foreach (var item in Ipv4Address)
                 {
@@ -33,7 +33,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             if (Optional.IsCollectionDefined(Ipv6Address))
             {
-                writer.WritePropertyName("ipv6Address");
+                writer.WritePropertyName("ipv6Address"u8);
                 writer.WriteStartArray();
                 foreach (var item in Ipv6Address)
                 {
@@ -46,26 +46,28 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static OnvifDns DeserializeOnvifDns(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> fromDhcp = default;
             Optional<IList<string>> ipv4Address = default;
             Optional<IList<string>> ipv6Address = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fromDhcp"))
+                if (property.NameEquals("fromDhcp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fromDhcp = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("ipv4Address"))
+                if (property.NameEquals("ipv4Address"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -76,11 +78,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     ipv4Address = array;
                     continue;
                 }
-                if (property.NameEquals("ipv6Address"))
+                if (property.NameEquals("ipv6Address"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

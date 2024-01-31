@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
@@ -11,8 +12,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Microsoft.Azure.Amqp;
 
 namespace Azure.Messaging.ServiceBus
 {
@@ -20,6 +23,15 @@ namespace Azure.Messaging.ServiceBus
     ///   A client responsible for sending <see cref="ServiceBusMessage" /> to a specific Service Bus entity
     ///   (Queue or Topic). It can be used for both session and non-session entities. It is constructed by calling <see cref="ServiceBusClient.CreateSender(string)"/>.
     /// </summary>
+    /// <remarks>
+    ///   The <see cref="ServiceBusSender" /> is safe to cache and use for the lifetime of an
+    ///   application or until the <see cref="ServiceBusClient" /> that it was created by is disposed.
+    ///   Caching the sender is recommended when the application is publishing messages
+    ///   regularly or semi-regularly.  The sender is responsible for ensuring efficient network, CPU,
+    ///   and memory use.  Calling <see cref="DisposeAsync" /> on the associated <see cref="ServiceBusClient" />
+    ///   as the application is shutting down will ensure that network resources and other unmanaged objects used
+    ///   by the sender are properly cleaned up.
+    ///</remarks>
     ///
     public class ServiceBusSender : IAsyncDisposable
     {
@@ -65,8 +77,8 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Gets the ID to identify this client. This can be used to correlate logs and exceptions.
         /// </summary>
-        /// <remarks>Every new client has a unique ID.</remarks>
-        internal string Identifier { get; private set; }
+        ///
+        public virtual string Identifier { get; }
 
         /// <summary>
         ///   The policy to use for determining retry behavior for when an operation fails.
@@ -87,16 +99,18 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         private readonly TransportSender _innerSender;
-        private readonly EntityScopeFactory _scopeFactory;
+        private readonly MessagingClientDiagnostics _clientDiagnostics;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="ServiceBusSender"/> class.
         /// </summary>
         /// <param name="entityPath">The entity path to send the message to.</param>
         /// <param name="connection">The connection for the sender.</param>
+        /// <param name="options">The set of options to use when configuring the sender.</param>
         internal ServiceBusSender(
             string entityPath,
-            ServiceBusConnection connection)
+            ServiceBusConnection connection,
+            ServiceBusSenderOptions options = default)
         {
             Logger.ClientCreateStart(typeof(ServiceBusSender), connection?.FullyQualifiedNamespace, entityPath);
             try
@@ -106,15 +120,22 @@ namespace Azure.Messaging.ServiceBus
                 Argument.AssertNotNullOrWhiteSpace(entityPath, nameof(entityPath));
                 connection.ThrowIfClosed();
 
+                options = options?.Clone() ?? new ServiceBusSenderOptions();
+
                 EntityPath = entityPath;
-                Identifier = DiagnosticUtilities.GenerateIdentifier(EntityPath);
+                Identifier = string.IsNullOrEmpty(options.Identifier) ? DiagnosticUtilities.GenerateIdentifier(EntityPath) : options.Identifier;
                 _connection = connection;
                 _retryPolicy = _connection.RetryOptions.ToRetryPolicy();
                 _innerSender = _connection.CreateTransportSender(
                     entityPath,
                     _retryPolicy,
                     Identifier);
-                _scopeFactory = new EntityScopeFactory(EntityPath, FullyQualifiedNamespace);
+                _clientDiagnostics = new MessagingClientDiagnostics(
+                    DiagnosticProperty.DiagnosticNamespace,
+                    DiagnosticProperty.ResourceProviderNamespace,
+                    DiagnosticProperty.ServiceBusServiceContext,
+                    FullyQualifiedNamespace,
+                    EntityPath);
             }
             catch (Exception ex)
             {
@@ -138,7 +159,18 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="client">The client instance to use for the sender.</param>
         /// <param name="queueOrTopicName">The name of the queue or topic to send to.</param>
         protected ServiceBusSender(ServiceBusClient client, string queueOrTopicName) :
-            this(queueOrTopicName, client.Connection)
+            this(queueOrTopicName, client.Connection, new ServiceBusSenderOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceBusSender"/> class for use with derived types.
+        /// </summary>
+        /// <param name="client">The client instance to use for the sender.</param>
+        /// <param name="queueOrTopicName">The name of the queue or topic to send to.</param>
+        /// <param name="options">The set of options to use when configuring the sender.</param>
+        protected ServiceBusSender(ServiceBusClient client, string queueOrTopicName, ServiceBusSenderOptions options) :
+            this(queueOrTopicName, client.Connection, options)
         {
         }
 
@@ -154,6 +186,10 @@ namespace Azure.Messaging.ServiceBus
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageSizeExceeded"/> in this case.
         ///   For more information on service limits, see
         ///   <see href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quotas#messaging-quotas"/>.
+        /// </exception>
+        /// <exception cref="System.Runtime.Serialization.SerializationException">
+        ///   Occurs when the <paramref name="message"/> has a member in its <see cref="ServiceBusMessage.ApplicationProperties"/> collection that is an
+        ///   unsupported type for serialization.  See the <see cref="ServiceBusMessage.ApplicationProperties"/> remarks for details.
         /// </exception>
         public virtual async Task SendMessageAsync(
             ServiceBusMessage message,
@@ -171,16 +207,22 @@ namespace Azure.Messaging.ServiceBus
         ///   an exception will be triggered and the send will fail. In order to ensure that the messages
         ///   being sent will fit in a batch, use <see cref="SendMessagesAsync(ServiceBusMessageBatch, CancellationToken)"/> instead.
         /// </summary>
-        ///
         /// <param name="messages">The set of messages to send.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
-        ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
+        /// <remarks>
+        ///   When sending, the result is atomic; either all messages that belong to the set were successful or all
+        ///   have failed.  Partial success is not possible.
+        /// </remarks>
         /// <exception cref="ServiceBusException">
         ///   The set of messages exceeds the maximum size allowed in a single batch, as determined by the Service Bus service.
         ///   The <see cref="ServiceBusException.Reason" /> will be set to <see cref="ServiceBusFailureReason.MessageSizeExceeded"/> in this case.
         ///   For more information on service limits, see
         ///   <see href="https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-quotas#messaging-quotas"/>.
+        /// </exception>
+        /// <exception cref="System.Runtime.Serialization.SerializationException">
+        ///   Occurs when one of the <paramref name="messages"/> has a member in its <see cref="ServiceBusMessage.ApplicationProperties"/> collection that is an
+        ///   unsupported type for serialization.  See the <see cref="ServiceBusMessage.ApplicationProperties"/> remarks for details.
         /// </exception>
         public virtual async Task SendMessagesAsync(
             IEnumerable<ServiceBusMessage> messages,
@@ -203,7 +245,7 @@ namespace Azure.Messaging.ServiceBus
 
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageCount: readOnlyCollection.Count);
-            using DiagnosticScope scope = CreateDiagnosticScope(readOnlyCollection, DiagnosticProperty.SendActivityName);
+            using DiagnosticScope scope = CreateDiagnosticScope(readOnlyCollection, DiagnosticProperty.SendActivityName, MessagingDiagnosticOperation.Publish);
             scope.Start();
 
             try
@@ -223,19 +265,38 @@ namespace Azure.Messaging.ServiceBus
             Logger.SendMessageComplete(Identifier);
         }
 
-        private DiagnosticScope CreateDiagnosticScope(IReadOnlyCollection<ServiceBusMessage> messages, string activityName)
+        private DiagnosticScope CreateDiagnosticScope(IReadOnlyCollection<ServiceBusMessage> messages, string activityName, MessagingDiagnosticOperation operation)
         {
             foreach (ServiceBusMessage message in messages)
             {
-                _scopeFactory.InstrumentMessage(message);
+                _clientDiagnostics.InstrumentMessage(message.ApplicationProperties, DiagnosticProperty.MessageActivityName, out var _, out var _);
             }
 
             // create a new scope for the specified operation
-            DiagnosticScope scope = _scopeFactory.CreateScope(
+            DiagnosticScope scope = _clientDiagnostics.CreateScope(
                 activityName,
-                DiagnosticScope.ActivityKind.Client);
+                ActivityKind.Client,
+                operation);
 
             scope.SetMessageData(messages);
+
+            return scope;
+        }
+
+        private DiagnosticScope CreateDiagnosticScope(ServiceBusMessageBatch messageBatch, string activityName, MessagingDiagnosticOperation operation)
+        {
+            // Messages in a batch have already been instrumented when
+            // they are added to the batch so we don't need to instrument them here.
+            var messages = messageBatch.AsReadOnly<AmqpMessage>();
+
+            // create a new scope for the specified operation
+            DiagnosticScope scope = _clientDiagnostics.CreateScope(
+                activityName,
+                ActivityKind.Client,
+                operation);
+
+            scope.SetMessageData(messages);
+
             return scope;
         }
 
@@ -287,14 +348,14 @@ namespace Azure.Messaging.ServiceBus
             try
             {
                 TransportMessageBatch transportBatch = await _innerSender.CreateMessageBatchAsync(options, cancellationToken).ConfigureAwait(false);
-                batch = new ServiceBusMessageBatch(transportBatch, _scopeFactory);
+                batch = new ServiceBusMessageBatch(transportBatch, _clientDiagnostics);
             }
             catch (Exception ex)
             {
                 Logger.CreateMessageBatchException(Identifier, ex.ToString());
                 throw;
             }
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
+
             Logger.CreateMessageBatchComplete(Identifier);
             return batch;
         }
@@ -304,10 +365,13 @@ namespace Azure.Messaging.ServiceBus
         ///   containing a set of <see cref="ServiceBusMessage"/> to
         ///   the associated Service Bus entity.
         /// </summary>
-        ///
         /// <param name="messageBatch">The batch of messages to send. A batch may be created using <see cref="CreateMessageBatchAsync(CancellationToken)" />.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>A task to be resolved on when the operation has completed.</returns>
+        /// <remarks>
+        ///   When sending, the result is atomic; either all messages that belong to the batch were successful or all
+        ///   have failed.  Partial success is not possible.
+        /// </remarks>
         ///
         public virtual async Task SendMessagesAsync(
             ServiceBusMessageBatch messageBatch,
@@ -325,8 +389,9 @@ namespace Azure.Messaging.ServiceBus
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageStart(Identifier, messageBatch.Count);
             using DiagnosticScope scope = CreateDiagnosticScope(
-                messageBatch.AsReadOnly<ServiceBusMessage>(),
-                DiagnosticProperty.SendActivityName);
+                messageBatch,
+                DiagnosticProperty.SendActivityName,
+                MessagingDiagnosticOperation.Publish);
             scope.Start();
 
             try
@@ -345,7 +410,6 @@ namespace Azure.Messaging.ServiceBus
                 messageBatch.Unlock();
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SendMessageComplete(Identifier);
         }
 
@@ -364,6 +428,13 @@ namespace Azure.Messaging.ServiceBus
         /// <see cref="SendMessagesAsync(ServiceBusMessageBatch, CancellationToken)"/>.</remarks>
         ///
         /// <returns>The sequence number of the message that was scheduled.</returns>
+        ///
+        /// <exception cref="System.Runtime.Serialization.SerializationException">
+        ///   Occurs when the <paramref name="message"/> has a member in its <see cref="ServiceBusMessage.ApplicationProperties"/> collection that is an
+        ///   unsupported type for serialization.  See the <see cref="ServiceBusMessage.ApplicationProperties"/> remarks for details.
+        /// </exception>
+        ///
+        /// <seealso cref="CancelScheduledMessageAsync(long, CancellationToken)"/>
         public virtual async Task<long> ScheduleMessageAsync(
             ServiceBusMessage message,
             DateTimeOffset scheduledEnqueueTime,
@@ -392,9 +463,19 @@ namespace Azure.Messaging.ServiceBus
         /// Messages can also be scheduled by setting <see cref="ServiceBusMessage.ScheduledEnqueueTime"/> and
         /// using <see cref="SendMessageAsync(ServiceBusMessage, CancellationToken)"/>,
         /// <see cref="SendMessagesAsync(IEnumerable{ServiceBusMessage}, CancellationToken)"/>, or
-        /// <see cref="SendMessagesAsync(ServiceBusMessageBatch, CancellationToken)"/>.</remarks>
+        /// <see cref="SendMessagesAsync(ServiceBusMessageBatch, CancellationToken)"/>.
+        ///
+        /// When scheduling, the result is atomic; either all messages that belong to the set were successful or all
+        /// have failed.  Partial success is not possible.</remarks>
         ///
         /// <returns>The sequence number of the message that was scheduled.</returns>
+        ///
+        /// <exception cref="System.Runtime.Serialization.SerializationException">
+        ///   Occurs when one of the <paramref name="messages"/> has a member in its <see cref="ServiceBusMessage.ApplicationProperties"/> collection that is an
+        ///   unsupported type for serialization.  See the <see cref="ServiceBusMessage.ApplicationProperties"/> remarks for details.
+        /// </exception>
+        ///
+        /// <seealso cref="CancelScheduledMessagesAsync(IEnumerable{long}, CancellationToken)"/>
         public virtual async Task<IReadOnlyList<long>> ScheduleMessagesAsync(
             IEnumerable<ServiceBusMessage> messages,
             DateTimeOffset scheduledEnqueueTime,
@@ -423,7 +504,8 @@ namespace Azure.Messaging.ServiceBus
 
             using DiagnosticScope scope = CreateDiagnosticScope(
                 readOnlyCollection,
-                DiagnosticProperty.ScheduleActivityName);
+                DiagnosticProperty.ScheduleActivityName,
+                MessagingDiagnosticOperation.Publish);
             scope.Start();
 
             IReadOnlyList<long> sequenceNumbers = null;
@@ -442,7 +524,6 @@ namespace Azure.Messaging.ServiceBus
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.ScheduleMessagesComplete(Identifier);
             return sequenceNumbers;
         }
@@ -452,6 +533,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="sequenceNumber">The <see cref="ServiceBusReceivedMessage.SequenceNumber"/> of the message to be cancelled.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <seealso cref="ScheduleMessageAsync(ServiceBusMessage, DateTimeOffset, CancellationToken)"/>
         public virtual async Task CancelScheduledMessageAsync(
             long sequenceNumber,
             CancellationToken cancellationToken = default) =>
@@ -465,6 +547,7 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         /// <param name="sequenceNumbers">The set of <see cref="ServiceBusReceivedMessage.SequenceNumber"/> of the messages to be cancelled.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <seealso cref="ScheduleMessagesAsync(IEnumerable{ServiceBusMessage}, DateTimeOffset, CancellationToken)"/>
         public virtual async Task CancelScheduledMessagesAsync(
             IEnumerable<long> sequenceNumbers,
             CancellationToken cancellationToken = default)
@@ -488,9 +571,9 @@ namespace Azure.Messaging.ServiceBus
 
             Logger.CancelScheduledMessagesStart(Identifier, sequenceArray);
 
-            using DiagnosticScope scope = _scopeFactory.CreateScope(
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(
                 DiagnosticProperty.CancelActivityName,
-                DiagnosticScope.ActivityKind.Client);
+                ActivityKind.Client);
             scope.Start();
 
             try
@@ -500,10 +583,10 @@ namespace Azure.Messaging.ServiceBus
             catch (Exception ex)
             {
                 Logger.CancelScheduledMessagesException(Identifier, ex.ToString());
+                scope.Failed(ex);
                 throw;
             }
 
-            cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.CancelScheduledMessagesComplete(Identifier);
         }
 
@@ -537,8 +620,6 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <returns>A task to be resolved on when the operation has completed.</returns>
-        [SuppressMessage("Usage", "AZC0002:Ensure all service methods take an optional CancellationToken parameter.",
-            Justification = "This signature must match the IAsyncDisposable interface.")]
         public virtual async ValueTask DisposeAsync()
         {
             await CloseAsync().ConfigureAwait(false);

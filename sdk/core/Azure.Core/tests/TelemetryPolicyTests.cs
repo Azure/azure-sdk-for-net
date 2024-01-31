@@ -18,7 +18,7 @@ namespace Azure.Core.Tests
         {
             var assembly = Assembly.GetAssembly(GetType());
             var transport = new MockTransport(new MockResponse(200));
-            var telemetryPolicy = new TelemetryPolicy(new TelemetryDetails(GetType().Assembly));
+            var telemetryPolicy = new TelemetryPolicy(new TelemetryDetails(GetType().Assembly, default));
 
             await SendGetRequest(transport, telemetryPolicy);
 

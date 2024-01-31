@@ -1,11 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using NUnit.Framework;
 
-namespace Azure.Monitor.Query.Tests
+namespace Azure.Core.Tests
 {
     public class TypeBinderTests
     {
@@ -122,6 +123,53 @@ namespace Azure.Monitor.Query.Tests
             Assert.False(dictionary.ContainsKey("PrivateProperty"));
         }
 
+        [Test]
+        public void CanDeserializeExplicitlyImplementedInterfaceProperties()
+        {
+            var binder = new TestBinder();
+            var typeInfo = binder.GetBinderInfo(typeof(ClassWithInterface), typeof(IFoo));
+            var model = typeInfo.Deserialize<ClassWithInterface>(new Dictionary<string, object>()
+            {
+                { "StringProperty", "1" },
+                { "PrivateStringProperty", "1" },
+            });
+
+            Assert.AreEqual("1", model.StringProperty);
+            Assert.AreEqual("1", ((IFoo)model).InterfaceString);
+        }
+
+        [Test]
+        public void CanSerializeExplicitlyImplementedInterfaceProperties()
+        {
+            var binder = new TestBinder();
+            var typeInfo = binder.GetBinderInfo(typeof(ClassWithInterface), typeof(IFoo));
+            var dictionary = new Dictionary<string, object>();
+
+            typeInfo.Serialize(new ClassWithInterface()
+            {
+                StringProperty = "1",
+            }, dictionary);
+
+            Assert.AreEqual("1", dictionary["StringProperty"]);
+            Assert.AreEqual("1", dictionary["InterfaceString"]);
+        }
+
+        [Test]
+        [TestCase(typeof(SomeClass))]
+        [TestCase(typeof(SomeStruct))]
+        public void InterfaceTypeThrowsIfNotInterface(Type type)
+        {
+            var binder = new TestBinder();
+            Assert.Throws<InvalidOperationException>(() => binder.GetBinderInfo(typeof(ClassWithInterface), type));
+        }
+
+        [Test]
+        public void InterfaceTypeThrowsIfNotAssignableFrom()
+        {
+            var binder = new TestBinder();
+            Assert.Throws<InvalidOperationException>(() => binder.GetBinderInfo(typeof(ClassWithInterface), typeof(IBar)));
+        }
+
 #pragma warning disable 414
 #pragma warning disable 649
         private class ModelClass
@@ -167,6 +215,32 @@ namespace Azure.Monitor.Query.Tests
             public string StringReadOnlyProperty => "3";
             public readonly string StringReadOnlyField;
         }
+
+        private class ClassWithInterface : IFoo
+        {
+            public int IntProperty { get; set; }
+            public string StringProperty { get; set; }
+
+            string IFoo.InterfaceString
+            {
+                get => StringProperty;
+                set => StringProperty = value;
+            }
+        }
+
+        private interface IFoo
+        {
+            string InterfaceString { get; set; }
+        }
+
+        private interface IBar
+        {
+            string InterfaceString { get; set; }
+        }
+
+        private class SomeClass { }
+        private struct SomeStruct { }
+
 #pragma warning restore 649
 #pragma warning restore 414
 
@@ -187,7 +261,7 @@ namespace Azure.Monitor.Query.Tests
 
                 if (typeof(T) == objectValue.GetType())
                 {
-                    value = (T) objectValue;
+                    value = (T)objectValue;
                     return true;
                 }
 

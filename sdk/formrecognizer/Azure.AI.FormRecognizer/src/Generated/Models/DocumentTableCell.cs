@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> An object representing the location and content of a table cell. </summary>
     public partial class DocumentTableCell
     {
-        /// <summary> Initializes a new instance of DocumentTableCell. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentTableCell"/>. </summary>
         /// <param name="rowIndex"> Row index of the cell. </param>
         /// <param name="columnIndex"> Column index of the cell. </param>
         /// <param name="content"> Concatenated content of the table cell in reading order. </param>
@@ -23,14 +23,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="spans"/> is null. </exception>
         internal DocumentTableCell(int rowIndex, int columnIndex, string content, IEnumerable<DocumentSpan> spans)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
-            if (spans == null)
-            {
-                throw new ArgumentNullException(nameof(spans));
-            }
+            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(spans, nameof(spans));
 
             RowIndex = rowIndex;
             ColumnIndex = columnIndex;
@@ -39,7 +33,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Spans = spans.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentTableCell. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentTableCell"/>. </summary>
         /// <param name="kindPrivate"> Table cell kind. </param>
         /// <param name="rowIndex"> Row index of the cell. </param>
         /// <param name="columnIndex"> Column index of the cell. </param>

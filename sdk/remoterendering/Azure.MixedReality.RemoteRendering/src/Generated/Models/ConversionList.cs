@@ -8,26 +8,24 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
 {
     /// <summary> List of conversions. </summary>
     internal partial class ConversionList
     {
-        /// <summary> Initializes a new instance of ConversionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConversionList"/>. </summary>
         /// <param name="conversions"> The list of conversions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="conversions"/> is null. </exception>
         internal ConversionList(IEnumerable<AssetConversion> conversions)
         {
-            if (conversions == null)
-            {
-                throw new ArgumentNullException(nameof(conversions));
-            }
+            Argument.AssertNotNull(conversions, nameof(conversions));
 
             Conversions = conversions.ToList();
         }
 
-        /// <summary> Initializes a new instance of ConversionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConversionList"/>. </summary>
         /// <param name="conversions"> The list of conversions. </param>
         /// <param name="nextLink"> If more conversions are available this field will contain a URL where the next batch of conversions can be requested. This URL will need the same authentication as all calls to the Azure Remote Rendering API. </param>
         internal ConversionList(IReadOnlyList<AssetConversion> conversions, string nextLink)

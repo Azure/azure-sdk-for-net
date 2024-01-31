@@ -7,37 +7,29 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> IoT Hub Message sink allows for pipeline messages to published into the IoT Edge Hub. Published messages can then be delivered to the cloud and other modules via routes declared in the IoT Edge deployment manifest. </summary>
     public partial class IotHubMessageSink : SinkNodeBase
     {
-        /// <summary> Initializes a new instance of IotHubMessageSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubMessageSink"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <param name="hubOutputName"> Name of the Iot Edge Hub output to which the messages will be published. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="inputs"/> or <paramref name="hubOutputName"/> is null. </exception>
         public IotHubMessageSink(string name, IEnumerable<NodeInput> inputs, string hubOutputName) : base(name, inputs)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (inputs == null)
-            {
-                throw new ArgumentNullException(nameof(inputs));
-            }
-            if (hubOutputName == null)
-            {
-                throw new ArgumentNullException(nameof(hubOutputName));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(inputs, nameof(inputs));
+            Argument.AssertNotNull(hubOutputName, nameof(hubOutputName));
 
             HubOutputName = hubOutputName;
             Type = "#Microsoft.VideoAnalyzer.IotHubMessageSink";
         }
 
-        /// <summary> Initializes a new instance of IotHubMessageSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubMessageSink"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>

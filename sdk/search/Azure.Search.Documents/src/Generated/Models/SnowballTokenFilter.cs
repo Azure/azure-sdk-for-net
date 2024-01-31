@@ -6,29 +6,27 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> A filter that stems words using a Snowball-generated stemmer. This token filter is implemented using Apache Lucene. </summary>
     public partial class SnowballTokenFilter : TokenFilter
     {
-        /// <summary> Initializes a new instance of SnowballTokenFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnowballTokenFilter"/>. </summary>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="language"> The language to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SnowballTokenFilter(string name, SnowballTokenFilterLanguage language) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Language = language;
             ODataType = "#Microsoft.Azure.Search.SnowballTokenFilter";
         }
 
-        /// <summary> Initializes a new instance of SnowballTokenFilter. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the token filter. </param>
+        /// <summary> Initializes a new instance of <see cref="SnowballTokenFilter"/>. </summary>
+        /// <param name="oDataType"> A URI fragment specifying the type of token filter. </param>
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="language"> The language to use. </param>
         internal SnowballTokenFilter(string oDataType, string name, SnowballTokenFilterLanguage language) : base(oDataType, name)

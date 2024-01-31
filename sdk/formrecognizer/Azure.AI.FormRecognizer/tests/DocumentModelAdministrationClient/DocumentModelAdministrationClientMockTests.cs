@@ -45,7 +45,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public async Task StartBuildModelEncodesBlankSpaces()
+        public async Task BuildModelEncodesBlankSpaces()
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader("operation-location", "host/operations/00000000000000000000000000000000?api-version=2021-07-30-preview"));
@@ -57,8 +57,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var encodedUriString = "https://fakeuri.com/blank%20space";
             var decodedUriString = "https://fakeuri.com/blank space";
 
-            await client.StartBuildModelAsync(new Uri(encodedUriString), DocumentBuildMode.Template);
-            await client.StartBuildModelAsync(new Uri(decodedUriString), DocumentBuildMode.Template);
+            await client.BuildDocumentModelAsync(WaitUntil.Started, new Uri(encodedUriString), DocumentBuildMode.Template);
+            await client.BuildDocumentModelAsync(WaitUntil.Started, new Uri(decodedUriString), DocumentBuildMode.Template);
 
             Assert.AreEqual(2, mockTransport.Requests.Count);
 
@@ -72,7 +72,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public async Task StartBuildModelGeneratesModelID()
+        public async Task BuildModelGeneratesModelID()
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader("operation-location", "host/operations/00000000000000000000000000000000?api-version=2021-07-30-preview"));
@@ -81,7 +81,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
             var client = CreateInstrumentedClient(options);
 
-            await client.StartBuildModelAsync(new Uri("http://localhost"), DocumentBuildMode.Template);
+            await client.BuildDocumentModelAsync(WaitUntil.Started, new Uri("http://localhost"), DocumentBuildMode.Template);
 
             var contentString = GetString(mockTransport.Requests.Single().Content);
             string modelId = contentString.Substring(contentString.IndexOf("modelId") + 10, 36);
@@ -90,7 +90,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
-        public async Task StartCreateComposedModelGeneratesModelID()
+        public async Task ComposeModelGeneratesModelID()
         {
             var mockResponse = new MockResponse(202);
             mockResponse.AddHeader(new HttpHeader("operation-location", "host/operations/00000000000000000000000000000000?api-version=2021-07-30-preview"));
@@ -99,7 +99,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             var options = new DocumentAnalysisClientOptions() { Transport = mockTransport };
             var client = CreateInstrumentedClient(options);
 
-            await client.StartCreateComposedModelAsync(new List<string> { "123123", "34234"} );
+            await client.ComposeDocumentModelAsync(WaitUntil.Started, new List<string> { "123123", "34234"} );
 
             var contentString = GetString(mockTransport.Requests.Single().Content);
             string modelId = contentString.Substring(contentString.IndexOf("modelId") + 10, 36);

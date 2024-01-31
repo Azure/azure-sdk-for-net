@@ -4,10 +4,13 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     EnvVars:
-      CONVERSATIONS_KEY: $(clu-key)
-      CONVERSATIONS_PROJECT: antischOne
-      CONVERSATIONS_URI: $(clu-uri)
-      QUESTIONANSWERING_KEY: $(qna-key)
-      QUESTIONANSWERING_PROJECT: 190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c
-      QUESTIONANSWERING_ENDPOINT: $(qna-uri)
+      AZURE_CONVERSATIONS_ENDPOINT: $(clu-uri)
+      AZURE_CONVERSATIONS_KEY: $(clu-key)
+      AZURE_CONVERSATIONS_PROJECT_NAME: $(clu-project)
+      AZURE_CONVERSATIONS_DEPLOYMENT_NAME: $(clu-project-deployment)
+      AZURE_CONVERSATIONS_WORKFLOW_PROJECT_NAME: $(clu-workflow-project)
+      AZURE_CONVERSATIONS_WORKFLOW_DEPLOYMENT_NAME: $(clu-workflow-project-deployment)
+      AZURE_QUESTIONANSWERING_ENDPOINT: $(qna-uri)
+      AZURE_QUESTIONANSWERING_KEY: $(qna-key)
+      AZURE_QUESTIONANSWERING_PROJECT: $(qna-project)
     ServiceDirectory: cognitivelanguage

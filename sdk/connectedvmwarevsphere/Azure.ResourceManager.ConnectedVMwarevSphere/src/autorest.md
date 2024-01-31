@@ -6,47 +6,90 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 azure-arm: true
 namespace: Azure.ResourceManager.ConnectedVMwarevSphere
-require: https://github.com/Azure/azure-rest-api-specs/blob/58891380ba22c3565ca884dee3831445f638b545/specification/connectedvmware/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/5775c90db370eb73a5cd7ccb36e16c34630a5c8c/specification/connectedvmware/resource-manager/readme.md
+#tag: package-2023-10
+output-folder: $(this-folder)/Generated
 clear-output-folder: true
-output-folder: Generated/
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
-rename-rules:
+modelerfour:
+  flatten-payloads: false
+use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'etag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
   Ip: IP
-  Ips: IPs
+  Ips: IPs|ips
   ID: Id
   IDs: Ids
   VM: Vm
   VMs: Vms
+  Vmos: VmOS
   VMScaleSet: VmScaleSet
   DNS: Dns
   VPN: Vpn
   NAT: Nat
   WAN: Wan
-  Ipv4: IPv4
-  Ipv6: IPv6
-  Ipsec: IPsec
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
   SSO: Sso
   URI: Uri
-directive:
-  - rename-model:
-      from: Identity
-      to: VMwareIdentity
-  - rename-model:
-      from: Datastore
-      to: VMwareDatastore
-  - rename-model:
-      from: Cluster
-      to: VMwareCluster
-  - rename-model:
-      from: Host
-      to: VMwareHost
-  - from: connectedvmware.json
-    where: $.definitions.MachineExtensionUpdateProperties.properties.type
-    transform: $["x-ms-client-name"] = "MachineExtensionType"
-  - from: connectedvmware.json
-    where: $.definitions.MachineExtensionProperties.properties.type
-    transform: $["x-ms-client-name"] = "MachineExtensionType"
+  Etag: ETag|etag
+
+rename-mapping:
+  Cluster: VMwareCluster
+  ClustersList: VMwareClusterListResult
+  Datastore: VMwareDatastore
+  DatastoresList: VMwareDatastoreListResult
+  DiskMode: VMwareDiskMode
+  DiskType: VMwareDiskType
+  FirmwareType: VMwareFirmwareType
+  GuestAgent: VmInstanceGuestAgent
+  GuestAgentList: VmInstanceGuestAgentListResult
+  GuestCredential: VmInstanceGuestCredential
+  HardwareProfile: VmInstanceHardwareProfile
+  Host: VMwareHost
+  HostsList: VMwareHostListResult
+  InfrastructureProfile: VCenterInfrastructureProfile
+  InventoryItem: VCenterInventoryItem
+  InventoryItemsList: VCenterInventoryItemListResult
+  InventoryType: VCenterInventoryType
+  NetworkInterface: VMwareNetworkInterface
+  NetworkInterfaceUpdate: VMwareNetworkInterfaceUpdate
+  NetworkProfile: VMwareNetworkProfile
+  NetworkProfileUpdate: VMwareNetworkProfileUpdate
+  NICType: VMwareNicType
+  OsType: VMwareOsType
+  ProvisioningAction: GuestAgentProvisioningAction
+  ProvisioningState: VMwareResourceProvisioningState
+  ResourcePatch: VMwareResourcePatchContent
+  ResourcePool: VMwareResourcePool
+  ResourcePoolsList: VMwareResourcePoolListResult
+  ResourceStatus: VMwareResourceStatus
+  StorageProfile: VMwareStorageProfile
+  VCenter: VMwareVCenter
+  VCentersList: VMwareVCenterListResult
+  VirtualDisk: VMwareVirtualDisk
+  VirtualDiskUpdate: VMwareVirtualDiskUpdate
+  VirtualMachineInstance: VMwareVmInstance
+  VirtualMachineInstancesList: VMwareVmInstanceListResult
+  VirtualMachineTemplate: VMwareVmTemplate
+  VirtualMachineTemplatesList: VMwareVmTemplateListResult
+  VirtualNetwork: VMwareVirtualNetwork
+  VirtualNetworksList: VMwareVirtualNetworkListResult
 ```

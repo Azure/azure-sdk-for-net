@@ -27,14 +27,14 @@ namespace Azure.Search.Documents
         /// The search text to use to suggest documents. Must be at least 1
         /// character, and no more than 100 characters.
         /// </summary>
-        [CodeGenMember("search")]
+        [CodeGenMember("Search")]
         internal string SearchText { get; set; }
 
         /// <summary>
         /// The name of the suggester as specified in the suggesters collection
         /// that's part of the index definition.
         /// </summary>
-        [CodeGenMember("suggesterName")]
+        [CodeGenMember("SuggesterName")]
         internal string SuggesterName { get; set; }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Azure.Search.Documents
         /// <see cref="SearchFilter.Create(FormattableString)"/> to help
         /// construct the filter expression.
         /// </summary>
-        [CodeGenMember("filter")]
+        [CodeGenMember("Filter")]
         public string Filter { get; set; }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join SearchFields so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenMember("searchFields")]
+        [CodeGenMember("SearchFields")]
         internal string SearchFieldsRaw
         {
             get => SearchFields.CommaJoin();
@@ -74,7 +74,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join Select so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenMember("select")]
+        [CodeGenMember("Select")]
         internal string SelectRaw
         {
             get => Select.CommaJoin();
@@ -86,7 +86,7 @@ namespace Azure.Search.Documents
         /// The number of suggestions to retrieve. This must be a value between
         /// 1 and 100. The default is 5.
         /// </summary>
-        [CodeGenMember("top")]
+        [CodeGenMember("Top")]
         public int? Size { get; set; }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace Azure.Search.Documents
         /// <summary>
         /// Join OrderBy so it can be sent as a comma separated string.
         /// </summary>
-        [CodeGenMember("orderby")]
+        [CodeGenMember("OrderBy")]
         internal string OrderByRaw
         {
             get => OrderBy.CommaJoin();

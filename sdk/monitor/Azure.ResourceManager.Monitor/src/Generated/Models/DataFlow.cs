@@ -5,24 +5,80 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Definition of which streams are sent to which destinations. </summary>
-    internal partial class DataFlow
+    public partial class DataFlow
     {
-        /// <summary> Initializes a new instance of DataFlow. </summary>
-        internal DataFlow()
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataFlow"/>. </summary>
+        public DataFlow()
         {
-            Streams = new ChangeTrackingList<KnownDataFlowStreams>();
+            Streams = new ChangeTrackingList<DataFlowStream>();
             Destinations = new ChangeTrackingList<string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFlow"/>. </summary>
+        /// <param name="streams"> List of streams for this data flow. </param>
+        /// <param name="destinations"> List of destinations for this data flow. </param>
+        /// <param name="transformKql"> The KQL query to transform stream data. </param>
+        /// <param name="outputStream"> The output stream of the transform. Only required if the transform changes data to a different stream. </param>
+        /// <param name="builtInTransform"> The builtIn transform to transform stream data. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFlow(IList<DataFlowStream> streams, IList<string> destinations, string transformKql, string outputStream, string builtInTransform, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Streams = streams;
+            Destinations = destinations;
+            TransformKql = transformKql;
+            OutputStream = outputStream;
+            BuiltInTransform = builtInTransform;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
         /// <summary> List of streams for this data flow. </summary>
-        public IReadOnlyList<KnownDataFlowStreams> Streams { get; }
+        public IList<DataFlowStream> Streams { get; }
         /// <summary> List of destinations for this data flow. </summary>
-        public IReadOnlyList<string> Destinations { get; }
+        public IList<string> Destinations { get; }
+        /// <summary> The KQL query to transform stream data. </summary>
+        public string TransformKql { get; set; }
+        /// <summary> The output stream of the transform. Only required if the transform changes data to a different stream. </summary>
+        public string OutputStream { get; set; }
+        /// <summary> The builtIn transform to transform stream data. </summary>
+        public string BuiltInTransform { get; set; }
     }
 }

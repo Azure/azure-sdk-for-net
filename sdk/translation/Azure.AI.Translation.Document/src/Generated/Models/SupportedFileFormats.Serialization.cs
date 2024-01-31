@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.Translation.Document;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
@@ -16,10 +15,14 @@ namespace Azure.AI.Translation.Document.Models
     {
         internal static SupportedFileFormats DeserializeSupportedFileFormats(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<DocumentTranslationFileFormat> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<DocumentTranslationFileFormat> array = new List<DocumentTranslationFileFormat>();
                     foreach (var item in property.Value.EnumerateArray())

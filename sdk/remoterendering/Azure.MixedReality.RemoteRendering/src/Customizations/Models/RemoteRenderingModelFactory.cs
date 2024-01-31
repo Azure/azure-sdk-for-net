@@ -12,7 +12,7 @@ namespace Azure.MixedReality.RemoteRendering
     /// <summary>
     /// Model factory that enables mocking for the Remote Rendering library.
     /// </summary>
-    public static class RemoteRenderingModelFactory
+    public static partial class RemoteRenderingModelFactory
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AssetConversionOutput"/> class for mocking purposes.

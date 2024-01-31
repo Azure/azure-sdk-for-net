@@ -7,32 +7,27 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Sap Business Warehouse Open Hub Destination Table properties. </summary>
     public partial class SapOpenHubTableDataset : Dataset
     {
-        /// <summary> Initializes a new instance of SapOpenHubTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapOpenHubTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="openHubDestinationName"> The name of the Open Hub Destination with destination type as Database Table. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="openHubDestinationName"/> is null. </exception>
         public SapOpenHubTableDataset(LinkedServiceReference linkedServiceName, object openHubDestinationName) : base(linkedServiceName)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
-            if (openHubDestinationName == null)
-            {
-                throw new ArgumentNullException(nameof(openHubDestinationName));
-            }
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+            Argument.AssertNotNull(openHubDestinationName, nameof(openHubDestinationName));
 
             OpenHubDestinationName = openHubDestinationName;
             Type = "SapOpenHubTable";
         }
 
-        /// <summary> Initializes a new instance of SapOpenHubTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapOpenHubTableDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

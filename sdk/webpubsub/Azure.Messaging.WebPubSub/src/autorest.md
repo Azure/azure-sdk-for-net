@@ -9,10 +9,10 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 title: WebPubSubServiceClient
 input-file:
-- https://github.com/Azure/azure-rest-api-specs/blob/39c7d63c21b9a29efe3907d9b949d1c77b021907/specification/webpubsub/data-plane/WebPubSub/stable/2021-10-01/webpubsub.json
-data-plane: true
+- https://github.com/Azure/azure-rest-api-specs/blob/1735a92bdc79b446385a36ba063ea5235680709f/specification/webpubsub/data-plane/WebPubSub/stable/2022-11-01/webpubsub.json
 credential-types: AzureKeyCredential
 credential-header-name: Ocp-Apim-Subscription-Key
+keep-non-overloadable-protocol-signature: true
 ```
 
 ### Make WebPubSubPermission a regular enum
@@ -270,5 +270,16 @@ directive:
   transform: return "WebPubSubService_CloseUserConnections";
 - from: swagger-document
   where: $.paths["/api/hubs/{hub}/users/{userId}/:closeConnections"].post.parameters["0"]
+  transform: $["x-ms-parameter-location"] = "client"
+```
+
+### RemoveConnectionFromAllGroups
+``` yaml
+directive:
+- from: swagger-document
+  where: $.paths["/api/hubs/{hub}/connections/{connectionId}/groups"].delete.operationId
+  transform: return "WebPubSubService_RemoveConnectionFromAllGroups";
+- from: swagger-document
+  where: $.paths["/api/hubs/{hub}/connections/{connectionId}/groups"].delete.parameters["0"]
   transform: $["x-ms-parameter-location"] = "client"
 ```

@@ -40,9 +40,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="proximityPlacementGroupType">Specifies the type of the
-        /// proximity placement group. &lt;br&gt;&lt;br&gt; Possible values
-        /// are: &lt;br&gt;&lt;br&gt; **Standard** : Co-locate resources within
-        /// an Azure region or Availability Zone. &lt;br&gt;&lt;br&gt;
+        /// proximity placement group. Possible values are: **Standard** :
+        /// Co-locate resources within an Azure region or Availability Zone.
         /// **Ultra** : For future use. Possible values include: 'Standard',
         /// 'Ultra'</param>
         /// <param name="virtualMachines">A list of references to all virtual
@@ -54,7 +53,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// availability sets in the proximity placement group.</param>
         /// <param name="colocationStatus">Describes colocation status of the
         /// Proximity Placement Group.</param>
-        public ProximityPlacementGroup(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string proximityPlacementGroupType = default(string), IList<SubResourceWithColocationStatus> virtualMachines = default(IList<SubResourceWithColocationStatus>), IList<SubResourceWithColocationStatus> virtualMachineScaleSets = default(IList<SubResourceWithColocationStatus>), IList<SubResourceWithColocationStatus> availabilitySets = default(IList<SubResourceWithColocationStatus>), InstanceViewStatus colocationStatus = default(InstanceViewStatus))
+        /// <param name="intent">Specifies the user intent of the proximity
+        /// placement group.</param>
+        /// <param name="zones">Specifies the Availability Zone where virtual
+        /// machine, virtual machine scale set or availability set associated
+        /// with the  proximity placement group can be created.</param>
+        public ProximityPlacementGroup(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string proximityPlacementGroupType = default(string), IList<SubResourceWithColocationStatus> virtualMachines = default(IList<SubResourceWithColocationStatus>), IList<SubResourceWithColocationStatus> virtualMachineScaleSets = default(IList<SubResourceWithColocationStatus>), IList<SubResourceWithColocationStatus> availabilitySets = default(IList<SubResourceWithColocationStatus>), InstanceViewStatus colocationStatus = default(InstanceViewStatus), ProximityPlacementGroupPropertiesIntent intent = default(ProximityPlacementGroupPropertiesIntent), IList<string> zones = default(IList<string>))
             : base(location, id, name, type, tags)
         {
             ProximityPlacementGroupType = proximityPlacementGroupType;
@@ -62,6 +66,8 @@ namespace Microsoft.Azure.Management.Compute.Models
             VirtualMachineScaleSets = virtualMachineScaleSets;
             AvailabilitySets = availabilitySets;
             ColocationStatus = colocationStatus;
+            Intent = intent;
+            Zones = zones;
             CustomInit();
         }
 
@@ -72,10 +78,8 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies the type of the proximity placement group.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values are:
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Standard** : Co-locate
-        /// resources within an Azure region or Availability Zone.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Ultra** : For future use.
+        /// Possible values are: **Standard** : Co-locate resources within an
+        /// Azure region or Availability Zone. **Ultra** : For future use.
         /// Possible values include: 'Standard', 'Ultra'
         /// </summary>
         [JsonProperty(PropertyName = "properties.proximityPlacementGroupType")]
@@ -108,6 +112,21 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.colocationStatus")]
         public InstanceViewStatus ColocationStatus { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the user intent of the proximity placement
+        /// group.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.intent")]
+        public ProximityPlacementGroupPropertiesIntent Intent { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the Availability Zone where virtual machine,
+        /// virtual machine scale set or availability set associated with the
+        /// proximity placement group can be created.
+        /// </summary>
+        [JsonProperty(PropertyName = "zones")]
+        public IList<string> Zones { get; set; }
 
         /// <summary>
         /// Validate the object.

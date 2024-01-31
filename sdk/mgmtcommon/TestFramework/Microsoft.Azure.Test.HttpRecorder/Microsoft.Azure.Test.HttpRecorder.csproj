@@ -9,7 +9,7 @@
     <DefaultItemExcludes>$(DefaultItemExcludes);HttpRecorder.csproj</DefaultItemExcludes>
     <PackageReleaseNotes>
       <![CDATA[
-        1) Accomodate Newtonsoft.Json breaking change for .NET 4.5.2 and above
+        1) Accommodate Newtonsoft.Json breaking change for .NET 4.5.2 and above
       ]]>
     </PackageReleaseNotes>
 

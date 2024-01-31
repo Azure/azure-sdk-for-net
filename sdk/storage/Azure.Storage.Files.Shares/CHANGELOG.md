@@ -1,6 +1,84 @@
 # Release History
 
-## 12.10.0-beta.1 (Unreleased)
+## 12.18.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.18.0-beta.1 (2023-12-05)
+- Added support for service version 2024-02-04.
+
+## 12.17.1 (2023-11-13)
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+
+## 12.17.0 (2023-11-06)
+- Includes all features from 12.17.0-beta.1.
+- Fixed bug where the x-ms-file-request-intent request header was not being sent for ShareFileClient.UploadRangeFromUri() and .UploadRangeFromUriAsync().
+
+## 12.17.0-beta.1 (2023-10-16)
+- Added support for service version 2023-11-03.
+- Added support for ShareClientOptions.Audience
+
+## 12.16.0 (2023-09-12)
+- Includes all features from 12.16.0-beta.1.
+
+## 12.16.0-beta.1 (2023-08-08)
+- Added support for service version 2023-05-03 and 2023-08-03.
+
+## 12.15.0 (2023-07-23)
+- Includes all features from 12.15.0-beta.1.
+
+## 12.15.0-beta.1 (2023-05-30)
+- Added support for service version 2023-01-03.
+- Added AccessRights property to ShareFileHandle.
+
+## 12.14.0 (2023-04-11)
+- Includes all features from 12.14.0-beta.1.
+
+## 12.14.0-beta.1 (2023-03-28)
+- Added support for service version 2022-11-02.
+- Added support OAuth.
+- Added support for Trailing Dot.
+
+## 12.13.1 (2023-03-24)
+- Bumped Azure.Core dependency from 1.28 and 1.30, fixing issue with headers being non-resilient to double dispose of the request.
+
+## 12.13.0 (2023-02-21)
+- Includes all features from 12.13.0-beta.1.
+
+## 12.13.0-beta.1 (2023-02-07)
+- Added support for service version 2021-12-02.
+- Added support for invalid XML characters in file and directory names for ShareDirectoryClient.GetfilesAndDirectories(), .GetHandles(), and ShareFileClient.GetHandles().
+
+## 12.12.1 (2022-10-25)
+- Fixed bug where ShareFileClient Download() and DownloadAsync() would return a consumed stream when TransferValidation was enabled.
+
+## 12.12.0 (2022-10-12)
+- Includes all features from 12.12.0-beta.1.
+- Added support for StorageTransferOptions on ShareFile upload (concurrency not supported).
+
+## 12.12.0-beta.1 (2022-08-23)
+- Added support for service version 2021-10-04.
+- Added support for SDK-calculated transactional checksums on data transfer.
+- Fixed bug where ShareClient.GetParentServiceClient() persisted the filesystem name in the URL of the returned ShareServiceClient
+
+## 12.11.0 (2022-07-07)
+- Includes all features from 12.11.0-beta.1.
+- Fixed bug where ShareFileClient and ShareDirectoryClient Rename() was not passing the AzureSasCredential to the source.
+
+## 12.11.0-beta.1 (2022-06-15)
+- Added support for service version 2021-08-06.
+- Added ability to set file change time with ShareFileClient.StartCopy() and .StartCopyAsync().
+
+## 12.10.0 (2022-05-02)
+- Includes all features from 12.10.0-beta.1.
+
+## 12.10.0-beta.1 (2022-04-12)
 - Added support for service version 2021-06-08.
 - Added ability to maintain a file's current LastWrittenOn time when calling ShareFileClient.PutRange(), .PutRangeAsync(), .PutRangeFromUri(), and .PutRangeFromUriAsync().
 - Added ability to specify a file or directory's ChangedOn time when calling ShareFileClient/ShareDirectoryClient.Create(), .CreateAsync(), .SetProperties(), .SetPropertiesAsync(), .Rename(), and .RenameAsync().

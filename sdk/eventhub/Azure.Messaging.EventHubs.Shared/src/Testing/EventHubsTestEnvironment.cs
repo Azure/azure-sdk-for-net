@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 
 namespace Azure.Messaging.EventHubs.Tests

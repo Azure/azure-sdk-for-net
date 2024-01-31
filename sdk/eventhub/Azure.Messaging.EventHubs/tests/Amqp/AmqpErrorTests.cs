@@ -30,6 +30,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Custom conditions.
 
             yield return new object[] { AmqpError.TimeoutError, typeof(EventHubsException), EventHubsException.FailureReason.ServiceTimeout };
+            yield return new object[] { AmqpError.DisabledError, typeof(EventHubsException), EventHubsException.FailureReason.ResourceNotFound };
             yield return new object[] { AmqpError.ServerBusyError, typeof(EventHubsException), EventHubsException.FailureReason.ServiceBusy };
             yield return new object[] { AmqpError.ProducerStolenError, typeof(EventHubsException), EventHubsException.FailureReason.ProducerDisconnected };
             yield return new object[] { AmqpError.SequenceOutOfOrderError, typeof(EventHubsException), EventHubsException.FailureReason.InvalidClientState };
@@ -80,7 +81,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should be a generic Event Hubs exception");
-            Assert.That(exception.Message, Is.EqualTo(Resources.UnknownCommunicationException), "The exception message should indicate an unknown failure");
+            Assert.That(exception.Message, Does.StartWith(Resources.UnknownCommunicationException), "The exception message should indicate an unknown failure");
             Assert.That(((EventHubsException)exception).IsTransient, Is.True, "The exception should be considered transient");
         }
 
@@ -326,7 +327,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(exception, Is.Not.Null, "An exception should have been created");
             Assert.That(exception, Is.TypeOf<EventHubsException>(), "The exception should be a generic Event Hubs exception");
-            Assert.That(exception.Message, Is.EqualTo(Resources.UnknownCommunicationException), "The exception message should indicate an unknown failure");
+            Assert.That(exception.Message, Does.StartWith(Resources.UnknownCommunicationException), "The exception message should indicate an unknown failure");
             Assert.That(((EventHubsException)exception).IsTransient, Is.True, "The exception should be considered transient");
         }
 

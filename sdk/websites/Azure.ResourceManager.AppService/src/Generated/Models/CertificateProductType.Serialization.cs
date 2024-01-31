@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static CertificateProductType ToCertificateProductType(this string value)
         {
-            if (string.Equals(value, "StandardDomainValidatedSsl", StringComparison.InvariantCultureIgnoreCase)) return CertificateProductType.StandardDomainValidatedSsl;
-            if (string.Equals(value, "StandardDomainValidatedWildCardSsl", StringComparison.InvariantCultureIgnoreCase)) return CertificateProductType.StandardDomainValidatedWildCardSsl;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StandardDomainValidatedSsl")) return CertificateProductType.StandardDomainValidatedSsl;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StandardDomainValidatedWildCardSsl")) return CertificateProductType.StandardDomainValidatedWildCardSsl;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CertificateProductType value.");
         }
     }

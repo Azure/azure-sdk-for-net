@@ -9,11 +9,13 @@ using System.Reflection;
 
 namespace Azure.Data.Tables.Queryable
 {
-    internal class ExpressionNormalizer : LinqExpressionVisitor
+    internal class ExpressionNormalizer : ExpressionVisitor
     {
         private const bool LiftToNull = false;
 
         private readonly Dictionary<Expression, Pattern> _patterns = new Dictionary<Expression, Pattern>(ReferenceEqualityComparer<Expression>.Instance);
+
+        private bool _underEqualityOperation;
 
         private ExpressionNormalizer(Dictionary<Expression, Expression> normalizerRewrites)
         {
@@ -33,8 +35,10 @@ namespace Azure.Data.Tables.Queryable
             return result;
         }
 
-        internal override Expression VisitBinary(BinaryExpression b)
+        protected override Expression VisitBinary(BinaryExpression b)
         {
+            _underEqualityOperation = b.NodeType == ExpressionType.Equal || b.NodeType == ExpressionType.NotEqual;
+
             BinaryExpression visited = (BinaryExpression)base.VisitBinary(b);
 
             switch (visited.NodeType)
@@ -64,19 +68,58 @@ namespace Azure.Data.Tables.Queryable
                 }
             }
 
+            _underEqualityOperation = false;
+
             RecordRewrite(b, visited);
 
             return visited;
         }
-
-        internal override Expression VisitUnary(UnaryExpression u)
+        protected override Expression VisitMember(MemberExpression m)
         {
-            UnaryExpression visited = (UnaryExpression)base.VisitUnary(u);
-            Expression result = visited;
+            Expression visited;
+            if (IsImplicitBooleanComparison(m))
+            {
+                visited = CreateExplicitBooleanComparison(m);
+            }
+            else
+            {
+                visited = base.VisitMember(m);
+            }
 
-            RecordRewrite(u, result);
+            RecordRewrite(m, visited);
+
+            return visited;
+        }
+
+        protected override Expression VisitUnary(UnaryExpression u)
+        {
+            Expression result;
+            if (u.NodeType == ExpressionType.Convert && IsImplicitBooleanComparison(u))
+            {
+                BinaryExpression expandedBooleanComparison = CreateExplicitBooleanComparison(u);
+                result = VisitBinary(expandedBooleanComparison);
+            }
+            else
+            {
+                result = base.VisitUnary(u);
+
+                RecordRewrite(u, result);
+            }
 
             return result;
+        }
+
+        private bool IsImplicitBooleanComparison(Expression expression)
+        {
+            return !_underEqualityOperation && typeof(bool?).IsAssignableFrom(expression.Type);
+        }
+
+        private static BinaryExpression CreateExplicitBooleanComparison(Expression expression)
+        {
+            var isNullable = expression.Type == typeof(bool?);
+            ConstantExpression constant = isNullable ? Expression.Constant(true, typeof(bool?)) : Expression.Constant(true, typeof(bool));
+
+            return CreateRelationalOperator(ExpressionType.Equal, expression, constant);
         }
 
         private static Expression UnwrapObjectConvert(Expression input)
@@ -106,7 +149,7 @@ namespace Azure.Data.Tables.Queryable
                 ((ConstantExpression)expression).Value.Equals(0);
         }
 
-        internal override Expression VisitMethodCall(MethodCallExpression call)
+        protected override Expression VisitMethodCall(MethodCallExpression call)
         {
             Expression visited = VisitMethodCallNoRewrite(call);
             RecordRewrite(call, visited);

@@ -18,11 +18,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static TriggerListResponse DeserializeTriggerListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<TriggerResource> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<TriggerResource> array = new List<TriggerResource>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -32,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"))
+                if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
                     continue;

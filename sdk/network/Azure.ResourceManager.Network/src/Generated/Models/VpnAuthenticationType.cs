@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Network.Models
 
         private const string CertificateValue = "Certificate";
         private const string RadiusValue = "Radius";
-        private const string AADValue = "AAD";
+        private const string AadValue = "AAD";
 
         /// <summary> Certificate. </summary>
         public static VpnAuthenticationType Certificate { get; } = new VpnAuthenticationType(CertificateValue);
         /// <summary> Radius. </summary>
         public static VpnAuthenticationType Radius { get; } = new VpnAuthenticationType(RadiusValue);
         /// <summary> AAD. </summary>
-        public static VpnAuthenticationType AAD { get; } = new VpnAuthenticationType(AADValue);
+        public static VpnAuthenticationType Aad { get; } = new VpnAuthenticationType(AadValue);
         /// <summary> Determines if two <see cref="VpnAuthenticationType"/> values are the same. </summary>
         public static bool operator ==(VpnAuthenticationType left, VpnAuthenticationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VpnAuthenticationType"/> values are not the same. </summary>

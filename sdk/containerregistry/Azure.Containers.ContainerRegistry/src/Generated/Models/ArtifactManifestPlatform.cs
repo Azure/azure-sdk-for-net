@@ -6,26 +6,24 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
-    /// <summary> The artifact&apos;s platform, consisting of operating system and architecture. </summary>
+    /// <summary> The artifact's platform, consisting of operating system and architecture. </summary>
     public partial class ArtifactManifestPlatform
     {
-        /// <summary> Initializes a new instance of ArtifactManifestPlatform. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactManifestPlatform"/>. </summary>
         /// <param name="digest"> Manifest digest. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="digest"/> is null. </exception>
         internal ArtifactManifestPlatform(string digest)
         {
-            if (digest == null)
-            {
-                throw new ArgumentNullException(nameof(digest));
-            }
+            Argument.AssertNotNull(digest, nameof(digest));
 
             Digest = digest;
         }
 
-        /// <summary> Initializes a new instance of ArtifactManifestPlatform. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactManifestPlatform"/>. </summary>
         /// <param name="digest"> Manifest digest. </param>
         /// <param name="architecture"> CPU architecture. </param>
         /// <param name="operatingSystem"> Operating system. </param>

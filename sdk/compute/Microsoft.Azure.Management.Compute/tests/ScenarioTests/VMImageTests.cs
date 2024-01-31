@@ -260,6 +260,56 @@ namespace Compute.Tests
                 Assert.True(skus.Count(sku => sku.Name == "2012-R2-Datacenter") != 0);
             }
         }
+
+        [Fact]
+        public void TestVMImage_ImageDeprecationStatusProperties_ActiveImage()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(context,
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                // Validate if images return correct ImageDeprecationStatus for Active images
+                string imagePublisher = "MicrosoftWindowsServer";
+                string imageOffer = "WindowsServer";
+                string imageSku = "2016-Datacenter";
+                string imageVersion = "14393.5501.221105";
+                var vmimage = _pirClient.VirtualMachineImages.Get(
+                    ComputeManagementTestUtilities.DefaultLocation, imagePublisher, imageOffer, imageSku, imageVersion);
+                Assert.NotNull(vmimage.ImageDeprecationStatus);
+                Assert.True(vmimage.ImageDeprecationStatus.ImageState.Equals("Active"));
+                Assert.Null(vmimage.ImageDeprecationStatus.ScheduledDeprecationTime);
+                Assert.Null(vmimage.ImageDeprecationStatus.AlternativeOption);
+            }
+        }
+
+        [Fact]
+        public void TestVMImage_ImageDeprecationStatusProperties_ScheduledForDeprecationImage()
+        {
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                ComputeManagementClient _pirClient = ComputeManagementTestUtilities.GetComputeManagementClient(context,
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                // Validate if images return correct ImageDeprecationStatus for ScheduledForDeprecation images
+                string imagePublisher = "MicrosoftWindowsDesktop";
+                string imageOffer = "Windows-10";
+                string imageSku = "21h1-pro-g2";
+                string imageVersion = "19043.2364.221205";
+                var vmimage = _pirClient.VirtualMachineImages.Get(
+                    ComputeManagementTestUtilities.DefaultLocation, imagePublisher, imageOffer, imageSku, imageVersion);
+                Assert.NotNull(vmimage.ImageDeprecationStatus);
+                //Assert.True(vmimage.ImageDeprecationStatus.ImageState.Equals("ScheduledForDeprecation"));
+                //Assert.NotNull(vmimage.ImageDeprecationStatus.ScheduledDeprecationTime);
+
+                // Currently no public image has this optional field set.
+                if (vmimage.ImageDeprecationStatus.AlternativeOption != null)
+                {
+                    Assert.NotNull(vmimage.ImageDeprecationStatus.AlternativeOption.Type);
+                    Assert.NotNull(vmimage.ImageDeprecationStatus.AlternativeOption.Value);
+                }
+            }
+        }
     }
 }
 

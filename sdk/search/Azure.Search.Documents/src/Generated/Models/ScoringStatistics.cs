@@ -7,7 +7,7 @@
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> A value that specifies whether we want to calculate scoring statistics (such as document frequency) globally for more consistent scoring, or locally, for lower latency. The default is &apos;local&apos;. Use &apos;global&apos; to aggregate scoring statistics globally before scoring. Using global scoring statistics can increase latency of search queries. </summary>
+    /// <summary> A value that specifies whether we want to calculate scoring statistics (such as document frequency) globally for more consistent scoring, or locally, for lower latency. The default is 'local'. Use 'global' to aggregate scoring statistics globally before scoring. Using global scoring statistics can increase latency of search queries. </summary>
     public enum ScoringStatistics
     {
         /// <summary> The scoring statistics will be calculated locally for lower latency. </summary>

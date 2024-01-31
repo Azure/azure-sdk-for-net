@@ -5,27 +5,43 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class CustomIPPrefixData : IUtf8JsonSerializable
+    public partial class CustomIPPrefixData : IUtf8JsonSerializable, IJsonModel<CustomIPPrefixData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomIPPrefixData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CustomIPPrefixData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomIPPrefixData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
             {
-                writer.WritePropertyName("extendedLocation");
-                writer.WriteObjectValue(ExtendedLocation);
+                writer.WritePropertyName("extendedLocation"u8);
+                JsonSerializer.Serialize(writer, ExtendedLocation);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Zones))
             {
-                writer.WritePropertyName("zones");
+                writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
                 foreach (var item in Zones)
                 {
@@ -35,17 +51,27 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -54,79 +80,181 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(Asn))
+            {
+                writer.WritePropertyName("asn"u8);
+                writer.WriteStringValue(Asn);
+            }
             if (Optional.IsDefined(Cidr))
             {
-                writer.WritePropertyName("cidr");
+                writer.WritePropertyName("cidr"u8);
                 writer.WriteStringValue(Cidr);
             }
             if (Optional.IsDefined(SignedMessage))
             {
-                writer.WritePropertyName("signedMessage");
+                writer.WritePropertyName("signedMessage"u8);
                 writer.WriteStringValue(SignedMessage);
             }
             if (Optional.IsDefined(AuthorizationMessage))
             {
-                writer.WritePropertyName("authorizationMessage");
+                writer.WritePropertyName("authorizationMessage"u8);
                 writer.WriteStringValue(AuthorizationMessage);
             }
-            if (Optional.IsDefined(CustomIPPrefixParent))
+            if (Optional.IsDefined(ParentCustomIPPrefix))
             {
-                writer.WritePropertyName("customIpPrefixParent");
-                writer.WriteObjectValue(CustomIPPrefixParent);
+                writer.WritePropertyName("customIpPrefixParent"u8);
+                JsonSerializer.Serialize(writer, ParentCustomIPPrefix);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ChildCustomIPPrefixList))
+            {
+                writer.WritePropertyName("childCustomIpPrefixes"u8);
+                writer.WriteStartArray();
+                foreach (var item in ChildCustomIPPrefixList)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(CommissionedState))
             {
-                writer.WritePropertyName("commissionedState");
+                writer.WritePropertyName("commissionedState"u8);
                 writer.WriteStringValue(CommissionedState.Value.ToString());
             }
+            if (Optional.IsDefined(ExpressRouteAdvertise))
+            {
+                writer.WritePropertyName("expressRouteAdvertise"u8);
+                writer.WriteBooleanValue(ExpressRouteAdvertise.Value);
+            }
+            if (Optional.IsDefined(Geo))
+            {
+                writer.WritePropertyName("geo"u8);
+                writer.WriteStringValue(Geo.Value.ToString());
+            }
+            if (Optional.IsDefined(NoInternetAdvertise))
+            {
+                writer.WritePropertyName("noInternetAdvertise"u8);
+                writer.WriteBooleanValue(NoInternetAdvertise.Value);
+            }
+            if (Optional.IsDefined(PrefixType))
+            {
+                writer.WritePropertyName("prefixType"u8);
+                writer.WriteStringValue(PrefixType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PublicIPPrefixes))
+            {
+                writer.WritePropertyName("publicIpPrefixes"u8);
+                writer.WriteStartArray();
+                foreach (var item in PublicIPPrefixes)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
+            {
+                writer.WritePropertyName("resourceGuid"u8);
+                writer.WriteStringValue(ResourceGuid.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FailedReason))
+            {
+                writer.WritePropertyName("failedReason"u8);
+                writer.WriteStringValue(FailedReason);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CustomIPPrefixData DeserializeCustomIPPrefixData(JsonElement element)
+        CustomIPPrefixData IJsonModel<CustomIPPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<Models.ExtendedLocation> extendedLocation = default;
-            Optional<string> etag = default;
+            var format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomIPPrefixData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomIPPrefixData(document.RootElement, options);
+        }
+
+        internal static CustomIPPrefixData DeserializeCustomIPPrefixData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<ETag> etag = default;
             Optional<IList<string>> zones = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> location = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
+            Optional<string> asn = default;
             Optional<string> cidr = default;
             Optional<string> signedMessage = default;
             Optional<string> authorizationMessage = default;
-            Optional<CustomIPPrefixData> customIpPrefixParent = default;
-            Optional<IReadOnlyList<CustomIPPrefixData>> childCustomIpPrefixes = default;
+            Optional<WritableSubResource> customIPPrefixParent = default;
+            Optional<IReadOnlyList<WritableSubResource>> childCustomIPPrefixes = default;
             Optional<CommissionedState> commissionedState = default;
-            Optional<IReadOnlyList<WritableSubResource>> publicIpPrefixes = default;
-            Optional<string> resourceGuid = default;
+            Optional<bool> expressRouteAdvertise = default;
+            Optional<CidrAdvertisingGeoCode> geo = default;
+            Optional<bool> noInternetAdvertise = default;
+            Optional<CustomIPPrefixType> prefixType = default;
+            Optional<IReadOnlyList<WritableSubResource>> publicIPPrefixes = default;
+            Optional<Guid> resourceGuid = default;
             Optional<string> failedReason = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("extendedLocation"))
+                if (property.NameEquals("extendedLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = Models.ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("etag"))
-                {
-                    etag = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("zones"))
+                if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("zones"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -137,31 +265,42 @@ namespace Azure.ResourceManager.Network
                     zones = array;
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -172,7 +311,7 @@ namespace Azure.ResourceManager.Network
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -181,96 +320,172 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("cidr"))
+                        if (property0.NameEquals("asn"u8))
+                        {
+                            asn = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("cidr"u8))
                         {
                             cidr = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("signedMessage"))
+                        if (property0.NameEquals("signedMessage"u8))
                         {
                             signedMessage = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("authorizationMessage"))
+                        if (property0.NameEquals("authorizationMessage"u8))
                         {
                             authorizationMessage = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("customIpPrefixParent"))
+                        if (property0.NameEquals("customIpPrefixParent"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            customIpPrefixParent = DeserializeCustomIPPrefixData(property0.Value);
+                            customIPPrefixParent = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("childCustomIpPrefixes"))
+                        if (property0.NameEquals("childCustomIpPrefixes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<CustomIPPrefixData> array = new List<CustomIPPrefixData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DeserializeCustomIPPrefixData(item));
-                            }
-                            childCustomIpPrefixes = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("commissionedState"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            commissionedState = new CommissionedState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("publicIpPrefixes"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.ToString()));
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
-                            publicIpPrefixes = array;
+                            childCustomIPPrefixes = array;
                             continue;
                         }
-                        if (property0.NameEquals("resourceGuid"))
+                        if (property0.NameEquals("commissionedState"u8))
                         {
-                            resourceGuid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            commissionedState = new CommissionedState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("failedReason"))
+                        if (property0.NameEquals("expressRouteAdvertise"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            expressRouteAdvertise = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("geo"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            geo = new CidrAdvertisingGeoCode(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("noInternetAdvertise"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            noInternetAdvertise = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("prefixType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            prefixType = new CustomIPPrefixType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("publicIpPrefixes"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<WritableSubResource> array = new List<WritableSubResource>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                            }
+                            publicIPPrefixes = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("resourceGuid"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("failedReason"u8))
                         {
                             failedReason = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomIPPrefixData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, etag.Value, Optional.ToList(zones), cidr.Value, signedMessage.Value, authorizationMessage.Value, customIpPrefixParent.Value, Optional.ToList(childCustomIpPrefixes), Optional.ToNullable(commissionedState), Optional.ToList(publicIpPrefixes), resourceGuid.Value, failedReason.Value, Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CustomIPPrefixData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, extendedLocation, Optional.ToNullable(etag), Optional.ToList(zones), asn.Value, cidr.Value, signedMessage.Value, authorizationMessage.Value, customIPPrefixParent, Optional.ToList(childCustomIPPrefixes), Optional.ToNullable(commissionedState), Optional.ToNullable(expressRouteAdvertise), Optional.ToNullable(geo), Optional.ToNullable(noInternetAdvertise), Optional.ToNullable(prefixType), Optional.ToList(publicIPPrefixes), Optional.ToNullable(resourceGuid), failedReason.Value, Optional.ToNullable(provisioningState));
         }
+
+        BinaryData IPersistableModel<CustomIPPrefixData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CustomIPPrefixData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CustomIPPrefixData IPersistableModel<CustomIPPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomIPPrefixData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCustomIPPrefixData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomIPPrefixData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CustomIPPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

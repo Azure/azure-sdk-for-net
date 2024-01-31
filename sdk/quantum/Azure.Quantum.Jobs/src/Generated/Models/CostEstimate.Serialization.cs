@@ -15,21 +15,24 @@ namespace Azure.Quantum.Jobs.Models
     {
         internal static CostEstimate DeserializeCostEstimate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> currencyCode = default;
             Optional<IReadOnlyList<UsageEvent>> events = default;
             Optional<float> estimatedTotal = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("currencyCode"))
+                if (property.NameEquals("currencyCode"u8))
                 {
                     currencyCode = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("events"))
+                if (property.NameEquals("events"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<UsageEvent> array = new List<UsageEvent>();
@@ -40,11 +43,10 @@ namespace Azure.Quantum.Jobs.Models
                     events = array;
                     continue;
                 }
-                if (property.NameEquals("estimatedTotal"))
+                if (property.NameEquals("estimatedTotal"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     estimatedTotal = property.Value.GetSingle();

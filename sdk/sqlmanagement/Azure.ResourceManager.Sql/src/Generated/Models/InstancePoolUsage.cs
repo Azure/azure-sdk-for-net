@@ -5,41 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> ARM usage. </summary>
     public partial class InstancePoolUsage
     {
-        /// <summary> Initializes a new instance of InstancePoolUsage. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InstancePoolUsage"/>. </summary>
         internal InstancePoolUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of InstancePoolUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancePoolUsage"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="instancePoolUsageType"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="unit"> Usage unit. </param>
         /// <param name="currentValue"> Usage current value. </param>
         /// <param name="limit"> Usage limit. </param>
         /// <param name="requestedLimit"> Usage requested limit. </param>
-        internal InstancePoolUsage(string id, UsageName name, string instancePoolUsageType, string unit, int? currentValue, int? limit, int? requestedLimit)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstancePoolUsage(ResourceIdentifier id, InstancePoolUsageName name, ResourceType? resourceType, string unit, int? currentValue, int? limit, int? requestedLimit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
-            InstancePoolUsageType = instancePoolUsageType;
+            ResourceType = resourceType;
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
             RequestedLimit = requestedLimit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource ID. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Resource name. </summary>
-        public UsageName Name { get; }
+        public InstancePoolUsageName Name { get; }
         /// <summary> Resource type. </summary>
-        public string InstancePoolUsageType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> Usage unit. </summary>
         public string Unit { get; }
         /// <summary> Usage current value. </summary>

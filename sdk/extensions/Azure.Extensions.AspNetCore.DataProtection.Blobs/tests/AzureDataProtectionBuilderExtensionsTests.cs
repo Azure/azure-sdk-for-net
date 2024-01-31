@@ -29,5 +29,21 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
             var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
             Assert.IsInstanceOf<AzureBlobXmlRepository>(options.Value.XmlRepository);
         }
+
+        [Test]
+        public void PersistKeysToAzureBlobStorage_WithServiceProviderFunc_UsesAzureBlobXmlRepository()
+        {
+            // Arrange
+            var serviceCollection = new ServiceCollection();
+            var builder = serviceCollection.AddDataProtection();
+
+            // Act
+            builder.PersistKeysToAzureBlobStorage(sp => new BlobClient(new Uri("http://www.example.com")));
+            var services = serviceCollection.BuildServiceProvider();
+
+            // Assert
+            var options = services.GetRequiredService<IOptions<KeyManagementOptions>>();
+            Assert.IsInstanceOf<AzureBlobXmlRepository>(options.Value.XmlRepository);
+        }
     }
 }

@@ -11,6 +11,7 @@
 namespace Microsoft.Azure.Management.Compute.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
@@ -22,7 +23,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// configurations.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineScaleSetUpdateNetworkConfiguration : SubResource
+    public partial class VirtualMachineScaleSetUpdateNetworkConfiguration : IResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -37,12 +38,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the
         /// VirtualMachineScaleSetUpdateNetworkConfiguration class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
         /// <param name="name">The network configuration name.</param>
         /// <param name="primary">Whether this is a primary NIC on a virtual
         /// machine.</param>
         /// <param name="enableAcceleratedNetworking">Specifies whether the
         /// network interface is accelerated networking-enabled.</param>
+        /// <param name="disableTcpStateTracking">Specifies whether the network
+        /// interface is disabled for tcp state tracking.</param>
         /// <param name="enableFpga">Specifies whether the network interface is
         /// FPGA networking-enabled.</param>
         /// <param name="networkSecurityGroup">The network security
@@ -56,12 +58,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="deleteOption">Specify what happens to the network
         /// interface when the VM is deleted. Possible values include:
         /// 'Delete', 'Detach'</param>
-        public VirtualMachineScaleSetUpdateNetworkConfiguration(string id = default(string), string name = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? enableFpga = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetNetworkConfigurationDnsSettings), IList<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = default(IList<VirtualMachineScaleSetUpdateIPConfiguration>), bool? enableIPForwarding = default(bool?), string deleteOption = default(string))
-            : base(id)
+        public VirtualMachineScaleSetUpdateNetworkConfiguration(string name = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? disableTcpStateTracking = default(bool?), bool? enableFpga = default(bool?), SubResource networkSecurityGroup = default(SubResource), VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings = default(VirtualMachineScaleSetNetworkConfigurationDnsSettings), IList<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations = default(IList<VirtualMachineScaleSetUpdateIPConfiguration>), bool? enableIPForwarding = default(bool?), string deleteOption = default(string))
         {
             Name = name;
             Primary = primary;
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
+            DisableTcpStateTracking = disableTcpStateTracking;
             EnableFpga = enableFpga;
             NetworkSecurityGroup = networkSecurityGroup;
             DnsSettings = dnsSettings;
@@ -94,6 +96,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableAcceleratedNetworking")]
         public bool? EnableAcceleratedNetworking { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether the network interface is disabled
+        /// for tcp state tracking.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.disableTcpStateTracking")]
+        public bool? DisableTcpStateTracking { get; set; }
 
         /// <summary>
         /// Gets or sets specifies whether the network interface is FPGA

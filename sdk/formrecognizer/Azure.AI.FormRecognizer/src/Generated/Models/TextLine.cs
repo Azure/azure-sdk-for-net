@@ -8,38 +8,30 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> An object representing an extracted text line. </summary>
     internal partial class TextLine
     {
-        /// <summary> Initializes a new instance of TextLine. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextLine"/>. </summary>
         /// <param name="text"> The text content of the line. </param>
         /// <param name="boundingBox"> Bounding box of an extracted line. </param>
         /// <param name="words"> List of words in the text line. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/>, <paramref name="boundingBox"/> or <paramref name="words"/> is null. </exception>
         internal TextLine(string text, IEnumerable<float> boundingBox, IEnumerable<TextWord> words)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-            if (boundingBox == null)
-            {
-                throw new ArgumentNullException(nameof(boundingBox));
-            }
-            if (words == null)
-            {
-                throw new ArgumentNullException(nameof(words));
-            }
+            Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(boundingBox, nameof(boundingBox));
+            Argument.AssertNotNull(words, nameof(words));
 
             Text = text;
             BoundingBox = boundingBox.ToList();
             Words = words.ToList();
         }
 
-        /// <summary> Initializes a new instance of TextLine. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextLine"/>. </summary>
         /// <param name="text"> The text content of the line. </param>
         /// <param name="boundingBox"> Bounding box of an extracted line. </param>
         /// <param name="words"> List of words in the text line. </param>

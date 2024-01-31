@@ -8,26 +8,24 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
     /// <summary> Base type for List return in our api. </summary>
     internal partial class SupportedStorageSources
     {
-        /// <summary> Initializes a new instance of SupportedStorageSources. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedStorageSources"/>. </summary>
         /// <param name="value"> list of objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal SupportedStorageSources(IEnumerable<StorageSource> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of SupportedStorageSources. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedStorageSources"/>. </summary>
         /// <param name="value"> list of objects. </param>
         internal SupportedStorageSources(IReadOnlyList<StorageSource> value)
         {

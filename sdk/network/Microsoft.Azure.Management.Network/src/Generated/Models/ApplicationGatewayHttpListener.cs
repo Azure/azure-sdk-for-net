@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="frontendPort">Frontend port resource of an application
         /// gateway.</param>
         /// <param name="protocol">Protocol of the HTTP listener. Possible
-        /// values include: 'Http', 'Https'</param>
+        /// values include: 'Http', 'Https', 'Tcp', 'Tls'</param>
         /// <param name="hostName">Host name of HTTP listener.</param>
         /// <param name="sslCertificate">SSL certificate resource of an
         /// application gateway.</param>
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets protocol of the HTTP listener. Possible values
-        /// include: 'Http', 'Https'
+        /// include: 'Http', 'Https', 'Tcp', 'Tls'
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }

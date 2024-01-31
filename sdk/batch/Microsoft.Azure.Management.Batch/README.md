@@ -1,3 +1,7 @@
+# Deprecated
+
+This package has been deprecated in favor of the `Azure.ResourceManager.Batch` package.  For instructions on how to use the new package, see the [migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/MigrationGuide.md). Also see https://aka.ms/azsdk/deprecated for more information on ongoing support for `Microsoft.Azure.Management.Batch`.
+
 # Azure Batch Management SDK developer guide
 
 1. Update the Azure Batch Management Swagger specification, which resides in the [Azure/azure-rest-api-specs](https://github.com/Azure/azure-rest-api-specs) GitHub repository (specifically [here](https://github.com/Azure/azure-rest-api-specs/tree/master/specification/batch/resource-manager))

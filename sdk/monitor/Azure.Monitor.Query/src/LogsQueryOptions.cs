@@ -33,7 +33,13 @@ namespace Azure.Monitor.Query
         public bool IncludeVisualization { get; set; }
 
         /// <summary>
+        /// <para>
         /// Gets a list of additional workspaces names to include in the query.
+        /// </para>
+        /// <para>
+        /// Although this collection cannot be set, it can be modified.
+        /// See <see href="https://learn.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/object-and-collection-initializers#object-initializers-with-collection-read-only-property-initialization">Object initializers with collection read-only property initialization</see>.
+        /// </para>
         /// </summary>
         public IList<string> AdditionalWorkspaces { get; } = new ChangeTrackingList<string>();
 

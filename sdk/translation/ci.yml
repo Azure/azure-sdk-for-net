@@ -21,10 +21,12 @@ pr:
     - sdk/translation/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: translation
     ArtifactName: packages
     Artifacts:
+    - name: Azure.AI.Translation.Text
+      safeName: AzureAITranslationText
     - name: Azure.AI.Translation.Document
       safeName: AzureAITranslationDocument

@@ -8,10 +8,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary>
     /// Represents one or more documents that have been analyzed by a trained or prebuilt model.
     /// </summary>
-    [CodeGenModel("AnalyzeResult")]
     public partial class AnalyzeResult
     {
-        private ApiVersion ApiVersion { get; }
+        /// <summary>
+        /// Service version used to produce this result.
+        /// </summary>
+        [CodeGenMember("ApiVersion")]
+        public string ServiceVersion { get; }
+
         private StringIndexType StringIndexType { get; }
     }
 }

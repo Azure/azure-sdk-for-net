@@ -5,45 +5,42 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> NVA Inbound Security Rule resource. </summary>
-    public partial class InboundSecurityRule : SubResource
+    public partial class InboundSecurityRule : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of InboundSecurityRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundSecurityRule"/>. </summary>
         public InboundSecurityRule()
         {
             Rules = new ChangeTrackingList<InboundSecurityRules>();
         }
 
-        /// <summary> Initializes a new instance of InboundSecurityRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundSecurityRule"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of security rule collection. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceType"> NVA inbound security rule type. </param>
         /// <param name="rules"> List of allowed rules. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal InboundSecurityRule(string id, string name, string etag, string resourceType, IList<InboundSecurityRules> rules, ProvisioningState? provisioningState) : base(id)
+        internal InboundSecurityRule(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IList<InboundSecurityRules> rules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
-            Name = name;
-            Etag = etag;
-            ResourceType = resourceType;
+            ETag = etag;
             Rules = rules;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Name of security rule collection. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> NVA inbound security rule type. </summary>
-        public string ResourceType { get; }
+        public ETag? ETag { get; }
         /// <summary> List of allowed rules. </summary>
         public IList<InboundSecurityRules> Rules { get; }
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
     }
 }

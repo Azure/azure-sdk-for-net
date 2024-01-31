@@ -17,11 +17,11 @@ namespace Microsoft.Azure.Management.Security.Models
     public static class ControlType
     {
         /// <summary>
-        /// Azure Security Center managed assessments
+        /// Microsoft Defender for Cloud managed assessments
         /// </summary>
         public const string BuiltIn = "BuiltIn";
         /// <summary>
-        /// Non Azure Security Center managed assessments
+        /// Non Microsoft Defender for Cloud managed assessments
         /// </summary>
         public const string Custom = "Custom";
     }

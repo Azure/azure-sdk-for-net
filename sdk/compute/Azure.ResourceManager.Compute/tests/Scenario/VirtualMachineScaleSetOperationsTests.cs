@@ -10,10 +10,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Tests
 {
+    [ClientTestFixture(true, "2022-08-01", "2021-04-01", "2020-06-01", "2022-11-01", "2023-03-01", "2023-07-01", "2023-09-01")]
     public class VirtualMachineScaleSetOperationsTests : VirtualMachineScaleSetTestBase
     {
-        public VirtualMachineScaleSetOperationsTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+        public VirtualMachineScaleSetOperationsTests(bool isAsync, string apiVersion)
+            : base(isAsync, VirtualMachineScaleSetResource.ResourceType, apiVersion)//, RecordedTestMode.Record)
         {
         }
 
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Tests
             ProximityPlacementGroupResource ppg = ppgLro.Value;
             // update PPG requires the VM to be deallocated
             await vmss.DeallocateAsync(WaitUntil.Completed);
-            var update = new PatchableVirtualMachineScaleSetData()
+            var update = new VirtualMachineScaleSetPatch()
             {
                 ProximityPlacementGroup = new WritableSubResource()
                 {

@@ -128,8 +128,10 @@
                     Protocol.Models.CertificateListNextOptions,
                     Protocol.Models.CertificateListHeaders>(req, FilterSelectDetailLevel)));
 
+#pragma warning disable CS0618 // Type or member is obsolete
             IEnumerable<Certificate> certificates = client.CertificateOperations.ListCertificates(
                 FilterSelectDetailLevel);
+#pragma warning restore CS0618 // Type or member is obsolete
 
             Assert.Empty(certificates.ToList());
         }

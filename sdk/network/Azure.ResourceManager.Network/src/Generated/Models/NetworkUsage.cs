@@ -6,24 +6,55 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The network resource usage. </summary>
     public partial class NetworkUsage
     {
-        /// <summary> Initializes a new instance of NetworkUsage. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkUsage"/>. </summary>
         /// <param name="unit"> An enum describing the unit of measurement. </param>
         /// <param name="currentValue"> The current value of the usage. </param>
         /// <param name="limit"> The limit of usage. </param>
         /// <param name="name"> The name of the type of usage. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal NetworkUsage(UsageUnit unit, long currentValue, long limit, UsageName name)
+        internal NetworkUsage(NetworkUsageUnit unit, long currentValue, long limit, NetworkUsageName name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Unit = unit;
             CurrentValue = currentValue;
@@ -31,30 +62,37 @@ namespace Azure.ResourceManager.Network.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of NetworkUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkUsage"/>. </summary>
         /// <param name="id"> Resource identifier. </param>
         /// <param name="unit"> An enum describing the unit of measurement. </param>
         /// <param name="currentValue"> The current value of the usage. </param>
         /// <param name="limit"> The limit of usage. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        internal NetworkUsage(string id, UsageUnit unit, long currentValue, long limit, UsageName name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkUsage(ResourceIdentifier id, NetworkUsageUnit unit, long currentValue, long limit, NetworkUsageName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkUsage"/> for deserialization. </summary>
+        internal NetworkUsage()
+        {
         }
 
         /// <summary> Resource identifier. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> An enum describing the unit of measurement. </summary>
-        public UsageUnit Unit { get; }
+        public NetworkUsageUnit Unit { get; }
         /// <summary> The current value of the usage. </summary>
         public long CurrentValue { get; }
         /// <summary> The limit of usage. </summary>
         public long Limit { get; }
         /// <summary> The name of the type of usage. </summary>
-        public UsageName Name { get; }
+        public NetworkUsageName Name { get; }
     }
 }

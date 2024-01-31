@@ -40,12 +40,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="provisioningState">The current state of the gallery
-        /// Application Version.</param>
-        public GalleryApplicationVersion(string location, GalleryApplicationVersionPublishingProfile publishingProfile, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), ReplicationStatus replicationStatus = default(ReplicationStatus))
+        /// <param name="provisioningState">Possible values include:
+        /// 'Creating', 'Updating', 'Failed', 'Succeeded', 'Deleting',
+        /// 'Migrating'</param>
+        public GalleryApplicationVersion(string location, GalleryApplicationVersionPublishingProfile publishingProfile, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), GalleryApplicationVersionSafetyProfile safetyProfile = default(GalleryApplicationVersionSafetyProfile), string provisioningState = default(string), ReplicationStatus replicationStatus = default(ReplicationStatus))
             : base(location, id, name, type, tags)
         {
             PublishingProfile = publishingProfile;
+            SafetyProfile = safetyProfile;
             ProvisioningState = provisioningState;
             ReplicationStatus = replicationStatus;
             CustomInit();
@@ -62,13 +64,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         public GalleryApplicationVersionPublishingProfile PublishingProfile { get; set; }
 
         /// <summary>
-        /// Gets the current state of the gallery Application Version.
         /// </summary>
-        /// <remarks>
-        /// The provisioning state, which only appears in the response.
-        /// Possible values include: 'Creating', 'Updating', 'Failed',
+        [JsonProperty(PropertyName = "properties.safetyProfile")]
+        public GalleryApplicationVersionSafetyProfile SafetyProfile { get; set; }
+
+        /// <summary>
+        /// Gets possible values include: 'Creating', 'Updating', 'Failed',
         /// 'Succeeded', 'Deleting', 'Migrating'
-        /// </remarks>
+        /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 

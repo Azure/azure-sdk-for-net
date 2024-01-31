@@ -62,13 +62,13 @@ internal static class Program
         // Decode and encrypt the message.
         byte[] plaintext = Encoding.UTF8.GetBytes(message);
 
-        using RSA encryptor = (RSA)pfx.PublicKey.Key;
+        using RSA encryptor = pfx.GetRSAPublicKey();
         byte[] ciphertext = encryptor.Encrypt(plaintext, RSAEncryptionPadding.OaepSHA256);
 
         console.Out.WriteLine($"Encrypted message: {Convert.ToBase64String(ciphertext)}");
 
         // Decrypt and encode the message.
-        using RSA decryptor = (RSA)pfx.PrivateKey;
+        using RSA decryptor = pfx.GetRSAPrivateKey();
         plaintext = decryptor.Decrypt(ciphertext, RSAEncryptionPadding.OaepSHA256);
 
         message = Encoding.UTF8.GetString(plaintext);

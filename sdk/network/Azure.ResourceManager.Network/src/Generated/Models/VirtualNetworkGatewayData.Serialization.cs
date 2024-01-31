@@ -5,37 +5,63 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VirtualNetworkGatewayData : IUtf8JsonSerializable
+    public partial class VirtualNetworkGatewayData : IUtf8JsonSerializable, IJsonModel<VirtualNetworkGatewayData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkGatewayData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VirtualNetworkGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
             {
-                writer.WritePropertyName("extendedLocation");
-                writer.WriteObjectValue(ExtendedLocation);
+                writer.WritePropertyName("extendedLocation"u8);
+                JsonSerializer.Serialize(writer, ExtendedLocation);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("id");
+                writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (Optional.IsDefined(Location))
             {
-                writer.WritePropertyName("location");
-                writer.WriteStringValue(Location);
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("tags");
+                writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
                 foreach (var item in Tags)
                 {
@@ -44,11 +70,16 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(AutoScaleConfiguration))
+            {
+                writer.WritePropertyName("autoScaleConfiguration"u8);
+                writer.WriteObjectValue(AutoScaleConfiguration);
+            }
             if (Optional.IsCollectionDefined(IPConfigurations))
             {
-                writer.WritePropertyName("ipConfigurations");
+                writer.WritePropertyName("ipConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
@@ -58,72 +89,102 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsDefined(GatewayType))
             {
-                writer.WritePropertyName("gatewayType");
+                writer.WritePropertyName("gatewayType"u8);
                 writer.WriteStringValue(GatewayType.Value.ToString());
             }
             if (Optional.IsDefined(VpnType))
             {
-                writer.WritePropertyName("vpnType");
+                writer.WritePropertyName("vpnType"u8);
                 writer.WriteStringValue(VpnType.Value.ToString());
             }
             if (Optional.IsDefined(VpnGatewayGeneration))
             {
-                writer.WritePropertyName("vpnGatewayGeneration");
+                writer.WritePropertyName("vpnGatewayGeneration"u8);
                 writer.WriteStringValue(VpnGatewayGeneration.Value.ToString());
             }
             if (Optional.IsDefined(EnableBgp))
             {
-                writer.WritePropertyName("enableBgp");
+                writer.WritePropertyName("enableBgp"u8);
                 writer.WriteBooleanValue(EnableBgp.Value);
             }
             if (Optional.IsDefined(EnablePrivateIPAddress))
             {
-                writer.WritePropertyName("enablePrivateIpAddress");
+                writer.WritePropertyName("enablePrivateIpAddress"u8);
                 writer.WriteBooleanValue(EnablePrivateIPAddress.Value);
             }
             if (Optional.IsDefined(Active))
             {
-                writer.WritePropertyName("activeActive");
+                writer.WritePropertyName("activeActive"u8);
                 writer.WriteBooleanValue(Active.Value);
+            }
+            if (Optional.IsDefined(DisableIPSecReplayProtection))
+            {
+                writer.WritePropertyName("disableIPSecReplayProtection"u8);
+                writer.WriteBooleanValue(DisableIPSecReplayProtection.Value);
             }
             if (Optional.IsDefined(GatewayDefaultSite))
             {
-                writer.WritePropertyName("gatewayDefaultSite");
+                writer.WritePropertyName("gatewayDefaultSite"u8);
                 JsonSerializer.Serialize(writer, GatewayDefaultSite);
             }
             if (Optional.IsDefined(Sku))
             {
-                writer.WritePropertyName("sku");
+                writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
             }
             if (Optional.IsDefined(VpnClientConfiguration))
             {
-                writer.WritePropertyName("vpnClientConfiguration");
+                writer.WritePropertyName("vpnClientConfiguration"u8);
                 writer.WriteObjectValue(VpnClientConfiguration);
+            }
+            if (Optional.IsCollectionDefined(VirtualNetworkGatewayPolicyGroups))
+            {
+                writer.WritePropertyName("virtualNetworkGatewayPolicyGroups"u8);
+                writer.WriteStartArray();
+                foreach (var item in VirtualNetworkGatewayPolicyGroups)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(BgpSettings))
             {
-                writer.WritePropertyName("bgpSettings");
+                writer.WritePropertyName("bgpSettings"u8);
                 writer.WriteObjectValue(BgpSettings);
             }
             if (Optional.IsDefined(CustomRoutes))
             {
-                writer.WritePropertyName("customRoutes");
+                writer.WritePropertyName("customRoutes"u8);
                 writer.WriteObjectValue(CustomRoutes);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
+            {
+                writer.WritePropertyName("resourceGuid"u8);
+                writer.WriteStringValue(ResourceGuid.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(EnableDnsForwarding))
             {
-                writer.WritePropertyName("enableDnsForwarding");
+                writer.WritePropertyName("enableDnsForwarding"u8);
                 writer.WriteBooleanValue(EnableDnsForwarding.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InboundDnsForwardingEndpoint))
+            {
+                writer.WritePropertyName("inboundDnsForwardingEndpoint"u8);
+                writer.WriteStringValue(InboundDnsForwardingEndpoint);
             }
             if (Optional.IsDefined(VNetExtendedLocationResourceId))
             {
-                writer.WritePropertyName("vNetExtendedLocationResourceId");
+                writer.WritePropertyName("vNetExtendedLocationResourceId"u8);
                 writer.WriteStringValue(VNetExtendedLocationResourceId);
             }
             if (Optional.IsCollectionDefined(NatRules))
             {
-                writer.WritePropertyName("natRules");
+                writer.WritePropertyName("natRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in NatRules)
                 {
@@ -133,83 +194,153 @@ namespace Azure.ResourceManager.Network
             }
             if (Optional.IsDefined(EnableBgpRouteTranslationForNat))
             {
-                writer.WritePropertyName("enableBgpRouteTranslationForNat");
+                writer.WritePropertyName("enableBgpRouteTranslationForNat"u8);
                 writer.WriteBooleanValue(EnableBgpRouteTranslationForNat.Value);
             }
+            if (Optional.IsDefined(AllowVirtualWanTraffic))
+            {
+                writer.WritePropertyName("allowVirtualWanTraffic"u8);
+                writer.WriteBooleanValue(AllowVirtualWanTraffic.Value);
+            }
+            if (Optional.IsDefined(AllowRemoteVnetTraffic))
+            {
+                writer.WritePropertyName("allowRemoteVnetTraffic"u8);
+                writer.WriteBooleanValue(AllowRemoteVnetTraffic.Value);
+            }
+            if (Optional.IsDefined(AdminState))
+            {
+                writer.WritePropertyName("adminState"u8);
+                writer.WriteStringValue(AdminState.Value.ToString());
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualNetworkGatewayData DeserializeVirtualNetworkGatewayData(JsonElement element)
+        VirtualNetworkGatewayData IJsonModel<VirtualNetworkGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            Optional<Models.ExtendedLocation> extendedLocation = default;
-            Optional<string> etag = default;
-            Optional<string> id = default;
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualNetworkGatewayData(document.RootElement, options);
+        }
+
+        internal static VirtualNetworkGatewayData DeserializeVirtualNetworkGatewayData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ExtendedLocation> extendedLocation = default;
+            Optional<ETag> etag = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> location = default;
+            Optional<ResourceType> type = default;
+            Optional<AzureLocation> location = default;
             Optional<IDictionary<string, string>> tags = default;
+            Optional<VirtualNetworkGatewayAutoScaleConfiguration> autoScaleConfiguration = default;
             Optional<IList<VirtualNetworkGatewayIPConfiguration>> ipConfigurations = default;
             Optional<VirtualNetworkGatewayType> gatewayType = default;
             Optional<VpnType> vpnType = default;
             Optional<VpnGatewayGeneration> vpnGatewayGeneration = default;
             Optional<bool> enableBgp = default;
-            Optional<bool> enablePrivateIpAddress = default;
+            Optional<bool> enablePrivateIPAddress = default;
             Optional<bool> activeActive = default;
+            Optional<bool> disableIPSecReplayProtection = default;
             Optional<WritableSubResource> gatewayDefaultSite = default;
             Optional<VirtualNetworkGatewaySku> sku = default;
             Optional<VpnClientConfiguration> vpnClientConfiguration = default;
+            Optional<IList<VirtualNetworkGatewayPolicyGroup>> virtualNetworkGatewayPolicyGroups = default;
             Optional<BgpSettings> bgpSettings = default;
             Optional<AddressSpace> customRoutes = default;
-            Optional<string> resourceGuid = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<Guid> resourceGuid = default;
+            Optional<NetworkProvisioningState> provisioningState = default;
             Optional<bool> enableDnsForwarding = default;
             Optional<string> inboundDnsForwardingEndpoint = default;
-            Optional<string> vNetExtendedLocationResourceId = default;
+            Optional<ResourceIdentifier> vNetExtendedLocationResourceId = default;
             Optional<IList<VirtualNetworkGatewayNatRuleData>> natRules = default;
             Optional<bool> enableBgpRouteTranslationForNat = default;
+            Optional<bool> allowVirtualWanTraffic = default;
+            Optional<bool> allowRemoteVnetTraffic = default;
+            Optional<ExpressRouteGatewayAdminState> adminState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("extendedLocation"))
+                if (property.NameEquals("extendedLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = Models.ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("location"))
-                {
-                    location = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -220,7 +351,7 @@ namespace Azure.ResourceManager.Network
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -229,11 +360,19 @@ namespace Azure.ResourceManager.Network
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("ipConfigurations"))
+                        if (property0.NameEquals("autoScaleConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            autoScaleConfiguration = VirtualNetworkGatewayAutoScaleConfiguration.DeserializeVirtualNetworkGatewayAutoScaleConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("ipConfigurations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             List<VirtualNetworkGatewayIPConfiguration> array = new List<VirtualNetworkGatewayIPConfiguration>();
@@ -244,156 +383,173 @@ namespace Azure.ResourceManager.Network
                             ipConfigurations = array;
                             continue;
                         }
-                        if (property0.NameEquals("gatewayType"))
+                        if (property0.NameEquals("gatewayType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             gatewayType = new VirtualNetworkGatewayType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("vpnType"))
+                        if (property0.NameEquals("vpnType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vpnType = new VpnType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("vpnGatewayGeneration"))
+                        if (property0.NameEquals("vpnGatewayGeneration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vpnGatewayGeneration = new VpnGatewayGeneration(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("enableBgp"))
+                        if (property0.NameEquals("enableBgp"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableBgp = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("enablePrivateIpAddress"))
+                        if (property0.NameEquals("enablePrivateIpAddress"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            enablePrivateIpAddress = property0.Value.GetBoolean();
+                            enablePrivateIPAddress = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("activeActive"))
+                        if (property0.NameEquals("activeActive"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             activeActive = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("gatewayDefaultSite"))
+                        if (property0.NameEquals("disableIPSecReplayProtection"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            gatewayDefaultSite = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            disableIPSecReplayProtection = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("sku"))
+                        if (property0.NameEquals("gatewayDefaultSite"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            gatewayDefaultSite = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("sku"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             sku = VirtualNetworkGatewaySku.DeserializeVirtualNetworkGatewaySku(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("vpnClientConfiguration"))
+                        if (property0.NameEquals("vpnClientConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vpnClientConfiguration = VpnClientConfiguration.DeserializeVpnClientConfiguration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("bgpSettings"))
+                        if (property0.NameEquals("virtualNetworkGatewayPolicyGroups"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            List<VirtualNetworkGatewayPolicyGroup> array = new List<VirtualNetworkGatewayPolicyGroup>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(VirtualNetworkGatewayPolicyGroup.DeserializeVirtualNetworkGatewayPolicyGroup(item));
+                            }
+                            virtualNetworkGatewayPolicyGroups = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("bgpSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             bgpSettings = BgpSettings.DeserializeBgpSettings(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("customRoutes"))
+                        if (property0.NameEquals("customRoutes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             customRoutes = AddressSpace.DeserializeAddressSpace(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("resourceGuid"))
-                        {
-                            resourceGuid = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("resourceGuid"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("enableDnsForwarding"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("enableDnsForwarding"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             enableDnsForwarding = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("inboundDnsForwardingEndpoint"))
+                        if (property0.NameEquals("inboundDnsForwardingEndpoint"u8))
                         {
                             inboundDnsForwardingEndpoint = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("vNetExtendedLocationResourceId"))
-                        {
-                            vNetExtendedLocationResourceId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("natRules"))
+                        if (property0.NameEquals("vNetExtendedLocationResourceId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            vNetExtendedLocationResourceId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("natRules"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             List<VirtualNetworkGatewayNatRuleData> array = new List<VirtualNetworkGatewayNatRuleData>();
@@ -404,21 +560,83 @@ namespace Azure.ResourceManager.Network
                             natRules = array;
                             continue;
                         }
-                        if (property0.NameEquals("enableBgpRouteTranslationForNat"))
+                        if (property0.NameEquals("enableBgpRouteTranslationForNat"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableBgpRouteTranslationForNat = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("allowVirtualWanTraffic"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            allowVirtualWanTraffic = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("allowRemoteVnetTraffic"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            allowRemoteVnetTraffic = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("adminState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            adminState = new ExpressRouteGatewayAdminState(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualNetworkGatewayData(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), extendedLocation.Value, etag.Value, Optional.ToList(ipConfigurations), Optional.ToNullable(gatewayType), Optional.ToNullable(vpnType), Optional.ToNullable(vpnGatewayGeneration), Optional.ToNullable(enableBgp), Optional.ToNullable(enablePrivateIpAddress), Optional.ToNullable(activeActive), gatewayDefaultSite, sku.Value, vpnClientConfiguration.Value, bgpSettings.Value, customRoutes.Value, resourceGuid.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(enableDnsForwarding), inboundDnsForwardingEndpoint.Value, vNetExtendedLocationResourceId.Value, Optional.ToList(natRules), Optional.ToNullable(enableBgpRouteTranslationForNat));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualNetworkGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, extendedLocation, Optional.ToNullable(etag), autoScaleConfiguration.Value, Optional.ToList(ipConfigurations), Optional.ToNullable(gatewayType), Optional.ToNullable(vpnType), Optional.ToNullable(vpnGatewayGeneration), Optional.ToNullable(enableBgp), Optional.ToNullable(enablePrivateIPAddress), Optional.ToNullable(activeActive), Optional.ToNullable(disableIPSecReplayProtection), gatewayDefaultSite, sku.Value, vpnClientConfiguration.Value, Optional.ToList(virtualNetworkGatewayPolicyGroups), bgpSettings.Value, customRoutes.Value, Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToNullable(enableDnsForwarding), inboundDnsForwardingEndpoint.Value, vNetExtendedLocationResourceId.Value, Optional.ToList(natRules), Optional.ToNullable(enableBgpRouteTranslationForNat), Optional.ToNullable(allowVirtualWanTraffic), Optional.ToNullable(allowRemoteVnetTraffic), Optional.ToNullable(adminState));
         }
+
+        BinaryData IPersistableModel<VirtualNetworkGatewayData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VirtualNetworkGatewayData IPersistableModel<VirtualNetworkGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualNetworkGatewayData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualNetworkGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

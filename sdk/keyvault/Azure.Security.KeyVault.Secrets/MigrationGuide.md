@@ -1,6 +1,6 @@
 # Migrate from Microsoft.Azure.KeyVault to Azure.Security.KeyVault.Secrets
 
-This guide is intended to assist in the migration to version 4 of the Key Vault client library [`Azure.Security.KeyVault.Secrets`](https://www.nuget.org/packages/Azure.Security.KeyVault.Secrets) from version 3 of [`Microsoft.Azure.KeyVault`](https://www.nuget.org/packages/Microsoft.Azure.KeyVault). It will focus on side-by-side comparisons for similar operations between the two packages.
+This guide is intended to assist in the migration to version 4 of the Key Vault client library [`Azure.Security.KeyVault.Secrets`](https://www.nuget.org/packages/Azure.Security.KeyVault.Secrets) from [deprecated] version 3 of [`Microsoft.Azure.KeyVault`](https://www.nuget.org/packages/Microsoft.Azure.KeyVault). It will focus on side-by-side comparisons for similar operations between the two packages.
 
 Familiarity with the `Microsoft.Azure.KeyVault` library is assumed. For those new to the Key Vault client library for .NET, please refer to the [`Azure.Security.KeyVault.Secrets` README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/README.md) and [`Azure.Security.KeyVault.Secrets` samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/samples) for the `Azure.Security.KeyVault.Secrets` library rather than this guide.
 
@@ -14,11 +14,15 @@ Familiarity with the `Microsoft.Azure.KeyVault` library is assumed. For those ne
   - [Setting secrets](#setting-secrets)
   - [Getting secrets](#getting-secrets)
   - [Listing secrets](#listing-secrets)
+  - [Listing secret versions](#listing-secret-versions)
   - [Deleting secrets](#deleting-secrets)
   - [Managing shared access signatures](#managing-shared-access-signatures)
 - [Additional samples](#additional-samples)
+- [Support](#support)
 
 ## Migration benefits
+
+> Note: `Microsoft.Azure.KeyVault` has been [deprecated]. Please upgrade to `Azure.Security.KeyVault.Secrets` for continued support.
 
 A natural question to ask when considering whether or not to adopt a new version or library is what the benefits of doing so would be. As Azure has matured and been embraced by a more diverse group of developers, we have been focused on learning the patterns and practices to best support developer productivity and to understand the gaps that the .NET client libraries have.
 
@@ -184,6 +188,45 @@ foreach (SecretProperties item in client.GetPropertiesOfSecrets())
 }
 ```
 
+### Listing secret versions
+
+Previously in `Microsoft.Azure.KeyVault`, you could list secret versions' properties using the `KeyVaultClient` and a specific Key Vault endpoint:
+
+```C# Snippet:Microsoft_Azure_KeyVault_Secrets_Snippets_MigrationGuide_ListSecretVersions
+IPage<SecretItem> page = await client.GetSecretVersionsAsync("https://myvault.vault.azure.net", "secret-name");
+foreach (SecretItem item in page)
+{
+    SecretIdentifier secretId = item.Identifier;
+    SecretBundle secret = await client.GetSecretAsync(secretId.Vault, secretId.Name, secretId.Version);
+}
+
+while (page.NextPageLink != null)
+{
+    page = await client.GetSecretVersionsNextAsync(page.NextPageLink);
+    foreach (SecretItem item in page)
+    {
+        SecretIdentifier secretId = item.Identifier;
+        SecretBundle secret = await client.GetSecretAsync(secretId.Vault, secretId.Name, secretId.Version);
+    }
+}
+```
+
+Now in `Azure.Security.KeyVault.Secrets`, you list secret versions' properties in the Key Vault you specified when constructing the `SecretClient`. This returns an enumerable that enumerates all secret versions across any number of pages. If you want to enumerate pages, call the `AsPages` method on the returned enumerable.
+
+```C# Snippet:Azure_Security_KeyVault_Secrets_Snippets_MigrationGuide_ListSecretVersions
+// List all secrets asynchronously.
+await foreach (SecretProperties item in client.GetPropertiesOfSecretVersionsAsync("secret-name"))
+{
+    KeyVaultSecret secret = await client.GetSecretAsync(item.Name, item.Version);
+}
+
+// List all secrets synchronously.
+foreach (SecretProperties item in client.GetPropertiesOfSecretVersions("secret-name"))
+{
+    KeyVaultSecret secret = client.GetSecret(item.Name, item.Version);
+}
+```
+
 ### Deleting secrets
 
 Previously in `Microsoft.Azure.KeyVault`, you could delete a secret using the `KeyVaultClient` and a specific Key Vault endpoint:
@@ -244,9 +287,17 @@ Synchronous methods are also available on `SecretClient`, though we recommend yo
 
 ### Managing shared access signatures
 
-Because [Role-Based Access Control (RBAC)](https://docs.microsoft.com/azure/role-based-access-control/overview) is now recommended for storage account access control, the APIs for Key Vault-managed storage accounts are no longer available in version 4 of Key Vault client libraries. If you cannot use RBAC and must use [Shared Access Signatures (SAS)](https://docs.microsoft.com/azure/storage/common/storage-sas-overview), see [our sample](https://docs.microsoft.com/samples/azure/azure-sdk-for-net/share-link/) for source you can use in your own projects built on the same `Azure.Core` pipeline as the version 4 client libraries described above.
+Because [Role-Based Access Control (RBAC)](https://learn.microsoft.com/azure/role-based-access-control/overview) is now recommended for storage account access control, the APIs for Key Vault-managed storage accounts are no longer available in version 4 of Key Vault client libraries. If you cannot use RBAC and must use [Shared Access Signatures (SAS)](https://learn.microsoft.com/azure/storage/common/storage-sas-overview), see [our sample](https://learn.microsoft.com/samples/azure/azure-sdk-for-net/share-link/) for source you can use in your own projects built on the same `Azure.Core` pipeline as the version 4 client libraries described above.
 
 ## Additional samples
 
-- [Key Vault secrets samples for .NET](https://docs.microsoft.com/samples/azure/azure-sdk-for-net/azuresecuritykeyvaultsecrets-samples/)
-- [All Key Vault samples for .NET](https://docs.microsoft.com/samples/browse/?products=azure-key-vault&languages=csharp)
+- [Key Vault secrets samples for .NET](https://learn.microsoft.com/samples/azure/azure-sdk-for-net/azuresecuritykeyvaultsecrets-samples/)
+- [All Key Vault samples for .NET](https://learn.microsoft.com/samples/browse/?products=azure-key-vault&languages=csharp)
+
+## Support
+
+If you have migrated your code base and experiencing errors, see our [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/TROUBLESHOOTING.md).
+For additional support, please search our [existing issues](https://github.com/Azure/azure-sdk-for-net/issues) or [open a new issue](https://github.com/Azure/azure-sdk-for-net/issues/new/choose).
+You may also find existing answers on community sites like [Stack Overflow](https://stackoverflow.com/questions/tagged/azure-keyvault+.net).
+
+[deprecated]: https://aka.ms/azsdk/deprecated

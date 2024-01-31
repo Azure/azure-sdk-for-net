@@ -63,10 +63,6 @@ namespace Azure.Security.KeyVault.Secrets.Perf.Scenarios
             {
                 count++;
             }
-
-#if DEBUG
-            Assert.AreEqual(Options.Count, count);
-#endif
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
@@ -79,10 +75,6 @@ namespace Azure.Security.KeyVault.Secrets.Perf.Scenarios
             {
                 count++;
             }
-
-#if DEBUG
-            Assert.AreEqual(Options.Count, count);
-#endif
         }
     }
 }

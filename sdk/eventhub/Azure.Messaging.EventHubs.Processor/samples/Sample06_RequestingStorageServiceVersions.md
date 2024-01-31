@@ -4,6 +4,10 @@ This sample demonstrates configuring the Blob Storage client to use a specific v
 
 To begin, please ensure that you're familiar with the items discussed in the [Event Processor Handlers](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample03_EventProcessorHandlers.md) sample.  You'll also need to have the prerequisites and connection string information available, as discussed in the [Getting started](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples#getting-started) section of the README.
 
+## Table of contents
+
+- [Configuring the Blob Storage client](#configuring-the-blob-storage-client)
+
 ## Configuring the Blob Storage client
 
  This sample demonstrates using an [Azure.Core](https://docs.microsoft.com/dotnet/api/overview/azure/core-readme) pipeline policy to request the Blob  Storage client request use of a specific service version.  

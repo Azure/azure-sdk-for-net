@@ -13,10 +13,12 @@ namespace Microsoft.Azure.Management.Security.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Azure Security Center is provided in two pricing tiers: free and
+    /// Microsoft Defender for Cloud is provided in two pricing tiers: free and
     /// standard, with the standard tier available with a trial period. The
     /// standard tier offers advanced security capabilities, while the free
     /// tier offers basic security features.
@@ -35,23 +37,35 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <summary>
         /// Initializes a new instance of the Pricing class.
         /// </summary>
-        /// <param name="pricingTier">The pricing tier value. Azure Security
-        /// Center is provided in two pricing tiers: free and standard, with
-        /// the standard tier available with a trial period. The standard tier
-        /// offers advanced security capabilities, while the free tier offers
-        /// basic security features. Possible values include: 'Free',
-        /// 'Standard'</param>
+        /// <param name="pricingTier">The pricing tier value. Microsoft
+        /// Defender for Cloud is provided in two pricing tiers: free and
+        /// standard, with the standard tier available with a trial period. The
+        /// standard tier offers advanced security capabilities, while the free
+        /// tier offers basic security features. Possible values include:
+        /// 'Free', 'Standard'</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="subPlan">The sub-plan selected for a Standard pricing
+        /// configuration, when more than one sub-plan is available. Each
+        /// sub-plan enables a set of security features. When not specified,
+        /// full plan is applied.</param>
         /// <param name="freeTrialRemainingTime">The duration left for the
         /// subscriptions free trial period - in ISO 8601 format (e.g.
         /// P3Y6M4DT12H30M5S).</param>
-        public Pricing(string pricingTier, string id = default(string), string name = default(string), string type = default(string), System.TimeSpan? freeTrialRemainingTime = default(System.TimeSpan?))
+        /// <param name="deprecated">Optional. True if the plan is deprecated.
+        /// If there are replacing plans they will appear in `replacedBy`
+        /// property</param>
+        /// <param name="replacedBy">Optional. List of plans that replace this
+        /// plan. This property exists only if this plan is deprecated.</param>
+        public Pricing(string pricingTier, string id = default(string), string name = default(string), string type = default(string), string subPlan = default(string), System.TimeSpan? freeTrialRemainingTime = default(System.TimeSpan?), bool? deprecated = default(bool?), IList<string> replacedBy = default(IList<string>))
             : base(id, name, type)
         {
             PricingTier = pricingTier;
+            SubPlan = subPlan;
             FreeTrialRemainingTime = freeTrialRemainingTime;
+            Deprecated = deprecated;
+            ReplacedBy = replacedBy;
             CustomInit();
         }
 
@@ -61,14 +75,24 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the pricing tier value. Azure Security Center is
-        /// provided in two pricing tiers: free and standard, with the standard
-        /// tier available with a trial period. The standard tier offers
-        /// advanced security capabilities, while the free tier offers basic
-        /// security features. Possible values include: 'Free', 'Standard'
+        /// Gets or sets the pricing tier value. Microsoft Defender for Cloud
+        /// is provided in two pricing tiers: free and standard, with the
+        /// standard tier available with a trial period. The standard tier
+        /// offers advanced security capabilities, while the free tier offers
+        /// basic security features. Possible values include: 'Free',
+        /// 'Standard'
         /// </summary>
         [JsonProperty(PropertyName = "properties.pricingTier")]
         public string PricingTier { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sub-plan selected for a Standard pricing
+        /// configuration, when more than one sub-plan is available. Each
+        /// sub-plan enables a set of security features. When not specified,
+        /// full plan is applied.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.subPlan")]
+        public string SubPlan { get; set; }
 
         /// <summary>
         /// Gets the duration left for the subscriptions free trial period - in
@@ -76,6 +100,20 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.freeTrialRemainingTime")]
         public System.TimeSpan? FreeTrialRemainingTime { get; private set; }
+
+        /// <summary>
+        /// Gets optional. True if the plan is deprecated. If there are
+        /// replacing plans they will appear in `replacedBy` property
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.deprecated")]
+        public bool? Deprecated { get; private set; }
+
+        /// <summary>
+        /// Gets optional. List of plans that replace this plan. This property
+        /// exists only if this plan is deprecated.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.replacedBy")]
+        public IList<string> ReplacedBy { get; private set; }
 
         /// <summary>
         /// Validate the object.

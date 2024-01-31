@@ -5,32 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the DiagnosticSettingsCategory data model. </summary>
+    /// <summary>
+    /// A class representing the DiagnosticSettingsCategory data model.
+    /// The diagnostic settings category resource.
+    /// </summary>
     public partial class DiagnosticSettingsCategoryData : ResourceData
     {
-        /// <summary> Initializes a new instance of DiagnosticSettingsCategoryData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingsCategoryData"/>. </summary>
         public DiagnosticSettingsCategoryData()
         {
+            CategoryGroups = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DiagnosticSettingsCategoryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiagnosticSettingsCategoryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="categoryType"> The type of the diagnostic settings category. </param>
-        internal DiagnosticSettingsCategoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CategoryType? categoryType) : base(id, name, resourceType, systemData)
+        /// <param name="categoryGroups"> the collection of what category groups are supported. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnosticSettingsCategoryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MonitorCategoryType? categoryType, IList<string> categoryGroups, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CategoryType = categoryType;
+            CategoryGroups = categoryGroups;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of the diagnostic settings category. </summary>
-        public CategoryType? CategoryType { get; set; }
+        public MonitorCategoryType? CategoryType { get; set; }
+        /// <summary> the collection of what category groups are supported. </summary>
+        public IList<string> CategoryGroups { get; }
     }
 }

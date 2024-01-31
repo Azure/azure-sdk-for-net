@@ -22,9 +22,9 @@ Before working on a contribution, it would be beneficial to familiarize yourself
 
 These libraries follow the [Azure SDK Design Guidelines for .NET][sdk_design_guidelines_dotnet] and share a number of core features such as HTTP retries, logging, transport protocols, authentication protocols, etc., so that once you learn how to use these features in one client library, you will know how to use them in other client libraries. You can learn about these shared features in the [Azure.Core README][sdk_dotnet_code_readme].
 
-## Public API changes  
+## Public API changes
 
-To update [`Azure.Data.AppConfiguration.netstandard2.0.cs`][azconfig_api] after making changes to the public API, execute [`./eng/scripts/Export-API.ps1`][azconfig_export_api]. 
+To update [`Azure.Data.AppConfiguration.netstandard2.0.cs`][azconfig_api] after making changes to the public API, execute [`./eng/scripts/Export-API.ps1`][azconfig_export_api].
 
 ## Testing
 
@@ -48,7 +48,7 @@ Properly supporting recorded tests does require a few extra considerations. All 
 
 The easiest way to run the tests is via Visual Studio's unit test runner.
 
-You can also run tests via the command line using `dotnet test`, but that will run tests for all supported platforms simultaneously and intermingle their output. You can run the tests for just one platform with `dotnet test -f netcoreapp3.1` or `dotnet test -f net461`.
+You can also run tests via the command line using `dotnet test`, but that will run tests for all supported platforms simultaneously and intermingle their output. You can run the tests for just one platform with `dotnet test -f net6.0` or `dotnet test -f net462`.
 
 The recorded tests are run automatically on every pull request. Live tests are run nightly. Contributors with write access can ask Azure DevOps to run the live tests against a pull request by commenting `/azp run net - appconfiguration - tests` in the PR.
 

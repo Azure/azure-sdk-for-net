@@ -15,25 +15,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Notebook cell. </summary>
     public partial class NotebookCell
     {
-        /// <summary> Initializes a new instance of NotebookCell. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookCell"/>. </summary>
         /// <param name="cellType"> String identifying the type of cell. </param>
         /// <param name="metadata"> Cell-level metadata. </param>
         /// <param name="source"> Contents of the cell, represented as an array of lines. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="cellType"/>, <paramref name="metadata"/> or <paramref name="source"/> is null. </exception>
         public NotebookCell(string cellType, object metadata, IEnumerable<string> source)
         {
-            if (cellType == null)
-            {
-                throw new ArgumentNullException(nameof(cellType));
-            }
-            if (metadata == null)
-            {
-                throw new ArgumentNullException(nameof(metadata));
-            }
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
+            Argument.AssertNotNull(cellType, nameof(cellType));
+            Argument.AssertNotNull(metadata, nameof(metadata));
+            Argument.AssertNotNull(source, nameof(source));
 
             CellType = cellType;
             Metadata = metadata;
@@ -42,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of NotebookCell. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookCell"/>. </summary>
         /// <param name="cellType"> String identifying the type of cell. </param>
         /// <param name="metadata"> Cell-level metadata. </param>
         /// <param name="source"> Contents of the cell, represented as an array of lines. </param>

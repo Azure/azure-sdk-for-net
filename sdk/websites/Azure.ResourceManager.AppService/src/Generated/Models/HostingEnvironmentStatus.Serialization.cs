@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static HostingEnvironmentStatus ToHostingEnvironmentStatus(this string value)
         {
-            if (string.Equals(value, "Preparing", StringComparison.InvariantCultureIgnoreCase)) return HostingEnvironmentStatus.Preparing;
-            if (string.Equals(value, "Ready", StringComparison.InvariantCultureIgnoreCase)) return HostingEnvironmentStatus.Ready;
-            if (string.Equals(value, "Scaling", StringComparison.InvariantCultureIgnoreCase)) return HostingEnvironmentStatus.Scaling;
-            if (string.Equals(value, "Deleting", StringComparison.InvariantCultureIgnoreCase)) return HostingEnvironmentStatus.Deleting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Preparing")) return HostingEnvironmentStatus.Preparing;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Ready")) return HostingEnvironmentStatus.Ready;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Scaling")) return HostingEnvironmentStatus.Scaling;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting")) return HostingEnvironmentStatus.Deleting;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HostingEnvironmentStatus value.");
         }
     }

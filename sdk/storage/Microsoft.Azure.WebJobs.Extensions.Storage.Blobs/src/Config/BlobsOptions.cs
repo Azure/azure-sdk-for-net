@@ -15,7 +15,10 @@ namespace Microsoft.Azure.WebJobs.Host
     /// </summary>
     public class BlobsOptions : IOptionsFormatter
     {
+        private const int DefaultPoisonBlobThreshold = 5;
+
         private int _maxDegreeOfParallelism;
+        private int _poisonBlobThreshold = DefaultPoisonBlobThreshold;
 
         /// <summary>
         /// Constructs a new instance.
@@ -43,13 +46,39 @@ namespace Microsoft.Azure.WebJobs.Host
             }
         }
 
+        /// <summary>
+        /// Gets or sets the number of times to try processing a given blob before adding a message to a
+        /// storage queue named `webjobs-blobtrigger-poison`.
+        ///
+        /// If not specified, will default to 5.
+        ///
+        /// See <see href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-storage-blob-trigger#poison-blobs">
+        /// Poison Blobs
+        /// </see>.
+        /// </summary>
+        public int PoisonBlobThreshold
+        {
+            get { return _poisonBlobThreshold; }
+
+            set
+            {
+                if (value < 1)
+                {
+                    throw new ArgumentException("PoisonBlobThreshold must not be less than 1.", nameof(value));
+                }
+
+                _poisonBlobThreshold = value;
+            }
+        }
+
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         string IOptionsFormatter.Format()
         {
             JObject options = new JObject
             {
-                { nameof(MaxDegreeOfParallelism), MaxDegreeOfParallelism }
+                { nameof(MaxDegreeOfParallelism), MaxDegreeOfParallelism },
+                { nameof(PoisonBlobThreshold), PoisonBlobThreshold }
             };
 
             return options.ToString(Formatting.Indented);

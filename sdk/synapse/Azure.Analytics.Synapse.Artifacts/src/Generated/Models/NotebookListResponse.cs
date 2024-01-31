@@ -8,26 +8,24 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A list of Notebook resources. </summary>
     internal partial class NotebookListResponse
     {
-        /// <summary> Initializes a new instance of NotebookListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookListResponse"/>. </summary>
         /// <param name="value"> List of Notebooks. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal NotebookListResponse(IEnumerable<NotebookResource> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of NotebookListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookListResponse"/>. </summary>
         /// <param name="value"> List of Notebooks. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal NotebookListResponse(IReadOnlyList<NotebookResource> value, string nextLink)

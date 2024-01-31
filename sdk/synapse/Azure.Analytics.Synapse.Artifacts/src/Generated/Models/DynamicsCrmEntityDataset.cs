@@ -7,26 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The Dynamics CRM entity dataset. </summary>
     public partial class DynamicsCrmEntityDataset : Dataset
     {
-        /// <summary> Initializes a new instance of DynamicsCrmEntityDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsCrmEntityDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public DynamicsCrmEntityDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
             Type = "DynamicsCrmEntity";
         }
 
-        /// <summary> Initializes a new instance of DynamicsCrmEntityDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="DynamicsCrmEntityDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

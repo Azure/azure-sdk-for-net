@@ -4,6 +4,7 @@
 using System;
 using Azure.Core;
 using Azure.Storage.Blobs;
+using Microsoft.Extensions.Configuration;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 {
@@ -13,6 +14,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs
 
         public FakeBlobServiceClientProvider(BlobServiceClient blobServiceClient)
             : base(null, null, null, null) {
+            _blobServiceClient = blobServiceClient;
+        }
+
+        public FakeBlobServiceClientProvider(BlobServiceClient blobServiceClient, IConfiguration configuration)
+            : base(configuration, null, null, null) {
             _blobServiceClient = blobServiceClient;
         }
 

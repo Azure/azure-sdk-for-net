@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static ManagedPipelineMode ToManagedPipelineMode(this string value)
         {
-            if (string.Equals(value, "Integrated", StringComparison.InvariantCultureIgnoreCase)) return ManagedPipelineMode.Integrated;
-            if (string.Equals(value, "Classic", StringComparison.InvariantCultureIgnoreCase)) return ManagedPipelineMode.Classic;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Integrated")) return ManagedPipelineMode.Integrated;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Classic")) return ManagedPipelineMode.Classic;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ManagedPipelineMode value.");
         }
     }

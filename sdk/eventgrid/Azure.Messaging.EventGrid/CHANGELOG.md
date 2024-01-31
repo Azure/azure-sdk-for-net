@@ -1,6 +1,6 @@
 # Release History
 
-## 4.10.0-beta.1 (Unreleased)
+## 4.22.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,133 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.21.0 (2023-11-07)
+
+### Features Added
+
+- Added new system events for Resource Notifications
+- Added the `Metadata` property to various Azure Communication Services events.
+
+## 4.20.0 (2023-10-18)
+
+### Bugs Fixed
+
+- Added several communication models into the correct namespace and hid the old ones.
+
+## 4.19.0 (2023-10-11)
+
+### Features Added
+
+- Added new system events for Resource Notifications and Azure Communication Services.
+
+## 4.18.0 (2023-09-12)
+
+### Features Added
+
+- Added new system events for Event Grid and App Configuration.
+- Added `Recipient` property to `AcsEmailEngagementTrackingReportReceivedEventData` event.
+
+### Breaking Changes
+
+- `EventGridClient` has been removed for the stable release. It will be included in a subsequent release.
+
+## 4.18.0-beta.1 (2023-07-16)
+
+### Other Changes
+
+- Shipping the `EventGridClient` on top of the latest system events.
+
+## 4.17.0 (2023-06-08)
+
+### Features Added
+
+- Added new system events for Container Service. 
+
+### Breaking Changes
+
+- `EventGridClient` has been removed for the stable release. It will be included in a subsequent release.
+
+## 4.17.0-beta.2 (2023-06-06)
+
+### Other Changes
+
+- Docs updated to remove example that was causing the doc build to fail.
+
+## 4.17.0-beta.1 (2023-05-22)
+
+### Features Added
+
+- Added `EventGridClient` for interacting with topic and subscription namespaces.
+
+## 4.16.0 (2023-05-09)
+
+### Features Added
+
+- Added `AcsIncomingCallEventData` event.
+- Added `DeliveryStatusDetails` property to `AcsEmailDeliveryReportReceivedEventData` event.
+- Added `HealthCareDicomImageUpdatedEventData` event.
+- Added `PartionName` property to Dicom events.
+
+## 4.15.0 (2023-04-13)
+
+### Features Added
+
+- Added new Storage events, `StorageTaskCompletedEventData` and `StorageTaskQueuedEventData`.
+
+## 4.14.1 (2023-03-13)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.30.0` due to an [issue in `ArrayBackedPropertyBag`](https://github.com/Azure/azure-sdk-for-net/pull/34800) in `Azure.Core` version `1.29.0`.
+
+## 4.14.0 (2023-03-06)
+
+### Features Added
+
+- Added new Communication events, `AcsEmailDeliveryReportReceivedEventData` and `AcsEmailEngagementTrackingReportReceivedEventData`.
+
+## 4.13.0 (2023-01-19)
+
+### Features Added
+
+- Added new API Management events.
+- Added new DataBox events.
+
+## 4.12.0 (2022-11-08)
+
+### Features Added
+
+- Added extension builder method that can be used to inject an `EventGridPublisherClient` instance using a `TokenCredential` for authentication.
+- Added new Dicom Healthcare events.
+
+### Breaking Changes
+
+- Fixed bug where the CloudEvents Distributed Tracing extensions were populated even when distributed tracing was disabled.
+
+## 4.11.0 (2022-07-07)
+
+### Features Added
+
+- Added support for sending events to partner channels.
+
+## 4.11.0-beta.2 (2022-05-10)
+
+### Breaking Changes
+
+- Removed `SendCloudEventsOptions` type in favor of a string parameter that can be used to specify the channel name.
+
+## 4.11.0-beta.1 (2022-04-07)
+
+### Features Added
+
+- Added Partner Topic support for channels
+
+## 4.10.0 (2022-04-05)
+
+### Features Added
+
+- Added Healthcare events
 
 ## 4.9.0 (2022-03-08)
 

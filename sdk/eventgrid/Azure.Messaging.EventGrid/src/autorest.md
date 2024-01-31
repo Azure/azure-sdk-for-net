@@ -4,7 +4,10 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 title: EventGridClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/3b2098c19355859f41e88b2d8b43b04dde887af6/specification/eventgrid/data-plane/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/11bbc2b1df2e915a2227a6a1a48a27b9e67c3311/specification/eventgrid/data-plane/readme.md
+generation1-convenience-client: true
+model-factory-for-hlc:
+- MediaJobOutputAsset
 ```
 
 ## Swagger workarounds
@@ -17,7 +20,13 @@ directive:
   where: $.definitions.CloudEventEvent
   transform: >
     $.properties.data["x-nullable"] = true;
-````
+```
+
+### Suppress Abstract Base Class
+
+``` yaml
+suppress-abstract-base-class: MediaJobOutput
+```
 
 ### Append `EventData` suffix to Resource Manager system event data models
 
@@ -90,8 +99,8 @@ directive:
       {
         $[path]["x-namespace"] = namespace;
       }
-      if (path.endsWith("EventData") || 
-          path.includes("EventGridEvent") || 
+      if (path.endsWith("EventData") ||
+          path.includes("EventGridEvent") ||
          ($[path]["x-ms-client-name"] && $[path]["x-ms-client-name"].endsWith("EventData")))
       {
         $[path]["x-csharp-usage"] = "model,output,converter";
@@ -125,6 +134,36 @@ directive:
           $[path]["properties"]["recordingFormatType"]["x-ms-client-name"] = "FormatType";
           $[path]["properties"]["recordingFormatType"]["x-ms-enum"]["name"] = "AcsRecordingFormatType";
       }
+      if (path.includes("AcsEmailDeliveryReportReceivedEventData"))
+      {
+          $[path]["properties"]["status"]["x-namespace"] = namespace;
+      }
+      if (path.includes("AcsEmailEngagementTrackingReportReceivedEventData"))
+      {
+          $[path]["properties"]["engagementType"]["x-namespace"] = namespace;
+      }
+      if (path.includes("StorageTaskCompletedEventData"))
+      {
+          $[path]["properties"]["status"]["x-namespace"] = namespace;
+          $[path]["properties"]["summaryReportBlobUrl"]["x-ms-client-name"] = "SummaryReportBlobUri";
+      }
+      if (path.includes("EventGridMQTTClientCreatedOrUpdatedEventData"))
+      {
+          $[path]["properties"]["state"]["x-namespace"] = namespace;
+      }
+      if (path.includes("EventGridMQTTClientSessionDisconnectedEventData"))
+      {
+          $[path]["properties"]["disconnectionReason"]["x-namespace"] = namespace;
+      }
+      if (path.includes("AcsRouterJobReceivedEventData"))
+      {
+          $[path]["properties"]["jobStatus"]["x-namespace"] = namespace;
+      }
+      if (path.includes("AcsRouterWorkerSelector"))
+      {
+          $[path]["properties"]["labelOperator"]["x-namespace"] = namespace;
+          $[path]["properties"]["state"]["x-namespace"] = namespace;
+      }
     }
 ```
 
@@ -134,7 +173,9 @@ directive:
 directive:
 - from: swagger-document
   where: $.definitions.MediaJobOutput
-  transform: $.required.push("@odata.type")
+  transform: >
+    $.required.push("@odata.type");
+    $["x-csharp-usage"] = "model,output";
 ```
 
 ### Fix Media types

@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Azure.Messaging.EventHubs;
+using Azure.Messaging.EventHubs.Producer;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -12,20 +13,14 @@ using System.Threading.Tasks;
 namespace Microsoft.Azure.WebJobs.EventHubs
 {
     /// <summary>
-    /// Core object to send events to EventHub.
-    /// Any user parameter that sends EventHub events will eventually get bound to this object.
-    /// This will queue events and send in batches, also keeping under the 1024kb event hub limit per batch.
+    /// This collector allows events to be published to Event Hubs asynchronously in the background.
     /// </summary>
-    internal class EventHubAsyncCollector : IAsyncCollector<EventData>, IDisposable
+    internal sealed class EventHubAsyncCollector : IAsyncCollector<EventData>, IDisposable
     {
         private readonly IEventHubProducerClient _client;
         private readonly SemaphoreSlim _batchSemaphore;
         private readonly Dictionary<string, IEventDataBatch> _batches = new Dictionary<string, IEventDataBatch>();
 
-        /// <summary>
-        /// Create a sender around the given client.
-        /// </summary>
-        /// <param name="client"></param>
         public EventHubAsyncCollector(IEventHubProducerClient client)
         {
             if (client == null)
@@ -38,19 +33,29 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         }
 
         /// <summary>
-        /// Add an event.
+        /// Add an event to be published with round-robin partition assignment.
         /// </summary>
         /// <param name="item">The event to add</param>
-        /// <param name="cancellationToken">a cancellation token. </param>
-        /// <returns></returns>
-        public async Task AddAsync(EventData item, CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
+        public Task AddAsync(EventData item, CancellationToken cancellationToken = default(CancellationToken)) => AddAsync(item, null, cancellationToken);
+
+        /// <summary>
+        /// Add an event to be published using the provided <paramref name="partitionKey"/> for partition assignment.
+        /// </summary>
+        /// <param name="item">The event to add</param>
+        /// <param name="partitionKey">The partition key to use for partition assignment.  If <c>null</c>, round-robin partition assignment will be used.</param>
+        /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
+        public async Task AddAsync(EventData item, string partitionKey, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (item == null)
             {
                 throw new ArgumentNullException(nameof(item));
             }
 
-            string key = item.PartitionKey ?? string.Empty;
+            // Normalize the partition key to an empty string so that it can be
+            // used with the dictionary.  The batch options consider null and empty
+            // to indicate that no partition key is specified.
+            partitionKey ??= string.Empty;
 
             while (true)
             {
@@ -59,10 +64,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 IEventDataBatch batchToSend;
                 try
                 {
-                    if (!_batches.TryGetValue(key, out IEventDataBatch batch))
+                    if (!_batches.TryGetValue(partitionKey, out IEventDataBatch batch))
                     {
-                        batch = await _client.CreateBatchAsync(cancellationToken).ConfigureAwait(false);
-                        _batches[key] = batch;
+                        batch = await _client.CreateBatchAsync(new CreateBatchOptions { PartitionKey = partitionKey }, cancellationToken).ConfigureAwait(false);
+                        _batches[partitionKey] = batch;
                     }
 
                     if (batch.TryAdd(item))
@@ -80,7 +85,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                         throw new InvalidOperationException(msg);
                     }
 
-                    _batches.Remove(key);
+                    _batches.Remove(partitionKey);
                     batchToSend = batch;
                 }
                 finally
@@ -93,9 +98,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs
         }
 
         /// <summary>
-        /// synchronously flush events that have been queued up via AddAsync.
+        /// Flushes events collected, publishing them to the Event Hub.
         /// </summary>
-        /// <param name="cancellationToken">a cancellation token</param>
+        /// <param name="cancellationToken">A token that can be used to cancel the operation.</param>
         public async Task FlushAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             await _batchSemaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
@@ -114,9 +119,14 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             }
         }
 
+        /// <summary>
+        /// Disposes the collector, ensuring that its resources
+        /// have been properly cleaned-up.
+        /// </summary>
         public void Dispose()
         {
             _batchSemaphore.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

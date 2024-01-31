@@ -6,13 +6,14 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Session properties. </summary>
     public partial class NotebookSessionProperties
     {
-        /// <summary> Initializes a new instance of NotebookSessionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotebookSessionProperties"/>. </summary>
         /// <param name="driverMemory"> Amount of memory to use for the driver process. </param>
         /// <param name="driverCores"> Number of cores to use for the driver. </param>
         /// <param name="executorMemory"> Amount of memory to use per executor process. </param>
@@ -21,14 +22,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="driverMemory"/> or <paramref name="executorMemory"/> is null. </exception>
         public NotebookSessionProperties(string driverMemory, int driverCores, string executorMemory, int executorCores, int numExecutors)
         {
-            if (driverMemory == null)
-            {
-                throw new ArgumentNullException(nameof(driverMemory));
-            }
-            if (executorMemory == null)
-            {
-                throw new ArgumentNullException(nameof(executorMemory));
-            }
+            Argument.AssertNotNull(driverMemory, nameof(driverMemory));
+            Argument.AssertNotNull(executorMemory, nameof(executorMemory));
 
             DriverMemory = driverMemory;
             DriverCores = driverCores;

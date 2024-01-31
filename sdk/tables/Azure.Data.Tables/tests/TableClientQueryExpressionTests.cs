@@ -26,6 +26,7 @@ namespace Azure.Data.Tables.Tests
         private const string Row = "row";
         private const int SomeInt = 10;
         private const double SomeDouble = 10.10;
+        private static readonly string SomeDoubleRoundtrip = XmlConvert.ToString(SomeDouble);
         private const long SomeInt64 = long.MaxValue;
         private const string SomeString = "someString";
         private const bool SomeTrueBool = true;
@@ -35,8 +36,10 @@ namespace Azure.Data.Tables.Tests
         private static string s_someDateTimeOffsetRoundtrip = XmlConvert.ToString(s_someDateTimeOffset.UtcDateTime, XmlDateTimeSerializationMode.RoundtripKind);
         private static readonly Guid s_someGuid = new Guid("66cf3753-1cc9-44c4-b857-4546f744901b");
         private static readonly string s_someGuidString = "66cf3753-1cc9-44c4-b857-4546f744901b";
-        private static readonly byte[] s_someBinary = new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 };
-        private static readonly BinaryData s_someBinaryData = new BinaryData(new byte[] { 0x01, 0x02, 0x03, 0x04, 0x05 });
+        private static readonly byte[] s_someBinary = new byte[] { 0x01, 0x02, 0x03, 0x04, 0xFF };
+        private static readonly BinaryData s_someBinaryData = new BinaryData(new byte[] { 0x01, 0x02, 0x03, 0x04, 0xFF });
+        private static readonly Expression<Func<ComplexEntity, bool>> s_rename = x => x.RenamableStringProperty == "someString";
+        private static readonly Expression<Func<ComplexEntity, bool>> s_renameAndNonrename = x => x.RenamableStringProperty != "someString" && x.PartitionKey == Partition;
         private static readonly Expression<Func<TableItem, bool>> s_ne_TI = x => x.Name != TableName;
         private static readonly Expression<Func<ComplexEntity, bool>> s_ne = x => x.PartitionKey == Partition && x.RowKey != Row;
         private static readonly Expression<Func<TableEntity, bool>> s_neDE = x => x.PartitionKey == Partition && x.RowKey != Row;
@@ -67,8 +70,10 @@ namespace Azure.Data.Tables.Tests
         private static readonly Expression<Func<ComplexEntity, bool>> s_intExp = ent => ent.Int32 >= SomeInt;
         private static readonly Expression<Func<TableEntity, bool>> s_intExpDE = ent => ent.GetInt32("Int32") >= SomeInt;
         private static readonly Expression<Func<ComplexEntity, bool>> s_dtoExp = ent => ent.DateTimeOffset >= s_someDateTimeOffset;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_dtoNewExp = ent => ent.DateTimeOffset >= new DateTimeOffset(s_someDateTimeOffset.UtcTicks, TimeSpan.Zero);
         private static readonly Expression<Func<TableEntity, bool>> s_dtoExpDE = ent => ent.GetDateTime("DateTimeOffset") >= s_someDateTimeOffset;
         private static readonly Expression<Func<ComplexEntity, bool>> s_dtExp = ent => ent.DateTime < s_someDateTime;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_dtNewExp = ent => ent.DateTime < new DateTime(s_someDateTime.Ticks, DateTimeKind.Utc);
         private static readonly Expression<Func<TableEntity, bool>> s_dtExpDE = ent => ent.GetDateTime("DateTime") < s_someDateTime;
         private static readonly Expression<Func<ComplexEntity, bool>> s_boolTrueExp = ent => ent.Bool == SomeTrueBool;
         private static readonly Expression<Func<TableEntity, bool>> s_boolTrueExpDE = ent => ent.GetBoolean("Bool") == SomeTrueBool;
@@ -78,9 +83,21 @@ namespace Azure.Data.Tables.Tests
         private static readonly Expression<Func<TableEntity, bool>> s_binaryExpDE = ent => ent.GetBinaryData("Binary") == s_someBinaryData;
         private static readonly Expression<Func<ComplexEntity, bool>> s_complexExp = ent => ent.String.CompareTo(SomeString) >= 0 && ent.Int64 >= SomeInt64 && ent.Int32 >= SomeInt && ent.DateTime >= s_someDateTime;
         private static readonly Expression<Func<TableEntity, bool>> s_complexExpDE = ent => ent.GetString("String").CompareTo(SomeString) >= 0 && ent.GetInt64("Int64") >= SomeInt64 && ent.GetInt32("Int32") >= SomeInt && ent.GetDateTime("DateTime") >= s_someDateTime;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_complexExpImplicitBooleanCmp = ent => ent.Bool;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_complexExpImplicitNullableBooleanCmp = ent => ent.BoolN.Value;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_complexExpImplicitBooleanCmpNot = ent => !ent.Bool;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_complexExpImplicitCastedNullableBooleanCmp = ent => (bool)ent.BoolN;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_complexExpImplicitBooleanCmpAnd = ent => ent.Bool && ent.BoolN.Value;
+        private static readonly Expression<Func<ComplexEntity, bool>> s_complexExpImplicitCastedBooleanCmpOr = ent => (bool)ent.Bool || (bool)(bool?)ent.BoolN;
+        private static readonly Expression<Func<TableEntity, bool>> s_tableEntExpImplicitBooleanCmp = ent => ent.GetBoolean("Bool").Value;
+        private static readonly Expression<Func<TableEntity, bool>> s_tableEntExpImplicitBooleanCmpCasted = ent => (bool)ent.GetBoolean("Bool");
+        private static readonly Expression<Func<TableEntity, bool>> s_tableEntExpImplicitBooleanCmpOr = ent => ent.GetBoolean("Bool").Value || (bool)ent.GetBoolean("Bool");
+        private static readonly Expression<Func<TableEntity, bool>> s_tableEntExpImplicitBooleanCmpNot = ent => !ent.GetBoolean("Bool").Value;
 
         public static object[] TableEntityExpressionTestCases =
         {
+            new object[] {$"SomeNewName eq 'someString'", s_rename},
+            new object[] {$"(SomeNewName ne 'someString') and (PartitionKey eq '{Partition}')", s_renameAndNonrename},
             new object[] { $"(PartitionKey eq '{Partition}') and (RowKey ne '{Row}')", s_ne },
             new object[] { $"(PartitionKey eq '{Partition}') and (RowKey gt '{Row}')", s_gt },
             new object[] { $"(PartitionKey eq '{Partition}') and (RowKey ge '{Row}')", s_ge },
@@ -90,15 +107,23 @@ namespace Azure.Data.Tables.Tests
             new object[] { $"String ge '{SomeString}'", s_compareToExp },
             new object[] { $"Guid eq guid'{s_someGuidString}'", s_guidExp },
             new object[] { $"Int64 ge {SomeInt64}L", s_int64Exp },
-            new object[] { $"Double ge {SomeDouble}", s_doubleExp },
+            new object[] { $"Double ge {SomeDoubleRoundtrip}", s_doubleExp },
             new object[] { $"Int32 ge {SomeInt}", s_intExp },
             new object[] { $"DateTimeOffset ge datetime'{s_someDateTimeOffsetRoundtrip}'", s_dtoExp },
+            new object[] { $"DateTimeOffset ge datetime'{s_someDateTimeOffsetRoundtrip}'", s_dtoNewExp },
             new object[] { $"DateTime lt datetime'{s_someDateTimeOffsetRoundtrip}'", s_dtExp },
+            new object[] { $"DateTime lt datetime'{s_someDateTimeOffsetRoundtrip}'", s_dtNewExp },
             new object[] { $"Bool eq true", s_boolTrueExp },
             new object[] { $"Bool eq false", s_boolFalseExp },
-            new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinary.Select(b => b.ToString("D2")))}'", s_binaryExp },
-            new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinaryData.ToArray().Select(b => b.ToString("D2")))}'", s_binaryExp },
+            new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinary.Select(b => b.ToString("X2")))}'", s_binaryExp },
+            new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinaryData.ToArray().Select(b => b.ToString("X2")))}'", s_binaryExp },
             new object[] { $"(((String ge '{SomeString}') and (Int64 ge {SomeInt64}L)) and (Int32 ge {SomeInt})) and (DateTime ge datetime'{s_someDateTimeOffsetRoundtrip}')", s_complexExp },
+            new object[] { $"Bool eq true", s_complexExpImplicitBooleanCmp },
+            new object[] { $"BoolN eq true", s_complexExpImplicitNullableBooleanCmp },
+            new object[] { $"not (Bool eq true)", s_complexExpImplicitBooleanCmpNot },
+            new object[] { $"BoolN eq true", s_complexExpImplicitCastedNullableBooleanCmp },
+            new object[] { $"(Bool eq true) and (BoolN eq true)", s_complexExpImplicitBooleanCmpAnd },
+            new object[] { $"(Bool eq true) or (BoolN eq true)", s_complexExpImplicitCastedBooleanCmpOr }
         };
 
         public static object[] TableItemExpressionTestCases =
@@ -123,15 +148,19 @@ namespace Azure.Data.Tables.Tests
             new object[] { $"String ge '{SomeString}'", s_compareToExpDE },
             new object[] { $"Guid eq guid'{s_someGuidString}'", s_guidExpDE },
             new object[] { $"Int64 ge {SomeInt64}L", s_int64ExpDE },
-            new object[] { $"Double ge {SomeDouble}", s_doubleExpDE },
+            new object[] { $"Double ge {SomeDoubleRoundtrip}", s_doubleExpDE },
             new object[] { $"Int32 ge {SomeInt}", s_intExpDE },
             new object[] { $"DateTimeOffset ge datetime'{s_someDateTimeOffsetRoundtrip}'", s_dtoExpDE },
             new object[] { $"DateTime lt datetime'{s_someDateTimeOffsetRoundtrip}'", s_dtExpDE },
             new object[] { $"Bool eq true", s_boolTrueExpDE },
             new object[] { $"Bool eq false", s_boolFalseExpDE },
-            new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinary.Select(b => b.ToString("D2")))}'", s_binaryExpDE },
-            new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinaryData.ToArray().Select(b => b.ToString("D2")))}'", s_binaryExpDE },
+            new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinary.Select(b => b.ToString("X2")))}'", s_binaryExpDE },
+            new object[] { $"Binary eq X'{string.Join(string.Empty, s_someBinaryData.ToArray().Select(b => b.ToString("X2")))}'", s_binaryExpDE },
             new object[] { $"(((String ge '{SomeString}') and (Int64 ge {SomeInt64}L)) and (Int32 ge {SomeInt})) and (DateTime ge datetime'{s_someDateTimeOffsetRoundtrip}')", s_complexExpDE },
+            new object[] { $"Bool eq true", s_tableEntExpImplicitBooleanCmp },
+            new object[] { $"Bool eq true", s_tableEntExpImplicitBooleanCmpCasted },
+            new object[] { $"(Bool eq true) or (Bool eq true)", s_tableEntExpImplicitBooleanCmpOr },
+            new object[] { $"not (Bool eq true)", s_tableEntExpImplicitBooleanCmpNot }
         };
 
         [TestCaseSource(nameof(TableItemExpressionTestCases))]

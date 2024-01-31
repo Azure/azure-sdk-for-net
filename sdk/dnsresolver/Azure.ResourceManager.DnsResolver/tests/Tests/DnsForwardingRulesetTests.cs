@@ -13,54 +13,47 @@ namespace Azure.ResourceManager.DnsResolver.Tests
 {
     public class DnsForwardingRulesetTests : DnsResolverTestBase
     {
-        private DnsResolverResource dnsResolver;
-        private DnsForwardingRulesetCollection dnsForwardingRulesetCollection;
-        private ResourceIdentifier outboundEndpointId;
-        private string vnetId;
-        private string subnetId;
+        private DnsResolverResource _dnsResolver;
+        private DnsForwardingRulesetCollection _dnsForwardingRulesetCollection;
+        private ResourceIdentifier _outboundEndpointId;
+        //private string _vnetId ;
+        //private string _subnetId;
 
-        public DnsForwardingRulesetTests(bool async) : base(async)
+        public DnsForwardingRulesetTests(bool async) : base(async)//, RecordedTestMode.Record)
         {
         }
 
-        [SetUp]
         public async Task CreateDnsResolverCollection()
         {
             var dnsResolverName = Recording.GenerateAssetName("dnsResolver-");
-            var vnetName = Recording.GenerateAssetName("dnsResolver-");
-            var dnsResolverData = new DnsResolverData(this.DefaultLocation);
+            var resourceGroup = await CreateResourceGroupAsync();
+            var outboundEndpointName = Recording.GenerateAssetName("outboundEndpoint-");
 
-            vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
-            subnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/snet-sim2";
+            //_vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
+            //_subnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{SubnetName}";
 
-            if (Mode == RecordedTestMode.Record)
+            (var vnetId, var subnetId) = await CreateVirtualNetworkAsync();
+            var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
             {
-                await CreateVirtualNetworkAsync(vnetName);
-                await CreateSubnetAsync(vnetName);
-            }
+                Id = new ResourceIdentifier(vnetId)
+            });
 
             dnsResolverData.VirtualNetwork = new WritableSubResource()
             {
                 Id = new ResourceIdentifier(vnetId)
             };
 
-            var subscription = await Client.GetSubscriptions().GetAsync(TestEnvironment.SubscriptionId);
-            var resourceGroup = await subscription.Value.GetResourceGroups().GetAsync(TestEnvironment.ResourceGroup);
+            _dnsResolver = (await resourceGroup.GetDnsResolvers().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData)).Value;
+            _dnsForwardingRulesetCollection = resourceGroup.GetDnsForwardingRulesets();
 
-            dnsResolver = (await resourceGroup.Value.GetDnsResolvers().CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData)).Value;
-            dnsForwardingRulesetCollection = resourceGroup.Value.GetDnsForwardingRulesets();
-
-            var outboundEndpointData = new OutboundEndpointData(this.DefaultLocation);
-
-            outboundEndpointData.Subnet = new WritableSubResource()
+            var outboundEndpointData = new DnsResolverOutboundEndpointData(this.DefaultLocation, new WritableSubResource
             {
                 Id = new ResourceIdentifier(subnetId),
-            };
+            });
 
-            var outboundEndpointName = Recording.GenerateAssetName("outboundEndpoint-");
-            var outboundEndpoint = await dnsResolver.GetOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
+            var outboundEndpoint = await _dnsResolver.GetDnsResolverOutboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, outboundEndpointName, outboundEndpointData);
 
-            outboundEndpointId = outboundEndpoint.Value.Id;
+            _outboundEndpointId = outboundEndpoint.Value.Id;
         }
 
         [Test]
@@ -68,20 +61,21 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task CreateDnsForwardingRuleset()
         {
             // ARRANGE
-            var dnsForwardingRulesetData = new DnsForwardingRulesetData(this.DefaultLocation);
-
-            dnsForwardingRulesetData.DnsResolverOutboundEndpoints.Add(new WritableSubResource()
+            var dnsForwardingRulesetName = Recording.GenerateAssetName("dnsForwardingRuleset-");
+            await CreateDnsResolverCollection();
+            var dnsForwardingRulesetData = new DnsForwardingRulesetData(this.DefaultLocation, new List<WritableSubResource>
             {
-                Id = outboundEndpointId,
+                new WritableSubResource
+                {
+                    Id = _outboundEndpointId,
+                }
             });
 
-            var dnsForwardingRulesetName = Recording.GenerateAssetName("dnsForwardingRuleset-");
-
             // ACT
-            var dnsForwardingRuleset = await dnsForwardingRulesetCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsForwardingRulesetName, dnsForwardingRulesetData);
+            var dnsForwardingRuleset = await _dnsForwardingRulesetCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsForwardingRulesetName, dnsForwardingRulesetData);
 
             // ASSERT
-            Assert.AreEqual(dnsForwardingRuleset.Value.Data.ProvisioningState, ProvisioningState.Succeeded);
+            Assert.AreEqual(dnsForwardingRuleset.Value.Data.ProvisioningState, DnsResolverProvisioningState.Succeeded);
         }
 
         [Test]
@@ -89,18 +83,20 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task GetDnsForwardingRuleset()
         {
             // ARRANGE
-            var dnsForwardingRulesetData = new DnsForwardingRulesetData(this.DefaultLocation);
-
-            dnsForwardingRulesetData.DnsResolverOutboundEndpoints.Add(new WritableSubResource()
+            var dnsForwardingRulesetName = Recording.GenerateAssetName("dnsForwardingRuleset-");
+            await CreateDnsResolverCollection();
+            var dnsForwardingRulesetData = new DnsForwardingRulesetData(this.DefaultLocation, new List<WritableSubResource>
             {
-                Id = outboundEndpointId,
+                new WritableSubResource
+                {
+                    Id = _outboundEndpointId,
+                }
             });
 
-            var dnsForwardingRulesetName = Recording.GenerateAssetName("dnsForwardingRuleset-");
-            await dnsForwardingRulesetCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsForwardingRulesetName, dnsForwardingRulesetData);
+            await _dnsForwardingRulesetCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsForwardingRulesetName, dnsForwardingRulesetData);
 
             // ACT
-            var retrievedDnsForwardingRuleset = await dnsForwardingRulesetCollection.GetAsync(dnsForwardingRulesetName);
+            var retrievedDnsForwardingRuleset = await _dnsForwardingRulesetCollection.GetAsync(dnsForwardingRulesetName);
 
             // ASSERT
             Assert.AreEqual(retrievedDnsForwardingRuleset.Value.Data.Name, dnsForwardingRulesetName);
@@ -112,18 +108,19 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task UpdateDnsForwardingRuleset()
         {
             // ARRANGE
-            var dnsForwardingRulesetData = new DnsForwardingRulesetData(this.DefaultLocation);
-
-            dnsForwardingRulesetData.DnsResolverOutboundEndpoints.Add(new WritableSubResource()
-            {
-                Id = outboundEndpointId,
-            });
-
             var dnsForwardingRulesetName = Recording.GenerateAssetName("dnsForwardingRuleset-");
-            var createdDnsForwardingRuleset = await dnsForwardingRulesetCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsForwardingRulesetName, dnsForwardingRulesetData);
-
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
+            await CreateDnsResolverCollection();
+            var dnsForwardingRulesetData = new DnsForwardingRulesetData(this.DefaultLocation, new List<WritableSubResource>
+            {
+                new WritableSubResource
+                {
+                    Id = _outboundEndpointId,
+                }
+            });
+
+            var createdDnsForwardingRuleset = await _dnsForwardingRulesetCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsForwardingRulesetName, dnsForwardingRulesetData);
 
             // ACT
             var patchedDnsForwardingRuleset = await createdDnsForwardingRuleset.Value.AddTagAsync(newTagKey, newTagValue);
@@ -137,21 +134,23 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         public async Task RemoveDnsForwardingRuleset()
         {
             // ARRANGE
-            var dnsForwardingRulesetData = new DnsForwardingRulesetData(this.DefaultLocation);
-
-            dnsForwardingRulesetData.DnsResolverOutboundEndpoints.Add(new WritableSubResource()
+            var dnsForwardingRulesetName = Recording.GenerateAssetName("dnsForwardingRuleset-");
+            await CreateDnsResolverCollection();
+            var dnsForwardingRulesetData = new DnsForwardingRulesetData(this.DefaultLocation, new List<WritableSubResource>
             {
-                Id = outboundEndpointId,
+                new WritableSubResource
+                {
+                    Id = _outboundEndpointId,
+                }
             });
 
-            var dnsForwardingRulesetName = Recording.GenerateAssetName("dnsForwardingRuleset-");
-            var createdDnsForwardingRuleset = await dnsForwardingRulesetCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsForwardingRulesetName, dnsForwardingRulesetData);
+            var createdDnsForwardingRuleset = await _dnsForwardingRulesetCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsForwardingRulesetName, dnsForwardingRulesetData);
 
             // ACT
             await createdDnsForwardingRuleset.Value.DeleteAsync(WaitUntil.Completed);
 
             // ASSERT
-            var getDnsForwardingRulesetResult = await dnsForwardingRulesetCollection.ExistsAsync(dnsForwardingRulesetName);
+            var getDnsForwardingRulesetResult = await _dnsForwardingRulesetCollection.ExistsAsync(dnsForwardingRulesetName);
             Assert.AreEqual(getDnsForwardingRulesetResult.Value, false);
         }
     }

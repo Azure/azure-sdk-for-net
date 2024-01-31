@@ -12,35 +12,43 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public void DetectLanguageBatch()
         {
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            // Instantiate a client that will be used to call the service.
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            #region Snippet:Sample1_DetectLanguageBatch
+            string documentA =
+                "Este documento está escrito en un lenguaje diferente al inglés. Su objectivo es demostrar cómo"
+                + " invocar el método de detección de lenguaje del servicio de Text Analytics en Microsoft Azure."
+                + " También muestra cómo acceder a la información retornada por el servicio. Esta funcionalidad es"
+                + " útil para las aplicaciones que recopilan texto arbitrario donde el lenguaje no se conoce de"
+                + " antemano. Puede usarse para detectar una amplia gama de lenguajes, variantes, dialectos y"
+                + " algunos idiomas regionales o culturales.";
 
-            #region Snippet:TextAnalyticsSample1DetectLanguageBatch
-            string documentA = @"Este documento está escrito en un idioma diferente al Inglés. Tiene como objetivo demostrar
-                                cómo invocar el método de Detección de idioma del servicio de Text Analytics en Microsoft Azure.
-                                También muestra cómo acceder a la información retornada por el servicio. Esta capacidad es útil
-                                para los sistemas de contenido que recopilan texto arbitrario, donde el idioma es desconocido.
-                                La característica Detección de idioma puede detectar una amplia gama de idiomas, variantes,
-                                dialectos y algunos idiomas regionales o culturales.";
+            string documentB =
+                "This document is written in English. Its objective is to demonstrate how to call the language"
+                + " detection method of the Text Analytics service in Microsoft Azure. It also shows how to access the"
+                + " information returned by the service. This functionality is useful for applications that collect"
+                + " arbitrary text where the language is not known beforehand. It can be used to detect a wide range"
+                + " of languages, variants, dialects, and some regional or cultural languages.";
 
-            string documentB = @"This document is written in a language different than Spanish. It's objective is to demonstrate
-                                how to call the Detect Language method from the Microsoft Azure Text Analytics service.
-                                It also shows how to access the information returned from the service. This capability is useful
-                                for content stores that collect arbitrary text, where language is unknown.
-                                The Language Detection feature can detect a wide range of languages, variants, dialects, and some
-                                regional or cultural languages.";
+            string documentC =
+                "Ce document est rédigé dans une langue autre que l'anglais. Son objectif est de montrer comment"
+                + " appeler la méthode de détection de langue du service Text Analytics dans Microsoft Azure. Il"
+                + " montre également comment accéder aux informations renvoyées par le service. Cette fonctionnalité"
+                + " est utile pour les applications qui collectent du texte arbitraire dont la langue n'est pas connue"
+                + " à l'avance. Il peut être utilisé pour détecter un large éventail de langues, de variantes, de"
+                + " dialectes et certaines langues régionales ou culturelles.";
 
-            string documentC = @"Ce document est rédigé dans une langue différente de l'espagnol. Son objectif est de montrer comment
-                                appeler la méthode Detect Language à partir du service Microsoft Azure Text Analytics.
-                                Il montre également comment accéder aux informations renvoyées par le service. Cette capacité est
-                                utile pour les magasins de contenu qui collectent du texte arbitraire dont la langue est inconnue.
-                                La fonctionnalité Détection de langue peut détecter une grande variété de langues, de variantes,
-                                de dialectes, et certaines langues régionales ou de culture.";
+            string documentD = "Tumhara naam kya hai?";
 
-            var documents = new List<DetectLanguageInput>
+            string documentE = ":) :( :D";
+
+            string documentF = string.Empty;
+
+            // Prepare the input of the text analysis operation. You can add multiple documents to this list and
+            // perform the same operation on all of them simultaneously.
+            List<DetectLanguageInput> batchedDocuments = new()
             {
                 new DetectLanguageInput("1", documentA)
                 {
@@ -54,44 +62,50 @@ namespace Azure.AI.TextAnalytics.Samples
                 {
                      CountryHint = "fr",
                 },
-                new DetectLanguageInput("4", ":) :( :D")
+                new DetectLanguageInput("4", documentD)
+                {
+                     CountryHint = "in",
+                },
+                new DetectLanguageInput("5", documentE)
                 {
                      CountryHint = DetectLanguageInput.None,
                 },
-                new DetectLanguageInput("5", "")
+                new DetectLanguageInput("6", documentF)
+                {
+                     CountryHint = "us",
+                }
             };
 
-            var options = new TextAnalyticsRequestOptions { IncludeStatistics = true };
-
-            Response<DetectLanguageResultCollection> response = client.DetectLanguageBatch(documents, options);
+            TextAnalyticsRequestOptions options = new() { IncludeStatistics = true };
+            Response<DetectLanguageResultCollection> response = client.DetectLanguageBatch(batchedDocuments, options);
             DetectLanguageResultCollection documentsLanguage = response.Value;
 
             int i = 0;
-            Console.WriteLine($"Results of Azure Text Analytics \"Detect Language\" Model, version: \"{documentsLanguage.ModelVersion}\"");
-            Console.WriteLine("");
+            Console.WriteLine($"Detect Language, model version: \"{documentsLanguage.ModelVersion}\"");
+            Console.WriteLine();
 
             foreach (DetectLanguageResult documentLanguage in documentsLanguage)
             {
-                DetectLanguageInput document = documents[i++];
+                DetectLanguageInput document = batchedDocuments[i++];
 
-                Console.WriteLine($"On document (Id={document.Id}, CountryHint=\"{document.CountryHint}\"):");
+                Console.WriteLine($"Result for document with Id = \"{document.Id}\" and CountryHint = \"{document.CountryHint}\":");
 
                 if (documentLanguage.HasError)
                 {
-                    Console.WriteLine("  Error!");
-                    Console.WriteLine($"  Document error code: {documentLanguage.Error.ErrorCode}.");
+                    Console.WriteLine($"  Error!");
+                    Console.WriteLine($"  Document error code: {documentLanguage.Error.ErrorCode}");
                     Console.WriteLine($"  Message: {documentLanguage.Error.Message}");
+                    Console.WriteLine();
+                    continue;
                 }
-                else
-                {
-                    Console.WriteLine($"  Detected language: {documentLanguage.PrimaryLanguage.Name}");
-                    Console.WriteLine($"  Confidence score: {documentLanguage.PrimaryLanguage.ConfidenceScore}");
 
-                    Console.WriteLine($"  Document statistics:");
-                    Console.WriteLine($"    Character count: {documentLanguage.Statistics.CharacterCount}");
-                    Console.WriteLine($"    Transaction count: {documentLanguage.Statistics.TransactionCount}");
-                }
-                Console.WriteLine("");
+                Console.WriteLine($"  Detected language: {documentLanguage.PrimaryLanguage.Name}");
+                Console.WriteLine($"  Confidence score: {documentLanguage.PrimaryLanguage.ConfidenceScore}");
+
+                Console.WriteLine($"  Document statistics:");
+                Console.WriteLine($"    Character count: {documentLanguage.Statistics.CharacterCount}");
+                Console.WriteLine($"    Transaction count: {documentLanguage.Statistics.TransactionCount}");
+                Console.WriteLine();
             }
 
             Console.WriteLine($"Batch operation statistics:");

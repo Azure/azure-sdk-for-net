@@ -81,6 +81,11 @@ namespace ServiceBus.Tests.ScenarioTests
                 getAllNamespacesResponse = ServiceBusManagementClient.Namespaces.List();
                 Assert.NotNull(getAllNamespacesResponse);
                 Assert.True(getAllNamespacesResponse.Count() >= 1);
+
+                if (getAllNamespacesResponse.ToList().Find(item => item.Name == getNamespaceResponse.Name).Equals(null))
+                {
+                    getAllNamespacesResponse = ServiceBusManagementClient.Namespaces.ListNext(getAllNamespacesResponse.NextPageLink);
+                }
                 Assert.Contains(getAllNamespacesResponse, ns => ns.Name == namespaceName);
 
                 //Update namespace tags

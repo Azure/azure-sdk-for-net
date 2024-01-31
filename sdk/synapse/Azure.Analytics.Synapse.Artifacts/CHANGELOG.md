@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-preview.15 (Unreleased)
+## 1.0.0-preview.20 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,42 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-preview.19 (2023-10-30)
+- Fix runNotebook sessionId from int to string
+- Fix placeholder links causing 404s
+- Sync expression Support From DataFactory To Synapse
+
+## 1.0.0-preview.18 (2023-08-08)
+- Added `authenticationType`, `containerUri`, `sasUri` and `sasToken` properties to BlobService 
+- Added `setSystemVariable` proprety to SetVariableActivityTypeProperties
+- Added `mongoDbAtlasDriverVersion` property to MongoDbAtlasLinkedServiceTypeProperties
+- Added `ActionOnExistingTargetTable` property for Synapse Link
+- Added `OutputColumn` Object For Office365Source outputColumns
+- Added `configurationType` ,`targetSparkConfiguration` and `sparkConfig` properties for SynapseNotebookActivityTypeProperties
+- Added `credential` property for LinkedService
+- Added `isolationLevel` property for SQLServerSource
+- Added new apis of Create/Cancel/GetStatus/GetSnapshot for RunNotebook
+
+## 1.0.0-preview.17 (2023-01-10)
+- Added `workspaceResourceId` to AzureSynapseArtifactsLinkedServiceTypeProperties
+- Added `pythonCodeReference`, `filesV2`, `scanFolder`, `configurationType`, `targetSparkConfiguration` and `sparkConfig` properties to SparkJobActivity
+- Added `authHeaders` proprety to RestServiceLinkedService
+- Added new apis of Pause/Resume for Synapse Link
+- Added PowerBIWorkspaceLinkedService
+
+## 1.0.0-preview.16 (2022-09-13)
+- Updated LinkConnection for Synapse Link
+- Added TargetSparkConfiguration property for SparkJobDefinition and Notebook
+- Added GoogleSheets connector
+- Added SAP ODP connector
+- Added support OAuth2ClientCredential auth in RestSevice
+- Added support rejected data linked service in dataflow sink
+- Added Dataworld, AppFigures, Asana, Twilio connectors
+- Added Fail Activity
+
+## 1.0.0-preview.15 (2022-04-07)
+- Added LinkConnectionOperations.
 
 ## 1.0.0-preview.14 (2022-03-08)
 - Added ScriptActivity.

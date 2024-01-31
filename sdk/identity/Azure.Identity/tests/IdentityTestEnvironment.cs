@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.IO;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -11,6 +10,11 @@ namespace Azure.Identity.Tests
     public class IdentityTestEnvironment : TestEnvironment
     {
         public string IdentityTenantId => GetRecordedVariable("AZURE_IDENTITY_TEST_TENANTID");
+        public string MultiTenantAppTenantId => GetRecordedVariable("AZURE_IDENTITY_MULTI_TENANT_TENANT_ID");
+        public string MultiTenantAppClientId => GetRecordedVariable("AZURE_IDENTITY_MULTI_TENANT_CLIENT_ID");
+        public string MultiTenantAppClientSecret => GetRecordedVariable("AZURE_IDENTITY_MULTI_TENANT_CLIENT_SECRET", options => options.IsSecret());
+        public string MultiTenantUserName => GetRecordedVariable("AZURE_IDENTITY_MULTI_TENANT_USERNAME");
+        public string MultiTenantPassword => GetRecordedVariable("AZURE_IDENTITY_MULTI_TENANT_PASSWORD", options => options.IsSecret());
         public string Username => GetRecordedVariable("AZURE_IDENTITY_TEST_USERNAME");
         public string Password => GetVariable("AZURE_IDENTITY_TEST_PASSWORD");
         public string IdentityClientId => GetVariable("AZURE_IDENTITY_TEST_CLIENT_ID");
@@ -30,7 +34,6 @@ namespace Azure.Identity.Tests
         public string UserAssignedVault => GetRecordedOptionalVariable("IDENTITYTEST_IMDSTEST_USERASSIGNEDVAULT");
 
         public string TestPassword => GetOptionalVariable("AZURE_IDENTITY_TEST_PASSWORD") ?? "SANITIZED";
-        public string TestTenantId => GetRecordedOptionalVariable("TENANT_ID") ?? GetRecordedVariable("AZURE_IDENTITY_TEST_TENANTID");
         public string KeyvaultScope => GetRecordedOptionalVariable("AZURE_KEYVAULT_SCOPE") ?? "https://vault.azure.net/.default";
 
         public string ServicePrincipalClientId => GetRecordedVariable("IDENTITY_SP_CLIENT_ID");
@@ -39,5 +42,8 @@ namespace Azure.Identity.Tests
         public string ServicePrincipalCertificatePfxPath => GetOptionalVariable("IDENTITY_SP_CERT_PFX") ?? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
         public string ServicePrincipalCertificatePemPath => GetOptionalVariable("IDENTITY_SP_CERT_PEM") ?? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
         public string ServicePrincipalSniCertificatePath => GetOptionalVariable("IDENTITY_SP_CERT_SNI") ?? Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+        public string IdentityTestWebName =>  GetRecordedVariable("IDENTITY_WEBAPP_NAME");
+        public string VMUserAssignedManagedIdentityClientId =>  GetOptionalVariable("IDENTITY_VM_USER_ASSIGNED_MI_CLIENT_ID");
+        public string IdentityTestAzFuncName =>  GetRecordedVariable("IDENTITY_FUNCTION_NAME");
     }
 }

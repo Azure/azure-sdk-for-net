@@ -1,7 +1,7 @@
 # Migration guide from Microsoft.Azure.Cosmos.Table to Azure.Data.Tables
 
 This guide is intended to assist in the migration to the `Azure.Data.Tables` package from the legacy `Microsoft.Azure.CosmosDB.Table` package focusing on
-side-by-side comparisons for similar operations between the to versions.
+side-by-side comparisons for similar operations between the two versions.
 
 Familiarity with the `Microsoft.Azure.CosmosDB.Table` package is assumed. If you are new to the Azure Tables client library for .NET, please refer to the
 [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/tables/Azure.Data.Tables/README.md) and
@@ -63,7 +63,7 @@ var serviceClient = new TableServiceClient(
 
 ### Creating a table
 
-Previously in `Microsoft.Azure.Comsmos.Table`, we'd use a `CloudTable` instance to create a table, which is returned from the `CloudTableClient` method on
+Previously in `Microsoft.Azure.Cosmos.Table`, we'd use a `CloudTable` instance to create a table, which is returned from the `CloudTableClient` method on
 `CloudTableClient`.
 
 ```C#
@@ -78,7 +78,6 @@ any one table, it is ideal for scenarios where you need to create, delete, or li
 
 ```C# Snippet:TablesSample1CreateTable
 // Create a new table. The TableItem class stores properties of the created table.
-string tableName = "OfficeSupplies1p1";
 TableItem table = serviceClient.CreateTableIfNotExists(tableName);
 Console.WriteLine($"The created table's name is {table.Name}.");
 ```
@@ -156,7 +155,7 @@ var entity = new OfficeSupplyEntity
 };
 ```
 
-Previously in `Microsoft.Azure.Comsmos.Table`, we would create a `TableOperation` and execute it with the table client.
+Previously in `Microsoft.Azure.Cosmos.Table`, we would create a `TableOperation` and execute it with the table client.
 The result of the operation must be casted back to the entity type.
 
 ```c#
@@ -175,14 +174,14 @@ or not it already exists.
 
 ```C# Snippet:TablesMigrationUpsertEntity
 // Upsert the newly created entity.
-tableClient.UpsertEntity(entity);
+tableClient.UpsertEntity(tableEntity);
 ```
 
 ### Fetching a single entity from the table
 
 Both clients allow for fetching a single entity from the table if the `PartitionKey` and `RowKey` are known.
 
-Previously in `Microsoft.Azure.Comsmos.Table`, we created an operation and then executed it, similar to when we added the item to the cloudTable.
+Previously in `Microsoft.Azure.Cosmos.Table`, we created an operation and then executed it, similar to when we added the item to the cloudTable.
 
 ```c#
 // Create the operation.
@@ -210,7 +209,7 @@ Console.WriteLine($"{marker.PartitionKey}, {marker.RowKey}, {marker.Product}, {m
 
 ### Querying data from the table
 
-Previously in `Microsoft.Azure.Comsmos.Table`, creating an executing a query looked as follows.
+Previously in `Microsoft.Azure.Cosmos.Table`, creating an executing a query looked as follows.
 
 ```c#
 // Create the query.

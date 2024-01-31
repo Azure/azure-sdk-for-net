@@ -68,7 +68,7 @@ namespace Azure.Storage.Queues
             }
 
             var encryptedMessageStream = new MemoryStream(Convert.FromBase64String(encryptedMessage.EncryptedMessageText));
-            var decryptedMessageStream = await _decryptor.DecryptInternal(
+            var decryptedMessageStream = await _decryptor.DecryptReadInternal(
                 encryptedMessageStream,
                 encryptedMessage.EncryptionData,
                 ivInStream: false,

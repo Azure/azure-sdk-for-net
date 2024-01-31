@@ -1,8 +1,8 @@
-## Extensibility
+# Extensibility
 
 This sample demonstrates how the key Service Bus types can be extended to provide custom functionality. As an example, we will demonstrate how messages can be intercepted and enriched before sending and after receiving. This mimics the functionality enabled by the `RegisterPlugin` method on client types in `Microsoft.Azure.ServiceBus`.
 
-### Extending the types
+## Extending the types
 
 In our derived classes, we will allow consumers to specify code that should be run for incoming and outgoing messages.
 
@@ -77,7 +77,7 @@ public class PluginProcessor : ServiceBusProcessor
         _plugins = plugins;
     }
 
-    protected internal override async Task OnProcessMessageAsync(ProcessMessageEventArgs args)
+    protected override async Task OnProcessMessageAsync(ProcessMessageEventArgs args)
     {
         foreach (var plugin in _plugins)
         {
@@ -107,7 +107,7 @@ public class PluginSessionProcessor : ServiceBusSessionProcessor
         _plugins = plugins;
     }
 
-    protected internal override async Task OnProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
+    protected override async Task OnProcessSessionMessageAsync(ProcessSessionMessageEventArgs args)
     {
         foreach (var plugin in _plugins)
         {
@@ -117,14 +117,14 @@ public class PluginSessionProcessor : ServiceBusSessionProcessor
         await base.OnProcessSessionMessageAsync(args);
     }
 
-    protected internal override Task OnProcessErrorAsync(ProcessErrorEventArgs args)
+    protected override Task OnProcessErrorAsync(ProcessErrorEventArgs args)
     {
         return Task.CompletedTask;
     }
 }
 ```
 
-### Defining extension methods
+## Defining extension methods
 Since the `ServiceBusClient` manages the underlying connection for the senders, receivers, and processors, we will add extension methods to `ServiceBusClient` that will let us create the derived versions of the sender, receiver, and processor.
 Here is how we define our extension methods so that these types can be created via the `ServiceBusClient`:
 
@@ -360,9 +360,3 @@ processor.ProcessErrorAsync += args =>
 await processor.StartProcessingAsync();
 Console.ReadKey();
 ```
-
-## Source
-
-To see the full example source, see:
-
-* [Sample09_Extensibility.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/tests/Samples/Sample09_Extensibility.cs)

@@ -1,8 +1,20 @@
 parameters:
-  ScanPath: $(Build.SourcesDirectory)
-  RepoRoot: $(Build.SourcesDirectory)
-  SettingsPath: '$(Build.SourcesDirectory)/eng/.docsettings.yml'
-  DocWardenVersion : '0.7.2'
+- name: ScanPath
+  type: string
+  default: ''
+  # Where ScanPath takes a single path, ScanPaths takes a comma separated list of paths to scan
+- name: ScanPaths
+  type: string
+  default: ''
+- name: RepoRoot
+  type: string
+  default: $(Build.SourcesDirectory)
+- name: SettingsPath
+  type: string
+  default: '$(Build.SourcesDirectory)/eng/.docsettings.yml'
+- name: DocWardenVersion
+  type: string
+  default: ''
 
 steps:
 - task: PowerShell@2
@@ -10,8 +22,8 @@ steps:
   inputs:
     filePath: "eng/common/scripts/Verify-Readme.ps1"
     arguments: >
-      -DocWardenVersion ${{ parameters.DocWardenVersion }}
-      -ScanPath ${{ parameters.ScanPath }}
+      -DocWardenVersion '${{ parameters.DocWardenVersion }}'
+      -ScanPaths '${{ coalesce(parameters.ScanPath, parameters.ScanPaths) }}'
       -RepoRoot ${{ parameters.RepoRoot }}
       -SettingsPath ${{ parameters.SettingsPath }}
     pwsh: true

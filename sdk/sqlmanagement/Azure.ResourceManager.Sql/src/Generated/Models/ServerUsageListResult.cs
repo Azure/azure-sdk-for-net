@@ -8,33 +8,70 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Represents the response to a list server metrics request. </summary>
     internal partial class ServerUsageListResult
     {
-        /// <summary> Initializes a new instance of ServerUsageListResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServerUsageListResult"/>. </summary>
         /// <param name="value"> The list of server metrics for the server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ServerUsageListResult(IEnumerable<ServerUsage> value)
+        internal ServerUsageListResult(IEnumerable<SqlServerUsage> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ServerUsageListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerUsageListResult"/>. </summary>
         /// <param name="value"> The list of server metrics for the server. </param>
-        internal ServerUsageListResult(IReadOnlyList<ServerUsage> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerUsageListResult(IReadOnlyList<SqlServerUsage> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServerUsageListResult"/> for deserialization. </summary>
+        internal ServerUsageListResult()
+        {
         }
 
         /// <summary> The list of server metrics for the server. </summary>
-        public IReadOnlyList<ServerUsage> Value { get; }
+        public IReadOnlyList<SqlServerUsage> Value { get; }
     }
 }

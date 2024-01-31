@@ -22,11 +22,6 @@ namespace Azure.Search.Documents
         public const string ApiKeyHeaderName = "api-key";
 
         /// <summary>
-        /// The name of the scope to authenticate for when creating a <see cref="Azure.Core.Pipeline.BearerTokenAuthenticationPolicy"/>
-        /// </summary>
-        public const string CredentialScopeName = "https://search.azure.com/.default";
-
-        /// <summary>
         /// Gets the representation of a NaN value.
         /// </summary>
         public const string NanValue = "NaN";
@@ -72,6 +67,16 @@ namespace Azure.Search.Documents
         public static readonly JsonEncodedText SearchNextPageKeyJson = JsonEncodedText.Encode("@search.nextPageParameters");
 
         /// <summary>
+        /// The @search.semanticPartialResponseReason key.
+        /// </summary>
+        public static readonly JsonEncodedText SearchSemanticErrorReasonKeyJson = JsonEncodedText.Encode("@search.semanticPartialResponseReason");
+
+        /// <summary>
+        /// The @search.semanticPartialResponseType key.
+        /// </summary>
+        public static readonly JsonEncodedText SearchSemanticSearchResultsTypeKeyJson = JsonEncodedText.Encode("@search.semanticPartialResponseType");
+
+        /// <summary>
         /// The @search.answers key.
         /// </summary>
         public static readonly JsonEncodedText SearchAnswersKeyJson = JsonEncodedText.Encode("@search.answers");
@@ -90,6 +95,11 @@ namespace Azure.Search.Documents
         /// The @search.captions key.
         /// </summary>
         public static readonly JsonEncodedText SearchCaptionsKeyJson = JsonEncodedText.Encode("@search.captions");
+
+        /// <summary>
+        /// The @search.captions key.
+        /// </summary>
+        public static readonly JsonEncodedText SearchDocumentDebugInfoKeyJson = JsonEncodedText.Encode("@search.documentDebugInfo");
 
         /// <summary>
         /// The @search.action key.

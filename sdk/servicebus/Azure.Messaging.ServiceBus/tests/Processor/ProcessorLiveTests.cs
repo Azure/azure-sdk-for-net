@@ -2,10 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Tests.Infrastructure;
@@ -58,6 +61,86 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 async Task ProcessMessage(ProcessMessageEventArgs args)
                 {
+                    Assert.AreEqual(processor.EntityPath, args.EntityPath);
+                    Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
+                    try
+                    {
+                        var message = args.Message;
+                        if (!autoComplete)
+                        {
+                            await args.CompleteMessageAsync(message, args.CancellationToken);
+                        }
+                        Interlocked.Increment(ref messageCt);
+                    }
+                    finally
+                    {
+                        var setIndex = Interlocked.Increment(ref completionSourceIndex);
+                        if (setIndex < numThreads)
+                        {
+                            completionSources[setIndex].SetResult(true);
+                        }
+                    }
+                }
+                await Task.WhenAll(completionSources.Select(source => source.Task));
+                var start = DateTime.UtcNow;
+                await processor.StopProcessingAsync();
+                var stop = DateTime.UtcNow;
+                Assert.Less(stop - start, TimeSpan.FromSeconds(10));
+
+                // we complete each task after one message being processed, so the total number of messages
+                // processed should equal the number of threads, but it's possible that we may process a few more per thread.
+                Assert.IsTrue(messageCt >= numThreads);
+                Assert.IsTrue(messageCt <= messageSendCt, messageCt.ToString());
+            }
+        }
+
+        [Test]
+        [TestCase(1, false)]
+        [TestCase(5, true)]
+        [TestCase(10, false)]
+        [TestCase(20, true)]
+        public async Task ProcessMessagesWithCustomIdentifier(int numThreads, bool autoComplete)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(
+                enablePartitioning: false,
+                enableSession: false))
+            {
+                await using var client = CreateClient(60);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+
+                // use double the number of threads so we can make sure we test that we don't
+                // retrieve more messages than expected when there are more messages available
+                using ServiceBusMessageBatch batch = await sender.CreateMessageBatchAsync();
+                var messageSendCt = numThreads * 2;
+                ServiceBusMessageBatch messageBatch = ServiceBusTestUtilities.AddMessages(batch, messageSendCt);
+
+                await sender.SendMessagesAsync(messageBatch);
+
+                var options = new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = numThreads,
+                    AutoCompleteMessages = autoComplete,
+                    PrefetchCount = 20,
+                    Identifier = "MyServiceBusProcessor"
+                };
+                await using var processor = client.CreateProcessor(scope.QueueName, options);
+                int messageCt = 0;
+
+                TaskCompletionSource<bool>[] completionSources = Enumerable
+                .Range(0, numThreads)
+                .Select(index => new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously))
+                .ToArray();
+                var completionSourceIndex = -1;
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+                await processor.StartProcessingAsync();
+
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    Assert.AreEqual(processor.EntityPath, args.EntityPath);
+                    Assert.AreEqual(processor.Identifier, args.Identifier);
+                    Assert.AreEqual(processor.FullyQualifiedNamespace, args.FullyQualifiedNamespace);
                     try
                     {
                         var message = args.Message;
@@ -285,6 +368,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 async Task ProcessMessage(ProcessMessageEventArgs args)
                 {
+                    bool messageLockLostRaised = false;
+                    args.MessageLockLostAsync += (lockLostArgs) =>
+                    {
+                        messageLockLostRaised = true;
+                        // no exception expected as we have stopped renewing the lock once the max duration has passed
+                        Assert.IsNull(lockLostArgs.Exception);
+                        return Task.CompletedTask;
+                    };
                     var message = args.Message;
                     // wait until 5 seconds past the locked until time
                     await Task.Delay(message.LockedUntil.Subtract(DateTimeOffset.UtcNow).Add(TimeSpan.FromSeconds(5)));
@@ -294,6 +385,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         // only do the assertion if cancellation wasn't requested as otherwise
                         // the exception we would get is a TaskCanceledException rather than ServiceBusException
                         Assert.AreEqual(lockedUntil, message.LockedUntil);
+                        Assert.IsTrue(args.MessageLockCancellationToken.IsCancellationRequested);
+                        Assert.IsTrue(messageLockLostRaised);
                         ServiceBusException exception = await AsyncAssert.ThrowsAsync<ServiceBusException>(
                             async () => await args.CompleteMessageAsync(message, args.CancellationToken));
                         Assert.AreEqual(ServiceBusFailureReason.MessageLockLost, exception.Reason);
@@ -982,6 +1075,69 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
         }
 
         [Test]
+        public async Task CanUpdatePrefetchCount()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 200;
+
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount));
+
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = 20
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    if (args.CancellationToken.IsCancellationRequested)
+                    {
+                        await args.AbandonMessageAsync(args.Message);
+                    }
+
+                    var count = Interlocked.Increment(ref receivedCount);
+                    if (count == messageCount)
+                    {
+                        tcs.SetResult(true);
+                    }
+
+                    // decrease prefetch
+                    if (count == 100)
+                    {
+                        processor.UpdatePrefetchCount(1);
+                        Assert.AreEqual(20, processor.MaxConcurrentCalls);
+                        Assert.AreEqual(1, processor.PrefetchCount);
+                    }
+
+                    // increase prefetch
+                    if (count == 150)
+                    {
+                        Assert.LessOrEqual(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 20);
+                        processor.UpdatePrefetchCount(10);
+                        Assert.AreEqual(20, processor.MaxConcurrentCalls);
+                        Assert.AreEqual(10, processor.PrefetchCount);
+                    }
+                    if (count == 175)
+                    {
+                        Assert.GreaterOrEqual(processor.TaskTuples.Where(t => !t.Task.IsCompleted).Count(), 15);
+                    }
+                }
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.StopProcessingAsync();
+            }
+        }
+
+        [Test]
         public async Task StopProcessingDoesNotResultInRedeliveredMessages()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
@@ -1044,7 +1200,412 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     await processor.StartProcessingAsync();
                     await tcs.Task;
                     Assert.IsTrue(received);
+                    await processor.StopProcessingAsync();
                 }
+            }
+        }
+
+        [Test]
+        [TestCase(true, true)]
+        [TestCase(false, true)]
+        [TestCase(true, false)]
+        [TestCase(false, false)]
+        public async Task CanReceiveMessagesFromCallback(bool manualComplete, bool manualRenew)
+        {
+            var lockDuration = ShortLockDuration;
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 10;
+
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount));
+
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = 5
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    var count = Interlocked.Increment(ref receivedCount);
+
+                    if (count == 1)
+                    {
+                        ProcessorReceiveActions receiveActions = args.GetReceiveActions();
+                        var received = await receiveActions.ReceiveMessagesAsync(messageCount);
+                        Assert.IsNotEmpty(received);
+                        count = Interlocked.Add(ref receivedCount, received.Count);
+
+                        var peeked = await receiveActions.PeekMessagesAsync(2);
+                        Assert.AreEqual(2, peeked.Count);
+                        var lastSeq = peeked[1].SequenceNumber;
+                        var nextPeek = await receiveActions.PeekMessagesAsync(1);
+                        Assert.Greater(nextPeek.Single().SequenceNumber, lastSeq);
+
+                        var peekWithSeq = await receiveActions.PeekMessagesAsync(1, fromSequenceNumber: lastSeq);
+                        Assert.AreEqual(lastSeq, peekWithSeq.Single().SequenceNumber);
+                    }
+
+                    if (manualRenew)
+                    {
+                        await args.RenewMessageLockAsync(args.Message);
+                    }
+
+                    // lock renewal should happen for messages received in callback
+                    await Task.Delay(lockDuration.Add(lockDuration));
+
+                    if (manualComplete)
+                    {
+                        await args.CompleteMessageAsync(args.Message);
+                    }
+
+                    if (count == messageCount)
+                    {
+                        tcs.TrySetResult(true);
+                    }
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.CloseAsync();
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var msg = await receiver.ReceiveMessageAsync();
+                // all messages should have been completed
+                Assert.IsNull(msg);
+            }
+        }
+
+        [Test]
+        [TestCase(true, true)]
+        [TestCase(false, true)]
+        [TestCase(true, false)]
+        [TestCase(false, false)]
+        public async Task CanReceiveDeferredMessagesFromCallback(bool manualComplete, bool manualRenew)
+        {
+            var lockDuration = ShortLockDuration;
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 10;
+
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount));
+
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = 5
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+                ProcessMessageEventArgs capturedArgs = null;
+                ServiceBusReceivedMessage receivedDeferredMessage = null;
+
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    capturedArgs ??= args;
+
+                    var count = Interlocked.Increment(ref receivedCount);
+
+                    // defer first message
+                    if (count == 1)
+                    {
+                        await args.DeferMessageAsync(args.Message);
+                        receivedDeferredMessage = (await args.GetReceiveActions().ReceiveDeferredMessagesAsync(new[] {args.Message.SequenceNumber})).Single();
+                    }
+                    else if (manualRenew)
+                    {
+                        await args.RenewMessageLockAsync(args.Message);
+                    }
+
+                    // lock renewal should happen for messages received in callback
+                    await Task.Delay(lockDuration.Add(lockDuration));
+
+                    if (manualComplete)
+                    {
+                        // do not attempt to complete the deferred message as we will only be able to complete it
+                        // after receiving using ReceiveDeferredMessageAsync
+                        if (count > 1)
+                        {
+                            await args.CompleteMessageAsync(args.Message);
+                        }
+                        else
+                        {
+                            await args.CompleteMessageAsync(receivedDeferredMessage);
+                        }
+                    }
+
+                    if (count == messageCount)
+                    {
+                        tcs.TrySetResult(true);
+                    }
+                }
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+
+                // verify args cannot be used to receive messages outside of callback scope
+                await AsyncAssert.ThrowsAsync<InvalidOperationException>(async () => await capturedArgs.GetReceiveActions().ReceiveMessagesAsync(10));
+
+                await processor.CloseAsync();
+
+                // all messages should have been completed
+                var receiver = client.CreateReceiver(scope.QueueName);
+                var msg = await receiver.ReceiveMessageAsync();
+                Assert.IsNull(msg);
+
+                Assert.That(
+                    async () => await receiver.ReceiveDeferredMessagesAsync(new[] {receivedDeferredMessage.SequenceNumber}),
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
+                        .EqualTo(ServiceBusFailureReason.MessageNotFound));
+            }
+        }
+
+        [Test]
+        public async Task MessagesReceivedFromCallbackAbandonedWhenException()
+        {
+            var lockDuration = ShortLockDuration;
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 10;
+                ConcurrentDictionary<long, byte> sequenceNumbers = new();
+
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount));
+
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    MaxConcurrentCalls = 1
+                });
+
+                int receivedCount = 0;
+                var tcs = new TaskCompletionSource<bool>();
+
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    var count = Interlocked.Increment(ref receivedCount);
+
+                    // defer first two messages
+                    if (count <= 2)
+                    {
+                        await args.DeferMessageAsync(args.Message);
+                        sequenceNumbers[args.Message.SequenceNumber] = default;
+                    }
+
+                    if (count == 2)
+                    {
+                        var additionalMessages = await args.GetReceiveActions().ReceiveMessagesAsync(2);
+                        Interlocked.Add(ref receivedCount, additionalMessages.Count);
+                    }
+
+                    if (count == messageCount)
+                    {
+                        tcs.TrySetResult(true);
+                    }
+
+                    throw new Exception("User exception message");
+                }
+
+                Task ProcessError(ProcessErrorEventArgs eventArgs)
+                {
+                    if (!eventArgs.Exception.Message.Contains("User exception message"))
+                    {
+                        Assert.Fail(eventArgs.Exception.ToString());
+                    }
+                    return Task.CompletedTask;
+                }
+
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ProcessError;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.CloseAsync();
+
+                var receiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions {ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete});
+                int remaining = messageCount;
+
+                // all messages should have been abandoned, so we should be able to receive them right away
+                CancellationTokenSource tokenSource = new CancellationTokenSource();
+                tokenSource.CancelAfter(TimeSpan.FromSeconds(5));
+
+                while (!tokenSource.IsCancellationRequested && remaining > 0)
+                {
+                    try
+                    {
+                        var receivedMessages = await receiver.ReceiveMessagesAsync(remaining, TimeSpan.FromSeconds(5), tokenSource.Token);
+                        remaining -= receivedMessages.Count;
+
+                        if (sequenceNumbers.Keys.Count > 0)
+                        {
+                            receivedMessages = await receiver.ReceiveDeferredMessagesAsync(sequenceNumbers.Keys, tokenSource.Token);
+                            sequenceNumbers.Clear();
+                            remaining -= receivedMessages.Count;
+                        }
+                    }
+                    catch (OperationCanceledException)
+                    {
+                    }
+                }
+                Assert.AreEqual(0, remaining);
+            }
+        }
+
+        [Test]
+        public async Task MessageLockLostEventRaisedAfterExpiration()
+        {
+            var lockDuration = ShortLockDuration;
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 1;
+
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount));
+
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    MaxAutoLockRenewalDuration = TimeSpan.Zero,
+                    AutoCompleteMessages = false
+                });
+
+                var tcs = new TaskCompletionSource<bool>();
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    bool messageLockLostRaised = false;
+                    args.MessageLockLostAsync += (lockLostArgs) =>
+                    {
+                        Assert.AreEqual(args.Message.LockToken, lockLostArgs.Message.LockToken);
+                        messageLockLostRaised = true;
+                        return Task.CompletedTask;
+                    };
+                    await args.CompleteMessageAsync(args.Message);
+                    await Task.Delay(lockDuration.Add(lockDuration));
+                    try
+                    {
+                        Assert.IsTrue(messageLockLostRaised);
+                        Assert.IsTrue(args.MessageLockCancellationToken.IsCancellationRequested);
+                        Assert.IsFalse(args.CancellationToken.IsCancellationRequested);
+                    }
+                    finally
+                    {
+                        tcs.SetResult(true);
+                    }
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.CloseAsync();
+            }
+        }
+
+        /// <summary>
+        /// Because the message lock renewal occurs on the mgmt link, even when the connection drops, message lock renewal continues
+        /// successfully. This is in contrast to session messages where the lock renewal requires the session to be locked,
+        /// so when the connection drops, the session is lost and the lock renewal fails.
+        /// </summary>
+        [Test]
+        public async Task MessageLockLostEventNotRaisedAfterConnectionDropped()
+        {
+            var lockDuration = TimeSpan.FromSeconds(30);
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 1;
+
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount));
+
+                await using var processor = client.CreateProcessor(scope.QueueName);
+
+                var tcs = new TaskCompletionSource<bool>();
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    bool messageLockLostRaised = false;
+                    args.MessageLockLostAsync += (lockLostArgs) =>
+                    {
+                        messageLockLostRaised = true;
+                        Assert.AreEqual(args.Message.LockToken, lockLostArgs.Message.LockToken);
+                        var lockLostException = lockLostArgs.Exception as ServiceBusException;
+                        Assert.IsNotNull(lockLostException);
+                        Assert.AreEqual(ServiceBusFailureReason.MessageLockLost, lockLostException.Reason);
+                        return Task.CompletedTask;
+                    };
+                    SimulateNetworkFailure(client);
+                    await Task.Delay(lockDuration.Add(lockDuration));
+                    try
+                    {
+                        Assert.IsFalse(messageLockLostRaised);
+                        Assert.IsFalse(args.MessageLockCancellationToken.IsCancellationRequested);
+                        Assert.IsFalse(args.CancellationToken.IsCancellationRequested);
+                    }
+                    finally
+                    {
+                        tcs.SetResult(true);
+                    }
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.CloseAsync();
+            }
+        }
+
+        [Test]
+        public async Task MessageLockLostEventNotRaisedAfterProcessMessageCompletes()
+        {
+            var lockDuration = ShortLockDuration;
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 1;
+
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount));
+
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    MaxAutoLockRenewalDuration = TimeSpan.Zero,
+                    AutoCompleteMessages = false
+                });
+
+                var tcs = new TaskCompletionSource<bool>();
+                bool messageLockLostRaised = false;
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    args.MessageLockLostAsync += (lockLostArgs) =>
+                    {
+                        messageLockLostRaised = true;
+                        return Task.CompletedTask;
+                    };
+                    await args.CompleteMessageAsync(args.Message);
+                    Assert.IsFalse(messageLockLostRaised);
+                    Assert.IsFalse(args.MessageLockCancellationToken.IsCancellationRequested);
+                    Assert.IsFalse(args.CancellationToken.IsCancellationRequested);
+                    tcs.SetResult(true);
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await Task.Delay(lockDuration.Add(lockDuration));
+                Assert.IsFalse(messageLockLostRaised);
+                await processor.CloseAsync();
             }
         }
     }

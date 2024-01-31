@@ -20,8 +20,10 @@ namespace Azure.Storage.Blobs
         {
             _response = response;
         }
-        /// <summary> Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob&apos;s metadata or properties, changes the last-modified time of the blob. </summary>
+        /// <summary> Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob. </summary>
         public DateTimeOffset? LastModified => _response.Headers.TryGetValue("Last-Modified", out DateTimeOffset? value) ? value : null;
+        /// <summary> Returns the date and time the blob was created. </summary>
+        public DateTimeOffset? CreationTime => _response.Headers.TryGetValue("x-ms-creation-time", out DateTimeOffset? value) ? value : null;
         public IDictionary<string, string> Metadata => _response.Headers.TryGetValue("x-ms-meta-", out IDictionary<string, string> value) ? value : null;
         /// <summary> Optional. Only valid when Object Replication is enabled for the storage container and on the destination blob of the replication. </summary>
         public string ObjectReplicationPolicyId => _response.Headers.TryGetValue("x-ms-or-policy-id", out string value) ? value : null;
@@ -29,9 +31,9 @@ namespace Azure.Storage.Blobs
         public IDictionary<string, string> ObjectReplicationRules => _response.Headers.TryGetValue("x-ms-or-", out IDictionary<string, string> value) ? value : null;
         /// <summary> The number of bytes present in the response body. </summary>
         public long? ContentLength => _response.Headers.TryGetValue("Content-Length", out long? value) ? value : null;
-        /// <summary> The media type of the body of the response. For Download Blob this is &apos;application/octet-stream&apos;. </summary>
+        /// <summary> The media type of the body of the response. For Download Blob this is 'application/octet-stream'. </summary>
         public string ContentType => _response.Headers.TryGetValue("Content-Type", out string value) ? value : null;
-        /// <summary> Indicates the range of bytes returned in the event that the client requested a subset of the blob by setting the &apos;Range&apos; request header. </summary>
+        /// <summary> Indicates the range of bytes returned in the event that the client requested a subset of the blob by setting the 'Range' request header. </summary>
         public string ContentRange => _response.Headers.TryGetValue("Content-Range", out string value) ? value : null;
         /// <summary> If the blob has an MD5 hash and this operation is to read the full blob, this response header is returned so that the client can check for message content integrity. </summary>
         public byte[] ContentMD5 => _response.Headers.TryGetValue("Content-MD5", out byte[] value) ? value : null;
@@ -39,13 +41,13 @@ namespace Azure.Storage.Blobs
         public string ContentEncoding => _response.Headers.TryGetValue("Content-Encoding", out string value) ? value : null;
         /// <summary> This header is returned if it was previously specified for the blob. </summary>
         public string CacheControl => _response.Headers.TryGetValue("Cache-Control", out string value) ? value : null;
-        /// <summary> This header returns the value that was specified for the &apos;x-ms-blob-content-disposition&apos; header. The Content-Disposition response header field conveys additional information about how to process the response payload, and also can be used to attach additional metadata. For example, if set to attachment, it indicates that the user-agent should not display the response, but instead show a Save As dialog with a filename other than the blob name specified. </summary>
+        /// <summary> This header returns the value that was specified for the 'x-ms-blob-content-disposition' header. The Content-Disposition response header field conveys additional information about how to process the response payload, and also can be used to attach additional metadata. For example, if set to attachment, it indicates that the user-agent should not display the response, but instead show a Save As dialog with a filename other than the blob name specified. </summary>
         public string ContentDisposition => _response.Headers.TryGetValue("Content-Disposition", out string value) ? value : null;
         /// <summary> This header returns the value that was specified for the Content-Language request header. </summary>
         public string ContentLanguage => _response.Headers.TryGetValue("Content-Language", out string value) ? value : null;
         /// <summary> The current sequence number for a page blob. This header is not returned for block blobs or append blobs. </summary>
         public long? BlobSequenceNumber => _response.Headers.TryGetValue("x-ms-blob-sequence-number", out long? value) ? value : null;
-        /// <summary> The blob&apos;s type. </summary>
+        /// <summary> The blob's type. </summary>
         public BlobType? BlobType => _response.Headers.TryGetValue("x-ms-blob-type", out string value) ? value.ToBlobType() : null;
         /// <summary> Conclusion time of the last attempted Copy Blob operation where this blob was the destination blob. This value can specify the time of a completed, aborted, or failed copy attempt. This header does not appear if a copy is pending, if this blob has never been the destination in a Copy Blob operation, or if this blob has been modified after a concluded Copy Blob operation using Set Blob Properties, Put Blob, or Put Block List. </summary>
         public DateTimeOffset? CopyCompletionTime => _response.Headers.TryGetValue("x-ms-copy-completion-time", out DateTimeOffset? value) ? value : null;
@@ -81,7 +83,7 @@ namespace Azure.Storage.Blobs
         public string EncryptionKeySha256 => _response.Headers.TryGetValue("x-ms-encryption-key-sha256", out string value) ? value : null;
         /// <summary> Returns the name of the encryption scope used to encrypt the blob contents and application metadata.  Note that the absence of this header implies use of the default account encryption scope. </summary>
         public string EncryptionScope => _response.Headers.TryGetValue("x-ms-encryption-scope", out string value) ? value : null;
-        /// <summary> If the blob has a MD5 hash, and if request contains range header (Range or x-ms-range), this response header is returned with the value of the whole blob&apos;s MD5 value. This value may or may not be equal to the value returned in Content-MD5 header, with the latter calculated from the requested range. </summary>
+        /// <summary> If the blob has a MD5 hash, and if request contains range header (Range or x-ms-range), this response header is returned with the value of the whole blob's MD5 value. This value may or may not be equal to the value returned in Content-MD5 header, with the latter calculated from the requested range. </summary>
         public byte[] BlobContentMD5 => _response.Headers.TryGetValue("x-ms-blob-content-md5", out byte[] value) ? value : null;
         /// <summary> The number of tags associated with the blob. </summary>
         public long? TagCount => _response.Headers.TryGetValue("x-ms-tag-count", out long? value) ? value : null;

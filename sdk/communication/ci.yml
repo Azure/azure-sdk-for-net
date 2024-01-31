@@ -8,6 +8,8 @@ trigger:
   paths:
     include:
     - sdk/communication/
+    exclude:
+    - sdk/communication/Azure.ResourceManager.Communication/
 
 pr:
   branches:
@@ -19,34 +21,46 @@ pr:
   paths:
     include:
     - sdk/communication/
+    exclude:
+    - sdk/communication/Azure.ResourceManager.Communication/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: communication
+    BuildSnippets: false
     ArtifactName: packages
     Artifacts:
+    - name: Azure.Communication.JobRouter
+      safeName: AzureCommunicationJobRouter
+    - name: Azure.Communication.CallAutomation
+      safeName: AzureCommunicationCallAutomation
     - name: Azure.Communication.CallingServer
       safeName: AzureCommunicationCallingServer
     - name: Azure.Communication.Chat
       safeName: AzureCommunicationChat
+    - name: Azure.Communication.Messages
+      safeName: AzureCommunicationMessages
     - name: Azure.Communication.Common
       safeName: AzureCommunicationCommon
+    - name: Azure.Communication.Email
+      safeName: AzureCommunicationEmail
     - name: Azure.Communication.Sms
       safeName: AzureCommunicationSms
+    - name: Azure.Communication.Rooms
+      safeName: AzureCommunicationRooms
     - name: Azure.Communication.Identity
       safeName: AzureCommunicationIdentity
+    - name: Azure.Communication.MediaComposition
+      safeName: AzureCommunicationMediaComposition
+      skipReleaseStage: true
     - name: Azure.Communication.NetworkTraversal
       safeName: AzureCommunicationNetworkTraversal
     - name: Azure.Communication.PhoneNumbers
       safeName: AzureCommunicationPhoneNumbers
-    - name: Azure.ResourceManager.Communication
-      safeName: AzureResourceManagerCommunication
     - name: Azure.Communication.ShortCodes
       safeName: AzureCommunicationShortCodes
-      skipTagRepository: true
-      skipPublishPackage: true
-      skipSymbolsUpload: true
-      skipPublishDocMs: true
-      skipPublishDocGithubIo: true
-      skipUpdatePackageVersion: true
+      skipReleaseStage: true
+    - name: Azure.Communication.AlphaIds
+      safeName: AzureCommunicationAlphaIds
+      skipReleaseStage: true

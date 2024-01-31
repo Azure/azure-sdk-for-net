@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Keys.Cryptography;
@@ -11,8 +12,10 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
-        KeyClientOptions.ServiceVersion.V7_2,
-        KeyClientOptions.ServiceVersion.V7_3)]
+        KeyClientOptions.ServiceVersion.V7_5_Preview_1,
+        KeyClientOptions.ServiceVersion.V7_4,
+        KeyClientOptions.ServiceVersion.V7_3,
+        KeyClientOptions.ServiceVersion.V7_2)]
     public class ManagedHsmCryptographyClientLiveTests : CryptographyClientLiveTests
     {
         private static readonly IEnumerable<KeyOperation> s_aesKeyOps = new[]
@@ -38,7 +41,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 // To provision Managed HSM: New-TestResources.ps1 -AdditionalParameters @{enableHsm=$true}
                 : throw new IgnoreException($"Required variable 'AZURE_MANAGEDHSM_URL' is not defined");
 
-        [Test]
+        [RecordedTest]
         public async Task EncryptLocalDecryptOnManagedHsm([EnumValues(
             nameof(EncryptionAlgorithm.A128Cbc),
             nameof(EncryptionAlgorithm.A192Cbc),
@@ -102,7 +105,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CollectionAssert.AreEqual(plaintext, decrypted.Plaintext);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AesGcmEncryptDecrypt([EnumValues(
             nameof(EncryptionAlgorithm.A128Gcm),
             nameof(EncryptionAlgorithm.A192Gcm),
@@ -165,7 +168,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
             CollectionAssert.AreEqual(plaintext, decrypted.Plaintext);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AesKwWrapUnwrapRoundTrip([EnumValues(
             nameof(KeyWrapAlgorithm.A128KW),
             nameof(KeyWrapAlgorithm.A192KW),

@@ -26,11 +26,10 @@ namespace Azure.Storage.Files.Shares.Models
         /// </summary>
         public ShareFileRequestConditions Conditions { get; set; }
 
-        // TODO #27253
-        ///// <summary>
-        ///// Optional transactional hashing options.
-        ///// </summary>
-        //public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        /// <summary>
+        /// Optional override settings for this client's <see cref="ShareClientOptions.TransferValidation"/> settings.
+        /// </summary>
+        public DownloadTransferValidationOptions TransferValidation { get; set; }
 
         internal bool AllowModifications { get; }
 

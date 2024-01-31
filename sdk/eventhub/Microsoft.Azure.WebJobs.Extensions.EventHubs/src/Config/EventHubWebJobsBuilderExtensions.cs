@@ -2,12 +2,14 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Globalization;
+using System.Linq;
 using System.Net;
 using Azure.Messaging.EventHubs.Consumer;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.EventHubs;
+using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
+using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -86,12 +88,28 @@ namespace Microsoft.Extensions.Hosting
             builder.Services.AddSingleton<EventHubClientFactory>();
             builder.Services.AddSingleton<CheckpointClientProvider>();
             builder.Services.Configure<EventHubOptions>(configure);
-            builder.Services.PostConfigure<EventHubOptions>(ConfigureInitialOffsetOptions);
+            builder.Services.PostConfigure<EventHubOptions>(ConfigureOptions);
 
             return builder;
         }
 
-        internal static void ConfigureInitialOffsetOptions(EventHubOptions options)
+        internal static IWebJobsBuilder AddEventHubsScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
+        {
+            // We need to register an instance of EventHubsScalerProvider in the DI container and then map it to the interfaces IScaleMonitorProvider and ITargetScalerProvider.
+            // Since there can be more than one instance of EventHubsScalerProvider, we have to store a reference to the created instance to filter it out later.
+            EventHubsScalerProvider eventHubsScalerProvider  = null;
+            builder.Services.AddSingleton(serviceProvider =>
+            {
+                eventHubsScalerProvider  = new EventHubsScalerProvider(serviceProvider, triggerMetadata);
+                return eventHubsScalerProvider ;
+            });
+            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider => serviceProvider.GetServices<EventHubsScalerProvider>().Single(x => x == eventHubsScalerProvider ));
+            builder.Services.AddSingleton<ITargetScalerProvider>(serviceProvider => serviceProvider.GetServices<EventHubsScalerProvider>().Single(x => x == eventHubsScalerProvider ));
+
+            return builder;
+        }
+
+        internal static void ConfigureOptions(EventHubOptions options)
         {
             OffsetType? type = options?.InitialOffsetOptions?.Type;
             if (type.HasValue)
@@ -120,6 +138,11 @@ namespace Microsoft.Extensions.Hosting
                             "An unsupported value was supplied for initialOffsetOptions.type");
                 }
                 // If not specified, EventProcessor's default offset will apply
+            }
+
+            if (options.MinEventBatchSize > options.MaxEventBatchSize)
+            {
+                throw new InvalidOperationException("The minimum event batch size cannot be larger than the maximum event batch size.");
             }
         }
     }

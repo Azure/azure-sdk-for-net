@@ -15,10 +15,9 @@ namespace Microsoft.Azure.Management.Compute.Models
 
     /// <summary>
     /// Boot Diagnostics is a debugging feature which allows you to view
-    /// Console Output and Screenshot to diagnose VM status.
-    /// &lt;br&gt;&lt;br&gt; You can easily view the output of your console
-    /// log. &lt;br&gt;&lt;br&gt; Azure also enables you to see a screenshot of
-    /// the VM from the hypervisor.
+    /// Console Output and Screenshot to diagnose VM status. You can easily
+    /// view the output of your console log. Azure also enables you to see a
+    /// screenshot of the VM from the hypervisor.
     /// </summary>
     public partial class BootDiagnostics
     {
@@ -36,9 +35,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="enabled">Whether boot diagnostics should be enabled on
         /// the Virtual Machine.</param>
         /// <param name="storageUri">Uri of the storage account to use for
-        /// placing the console output and screenshot. &lt;br&gt;&lt;br&gt;If
-        /// storageUri is not specified while enabling boot diagnostics,
-        /// managed storage will be used.</param>
+        /// placing the console output and screenshot. If storageUri is not
+        /// specified while enabling boot diagnostics, managed storage will be
+        /// used.</param>
         public BootDiagnostics(bool? enabled = default(bool?), string storageUri = default(string))
         {
             Enabled = enabled;
@@ -60,9 +59,8 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets uri of the storage account to use for placing the
-        /// console output and screenshot.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;If storageUri is not specified
-        /// while enabling boot diagnostics, managed storage will be used.
+        /// console output and screenshot. If storageUri is not specified while
+        /// enabling boot diagnostics, managed storage will be used.
         /// </summary>
         [JsonProperty(PropertyName = "storageUri")]
         public string StorageUri { get; set; }

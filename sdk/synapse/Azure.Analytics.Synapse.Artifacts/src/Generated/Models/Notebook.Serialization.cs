@@ -21,14 +21,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
             {
-                writer.WritePropertyName("description");
+                writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             if (Optional.IsDefined(BigDataPool))
             {
                 if (BigDataPool != null)
                 {
-                    writer.WritePropertyName("bigDataPool");
+                    writer.WritePropertyName("bigDataPool"u8);
                     writer.WriteObjectValue(BigDataPool);
                 }
                 else
@@ -36,11 +36,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     writer.WriteNull("bigDataPool");
                 }
             }
+            if (Optional.IsDefined(TargetSparkConfiguration))
+            {
+                writer.WritePropertyName("targetSparkConfiguration"u8);
+                writer.WriteObjectValue(TargetSparkConfiguration);
+            }
             if (Optional.IsDefined(SessionProperties))
             {
                 if (SessionProperties != null)
                 {
-                    writer.WritePropertyName("sessionProperties");
+                    writer.WritePropertyName("sessionProperties"u8);
                     writer.WriteObjectValue(SessionProperties);
                 }
                 else
@@ -48,13 +53,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     writer.WriteNull("sessionProperties");
                 }
             }
-            writer.WritePropertyName("metadata");
+            writer.WritePropertyName("metadata"u8);
             writer.WriteObjectValue(Metadata);
-            writer.WritePropertyName("nbformat");
+            writer.WritePropertyName("nbformat"u8);
             writer.WriteNumberValue(NotebookFormat);
-            writer.WritePropertyName("nbformat_minor");
+            writer.WritePropertyName("nbformat_minor"u8);
             writer.WriteNumberValue(NotebookFormatMinor);
-            writer.WritePropertyName("cells");
+            writer.WritePropertyName("cells"u8);
             writer.WriteStartArray();
             foreach (var item in Cells)
             {
@@ -65,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 if (Folder != null)
                 {
-                    writer.WritePropertyName("folder");
+                    writer.WritePropertyName("folder"u8);
                     writer.WriteObjectValue(Folder);
                 }
                 else
@@ -83,8 +88,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static Notebook DeserializeNotebook(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<BigDataPoolReference> bigDataPool = default;
+            Optional<SparkConfigurationReference> targetSparkConfiguration = default;
             Optional<NotebookSessionProperties> sessionProperties = default;
             NotebookMetadata metadata = default;
             int nbformat = default;
@@ -95,12 +105,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("description"))
+                if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("bigDataPool"))
+                if (property.NameEquals("bigDataPool"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -110,7 +120,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     bigDataPool = BigDataPoolReference.DeserializeBigDataPoolReference(property.Value);
                     continue;
                 }
-                if (property.NameEquals("sessionProperties"))
+                if (property.NameEquals("targetSparkConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetSparkConfiguration = SparkConfigurationReference.DeserializeSparkConfigurationReference(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("sessionProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -120,22 +139,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     sessionProperties = NotebookSessionProperties.DeserializeNotebookSessionProperties(property.Value);
                     continue;
                 }
-                if (property.NameEquals("metadata"))
+                if (property.NameEquals("metadata"u8))
                 {
                     metadata = NotebookMetadata.DeserializeNotebookMetadata(property.Value);
                     continue;
                 }
-                if (property.NameEquals("nbformat"))
+                if (property.NameEquals("nbformat"u8))
                 {
                     nbformat = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("nbformat_minor"))
+                if (property.NameEquals("nbformat_minor"u8))
                 {
                     nbformatMinor = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("cells"))
+                if (property.NameEquals("cells"u8))
                 {
                     List<NotebookCell> array = new List<NotebookCell>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -145,7 +164,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     cells = array;
                     continue;
                 }
-                if (property.NameEquals("folder"))
+                if (property.NameEquals("folder"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -158,7 +177,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Notebook(description.Value, bigDataPool.Value, sessionProperties.Value, metadata, nbformat, nbformatMinor, cells, folder.Value, additionalProperties);
+            return new Notebook(description.Value, bigDataPool.Value, targetSparkConfiguration.Value, sessionProperties.Value, metadata, nbformat, nbformatMinor, cells, folder.Value, additionalProperties);
         }
 
         internal partial class NotebookConverter : JsonConverter<Notebook>

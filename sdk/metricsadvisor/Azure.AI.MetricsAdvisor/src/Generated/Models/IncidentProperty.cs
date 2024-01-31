@@ -10,11 +10,11 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The IncidentProperty. </summary>
     internal partial class IncidentProperty
     {
-        /// <summary> Initializes a new instance of IncidentProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncidentProperty"/>. </summary>
         /// <param name="maxSeverity"> max severity of latest anomalies in the incident. </param>
         /// <param name="incidentStatus">
         /// incident status
-        /// 
+        ///
         /// only return for alerting incident result
         /// </param>
         /// <param name="valueOfRootNode"> value of the root node. </param>
@@ -25,11 +25,11 @@ namespace Azure.AI.MetricsAdvisor.Models
             ValueOfRootNode = valueOfRootNode;
         }
 
-        /// <summary> Initializes a new instance of IncidentProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncidentProperty"/>. </summary>
         /// <param name="maxSeverity"> max severity of latest anomalies in the incident. </param>
         /// <param name="incidentStatus">
         /// incident status
-        /// 
+        ///
         /// only return for alerting incident result
         /// </param>
         /// <param name="valueOfRootNode"> value of the root node. </param>
@@ -46,7 +46,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         public AnomalySeverity MaxSeverity { get; }
         /// <summary>
         /// incident status
-        /// 
+        ///
         /// only return for alerting incident result
         /// </summary>
         public AnomalyIncidentStatus IncidentStatus { get; }

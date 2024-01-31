@@ -13,9 +13,11 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Tests
 {
+    [ClientTestFixture(true, "2021-04-01", "2018-11-01")]
     public class PublicIpAddressTests : NetworkServiceClientTestBase
     {
-        public PublicIpAddressTests(bool isAsync) : base(isAsync)
+        public PublicIpAddressTests(bool isAsync, string apiVersion)
+        : base(isAsync, PublicIPAddressResource.ResourceType, apiVersion)
         {
         }
 
@@ -46,7 +48,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+                PublicIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings()
                 {
                     DomainNameLabel = domainNameLabel
@@ -103,7 +105,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = TestEnvironment.Location,
                 Tags = { { "key", "value" } },
-                PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+                PublicIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings() { DomainNameLabel = domainNameLabel, },
                 IdleTimeoutInMinutes = 16,
             };
@@ -168,12 +170,12 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = TestEnvironment.Location,
                 Tags = { { "key", "value" } },
-                PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+                PublicIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings()
                 {
                     DomainNameLabel = domainNameLabel
                 },
-                PublicIPAddressVersion = IPVersion.IPv6
+                PublicIPAddressVersion = NetworkIPVersion.IPv6
             };
 
             // Put PublicIPAddress
@@ -186,7 +188,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<PublicIPAddressResource> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(ipv6PublicIpName);
             Assert.NotNull(getPublicIpAddressResponse);
 
-            Assert.AreEqual(IPVersion.IPv6, getPublicIpAddressResponse.Value.Data.PublicIPAddressVersion);
+            Assert.AreEqual(NetworkIPVersion.IPv6, getPublicIpAddressResponse.Value.Data.PublicIPAddressVersion);
             Assert.AreEqual(4, getPublicIpAddressResponse.Value.Data.IdleTimeoutInMinutes);
             Assert.NotNull(getPublicIpAddressResponse.Value.Data.ResourceGuid);
 
@@ -218,12 +220,12 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = TestEnvironment.Location,
                 Tags = { { "key", "value" } },
-                PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+                PublicIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings()
                 {
                     DomainNameLabel = domainNameLabel
                 },
-                PublicIPAddressVersion = IPVersion.IPv4,
+                PublicIPAddressVersion = NetworkIPVersion.IPv4,
             };
 
             // Put PublicIPAddress
@@ -235,7 +237,7 @@ namespace Azure.ResourceManager.Network.Tests
             Response<PublicIPAddressResource> getIpv4PublicIpAddressResponse = await publicIPAddressCollection.GetAsync(ipv4PublicIpName);
             Assert.NotNull(getIpv4PublicIpAddressResponse);
 
-            Assert.AreEqual(IPVersion.IPv4, getIpv4PublicIpAddressResponse.Value.Data.PublicIPAddressVersion);
+            Assert.AreEqual(NetworkIPVersion.IPv4, getIpv4PublicIpAddressResponse.Value.Data.PublicIPAddressVersion);
             Assert.AreEqual(4, getIpv4PublicIpAddressResponse.Value.Data.IdleTimeoutInMinutes);
             Assert.NotNull(getIpv4PublicIpAddressResponse.Value.Data.ResourceGuid);
 

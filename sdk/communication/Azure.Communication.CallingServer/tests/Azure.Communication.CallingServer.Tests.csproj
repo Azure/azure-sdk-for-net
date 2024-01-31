@@ -11,13 +11,14 @@
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\Azure.Communication.Identity\src\Azure.Communication.Identity.csproj" />
-    <ProjectReference Include="..\..\Azure.Communication.Common\tests\Azure.Communication.Common.Tests.csproj" />
     <ProjectReference Include="..\src\Azure.Communication.CallingServer.csproj" />
+    <Compile Include="..\..\Shared\tests\CommunicationTestEnvironment.cs" LinkBase="Shared\Communication.Tests" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\tests.yml" Link="\tests.yml" />
-    <None Include="..\samples\README.md" Link="samples\README.md" />
-    <None Include="..\samples\Sample1_CreateCall.md" Link="samples\Sample1_CreateCall.md" />
-    <None Include="..\samples\Sample1_CreateCallAsync.md" Link="samples\Sample1_CreateCallAsync.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SessionRecords\CallMediaLiveTests\" />
+    <Folder Include="SessionRecords\CallConnectionLiveTests\" />
   </ItemGroup>
 </Project>

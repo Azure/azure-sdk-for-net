@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -15,17 +14,21 @@ namespace Azure.Monitor.Query.Models
     {
         internal static LogsTable DeserializeLogsTable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             IReadOnlyList<LogsTableColumn> columns = default;
             JsonElement rows = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("columns"))
+                if (property.NameEquals("columns"u8))
                 {
                     List<LogsTableColumn> array = new List<LogsTableColumn>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -35,7 +38,7 @@ namespace Azure.Monitor.Query.Models
                     columns = array;
                     continue;
                 }
-                if (property.NameEquals("rows"))
+                if (property.NameEquals("rows"u8))
                 {
                     rows = property.Value.Clone();
                     continue;

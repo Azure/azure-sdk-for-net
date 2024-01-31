@@ -14,23 +14,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Script block of scripts. </summary>
     public partial class ScriptActivityScriptBlock
     {
-        /// <summary> Initializes a new instance of ScriptActivityScriptBlock. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityScriptBlock"/>. </summary>
         /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
         /// <param name="type"> The type of the query. Type: string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public ScriptActivityScriptBlock(object text, ScriptType type)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
             Type = type;
             Parameters = new ChangeTrackingList<ScriptActivityParameter>();
         }
 
-        /// <summary> Initializes a new instance of ScriptActivityScriptBlock. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActivityScriptBlock"/>. </summary>
         /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
         /// <param name="type"> The type of the query. Type: string. </param>
         /// <param name="parameters"> Array of script parameters. Type: array. </param>

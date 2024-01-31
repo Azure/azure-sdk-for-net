@@ -9,7 +9,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// The technique to use to build a custom model. For more information see
     /// <see href="https://aka.ms/azsdk/formrecognizer/buildmode">here</see>.
     /// </summary>
-    [CodeGenModel("DocumentBuildMode")]
     public readonly partial struct DocumentBuildMode
     {
         /// <summary>

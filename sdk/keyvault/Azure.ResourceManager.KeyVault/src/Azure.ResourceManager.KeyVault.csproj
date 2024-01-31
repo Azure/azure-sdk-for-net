@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.0.0-beta.8</Version>
+    <Version>1.3.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.2.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.KeyVault</PackageId>
-    <Description>
-      Azure management client SDK for Azure resource provider Microsoft.KeyVault.
-      This is a beta preview vesion. This version uses a next-generation code generator that introduces important breaking changes, but also new features (such as intuitive authentication, custom HTTP pipeline, distributed tracing and much more).
-    </Description>
+    <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.KeyVault.</Description>
     <PackageTags>azure;management;keyvault</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
 </Project>

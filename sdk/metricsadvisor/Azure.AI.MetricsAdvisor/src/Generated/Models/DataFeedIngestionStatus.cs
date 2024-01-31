@@ -6,23 +6,21 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The IngestionStatus. </summary>
     public partial class DataFeedIngestionStatus
     {
-        /// <summary> Initializes a new instance of DataFeedIngestionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFeedIngestionStatus"/>. </summary>
         /// <param name="timestamp"> data slice timestamp. </param>
         /// <param name="status"> latest ingestion task status for this data slice. </param>
         /// <param name="message"> the trimmed message of last ingestion job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         internal DataFeedIngestionStatus(DateTimeOffset timestamp, IngestionStatusType status, string message)
         {
-            if (message == null)
-            {
-                throw new ArgumentNullException(nameof(message));
-            }
+            Argument.AssertNotNull(message, nameof(message));
 
             Timestamp = timestamp;
             Status = status;

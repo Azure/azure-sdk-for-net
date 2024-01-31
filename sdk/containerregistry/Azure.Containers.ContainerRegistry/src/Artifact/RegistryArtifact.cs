@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -319,6 +320,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="orderBy"> Requested order of tags in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<ArtifactTagProperties> GetTagPropertiesCollectionAsync(ArtifactTagOrder orderBy = ArtifactTagOrder.None, CancellationToken cancellationToken = default)
         {
             async Task<Page<ArtifactTagProperties>> FirstPageFunc(int? pageSizeHint)
@@ -365,6 +367,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="orderBy"> Requested order of tags in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Container Registry service.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<ArtifactTagProperties> GetTagPropertiesCollection(ArtifactTagOrder orderBy = ArtifactTagOrder.None, CancellationToken cancellationToken = default)
         {
             Page<ArtifactTagProperties> FirstPageFunc(int? pageSizeHint)

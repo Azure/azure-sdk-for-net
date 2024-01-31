@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Microsoft.Identity.Client;
 
 namespace Azure.Identity.Tests.Mock
@@ -16,35 +16,31 @@ namespace Azure.Identity.Tests.Mock
     {
         public DeviceCodeResult DeviceCodeResult { get; set; } = GetDeviceCodeResult();
         public List<IAccount> Accounts { get; set; }
-
         public Func<string[], string, AuthenticationResult> AuthFactory { get; set; }
-
-        public Func<string[], string, AuthenticationResult> UserPassAuthFactory { get; set; }
-
-        public Func<string[], string, Prompt, string, string, bool, CancellationToken, AuthenticationResult> InteractiveAuthFactory { get; set; }
-
-        public Func<string[], string, AuthenticationResult> SilentAuthFactory { get; set; }
-
+        public Func<string[], string, string, string, string, bool, AuthenticationResult> UserPassAuthFactory { get; set; }
+        public Func<string[], string, Prompt, string, string, bool, BrowserCustomizationOptions, CancellationToken, AuthenticationResult> InteractiveAuthFactory { get; set; }
+        public Func<string[], string, AuthenticationRecord, string, bool, AuthenticationResult> SilentAuthFactory { get; set; }
         public Func<string[], string, IAccount, string, bool, CancellationToken, AuthenticationResult> ExtendedSilentAuthFactory { get; set; }
-
-        public Func<DeviceCodeInfo, CancellationToken, AuthenticationResult> DeviceCodeAuthFactory { get; set; }
-
-        public Func<string[], IPublicClientApplication> PubClientAppFactory { get; set; }
-
-        public Func<string[], string,
-            string,
-            AzureCloudInstance,
-            string,
-            bool,
-            CancellationToken, AuthenticationResult> RefreshTokenFactory
-        { get; set; }
-
+        public Func<string[], string, DeviceCodeInfo, bool, CancellationToken, AuthenticationResult> DeviceCodeAuthFactory { get; set; }
+        public Func<bool, IPublicClientApplication> ClientAppFactory { get; set; }
+        public Func<string[], string, string, AzureCloudInstance, string, bool, CancellationToken, AuthenticationResult> RefreshTokenFactory { get; set; }
         public MockMsalPublicClient() { }
+
+        public MockMsalPublicClient(AuthenticationResult result)
+        {
+            AuthFactory = (_, _) => result;
+            UserPassAuthFactory = (_, _, _, _, _, _) => result;
+            InteractiveAuthFactory = (_, _, _, _, _, _, _, _) => result;
+            SilentAuthFactory = (_, _, _, _, _) => result;
+            ExtendedSilentAuthFactory = (_, _, _, _, _, _) => result;
+            DeviceCodeAuthFactory = (_, _, _, _, _) => result;
+            RefreshTokenFactory = (_, _, _, _, _, _, _) => result;
+        }
 
         public MockMsalPublicClient(CredentialPipeline pipeline, string tenantId, string clientId, string redirectUrl, TokenCredentialOptions options)
             : base(pipeline, tenantId, clientId, redirectUrl, options) { }
 
-        protected override ValueTask<List<IAccount>> GetAccountsCoreAsync(bool async, CancellationToken cancellationToken)
+        protected override ValueTask<List<IAccount>> GetAccountsCoreAsync(bool enableCae, bool async, CancellationToken cancellationToken)
         {
             return new(Accounts);
         }
@@ -53,16 +49,15 @@ namespace Azure.Identity.Tests.Mock
             string[] scopes,
             string claims,
             string username,
-            SecureString password,
+            string password,
             string tenantId,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
-            Func<string[], string, AuthenticationResult> factory = UserPassAuthFactory ?? AuthFactory;
-
-            if (factory != null)
+            if (UserPassAuthFactory != null)
             {
-                return new ValueTask<AuthenticationResult>(factory(scopes, tenantId));
+                return new ValueTask<AuthenticationResult>(UserPassAuthFactory(scopes, claims, username, password, tenantId, enableCae));
             }
 
             throw new NotImplementedException();
@@ -74,6 +69,9 @@ namespace Azure.Identity.Tests.Mock
             Prompt prompt,
             string loginHint,
             string tenantId,
+            bool enableCae,
+            BrowserCustomizationOptions browserOptions,
+            PopTokenRequestContext popTokenRequestContext,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -82,7 +80,7 @@ namespace Azure.Identity.Tests.Mock
 
             if (interactiveAuthFactory != null)
             {
-                return new ValueTask<AuthenticationResult>(interactiveAuthFactory(scopes, claims, prompt, loginHint, tenantId, async, cancellationToken));
+                return new ValueTask<AuthenticationResult>(interactiveAuthFactory(scopes, claims, prompt, loginHint, tenantId, async, browserOptions, cancellationToken));
             }
             if (authFactory != null)
             {
@@ -97,19 +95,13 @@ namespace Azure.Identity.Tests.Mock
             string claims,
             IAccount account,
             string tenantId,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
             if (ExtendedSilentAuthFactory != null)
             {
                 return new ValueTask<AuthenticationResult>(ExtendedSilentAuthFactory(scopes, claims, account, tenantId, async, cancellationToken));
-            }
-
-            Func<string[], string, AuthenticationResult> factory = SilentAuthFactory ?? AuthFactory;
-
-            if (factory != null)
-            {
-                return new ValueTask<AuthenticationResult>(factory(scopes, null));
             }
 
             throw new NotImplementedException();
@@ -120,14 +112,13 @@ namespace Azure.Identity.Tests.Mock
             string claims,
             AuthenticationRecord record,
             string tenantId,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
-            Func<string[], string, AuthenticationResult> factory = SilentAuthFactory ?? AuthFactory;
-
-            if (factory != null)
+            if (SilentAuthFactory != null)
             {
-                return new ValueTask<AuthenticationResult>(factory(scopes, tenantId));
+                return new ValueTask<AuthenticationResult>(SilentAuthFactory(scopes, claims, record, tenantId, enableCae));
             }
 
             throw new NotImplementedException();
@@ -137,13 +128,14 @@ namespace Azure.Identity.Tests.Mock
             string[] scopes,
             string claims,
             Func<DeviceCodeResult, Task> deviceCodeCallback,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {
             if (DeviceCodeAuthFactory != null)
             {
                 await deviceCodeCallback(DeviceCodeResult);
-                var result = DeviceCodeAuthFactory(new DeviceCodeInfo(DeviceCodeResult), cancellationToken);
+                var result = DeviceCodeAuthFactory(scopes, claims, new DeviceCodeInfo(DeviceCodeResult), enableCae, cancellationToken);
                 cancellationToken.ThrowIfCancellationRequested();
                 return result;
             }
@@ -151,19 +143,24 @@ namespace Azure.Identity.Tests.Mock
             throw new NotImplementedException();
         }
 
-        internal ValueTask<IPublicClientApplication> CallCreateClientAsync(bool async, CancellationToken cancellationToken)
+        internal ValueTask<IPublicClientApplication> CallBaseGetClientAsync(bool enableCae, bool async, CancellationToken cancellationToken)
         {
-            return CreateClientAsync(async, cancellationToken);
+            return GetClientAsync(enableCae, async, cancellationToken);
         }
 
-        protected override ValueTask<IPublicClientApplication> CreateClientCoreAsync(string[] clientCapabilities, bool async, CancellationToken cancellationToken)
+        internal ValueTask<IPublicClientApplication> CallCreateClientAsync(bool enableCae, bool async, CancellationToken cancellationToken)
         {
-            if (PubClientAppFactory == null)
+            return CreateClientAsync(enableCae, async, cancellationToken);
+        }
+
+        protected override ValueTask<IPublicClientApplication> CreateClientCoreAsync(bool enableCae, bool async, CancellationToken cancellationToken)
+        {
+            if (ClientAppFactory == null)
             {
-                throw new NotImplementedException();
+                return base.CreateClientCoreAsync(enableCae, async, cancellationToken);
             }
 
-            return new ValueTask<IPublicClientApplication>(PubClientAppFactory(clientCapabilities));
+            return new ValueTask<IPublicClientApplication>(ClientAppFactory(enableCae));
         }
 
         protected override ValueTask<AuthenticationResult> AcquireTokenByRefreshTokenCoreAsync(
@@ -172,6 +169,7 @@ namespace Azure.Identity.Tests.Mock
             string refreshToken,
             AzureCloudInstance azureCloudInstance,
             string tenant,
+            bool enableCae,
             bool async,
             CancellationToken cancellationToken)
         {

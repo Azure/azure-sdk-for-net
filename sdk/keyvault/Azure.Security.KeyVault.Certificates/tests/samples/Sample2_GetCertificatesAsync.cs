@@ -46,7 +46,7 @@ namespace Azure.Security.KeyVault.Certificates.Samples
             // Let's list the certificates which exist in the vault along with their thumbprints
             await foreach (CertificateProperties cert in client.GetPropertiesOfCertificatesAsync())
             {
-                Debug.WriteLine($"Certificate is returned with name {cert.Name} and thumbprint {BitConverter.ToString(cert.X509Thumbprint)}");
+                Debug.WriteLine($"Certificate is returned with name {cert.Name} and thumbprint {cert.X509ThumbprintString}");
             }
 
             // We need to create a new version of a certificate. Creating a certificate with the same name will create another version of the certificate

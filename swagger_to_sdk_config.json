@@ -1,5 +1,10 @@
 {
   "$schema": "https://raw.githubusercontent.com/lmazuel/swagger-to-sdk/master/swagger_to_sdk_config.schema.json",
+  "initOptions": {
+    "initScript": {
+      "path": "pwsh ./eng/scripts/Automation-Sdk-Init.ps1"
+    }
+  },
   "meta": {
     "autorest_options": {
       "version": "2.0.4421",
@@ -7,7 +12,7 @@
       "reflect-api-versions": "",
       "license-header": "MICROSOFT_MIT_NO_VERSION",
       "sdkrel:csharp-sdks-folder": "./sdk",
-      "use": "@microsoft.azure/autorest.csharp@2.3.82"
+      "use": "@microsoft.azure/autorest.csharp@2.3.101"
     },
     "advanced_options": {
       "create_sdk_pull_requests": true,

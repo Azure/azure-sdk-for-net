@@ -11,6 +11,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
+using Azure.Security.KeyVault.Secrets;
 using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 
@@ -295,6 +296,96 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             ex = Assert.ThrowsAsync<ArgumentNullException>(async () => await Client.UpdateKeyRotationPolicyAsync("test", null));
             Assert.AreEqual("policy", ex.ParamName);
+        }
+
+        [Test]
+        public async Task PagesResults()
+        {
+            MockTransport transport = new(
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [
+                        {""id"": ""https://test/keys/1""},
+                        {""id"": ""https://test/keys/2""}
+                    ],
+                    ""nextLink"": ""https://test/keys?$skiptoken=1""
+                }"),
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [],
+                    ""nextLink"": ""https://test/keys?$skiptoken=2""
+                }"),
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [
+                        {""id"": ""https://test/keys/3""}
+                    ]
+                }"));
+
+            KeyClient client = InstrumentClient(new KeyClient(new Uri("https://test"), new MockCredential(), new() { Transport = transport }));
+
+            var keys = await client.GetPropertiesOfKeysAsync().ToEnumerableAsync();
+            Assert.AreEqual(3, keys.Count);
+        }
+
+        [Test]
+        public async Task PagesVersionsResults()
+        {
+            MockTransport transport = new(
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [
+                        {""id"": ""https://test/keys/1/1""},
+                        {""id"": ""https://test/keys/1/2""}
+                    ],
+                    ""nextLink"": ""https://test/keys/1/versions?$skiptoken=1""
+                }"),
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [],
+                    ""nextLink"": ""https://test/keys/1/versions?$skiptoken=2""
+                }"),
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [
+                        {""id"": ""https://test/keys/1/3""}
+                    ]
+                }"));
+
+            KeyClient client = InstrumentClient(new KeyClient(new Uri("https://test"), new MockCredential(), new() { Transport = transport }));
+
+            var versions = await client.GetPropertiesOfKeyVersionsAsync("1").ToEnumerableAsync();
+            Assert.AreEqual(3, versions.Count);
+        }
+
+        [Test]
+        public async Task PagesDeletedResults()
+        {
+            MockTransport transport = new(
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [
+                        {""id"": ""https://test/keys/1""},
+                        {""id"": ""https://test/keys/2""}
+                    ],
+                    ""nextLink"": ""https://test/deletedkeys?$skiptoken=1""
+                }"),
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [],
+                    ""nextLink"": ""https://test/deletedkeys?$skiptoken=2""
+                }"),
+                new MockResponse(200).WithJson(@"
+                {
+                    ""value"": [
+                        {""id"": ""https://test/keys/3""}
+                    ]
+                }"));
+
+            KeyClient client = InstrumentClient(new KeyClient(new Uri("https://test"), new MockCredential(), new() { Transport = transport }));
+
+            var keys = await client.GetDeletedKeysAsync().ToEnumerableAsync();
+            Assert.AreEqual(3, keys.Count);
         }
 
         private class MockCredential : TokenCredential

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
     public class NotebookWorkspaceTests : CosmosDBManagementClientBase
     {
         private ResourceIdentifier _databaseAccountIdentifier;
-        private DatabaseAccountResource _databaseAccount;
+        private CosmosDBAccountResource _databaseAccount;
 
         private const string WorkspaceName = "default";
 

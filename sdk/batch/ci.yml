@@ -9,6 +9,8 @@ trigger:
   paths:
     include:
     - sdk/batch/
+    exclude:
+    - sdk/batch/Azure.ResourceManager.Batch/
 
 pr:
   branches:
@@ -20,9 +22,11 @@ pr:
   paths:
     include:
     - sdk/batch/
+    exclude:
+    - sdk/batch/Azure.ResourceManager.Batch/
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: batch
     ArtifactName: packages

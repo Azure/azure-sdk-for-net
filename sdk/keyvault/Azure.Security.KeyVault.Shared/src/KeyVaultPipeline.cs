@@ -263,7 +263,7 @@ namespace Azure.Security.KeyVault
                 case 204:
                     return response;
                 default:
-                    throw await Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                    throw new RequestFailedException(response);
             }
         }
         private Response SendRequest(Request request, CancellationToken cancellationToken)
@@ -278,7 +278,7 @@ namespace Azure.Security.KeyVault
                 case 204:
                     return response;
                 default:
-                    throw Diagnostics.CreateRequestFailedException(response);
+                    throw new RequestFailedException(response);
             }
         }
     }

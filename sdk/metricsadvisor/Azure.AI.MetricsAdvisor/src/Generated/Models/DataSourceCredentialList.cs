@@ -14,15 +14,18 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The DataSourceCredentialList. </summary>
     internal partial class DataSourceCredentialList
     {
-        /// <summary> Initializes a new instance of DataSourceCredentialList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataSourceCredentialList"/>. </summary>
         internal DataSourceCredentialList()
         {
             Value = new ChangeTrackingList<DataSourceCredentialEntity>();
         }
 
-        /// <summary> Initializes a new instance of DataSourceCredentialList. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataSourceCredentialList"/>. </summary>
         /// <param name="nextLink"></param>
-        /// <param name="value"></param>
+        /// <param name="value">
+        /// Please note <see cref="DataSourceCredentialEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SqlConnectionStringCredentialEntity"/>, <see cref="DataLakeSharedKeyCredentialEntity"/>, <see cref="ServicePrincipalCredentialEntity"/> and <see cref="ServicePrincipalInKeyVaultCredentialEntity"/>.
+        /// </param>
         internal DataSourceCredentialList(string nextLink, IReadOnlyList<DataSourceCredentialEntity> value)
         {
             NextLink = nextLink;
@@ -31,7 +34,11 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
-        /// <summary> Gets the value. </summary>
+        /// <summary>
+        /// Gets the value
+        /// Please note <see cref="DataSourceCredentialEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SqlConnectionStringCredentialEntity"/>, <see cref="DataLakeSharedKeyCredentialEntity"/>, <see cref="ServicePrincipalCredentialEntity"/> and <see cref="ServicePrincipalInKeyVaultCredentialEntity"/>.
+        /// </summary>
         public IReadOnlyList<DataSourceCredentialEntity> Value { get; }
     }
 }

@@ -6,27 +6,29 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Trigger referenced dependency. </summary>
+    /// <summary>
+    /// Trigger referenced dependency.
+    /// Please note <see cref="TriggerDependencyReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="TumblingWindowTriggerDependencyReference"/>.
+    /// </summary>
     public partial class TriggerDependencyReference : DependencyReference
     {
-        /// <summary> Initializes a new instance of TriggerDependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerDependencyReference"/>. </summary>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceTrigger"/> is null. </exception>
         public TriggerDependencyReference(TriggerReference referenceTrigger)
         {
-            if (referenceTrigger == null)
-            {
-                throw new ArgumentNullException(nameof(referenceTrigger));
-            }
+            Argument.AssertNotNull(referenceTrigger, nameof(referenceTrigger));
 
             ReferenceTrigger = referenceTrigger;
             Type = "TriggerDependencyReference";
         }
 
-        /// <summary> Initializes a new instance of TriggerDependencyReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerDependencyReference"/>. </summary>
         /// <param name="type"> The type of dependency reference. </param>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
         internal TriggerDependencyReference(string type, TriggerReference referenceTrigger) : base(type)

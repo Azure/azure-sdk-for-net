@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
@@ -11,7 +14,7 @@ namespace Azure.Core.TestFramework
 {
     [AttributeUsage(AttributeTargets.Method)]
     /// <summary>
-    /// This attribute replaces the [Test] attribute and will dynamically re-record recorded tests on failure.
+    /// This attribute replaces the [Test] attribute and will dynamically re-record recorded tests on failure when run in Playback mode.
     /// Tests that are re-recorded will complete with a error status and indicate that copying the updated recording to SessionRecords is needed.
     /// </summary>
     public class RecordedTestAttribute : TestAttribute, IWrapSetUpTearDown
@@ -23,70 +26,146 @@ namespace Azure.Core.TestFramework
             {
                 test = test.Parent;
             }
-            if (test.Fixture is RecordedTestBase fixture && fixture.Mode == RecordedTestMode.Playback)
+
+            if (test.Fixture is RecordedTestBase fixture)
             {
-                return new FallbackCommand(command);
+                return new RecordedTestAttributeCommand(command, fixture.Mode);
             }
-            else
-            {
-                return command;
-            }
+
+            return command;
         }
 
-        private class FallbackCommand : DelegatingTestCommand
+        private class RecordedTestAttributeCommand : DelegatingTestCommand
         {
-            public FallbackCommand(TestCommand innerCommand) : base(innerCommand)
-            { }
+            private readonly RecordedTestMode _mode;
+
+            public RecordedTestAttributeCommand(TestCommand innerCommand, RecordedTestMode mode) : base(innerCommand)
+            {
+                _mode = mode;
+            }
             public override TestResult Execute(TestExecutionContext context)
             {
                 // Run the test
                 context.CurrentResult = innerCommand.Execute(context);
 
                 // Check the result
-                if (IsTestFailedWithRecordingMismatch(context) && !TestEnvironment.GlobalDisableAutoRecording)
+                if (!IsTestFailed(context))
                 {
-                    var originalResult = context.CurrentResult;
-                    context.CurrentResult = context.CurrentTest.MakeTestResult();
-                    // Run the test again after setting the RecordedTestMode to Record
-                    SetRecordMode(context.TestObject as RecordedTestBase, RecordedTestMode.Record);
-                    context.CurrentResult = innerCommand.Execute(context);
-
-                    // If the recording succeeded, set an error result.
-                    if (context.CurrentResult.ResultState.Status == TestStatus.Passed)
-                    {
-                        context.CurrentResult.SetResult(ResultState.Error, "Test failed playback, but was successfully re-recorded (it should pass if re-run)."+ Environment.NewLine + Environment.NewLine +
-                            originalResult.Message);
-                    }
-                    else
-                    {
-                        context.CurrentResult.SetResult(context.CurrentResult.ResultState,
-                            originalResult.Message, context.CurrentResult.StackTrace + Environment.NewLine + Environment.NewLine +
-                            "The [RecordedTest] attribute attempted to re-record, but failed: " + Environment.NewLine +
-                            context.CurrentResult.Message + Environment.NewLine);
-                    }
-
-                    // revert RecordTestMode to Playback
-                    SetRecordMode(context.TestObject as RecordedTestBase, RecordedTestMode.Playback);
+                    return context.CurrentResult;
                 }
+
+                if (_mode == RecordedTestMode.Playback)
+                {
+                    string resultMessage = context.CurrentResult.Message;
+                    TestResult originalResult = context.CurrentResult;
+
+                    if (resultMessage.Contains(typeof(TestRecordingMismatchException).FullName) &&
+                        !TestEnvironment.GlobalDisableAutoRecording)
+                    {
+                        context.CurrentResult = context.CurrentTest.MakeTestResult();
+                        // Run the test again after setting the RecordedTestMode to Record
+                        SetRecordMode(context.TestObject as RecordedTestBase, RecordedTestMode.Record);
+                        context.CurrentResult = innerCommand.Execute(context);
+
+                        // If the recording succeeded, set an error result.
+                        if (context.CurrentResult.ResultState.Status == TestStatus.Passed)
+                        {
+                            string message = "Test failed playback, but was successfully re-recorded. It should pass if re-run." +
+                                Environment.NewLine +
+                                Environment.NewLine +
+                                originalResult.Message;
+
+                            context.CurrentResult.SetResult(ResultState.Error, message);
+                        }
+                        else
+                        {
+                            string message = "The [RecordedTest] attribute attempted to re-record, but failed:" +
+                                Environment.NewLine +
+                                Environment.NewLine +
+                                context.CurrentResult.Message +
+                                Environment.NewLine +
+                                Environment.NewLine +
+                                "Original failure:" +
+                                Environment.NewLine +
+                                Environment.NewLine +
+                                originalResult.Message;
+
+                            context.CurrentResult.SetResult(context.CurrentResult.ResultState, message, context.CurrentResult.StackTrace);
+                        }
+
+                        // revert RecordTestMode to Playback
+                        SetRecordMode(context.TestObject as RecordedTestBase, RecordedTestMode.Playback);
+                        return context.CurrentResult;
+                    }
+
+                    if (resultMessage.Contains(typeof(TestTimeoutException).FullName))
+                    {
+                        // retry once
+                        context.CurrentResult = context.CurrentTest.MakeTestResult();
+                        context.CurrentResult = innerCommand.Execute(context);
+
+                        if (IsTestFailed(context))
+                        {
+                            context.CurrentResult.SetResult(
+                                ResultState.Error,
+                                "The test timed out twice:" + Environment.NewLine +
+                                $"First attempt: {originalResult.Message}" + Environment.NewLine +
+                                $"Second attempt: {context.CurrentResult.Message}");
+                        }
+                        else
+                        {
+                            context.CurrentResult.SetResult(
+                                context.CurrentResult.ResultState,
+                                "Test timed out in initial run, but was retried successfully.");
+                        }
+
+                        return context.CurrentResult;
+                    }
+                }
+
+                CheckForIgnoredServiceErrors(context);
                 return context.CurrentResult;
             }
 
-            private static bool IsTestFailedWithRecordingMismatch(TestExecutionContext context)
+            private void CheckForIgnoredServiceErrors(TestExecutionContext context)
             {
-                var failed = context.CurrentResult.ResultState.Status switch
+                // Check if there are any service errors we should ignore.
+                var ignoreServiceErrorAttributes = innerCommand.Test.GetCustomAttributes<IgnoreServiceErrorAttribute>(true).ToList();
+
+                // Check parents for service errors to ignore.
+                var test = Test;
+                while (test.Parent is Test t)
+                {
+                    ignoreServiceErrorAttributes.AddRange(t.GetCustomAttributes<IgnoreServiceErrorAttribute>(true));
+                    test = t;
+                }
+                foreach (IgnoreServiceErrorAttribute attr in ignoreServiceErrorAttributes)
+                {
+                    if (attr.Matches(context.CurrentResult.Message))
+                    {
+                        context.CurrentResult.SetResult(
+                            ResultState.Inconclusive,
+                            $"{attr.Reason}\n\nOriginal message follows:\n\n{context.CurrentResult.Message}",
+                            context.CurrentResult.StackTrace);
+                        break;
+                    }
+                }
+            }
+
+            private static void SetRecordMode(RecordedTestBase fixture, RecordedTestMode mode)
+            {
+                fixture.Mode = mode;
+            }
+
+            private static bool IsTestFailed(TestExecutionContext context)
+            {
+                return context.CurrentResult.ResultState.Status switch
                 {
                     TestStatus.Passed => false,
                     TestStatus.Skipped => false,
                     _ => true
                 };
-
-                return failed && context.CurrentResult.Message.Contains(typeof(TestRecordingMismatchException).FullName);
             }
-        }
-
-        private static void SetRecordMode(RecordedTestBase fixture, RecordedTestMode mode)
-        {
-            fixture.Mode = mode;
         }
     }
 }

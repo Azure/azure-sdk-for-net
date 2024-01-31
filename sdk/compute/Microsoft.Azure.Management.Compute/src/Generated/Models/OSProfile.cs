@@ -33,12 +33,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the OSProfile class.
         /// </summary>
         /// <param name="computerName">Specifies the host OS name of the
-        /// virtual machine. &lt;br&gt;&lt;br&gt; This name cannot be updated
-        /// after the VM is created. &lt;br&gt;&lt;br&gt; **Max-length
-        /// (Windows):** 15 characters &lt;br&gt;&lt;br&gt; **Max-length
-        /// (Linux):** 64 characters. &lt;br&gt;&lt;br&gt; For naming
-        /// conventions and restrictions see [Azure infrastructure services
-        /// implementation
+        /// virtual machine. This name cannot be updated after the VM is
+        /// created. **Max-length (Windows):** 15 characters. **Max-length
+        /// (Linux):** 64 characters. For naming conventions and restrictions
+        /// see [Azure infrastructure services implementation
         /// guidelines](https://docs.microsoft.com/azure/azure-resource-manager/management/resource-name-rules).</param>
         /// <param name="adminUsername">Specifies the name of the administrator
         /// account. &lt;br&gt;&lt;br&gt; This property cannot be updated after
@@ -75,21 +73,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="customData">Specifies a base-64 encoded string of
         /// custom data. The base-64 encoded string is decoded to a binary
         /// array that is saved as a file on the Virtual Machine. The maximum
-        /// length of the binary array is 65535 bytes. &lt;br&gt;&lt;br&gt;
-        /// **Note: Do not pass any secrets or passwords in customData
-        /// property** &lt;br&gt;&lt;br&gt; This property cannot be updated
-        /// after the VM is created. &lt;br&gt;&lt;br&gt; customData is passed
-        /// to the VM to be saved as a file, for more information see [Custom
-        /// Data on Azure
-        /// VMs](https://azure.microsoft.com/blog/custom-data-and-cloud-init-on-windows-azure/)
-        /// &lt;br&gt;&lt;br&gt; For using cloud-init for your Linux VM, see
-        /// [Using cloud-init to customize a Linux VM during
-        /// creation](https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init)</param>
+        /// length of the binary array is 65535 bytes. **Note: Do not pass any
+        /// secrets or passwords in customData property.** This property cannot
+        /// be updated after the VM is created. The property 'customData' is
+        /// passed to the VM to be saved as a file, for more information see
+        /// [Custom Data on Azure
+        /// VMs](https://azure.microsoft.com/blog/custom-data-and-cloud-init-on-windows-azure/).
+        /// For using cloud-init for your Linux VM, see [Using cloud-init to
+        /// customize a Linux VM during
+        /// creation](https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init).</param>
         /// <param name="windowsConfiguration">Specifies Windows operating
         /// system settings on the virtual machine.</param>
         /// <param name="linuxConfiguration">Specifies the Linux operating
-        /// system settings on the virtual machine. &lt;br&gt;&lt;br&gt;For a
-        /// list of supported Linux distributions, see [Linux on Azure-Endorsed
+        /// system settings on the virtual machine. For a list of supported
+        /// Linux distributions, see [Linux on Azure-Endorsed
         /// Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros).</param>
         /// <param name="secrets">Specifies set of certificates that should be
         /// installed onto the virtual machine. To install certificates on a
@@ -99,14 +96,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// or the [Azure Key Vault virtual machine extension for
         /// Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows).</param>
         /// <param name="allowExtensionOperations">Specifies whether extension
-        /// operations should be allowed on the virtual machine.
-        /// &lt;br&gt;&lt;br&gt;This may only be set to False when no
-        /// extensions are present on the virtual machine.</param>
-        /// <param name="requireGuestProvisionSignal">Specifies whether the
-        /// guest provision signal is required to infer provision success of
-        /// the virtual machine.  **Note: This property is for private testing
-        /// only, and all customers must not set the property to
-        /// false.**</param>
+        /// operations should be allowed on the virtual machine. This may only
+        /// be set to False when no extensions are present on the virtual
+        /// machine.</param>
+        /// <param name="requireGuestProvisionSignal">Optional property which
+        /// must either be set to True or omitted.</param>
         public OSProfile(string computerName = default(string), string adminUsername = default(string), string adminPassword = default(string), string customData = default(string), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), LinuxConfiguration linuxConfiguration = default(LinuxConfiguration), IList<VaultSecretGroup> secrets = default(IList<VaultSecretGroup>), bool? allowExtensionOperations = default(bool?), bool? requireGuestProvisionSignal = default(bool?))
         {
             ComputerName = computerName;
@@ -128,13 +122,10 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies the host OS name of the virtual machine.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; This name cannot be updated
-        /// after the VM is created. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
-        /// **Max-length (Windows):** 15 characters
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Max-length (Linux):** 64
-        /// characters. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For naming
-        /// conventions and restrictions see [Azure infrastructure services
-        /// implementation
+        /// This name cannot be updated after the VM is created. **Max-length
+        /// (Windows):** 15 characters. **Max-length (Linux):** 64 characters.
+        /// For naming conventions and restrictions see [Azure infrastructure
+        /// services implementation
         /// guidelines](https://docs.microsoft.com/azure/azure-resource-manager/management/resource-name-rules).
         /// </summary>
         [JsonProperty(PropertyName = "computerName")]
@@ -190,17 +181,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets specifies a base-64 encoded string of custom data. The
         /// base-64 encoded string is decoded to a binary array that is saved
         /// as a file on the Virtual Machine. The maximum length of the binary
-        /// array is 65535 bytes. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Note:
-        /// Do not pass any secrets or passwords in customData property**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; This property cannot be
-        /// updated after the VM is created.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; customData is passed to the VM
-        /// to be saved as a file, for more information see [Custom Data on
-        /// Azure
-        /// VMs](https://azure.microsoft.com/blog/custom-data-and-cloud-init-on-windows-azure/)
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For using cloud-init for your
-        /// Linux VM, see [Using cloud-init to customize a Linux VM during
-        /// creation](https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init)
+        /// array is 65535 bytes. **Note: Do not pass any secrets or passwords
+        /// in customData property.** This property cannot be updated after the
+        /// VM is created. The property 'customData' is passed to the VM to be
+        /// saved as a file, for more information see [Custom Data on Azure
+        /// VMs](https://azure.microsoft.com/blog/custom-data-and-cloud-init-on-windows-azure/).
+        /// For using cloud-init for your Linux VM, see [Using cloud-init to
+        /// customize a Linux VM during
+        /// creation](https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init).
         /// </summary>
         [JsonProperty(PropertyName = "customData")]
         public string CustomData { get; set; }
@@ -214,8 +202,8 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies the Linux operating system settings on the
-        /// virtual machine. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For a list of
-        /// supported Linux distributions, see [Linux on Azure-Endorsed
+        /// virtual machine. For a list of supported Linux distributions, see
+        /// [Linux on Azure-Endorsed
         /// Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros).
         /// </summary>
         [JsonProperty(PropertyName = "linuxConfiguration")]
@@ -235,18 +223,15 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies whether extension operations should be
-        /// allowed on the virtual machine.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;This may only be set to False
-        /// when no extensions are present on the virtual machine.
+        /// allowed on the virtual machine. This may only be set to False when
+        /// no extensions are present on the virtual machine.
         /// </summary>
         [JsonProperty(PropertyName = "allowExtensionOperations")]
         public bool? AllowExtensionOperations { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies whether the guest provision signal is
-        /// required to infer provision success of the virtual machine.
-        /// **Note: This property is for private testing only, and all
-        /// customers must not set the property to false.**
+        /// Gets or sets optional property which must either be set to True or
+        /// omitted.
         /// </summary>
         [JsonProperty(PropertyName = "requireGuestProvisionSignal")]
         public bool? RequireGuestProvisionSignal { get; set; }

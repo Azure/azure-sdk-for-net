@@ -96,55 +96,44 @@ namespace Azure.Quantum.Jobs.Tests
             }
 
             // Get input data blob Uri with SAS key
-            string blobName = $"input-{TestEnvironment.GetRandomId("BlobName")}.json";
+            string blobName = $"input-{TestEnvironment.GetRandomId("BlobName")}.bc";
             var inputDataUri = (await client.GetStorageSasUriAsync(
                 new BlobDetails("testcontainer")
                 {
                     BlobName = blobName,
                 })).Value.SasUri;
 
-            // Upload input data to blob (if not in Playback mode)
+            // Upload QIR bitcode to blob storage (if not in Playback mode)
             if (Mode != RecordedTestMode.Playback)
             {
-                var problemFilePath = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "problem.json");
+                var qirFilePath = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), "BellState.bc");
 
-                using (var problemStreamToUpload = new MemoryStream())
+                // Upload QIR bitcode to blob storage
+                var blobClient = new BlobClient(new Uri(inputDataUri));
+                var blobHeaders = new BlobHttpHeaders
                 {
-                    using (FileStream problemFileStream = File.OpenRead(problemFilePath))
-                    {
-                        using (var gzip = new GZipStream(problemStreamToUpload, CompressionMode.Compress, leaveOpen: true))
-                        {
-                            byte[] buffer = new byte[8192];
-                            int count;
-                            while ((count = problemFileStream.Read(buffer, 0, buffer.Length)) > 0)
-                            {
-                                gzip.Write(buffer, 0, count);
-                            }
-                        }
-                    }
-
-                    problemStreamToUpload.Position = 0;
-
-                    // Upload input data to blob
-                    var blobClient = new BlobClient(new Uri(inputDataUri));
-                    var blobHeaders = new BlobHttpHeaders
-                    {
-                        ContentType = "application/json",
-                        ContentEncoding = "gzip"
-                    };
-                    var blobUploadOptions = new BlobUploadOptions { HttpHeaders = blobHeaders };
-                    blobClient.Upload(problemStreamToUpload, options: blobUploadOptions);
+                    ContentType = "qir.v1"
+                };
+                var blobUploadOptions = new BlobUploadOptions { HttpHeaders = blobHeaders };
+                using (FileStream qirFileStream = File.OpenRead(qirFilePath))
+                {
+                    await blobClient.UploadAsync(qirFileStream, options: blobUploadOptions);
                 }
             }
 
             // Submit job
             var jobId = $"job-{TestEnvironment.GetRandomId("JobId")}";
             var jobName = $"jobName-{TestEnvironment.GetRandomId("JobName")}";
-            var inputDataFormat = "microsoft.qio.v2";
-            var outputDataFormat = "microsoft.qio-results.v2";
-            var providerId = "microsoft";
-            var target = "microsoft.paralleltempering-parameterfree.cpu";
-            var inputParams = new Dictionary<string, object>() { { "params", new Dictionary<string, object>() } };
+            var inputDataFormat = "qir.v1";
+            var outputDataFormat = "microsoft.quantum-results.v1";
+            var providerId = "quantinuum";
+            var target = "quantinuum.sim.h1-1e";
+            var inputParams = new Dictionary<string, object>()
+            {
+                { "entryPoint", "ENTRYPOINT__BellState" },
+                { "arguments", new string[] { } },
+                { "targetCapability", "AdaptiveExecution" },
+            };
             var createJobDetails = new JobDetails(containerUri, inputDataFormat, providerId, target)
             {
                 Id = jobId,

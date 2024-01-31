@@ -24,7 +24,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         {
             var serviceHubContext = await _serviceManagerStore
                 .GetOrAddByConnectionStringKey(input.ConnectionStringSetting)
-                .GetAsync(input.HubName).ConfigureAwait(false) as IInternalServiceHubContext;
+                .GetAsync(input.HubName).ConfigureAwait(false) as ServiceHubContext;
             var endpoints = serviceHubContext.GetServiceEndpoints();
             var endpointConnectionInfo = await Task.WhenAll(endpoints.Select(async e =>
             {

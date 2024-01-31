@@ -22,7 +22,7 @@ namespace Azure.Storage.Files.DataLake
         public DateTimeOffset? LastModified => _response.Headers.TryGetValue("Last-Modified", out DateTimeOffset? value) ? value : null;
         /// <summary> The version of the REST protocol used to process the request. </summary>
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
-        /// <summary> A successful &quot;renew&quot; action returns the lease ID. </summary>
+        /// <summary> A successful "renew" action returns the lease ID. </summary>
         public string LeaseId => _response.Headers.TryGetValue("x-ms-lease-id", out string value) ? value : null;
         /// <summary> The time remaining in the lease period in seconds. </summary>
         public string LeaseTime => _response.Headers.TryGetValue("x-ms-lease-time", out string value) ? value : null;

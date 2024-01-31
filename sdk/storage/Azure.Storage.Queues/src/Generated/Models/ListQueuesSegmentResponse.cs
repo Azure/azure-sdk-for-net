@@ -14,7 +14,7 @@ namespace Azure.Storage.Queues.Models
     /// <summary> The object returned when calling List Queues on a Queue Service. </summary>
     internal partial class ListQueuesSegmentResponse
     {
-        /// <summary> Initializes a new instance of ListQueuesSegmentResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListQueuesSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="prefix"></param>
         /// <param name="maxResults"></param>
@@ -22,18 +22,9 @@ namespace Azure.Storage.Queues.Models
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpoint"/>, <paramref name="prefix"/> or <paramref name="nextMarker"/> is null. </exception>
         internal ListQueuesSegmentResponse(string serviceEndpoint, string prefix, int maxResults, string nextMarker)
         {
-            if (serviceEndpoint == null)
-            {
-                throw new ArgumentNullException(nameof(serviceEndpoint));
-            }
-            if (prefix == null)
-            {
-                throw new ArgumentNullException(nameof(prefix));
-            }
-            if (nextMarker == null)
-            {
-                throw new ArgumentNullException(nameof(nextMarker));
-            }
+            Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
+            Argument.AssertNotNull(prefix, nameof(prefix));
+            Argument.AssertNotNull(nextMarker, nameof(nextMarker));
 
             ServiceEndpoint = serviceEndpoint;
             Prefix = prefix;
@@ -42,7 +33,7 @@ namespace Azure.Storage.Queues.Models
             NextMarker = nextMarker;
         }
 
-        /// <summary> Initializes a new instance of ListQueuesSegmentResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListQueuesSegmentResponse"/>. </summary>
         /// <param name="serviceEndpoint"></param>
         /// <param name="prefix"></param>
         /// <param name="marker"></param>

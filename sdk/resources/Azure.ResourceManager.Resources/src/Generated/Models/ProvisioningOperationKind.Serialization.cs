@@ -28,16 +28,16 @@ namespace Azure.ResourceManager.Resources.Models
 
         public static ProvisioningOperationKind ToProvisioningOperationKind(this string value)
         {
-            if (string.Equals(value, "NotSpecified", StringComparison.InvariantCultureIgnoreCase)) return ProvisioningOperationKind.NotSpecified;
-            if (string.Equals(value, "Create", StringComparison.InvariantCultureIgnoreCase)) return ProvisioningOperationKind.Create;
-            if (string.Equals(value, "Delete", StringComparison.InvariantCultureIgnoreCase)) return ProvisioningOperationKind.Delete;
-            if (string.Equals(value, "Waiting", StringComparison.InvariantCultureIgnoreCase)) return ProvisioningOperationKind.Waiting;
-            if (string.Equals(value, "AzureAsyncOperationWaiting", StringComparison.InvariantCultureIgnoreCase)) return ProvisioningOperationKind.AzureAsyncOperationWaiting;
-            if (string.Equals(value, "ResourceCacheWaiting", StringComparison.InvariantCultureIgnoreCase)) return ProvisioningOperationKind.ResourceCacheWaiting;
-            if (string.Equals(value, "Action", StringComparison.InvariantCultureIgnoreCase)) return ProvisioningOperationKind.Action;
-            if (string.Equals(value, "Read", StringComparison.InvariantCultureIgnoreCase)) return ProvisioningOperationKind.Read;
-            if (string.Equals(value, "EvaluateDeploymentOutput", StringComparison.InvariantCultureIgnoreCase)) return ProvisioningOperationKind.EvaluateDeploymentOutput;
-            if (string.Equals(value, "DeploymentCleanup", StringComparison.InvariantCultureIgnoreCase)) return ProvisioningOperationKind.DeploymentCleanup;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSpecified")) return ProvisioningOperationKind.NotSpecified;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Create")) return ProvisioningOperationKind.Create;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Delete")) return ProvisioningOperationKind.Delete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Waiting")) return ProvisioningOperationKind.Waiting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzureAsyncOperationWaiting")) return ProvisioningOperationKind.AzureAsyncOperationWaiting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ResourceCacheWaiting")) return ProvisioningOperationKind.ResourceCacheWaiting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Action")) return ProvisioningOperationKind.Action;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Read")) return ProvisioningOperationKind.Read;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "EvaluateDeploymentOutput")) return ProvisioningOperationKind.EvaluateDeploymentOutput;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DeploymentCleanup")) return ProvisioningOperationKind.DeploymentCleanup;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ProvisioningOperationKind value.");
         }
     }

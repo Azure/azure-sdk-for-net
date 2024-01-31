@@ -11,12 +11,16 @@ using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceBus.Models;
-using Azure.ResourceManager.ServiceBus.Tests.Helpers;
+using Azure.ResourceManager.KeyVault;
+using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.ManagedServiceIdentities;
+using Azure.ResourceManager.ManagedServiceIdentities.Models;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceBus.Tests
 {
-    public class ServiceBusNamespaceTests : ServiceBusTestBase
+    public class ServiceBusNamespaceTests : ServiceBusManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private string namespacePrefix = "testnamespacemgmt";
@@ -66,11 +70,39 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 {
                     Tier = ServiceBusSkuTier.Premium
                 },
-                ZoneRedundant = true
+                IsZoneRedundant = true
             };
             ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, parameters)).Value;
             VerifyNamespaceProperties(serviceBusNamespace, false);
-            Assert.IsTrue(serviceBusNamespace.Data.ZoneRedundant);
+            Assert.IsTrue(serviceBusNamespace.Data.IsZoneRedundant);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task CreateNamespaceWithPremiumPartitionCount()
+        {
+            IgnoreTestInLiveMode();
+            //create namespace and wait for completion
+            string namespaceName = await CreateValidNamespaceName(namespacePrefix);
+            _resourceGroup = await CreateResourceGroupAsync();
+            ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
+            var parameters = new ServiceBusNamespaceData(DefaultLocation)
+            {
+                Sku = new ServiceBusSku(ServiceBusSkuName.Premium)
+                {
+                    Tier = ServiceBusSkuTier.Premium,
+                    Capacity = 2
+                },
+                PremiumMessagingPartitions = 2,
+                IsZoneRedundant = true,
+                Location = "North Europe"
+            };
+            ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, parameters)).Value;
+            VerifyNamespaceProperties(serviceBusNamespace, false);
+            Assert.AreEqual(parameters.Sku.Capacity, serviceBusNamespace.Data.Sku.Capacity);
+            Assert.IsTrue(serviceBusNamespace.Data.IsZoneRedundant);
+            Assert.AreEqual(serviceBusNamespace.Data.PremiumMessagingPartitions, 2);
+            await serviceBusNamespace.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -86,7 +118,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             VerifyNamespaceProperties(serviceBusNamespace, true);
 
             //update namespace
-            PatchableServiceBusNamespaceData parameters = new PatchableServiceBusNamespaceData(DefaultLocation);
+            ServiceBusNamespacePatch parameters = new ServiceBusNamespacePatch(DefaultLocation);
             parameters.Tags.Add("key1", "value1");
             parameters.Tags.Add("key2", "value2");
             serviceBusNamespace = await serviceBusNamespace.UpdateAsync(parameters);
@@ -191,7 +223,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             string namespaceName = await CreateValidNamespaceName(namespacePrefix);
             ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
-            PrivateEndpointConnectionCollection privateEndpointConnectionCollection = serviceBusNamespace.GetPrivateEndpointConnections();
+            ServiceBusPrivateEndpointConnectionCollection privateEndpointConnectionCollection = serviceBusNamespace.GetServiceBusPrivateEndpointConnections();
 
             //create another namespace for connection
             string namespaceName2 = await CreateValidNamespaceName(namespacePrefix);
@@ -199,14 +231,14 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //create an endpoint connection
             string connectionName = Recording.GenerateAssetName("endpointconnection");
-            PrivateEndpointConnectionData parameter = new PrivateEndpointConnectionData()
+            ServiceBusPrivateEndpointConnectionData parameter = new ServiceBusPrivateEndpointConnectionData()
             {
                 PrivateEndpoint = new WritableSubResource()
                 {
                     Id = serviceBusNamespace2.Id
                 }
             };
-            PrivateEndpointConnectionResource privateEndpointConnection = (await privateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, parameter)).Value;
+            ServiceBusPrivateEndpointConnectionResource privateEndpointConnection = (await privateEndpointConnectionCollection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, parameter)).Value;
             Assert.NotNull(privateEndpointConnection);
             Assert.AreEqual(privateEndpointConnection.Data.PrivateEndpoint.Id, serviceBusNamespace2.Id.ToString());
             connectionName = privateEndpointConnection.Id.Name;
@@ -217,7 +249,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.AreEqual(privateEndpointConnection.Data.PrivateEndpoint.Id, serviceBusNamespace2.Id.ToString());
 
             //get all endpoint connections and validate
-            List<PrivateEndpointConnectionResource> privateEndpointConnections = await privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
+            List<ServiceBusPrivateEndpointConnectionResource> privateEndpointConnections = await privateEndpointConnectionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(privateEndpointConnections, 1);
             Assert.AreEqual(privateEndpointConnections.First().Data.PrivateEndpoint.Id, serviceBusNamespace2.Id.ToString());
 
@@ -236,15 +268,15 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             string namespaceName = await CreateValidNamespaceName(namespacePrefix);
             ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
-            NamespaceAuthorizationRuleCollection ruleCollection = serviceBusNamespace.GetNamespaceAuthorizationRules();
+            ServiceBusNamespaceAuthorizationRuleCollection ruleCollection = serviceBusNamespace.GetServiceBusNamespaceAuthorizationRules();
 
             //create authorization rule
             string ruleName = Recording.GenerateAssetName("authorizationrule");
             ServiceBusAuthorizationRuleData parameter = new ServiceBusAuthorizationRuleData()
             {
-                Rights = { AccessRights.Listen, AccessRights.Send }
+                Rights = { ServiceBusAccessRight.Listen, ServiceBusAccessRight.Send }
             };
-            NamespaceAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
+            ServiceBusNamespaceAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
@@ -255,13 +287,13 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
             //get all authorization rules
-            List<NamespaceAuthorizationRuleResource> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
+            List<ServiceBusNamespaceAuthorizationRuleResource> rules = await ruleCollection.GetAllAsync().ToEnumerableAsync();
 
             //there should be two authorization rules
             Assert.True(rules.Count > 1);
             bool isContainAuthorizationRuleName = false;
             bool isContainDefaultRuleName = false;
-            foreach (NamespaceAuthorizationRuleResource rule in rules)
+            foreach (ServiceBusNamespaceAuthorizationRuleResource rule in rules)
             {
                 if (rule.Id.Name == ruleName)
                 {
@@ -276,7 +308,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.True(isContainAuthorizationRuleName);
 
             //update authorization rule
-            parameter.Rights.Add(AccessRights.Manage);
+            parameter.Rights.Add(ServiceBusAccessRight.Manage);
             authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
@@ -301,35 +333,60 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
             string namespaceName = await CreateValidNamespaceName(namespacePrefix);
             ServiceBusNamespaceResource serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, new ServiceBusNamespaceData(DefaultLocation))).Value;
-            NamespaceAuthorizationRuleCollection ruleCollection = serviceBusNamespace.GetNamespaceAuthorizationRules();
+            ServiceBusNamespaceAuthorizationRuleCollection ruleCollection = serviceBusNamespace.GetServiceBusNamespaceAuthorizationRules();
 
             //create authorization rule
             string ruleName = Recording.GenerateAssetName("authorizationrule");
             ServiceBusAuthorizationRuleData parameter = new ServiceBusAuthorizationRuleData()
             {
-                Rights = { AccessRights.Listen, AccessRights.Send }
+                Rights = { ServiceBusAccessRight.Listen, ServiceBusAccessRight.Send }
             };
-            NamespaceAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
+            ServiceBusNamespaceAuthorizationRuleResource authorizationRule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, parameter)).Value;
             Assert.NotNull(authorizationRule);
             Assert.AreEqual(authorizationRule.Data.Rights.Count, parameter.Rights.Count);
 
-            AccessKeys keys1 = await authorizationRule.GetKeysAsync();
+            ServiceBusAccessKeys keys1 = await authorizationRule.GetKeysAsync();
             Assert.NotNull(keys1);
             Assert.NotNull(keys1.PrimaryConnectionString);
             Assert.NotNull(keys1.SecondaryConnectionString);
 
-            AccessKeys keys2 = await authorizationRule.RegenerateKeysAsync(new RegenerateAccessKeyOptions(KeyType.PrimaryKey));
+            ServiceBusAccessKeys keys2 = await authorizationRule.RegenerateKeysAsync(new ServiceBusRegenerateAccessKeyContent(ServiceBusAccessKeyType.PrimaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
                 Assert.AreNotEqual(keys1.PrimaryKey, keys2.PrimaryKey);
                 Assert.AreEqual(keys1.SecondaryKey, keys2.SecondaryKey);
             }
 
-            AccessKeys keys3 = await authorizationRule.RegenerateKeysAsync(new RegenerateAccessKeyOptions(KeyType.SecondaryKey));
+            ServiceBusAccessKeys keys3 = await authorizationRule.RegenerateKeysAsync(new ServiceBusRegenerateAccessKeyContent(ServiceBusAccessKeyType.SecondaryKey));
             if (Mode != RecordedTestMode.Playback)
             {
                 Assert.AreEqual(keys2.PrimaryKey, keys3.PrimaryKey);
                 Assert.AreNotEqual(keys2.SecondaryKey, keys3.SecondaryKey);
+            }
+
+            var updatePrimaryKey = GenerateRandomKey();
+            ServiceBusAccessKeys currentKeys = keys3;
+
+            ServiceBusAccessKeys keys4 = await authorizationRule.RegenerateKeysAsync(new ServiceBusRegenerateAccessKeyContent(ServiceBusAccessKeyType.PrimaryKey)
+            {
+                Key = updatePrimaryKey
+            });
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.AreEqual(updatePrimaryKey, keys4.PrimaryKey);
+                Assert.AreEqual(currentKeys.SecondaryKey, keys4.SecondaryKey);
+            }
+
+            currentKeys = keys4;
+            var updateSecondaryKey = GenerateRandomKey();
+            ServiceBusAccessKeys keys5 = await authorizationRule.RegenerateKeysAsync(new ServiceBusRegenerateAccessKeyContent(ServiceBusAccessKeyType.SecondaryKey)
+            {
+                Key = updateSecondaryKey
+            });
+            if (Mode != RecordedTestMode.Playback)
+            {
+                Assert.AreEqual(updateSecondaryKey, keys5.SecondaryKey);
+                Assert.AreEqual(currentKeys.PrimaryKey, keys5.PrimaryKey);
             }
         }
 
@@ -358,19 +415,19 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                     {
                         Name = "default1",
                         AddressPrefix = "10.0.0.0/24",
-                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.ServiceBus" } }
+                        ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
                     },
                     new SubnetData
                     {
                         Name = "default2",
                         AddressPrefix = "10.0.1.0/24",
-                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.ServiceBus" } }
+                        ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
                     },
                     new SubnetData
                     {
                         Name = "default3",
                         AddressPrefix = "10.0.2.0/24",
-                        ServiceEndpoints = { new ServiceEndpointPropertiesFormat { Service = "Microsoft.ServiceBus" } }
+                        ServiceEndpoints = { new ServiceEndpointProperties { Service = "Microsoft.ServiceBus" } }
                     }
                 },
                 Location = "eastus2"
@@ -383,36 +440,183 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             ResourceIdentifier subnetId1 = new ResourceIdentifier(subscriptionId + "/resourceGroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default1");
             ResourceIdentifier subnetId2 = new ResourceIdentifier(subscriptionId + "/resourceGroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default2");
             ResourceIdentifier subnetId3 = new ResourceIdentifier(subscriptionId + "/resourceGroups/" + _resourceGroup.Id.Name + "/providers/Microsoft.Network/virtualNetworks/" + vnetName + "/subnets/default3");
-            NetworkRuleSetData parameter = new NetworkRuleSetData()
+            ServiceBusNetworkRuleSetData parameter = new ServiceBusNetworkRuleSetData()
             {
-                DefaultAction = DefaultAction.Deny,
+                DefaultAction = ServiceBusNetworkRuleSetDefaultAction.Deny,
                 VirtualNetworkRules =
                 {
-                    new NetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){ Id=subnetId1 } ,IgnoreMissingVnetServiceEndpoint = true},
-                    new NetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){ Id=subnetId2 } ,IgnoreMissingVnetServiceEndpoint = false},
-                    new NetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){ Id=subnetId3 } ,IgnoreMissingVnetServiceEndpoint = false}
+                    new ServiceBusNetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){ Id=subnetId1 } ,IgnoreMissingVnetServiceEndpoint = true},
+                    new ServiceBusNetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){ Id=subnetId2 } ,IgnoreMissingVnetServiceEndpoint = false},
+                    new ServiceBusNetworkRuleSetVirtualNetworkRules() { Subnet = new WritableSubResource(){ Id=subnetId3 } ,IgnoreMissingVnetServiceEndpoint = false}
                 },
                 IPRules =
                     {
-                        new NetworkRuleSetIPRules() { IPMask = "1.1.1.1", Action = "Allow" },
-                        new NetworkRuleSetIPRules() { IPMask = "1.1.1.2", Action = "Allow" },
-                        new NetworkRuleSetIPRules() { IPMask = "1.1.1.3", Action = "Allow" },
-                        new NetworkRuleSetIPRules() { IPMask = "1.1.1.4", Action = "Allow" },
-                        new NetworkRuleSetIPRules() { IPMask = "1.1.1.5", Action = "Allow" }
+                        new ServiceBusNetworkRuleSetIPRules() { IPMask = "1.1.1.1", Action = "Allow" },
+                        new ServiceBusNetworkRuleSetIPRules() { IPMask = "1.1.1.2", Action = "Allow" },
+                        new ServiceBusNetworkRuleSetIPRules() { IPMask = "1.1.1.3", Action = "Allow" },
+                        new ServiceBusNetworkRuleSetIPRules() { IPMask = "1.1.1.4", Action = "Allow" },
+                        new ServiceBusNetworkRuleSetIPRules() { IPMask = "1.1.1.5", Action = "Allow" }
                     }
             };
-            await serviceBusNamespace.GetNetworkRuleSet().CreateOrUpdateAsync(WaitUntil.Completed, parameter);
+            await serviceBusNamespace.GetServiceBusNetworkRuleSet().CreateOrUpdateAsync(WaitUntil.Completed, parameter);
 
             //get the network rule set
-            NetworkRuleSetResource networkRuleSet = await serviceBusNamespace.GetNetworkRuleSet().GetAsync();
+            ServiceBusNetworkRuleSetResource networkRuleSet = await serviceBusNamespace.GetServiceBusNetworkRuleSet().GetAsync();
             Assert.NotNull(networkRuleSet);
             Assert.NotNull(networkRuleSet.Data.IPRules);
             Assert.NotNull(networkRuleSet.Data.VirtualNetworkRules);
             Assert.AreEqual(networkRuleSet.Data.VirtualNetworkRules.Count, 3);
             Assert.AreEqual(networkRuleSet.Data.IPRules.Count, 5);
+        }
 
-            //delete virtual network
-            await virtualNetwork.DeleteAsync(WaitUntil.Completed);
+        [Test]
+        [RecordedTest]
+        public async Task NamespaceSystemAssignedEncryptionTests()
+        {
+            //This test uses a pre-created KeyVault resource. In the event the resource cannot be accessed or is deleted
+            //Please create a new key vault in the subscription that the SDK repo is supposed to use
+            //And update the KeyVault and KeyName in the ServiceBusTestBase
+            ServiceBusNamespaceResource resource = null;
+
+            _resourceGroup = await CreateResourceGroupAsync();
+            ResourceGroupResource _sdk_Resource_Group = await GetResourceGroupAsync("ps-testing");
+            ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
+            KeyVaultCollection kvCollection = _sdk_Resource_Group.GetKeyVaults();
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+
+            ServiceBusNamespaceData namespaceData = new ServiceBusNamespaceData(DefaultLocation)
+            {
+                Sku = new ServiceBusSku(ServiceBusSkuName.Premium)
+                {
+                    Tier = ServiceBusSkuTier.Premium,
+                    Capacity = 1
+                },
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
+            };
+
+            ArmOperation<ServiceBusNamespaceResource> serviceBusNamespace = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, namespaceData).ConfigureAwait(false));
+
+            Assert.AreEqual(namespaceName, serviceBusNamespace.Value.Data.Name);
+            Assert.AreEqual(ServiceBusSkuName.Premium, serviceBusNamespace.Value.Data.Sku.Name);
+            Assert.AreEqual(ManagedServiceIdentityType.SystemAssigned, serviceBusNamespace.Value.Data.Identity.ManagedServiceIdentityType);
+
+            namespaceData = serviceBusNamespace.Value.Data;
+
+            IdentityAccessPermissions identityAccessPermissions = new IdentityAccessPermissions();
+            identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.WrapKey);
+            identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.UnwrapKey);
+            identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.Get);
+
+            KeyVaultAccessPolicy property = new KeyVaultAccessPolicy((Guid)namespaceData.Identity.TenantId, namespaceData.Identity.PrincipalId.ToString(), identityAccessPermissions);
+            Response<KeyVaultResource> kvResponse = await kvCollection.GetAsync(VaultName).ConfigureAwait(false);
+            KeyVaultData kvData = kvResponse.Value.Data;
+            kvData.Properties.AccessPolicies.Add(property);
+            KeyVaultCreateOrUpdateContent parameters = new KeyVaultCreateOrUpdateContent(AzureLocation.EastUS, kvData.Properties);
+            ArmOperation<KeyVaultResource> rawUpdateVault = await kvCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
+
+            namespaceData.Encryption = new ServiceBusEncryption()
+            {
+                KeySource = ServiceBusEncryptionKeySource.MicrosoftKeyVault
+            };
+
+            namespaceData.Encryption.KeyVaultProperties.Add(new ServiceBusKeyVaultProperties()
+            {
+                KeyName = Key1,
+                KeyVaultUri = kvData.Properties.VaultUri
+            });
+
+            namespaceData.Encryption.KeyVaultProperties.Add(new ServiceBusKeyVaultProperties()
+            {
+                KeyName = Key2,
+                KeyVaultUri = kvData.Properties.VaultUri
+            });
+
+            namespaceData.Encryption.KeyVaultProperties.Add(new ServiceBusKeyVaultProperties()
+            {
+                KeyName = Key3,
+                KeyVaultUri = kvData.Properties.VaultUri
+            });
+
+            resource = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, namespaceData).ConfigureAwait(false)).Value;
+            AssertNamespaceMSIOnUpdates(namespaceData, resource.Data);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task UserAssignedEncryptionTests()
+        {
+            ServiceBusNamespaceResource resource = null;
+            //UserAssignedIdentityResource identityResource = null;
+
+            _resourceGroup = await CreateResourceGroupAsync();
+            ResourceGroupResource _sdk_Resource_Group = await GetResourceGroupAsync("ps-testing");
+            ServiceBusNamespaceCollection namespaceCollection = _resourceGroup.GetServiceBusNamespaces();
+            KeyVaultCollection kvCollection = _sdk_Resource_Group.GetKeyVaults();
+            string namespaceName = await CreateValidNamespaceName("testnamespacemgmt");
+
+            string identityName_1 = Recording.GenerateAssetName("identity1");
+            string identityName_2 = Recording.GenerateAssetName("identity2");
+            UserAssignedIdentityCollection identityCollection = _resourceGroup.GetUserAssignedIdentities();
+
+            ResourceIdentifier firstIdentityId, secondIdentityId;
+            ArmOperation<UserAssignedIdentityResource> identityResponse_1 = (await identityCollection.CreateOrUpdateAsync(WaitUntil.Completed, identityName_1, new UserAssignedIdentityData(DefaultLocation)));
+            ArmOperation<UserAssignedIdentityResource> identityResponse_2 = (await identityCollection.CreateOrUpdateAsync(WaitUntil.Completed, identityName_2, new UserAssignedIdentityData(DefaultLocation)));
+
+            IdentityAccessPermissions identityAccessPermissions = new IdentityAccessPermissions();
+            identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.WrapKey);
+            identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.UnwrapKey);
+            identityAccessPermissions.Keys.Add(IdentityAccessKeyPermission.Get);
+            KeyVaultAccessPolicy property = new KeyVaultAccessPolicy((Guid)identityResponse_1.Value.Data.TenantId, identityResponse_1.Value.Data.PrincipalId.ToString(), identityAccessPermissions);
+            Response<KeyVaultResource> kvResponse = await kvCollection.GetAsync(VaultName).ConfigureAwait(false);
+            KeyVaultData kvData = kvResponse.Value.Data;
+            kvData.Properties.AccessPolicies.Add(property);
+            KeyVaultCreateOrUpdateContent parameters = new KeyVaultCreateOrUpdateContent(AzureLocation.EastUS, kvData.Properties);
+            await kvCollection.CreateOrUpdateAsync(WaitUntil.Completed, VaultName, parameters).ConfigureAwait(false);
+            var keyVaultUri = kvData.Properties.VaultUri;
+            firstIdentityId = identityResponse_1.Value.Data.Id;
+            secondIdentityId = identityResponse_2.Value.Data.Id;
+
+            ServiceBusNamespaceData serviceBusNamespaceData = new ServiceBusNamespaceData(DefaultLocation)
+            {
+                Sku = new ServiceBusSku(ServiceBusSkuName.Premium)
+                {
+                    Tier = ServiceBusSkuTier.Premium,
+                    Capacity = 1
+                },
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
+            };
+
+            serviceBusNamespaceData.Identity.UserAssignedIdentities.Add(new KeyValuePair<ResourceIdentifier, UserAssignedIdentity>(firstIdentityId, new UserAssignedIdentity()));
+            serviceBusNamespaceData.Identity.UserAssignedIdentities.Add(new KeyValuePair<ResourceIdentifier, UserAssignedIdentity>(secondIdentityId, new UserAssignedIdentity()));
+
+            serviceBusNamespaceData.Encryption = new ServiceBusEncryption()
+            {
+                KeySource = ServiceBusEncryptionKeySource.MicrosoftKeyVault
+            };
+
+            serviceBusNamespaceData.Encryption.KeyVaultProperties.Add(new ServiceBusKeyVaultProperties()
+            {
+                KeyName = Key1,
+                KeyVaultUri = keyVaultUri,
+                Identity = new UserAssignedIdentityProperties(firstIdentityId.ToString(), null)
+            });
+
+            serviceBusNamespaceData.Encryption.KeyVaultProperties.Add(new ServiceBusKeyVaultProperties()
+            {
+                KeyName = Key2,
+                KeyVaultUri = keyVaultUri,
+                Identity = new UserAssignedIdentityProperties(firstIdentityId.ToString(), null)
+            });
+
+            serviceBusNamespaceData.Encryption.KeyVaultProperties.Add(new ServiceBusKeyVaultProperties()
+            {
+                KeyName = Key3,
+                KeyVaultUri = keyVaultUri,
+                Identity = new UserAssignedIdentityProperties(firstIdentityId.ToString(), null)
+            });
+
+            resource = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, serviceBusNamespaceData)).Value;
+            AssertNamespaceMSIOnUpdates(serviceBusNamespaceData, resource.Data);
         }
 
         [Test]
@@ -456,15 +660,15 @@ namespace Azure.ResourceManager.ServiceBus.Tests
 
             //create the migration config, it's name should always be $default
             string postMigrationName = Recording.GenerateAssetName("postmigration");
-            var migrationParameters = new MigrationConfigPropertiesData()
+            var migrationParameters = new MigrationConfigurationData()
             {
                 PostMigrationName = postMigrationName,
-                TargetNamespace = serviceBusNamespace1.Id.ToString()
+                TargetServiceBusNamespace = serviceBusNamespace1.Id
             };
-            _ = await serviceBusNamespace2.GetMigrationConfigProperties().CreateOrUpdateAsync(WaitUntil.Completed, MigrationConfigurationName.Default, migrationParameters);
+            _ = await serviceBusNamespace2.GetMigrationConfigurations().CreateOrUpdateAsync(WaitUntil.Completed, MigrationConfigurationName.Default, migrationParameters);
 
             //wait for migration state
-            MigrationConfigPropertiesResource migrationConfig = await serviceBusNamespace2.GetMigrationConfigProperties().GetAsync(MigrationConfigurationName.Default);
+            MigrationConfigurationResource migrationConfig = await serviceBusNamespace2.GetMigrationConfigurations().GetAsync(MigrationConfigurationName.Default);
             int count = 0;
             while (count < 100 && (migrationConfig.Data.MigrationState != "Active" || (migrationConfig.Data.PendingReplicationOperationsCount.HasValue && migrationConfig.Data.PendingReplicationOperationsCount != 0)))
             {
@@ -472,11 +676,11 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 {
                     await Task.Delay(30000);
                 }
-                migrationConfig = await serviceBusNamespace2.GetMigrationConfigProperties().GetAsync(MigrationConfigurationName.Default);
+                migrationConfig = await serviceBusNamespace2.GetMigrationConfigurations().GetAsync(MigrationConfigurationName.Default);
                 count++;
             }
             Assert.NotNull(migrationConfig);
-            List<MigrationConfigPropertiesResource> migrationConfigs = await serviceBusNamespace2.GetMigrationConfigProperties().GetAllAsync().ToEnumerableAsync();
+            List<MigrationConfigurationResource> migrationConfigs = await serviceBusNamespace2.GetMigrationConfigurations().GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, migrationConfigs.Count);
 
             //complete migration
@@ -489,7 +693,7 @@ namespace Azure.ResourceManager.ServiceBus.Tests
             Assert.AreEqual(10, queues.Count);
 
             //wait for migration config and premium namespace
-            migrationConfig = await serviceBusNamespace2.GetMigrationConfigProperties().GetAsync(MigrationConfigurationName.Default);
+            migrationConfig = await serviceBusNamespace2.GetMigrationConfigurations().GetAsync(MigrationConfigurationName.Default);
             count = 0;
             while (count < 100 && migrationConfig.Data.MigrationState != "Active")
             {
@@ -497,10 +701,45 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 {
                     await Task.Delay(30000);
                 }
-                migrationConfig = await serviceBusNamespace2.GetMigrationConfigProperties().GetAsync(MigrationConfigurationName.Default);
+                migrationConfig = await serviceBusNamespace2.GetMigrationConfigurations().GetAsync(MigrationConfigurationName.Default);
                 count++;
             }
             await GetSucceededNamespace(serviceBusNamespace1);
+        }
+
+        public void AssertNamespaceMSIOnUpdates(ServiceBusNamespaceData expectedNamespace, ServiceBusNamespaceData actualNamespace)
+        {
+            if (expectedNamespace.Identity != null)
+            {
+                Assert.IsNotNull(actualNamespace.Identity);
+                Assert.AreEqual(expectedNamespace.Identity.ManagedServiceIdentityType, actualNamespace.Identity.ManagedServiceIdentityType);
+                Assert.AreEqual(expectedNamespace.Identity.PrincipalId, actualNamespace.Identity.PrincipalId);
+                Assert.AreEqual(expectedNamespace.Identity.TenantId, actualNamespace.Identity.TenantId);
+
+                if (expectedNamespace.Identity.UserAssignedIdentities != null)
+                {
+                    Assert.NotNull(actualNamespace.Identity.UserAssignedIdentities);
+                    Assert.AreEqual(expectedNamespace.Identity.UserAssignedIdentities.Count, actualNamespace.Identity.UserAssignedIdentities.Count);
+                }
+                else
+                {
+                    Assert.Null(actualNamespace.Identity.UserAssignedIdentities);
+                }
+
+                if (expectedNamespace.Encryption != null)
+                {
+                    Assert.NotNull(actualNamespace.Encryption);
+                    Assert.AreEqual(expectedNamespace.Encryption.KeyVaultProperties.Count, actualNamespace.Encryption.KeyVaultProperties.Count);
+                }
+                else
+                {
+                    Assert.Null(actualNamespace.Encryption);
+                }
+            }
+            else
+            {
+                Assert.Null(actualNamespace.Identity);
+            }
         }
 
         public async Task<ServiceBusNamespaceResource> GetSucceededNamespace(ServiceBusNamespaceResource serviceBusNamespace)

@@ -9,13 +9,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.TextAnalytics;
+using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The SentenceSentiment. </summary>
     internal readonly partial struct SentenceSentimentInternal
     {
-        /// <summary> Initializes a new instance of SentenceSentimentInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentenceSentimentInternal"/>. </summary>
         /// <param name="text"> The sentence text. </param>
         /// <param name="sentiment"> The predicted Sentiment for the sentence. </param>
         /// <param name="confidenceScores"> The sentiment confidence score between 0 and 1 for the sentence for all classes. </param>
@@ -24,28 +25,13 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="targets"> The array of sentence targets for the sentence. </param>
         /// <param name="assessments"> The array of assessments for the sentence. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/>, <paramref name="sentiment"/>, <paramref name="confidenceScores"/>, <paramref name="targets"/> or <paramref name="assessments"/> is null. </exception>
-        internal SentenceSentimentInternal(string text, string sentiment, SentimentConfidenceScores confidenceScores, int offset, int length, IEnumerable<SentenceTarget> targets, IEnumerable<SentenceAssessment> assessments)
+        public SentenceSentimentInternal(string text, string sentiment, SentimentConfidenceScores confidenceScores, int offset, int length, IEnumerable<SentenceTarget> targets, IEnumerable<SentenceAssessment> assessments)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-            if (sentiment == null)
-            {
-                throw new ArgumentNullException(nameof(sentiment));
-            }
-            if (confidenceScores == null)
-            {
-                throw new ArgumentNullException(nameof(confidenceScores));
-            }
-            if (targets == null)
-            {
-                throw new ArgumentNullException(nameof(targets));
-            }
-            if (assessments == null)
-            {
-                throw new ArgumentNullException(nameof(assessments));
-            }
+            Argument.AssertNotNull(text, nameof(text));
+            Argument.AssertNotNull(sentiment, nameof(sentiment));
+            Argument.AssertNotNull(confidenceScores, nameof(confidenceScores));
+            Argument.AssertNotNull(targets, nameof(targets));
+            Argument.AssertNotNull(assessments, nameof(assessments));
 
             Text = text;
             Sentiment = sentiment;
@@ -56,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Models
             Assessments = assessments.ToList();
         }
 
-        /// <summary> Initializes a new instance of SentenceSentimentInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentenceSentimentInternal"/>. </summary>
         /// <param name="text"> The sentence text. </param>
         /// <param name="sentiment"> The predicted Sentiment for the sentence. </param>
         /// <param name="confidenceScores"> The sentiment confidence score between 0 and 1 for the sentence for all classes. </param>

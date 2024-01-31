@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DocumentKeys))
             {
-                writer.WritePropertyName("documentKeys");
+                writer.WritePropertyName("documentKeys"u8);
                 writer.WriteStartArray();
                 foreach (var item in DocumentKeys)
                 {
@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Models
             }
             if (Optional.IsCollectionDefined(DataSourceDocumentIds))
             {
-                writer.WritePropertyName("datasourceDocumentIds");
+                writer.WritePropertyName("datasourceDocumentIds"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataSourceDocumentIds)
                 {

@@ -6,32 +6,24 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> The PathsV3R3RxOauth2TokenPostRequestbodyContentApplicationXWwwFormUrlencodedSchema. </summary>
     internal partial class PathsV3R3RxOauth2TokenPostRequestbodyContentApplicationXWwwFormUrlencodedSchema
     {
-        /// <summary> Initializes a new instance of PathsV3R3RxOauth2TokenPostRequestbodyContentApplicationXWwwFormUrlencodedSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="PathsV3R3RxOauth2TokenPostRequestbodyContentApplicationXWwwFormUrlencodedSchema"/>. </summary>
         /// <param name="service"> Indicates the name of your Azure container registry. </param>
         /// <param name="scope"> Which is expected to be a valid scope, and can be specified more than once for multiple scope requests. You obtained this from the Www-Authenticate response header from the challenge. </param>
         /// <param name="acrRefreshToken"> Must be a valid ACR refresh token. </param>
         /// <param name="grantType"> Grant type is expected to be refresh_token. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="service"/>, <paramref name="scope"/> or <paramref name="acrRefreshToken"/> is null. </exception>
-        internal PathsV3R3RxOauth2TokenPostRequestbodyContentApplicationXWwwFormUrlencodedSchema(string service, string scope, string acrRefreshToken, TokenGrantType grantType = TokenGrantType.RefreshToken)
+        internal PathsV3R3RxOauth2TokenPostRequestbodyContentApplicationXWwwFormUrlencodedSchema(string service, string scope, string acrRefreshToken, TokenGrantType grantType)
         {
-            if (service == null)
-            {
-                throw new ArgumentNullException(nameof(service));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (acrRefreshToken == null)
-            {
-                throw new ArgumentNullException(nameof(acrRefreshToken));
-            }
+            Argument.AssertNotNull(service, nameof(service));
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(acrRefreshToken, nameof(acrRefreshToken));
 
             Service = service;
             Scope = scope;

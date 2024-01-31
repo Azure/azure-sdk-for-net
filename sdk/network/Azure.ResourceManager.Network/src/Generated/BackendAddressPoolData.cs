@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the BackendAddressPool data model. </summary>
-    public partial class BackendAddressPoolData : Models.SubResource
+    /// <summary>
+    /// A class representing the BackendAddressPool data model.
+    /// Pool of backend IP addresses.
+    /// </summary>
+    public partial class BackendAddressPoolData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendAddressPoolData"/>. </summary>
         public BackendAddressPoolData()
         {
             TunnelInterfaces = new ChangeTrackingList<GatewayLoadBalancerTunnelInterface>();
@@ -23,13 +28,15 @@ namespace Azure.ResourceManager.Network
             BackendIPConfigurations = new ChangeTrackingList<NetworkInterfaceIPConfigurationData>();
             LoadBalancingRules = new ChangeTrackingList<WritableSubResource>();
             OutboundRules = new ChangeTrackingList<WritableSubResource>();
+            InboundNatRules = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendAddressPoolData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> The name of the resource that is unique within the set of backend address pools used by the load balancer. This name can be used to access the resource. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="resourceType"> Type of the resource. </param>
         /// <param name="location"> The location of the backend address pool. </param>
         /// <param name="tunnelInterfaces"> An array of gateway load balancer tunnel interfaces. </param>
         /// <param name="loadBalancerBackendAddresses"> An array of backend addresses. </param>
@@ -37,12 +44,14 @@ namespace Azure.ResourceManager.Network
         /// <param name="loadBalancingRules"> An array of references to load balancing rules that use this backend address pool. </param>
         /// <param name="outboundRule"> A reference to an outbound rule that uses this backend address pool. </param>
         /// <param name="outboundRules"> An array of references to outbound rules that use this backend address pool. </param>
+        /// <param name="inboundNatRules"> An array of references to inbound NAT rules that use this backend address pool. </param>
         /// <param name="provisioningState"> The provisioning state of the backend address pool resource. </param>
-        internal BackendAddressPoolData(string id, string name, string etag, string resourceType, string location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, WritableSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, ProvisioningState? provisioningState) : base(id)
+        /// <param name="drainPeriodInSeconds"> Amount of seconds Load Balancer waits for before sending RESET to client and backend address. </param>
+        /// <param name="virtualNetwork"> A reference to a virtual network. </param>
+        /// <param name="syncMode"> Backend address synchronous mode for the backend pool. </param>
+        internal BackendAddressPoolData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, AzureLocation? location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, WritableSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> inboundNatRules, NetworkProvisioningState? provisioningState, int? drainPeriodInSeconds, WritableSubResource virtualNetwork, BackendAddressSyncMode? syncMode) : base(id, name, resourceType, serializedAdditionalRawData)
         {
-            Name = name;
-            Etag = etag;
-            ResourceType = resourceType;
+            ETag = etag;
             Location = location;
             TunnelInterfaces = tunnelInterfaces;
             LoadBalancerBackendAddresses = loadBalancerBackendAddresses;
@@ -50,17 +59,17 @@ namespace Azure.ResourceManager.Network
             LoadBalancingRules = loadBalancingRules;
             OutboundRule = outboundRule;
             OutboundRules = outboundRules;
+            InboundNatRules = inboundNatRules;
             ProvisioningState = provisioningState;
+            DrainPeriodInSeconds = drainPeriodInSeconds;
+            VirtualNetwork = virtualNetwork;
+            SyncMode = syncMode;
         }
 
-        /// <summary> The name of the resource that is unique within the set of backend address pools used by the load balancer. This name can be used to access the resource. </summary>
-        public string Name { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public string Etag { get; }
-        /// <summary> Type of the resource. </summary>
-        public string ResourceType { get; }
+        public ETag? ETag { get; }
         /// <summary> The location of the backend address pool. </summary>
-        public string Location { get; set; }
+        public AzureLocation? Location { get; set; }
         /// <summary> An array of gateway load balancer tunnel interfaces. </summary>
         public IList<GatewayLoadBalancerTunnelInterface> TunnelInterfaces { get; }
         /// <summary> An array of backend addresses. </summary>
@@ -74,13 +83,32 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier OutboundRuleId
         {
-            get => OutboundRule.Id;
-            set => OutboundRule.Id = value;
+            get => OutboundRule?.Id;
         }
 
         /// <summary> An array of references to outbound rules that use this backend address pool. </summary>
         public IReadOnlyList<WritableSubResource> OutboundRules { get; }
+        /// <summary> An array of references to inbound NAT rules that use this backend address pool. </summary>
+        public IReadOnlyList<WritableSubResource> InboundNatRules { get; }
         /// <summary> The provisioning state of the backend address pool resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState { get; }
+        /// <summary> Amount of seconds Load Balancer waits for before sending RESET to client and backend address. </summary>
+        public int? DrainPeriodInSeconds { get; set; }
+        /// <summary> A reference to a virtual network. </summary>
+        internal WritableSubResource VirtualNetwork { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier VirtualNetworkId
+        {
+            get => VirtualNetwork is null ? default : VirtualNetwork.Id;
+            set
+            {
+                if (VirtualNetwork is null)
+                    VirtualNetwork = new WritableSubResource();
+                VirtualNetwork.Id = value;
+            }
+        }
+
+        /// <summary> Backend address synchronous mode for the backend pool. </summary>
+        public BackendAddressSyncMode? SyncMode { get; set; }
     }
 }

@@ -15,36 +15,37 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsSmsDeliveryAttemptProperties DeserializeAcsSmsDeliveryAttemptProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> timestamp = default;
             Optional<int> segmentsSucceeded = default;
             Optional<int> segmentsFailed = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("segmentsSucceeded"))
+                if (property.NameEquals("segmentsSucceeded"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     segmentsSucceeded = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("segmentsFailed"))
+                if (property.NameEquals("segmentsFailed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     segmentsFailed = property.Value.GetInt32();

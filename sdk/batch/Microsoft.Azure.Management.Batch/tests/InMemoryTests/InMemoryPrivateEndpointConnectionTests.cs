@@ -29,7 +29,8 @@ namespace Microsoft.Azure.Batch.Tests
                             'privateLinkServiceConnectionState': {
                                 'status': 'Approved',
                                 'description': 'Its approved'
-                            }
+                            },
+                            'groupIds': [ 'abc123' ]
                         }
                     }")
             };
@@ -44,7 +45,9 @@ namespace Microsoft.Azure.Batch.Tests
             Assert.Equal("/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Network/privateEndpoints/privateEndpointName", result.PrivateEndpoint.Id);
             Assert.Equal(PrivateLinkServiceConnectionStatus.Approved, result.PrivateLinkServiceConnectionState.Status);
             Assert.Equal("Its approved", result.PrivateLinkServiceConnectionState.Description);
-            Assert.Null(result.PrivateLinkServiceConnectionState.ActionRequired);
+            Assert.Equal(1, result.GroupIds.Count);
+            Assert.Equal("abc123", result.GroupIds[0]);
+            Assert.Null(result.PrivateLinkServiceConnectionState.ActionsRequired);
         }
 
         [Fact]
@@ -64,7 +67,8 @@ namespace Microsoft.Azure.Batch.Tests
                                     'privateLinkServiceConnectionState': {
                                         'status': 'Approved',
                                         'description': 'Its approved'
-                                    }
+                                    },
+                                    'groupIds': [ 'abc123' ]
                                 }
                             }]
                     }")
@@ -73,14 +77,16 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler(new HttpResponseMessage[] { okResponse });
 
             var client = BatchTestHelper.GetBatchManagementClient(handler);
-            var result = (await client.PrivateEndpointConnection.ListByBatchAccountAsync("rg", "myaccount")).ToList();
+            var result = (await client.PrivateEndpointConnection.ListByBatchAccountAsync("rg", "myaccount")).ToList().Single();
 
             // Validate result
-            Assert.Equal(PrivateEndpointConnectionProvisioningState.Succeeded, result.Single().ProvisioningState);
-            Assert.Equal("/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Network/privateEndpoints/privateEndpointName", result.Single().PrivateEndpoint.Id);
-            Assert.Equal(PrivateLinkServiceConnectionStatus.Approved, result.Single().PrivateLinkServiceConnectionState.Status);
-            Assert.Equal("Its approved", result.Single().PrivateLinkServiceConnectionState.Description);
-            Assert.Null(result.Single().PrivateLinkServiceConnectionState.ActionRequired);
+            Assert.Equal(PrivateEndpointConnectionProvisioningState.Succeeded, result.ProvisioningState);
+            Assert.Equal("/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Network/privateEndpoints/privateEndpointName", result.PrivateEndpoint.Id);
+            Assert.Equal(PrivateLinkServiceConnectionStatus.Approved, result.PrivateLinkServiceConnectionState.Status);
+            Assert.Equal("Its approved", result.PrivateLinkServiceConnectionState.Description);
+            Assert.Equal(1, result.GroupIds.Count);
+            Assert.Equal("abc123", result.GroupIds[0]);
+            Assert.Null(result.PrivateLinkServiceConnectionState.ActionsRequired);
         }
 
         [Fact]
@@ -98,7 +104,8 @@ namespace Microsoft.Azure.Batch.Tests
                             'privateLinkServiceConnectionState': {
                                 'status': 'Pending',
                                 'description': 'Its pending'
-                            }
+                            },
+                            'groupIds': [ 'abc123' ]
                         }
                     }")
             };
@@ -106,21 +113,18 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler(new HttpResponseMessage[] { okResponse });
 
             var client = BatchTestHelper.GetBatchManagementClient(handler);
-            var result = await client.PrivateEndpointConnection.UpdateAsync(
+            PrivateEndpointConnection result = await client.PrivateEndpointConnection.UpdateAsync(
                 "rg",
                 "myaccount",
-                "privateEndpointName",
-                new PrivateEndpointConnection(
-                    privateLinkServiceConnectionState: new PrivateLinkServiceConnectionState(
-                        status: PrivateLinkServiceConnectionStatus.Pending,
-                        description: "It's pending")));
+                "privateEndpointName"
+            );
 
             // Validate result
             Assert.Equal(PrivateEndpointConnectionProvisioningState.Succeeded, result.ProvisioningState);
             Assert.Equal("/subscriptions/1234/resourceGroups/rg/providers/Microsoft.Network/privateEndpoints/privateEndpointName", result.PrivateEndpoint.Id);
             Assert.Equal(PrivateLinkServiceConnectionStatus.Pending, result.PrivateLinkServiceConnectionState.Status);
             Assert.Equal("Its pending", result.PrivateLinkServiceConnectionState.Description);
-            Assert.Null(result.PrivateLinkServiceConnectionState.ActionRequired);
+            Assert.Null(result.PrivateLinkServiceConnectionState.ActionsRequired);
         }
     }
 }

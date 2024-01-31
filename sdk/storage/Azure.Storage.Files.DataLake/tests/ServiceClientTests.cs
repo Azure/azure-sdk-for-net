@@ -54,6 +54,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(uri, serviceClient.Uri);
+            Assert.IsNotNull(serviceClient.ClientConfiguration.SharedKeyCredential);
         }
 
         [RecordedTest]
@@ -69,6 +70,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.AreEqual(uri, serviceClient.Uri);
+            Assert.IsNotNull(serviceClient.ClientConfiguration.TokenCredential);
         }
 
         [RecordedTest]
@@ -83,6 +85,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             try
             {
                 await fileSystem.CreateAsync();
+                Assert.IsNotNull(fileSystem.ClientConfiguration.SharedKeyCredential);
             }
 
             // Cleanup
@@ -154,6 +157,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             Assert.IsNotNull(fileSystems);
+            Assert.IsNotNull(sasClient.ClientConfiguration.SasCredential);
         }
 
         [RecordedTest]
@@ -185,6 +189,83 @@ namespace Azure.Storage.Files.DataLake.Tests
             TestHelper.AssertExpectedException(
                 () => new DataLakeServiceClient(httpUri, dataLakeClientOptions),
                 new ArgumentException("Cannot use client-provided key without HTTPS."));
+        }
+
+        [RecordedTest]
+        public async Task Ctor_DefaultAudience()
+        {
+            // Arrange
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            DataLakeClientOptions options = GetOptionsWithAudience(DataLakeAudience.DefaultAudience);
+
+            DataLakeServiceClient aadServiceClient = InstrumentClient(new DataLakeServiceClient(
+                service.Uri,
+                GetOAuthHnsCredential(),
+                options));
+
+            // Assert
+            DataLakeServiceProperties properties = await aadServiceClient.GetPropertiesAsync();
+            Assert.IsNotNull(properties);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_CustomAudience()
+        {
+            // Arrange
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            DataLakeClientOptions options = GetOptionsWithAudience(new DataLakeAudience($"https://{service.AccountName}.blob.core.windows.net/"));
+
+            DataLakeServiceClient aadServiceClient = InstrumentClient(new DataLakeServiceClient(
+                service.Uri,
+                GetOAuthHnsCredential(),
+                options));
+
+            // Assert
+            DataLakeServiceProperties properties = await aadServiceClient.GetPropertiesAsync();
+            Assert.IsNotNull(properties);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_StorageAccountAudience()
+        {
+            // Arrange
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            DataLakeClientOptions options = GetOptionsWithAudience(DataLakeAudience.CreateDataLakeServiceAccountAudience(service.AccountName));
+
+            DataLakeServiceClient aadServiceClient = InstrumentClient(new DataLakeServiceClient(
+                service.Uri,
+                GetOAuthHnsCredential(),
+                options));
+
+            // Assert
+            DataLakeServiceProperties properties = await aadServiceClient.GetPropertiesAsync();
+            Assert.IsNotNull(properties);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_AudienceError()
+        {
+            // Arrange
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            DataLakeClientOptions options = GetOptionsWithAudience(new DataLakeAudience("https://badaudience.blob.core.windows.net"));
+
+            DataLakeServiceClient aadServiceClient = InstrumentClient(new DataLakeServiceClient(
+                service.Uri,
+                new MockCredential(),
+                options));
+
+            // Assert
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                aadServiceClient.GetPropertiesAsync(),
+                e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
         }
 
         [RecordedTest]
@@ -228,6 +309,36 @@ namespace Azure.Storage.Files.DataLake.Tests
                 var accountName = new DataLakeUriBuilder(service.Uri).AccountName;
                 TestHelper.AssertCacheableProperty(accountName, () => service.AccountName);
             }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2020_10_02)]
+        public async Task GetFileSystemsAsync_EncryptionScope()
+        {
+            // Arrange
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
+            string fileSystemName = GetNewFileSystemName();
+            DataLakeFileSystemClient fileSystemClient = InstrumentClient(service.GetFileSystemClient(fileSystemName));
+            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = new DataLakeFileSystemEncryptionScopeOptions
+            {
+                DefaultEncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope
+            };
+            DataLakeFileSystemCreateOptions options = new DataLakeFileSystemCreateOptions
+            {
+                EncryptionScopeOptions = encryptionScopeOptions
+            };
+
+            await fileSystemClient.CreateAsync(options: options);
+
+            // Act
+            IList<FileSystemItem> fileSystems = await service.GetFileSystemsAsync().ToListAsync();
+            FileSystemItem fileSystemItem = fileSystems.Single(r => r.Name == fileSystemName);
+
+            // Assert
+            Assert.AreEqual(TestConfigHierarchicalNamespace.EncryptionScope, fileSystemItem.Properties.DefaultEncryptionScope);
+
+            // Cleanup
+            await fileSystemClient.DeleteIfExistsAsync();
         }
 
         [RecordedTest]
@@ -392,6 +503,31 @@ namespace Azure.Storage.Files.DataLake.Tests
                 DataLakeFileSystemClient fileSystem = InstrumentClient((await service.CreateFileSystemAsync(name)).Value);
                 Response<FileSystemProperties> properties = await fileSystem.GetPropertiesAsync();
                 Assert.IsNotNull(properties.Value);
+            }
+            finally
+            {
+                await service.DeleteFileSystemAsync(name);
+            }
+        }
+
+        [RecordedTest]
+        public async Task CreateFileSystemAsync_EncryptionScopeOptions()
+        {
+            var name = GetNewFileSystemName();
+            DataLakeFileSystemEncryptionScopeOptions encryptionScopeOptions = new DataLakeFileSystemEncryptionScopeOptions
+            {
+                DefaultEncryptionScope = TestConfigHierarchicalNamespace.EncryptionScope
+            };
+            DataLakeFileSystemCreateOptions options = new DataLakeFileSystemCreateOptions
+            {
+                EncryptionScopeOptions = encryptionScopeOptions
+            };
+            DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
+            try
+            {
+                DataLakeFileSystemClient fileSystem = InstrumentClient((await service.CreateFileSystemAsync(name, options: options)).Value);
+                Response<FileSystemProperties> properties = await fileSystem.GetPropertiesAsync();
+                Assert.AreEqual(TestConfigHierarchicalNamespace.EncryptionScope, properties.Value.DefaultEncryptionScope);
             }
             finally
             {

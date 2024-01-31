@@ -247,7 +247,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(entity["Foo3"] is DateTime);
         }
 
-         [Test]
+        [Test]
         public void TypeCoercionForDateTimeTypes()
         {
             var entity = new TableEntity("partition", "row");
@@ -268,6 +268,27 @@ namespace Azure.Data.Tables.Tests
             Assert.That(entity["DT"], Is.EqualTo(dateNow));
             Assert.That(entity.GetDateTime("DT"), Is.EqualTo(dateNow));
             Assert.That(entity.GetDateTimeOffset("DT"), Is.EqualTo(offsetNow));
+        }
+
+        [Test]
+        public void TypeCoercionForStringTypes()
+        {
+            var entity = new TableEntity("partition", "row");
+
+            // Initialize a property to an DateTimeOffset value
+            entity["PartitionKey"] = new DateTime();
+            Assert.DoesNotThrow(() => { string foo = entity.PartitionKey; });
+            Assert.That(entity["PartitionKey"] is string);
+        }
+
+        [Test]
+        public void GetBinaryDataRoundtripsBytes()
+        {
+            TableEntity te = new("a", "b");
+            byte[] array = new byte[] { 1, 2, 3, 4, 5 };
+            te.Add("binarydata", array);
+            byte[] roundTrip = te.GetBinaryData("binarydata").ToArray();
+            CollectionAssert.AreEqual(array, roundTrip);
         }
     }
 }

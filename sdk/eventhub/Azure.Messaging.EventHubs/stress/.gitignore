@@ -1,0 +1,11 @@
+stress-test-resources.json
+charts
+.vscode
+*.suo
+*.user
+*.sln.docstates
+.vs/
+*.lock.json
+developer/
+launch.json
+launchSettings.json

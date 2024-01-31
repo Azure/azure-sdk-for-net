@@ -12,9 +12,9 @@ namespace Azure.Communication.CallingServer
 {
     internal class ContentDownloader
     {
-        private readonly CallingServerClient _client;
+        private readonly CallRecording _client;
 
-        internal ContentDownloader(CallingServerClient client)
+        internal ContentDownloader(CallRecording client)
         {
             _client = client;
         }
@@ -73,8 +73,9 @@ namespace Azure.Communication.CallingServer
             }
 
             HttpMessage message = GetHttpMessage(sourceEndpoint, pageRange);
-
+            RedirectPolicy.SetAllowAutoRedirect(message, true);
             await _client._pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+
             switch (message.Response.Status)
             {
                 case 200:
@@ -84,7 +85,7 @@ namespace Azure.Communication.CallingServer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await _client._clientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -102,6 +103,7 @@ namespace Azure.Communication.CallingServer
             }
 
             HttpMessage message = GetHttpMessage(sourceEndpoint, pageRange);
+            RedirectPolicy.SetAllowAutoRedirect(message, true);
             _client._pipeline.Send(message, cancellationToken);
 
             switch (message.Response.Status)
@@ -113,7 +115,7 @@ namespace Azure.Communication.CallingServer
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw _client._clientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 

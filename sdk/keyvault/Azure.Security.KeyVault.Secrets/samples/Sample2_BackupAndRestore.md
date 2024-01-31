@@ -49,11 +49,4 @@ byte[] secretBackupToRestore = File.ReadAllBytes(backupPath);
 SecretProperties restoreSecret = client.RestoreSecretBackup(secretBackupToRestore);
 ```
 
-## Source
-
-To see the full example source, see:
-
-* [Synchronous Sample2_BackupAndRestore.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/tests/samples/Sample2_BackupAndRestore.cs)
-* [Asynchronous Sample2_BackupAndRestore.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Secrets/tests/samples/Sample2_BackupAndRestoreAsync.cs)
-
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

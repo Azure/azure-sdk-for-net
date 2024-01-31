@@ -1,2 +1,0 @@
-# Baselining these until the next GA. This is not a compatibility issue; the impacted member was inappropriately tagged as non-visible and provides value for customers being discoverable.
-CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'Azure.Messaging.EventHubs.Consumer.EventPosition.ToString()' in the contract but not the implementation.

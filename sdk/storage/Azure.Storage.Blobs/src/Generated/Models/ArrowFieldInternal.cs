@@ -6,23 +6,34 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> Groups settings regarding specific field of an arrow schema. </summary>
     internal partial class ArrowFieldInternal
     {
-        /// <summary> Initializes a new instance of ArrowFieldInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArrowFieldInternal"/>. </summary>
         /// <param name="type"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
         public ArrowFieldInternal(string type)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
+            Argument.AssertNotNull(type, nameof(type));
 
             Type = type;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArrowFieldInternal"/>. </summary>
+        /// <param name="type"></param>
+        /// <param name="name"></param>
+        /// <param name="precision"></param>
+        /// <param name="scale"></param>
+        internal ArrowFieldInternal(string type, string name, int? precision, int? scale)
+        {
+            Type = type;
+            Name = name;
+            Precision = precision;
+            Scale = scale;
         }
 
         /// <summary> Gets the type. </summary>

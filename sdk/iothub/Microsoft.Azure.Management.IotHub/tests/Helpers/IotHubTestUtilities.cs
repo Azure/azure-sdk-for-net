@@ -13,8 +13,8 @@ namespace IotHub.Tests.Helpers
 {
     public class IotHubTestUtilities
     {
-        public const string DefaultLocation = "WestUS2";
-        public const string DefaultFailoverLocation = "WestCentralUS";
+        public const string DefaultLocation = "Eastus2Euap";
+        public const string DefaultFailoverLocation = "CentralUsEuap";
         public const string DefaultIotHubName = "DotNetHub";
         public const string DefaultUpdateIotHubName = "UpdateDotNetHub";
         public const string DefaultResourceGroupName = "DotNetHubRG";

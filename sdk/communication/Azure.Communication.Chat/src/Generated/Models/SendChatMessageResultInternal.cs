@@ -6,21 +6,19 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
     /// <summary> Result of the send message operation. </summary>
     internal partial class SendChatMessageResultInternal
     {
-        /// <summary> Initializes a new instance of SendChatMessageResultInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="SendChatMessageResultInternal"/>. </summary>
         /// <param name="id"> A server-generated message id. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         internal SendChatMessageResultInternal(string id)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }

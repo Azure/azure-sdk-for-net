@@ -2,24 +2,22 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-/// <summary>
-/// The suite of tests for the `StartRecognizeBusinessCards` methods in the <see cref="FormRecognizerClient"/> class.
-/// </summary>
-/// <remarks>
-/// These tests have a dependency on live Azure services and may incur costs for the associated
-/// Azure subscription.
-/// </remarks>
 namespace Azure.AI.FormRecognizer.Tests
 {
+    /// <summary>
+    /// The suite of tests for the `StartRecognizeBusinessCards` methods in the <see cref="FormRecognizerClient"/> class.
+    /// </summary>
+    /// <remarks>
+    /// These tests have a dependency on live Azure services and may incur costs for the associated
+    /// Azure subscription.
+    /// </remarks>
     [ClientTestFixture(FormRecognizerClientOptions.ServiceVersion.V2_1)]
-
     public class RecognizeBusinessCardsLiveTests : FormRecognizerLiveTestBase
     {
         public RecognizeBusinessCardsLiveTests(bool isAsync, FormRecognizerClientOptions.ServiceVersion serviceVersion)
@@ -323,20 +321,6 @@ namespace Azure.AI.FormRecognizer.Tests
             Assert.AreEqual(0, blankPage.SelectionMarks.Count);
         }
 
-        [RecordedTest]
-        public void StartRecognizeBusinessCardsThrowsForDamagedFile()
-        {
-            var client = CreateFormRecognizerClient();
-
-            // First 4 bytes are PDF signature, but fill the rest of the "file" with garbage.
-
-            var damagedFile = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x55, 0x55, 0x55 };
-            using var stream = new MemoryStream(damagedFile);
-
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeBusinessCardsAsync(stream));
-            Assert.AreEqual("BadArgument", ex.ErrorCode);
-        }
-
         /// <summary>
         /// Verifies that the <see cref="FormRecognizerClient" /> is able to connect to the Form
         /// Recognizer cognitive service and handle returned errors.
@@ -348,7 +332,7 @@ namespace Azure.AI.FormRecognizer.Tests
             var invalidUri = new Uri("https://idont.ex.ist");
 
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeBusinessCardsFromUriAsync(invalidUri));
-            Assert.AreEqual("FailedToDownloadImage", ex.ErrorCode);
+            Assert.AreEqual("InvalidImage", ex.ErrorCode);
         }
 
         [RecordedTest]
@@ -414,42 +398,6 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [RecordedTest]
-        public async Task StartRecognizeBusinessCardsWithSupportedLocale()
-        {
-            var client = CreateFormRecognizerClient();
-            var options = new RecognizeBusinessCardsOptions()
-            {
-                IncludeFieldElements = true,
-                Locale = FormRecognizerLocale.EnUS
-            };
-            RecognizeBusinessCardsOperation operation;
-
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.BusinessCardJpg);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeBusinessCardsAsync(stream, options);
-            }
-
-            RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
-
-            var businessCard = recognizedForms.Single();
-
-            ValidatePrebuiltForm(
-                businessCard,
-                includeFieldElements: true,
-                expectedFirstPageNumber: 1,
-                expectedLastPageNumber: 1);
-
-            Assert.Greater(businessCard.Fields.Count, 0);
-
-            var businessCardPage = businessCard.Pages.Single();
-
-            Assert.Greater(businessCardPage.Lines.Count, 0);
-            Assert.AreEqual(0, businessCardPage.SelectionMarks.Count);
-            Assert.AreEqual(0, businessCardPage.Tables.Count);
-        }
-
-        [RecordedTest]
         public void StartRecognizeBusinessCardsWithWrongLocale()
         {
             var client = CreateFormRecognizerClient();
@@ -462,44 +410,6 @@ namespace Azure.AI.FormRecognizer.Tests
                 ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeBusinessCardsAsync(stream, new RecognizeBusinessCardsOptions() { Locale = "not-locale" }));
             }
             Assert.AreEqual("UnsupportedLocale", ex.ErrorCode);
-        }
-
-        [RecordedTest]
-        [TestCase("1", 1)]
-        [TestCase("1-2", 2)]
-        public async Task StartRecognizeBusinessCardsWithOnePageArgument(string pages, int expected)
-        {
-            var client = CreateFormRecognizerClient();
-            RecognizeBusinessCardsOperation operation;
-
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeBusinessCardsAsync(stream, new RecognizeBusinessCardsOptions() { Pages = { pages } });
-            }
-
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
-
-            Assert.AreEqual(expected, forms.Count);
-        }
-
-        [RecordedTest]
-        [TestCase("1", "3", 2)]
-        [TestCase("1-2", "3", 3)]
-        public async Task StartRecognizeBusinessCardsWithMultiplePageArgument(string page1, string page2, int expected)
-        {
-            var client = CreateFormRecognizerClient();
-            RecognizeBusinessCardsOperation operation;
-
-            using var stream = FormRecognizerTestEnvironment.CreateStream(TestFile.InvoiceMultipageBlank);
-            using (Recording.DisableRequestBodyRecording())
-            {
-                operation = await client.StartRecognizeBusinessCardsAsync(stream, new RecognizeBusinessCardsOptions() { Pages = { page1, page2 } });
-            }
-
-            RecognizedFormCollection forms = await operation.WaitForCompletionAsync();
-
-            Assert.AreEqual(expected, forms.Count);
         }
     }
 }

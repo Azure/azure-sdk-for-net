@@ -1,9 +1,0 @@
-{
-  "Entries": [],
-  "Variables": {
-    "COSMOS_TABLES_ENDPOINT_SUFFIX": "cosmos.azure.com",
-    "RandomSeed": "1704637388",
-    "TABLES_COSMOS_ACCOUNT_NAME": "pakrymtables3prim",
-    "TABLES_PRIMARY_COSMOS_ACCOUNT_KEY": "Kg=="
-  }
-}

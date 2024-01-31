@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
     {
         public const string None = "None";
         public const string Pending = "Pending";
+        public const string Processing = "Processing";
         public const string Active = "Active";
         public const string PurchaseError = "PurchaseError";
         public const string PaymentInstrumentError = "PaymentInstrumentError";

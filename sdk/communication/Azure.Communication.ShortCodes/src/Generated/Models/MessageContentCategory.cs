@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    /// <summary> Indicates the messaging content category used in the program e.g. &apos;ringTones&apos;, &apos;smsChat&apos;, &apos;video&apos;, &apos;loyaltyProgramPointsPrizes&apos;, &apos;gifting&apos;, &apos;inApplicationBilling&apos;, &apos;textToScreen&apos;. </summary>
+    /// <summary> Indicates the messaging content category used in the program e.g. 'ringTones', 'smsChat', 'video', 'loyaltyProgramPointsPrizes', 'gifting', 'inApplicationBilling', 'textToScreen'. </summary>
     public readonly partial struct MessageContentCategory : IEquatable<MessageContentCategory>
     {
         private readonly string _value;

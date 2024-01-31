@@ -6,32 +6,27 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Remote device adapter properties. </summary>
     public partial class RemoteDeviceAdapterProperties
     {
-        /// <summary> Initializes a new instance of RemoteDeviceAdapterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteDeviceAdapterProperties"/>. </summary>
         /// <param name="target"> The IoT device to which this remote device will connect. </param>
         /// <param name="iotHubDeviceConnection"> Information that enables communication between the IoT Hub and the IoT device - allowing this edge module to act as a transparent gateway between the two. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="target"/> or <paramref name="iotHubDeviceConnection"/> is null. </exception>
         public RemoteDeviceAdapterProperties(RemoteDeviceAdapterTarget target, IotHubDeviceConnection iotHubDeviceConnection)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException(nameof(target));
-            }
-            if (iotHubDeviceConnection == null)
-            {
-                throw new ArgumentNullException(nameof(iotHubDeviceConnection));
-            }
+            Argument.AssertNotNull(target, nameof(target));
+            Argument.AssertNotNull(iotHubDeviceConnection, nameof(iotHubDeviceConnection));
 
             Target = target;
             IotHubDeviceConnection = iotHubDeviceConnection;
         }
 
-        /// <summary> Initializes a new instance of RemoteDeviceAdapterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoteDeviceAdapterProperties"/>. </summary>
         /// <param name="description"> An optional description for the remote device adapter. </param>
         /// <param name="target"> The IoT device to which this remote device will connect. </param>
         /// <param name="iotHubDeviceConnection"> Information that enables communication between the IoT Hub and the IoT device - allowing this edge module to act as a transparent gateway between the two. </param>

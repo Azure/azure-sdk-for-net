@@ -20,20 +20,11 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
             #region Snippet:ContainerRegistry_Tests_Samples_DeleteImage
-#if SNIPPET
-            using Azure.Containers.ContainerRegistry;
-            using Azure.Identity;
-#endif
-
             // Get the service endpoint from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
             // Create a new ContainerRegistryClient
-            ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
-                new ContainerRegistryClientOptions()
-                {
-                    Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-                });
+            ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
 
             // Iterate through repositories
             Pageable<string> repositoryNames = client.GetRepositoryNames();
@@ -69,21 +60,11 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
             Environment.SetEnvironmentVariable("REGISTRY_ENDPOINT", TestEnvironment.Endpoint);
 
             #region Snippet:ContainerRegistry_Tests_Samples_DeleteImageAsync
-#if SNIPPET
-            using System.Linq;
-            using Azure.Containers.ContainerRegistry;
-            using Azure.Identity;
-#endif
-
             // Get the service endpoint from the environment
             Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
             // Create a new ContainerRegistryClient
-            ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
-                new ContainerRegistryClientOptions()
-                {
-                    Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-                });
+            ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
 
             // Iterate through repositories
             AsyncPageable<string> repositoryNames = client.GetRepositoryNamesAsync();
@@ -109,7 +90,6 @@ namespace Azure.Containers.ContainerRegistry.Tests.Samples
                     await image.DeleteAsync();
                 }
             }
-
             #endregion
         }
     }

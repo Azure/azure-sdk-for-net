@@ -7,7 +7,9 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/quantum/
+    - sdk/quantum/ci.yml
+    - sdk/quantum/service.projects
+    - sdk/quantum/Azure.Quantum.Jobs
 
 pr:
   branches:
@@ -18,11 +20,14 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/quantum/
+    - sdk/quantum/ci.yml
+    - sdk/quantum/service.projects
+    - sdk/quantum/Azure.Quantum.Jobs
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SDKType: client
     ServiceDirectory: quantum
     ArtifactName: packages
     Artifacts:

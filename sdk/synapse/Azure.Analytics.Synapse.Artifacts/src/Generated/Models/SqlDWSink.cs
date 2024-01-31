@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A copy activity SQL Data Warehouse sink. </summary>
     public partial class SqlDWSink : CopySink
     {
-        /// <summary> Initializes a new instance of SqlDWSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDWSink"/>. </summary>
         public SqlDWSink()
         {
             Type = "SqlDWSink";
         }
 
-        /// <summary> Initializes a new instance of SqlDWSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlDWSink"/>. </summary>
         /// <param name="type"> Copy sink type. </param>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="polyBaseSettings"> Specifies PolyBase-related settings when allowPolyBase is true. </param>
         /// <param name="allowCopyCommand"> Indicates to use Copy Command to copy data into SQL Data Warehouse. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyCommandSettings"> Specifies Copy Command related settings when allowCopyCommand is true. </param>
-        /// <param name="tableOption"> The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string). </param>
+        /// <param name="tableOption"> The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType string). </param>
         internal SqlDWSink(string type, object writeBatchSize, object writeBatchTimeout, object sinkRetryCount, object sinkRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object preCopyScript, object allowPolyBase, PolybaseSettings polyBaseSettings, object allowCopyCommand, DWCopyCommandSettings copyCommandSettings, object tableOption) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
         {
             PreCopyScript = preCopyScript;
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object AllowCopyCommand { get; set; }
         /// <summary> Specifies Copy Command related settings when allowCopyCommand is true. </summary>
         public DWCopyCommandSettings CopyCommandSettings { get; set; }
-        /// <summary> The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType string). </summary>
         public object TableOption { get; set; }
     }
 }

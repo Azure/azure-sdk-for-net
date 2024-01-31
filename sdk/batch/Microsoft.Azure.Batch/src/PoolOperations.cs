@@ -1901,47 +1901,6 @@ namespace Microsoft.Azure.Batch
             asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
-
-        /// <summary>
-        /// Gets lifetime summary statistics for all of the pools in the current account.
-        /// Statistics are aggregated across all pools that have ever existed in the account, from account creation to the last update time of the statistics. The statistics may not be immediately available. The
-        /// Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes.
-        /// </summary>
-        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>The aggregated pool statistics.</returns>
-        /// <remarks>The get statistics operation runs asynchronously.</remarks>
-        public async Task<PoolStatistics> GetAllLifetimeStatisticsAsync(IEnumerable<BatchClientBehavior> additionalBehaviors = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // craft the behavior manager for this call
-            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
-
-            Task<AzureOperationResponse<Models.PoolStatistics, Models.PoolGetAllLifetimeStatisticsHeaders>> asyncTask =
-                ParentBatchClient.ProtocolLayer.GetAllPoolLifetimeStats(bhMgr, cancellationToken);
-
-            var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
-
-            PoolStatistics statistics = new PoolStatistics(response.Body);
-
-            return statistics;
-        }
-
-        /// <summary>
-        /// Gets lifetime summary statistics for all of the pools in the current account.
-        /// Statistics are aggregated across all pools that have ever existed in the account, from account creation to the last update time of the statistics. The statistics may not be immediately available. The
-        /// Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes.
-        /// </summary>
-        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
-        /// <returns>The aggregated pool statistics.</returns>
-        /// <remarks>This is a blocking operation. For a non-blocking equivalent, see <see cref="GetAllLifetimeStatisticsAsync"/>.</remarks>
-        public PoolStatistics GetAllLifetimeStatistics(IEnumerable<BatchClientBehavior> additionalBehaviors = null)
-        {
-            Task<PoolStatistics> asyncTask = GetAllLifetimeStatisticsAsync(additionalBehaviors);
-            PoolStatistics statistics = asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
-
-            return statistics;
-        }
-
         /// <summary>
         /// Enumerates pool usage metrics.
         /// </summary>

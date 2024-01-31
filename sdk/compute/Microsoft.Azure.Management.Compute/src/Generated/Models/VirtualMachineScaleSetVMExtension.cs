@@ -11,15 +11,18 @@
 namespace Microsoft.Azure.Management.Compute.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Describes a VMSS VM Extension.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineScaleSetVMExtension : SubResourceReadOnly
+    public partial class VirtualMachineScaleSetVMExtension : IResource
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineScaleSetVMExtension
@@ -34,9 +37,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the VirtualMachineScaleSetVMExtension
         /// class.
         /// </summary>
-        /// <param name="id">Resource Id</param>
         /// <param name="name">The name of the extension.</param>
         /// <param name="type">Resource type</param>
+        /// <param name="location">The location of the extension.</param>
         /// <param name="forceUpdateTag">How the extension handler should be
         /// forced to update even if the extension configuration has not
         /// changed.</param>
@@ -70,11 +73,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="protectedSettingsFromKeyVault">The extensions
         /// protected settings that are passed by reference, and consumed from
         /// key vault</param>
-        public VirtualMachineScaleSetVMExtension(string id = default(string), string name = default(string), string type = default(string), string forceUpdateTag = default(string), string publisher = default(string), string type1 = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), VirtualMachineExtensionInstanceView instanceView = default(VirtualMachineExtensionInstanceView), bool? suppressFailures = default(bool?), object protectedSettingsFromKeyVault = default(object))
-            : base(id)
+        /// <param name="provisionAfterExtensions">Collection of extension
+        /// names after which this extension needs to be provisioned.</param>
+        public VirtualMachineScaleSetVMExtension(string name = default(string), string type = default(string), string location = default(string), string forceUpdateTag = default(string), string publisher = default(string), string type1 = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), bool? enableAutomaticUpgrade = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), VirtualMachineExtensionInstanceView instanceView = default(VirtualMachineExtensionInstanceView), bool? suppressFailures = default(bool?), KeyVaultSecretReference protectedSettingsFromKeyVault = default(KeyVaultSecretReference), IList<string> provisionAfterExtensions = default(IList<string>))
         {
             Name = name;
             Type = type;
+            Location = location;
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
             Type1 = type1;
@@ -87,6 +92,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             InstanceView = instanceView;
             SuppressFailures = suppressFailures;
             ProtectedSettingsFromKeyVault = protectedSettingsFromKeyVault;
+            ProvisionAfterExtensions = provisionAfterExtensions;
             CustomInit();
         }
 
@@ -106,6 +112,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the location of the extension.
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets how the extension handler should be forced to update
@@ -189,7 +201,27 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// reference, and consumed from key vault
         /// </summary>
         [JsonProperty(PropertyName = "properties.protectedSettingsFromKeyVault")]
-        public object ProtectedSettingsFromKeyVault { get; set; }
+        public KeyVaultSecretReference ProtectedSettingsFromKeyVault { get; set; }
 
+        /// <summary>
+        /// Gets or sets collection of extension names after which this
+        /// extension needs to be provisioned.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisionAfterExtensions")]
+        public IList<string> ProvisionAfterExtensions { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ProtectedSettingsFromKeyVault != null)
+            {
+                ProtectedSettingsFromKeyVault.Validate();
+            }
+        }
     }
 }

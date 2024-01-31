@@ -13,7 +13,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Catalog
 {
-    /// <summary> The PurviewRelationships service client. </summary>
+    // Data plane generated sub-client.
+    /// <summary> The PurviewRelationships sub-client. </summary>
     public partial class PurviewRelationships
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
@@ -32,66 +33,35 @@ namespace Azure.Analytics.Purview.Catalog
         {
         }
 
-        /// <summary> Create a new relationship between entities. </summary>
+        /// <summary> Initializes a new instance of PurviewRelationships. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
+        /// <param name="endpoint"> The catalog endpoint of your Purview account. Example: https://{accountName}.purview.azure.com. </param>
+        internal PurviewRelationships(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
+            _endpoint = endpoint;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a new relationship between entities.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   end1: {
-        ///     guid: string,
-        ///     typeName: string,
-        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
-        ///   },
-        ///   end2: AtlasObjectId,
-        ///   guid: string,
-        ///   homeId: string,
-        ///   label: string,
-        ///   provenanceType: number,
-        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   end1: {
-        ///     guid: string,
-        ///     typeName: string,
-        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
-        ///   },
-        ///   end2: AtlasObjectId,
-        ///   guid: string,
-        ///   homeId: string,
-        ///   label: string,
-        ///   provenanceType: number,
-        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='CreateAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -110,66 +80,22 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Create a new relationship between entities. </summary>
+        /// <summary>
+        /// [Protocol Method] Create a new relationship between entities.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   end1: {
-        ///     guid: string,
-        ///     typeName: string,
-        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
-        ///   },
-        ///   end2: AtlasObjectId,
-        ///   guid: string,
-        ///   homeId: string,
-        ///   label: string,
-        ///   provenanceType: number,
-        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   end1: {
-        ///     guid: string,
-        ///     typeName: string,
-        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
-        ///   },
-        ///   end2: AtlasObjectId,
-        ///   guid: string,
-        ///   homeId: string,
-        ///   label: string,
-        ///   provenanceType: number,
-        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='Create(RequestContent,RequestContext)']/*" />
         public virtual Response Create(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -188,66 +114,22 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Update an existing relationship between entities. </summary>
+        /// <summary>
+        /// [Protocol Method] Update an existing relationship between entities.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   end1: {
-        ///     guid: string,
-        ///     typeName: string,
-        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
-        ///   },
-        ///   end2: AtlasObjectId,
-        ///   guid: string,
-        ///   homeId: string,
-        ///   label: string,
-        ///   provenanceType: number,
-        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   end1: {
-        ///     guid: string,
-        ///     typeName: string,
-        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
-        ///   },
-        ///   end2: AtlasObjectId,
-        ///   guid: string,
-        ///   homeId: string,
-        ///   label: string,
-        ///   provenanceType: number,
-        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='UpdateAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> UpdateAsync(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -266,66 +148,22 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Update an existing relationship between entities. </summary>
+        /// <summary>
+        /// [Protocol Method] Update an existing relationship between entities.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <remarks>
-        /// Schema for <c>Request Body</c>:
-        /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   end1: {
-        ///     guid: string,
-        ///     typeName: string,
-        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
-        ///   },
-        ///   end2: AtlasObjectId,
-        ///   guid: string,
-        ///   homeId: string,
-        ///   label: string,
-        ///   provenanceType: number,
-        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///   typeName: string,
-        ///   lastModifiedTS: string,
-        ///   createTime: number,
-        ///   createdBy: string,
-        ///   end1: {
-        ///     guid: string,
-        ///     typeName: string,
-        ///     uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
-        ///   },
-        ///   end2: AtlasObjectId,
-        ///   guid: string,
-        ///   homeId: string,
-        ///   label: string,
-        ///   provenanceType: number,
-        ///   status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///   updateTime: number,
-        ///   updatedBy: string,
-        ///   version: number
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='Update(RequestContent,RequestContext)']/*" />
         public virtual Response Update(RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -344,49 +182,25 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get relationship information between entities by its GUID. </summary>
+        /// <summary>
+        /// [Protocol Method] Get relationship information between entities by its GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntityHeader&gt;,
-        ///   relationship: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string,
-        ///     createTime: number,
-        ///     createdBy: string,
-        ///     end1: {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
-        ///     },
-        ///     end2: AtlasObjectId,
-        ///     guid: string,
-        ///     homeId: string,
-        ///     label: string,
-        ///     provenanceType: number,
-        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///     updateTime: number,
-        ///     updatedBy: string,
-        ///     version: number
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual async Task<Response> GetPurviewRelationshipAsync(string guid, bool? extendedInfo = null, RequestContext context = null)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='GetPurviewRelationshipAsync(string,bool?,RequestContext)']/*" />
+        public virtual async Task<Response> GetPurviewRelationshipAsync(string guid, bool? extendedInfo, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -404,49 +218,25 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Get relationship information between entities by its GUID. </summary>
+        /// <summary>
+        /// [Protocol Method] Get relationship information between entities by its GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
         /// <param name="extendedInfo"> Limits whether includes extended information. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Body</c>:
-        /// <code>{
-        ///   referredEntities: Dictionary&lt;string, AtlasEntityHeader&gt;,
-        ///   relationship: {
-        ///     attributes: Dictionary&lt;string, AnyObject&gt;,
-        ///     typeName: string,
-        ///     lastModifiedTS: string,
-        ///     createTime: number,
-        ///     createdBy: string,
-        ///     end1: {
-        ///       guid: string,
-        ///       typeName: string,
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;
-        ///     },
-        ///     end2: AtlasObjectId,
-        ///     guid: string,
-        ///     homeId: string,
-        ///     label: string,
-        ///     provenanceType: number,
-        ///     status: &quot;ACTIVE&quot; | &quot;DELETED&quot;,
-        ///     updateTime: number,
-        ///     updatedBy: string,
-        ///     version: number
-        ///   }
-        /// }
-        /// </code>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
-        public virtual Response GetPurviewRelationship(string guid, bool? extendedInfo = null, RequestContext context = null)
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='GetPurviewRelationship(string,bool?,RequestContext)']/*" />
+        public virtual Response GetPurviewRelationship(string guid, bool? extendedInfo, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
 
@@ -464,21 +254,23 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Delete a relationship between entities by its GUID. </summary>
+        /// <summary>
+        /// [Protocol Method] Delete a relationship between entities by its GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='DeleteAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAsync(string guid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));
@@ -497,21 +289,23 @@ namespace Azure.Analytics.Purview.Catalog
             }
         }
 
-        /// <summary> Delete a relationship between entities by its GUID. </summary>
+        /// <summary>
+        /// [Protocol Method] Delete a relationship between entities by its GUID.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="guid"> The globally unique identifier of the relationship. </param>
-        /// <param name="context"> The request context, which can override default behaviors on the request on a per-call basis. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="guid"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="guid"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <remarks>
-        /// Schema for <c>Response Error</c>:
-        /// <code>{
-        ///   requestId: string,
-        ///   errorCode: string,
-        ///   errorMessage: string
-        /// }
-        /// </code>
-        /// 
-        /// </remarks>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/PurviewRelationships.xml" path="doc/members/member[@name='Delete(string,RequestContext)']/*" />
         public virtual Response Delete(string guid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(guid, nameof(guid));

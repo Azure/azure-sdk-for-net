@@ -1,0 +1,12 @@
+trigger: none
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  parameters:
+    ServiceDirectory: devcenter
+    SDKType: client
+    DeployTestResources: false
+    CloudConfig:
+        Public:
+            SubscriptionConfiguration: $(sub-config-devcenter-test-resources)
+            Location: "eastus"

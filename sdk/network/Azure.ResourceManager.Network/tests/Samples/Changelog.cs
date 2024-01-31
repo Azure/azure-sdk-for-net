@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#region Snippet:Changelog_NewCode
+#region Snippet:Changelog_NewCode_Namespaces
             using System;
             using Azure.Identity;
             using Azure.ResourceManager.Network.Models;
             using Azure.ResourceManager.Resources;
             using Azure.ResourceManager.Resources.Models;
-
-#if !SNIPPET
+#endregion
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager.Network.Tests.Samples
         [Ignore("Only verifying that the sample builds")]
         public async Task NewCode()
         {
-#endif
+            #region Snippet:Changelog_NewCode
             ArmClient armClient = new ArmClient(new DefaultAzureCredential());
             SubscriptionResource subscription = await armClient.GetDefaultSubscriptionAsync();
             ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().GetAsync("abc");
@@ -51,12 +50,12 @@ namespace Azure.ResourceManager.Network.Tests.Samples
             IPsecPolicy policy = new IPsecPolicy(
                300,
                1024,
-               IPsecEncryption.AES128,
-               IPsecIntegrity.SHA256,
-               IkeEncryption.AES192,
-               IkeIntegrity.SHA1,
-               DhGroup.DHGroup2,
-               PfsGroup.PFS1);
+               IPsecEncryption.Aes128,
+               IPsecIntegrity.Sha256,
+               IkeEncryption.Aes192,
+               IkeIntegrity.Sha1,
+               DHGroup.DHGroup2,
+               PfsGroup.Pfs1);
             #endregion
         }
     }

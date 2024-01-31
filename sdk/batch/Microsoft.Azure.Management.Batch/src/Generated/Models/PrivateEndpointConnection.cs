@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Batch.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -41,14 +43,17 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// private endpoint connection.</param>
         /// <param name="privateEndpoint">The ARM resource identifier of the
         /// private endpoint.</param>
+        /// <param name="groupIds">The group id of the private endpoint
+        /// connection.</param>
         /// <param name="privateLinkServiceConnectionState">The private link
         /// service connection state of the private endpoint
         /// connection.</param>
-        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), PrivateEndpointConnectionProvisioningState provisioningState = default(PrivateEndpointConnectionProvisioningState), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionState))
+        public PrivateEndpointConnection(string id = default(string), string name = default(string), string type = default(string), string etag = default(string), PrivateEndpointConnectionProvisioningState provisioningState = default(PrivateEndpointConnectionProvisioningState), PrivateEndpoint privateEndpoint = default(PrivateEndpoint), IList<string> groupIds = default(IList<string>), PrivateLinkServiceConnectionState privateLinkServiceConnectionState = default(PrivateLinkServiceConnectionState))
             : base(id, name, type, etag)
         {
             ProvisioningState = provisioningState;
             PrivateEndpoint = privateEndpoint;
+            GroupIds = groupIds;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             CustomInit();
         }
@@ -62,16 +67,26 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// Gets the provisioning state of the private endpoint connection.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'Succeeded', 'Updating', 'Failed'
+        /// Possible values include: 'Creating', 'Updating', 'Deleting',
+        /// 'Succeeded', 'Failed', 'Cancelled'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public PrivateEndpointConnectionProvisioningState ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets the ARM resource identifier of the private endpoint.
+        /// Gets the ARM resource identifier of the private endpoint.
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateEndpoint")]
-        public PrivateEndpoint PrivateEndpoint { get; set; }
+        public PrivateEndpoint PrivateEndpoint { get; private set; }
+
+        /// <summary>
+        /// Gets the group id of the private endpoint connection.
+        /// </summary>
+        /// <remarks>
+        /// The value has one and only one group id.
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.groupIds")]
+        public IList<string> GroupIds { get; private set; }
 
         /// <summary>
         /// Gets or sets the private link service connection state of the

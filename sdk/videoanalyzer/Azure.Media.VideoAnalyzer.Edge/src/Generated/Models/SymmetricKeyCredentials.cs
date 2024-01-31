@@ -6,27 +6,25 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Symmetric key credential. </summary>
     public partial class SymmetricKeyCredentials : CredentialsBase
     {
-        /// <summary> Initializes a new instance of SymmetricKeyCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="SymmetricKeyCredentials"/>. </summary>
         /// <param name="key"> Symmetric key credential. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public SymmetricKeyCredentials(string key)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             Key = key;
             Type = "#Microsoft.VideoAnalyzer.SymmetricKeyCredentials";
         }
 
-        /// <summary> Initializes a new instance of SymmetricKeyCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="SymmetricKeyCredentials"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="key"> Symmetric key credential. </param>
         internal SymmetricKeyCredentials(string type, string key) : base(type)

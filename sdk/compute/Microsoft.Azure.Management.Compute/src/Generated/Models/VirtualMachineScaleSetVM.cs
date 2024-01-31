@@ -64,20 +64,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="networkProfileConfiguration">Specifies the network
         /// profile configuration of the virtual machine.</param>
         /// <param name="diagnosticsProfile">Specifies the boot diagnostic
-        /// settings state. &lt;br&gt;&lt;br&gt;Minimum api-version:
-        /// 2015-06-15.</param>
+        /// settings state. Minimum api-version: 2015-06-15.</param>
         /// <param name="availabilitySet">Specifies information about the
         /// availability set that the virtual machine should be assigned to.
         /// Virtual machines specified in the same availability set are
         /// allocated to different nodes to maximize availability. For more
         /// information about availability sets, see [Availability sets
         /// overview](https://docs.microsoft.com/azure/virtual-machines/availability-set-overview).
-        /// &lt;br&gt;&lt;br&gt; For more information on Azure planned
-        /// maintenance, see [Maintenance and updates for Virtual Machines in
-        /// Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates)
-        /// &lt;br&gt;&lt;br&gt; Currently, a VM can only be added to
-        /// availability set at creation time. An existing VM cannot be added
-        /// to an availability set.</param>
+        /// For more information on Azure planned maintenance, see [Maintenance
+        /// and updates for Virtual Machines in
+        /// Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates).
+        /// Currently, a VM can only be added to availability set at creation
+        /// time. An existing VM cannot be added to an availability
+        /// set.</param>
         /// <param name="provisioningState">The provisioning state, which only
         /// appears in the response.</param>
         /// <param name="licenseType">Specifies that the image or disk that is
@@ -111,7 +110,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="resources">The virtual machine child extension
         /// resources.</param>
         /// <param name="zones">The virtual machine zones.</param>
-        public VirtualMachineScaleSetVM(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string instanceId = default(string), Sku sku = default(Sku), bool? latestModelApplied = default(bool?), string vmId = default(string), VirtualMachineScaleSetVMInstanceView instanceView = default(VirtualMachineScaleSetVMInstanceView), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), SecurityProfile securityProfile = default(SecurityProfile), NetworkProfile networkProfile = default(NetworkProfile), VirtualMachineScaleSetVMNetworkProfileConfiguration networkProfileConfiguration = default(VirtualMachineScaleSetVMNetworkProfileConfiguration), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), string licenseType = default(string), string modelDefinitionApplied = default(string), VirtualMachineScaleSetVMProtectionPolicy protectionPolicy = default(VirtualMachineScaleSetVMProtectionPolicy), string userData = default(string), Plan plan = default(Plan), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), IList<string> zones = default(IList<string>))
+        /// <param name="identity">The identity of the virtual machine, if
+        /// configured.</param>
+        public VirtualMachineScaleSetVM(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string instanceId = default(string), Sku sku = default(Sku), bool? latestModelApplied = default(bool?), string vmId = default(string), VirtualMachineScaleSetVMInstanceView instanceView = default(VirtualMachineScaleSetVMInstanceView), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), SecurityProfile securityProfile = default(SecurityProfile), NetworkProfile networkProfile = default(NetworkProfile), VirtualMachineScaleSetVMNetworkProfileConfiguration networkProfileConfiguration = default(VirtualMachineScaleSetVMNetworkProfileConfiguration), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), string licenseType = default(string), string modelDefinitionApplied = default(string), VirtualMachineScaleSetVMProtectionPolicy protectionPolicy = default(VirtualMachineScaleSetVMProtectionPolicy), string userData = default(string), Plan plan = default(Plan), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), IList<string> zones = default(IList<string>), VirtualMachineIdentity identity = default(VirtualMachineIdentity))
             : base(location, id, name, type, tags)
         {
             InstanceId = instanceId;
@@ -136,6 +137,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             Plan = plan;
             Resources = resources;
             Zones = zones;
+            Identity = identity;
             CustomInit();
         }
 
@@ -227,9 +229,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public VirtualMachineScaleSetVMNetworkProfileConfiguration NetworkProfileConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the boot diagnostic settings state.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2015-06-15.
+        /// Gets or sets specifies the boot diagnostic settings state. Minimum
+        /// api-version: 2015-06-15.
         /// </summary>
         [JsonProperty(PropertyName = "properties.diagnosticsProfile")]
         public DiagnosticsProfile DiagnosticsProfile { get; set; }
@@ -241,13 +242,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// nodes to maximize availability. For more information about
         /// availability sets, see [Availability sets
         /// overview](https://docs.microsoft.com/azure/virtual-machines/availability-set-overview).
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For more information on Azure
-        /// planned maintenance, see [Maintenance and updates for Virtual
-        /// Machines in
-        /// Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates)
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Currently, a VM can only be
-        /// added to availability set at creation time. An existing VM cannot
-        /// be added to an availability set.
+        /// For more information on Azure planned maintenance, see [Maintenance
+        /// and updates for Virtual Machines in
+        /// Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates).
+        /// Currently, a VM can only be added to availability set at creation
+        /// time. An existing VM cannot be added to an availability set.
         /// </summary>
         [JsonProperty(PropertyName = "properties.availabilitySet")]
         public SubResource AvailabilitySet { get; set; }
@@ -325,6 +324,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "zones")]
         public IList<string> Zones { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the identity of the virtual machine, if configured.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public VirtualMachineIdentity Identity { get; set; }
 
         /// <summary>
         /// Validate the object.

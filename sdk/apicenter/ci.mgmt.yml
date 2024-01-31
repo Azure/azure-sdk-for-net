@@ -1,0 +1,23 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/apicenter/ci.mgmt.yml
+    - sdk/apicenter/Azure.ResourceManager.ApiCenter/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: apicenter
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.ApiCenter
+      safeName: AzureResourceManagerApiCenter

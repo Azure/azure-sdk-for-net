@@ -41,7 +41,12 @@ namespace Azure.Core.TestFramework
             {
                 var handler = new HttpClientHandler
                 {
-                    ServerCertificateCustomValidationCallback = (_, certificate, _, _) => certificate.Issuer == certIssuer
+                    ServerCertificateCustomValidationCallback = (_, certificate, _, _) => certificate.Issuer == certIssuer,
+                    // copied from HttpClientTransport - not needed for HttpWebRequestTransport case as cookies are already off by default and can't be turned on
+                    UseCookies = AppContextSwitchHelper.GetConfigValue(
+                        "Azure.Core.Pipeline.HttpClientTransport.EnableCookies",
+                        "AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES"),
+                    AllowAutoRedirect = false
                 };
                 _innerTransport = new HttpClientTransport(handler);
             }
@@ -62,6 +67,12 @@ namespace Azure.Core.TestFramework
 
         private async Task ProcessAsyncInternalAsync(HttpMessage message, bool async)
         {
+            if (_recording.Mode == RecordedTestMode.Playback && _filter() == EntryRecordModel.DoNotRecord)
+            {
+                throw new InvalidOperationException(
+                    "Operations that are enclosed in a 'TestRecording.DisableRecordingScope' created with the 'DisableRecording' method should not be executed in Playback mode." +
+                    "Instead, update the test to skip the operation when in Playback mode by checking the 'Mode' property of 'RecordedTestBase'.");
+            }
             try
             {
                 RedirectToTestProxy(message);
@@ -124,8 +135,16 @@ namespace Azure.Core.TestFramework
             _recording.HasRequests = true;
             lock (_recording.Random)
             {
-                // Make sure ClientRequestId are the same across request and response
-                request.ClientRequestId = _recording.Random.NewGuid().ToString("N");
+                if (_recording.UseDefaultGuidFormatForClientRequestId)
+                {
+                    // User want the client format to use the default format
+                    request.ClientRequestId = _recording.Random.NewGuid().ToString();
+                }
+                else
+                {
+                    // Make sure ClientRequestId are the same across request and response
+                    request.ClientRequestId = _recording.Random.NewGuid().ToString("N");
+                }
             }
             return request;
         }

@@ -4,25 +4,38 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Scale;
+using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 {
-    internal sealed class BlobListener : IListener, IScaleMonitorProvider
+    internal sealed class BlobListener : IListener, IScaleMonitorProvider, ITargetScalerProvider
     {
         private readonly ISharedListener _sharedListener;
+        private readonly ILogger<BlobListener> _logger;
 
         private bool _started;
         private bool _disposed;
+        private string _details;
 
-        public BlobListener(ISharedListener sharedListener)
+        // for mock test purposes only
+        internal BlobListener(ISharedListener sharedListener)
         {
             _sharedListener = sharedListener;
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        public BlobListener(ISharedListener sharedListener, BlobContainerClient containerClient, IBlobPathSource blobPathSource, ILoggerFactory loggerFactory)
+        {
+            _sharedListener = sharedListener;
+            _details = $"blob container name={containerClient.Name}, storage account name={containerClient.AccountName}, blob name pattern={blobPathSource.BlobNamePattern}";
+            _logger = loggerFactory.CreateLogger<BlobListener>();
+        }
+
+        public async Task StartAsync(CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -31,7 +44,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 throw new InvalidOperationException("The listener has already been started.");
             }
 
-            return StartAsyncCore(cancellationToken);
+            await StartAsyncCore(cancellationToken).ConfigureAwait(false);
+            _logger.LogDebug($"Storage blob listener started ({_details})");
         }
 
         private async Task StartAsyncCore(CancellationToken cancellationToken)
@@ -42,7 +56,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             _started = true;
         }
 
-        public Task StopAsync(CancellationToken cancellationToken)
+        public async Task StopAsync(CancellationToken cancellationToken)
         {
             ThrowIfDisposed();
 
@@ -52,7 +66,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                     "The listener has not yet been started or has already been stopped.");
             }
 
-            return StopAsyncCore(cancellationToken);
+            await StopAsyncCore(cancellationToken).ConfigureAwait(false);
+            _logger.LogDebug($"Storage blob listener stopped ({_details})");
         }
 
         private async Task StopAsyncCore(CancellationToken cancellationToken)
@@ -97,6 +112,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             // shared QueueListener. If all BlobTrigger functions are disabled, their listeners won't be created
             // so the shared queue won't be monitored.
             return ((IScaleMonitorProvider)_sharedListener).GetMonitor();
+        }
+
+        public ITargetScaler GetTargetScaler()
+        {
+            return ((ITargetScalerProvider)_sharedListener).GetTargetScaler();
         }
     }
 }

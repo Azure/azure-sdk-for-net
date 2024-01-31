@@ -6,27 +6,25 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Live Pipeline represents an unique instance of a pipeline topology which is used for real-time content ingestion and analysis. </summary>
     internal partial class LivePipelineSetRequestBody : MethodRequest
     {
-        /// <summary> Initializes a new instance of LivePipelineSetRequestBody. </summary>
+        /// <summary> Initializes a new instance of <see cref="LivePipelineSetRequestBody"/>. </summary>
         /// <param name="name"> Live pipeline unique identifier. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public LivePipelineSetRequestBody(string name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             MethodName = "LivePipelineSetRequestBody";
         }
 
-        /// <summary> Initializes a new instance of LivePipelineSetRequestBody. </summary>
+        /// <summary> Initializes a new instance of <see cref="LivePipelineSetRequestBody"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
         /// <param name="name"> Live pipeline unique identifier. </param>

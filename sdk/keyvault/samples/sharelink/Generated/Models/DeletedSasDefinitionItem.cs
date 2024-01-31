@@ -13,12 +13,12 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> The deleted SAS definition item containing metadata about the deleted SAS definition. </summary>
     public partial class DeletedSasDefinitionItem : SasDefinitionItem
     {
-        /// <summary> Initializes a new instance of DeletedSasDefinitionItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedSasDefinitionItem"/>. </summary>
         internal DeletedSasDefinitionItem()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedSasDefinitionItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedSasDefinitionItem"/>. </summary>
         /// <param name="id"> The storage SAS identifier. </param>
         /// <param name="secretId"> The storage account SAS definition secret id. </param>
         /// <param name="attributes"> The SAS definition management attributes. </param>

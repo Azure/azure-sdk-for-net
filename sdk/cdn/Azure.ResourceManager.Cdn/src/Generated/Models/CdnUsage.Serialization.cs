@@ -5,49 +5,163 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CdnUsage
+    public partial class CdnUsage : IUtf8JsonSerializable, IJsonModel<CdnUsage>
     {
-        internal static CdnUsage DeserializeCdnUsage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnUsage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CdnUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            Optional<string> id = default;
-            UsageUnit unit = default;
-            long currentValue = default;
-            long limit = default;
-            UsageName name = default;
-            foreach (var property in element.EnumerateObject())
+            var format = options.Format == "W" ? ((IPersistableModel<CdnUsage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                if (property.NameEquals("id"))
+                throw new FormatException($"The model {nameof(CdnUsage)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(CurrentValue))
+            {
+                writer.WritePropertyName("currentValue"u8);
+                writer.WriteNumberValue(CurrentValue.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Limit))
+            {
+                writer.WritePropertyName("limit"u8);
+                writer.WriteNumberValue(Limit.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("unit"))
-                {
-                    unit = new UsageUnit(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("currentValue"))
-                {
-                    currentValue = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("limit"))
-                {
-                    limit = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("name"))
-                {
-                    name = UsageName.DeserializeUsageName(property.Value);
-                    continue;
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
             }
-            return new CdnUsage(id.Value, unit, currentValue, limit, name);
+            writer.WriteEndObject();
         }
+
+        CdnUsage IJsonModel<CdnUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CdnUsage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CdnUsage)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCdnUsage(document.RootElement, options);
+        }
+
+        internal static CdnUsage DeserializeCdnUsage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> resourceType = default;
+            Optional<CdnUsageUnit> unit = default;
+            Optional<int> currentValue = default;
+            Optional<int> limit = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("resourceType"u8))
+                {
+                    resourceType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("unit"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    unit = new CdnUsageUnit(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("currentValue"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    currentValue = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("limit"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    limit = property.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CdnUsage(resourceType.Value, Optional.ToNullable(unit), Optional.ToNullable(currentValue), Optional.ToNullable(limit), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<CdnUsage>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CdnUsage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CdnUsage)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CdnUsage IPersistableModel<CdnUsage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CdnUsage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCdnUsage(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CdnUsage)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CdnUsage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

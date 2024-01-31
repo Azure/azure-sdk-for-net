@@ -1,0 +1,10 @@
+﻿<xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' xmlns:xs='http://www.w3.org/2001/XMLSchema' version='3.0'>
+  <xsl:output method='text'/>
+  <xsl:template match='/'>
+    <xsl:value-of select='company/employee/name'/>
+    <xsl:variable name='test'>
+      <xsl:text>company/employee/name</xsl:text>
+    </xsl:variable>
+    <xsl:evaluate xpath='$test'/>
+  </xsl:template>
+</xsl:stylesheet>

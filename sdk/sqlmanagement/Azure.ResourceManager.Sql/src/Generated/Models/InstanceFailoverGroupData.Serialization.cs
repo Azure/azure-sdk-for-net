@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,26 +15,69 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class InstanceFailoverGroupData : IUtf8JsonSerializable
+    public partial class InstanceFailoverGroupData : IUtf8JsonSerializable, IJsonModel<InstanceFailoverGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InstanceFailoverGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InstanceFailoverGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InstanceFailoverGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InstanceFailoverGroupData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(SecondaryType))
+            {
+                writer.WritePropertyName("secondaryType"u8);
+                writer.WriteStringValue(SecondaryType.Value.ToString());
+            }
             if (Optional.IsDefined(ReadWriteEndpoint))
             {
-                writer.WritePropertyName("readWriteEndpoint");
+                writer.WritePropertyName("readWriteEndpoint"u8);
                 writer.WriteObjectValue(ReadWriteEndpoint);
             }
             if (Optional.IsDefined(ReadOnlyEndpoint))
             {
-                writer.WritePropertyName("readOnlyEndpoint");
+                writer.WritePropertyName("readOnlyEndpoint"u8);
                 writer.WriteObjectValue(ReadOnlyEndpoint);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReplicationRole))
+            {
+                writer.WritePropertyName("replicationRole"u8);
+                writer.WriteStringValue(ReplicationRole.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReplicationState))
+            {
+                writer.WritePropertyName("replicationState"u8);
+                writer.WriteStringValue(ReplicationState);
             }
             if (Optional.IsCollectionDefined(PartnerRegions))
             {
-                writer.WritePropertyName("partnerRegions");
+                writer.WritePropertyName("partnerRegions"u8);
                 writer.WriteStartArray();
                 foreach (var item in PartnerRegions)
                 {
@@ -42,7 +87,7 @@ namespace Azure.ResourceManager.Sql
             }
             if (Optional.IsCollectionDefined(ManagedInstancePairs))
             {
-                writer.WritePropertyName("managedInstancePairs");
+                writer.WritePropertyName("managedInstancePairs"u8);
                 writer.WriteStartArray();
                 foreach (var item in ManagedInstancePairs)
                 {
@@ -51,44 +96,84 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InstanceFailoverGroupData DeserializeInstanceFailoverGroupData(JsonElement element)
+        InstanceFailoverGroupData IJsonModel<InstanceFailoverGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InstanceFailoverGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InstanceFailoverGroupData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInstanceFailoverGroupData(document.RootElement, options);
+        }
+
+        internal static InstanceFailoverGroupData DeserializeInstanceFailoverGroupData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
+            Optional<GeoSecondaryInstanceType> secondaryType = default;
             Optional<InstanceFailoverGroupReadWriteEndpoint> readWriteEndpoint = default;
             Optional<InstanceFailoverGroupReadOnlyEndpoint> readOnlyEndpoint = default;
             Optional<InstanceFailoverGroupReplicationRole> replicationRole = default;
             Optional<string> replicationState = default;
             Optional<IList<PartnerRegionInfo>> partnerRegions = default;
             Optional<IList<ManagedInstancePairInfo>> managedInstancePairs = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -97,46 +182,51 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("readWriteEndpoint"))
+                        if (property0.NameEquals("secondaryType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            secondaryType = new GeoSecondaryInstanceType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("readWriteEndpoint"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             readWriteEndpoint = InstanceFailoverGroupReadWriteEndpoint.DeserializeInstanceFailoverGroupReadWriteEndpoint(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("readOnlyEndpoint"))
+                        if (property0.NameEquals("readOnlyEndpoint"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             readOnlyEndpoint = InstanceFailoverGroupReadOnlyEndpoint.DeserializeInstanceFailoverGroupReadOnlyEndpoint(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("replicationRole"))
+                        if (property0.NameEquals("replicationRole"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             replicationRole = new InstanceFailoverGroupReplicationRole(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("replicationState"))
+                        if (property0.NameEquals("replicationState"u8))
                         {
                             replicationState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("partnerRegions"))
+                        if (property0.NameEquals("partnerRegions"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PartnerRegionInfo> array = new List<PartnerRegionInfo>();
@@ -147,11 +237,10 @@ namespace Azure.ResourceManager.Sql
                             partnerRegions = array;
                             continue;
                         }
-                        if (property0.NameEquals("managedInstancePairs"))
+                        if (property0.NameEquals("managedInstancePairs"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ManagedInstancePairInfo> array = new List<ManagedInstancePairInfo>();
@@ -165,8 +254,44 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InstanceFailoverGroupData(id, name, type, systemData, readWriteEndpoint.Value, readOnlyEndpoint.Value, Optional.ToNullable(replicationRole), replicationState.Value, Optional.ToList(partnerRegions), Optional.ToList(managedInstancePairs));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InstanceFailoverGroupData(id, name, type, systemData.Value, Optional.ToNullable(secondaryType), readWriteEndpoint.Value, readOnlyEndpoint.Value, Optional.ToNullable(replicationRole), replicationState.Value, Optional.ToList(partnerRegions), Optional.ToList(managedInstancePairs), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InstanceFailoverGroupData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InstanceFailoverGroupData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InstanceFailoverGroupData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        InstanceFailoverGroupData IPersistableModel<InstanceFailoverGroupData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InstanceFailoverGroupData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInstanceFailoverGroupData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InstanceFailoverGroupData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InstanceFailoverGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

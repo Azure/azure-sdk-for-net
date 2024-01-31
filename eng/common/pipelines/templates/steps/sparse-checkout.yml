@@ -8,16 +8,19 @@ parameters:
       - Name: $(Build.Repository.Name)
         Commitish: $(Build.SourceVersion)
         WorkingDirectory: $(System.DefaultWorkingDirectory)
-  - name: SkipDefaultCheckout
+  - name: SkipCheckoutNone
     type: boolean
     default: false
 
 steps:
-  - ${{ if not(parameters.SkipDefaultCheckout) }}:
-    - checkout: none
+  - ${{ if not(parameters.SkipCheckoutNone) }}:
+      - checkout: none
 
   - task: PowerShell@2
-    displayName: 'Sparse checkout repositories'
+    ${{ if eq(length(parameters.Repositories), 1) }}:
+      displayName: 'Sparse checkout ${{ parameters.Repositories[0].Name }}'
+    ${{ else }}:
+      displayName: 'Sparse checkout repositories'
     inputs:
       targetType: inline
       # Define this inline, because of the chicken/egg problem with loading a script when nothing
@@ -29,7 +32,7 @@ steps:
             if (!$dir) {
               $dir = "./$($repository.Name)"
             }
-            New-Item $dir -ItemType Directory -Force
+            New-Item $dir -ItemType Directory -Force | Out-Null
             Push-Location $dir
 
             if (Test-Path .git/info/sparse-checkout) {
@@ -38,14 +41,25 @@ steps:
             } else {
               Write-Host "Repository $($repository.Name) is being initialized."
 
-              Write-Host "git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) ."
-              git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) .
+              if ($repository.Commitish -match '^refs/pull/\d+/merge$') {
+                Write-Host "git clone --no-checkout --filter=tree:0 -c remote.origin.fetch='+$($repository.Commitish):refs/remotes/origin/$($repository.Commitish)' https://github.com/$($repository.Name) ."
+                git clone --no-checkout --filter=tree:0 -c remote.origin.fetch=''+$($repository.Commitish):refs/remotes/origin/$($repository.Commitish)'' https://github.com/$($repository.Name) .
+              } else {
+                Write-Host "git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) ."
+                git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) .
+              }
+
+              # Turn off git GC for sparse checkout. Note: The devops checkout task does this by default
+              Write-Host "git config gc.auto 0"
+              git config gc.auto 0
 
               Write-Host "git sparse-checkout init"
               git sparse-checkout init
 
-              Write-Host "git sparse-checkout set '/*' '!/*/' '/eng'"
-              git sparse-checkout set '/*' '!/*/' '/eng'
+              # Set non-cone mode otherwise path filters will not work in git >= 2.37.0
+              # See https://github.blog/2022-06-27-highlights-from-git-2-37/#tidbits
+              Write-Host "git sparse-checkout set --no-cone '/*' '!/*/' '/eng'"
+              git sparse-checkout set --no-cone '/*' '!/*/' '/eng'
             }
 
             # Prevent wildcard expansion in Invoke-Expression (e.g. for checkout path '/*')
@@ -59,8 +73,14 @@ steps:
 
             # sparse-checkout commands after initial checkout will auto-checkout again
             if (!$hasInitialized) {
-              Write-Host "git checkout $($repository.Commitish)"
-              git checkout $($repository.Commitish)  # this will use the default branch if repo.Commitish is empty
+              # Remove refs/heads/ prefix from branch names
+              $commitish = $repository.Commitish -replace '^refs/heads/', ''
+
+              # use -- to prevent git from interpreting the commitish as a path
+              Write-Host "git -c advice.detachedHead=false checkout $commitish --"
+
+              # This will use the default branch if repo.Commitish is empty
+              git -c advice.detachedHead=false checkout $commitish --
             } else {
               Write-Host "Skipping checkout as repo has already been initialized"
             }

@@ -6,55 +6,72 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes resource usage. </summary>
+    /// <summary> Output of check resource usage API. </summary>
     public partial class CdnUsage
     {
-        /// <summary> Initializes a new instance of CdnUsage. </summary>
-        /// <param name="unit"> An enum describing the unit of measurement. </param>
-        /// <param name="currentValue"> The current value of the usage. </param>
-        /// <param name="limit"> The limit of usage. </param>
-        /// <param name="name"> The name of the type of usage. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal CdnUsage(UsageUnit unit, long currentValue, long limit, UsageName name)
-        {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
+        /// <summary> Initializes a new instance of <see cref="CdnUsage"/>. </summary>
+        internal CdnUsage()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CdnUsage"/>. </summary>
+        /// <param name="resourceType"> Resource type for which the usage is provided. </param>
+        /// <param name="unit"> Unit of the usage. e.g. count. </param>
+        /// <param name="currentValue"> Actual value of usage on the specified resource type. </param>
+        /// <param name="limit"> Quota of the specified resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CdnUsage(string resourceType, CdnUsageUnit? unit, int? currentValue, int? limit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ResourceType = resourceType;
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
-            Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of CdnUsage. </summary>
-        /// <param name="id"> Resource identifier. </param>
-        /// <param name="unit"> An enum describing the unit of measurement. </param>
-        /// <param name="currentValue"> The current value of the usage. </param>
-        /// <param name="limit"> The limit of usage. </param>
-        /// <param name="name"> The name of the type of usage. </param>
-        internal CdnUsage(string id, UsageUnit unit, long currentValue, long limit, UsageName name)
-        {
-            Id = id;
-            Unit = unit;
-            CurrentValue = currentValue;
-            Limit = limit;
-            Name = name;
-        }
-
-        /// <summary> Resource identifier. </summary>
-        public string Id { get; }
-        /// <summary> An enum describing the unit of measurement. </summary>
-        public UsageUnit Unit { get; }
-        /// <summary> The current value of the usage. </summary>
-        public long CurrentValue { get; }
-        /// <summary> The limit of usage. </summary>
-        public long Limit { get; }
-        /// <summary> The name of the type of usage. </summary>
-        public UsageName Name { get; }
+        /// <summary> Resource type for which the usage is provided. </summary>
+        public string ResourceType { get; }
+        /// <summary> Unit of the usage. e.g. count. </summary>
+        public CdnUsageUnit? Unit { get; }
+        /// <summary> Actual value of usage on the specified resource type. </summary>
+        public int? CurrentValue { get; }
+        /// <summary> Quota of the specified resource type. </summary>
+        public int? Limit { get; }
     }
 }

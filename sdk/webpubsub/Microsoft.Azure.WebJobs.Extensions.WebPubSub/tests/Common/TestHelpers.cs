@@ -88,7 +88,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             string[] signatures,
             string contentType = Constants.ContentTypes.PlainTextContentType,
             string httpMethod = "Post",
-            string origin = null,
+            string[] origin = null,
             string userId = "testuser",
             byte[] payload = null)
         {

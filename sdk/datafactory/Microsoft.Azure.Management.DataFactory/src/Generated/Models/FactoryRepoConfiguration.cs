@@ -35,13 +35,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="collaborationBranch">Collaboration branch.</param>
         /// <param name="rootFolder">Root folder.</param>
         /// <param name="lastCommitId">Last commit id.</param>
-        public FactoryRepoConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId = default(string))
+        /// <param name="disablePublish">Disable manual publish operation in
+        /// ADF studio to favor automated publish.</param>
+        public FactoryRepoConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId = default(string), bool? disablePublish = default(bool?))
         {
             AccountName = accountName;
             RepositoryName = repositoryName;
             CollaborationBranch = collaborationBranch;
             RootFolder = rootFolder;
             LastCommitId = lastCommitId;
+            DisablePublish = disablePublish;
             CustomInit();
         }
 
@@ -79,6 +82,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "lastCommitId")]
         public string LastCommitId { get; set; }
+
+        /// <summary>
+        /// Gets or sets disable manual publish operation in ADF studio to
+        /// favor automated publish.
+        /// </summary>
+        [JsonProperty(PropertyName = "disablePublish")]
+        public bool? DisablePublish { get; set; }
 
         /// <summary>
         /// Validate the object.

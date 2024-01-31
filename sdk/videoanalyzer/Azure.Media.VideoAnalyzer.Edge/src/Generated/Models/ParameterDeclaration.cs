@@ -6,28 +6,26 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> Single topology parameter declaration. Declared parameters can and must be referenced throughout the topology and can optionally have default values to be used when they are not defined in the pipeline instances. </summary>
     public partial class ParameterDeclaration
     {
-        /// <summary> Initializes a new instance of ParameterDeclaration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParameterDeclaration"/>. </summary>
         /// <param name="name"> Name of the parameter. </param>
         /// <param name="type"> Type of the parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ParameterDeclaration(string name, ParameterType type)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             Type = type;
         }
 
-        /// <summary> Initializes a new instance of ParameterDeclaration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ParameterDeclaration"/>. </summary>
         /// <param name="name"> Name of the parameter. </param>
         /// <param name="type"> Type of the parameter. </param>
         /// <param name="description"> Description of the parameter. </param>

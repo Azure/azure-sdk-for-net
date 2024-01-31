@@ -1,20 +1,155 @@
 # Release History
 
-## 4.0.0-beta.4 (Unreleased)
+## 4.2.0-beta.1 (Unreleased)
 
 ### Features Added
-- Added `DocumentAnalysisClient` integration for ASP.NET Core ([#27123](https://github.com/azure/azure-sdk-for-net/issues/27123)).
 
 ### Breaking Changes
-- Renamed `StartCopyModel` methods to `StartCopyModelTo`.
-- Made `DocumentSpan` a `struct` instead of a `class`.
-- In `AccountProperties`, renamed `Count` and `Limit` to `DocumentModelCount` and `DocumentModelLimit`.
-- In `DocumentTableCell`, properties `Kind`, `RowSpan`, and `ColumnSpan` are not nullable anymore.
-- In the method `StartCreateComposedModel`, renamed parameter `modelIds` to `componentModelIds`.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.1.0 (2023-08-10)
+
+### Features Added
+- In struct `DocumentAnalysisFeature`, added properties `Barcodes`, `KeyValuePairs`, and `Languages` as add-on capabilities.
+- Added class `DocumentContentSource` as a base class to `AzureBlobContentSource` (renamed to `BlobContentSource` in this SDK version) and `AzureBlobFileListSource` (renamed to `BlobFileListContentSource` in this SDK version).
+- In `DocumentModelAdministrationClient`, added a new overload to `BuildDocumentModel` that takes a `DocumentContentSource` object. It can be used to build a document model from alternative content sources.
+- Added property `ServiceVersion` to classes `AnalyzeResult`, `DocumentModelDetails`, `DocumentModelSummary`, `OperationDetails`, and `OperationSummary`.
+
+### Breaking Changes
+- `DocumentAnalysisClient` and `DocumentModelAdministrationClient` now target service API version `2023-07-31` by default. Version `2023-02-28-preview` is not supported anymore.
+- In struct `DocumentAnalysisFeature`, properties `OcrFormula` and `OcrFont` were renamed to `Formulas` and `FontStyling`, respectively.
+- Removed query fields support. The properties `AnalyzeDocumentOptions.QueryFields` and `DocumentAnalysisFeature.QueryFieldsPremium` were removed.
+- Removed image extraction support. The class `DocumentImage` and the property `DocumentPage.Images` were removed.
+- Removed annotation extraction support. The types `DocumentAnnotation`, `DocumentAnnotationKind`, and the property `DocumentPage.Annotations` were removed.
+- Removed struct `DocumentPageKind` and property `DocumentPage.Kind`.
+- Removed property `DocumentKeyValuePair.CommonName`.
+- In `DocumentBarcodeKind`, renamed members `QRCode`, `PDF417`, `EAN8`, `EAN13`, `ITF`, and `MicroQRCode` to `QrCode`, `Pdf417`, `Ean8`, `Ean13`, `Itf`, and `MicroQrCode`, respectively.
+- Renamed class `AzureBlobContentSource` to `BlobContentSource`.
+- Renamed class `AzureBlobFileListSource` to `BlobFileListContentSource`.
+- In class `ClassifierDocumentTypeDetails`, properties `AzureBlobFileListSource` and `AzureBlobSource` have been replaced by a single polymorphic property `TrainingDataSource`.
+- In class `ClassifierDocumentTypeDetails`, all constructors have been replaced by a single constructor that takes a polymorphic parameter `trainingDataSource`.
+- In class `ResourceDetails`, renamed property `CustomNeuralDocumentModelBuilds` to `NeuralDocumentModelQuota`.
+- In class `DocumentClassifierDetails`, renamed property `ApiVersion` to `ServiceVersion`.
+- Renamed struct `FontStyle` to `DocumentFontStyle`.
+- Renamed struct `FontWeight` to `DocumentFontWeight`.
+- Renamed class `QuotaDetails` to `ResourceQuotaDetails`.
+
+### Bugs Fixed
+- Fixed a bug where calling the `GetResourceDetails` API while targeting service version `2022-08-31` would throw an `ArgumentNullException`.
+
+## 4.1.0-beta.1 (2023-04-13)
+
+### Features Added
+- Added property `QueryFields` to `AnalyzeDocumentOptions` to support field extraction without the need for added training.
+- Added property `Features` to `AnalyzeDocumentOptions` to support add-on capabilities.
+- Added properties `SimilarFontFamily`, `FontStyle`, `FontWeight`, `Color`, and `BackgroundColor` to `DocumentStyle`. These properties can only be populated when `DocumentAnalysisFeature.OcrFont` is enabled.
+- Added properties `Annotations`, `Barcodes`, `Formulas`, `Images`, and `Kind` to `DocumentPage`. `Formulas` can only be populated when `DocumentAnalysisFeature.OcrFormula` is enabled.
+- Added member `FormulaBlock` to `ParagraphRole`.
+- Added methods in `DocumentAnalysisClient` to support custom document classification: `ClassifyDocument` and `ClassifyDocumentFromUri`.
+- Added methods in `DocumentModelAdministrationClient` to support custom document classification: `BuildDocumentClassifier`, `GetDocumentClassifier`, `GetDocumentClassifiers`, and `DeleteDocumentClassifier`.
+- Added a new `DocumentClassifierBuildOperationDetails` class. Instances of this class can now be returned in calls to `DocumentModelAdministrationClient.GetOperation`.
+- Added member `DocumentClassifierBuild` to `DocumentOperationKind`.
+- Added member `Boolean` to `DocumentFieldType`.
+- Added method `AsBoolean` to `DocumentFieldValue` to support extracting values of boolean fields.
+- Added property `Code` to the `CurrencyValue` class.
+- Added properties `Unit`, `CityDistrict`, `StateDistrict`, `Suburb`, `House`, and `Level` to the `AddressValue` class.
+- Added property `CommonName` to the `DocumentKeyValuePair` class.
+- Added property `ExpiresOn` to the `DocumentModelDetails` and `DocumentModelSummary` classes.
+- Added property `CustomNeuralDocumentModelBuilds` to the `ResourceDetails` class.
+
+### Other Changes
+- `DocumentAnalysisClient` and `DocumentModelAdministrationClient` now target service API version `2023-02-28-preview` by default. Version `2022-08-31` can still be targeted if specified in the `DocumentAnalysisClientOptions`.
+
+## 4.0.0 (2022-09-08)
+
+### Features Added
+- Added `GetWords` method to `DocumentLine`. It can be used to split the line into separate `DocumentWord` instances.
+- Added derived classes to `DocumentModelOperationDetails` for each kind of operation: `DocumentModelBuildOperationDetails`, `DocumentModelCopyToOperationDetails`, and `DocumentModelComposeOperationDetails`.
+- Added `DocumentField.ExpectedFieldType` property.
+
+### Breaking Changes
+- The `DocumentAnalysisClient` and `DocumentModelAdministrationClient` now target the service version `2022-08-31`, so they don't support `2020-06-30-preview` anymore.
+- Renamed `DocumentModelAdministrationClient` methods to use the term `DocumentModel` instead of `Model` only. For example, `BuildModel` and `GetModels` became `BuildDocumentModel` and `GetDocumentModels`.
+  - Similarly, `Operation` types have been renamed to reflect this change. For example, `ComposeModelOperation` became `ComposeDocumentModelOperation`.
+  - As a consequence, `BuildModelOptions` has been renamed to `BuildDocumentModelOptions`.
+- Removed the `BoundingPolygon` type. All `BoundingPolygon` properties are now of type `IReadOnlyList<PointF>`.
+- Moved all `DocumentField` conversion methods, such as `AsDate` and `AsString`, to the new `DocumentFieldValue` class. They can be accessed from the `DocumentField.Value` property.
+- `DocumentField.ValueType` (now called `FieldType`) can now be `Unknown` when the field value couldn't be parsed by the service. In this case, `DocumentField.Content` can be used to get a textual representation of the field.
+- Updated `DocumentField.AsDate` to return a `DateTimeOffset` instead of a `DateTime`.
+- Renamed classes `DocumentModelOperationDetails` and `DocumentModelOperationSummary` to `OperationDetails` and `OperationSummary`, respectively.
+- Moved property `Result` in `DocumentModelOperationDetails` (now called `OperationDetails`) to each of its new derived classes. The property can't be accessed from the base class anymore.
+- Renamed class `DocTypeInfo` to `DocumentTypeDetails`.
+- Renamed property `Offset` to `Index` in the `DocumentSpan` class.
+- Renamed property `DocType` to `DocumentType` in the `AnalyzedDocument` class.
+- Renamed property `DocTypes` to `DocumentTypes` in the `DocumentModelDetails` class.
+- Renamed properties `DocumentModelCount` and `DocumentModelLimit` to `CustomDocumentModelCount` and `CustomDocumentModelLimit` in the `ResourceDetails` class.
+- Removed property `BuildModelOptions.Prefix`. The prefix must now be set with the `prefix` parameter in the method `BuildModel`.
+- Removed class `DocumentPageKind` and related properties.
+- Made `BoundingRegion` a `struct` instead of a `class`.
+- `BoundingRegion` now implements the `IEquatable<BoundingRegion>` interface.
+- Overrode `BoundingRegion.ToString` to include information about its page number and its bounding polygon in its string representation.
+- `DocumentSpan` now implements the `IEquatable<DocumentSpan>` interface.
+- Overrode `DocumentSpan.ToString` to include information about its index and its length in its string representation.
+- Renamed `LengthUnit` to `DocumentPageLengthUnit`. This change only affects the type defined in the `DocumentAnalysis` namespace.
+- Renamed `SelectionMarkState` to `DocumentSelectionMarkState`. This change only affects the type defined in the `DocumentAnalysis` namespace.
+- Renamed `CopyAuthorization` to `DocumentModelCopyAuthorization`. This change only affects the type defined in the `DocumentAnalysis` namespace.
+
+## 4.0.0-beta.5 (2022-08-09)
+
+### Features Added
+- Added `Length` property to `BoundingPolygon`.
+- Added a public constructor to `CopyAuthorization`.
+- Added properties `AccessToken` and `TargetResourceId` to `CopyAuthorization`.
+
+### Breaking Changes
+- Updated all long-running operation client methods to a new pattern. This affects `StartAnalyzeDocument`, `StartAnalyzeDocumentFromUri`, `StartBuildModel`, `StartCopyModelTo`, and `StartCreateComposedModel` methods. Changes are:
+  - Removed the "Start" prefix. For example, `StartAnalyzeDocument` was renamed to `AnalyzeDocument`.
+  - Added a new required parameter: `waitUntil`. It specifies whether the operation should run to completion before returning or not, removing the need to call `WaitForCompletion` in most scenarios.
+- Updated `DocumentModelInfo` and `DocumentModel`:
+  - Renamed them to `DocumentModelSummary` and `DocumentModelDetails`, respectively.
+  - Removed the inheritance between them.
+- Updated `ModelOperationInfo` and `ModelOperation`:
+  - Renamed them to `DocumentModelOperationSummary` and `DocumentModelOperationDetails`, respectively.
+  - Removed the inheritance between them.
+  - Updated `ResourceLocation` to be a `Uri` in both.
+- Renamed `AccountProperties` to `ResourceDetails`.
+- Renamed method `GetAccountProperties` to `GetResourceDetails`.
+- Renamed method `StartCreateComposedModel` to `ComposeModel`.
+- Renamed `BuildModelOptions.ModelDescription` to `Description`.
+- Renamed `modelDescription` parameters to `description` in methods `GetCopyAuthorization` and `StartCreateComposedModel` (now called `ComposeModel`).
+- Renamed `CopyAuthorization.ExpirationDateTime` to `ExpiresOn`.
+- Removed `DocumentCaption` and `DocumentFootnote` features.
+- Updated the return type of `StartCreateComposedModel` (now called `ComposeModel`) to a `ComposeModelOperation`.
+- Renamed class `CopyModelOperation` to `CopyModelToOperation`.
+- Renamed parameter `analyzeDocumentOptions` to `options` in the `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` methods (now called `AnalyzeDocument` and `AnalyzeDocumentFromUri`).
+- Renamed parameter `buildModelOptions` to `options` in the `StartBuildModel` method (now called `BuildModel`).
+- `FormRecognizerClientOptions.Audience` and `DocumentAnalysisClientOptions.Audience` now default to `null`.
+- In the `DocumentAnalysis` namespace, `CopyModelOperation.PercentCompleted` and `BuildModelOperation.PercentCompleted` now throw an `InvalidOperationException` if called before a call to `UpdateStatus`.
+- Updated `CopyAuthorization.TargetModelLocation` to be a `Uri` instead of `string`.
+- Removed method `DocumentAnalysisModelFactory.CopyAuthorization`.
+
+## 4.0.0-beta.4 (2022-06-08)
+
+### Features Added
+- Added `Kind` property to the `DocumentPage` class.
+- Added the `Paragraphs` property to the `AnalyzeResult` class. This property holds information about the paragraphs extracted from the input documents.
+- Added `DocumentAnalysisClient` integration for ASP.NET Core ([#27123](https://github.com/azure/azure-sdk-for-net/issues/27123)).
+
+### Breaking Changes
+- In the `DocumentAnalysis` namespace, renamed `BoundingBox` model and properties to `BoundingPolygon`. It will eventually be able to include more points to better fit the borders of a document element.
+- Removed the support for analyzing entities. The `DocumentEntity` class and related properties have been removed from the SDK.
+- Renamed `DocumentModelAdministrationClient.StartCopyModel` methods to `StartCopyModelTo`.
+- Made `DocumentSpan` a `struct` instead of a `class`.
+- In `AccountProperties`, renamed `Count` and `Limit` to `DocumentModelCount` and `DocumentModelLimit`.
+- In `DocumentPage`, properties `Angle`, `Height`, `Unit`, and `Width` were made nullable.
+- In `DocumentTableCell`, properties `Kind`, `RowSpan`, and `ColumnSpan` are not nullable anymore.
+- In `DocumentLanguage`, renamed property `LanguageCode` to `Locale`.
+- In the method `DocumentModelAdministrationClient.StartCreateComposedModel`, renamed parameter `modelIds` to `componentModelIds`.
+- The `DocumentAnalysisClient` and `DocumentModelAdministrationClient` now target the service version `2022-06-30-preview`, so they don't support `2020-01-30-preview` anymore.
+- `DocumentAnalysisModelFactory.DocumentPage` has a new `kind` parameter.
 
 ## 4.0.0-beta.3 (2022-02-10)
 

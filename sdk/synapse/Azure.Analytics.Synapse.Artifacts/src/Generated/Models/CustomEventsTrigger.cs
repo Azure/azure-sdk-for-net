@@ -8,33 +8,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Trigger that runs every time a custom event is received. </summary>
     public partial class CustomEventsTrigger : MultiplePipelineTrigger
     {
-        /// <summary> Initializes a new instance of CustomEventsTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEventsTrigger"/>. </summary>
         /// <param name="events"> The list of event types that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Azure Event Grid Topic. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="events"/> or <paramref name="scope"/> is null. </exception>
         public CustomEventsTrigger(IEnumerable<object> events, string scope)
         {
-            if (events == null)
-            {
-                throw new ArgumentNullException(nameof(events));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(events, nameof(events));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             Events = events.ToList();
             Scope = scope;
             Type = "CustomEventsTrigger";
         }
 
-        /// <summary> Initializes a new instance of CustomEventsTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEventsTrigger"/>. </summary>
         /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>

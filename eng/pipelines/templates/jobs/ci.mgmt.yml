@@ -1,15 +1,31 @@
+parameters:
+- name: ShouldPublish
+  type: boolean
+  default: false
+- name: Scope
+  type: string
+  default: ''
+
 jobs:
   - job: Build
     timeoutInMinutes: 100
     pool:
-      name: azsdk-pool-mms-win-2019-general
-      vmImage: MMS2019
+      name: azsdk-pool-mms-win-2022-general
+      vmImage: windows-2022
     steps:
       #- script: "echo $(system.pullrequest.pullrequestnumber), https://github.com/$(build.repository.id), https://github.com/$(build.repository.ID)"
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
+      - task: UseDotNet@2
+        displayName: 'Use .NET Core 3.1 SDK' # We still need .NET Core 3.1 for .NET Track 1 SDK
+        retryCountOnTaskFailure: 3
+        inputs:
+          # AspNetCore runtime pack can't be installed outside of SDK and we need it for intergation tests
+          packageType: sdk
+          performMultiLevelLookup: true
+          version: "3.1.x"
       - script: |
           if "$(BuildConfiguration)" == "Release" (set SkipTests=true) else (set SkipTests=false)
-          dotnet msbuild mgmt.proj /v:m /t:CreateNugetPackage /p:Configuration=$(BuildConfiguration) /p:SkipTests=%SkipTests% /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) $(loggingArgs) $(RPScopeArgs)"
+          dotnet msbuild mgmt.proj /v:m /t:CreateNugetPackage /p:Configuration=$(BuildConfiguration) /p:SkipTests=%SkipTests% /p:PackageOutputPath=$(Build.ArtifactStagingDirectory) /p:Scope=${{ parameters.Scope }} /p:ForPublishing=${{ parameters.ShouldPublish }} $(loggingArgs) $(RPScopeArgs)"
         displayName: "Build & Package"
       - task: PowerShell@2
         displayName: "Verify generated code"
@@ -33,7 +49,7 @@ jobs:
           targetPath: $(Build.ArtifactStagingDirectory)
       - pwsh: |
           $releaseTag = "FOR_SIGNING"
-          if ("$(ShouldPublish)" -eq "true") { $releaseTag = "FOR_PUBLISHING" }
+          if ("${{ parameters.ShouldPublish }}" -eq "true") { $releaseTag = "FOR_PUBLISHING" }
           echo "Tagging build with $releaseTag"
           echo "##vso[build.addbuildtag]$releaseTag"
         displayName: "Tagging the build"
@@ -48,11 +64,11 @@ jobs:
           Pool: azsdk-pool-mms-ubuntu-2004-general
           OSVmImage: "MMSUbuntu20.04"
         Windows:
-          Pool: azsdk-pool-mms-win-2019-general
-          OSVmImage: MMS2019
+          Pool: azsdk-pool-mms-win-2022-general
+          OSVmImage: windows-2022
         MacOs:
           Pool: Azure Pipelines
-          OSVmImage: "macOS-10.15"
+          OSVmImage: "macos-11"
     pool:
       name: $(Pool)
       vmImage: $(OSVmImage)
@@ -62,7 +78,15 @@ jobs:
           AgentImage: $(OSVmImage)
       - script: "echo $(system.pullrequest.pullrequestnumber), http://github.com/$(build.repository.id), http://github.com/$(build.repository.ID)"
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
-      - script: "dotnet msbuild mgmt.proj /v:n /t:RunTests /p:Scope=${{parameters.Scope}} /p:ForPublishing=$(ShouldPublish) /clp:ShowtimeStamp $(RPScopeArgs)"
+      - task: UseDotNet@2
+        displayName: 'Use .NET Core 3.1 SDK' # We still need .NET Core 3.1 for .NET Track 1 SDK
+        retryCountOnTaskFailure: 3
+        inputs:
+          # AspNetCore runtime pack can't be installed outside of SDK and we need it for intergation tests
+          packageType: sdk
+          performMultiLevelLookup: true
+          version: "3.1.x"
+      - script: "dotnet msbuild mgmt.proj /v:n /t:RunTests /p:Scope=${{ parameters.Scope }} /p:ForPublishing=${{ parameters.ShouldPublish }} /clp:ShowtimeStamp $(RPScopeArgs)"
         displayName: "Build & Run Tests"
       - task: PublishTestResults@2
         condition: succeededOrFailed()
@@ -80,13 +104,13 @@ jobs:
     dependsOn:
       - Build
     pool:
-      name: azsdk-pool-mms-win-2019-general
-      vmImage: MMS2019
+      name: azsdk-pool-mms-win-2022-general
+      vmImage: windows-2022
     steps:
       - task: UsePythonVersion@0
-        displayName: "Use Python 3.6"
+        displayName: "Use Python 3.9"
         inputs:
-          versionSpec: "3.6"
+          versionSpec: "3.9"
       - template: /eng/common/pipelines/templates/steps/verify-path-length.yml
         parameters:
           SourceDirectory: $(Build.SourcesDirectory)
@@ -99,3 +123,12 @@ jobs:
             }
           failOnStderr: true
           pwsh: true
+
+  - job: Compliance
+    pool:
+      name: azsdk-pool-mms-win-2022-general
+      vmImage: windows-2022
+    steps:
+      - template: /eng/common/pipelines/templates/steps/credscan.yml
+        parameters:
+          BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines

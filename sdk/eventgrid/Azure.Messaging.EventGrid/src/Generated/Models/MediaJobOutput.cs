@@ -7,10 +7,14 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> The event data for a Job output. </summary>
+    /// <summary>
+    /// The event data for a Job output.
+    /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="MediaJobOutputAsset"/>.
+    /// </summary>
     public partial class MediaJobOutput
     {
-        /// <summary> Initializes a new instance of MediaJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutput"/>. </summary>
         /// <param name="progress"> Gets the Job output progress. </param>
         /// <param name="state"> Gets the Job output state. </param>
         internal MediaJobOutput(long progress, MediaJobState state)
@@ -19,7 +23,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             State = state;
         }
 
-        /// <summary> Initializes a new instance of MediaJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutput"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="error"> Gets the Job output error. </param>
         /// <param name="label"> Gets the Job output label. </param>

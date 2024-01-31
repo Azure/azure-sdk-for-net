@@ -7,9 +7,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
+using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
+using Microsoft.Azure.Amqp;
 using Moq;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace Azure.Messaging.ServiceBus.Tests.Receiver
 {
@@ -24,7 +28,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             var queueName = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
             var options = new ServiceBusReceiverOptions()
             {
-                ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete
+                ReceiveMode = ServiceBusReceiveMode.ReceiveAndDelete,
+                PrefetchCount = 5
             };
             var receiver = new ServiceBusClient(connString).CreateReceiver(queueName, options);
             Assert.AreEqual(queueName, receiver.EntityPath);
@@ -32,6 +37,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             Assert.IsNotNull(receiver.Identifier);
             Assert.IsFalse(receiver.IsSessionReceiver);
             Assert.AreEqual(ServiceBusReceiveMode.ReceiveAndDelete, receiver.ReceiveMode);
+            Assert.AreEqual(5, receiver.PrefetchCount);
         }
 
         [Test]
@@ -124,7 +130,9 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [Test]
         public async Task ReceiveValidatesMaxWaitTimePrefetchMode()
         {
+            int prefetchCount = 0;
             var mockTransportReceiver = new Mock<TransportReceiver>();
+            mockTransportReceiver.Setup(receiver => receiver.PrefetchCount).Returns(() => prefetchCount);
             var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
             mockConnection.Setup(
                     connection => connection.CreateTransportReceiver(
@@ -137,6 +145,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         It.IsAny<bool>(),
                         It.IsAny<bool>(),
                         It.IsAny<CancellationToken>()))
+                .Callback<string, ServiceBusRetryPolicy, ServiceBusReceiveMode, uint, string, string, bool, bool, CancellationToken>(
+                    (_, _, _, count, _, _, _, _, _) =>
+                    {
+                        prefetchCount = (int) count;
+                    })
                 .Returns(mockTransportReceiver.Object);
             IReadOnlyList<ServiceBusReceivedMessage> receivedMessages = new[]
             {
@@ -148,7 +161,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 .Returns(Task.FromResult(receivedMessages));
 
             var receiver = new ServiceBusReceiver(mockConnection.Object, "queue", default,
-                new ServiceBusReceiverOptions {PrefetchCount = 10});
+                new ServiceBusReceiverOptions { PrefetchCount = 10 });
 
             Assert.That(
                 async () => await receiver.ReceiveMessagesAsync(10, TimeSpan.FromSeconds(-1)),
@@ -310,6 +323,123 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             var receiver = new ServiceBusReceiver(mockConnection.Object, "fake", default, new ServiceBusReceiverOptions());
             await receiver.CloseAsync(cts.Token);
             mockTransportReceiver.Verify(transportReceiver => transportReceiver.CloseAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));
+        }
+
+        [Test]
+        public async Task CallingCloseAsyncUpdatesIsClosed()
+        {
+            var account = Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(12));
+            var fullyQualifiedNamespace = new UriBuilder($"{account}.servicebus.windows.net/").Host;
+            var connString = $"Endpoint=sb://{fullyQualifiedNamespace};SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey={Encoding.Default.GetString(ServiceBusTestUtilities.GetRandomBuffer(64))}";
+            var client = new ServiceBusClient(connString);
+            var receiver = client.CreateReceiver("queue");
+            await receiver.CloseAsync();
+            Assert.IsTrue(receiver.IsClosed);
+
+            Assert.IsTrue(((AmqpReceiver)receiver.InnerReceiver).RequestResponseLockedMessages.IsDisposed);
+        }
+
+        [Test]
+        public async Task CreatingReceiverWithoutOptionsGeneratesIdentifier()
+        {
+            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
+            await using var receiver = client.CreateReceiver("fake");
+
+            var identifier = receiver.Identifier;
+            Assert.That(identifier, Is.Not.Null);
+        }
+
+        [Test]
+        public async Task CreatingReceiverWithIdentifierSetsIdentifier()
+        {
+            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
+
+            var setIdentifier = "UniqueIdentifier-abcedefg";
+
+            var options = new ServiceBusReceiverOptions
+            {
+                Identifier = setIdentifier
+            };
+
+            await using var receiver = client.CreateReceiver("fake", options);
+
+            var identifier = receiver.Identifier;
+            Assert.AreEqual(setIdentifier, identifier);
+        }
+
+        [Test]
+        public async Task DeadLetterMessageChecksArguments()
+        {
+            var mockReceiver = new Mock<ServiceBusReceiver>() { CallBase = true };
+
+            mockReceiver.Setup(r =>
+            r.DeadLetterInternalAsync(
+                It.IsAny<ServiceBusReceivedMessage>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+
+            mockReceiver.Setup(r => r.CloseAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+
+            var receiver = mockReceiver.Object;
+
+            var properties = new Dictionary<string, object>();
+            properties.Add(AmqpMessageConstants.DeadLetterReasonHeader, "header-1");
+
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(default);
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await receiver.DeadLetterMessageAsync(message, properties, "header-2"));
+            await receiver.CloseAsync();
+        }
+
+        [Test]
+        public async Task DeadLetterMessageAllowsSameHeaders()
+        {
+            var mockReceiver = new Mock<ServiceBusReceiver>() { CallBase = true };
+
+            mockReceiver.Setup(r =>
+            r.DeadLetterInternalAsync(
+                It.IsAny<ServiceBusReceivedMessage>(),
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<Dictionary<string, object>>(),
+                It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+
+            mockReceiver.Setup(r => r.CloseAsync(It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+
+            var receiver = mockReceiver.Object;
+
+            var properties = new Dictionary<string, object>();
+            properties.Add(AmqpMessageConstants.DeadLetterReasonHeader, "header");
+            properties.Add(AmqpMessageConstants.DeadLetterErrorDescriptionHeader, "description");
+
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(default);
+
+            Assert.DoesNotThrowAsync(async () => await receiver.DeadLetterMessageAsync(message, properties, "header", "description"));
+            await receiver.CloseAsync();
+        }
+
+        [Test]
+        public async Task UpdatedPrefetchCountReflectedInGetter()
+        {
+            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
+
+            await using var receiver = client.CreateReceiver("fake");
+            receiver.PrefetchCount = 10;
+            Assert.AreEqual(10, receiver.PrefetchCount);
+        }
+
+        [Test]
+        public async Task UpdatePrefetchDoesNotThrowWhenClosed()
+        {
+            await using var client = new ServiceBusClient("not.real.com", Mock.Of<TokenCredential>());
+
+            await using var receiver = client.CreateReceiver("fake");
+            await receiver.CloseAsync();
+
+            // the PrefetchCount property is internal so it is okay that we don't throw an ObjectDisposedException
+            Assert.DoesNotThrow(() => receiver.PrefetchCount = 10);
         }
     }
 }

@@ -16,11 +16,11 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("startTime");
+            writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
-            writer.WritePropertyName("endTime");
+            writer.WritePropertyName("endTime"u8);
             writer.WriteStringValue(EndTime, "O");
-            writer.WritePropertyName("timeMode");
+            writer.WritePropertyName("timeMode"u8);
             writer.WriteStringValue(TimeMode.ToSerialString());
             writer.WriteEndObject();
         }

@@ -147,6 +147,119 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task Ctor_DefaultAudience()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            await blob.CreateIfNotExistsAsync(Constants.KB);
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            BlobClientOptions options = GetOptionsWithAudience(BlobAudience.DefaultAudience);
+
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
+            {
+                BlobContainerName = blob.BlobContainerName,
+                BlobName = blob.Name
+            };
+
+            PageBlobClient aadBlob = InstrumentClient(new PageBlobClient(
+                uriBuilder.ToUri(),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            bool exists = await aadBlob.ExistsAsync();
+            Assert.IsTrue(exists);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_CustomAudience()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            await blob.CreateIfNotExistsAsync(Constants.KB);
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            BlobClientOptions options = GetOptionsWithAudience(new BlobAudience($"https://{test.Container.AccountName}.blob.core.windows.net/"));
+
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
+            {
+                BlobContainerName = blob.BlobContainerName,
+                BlobName = blob.Name
+            };
+
+            PageBlobClient aadBlob = InstrumentClient(new PageBlobClient(
+                uriBuilder.ToUri(),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            bool exists = await aadBlob.ExistsAsync();
+            Assert.IsTrue(exists);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_StorageAccountAudience()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            await blob.CreateIfNotExistsAsync(Constants.KB);
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            BlobClientOptions options = GetOptionsWithAudience(BlobAudience.CreateBlobServiceAccountAudience(test.Container.AccountName));
+
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
+            {
+                BlobContainerName = blob.BlobContainerName,
+                BlobName = blob.Name
+            };
+
+            PageBlobClient aadBlob = InstrumentClient(new PageBlobClient(
+                uriBuilder.ToUri(),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            bool exists = await aadBlob.ExistsAsync();
+            Assert.IsTrue(exists);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_AudienceError()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync();
+
+            PageBlobClient blob = InstrumentClient(test.Container.GetPageBlobClient(GetNewBlobName()));
+            await blob.CreateIfNotExistsAsync(Constants.KB);
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            BlobClientOptions options = GetOptionsWithAudience(new BlobAudience("https://badaudience.blob.core.windows.net"));
+
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
+            {
+                BlobContainerName = blob.BlobContainerName,
+                BlobName = blob.Name
+            };
+
+            PageBlobClient aadBlob = InstrumentClient(new PageBlobClient(
+                uriBuilder.ToUri(),
+                new MockCredential(),
+                options));
+
+            // Assert
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                aadBlob.ExistsAsync(),
+                e => Assert.AreEqual(BlobErrorCode.InvalidAuthenticationInfo.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
         public async Task CreateAsync_Min()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -657,7 +770,10 @@ namespace Azure.Storage.Blobs.Test
                     Response<PageInfo> response = await blob.UploadPagesAsync(
                         content: stream,
                         offset: 0,
-                        conditions: accessConditions);
+                        options: new PageBlobUploadPagesOptions
+                        {
+                            Conditions = accessConditions
+                        });
 
                     // Assert
                     Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
@@ -705,7 +821,10 @@ namespace Azure.Storage.Blobs.Test
                         blob.UploadPagesAsync(
                             content: stream,
                             offset: 0,
-                            conditions: accessConditions),
+                            options: new PageBlobUploadPagesOptions
+                            {
+                                Conditions = accessConditions
+                            }),
                         e => Assert.IsTrue(true));
                 }
             }
@@ -739,7 +858,10 @@ namespace Azure.Storage.Blobs.Test
             await blob.UploadPagesAsync(
                 content: stream,
                 offset: Constants.KB,
-                conditions: conditions);
+                options: new PageBlobUploadPagesOptions
+                {
+                    Conditions = conditions
+                });
         }
 
         [RecordedTest]
@@ -765,7 +887,10 @@ namespace Azure.Storage.Blobs.Test
                 blob.UploadPagesAsync(
                     content: stream,
                     offset: Constants.KB,
-                    conditions: conditions),
+                    options: new PageBlobUploadPagesOptions
+                    {
+                        Conditions = conditions
+                    }),
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
@@ -806,7 +931,10 @@ namespace Azure.Storage.Blobs.Test
                 new IOException("Simulated stream fault"),
                 () => timesFaulted++))
             {
-                await blobFaulty.UploadPagesAsync(stream, offset, progressHandler: progressHandler);
+                await blobFaulty.UploadPagesAsync(stream, offset, new PageBlobUploadPagesOptions
+                {
+                    ProgressHandler = progressHandler
+                });
 
                 await WaitForProgressAsync(progressBag, data.LongLength);
                 Assert.IsTrue(progressBag.Count > 1, "Too few progress received");
@@ -841,7 +969,10 @@ namespace Azure.Storage.Blobs.Test
                 await blob.UploadPagesAsync(
                     content: stream,
                     offset: 0,
-                    progressHandler: progress);
+                    new PageBlobUploadPagesOptions
+                    {
+                        ProgressHandler = progress
+                    });
             }
 
             // Assert
@@ -1370,8 +1501,8 @@ namespace Azure.Storage.Blobs.Test
             PageBlobClient pageBlob = await CreatePageBlobWithRangesAsync(test.Container);
 
             // Act
-            List<PageBlobRange> pageBlobRanges = new List<PageBlobRange>();
-            await foreach (PageBlobRange pageBlobRange in pageBlob.GetPageRangesAsync())
+            List<PageRangeItem> pageBlobRanges = new List<PageRangeItem>();
+            await foreach (PageRangeItem pageBlobRange in pageBlob.GetAllPageRangesAsync())
             {
                 pageBlobRanges.Add(pageBlobRange);
             }
@@ -1414,14 +1545,14 @@ namespace Azure.Storage.Blobs.Test
                     break;
             }
 
-            PageBlobGetPageRangesOptions options = new PageBlobGetPageRangesOptions
+            GetPageRangesOptions options = new GetPageRangesOptions
             {
                 Conditions = conditions
             };
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                pageBlobClient.GetPageRangesAsync(options).ToListAsync(),
+                pageBlobClient.GetAllPageRangesAsync(options).ToListAsync(),
                 e =>
                 {
                     Assert.IsTrue(e.Message.Contains($"GetPageRanges does not support the {invalidCondition} condition(s)."));
@@ -1438,8 +1569,8 @@ namespace Azure.Storage.Blobs.Test
             PageBlobClient pageBlob = await CreatePageBlobWithRangesAsync(test.Container);
 
             // Act
-            List<PageBlobRange> pageBlobRanges = new List<PageBlobRange>();
-            await foreach (Page<PageBlobRange> page in pageBlob.GetPageRangesAsync().AsPages(pageSizeHint: 1))
+            List<PageRangeItem> pageBlobRanges = new List<PageRangeItem>();
+            await foreach (Page<PageRangeItem> page in pageBlob.GetAllPageRangesAsync().AsPages(pageSizeHint: 1))
             {
                 pageBlobRanges.AddRange(page.Values);
             }
@@ -1463,14 +1594,14 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await using DisposingContainer test = await GetTestContainerAsync();
             PageBlobClient pageBlob = await CreatePageBlobWithRangesAsync(test.Container);
-            PageBlobGetPageRangesOptions options = new PageBlobGetPageRangesOptions
+            GetPageRangesOptions options = new GetPageRangesOptions
             {
                 Range = new HttpRange(0, 2 * Constants.KB)
             };
 
             // Act
-            List<PageBlobRange> pageBlobRanges = new List<PageBlobRange>();
-            await foreach (PageBlobRange pageBlobRange in pageBlob.GetPageRangesAsync(options))
+            List<PageRangeItem> pageBlobRanges = new List<PageRangeItem>();
+            await foreach (PageRangeItem pageBlobRange in pageBlob.GetAllPageRangesAsync(options))
             {
                 pageBlobRanges.Add(pageBlobRange);
             }
@@ -1491,14 +1622,14 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
             PageBlobClient pageBlob = await CreatePageBlobWithRangesAsync(test.Container);
             Response<BlobSnapshotInfo> snapshotResponse = await pageBlob.CreateSnapshotAsync();
-            PageBlobGetPageRangesOptions options = new PageBlobGetPageRangesOptions
+            GetPageRangesOptions options = new GetPageRangesOptions
             {
                 Snapshot = snapshotResponse.Value.Snapshot
             };
 
             // Act
-            List<PageBlobRange> pageBlobRanges = new List<PageBlobRange>();
-            await foreach (PageBlobRange pageBlobRange in pageBlob.GetPageRangesAsync(options))
+            List<PageRangeItem> pageBlobRanges = new List<PageRangeItem>();
+            await foreach (PageRangeItem pageBlobRange in pageBlob.GetAllPageRangesAsync(options))
             {
                 pageBlobRanges.Add(pageBlobRange);
             }
@@ -1527,7 +1658,7 @@ namespace Azure.Storage.Blobs.Test
                 PageBlobClient pageBlob = await CreatePageBlobWithRangesAsync(test.Container);
 
                 // Act
-                List<PageBlobRange> pageBlobRanges = new List<PageBlobRange>();
+                List<PageRangeItem> pageBlobRanges = new List<PageRangeItem>();
 
                 parameters.Match = await SetupBlobMatchCondition(pageBlob, parameters.Match);
                 parameters.LeaseId = await SetupBlobLeaseCondition(pageBlob, parameters.LeaseId, garbageLeaseId);
@@ -1536,12 +1667,12 @@ namespace Azure.Storage.Blobs.Test
                     parameters: parameters,
                     lease: true);
 
-                PageBlobGetPageRangesOptions options = new PageBlobGetPageRangesOptions
+                GetPageRangesOptions options = new GetPageRangesOptions
                 {
                     Conditions = accessConditions,
                 };
 
-                await foreach (PageBlobRange pageBlobRange in pageBlob.GetPageRangesAsync(options))
+                await foreach (PageRangeItem pageBlobRange in pageBlob.GetAllPageRangesAsync(options))
                 {
                     pageBlobRanges.Add(pageBlobRange);
                 }
@@ -1577,7 +1708,7 @@ namespace Azure.Storage.Blobs.Test
                     parameters: parameters,
                     lease: true);
 
-                PageBlobGetPageRangesOptions options = new PageBlobGetPageRangesOptions
+                GetPageRangesOptions options = new GetPageRangesOptions
                 {
                     Conditions = accessConditions,
                 };
@@ -1586,7 +1717,7 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
-                        await foreach (PageBlobRange pageBlobRange in pageBlob.GetPageRangesAsync(options))
+                        await foreach (PageRangeItem pageBlobRange in pageBlob.GetAllPageRangesAsync(options))
                         {
                         }
                     });
@@ -1613,12 +1744,12 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            List<PageBlobRange> pageBlobRanges = new List<PageBlobRange>();
-            PageBlobGetPageRangesOptions options = new PageBlobGetPageRangesOptions
+            List<PageRangeItem> pageBlobRanges = new List<PageRangeItem>();
+            GetPageRangesOptions options = new GetPageRangesOptions
             {
                 Conditions = conditions,
             };
-            await foreach (PageBlobRange pageBlobRange in pageBlob.GetPageRangesAsync(options))
+            await foreach (PageRangeItem pageBlobRange in pageBlob.GetAllPageRangesAsync(options))
             {
                 pageBlobRanges.Add(pageBlobRange);
             }
@@ -1648,7 +1779,7 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
-            PageBlobGetPageRangesOptions options = new PageBlobGetPageRangesOptions
+            GetPageRangesOptions options = new GetPageRangesOptions
             {
                 Range = new HttpRange(0, 4 * Constants.KB),
                 Conditions = conditions
@@ -1656,7 +1787,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                pageBlob.GetPageRangesAsync(options).ToListAsync(),
+                pageBlob.GetAllPageRangesAsync(options).ToListAsync(),
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
@@ -1668,14 +1799,14 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
             PageBlobClient pageBlob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
 
-            PageBlobGetPageRangesOptions options = new PageBlobGetPageRangesOptions
+            GetPageRangesOptions options = new GetPageRangesOptions
             {
                 Range = new HttpRange(5 * Constants.KB, 4 * Constants.KB)
             };
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-               pageBlob.GetPageRangesAsync(options).ToListAsync(),
+               pageBlob.GetAllPageRangesAsync(options).ToListAsync(),
                 e =>
                 {
                     Assert.AreEqual("InvalidRange", e.ErrorCode);
@@ -2001,15 +2132,15 @@ namespace Azure.Storage.Blobs.Test
             string prevSnapshot = setup.Item2;
             string snapshot = setup.Item3;
 
-            PageBlobGetPageRangesDiffOptions options = new PageBlobGetPageRangesDiffOptions
+            GetPageRangesDiffOptions options = new GetPageRangesDiffOptions
             {
                 PreviousSnapshot = prevSnapshot,
                 Snapshot = snapshot
             };
 
             // Act
-            List<PageBlobRange> pageBlobRanges = new List<PageBlobRange>();
-            await foreach (PageBlobRange pageBlobRange in pageBlob.GetPageRangesDiffAsync(options))
+            List<PageRangeItem> pageBlobRanges = new List<PageRangeItem>();
+            await foreach (PageRangeItem pageBlobRange in pageBlob.GetAllPageRangesDiffAsync(options))
             {
                 pageBlobRanges.Add(pageBlobRange);
             }
@@ -2060,14 +2191,14 @@ namespace Azure.Storage.Blobs.Test
                     break;
             }
 
-            PageBlobGetPageRangesDiffOptions options = new PageBlobGetPageRangesDiffOptions
+            GetPageRangesDiffOptions options = new GetPageRangesDiffOptions
             {
                 Conditions = conditions
             };
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
-                pageBlobClient.GetPageRangesDiffAsync(options).ToListAsync(),
+                pageBlobClient.GetAllPageRangesDiffAsync(options).ToListAsync(),
                 e =>
                 {
                     Assert.IsTrue(e.Message.Contains($"GetPageRanges does not support the {invalidCondition} condition(s)."));
@@ -2086,15 +2217,15 @@ namespace Azure.Storage.Blobs.Test
             string prevSnapshot = setup.Item2;
             string snapshot = setup.Item3;
 
-            PageBlobGetPageRangesDiffOptions options = new PageBlobGetPageRangesDiffOptions
+            GetPageRangesDiffOptions options = new GetPageRangesDiffOptions
             {
                 PreviousSnapshot = prevSnapshot,
                 Snapshot = snapshot
             };
 
             // Act
-            List<PageBlobRange> pageBlobRanges = new List<PageBlobRange>();
-            await foreach (Page<PageBlobRange> page in pageBlob.GetPageRangesDiffAsync(options)
+            List<PageRangeItem> pageBlobRanges = new List<PageRangeItem>();
+            await foreach (Page<PageRangeItem> page in pageBlob.GetAllPageRangesDiffAsync(options)
                 .AsPages(pageSizeHint: 1))
             {
                 pageBlobRanges.AddRange(page.Values);
@@ -2131,7 +2262,7 @@ namespace Azure.Storage.Blobs.Test
             string prevSnapshot = setup.Item2;
             string snapshot = setup.Item3;
 
-            PageBlobGetPageRangesDiffOptions options = new PageBlobGetPageRangesDiffOptions
+            GetPageRangesDiffOptions options = new GetPageRangesDiffOptions
             {
                 PreviousSnapshot = prevSnapshot,
                 Snapshot = snapshot,
@@ -2139,8 +2270,8 @@ namespace Azure.Storage.Blobs.Test
             };
 
             // Act
-            List<PageBlobRange> pageBlobRanges = new List<PageBlobRange>();
-            await foreach (PageBlobRange pageBlobRange in pageBlob.GetPageRangesDiffAsync(options))
+            List<PageRangeItem> pageBlobRanges = new List<PageRangeItem>();
+            await foreach (PageRangeItem pageBlobRange in pageBlob.GetAllPageRangesDiffAsync(options))
             {
                 pageBlobRanges.Add(pageBlobRange);
             }
@@ -2178,15 +2309,15 @@ namespace Azure.Storage.Blobs.Test
                     parameters: parameters,
                     lease: true);
 
-                PageBlobGetPageRangesDiffOptions options = new PageBlobGetPageRangesDiffOptions
+                GetPageRangesDiffOptions options = new GetPageRangesDiffOptions
                 {
                     PreviousSnapshot = prevSnapshot,
                     Conditions = accessConditions
                 };
 
                 // Act
-                List<PageBlobRange> pageBlobRanges = new List<PageBlobRange>();
-                await foreach (PageBlobRange pageBlobRange in pageBlob.GetPageRangesDiffAsync(options))
+                List<PageRangeItem> pageBlobRanges = new List<PageRangeItem>();
+                await foreach (PageRangeItem pageBlobRange in pageBlob.GetAllPageRangesDiffAsync(options))
                 {
                     pageBlobRanges.Add(pageBlobRange);
                 }
@@ -2230,7 +2361,7 @@ namespace Azure.Storage.Blobs.Test
                     parameters: parameters,
                     lease: true);
 
-                PageBlobGetPageRangesDiffOptions options = new PageBlobGetPageRangesDiffOptions
+                GetPageRangesDiffOptions options = new GetPageRangesDiffOptions
                 {
                     Conditions = accessConditions,
                 };
@@ -2239,7 +2370,7 @@ namespace Azure.Storage.Blobs.Test
                 await TestHelper.CatchAsync<Exception>(
                     async () =>
                     {
-                        await foreach (PageBlobRange pageBlobRange in pageBlob.GetPageRangesDiffAsync(options))
+                        await foreach (PageRangeItem pageBlobRange in pageBlob.GetAllPageRangesDiffAsync(options))
                         {
                         }
                     });
@@ -2268,15 +2399,15 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
-            PageBlobGetPageRangesDiffOptions options = new PageBlobGetPageRangesDiffOptions
+            GetPageRangesDiffOptions options = new GetPageRangesDiffOptions
             {
                 PreviousSnapshot = prevSnapshot,
                 Conditions = conditions
             };
 
             // Act
-            List<PageBlobRange> pageBlobRanges = new List<PageBlobRange>();
-            await foreach (PageBlobRange pageBlobRange in pageBlob.GetPageRangesDiffAsync(options))
+            List<PageRangeItem> pageBlobRanges = new List<PageRangeItem>();
+            await foreach (PageRangeItem pageBlobRange in pageBlob.GetAllPageRangesDiffAsync(options))
             {
                 pageBlobRanges.Add(pageBlobRange);
             }
@@ -2317,7 +2448,7 @@ namespace Azure.Storage.Blobs.Test
                 TagConditions = "\"coolTag\" = 'true'"
             };
 
-            PageBlobGetPageRangesDiffOptions options = new PageBlobGetPageRangesDiffOptions
+            GetPageRangesDiffOptions options = new GetPageRangesDiffOptions
             {
                 Conditions = conditions,
                 Range = new HttpRange(0, 4 * Constants.KB),
@@ -2327,7 +2458,7 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                pageBlob.GetPageRangesDiffAsync(options).ToListAsync(),
+                pageBlob.GetAllPageRangesDiffAsync(options).ToListAsync(),
                 e => Assert.AreEqual("ConditionNotMet", e.ErrorCode));
         }
 
@@ -2339,14 +2470,14 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync();
             PageBlobClient pageBlob = await CreatePageBlobClientAsync(test.Container, 4 * Constants.KB);
 
-            PageBlobGetPageRangesDiffOptions options = new PageBlobGetPageRangesDiffOptions
+            GetPageRangesDiffOptions options = new GetPageRangesDiffOptions
             {
                 Range = new HttpRange(5 * Constants.KB, 4 * Constants.KB)
             };
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-               pageBlob.GetPageRangesDiffAsync(options).ToListAsync(),
+               pageBlob.GetAllPageRangesDiffAsync(options).ToListAsync(),
                 e =>
                 {
                     Assert.AreEqual("InvalidRange", e.ErrorCode);
@@ -3097,6 +3228,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [Category("NonVirtualized")]
         public async Task StartCopyIncrementalAsync_AccessTier()
         {
             BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
@@ -3137,6 +3269,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [Category("NonVirtualized")]
         public async Task StartCopyIncrementalAsync_AccessTierFail()
         {
             BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
@@ -3172,6 +3305,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [Category("NonVirtualized")]
         public async Task SetTierAsync_AccessTier()
         {
             BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();
@@ -3189,6 +3323,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [Category("NonVirtualized")]
         public async Task SetTierAsync_AccessTierFail()
         {
             BlobServiceClient premiumService = BlobsClientBuilder.GetServiceClient_PremiumBlobAccount_SharedKey();

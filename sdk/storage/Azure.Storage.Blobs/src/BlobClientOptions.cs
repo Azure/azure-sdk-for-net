@@ -91,7 +91,52 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// The 2021-06-08 service version.
             /// </summary>
-            V2021_06_08 = 12
+            V2021_06_08 = 12,
+
+            /// <summary>
+            /// The 2021-08-06 service version.
+            /// </summary>
+            V2021_08_06 = 13,
+
+            /// <summary>
+            /// The 2021-10-04 service version.
+            /// </summary>
+            V2021_10_04 = 14,
+
+            /// <summary>
+            /// The 2021-12-02 service version.
+            /// </summary>
+            V2021_12_02 = 15,
+
+            /// <summary>
+            /// The 2022-11-02 service version.
+            /// </summary>
+            V2022_11_02 = 16,
+
+            /// <summary>
+            /// The 2023-01-03 service version.
+            /// </summary>
+            V2023_01_03 = 17,
+
+            /// <summary>
+            /// The 2023-05-03 service version.
+            /// </summary>
+            V2023_05_03 = 18,
+
+            /// <summary>
+            /// The 2023-08-03 service version.
+            /// </summary>
+            V2023_08_03 = 19,
+
+            /// <summary>
+            /// The 2023-11-03 service version.
+            /// </summary>
+            V2023_11_03 = 20,
+
+            /// <summary>
+            /// The 2024-02-04 service version.
+            /// </summary>
+            V2024_02_04 = 21
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -124,6 +169,24 @@ namespace Azure.Storage.Blobs
         /// between primary and secondary Uri.
         /// </summary>
         public Uri GeoRedundantSecondaryUri { get; set; }
+
+        /// <summary>
+        /// Configures whether to send or receive checksum headers for blob uploads and downloads. Downloads
+        /// can optionally validate that the content matches the checksum.
+        /// </summary>
+        public TransferValidationOptions TransferValidation { get; } = new();
+
+        /// <summary>
+        /// Whether to trim leading and trailing slashes on a blob name when using
+        /// <see cref="BlobContainerClient.GetBlobClient(string)"/> and similar methods.
+        /// Defaults to true for backwards compatibility.
+        /// </summary>
+        public bool TrimBlobNameSlashes { get; set; } = Constants.DefaultTrimBlobNameSlashes;
+
+        /// <summary>
+        /// Behavior options for setting HTTP header <c>Expect: 100-continue</c> on requests.
+        /// </summary>
+        public ExpectContinueOptions ExpectContinueBehavior { get; set; }
 
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
@@ -276,7 +339,7 @@ namespace Azure.Storage.Blobs
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         internal HttpPipeline Build(HttpPipelinePolicy authentication = null)
         {
-            return this.Build(authentication, GeoRedundantSecondaryUri);
+            return this.Build(authentication, GeoRedundantSecondaryUri, ExpectContinueBehavior);
         }
 
         /// <summary>
@@ -286,10 +349,16 @@ namespace Azure.Storage.Blobs
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         internal HttpPipeline Build(object credentials)
         {
-            return this.Build(credentials, GeoRedundantSecondaryUri);
+            return this.Build(credentials, GeoRedundantSecondaryUri, ExpectContinueBehavior);
         }
 
         /// <inheritdoc />
         public bool EnableTenantDiscovery { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// </summary>
+        /// <value>If <c>null</c>, <see cref="BlobAudience.DefaultAudience" /> will be assumed.</value>
+        public BlobAudience? Audience { get; set; }
     }
 }

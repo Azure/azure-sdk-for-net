@@ -6,52 +6,87 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> An object that wraps the Lifecycle rule. Each rule is uniquely defined by name. </summary>
     public partial class ManagementPolicyRule
     {
-        /// <summary> Initializes a new instance of ManagementPolicyRule. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyRule"/>. </summary>
         /// <param name="name"> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </param>
         /// <param name="ruleType"> The valid value is Lifecycle. </param>
         /// <param name="definition"> An object that defines the Lifecycle rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="definition"/> is null. </exception>
-        public ManagementPolicyRule(string name, RuleType ruleType, ManagementPolicyDefinition definition)
+        public ManagementPolicyRule(string name, ManagementPolicyRuleType ruleType, ManagementPolicyDefinition definition)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (definition == null)
-            {
-                throw new ArgumentNullException(nameof(definition));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(definition, nameof(definition));
 
             Name = name;
             RuleType = ruleType;
             Definition = definition;
         }
 
-        /// <summary> Initializes a new instance of ManagementPolicyRule. </summary>
-        /// <param name="enabled"> Rule is enabled if set to true. </param>
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyRule"/>. </summary>
+        /// <param name="isEnabled"> Rule is enabled if set to true. </param>
         /// <param name="name"> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </param>
         /// <param name="ruleType"> The valid value is Lifecycle. </param>
         /// <param name="definition"> An object that defines the Lifecycle rule. </param>
-        internal ManagementPolicyRule(bool? enabled, string name, RuleType ruleType, ManagementPolicyDefinition definition)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementPolicyRule(bool? isEnabled, string name, ManagementPolicyRuleType ruleType, ManagementPolicyDefinition definition, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             Name = name;
             RuleType = ruleType;
             Definition = definition;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyRule"/> for deserialization. </summary>
+        internal ManagementPolicyRule()
+        {
         }
 
         /// <summary> Rule is enabled if set to true. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </summary>
         public string Name { get; set; }
         /// <summary> The valid value is Lifecycle. </summary>
-        public RuleType RuleType { get; set; }
+        public ManagementPolicyRuleType RuleType { get; set; }
         /// <summary> An object that defines the Lifecycle rule. </summary>
         public ManagementPolicyDefinition Definition { get; set; }
     }

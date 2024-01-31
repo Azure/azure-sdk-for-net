@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The behavior of the endpoint filter. Currently only &apos;Include&apos; is supported. </summary>
+    /// <summary> The behavior of the endpoint filter. Currently only 'Include' is supported. </summary>
     public readonly partial struct ConnectionMonitorEndpointFilterType : IEquatable<ConnectionMonitorEndpointFilterType>
     {
         private readonly string _value;

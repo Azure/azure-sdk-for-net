@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -46,6 +48,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
         }
 
         [RecordedTest]
+        [Ignore("Known service regression with scheduled fix 01/12/2023.")]
         public async Task CanGetManifestProperties()
         {
             // Arrange
@@ -126,25 +129,42 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 }));
         }
 
-        [RecordedTest, NonParallelizable]
+        [RecordedTest]
         public async Task CanDeleteRegistryArtifact()
         {
             // Arrange
-            string repository = $"library/node";
-            string tag = "test-delete-image";
             var client = CreateClient();
-            var artifact = client.GetArtifact(repository, tag);
+            var repositoryId = Recording.Random.NewGuid().ToString();
+            var tag = "v1";
+            var artifact = client.GetArtifact(repositoryId, tag);
 
-            if (Mode != RecordedTestMode.Playback)
+            try
             {
-                await ImportImageAsync(TestEnvironment.Registry, repository, tag);
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await CreateImageAsync(repositoryId, tag);
+                }
+
+                var properties = await artifact.GetManifestPropertiesAsync();
+                Assert.AreEqual(1, properties.Value.Tags.Count);
+                Assert.AreEqual(tag, properties.Value.Tags[0]);
+
+                // Act
+                await artifact.DeleteAsync();
+                await Delay(5000);
+
+                await Delay(5000);
+
+                // Assert
+                Assert.ThrowsAsync<RequestFailedException>(async () => { await artifact.GetManifestPropertiesAsync(); });
             }
-
-            // Act
-            await artifact.DeleteAsync();
-
-            // Assert
-            Assert.ThrowsAsync<RequestFailedException>(async () => { await artifact.GetManifestPropertiesAsync(); });
+            finally
+            {
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await DeleteRepositoryAsync(repositoryId);
+                }
+            }
         }
 
         #endregion
@@ -261,23 +281,42 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             // Arrange
             var client = CreateClient(anonymous);
-            string registry = anonymous ? TestEnvironment.AnonymousAccessRegistry : TestEnvironment.Registry;
-            string tagName = "latest";
-            var artifact = client.GetArtifact(_repositoryName, tagName);
+            var repositoryId = Recording.Random.NewGuid().ToString();
+            List<string> tags = new List<string>() { "v1", "v2" };
+            var artifact = client.GetArtifact(repositoryId, tags[0]);
 
-            if (Mode != RecordedTestMode.Playback)
+            Uri endpoint = anonymous ?
+                new Uri(TestEnvironment.AnonymousAccessEndpoint) :
+                new Uri(TestEnvironment.Endpoint);
+
+            try
             {
-                await ImportImageAsync(registry, _repositoryName, "newest");
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await CreateImageAsync(endpoint, repositoryId, tags[0]);
+                    await AddTagAsync(endpoint, repositoryId, tags[0], tags[1]);
+                }
+
+                // Act
+                AsyncPageable<ArtifactTagProperties> allTags = artifact.GetAllTagPropertiesAsync(ArtifactTagOrder.LastUpdatedOnAscending);
+
+                // Assert
+                int i = 0;
+                await foreach (ArtifactTagProperties tag in allTags)
+                {
+                    Assert.AreEqual(tags[i], tag.Name);
+                    i++;
+                }
+
+                Assert.AreEqual(2, i);
             }
-
-            // Act
-            AsyncPageable<ArtifactTagProperties> tags = artifact.GetAllTagPropertiesAsync(ArtifactTagOrder.LastUpdatedOnDescending);
-
-            // Assert
-            await foreach (ArtifactTagProperties tag in tags)
+            finally
             {
-                Assert.That(tag.Name.Contains("newest"));
-                break;
+                // Clean up
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await DeleteRepositoryAsync(endpoint, repositoryId);
+                }
             }
         }
 
@@ -340,24 +379,39 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 }));
         }
 
-        [RecordedTest, NonParallelizable]
+        [RecordedTest]
         public async Task CanDeleteTag()
         {
             // Arrange
             var client = CreateClient();
+            var repositoryId = Recording.Random.NewGuid().ToString();
             string tag = "test-delete-tag";
-            var artifact = client.GetArtifact(_repositoryName, tag);
+            var artifact = client.GetArtifact(repositoryId, tag);
 
-            if (Mode != RecordedTestMode.Playback)
+            try
             {
-                await ImportImageAsync(TestEnvironment.Registry, _repositoryName, tag);
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await CreateImageAsync(repositoryId, tag);
+                }
+
+                var properties = await artifact.GetManifestPropertiesAsync();
+                Assert.AreEqual(1, properties.Value.Tags.Count);
+                Assert.AreEqual(tag, properties.Value.Tags[0]);
+
+                // Act
+                await artifact.DeleteTagAsync(tag);
+
+                // Assert
+                Assert.ThrowsAsync<RequestFailedException>(async () => { await artifact.GetTagPropertiesAsync(tag); });
             }
-
-            // Act
-            await artifact.DeleteTagAsync(tag);
-
-            // Assert
-            Assert.ThrowsAsync<RequestFailedException>(async () => { await artifact.GetTagPropertiesAsync(tag); });
+            finally
+            {
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await DeleteRepositoryAsync(repositoryId);
+                }
+            }
         }
         #endregion
     }

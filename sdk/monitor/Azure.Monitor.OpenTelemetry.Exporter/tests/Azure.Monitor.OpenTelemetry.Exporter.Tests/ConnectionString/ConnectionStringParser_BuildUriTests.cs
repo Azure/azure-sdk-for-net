@@ -2,9 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+
 using Xunit;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.ConnectionString.Tests
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     /// <summary>
     /// The <see cref="ConnectionStringParser.TryBuildUri(string, string, out Uri, string)"/> method takes user input to construct an endpoint.
@@ -19,10 +22,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.ConnectionString.Tests
                 location: "westus2.",
                 prefix: "dc",
                 suffix: ".applicationinsights.azure.com",
-                uri: out Uri uri);
+                uri: out Uri? uri);
 
             Assert.True(result);
-            Assert.Equal("https://westus2.dc.applicationinsights.azure.com/", uri.AbsoluteUri);
+            Assert.Equal("https://westus2.dc.applicationinsights.azure.com/", uri!.AbsoluteUri);
         }
 
         [Fact]
@@ -32,10 +35,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.ConnectionString.Tests
                 location: "westus2",
                 prefix: "dc",
                 suffix: "applicationinsights.azure.com",
-                uri: out Uri uri);
+                uri: out Uri? uri);
 
             Assert.True(result);
-            Assert.Equal("https://westus2.dc.applicationinsights.azure.com/", uri.AbsoluteUri);
+            Assert.Equal("https://westus2.dc.applicationinsights.azure.com/", uri!.AbsoluteUri);
         }
 
         [Fact]
@@ -45,10 +48,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.ConnectionString.Tests
                 location: null,
                 prefix: "dc",
                 suffix: "applicationinsights.azure.com",
-                uri: out Uri uri);
+                uri: out Uri? uri);
 
             Assert.True(result);
-            Assert.Equal("https://dc.applicationinsights.azure.com/", uri.AbsoluteUri);
+            Assert.Equal("https://dc.applicationinsights.azure.com/", uri!.AbsoluteUri);
         }
 
         [Fact]
@@ -59,7 +62,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.ConnectionString.Tests
                     location: "westus2/",
                     prefix: "dc",
                     suffix: "applicationinsights.azure.com",
-                    uri: out Uri uri));
+                    uri: out Uri? uri));
         }
 
         [Fact]
@@ -69,10 +72,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.ConnectionString.Tests
                 location: " westus2 ",
                 prefix: "dc",
                 suffix: "   applicationinsights.azure.com   ",
-                uri: out Uri uri);
+                uri: out Uri? uri);
 
             Assert.True(result);
-            Assert.Equal("https://westus2.dc.applicationinsights.azure.com/", uri.AbsoluteUri);
+            Assert.Equal("https://westus2.dc.applicationinsights.azure.com/", uri!.AbsoluteUri);
         }
     }
 }

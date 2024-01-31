@@ -39,9 +39,10 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <param name="name">Operation ID</param>
         /// <param name="type">Resource type</param>
         /// <param name="provisioningState">The details of the quota request
-        /// status.</param>
+        /// status. Possible values include: 'Accepted', 'Invalid',
+        /// 'Succeeded', 'Failed', 'InProgress'</param>
         /// <param name="message">A user friendly message.</param>
-        public QuotaRequestSubmitResponse201(string id = default(string), string name = default(string), string type = default(string), object provisioningState = default(object), string message = default(string))
+        public QuotaRequestSubmitResponse201(string id = default(string), string name = default(string), string type = default(string), string provisioningState = default(string), string message = default(string))
         {
             Id = id;
             Name = name;
@@ -76,10 +77,11 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets the details of the quota request status.
+        /// Gets the details of the quota request status. Possible values
+        /// include: 'Accepted', 'Invalid', 'Succeeded', 'Failed', 'InProgress'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public object ProvisioningState { get; private set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets a user friendly message.

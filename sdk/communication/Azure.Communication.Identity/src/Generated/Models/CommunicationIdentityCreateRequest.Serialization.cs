@@ -17,13 +17,18 @@ namespace Azure.Communication.Identity.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(CreateTokenWithScopes))
             {
-                writer.WritePropertyName("createTokenWithScopes");
+                writer.WritePropertyName("createTokenWithScopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in CreateTokenWithScopes)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ExpiresInMinutes))
+            {
+                writer.WritePropertyName("expiresInMinutes"u8);
+                writer.WriteNumberValue(ExpiresInMinutes.Value);
             }
             writer.WriteEndObject();
         }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Xml.Linq;
-using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -16,17 +15,17 @@ namespace Azure.Storage.Files.Shares.Models
         internal static ListHandlesResponse DeserializeListHandlesResponse(XElement element)
         {
             string nextMarker = default;
-            IReadOnlyList<ShareFileHandle> handleList = default;
+            IReadOnlyList<HandleItem> handleList = default;
             if (element.Element("NextMarker") is XElement nextMarkerElement)
             {
                 nextMarker = (string)nextMarkerElement;
             }
             if (element.Element("Entries") is XElement entriesElement)
             {
-                var array = new List<ShareFileHandle>();
+                var array = new List<HandleItem>();
                 foreach (var e in entriesElement.Elements("Handle"))
                 {
-                    array.Add(ShareFileHandle.DeserializeShareFileHandle(e));
+                    array.Add(HandleItem.DeserializeHandleItem(e));
                 }
                 handleList = array;
             }

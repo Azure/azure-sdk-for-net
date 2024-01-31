@@ -17,7 +17,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(EnableVideoPreviewImage))
             {
-                writer.WritePropertyName("enableVideoPreviewImage");
+                writer.WritePropertyName("enableVideoPreviewImage"u8);
                 writer.WriteStringValue(EnableVideoPreviewImage);
             }
             writer.WriteEndObject();
@@ -25,10 +25,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static VideoPublishingOptions DeserializeVideoPublishingOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> enableVideoPreviewImage = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("enableVideoPreviewImage"))
+                if (property.NameEquals("enableVideoPreviewImage"u8))
                 {
                     enableVideoPreviewImage = property.Value.GetString();
                     continue;

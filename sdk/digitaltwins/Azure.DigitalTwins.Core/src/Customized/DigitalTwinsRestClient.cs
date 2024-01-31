@@ -19,6 +19,234 @@ namespace Azure.DigitalTwins.Core
     {
         private const string DateTimeOffsetFormat = "MM/dd/yy H:mm:ss zzz";
 
+        /// <summary>
+        /// Retrieves a digital twin.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="digitalTwinsGetByIdOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public async Task<Response<Stream>> GetByIdAsync(string id, GetDigitalTwinOptions digitalTwinsGetByIdOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            using var message = CreateGetByIdRequest(id, digitalTwinsGetByIdOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary>
+        /// Retrieves a digital twin.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="digitalTwinsGetByIdOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        public Response<Stream> GetById(string id, GetDigitalTwinOptions digitalTwinsGetByIdOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            using var message = CreateGetByIdRequest(id, digitalTwinsGetByIdOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary>
+        /// Retrieves a relationship between two digital twins.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id or relationship id is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        ///   * RelationshipNotFound - The relationship was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="relationshipId"> The id of the relationship. The id is unique within the digital twin and case sensitive. </param>
+        /// <param name="digitalTwinsGetRelationshipByIdOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="relationshipId"/> is null. </exception>
+        public async Task<Response<Stream>> GetRelationshipByIdAsync(string id, string relationshipId, GetRelationshipOptions digitalTwinsGetRelationshipByIdOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (relationshipId == null)
+            {
+                throw new ArgumentNullException(nameof(relationshipId));
+            }
+
+            using var message = CreateGetRelationshipByIdRequest(id, relationshipId, digitalTwinsGetRelationshipByIdOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary>
+        /// Retrieves a relationship between two digital twins.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id or relationship id is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        ///   * RelationshipNotFound - The relationship was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="relationshipId"> The id of the relationship. The id is unique within the digital twin and case sensitive. </param>
+        /// <param name="digitalTwinsGetRelationshipByIdOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="relationshipId"/> is null. </exception>
+        public Response<Stream> GetRelationshipById(string id, string relationshipId, GetRelationshipOptions digitalTwinsGetRelationshipByIdOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (relationshipId == null)
+            {
+                throw new ArgumentNullException(nameof(relationshipId));
+            }
+
+            using var message = CreateGetRelationshipByIdRequest(id, relationshipId, digitalTwinsGetRelationshipByIdOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary>
+        /// Retrieves a component from a digital twin.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id or component path is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        ///   * ComponentNotFound - The component path was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="componentPath"> The name of the DTDL component. </param>
+        /// <param name="digitalTwinsGetComponentOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="componentPath"/> is null. </exception>
+        public async Task<Response<Stream>> GetComponentAsync(string id, string componentPath, GetComponentOptions digitalTwinsGetComponentOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (componentPath == null)
+            {
+                throw new ArgumentNullException(nameof(componentPath));
+            }
+
+            using var message = CreateGetComponentRequest(id, componentPath, digitalTwinsGetComponentOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary>
+        /// Retrieves a component from a digital twin.
+        /// Status codes:
+        /// * 200 OK
+        /// * 400 Bad Request
+        ///   * InvalidArgument - The digital twin id or component path is invalid.
+        /// * 404 Not Found
+        ///   * DigitalTwinNotFound - The digital twin was not found.
+        ///   * ComponentNotFound - The component path was not found.
+        /// </summary>
+        /// <param name="id"> The id of the digital twin. The id is unique within the service and case sensitive. </param>
+        /// <param name="componentPath"> The name of the DTDL component. </param>
+        /// <param name="digitalTwinsGetComponentOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="componentPath"/> is null. </exception>
+        public Response<Stream> GetComponent(string id, string componentPath, GetComponentOptions digitalTwinsGetComponentOptions = null, CancellationToken cancellationToken = default)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            if (componentPath == null)
+            {
+                throw new ArgumentNullException(nameof(componentPath));
+            }
+
+            using var message = CreateGetComponentRequest(id, componentPath, digitalTwinsGetComponentOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateAddRequest(string id, Stream twin, CreateOrReplaceDigitalTwinOptions digitalTwinsAddOptions)
         {
             var message = _pipeline.CreateMessage();
@@ -77,7 +305,7 @@ namespace Azure.DigitalTwins.Core
                     return Response.FromValue<Stream>(null, message.Response);
 
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -109,7 +337,7 @@ namespace Azure.DigitalTwins.Core
                     return Response.FromValue<Stream>(null, message.Response);
 
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -137,7 +365,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -165,7 +393,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -199,7 +427,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -233,7 +461,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -258,7 +486,7 @@ namespace Azure.DigitalTwins.Core
             return message.Response.Status switch
             {
                 204 => message.Response,
-                _ => throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false),
+                _ => throw new RequestFailedException(message.Response),
             };
         }
 
@@ -283,7 +511,7 @@ namespace Azure.DigitalTwins.Core
             return message.Response.Status switch
             {
                 204 => message.Response,
-                _ => throw ClientDiagnostics.CreateRequestFailedException(message.Response),
+                _ => throw new RequestFailedException(message.Response),
             };
         }
 
@@ -312,7 +540,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -341,7 +569,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -373,7 +601,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -405,7 +633,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -442,7 +670,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -479,7 +707,7 @@ namespace Azure.DigitalTwins.Core
                     return message.Response;
 
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -511,7 +739,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -549,7 +777,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -581,7 +809,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -619,7 +847,7 @@ namespace Azure.DigitalTwins.Core
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 

@@ -83,7 +83,7 @@ namespace Azure.Core.TestFramework
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -116,7 +116,7 @@ namespace Azure.Core.TestFramework
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -173,7 +173,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -212,7 +212,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -235,11 +235,11 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateStopRecordRequest(string xRecordingId, IDictionary<string, string> variables)
+        internal HttpMessage CreateStopRecordRequest(string xRecordingId, IDictionary<string, string> variables, string xRecordingSkip)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -249,6 +249,10 @@ namespace Azure.Core.TestFramework
             uri.AppendPath("/record/stop", false);
             request.Uri = uri;
             request.Headers.Add("x-recording-id", xRecordingId);
+            if (xRecordingSkip != null)
+            {
+                request.Headers.Add("x-recording-skip", xRecordingSkip);
+            }
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartObject();
@@ -262,12 +266,14 @@ namespace Azure.Core.TestFramework
             return message;
         }
 
-        /// <summary> Stop recording for a test. </summary>
+        /// <summary> Stop recording a test. </summary>
         /// <param name="xRecordingId"> The recording ID. </param>
         /// <param name="variables"> Variables for the recording. </param>
+        /// <param name="xRecordingSkip"> Set to request-response to skip recording this session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="xRecordingId"/> or <paramref name="variables"/> is null. </exception>
-        public async Task<Response> StopRecordAsync(string xRecordingId, IDictionary<string, string> variables, CancellationToken cancellationToken = default)
+        /// <remarks> Stop recording for a test. </remarks>
+        public async Task<Response> StopRecordAsync(string xRecordingId, IDictionary<string, string> variables, string xRecordingSkip = null, CancellationToken cancellationToken = default)
         {
             if (xRecordingId == null)
             {
@@ -278,23 +284,25 @@ namespace Azure.Core.TestFramework
                 throw new ArgumentNullException(nameof(variables));
             }
 
-            using var message = CreateStopRecordRequest(xRecordingId, variables);
+            using var message = CreateStopRecordRequest(xRecordingId, variables, xRecordingSkip);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Stop recording for a test. </summary>
+        /// <summary> Stop recording a test. </summary>
         /// <param name="xRecordingId"> The recording ID. </param>
         /// <param name="variables"> Variables for the recording. </param>
+        /// <param name="xRecordingSkip"> Set to request-response to skip recording this session. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="xRecordingId"/> or <paramref name="variables"/> is null. </exception>
-        public Response StopRecord(string xRecordingId, IDictionary<string, string> variables, CancellationToken cancellationToken = default)
+        /// <remarks> Stop recording for a test. </remarks>
+        public Response StopRecord(string xRecordingId, IDictionary<string, string> variables, string xRecordingSkip = null, CancellationToken cancellationToken = default)
         {
             if (xRecordingId == null)
             {
@@ -305,14 +313,85 @@ namespace Azure.Core.TestFramework
                 throw new ArgumentNullException(nameof(variables));
             }
 
-            using var message = CreateStopRecordRequest(xRecordingId, variables);
+            using var message = CreateStopRecordRequest(xRecordingId, variables, xRecordingSkip);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateSetRecordingTransportOptionsRequest(string xRecordingId, ProxyOptions proxyOptions)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/admin/setrecordingoptions", false);
+            request.Uri = uri;
+            request.Headers.Add("x-recording-id", xRecordingId);
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(proxyOptions);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Set the proxy recording options. </summary>
+        /// <param name="xRecordingId"> The recording ID. </param>
+        /// <param name="proxyOptions"> File location of the recording. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="xRecordingId"/> or <paramref name="proxyOptions"/> is null. </exception>
+        public async Task<Response> SetRecordingTransportOptionsAsync(string xRecordingId, ProxyOptions proxyOptions, CancellationToken cancellationToken = default)
+        {
+            if (xRecordingId == null)
+            {
+                throw new ArgumentNullException(nameof(xRecordingId));
+            }
+            if (proxyOptions == null)
+            {
+                throw new ArgumentNullException(nameof(proxyOptions));
+            }
+
+            using var message = CreateSetRecordingTransportOptionsRequest(xRecordingId, proxyOptions);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Set the proxy recording options. </summary>
+        /// <param name="xRecordingId"> The recording ID. </param>
+        /// <param name="proxyOptions"> File location of the recording. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="xRecordingId"/> or <paramref name="proxyOptions"/> is null. </exception>
+        public Response SetRecordingTransportOptions(string xRecordingId, ProxyOptions proxyOptions, CancellationToken cancellationToken = default)
+        {
+            if (xRecordingId == null)
+            {
+                throw new ArgumentNullException(nameof(xRecordingId));
+            }
+            if (proxyOptions == null)
+            {
+                throw new ArgumentNullException(nameof(proxyOptions));
+            }
+
+            using var message = CreateSetRecordingTransportOptionsRequest(xRecordingId, proxyOptions);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -337,11 +416,12 @@ namespace Azure.Core.TestFramework
             return message;
         }
 
-        /// <summary> Stop recording for a test. </summary>
+        /// <summary> Add a sanitizer. </summary>
         /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
         /// <param name="xRecordingId"> The recording ID to apply the sanitizer to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sanitizer"/> is null. </exception>
+        /// <remarks> Stop recording for a test. </remarks>
         public async Task<Response> AddBodyKeySanitizerAsync(BodyKeySanitizer sanitizer, string xRecordingId = null, CancellationToken cancellationToken = default)
         {
             if (sanitizer == null)
@@ -356,15 +436,16 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Stop recording for a test. </summary>
+        /// <summary> Add a sanitizer. </summary>
         /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
         /// <param name="xRecordingId"> The recording ID to apply the sanitizer to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sanitizer"/> is null. </exception>
+        /// <remarks> Stop recording for a test. </remarks>
         public Response AddBodyKeySanitizer(BodyKeySanitizer sanitizer, string xRecordingId = null, CancellationToken cancellationToken = default)
         {
             if (sanitizer == null)
@@ -379,7 +460,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -404,11 +485,12 @@ namespace Azure.Core.TestFramework
             return message;
         }
 
-        /// <summary> Stop recording for a test. </summary>
+        /// <summary> Add a sanitizer. </summary>
         /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
         /// <param name="xRecordingId"> The recording ID to apply the sanitizer to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sanitizer"/> is null. </exception>
+        /// <remarks> Add header sanitizer. </remarks>
         public async Task<Response> AddHeaderSanitizerAsync(HeaderRegexSanitizer sanitizer, string xRecordingId = null, CancellationToken cancellationToken = default)
         {
             if (sanitizer == null)
@@ -423,15 +505,16 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Stop recording for a test. </summary>
+        /// <summary> Add a sanitizer. </summary>
         /// <param name="sanitizer"> The body for a header regex sanitizer. </param>
         /// <param name="xRecordingId"> The recording ID to apply the sanitizer to. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sanitizer"/> is null. </exception>
+        /// <remarks> Add header sanitizer. </remarks>
         public Response AddHeaderSanitizer(HeaderRegexSanitizer sanitizer, string xRecordingId = null, CancellationToken cancellationToken = default)
         {
             if (sanitizer == null)
@@ -446,7 +529,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -490,7 +573,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -513,7 +596,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -557,7 +640,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -580,7 +663,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -613,7 +696,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -629,7 +712,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -673,7 +756,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -696,7 +779,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -740,7 +823,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -763,7 +846,7 @@ namespace Azure.Core.TestFramework
                 case 200:
                     return message.Response;
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

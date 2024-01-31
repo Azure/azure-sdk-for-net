@@ -1,4 +1,5 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
 trigger:
   branches:
     include:
@@ -13,6 +14,7 @@ trigger:
     # The surrounding conditions should accomplish that when installed with `dotnet new azsdk`.
     # eng/common code changes trigger template pipeline for basic checking.
     - eng/common/
+#endif
 
 pr:
   branches:
@@ -29,16 +31,24 @@ pr:
     # The surrounding conditions should accomplish that when installed with `dotnet new azsdk`.
     # eng/common code changes trigger template pipeline for basic checking.
     - eng/common/
-    - common/Perf/
-    - common/PerfStressShared/
-    - common/Stress/
 #endif
 
+parameters:
+- name: AllowFailingLiveTests
+  displayName: Allow release with failing live tests
+  type: boolean
+  default: false
+
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: template
     ArtifactName: packages
     Artifacts:
     - name: Azure.Template
       safeName: AzureTemplate
+    ReleaseDependsOnLiveTests: ${{ not(parameters.AllowFailingLiveTests) }}
+    LiveTestStages:
+      - template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
+        parameters:
+          ServiceDirectory: template

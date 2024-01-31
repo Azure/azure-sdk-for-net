@@ -8,38 +8,30 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
     /// <summary> List of tag details. </summary>
     internal partial class TagList
     {
-        /// <summary> Initializes a new instance of TagList. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagList"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repository"> Image name. </param>
         /// <param name="tagAttributeBases"> List of tag attribute details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="registryLoginServer"/>, <paramref name="repository"/> or <paramref name="tagAttributeBases"/> is null. </exception>
         internal TagList(string registryLoginServer, string repository, IEnumerable<TagAttributesBase> tagAttributeBases)
         {
-            if (registryLoginServer == null)
-            {
-                throw new ArgumentNullException(nameof(registryLoginServer));
-            }
-            if (repository == null)
-            {
-                throw new ArgumentNullException(nameof(repository));
-            }
-            if (tagAttributeBases == null)
-            {
-                throw new ArgumentNullException(nameof(tagAttributeBases));
-            }
+            Argument.AssertNotNull(registryLoginServer, nameof(registryLoginServer));
+            Argument.AssertNotNull(repository, nameof(repository));
+            Argument.AssertNotNull(tagAttributeBases, nameof(tagAttributeBases));
 
             RegistryLoginServer = registryLoginServer;
             Repository = repository;
             TagAttributeBases = tagAttributeBases.ToList();
         }
 
-        /// <summary> Initializes a new instance of TagList. </summary>
+        /// <summary> Initializes a new instance of <see cref="TagList"/>. </summary>
         /// <param name="registryLoginServer"> Registry login server name. This is likely to be similar to {registry-name}.azurecr.io. </param>
         /// <param name="repository"> Image name. </param>
         /// <param name="tagAttributeBases"> List of tag attribute details. </param>

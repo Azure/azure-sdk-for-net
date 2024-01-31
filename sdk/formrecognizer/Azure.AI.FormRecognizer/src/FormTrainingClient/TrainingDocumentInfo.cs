@@ -31,20 +31,20 @@ namespace Azure.AI.FormRecognizer.Training
         /// <summary>
         /// Training document name.
         /// </summary>
-        [CodeGenMember("documentName")]
+        [CodeGenMember("DocumentName")]
         public string Name { get; }
 
         /// <summary>
         /// The number of pages the document has.
         /// </summary>
-        [CodeGenMember("pages")]
+        [CodeGenMember("Pages")]
         public int PageCount { get; }
 
         /// <summary>
         /// The unique identifier of the model.
         /// </summary>
         /// <remarks>
-        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and newer.
         /// </remarks>
         public string ModelId { get; }
     }

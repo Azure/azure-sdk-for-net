@@ -5,43 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the DatabaseColumn data model. </summary>
+    /// <summary>
+    /// A class representing the DatabaseColumn data model.
+    /// A database column resource.
+    /// </summary>
     public partial class DatabaseColumnData : ResourceData
     {
-        /// <summary> Initializes a new instance of DatabaseColumnData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatabaseColumnData"/>. </summary>
         public DatabaseColumnData()
         {
         }
 
-        /// <summary> Initializes a new instance of DatabaseColumnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseColumnData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="columnType"> The column data type. </param>
         /// <param name="temporalType"> The table temporal type. </param>
-        /// <param name="memoryOptimized"> Whether or not the column belongs to a memory optimized table. </param>
+        /// <param name="isMemoryOptimized"> Whether or not the column belongs to a memory optimized table. </param>
         /// <param name="isComputed"> Whether or not the column is computed. </param>
-        internal DatabaseColumnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ColumnDataType? columnType, TableTemporalType? temporalType, bool? memoryOptimized, bool? isComputed) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseColumnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlColumnDataType? columnType, TableTemporalType? temporalType, bool? isMemoryOptimized, bool? isComputed, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ColumnType = columnType;
             TemporalType = temporalType;
-            MemoryOptimized = memoryOptimized;
+            IsMemoryOptimized = isMemoryOptimized;
             IsComputed = isComputed;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The column data type. </summary>
-        public ColumnDataType? ColumnType { get; set; }
+        public SqlColumnDataType? ColumnType { get; set; }
         /// <summary> The table temporal type. </summary>
         public TableTemporalType? TemporalType { get; set; }
         /// <summary> Whether or not the column belongs to a memory optimized table. </summary>
-        public bool? MemoryOptimized { get; set; }
+        public bool? IsMemoryOptimized { get; set; }
         /// <summary> Whether or not the column is computed. </summary>
         public bool? IsComputed { get; set; }
     }

@@ -1,9 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Microsoft.Azure.Management.Maintenance;
+using Microsoft.Azure.Management.Maintenance.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
@@ -189,6 +191,202 @@ namespace Maintenance.Tests
                 var createdMaintenanceConfiguration2 = maintenanceClient.MaintenanceConfigurations.CreateOrUpdate(resourceGroup.Name, maintenanceConfigurationName2, maintenanceConfiguration2);
                 MaintenanceTestUtilities.VerifyMaintenanceConfigurationProperties(maintenanceConfiguration1, createdMaintenanceConfiguration1);
                 MaintenanceTestUtilities.VerifyMaintenanceConfigurationProperties(maintenanceConfiguration2, createdMaintenanceConfiguration2);
+            }
+        }
+
+        /// <summary>
+        /// Test create maintenance configuration.
+        /// </summary>
+        [Fact]
+        public void MaintenanceConfigurationAssignmentDynamicScopeTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourceClient = MaintenanceTestUtilities.GetResourceManagementClient(context, handler);
+                var maintenanceClient = MaintenanceTestUtilities.GetMaintenanceManagementClient(context, handler);
+
+                var resourceGroup = MaintenanceTestUtilities.CreateResourceGroup(resourceClient);
+
+                // Create maintenance configuration.
+                var maintenanceConfigurationName1 = TestUtilities.GenerateName("maintenancesdk");
+                var configurationAssignmentName1 = "dotsdktestassignment01";
+                var maintenanceConfiguration1 = MaintenanceTestUtilities.CreateTestMaintenanceConfigurationInGuestPatchScope(maintenanceConfigurationName1, advancePatchOption: true);
+ 
+                // Verify created maintenance configuration.
+                var createdMaintenanceConfiguration1 = maintenanceClient.MaintenanceConfigurations.CreateOrUpdate(resourceGroup.Name,maintenanceConfigurationName1, maintenanceConfiguration1);
+  
+                MaintenanceTestUtilities.VerifyMaintenanceConfigurationProperties(maintenanceConfiguration1, createdMaintenanceConfiguration1);
+
+                var createdConfigurationAssignment1 = maintenanceClient.ConfigurationAssignmentsForSubscriptions.CreateOrUpdate(configurationAssignmentName1, new Microsoft.Azure.Management.Maintenance.Models.ConfigurationAssignment() {
+                    Location = "global",
+                    MaintenanceConfigurationId = createdMaintenanceConfiguration1.Id
+                });
+
+                var createdConfigurationAssignment2 = maintenanceClient.ConfigurationAssignmentsForSubscriptions.Get(configurationAssignmentName1);
+
+                Assert.Equal(createdConfigurationAssignment2.Location, createdConfigurationAssignment1.Location);
+                Assert.Equal(createdConfigurationAssignment2.MaintenanceConfigurationId, createdConfigurationAssignment1.MaintenanceConfigurationId);
+                Assert.Equal(createdConfigurationAssignment2.Filter, createdConfigurationAssignment1.Filter);
+
+                createdConfigurationAssignment1 = maintenanceClient.ConfigurationAssignmentsForSubscriptions.CreateOrUpdate(configurationAssignmentName1, new Microsoft.Azure.Management.Maintenance.Models.ConfigurationAssignment()
+                {
+                    Location = "global",
+                    MaintenanceConfigurationId = createdMaintenanceConfiguration1.Id,
+                    Filter = new Microsoft.Azure.Management.Maintenance.Models.ConfigurationAssignmentFilterProperties()
+                    {
+                        Locations = new List<string> { "eastus2euap", "centraluseuap"}
+                    }
+                });
+
+                createdConfigurationAssignment2 = maintenanceClient.ConfigurationAssignmentsForSubscriptions.Get(configurationAssignmentName1);
+
+                Assert.Equal(createdConfigurationAssignment2.Location, createdConfigurationAssignment1.Location);
+                Assert.Equal(createdConfigurationAssignment2.MaintenanceConfigurationId, createdConfigurationAssignment1.MaintenanceConfigurationId);
+                Assert.Equal(createdConfigurationAssignment2.Filter.Locations.Count, createdConfigurationAssignment1.Filter.Locations.Count);
+                Assert.True(createdConfigurationAssignment2.Filter.Locations.Contains("eastus2euap"));
+                Assert.True(createdConfigurationAssignment2.Filter.Locations.Contains("centraluseuap"));
+
+
+                createdConfigurationAssignment1 = maintenanceClient.ConfigurationAssignmentsForSubscriptions.CreateOrUpdate(configurationAssignmentName1, new Microsoft.Azure.Management.Maintenance.Models.ConfigurationAssignment()
+                {
+                    Location = "global",
+                    MaintenanceConfigurationId = createdMaintenanceConfiguration1.Id,
+                    Filter = new Microsoft.Azure.Management.Maintenance.Models.ConfigurationAssignmentFilterProperties()
+                    {
+                        Locations = new List<string> { "eastus2euap", "centraluseuap" },
+                        TagSettings = new Microsoft.Azure.Management.Maintenance.Models.TagSettingsProperties()
+                        {
+                            FilterOperator = Microsoft.Azure.Management.Maintenance.Models.TagOperators.Any,
+                            Tags = new Dictionary<string, IList<string>> {
+                                ["tagKey1"] = new List<string> { "tagKey1Value1", "tagKey1Value2" },
+                                ["tagKey2"] = new List<string> { "tagKey2Value1", "tagKey2Value2", "tagKey2Value3" }
+                            }
+                        }
+                    }
+                });
+
+                createdConfigurationAssignment2 = maintenanceClient.ConfigurationAssignmentsForSubscriptions.Get(configurationAssignmentName1);
+
+                Assert.Equal(createdConfigurationAssignment2.Location, createdConfigurationAssignment1.Location);
+                Assert.Equal(createdConfigurationAssignment2.MaintenanceConfigurationId, createdConfigurationAssignment1.MaintenanceConfigurationId);
+                Assert.Equal(createdConfigurationAssignment2.Filter.Locations.Count, createdConfigurationAssignment1.Filter.Locations.Count);
+                Assert.True(createdConfigurationAssignment2.Filter.Locations.Contains("eastus2euap"));
+                Assert.True(createdConfigurationAssignment2.Filter.Locations.Contains("centraluseuap"));
+                Assert.Equal(2, createdConfigurationAssignment2.Filter.TagSettings.Tags.Count);
+                Assert.Equal(2, createdConfigurationAssignment2.Filter.TagSettings.Tags["tagKey1"].Count);
+                Assert.Equal(3, createdConfigurationAssignment2.Filter.TagSettings.Tags["tagKey2"].Count);
+                Assert.True(createdConfigurationAssignment2.Filter.TagSettings.Tags["tagKey2"].Contains("tagKey2Value1"));
+                Assert.True(createdConfigurationAssignment2.Filter.TagSettings.Tags["tagKey2"].Contains("tagKey2Value2"));
+                Assert.True(createdConfigurationAssignment2.Filter.TagSettings.Tags["tagKey2"].Contains("tagKey2Value3"));
+                Assert.True(createdConfigurationAssignment2.Filter.TagSettings.Tags["tagKey1"].Contains("tagKey1Value1"));
+                Assert.True(createdConfigurationAssignment2.Filter.TagSettings.Tags["tagKey1"].Contains("tagKey1Value2"));
+
+                //Delete
+                maintenanceClient.ConfigurationAssignmentsForSubscriptions.Delete(configurationAssignmentName1);
+            }
+        }
+
+        /// <summary>
+        /// Test create maintenance configuration.
+        /// </summary>
+        [Fact]
+        public void MaintenanceConfigurationAssignmentResourceGroupDynamicScopeTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourceClient = MaintenanceTestUtilities.GetResourceManagementClient(context, handler);
+                var maintenanceClient = MaintenanceTestUtilities.GetMaintenanceManagementClient(context, handler);
+
+                var resourceGroup = MaintenanceTestUtilities.CreateResourceGroup(resourceClient);
+
+                // Create maintenance configuration.
+                var maintenanceConfigurationName1 = TestUtilities.GenerateName("maintenancesdk");
+                var configurationAssignmentName1 = "dotnetsdktestassignment01";
+                var configurationAssignmentResourceGroupName = "dotnetsdkeastus2euap";
+                var maintenanceConfiguration1 = MaintenanceTestUtilities.CreateTestMaintenanceConfigurationInGuestPatchScope(maintenanceConfigurationName1, advancePatchOption: true);
+
+                // Verify created maintenance configuration.
+                var createdMaintenanceConfiguration1 = maintenanceClient.MaintenanceConfigurations.CreateOrUpdate(resourceGroup.Name, maintenanceConfigurationName1, maintenanceConfiguration1);
+
+                MaintenanceTestUtilities.VerifyMaintenanceConfigurationProperties(maintenanceConfiguration1, createdMaintenanceConfiguration1);
+
+                var createdConfigurationAssignment1 = maintenanceClient.ConfigurationAssignmentsForResourceGroup.CreateOrUpdate(configurationAssignmentResourceGroupName, configurationAssignmentName1, new ConfigurationAssignment()
+                {
+                    Location = resourceGroup.Location,
+                    MaintenanceConfigurationId = createdMaintenanceConfiguration1.Id,
+                    Filter = new ConfigurationAssignmentFilterProperties()
+                    {
+                        Locations = new List<string>() { "eastus2euap" }
+                    }
+                });
+
+                var createdConfigurationAssignment2 = maintenanceClient.ConfigurationAssignmentsForResourceGroup.Get(configurationAssignmentResourceGroupName, configurationAssignmentName1);
+
+                Assert.Equal(createdConfigurationAssignment2.Location, createdConfigurationAssignment1.Location);
+                Assert.Equal(createdConfigurationAssignment2.MaintenanceConfigurationId, createdConfigurationAssignment1.MaintenanceConfigurationId);
+                Assert.Equal(createdConfigurationAssignment2.Filter.Locations.Count, createdConfigurationAssignment1.Filter.Locations.Count);
+                Assert.True(createdConfigurationAssignment2.Filter.Locations.Contains("eastus2euap"));
+
+                createdConfigurationAssignment1 = maintenanceClient.ConfigurationAssignmentsForResourceGroup.CreateOrUpdate(configurationAssignmentResourceGroupName, configurationAssignmentName1, new ConfigurationAssignment()
+                {
+                    Location = resourceGroup.Location,
+                    MaintenanceConfigurationId = createdMaintenanceConfiguration1.Id,
+                    Filter = new ConfigurationAssignmentFilterProperties()
+                    {
+                        Locations = new List<string> { "eastus2euap", "centraluseuap" }
+                    }
+                });
+
+                createdConfigurationAssignment2 = maintenanceClient.ConfigurationAssignmentsForResourceGroup.Get(configurationAssignmentResourceGroupName, configurationAssignmentName1);
+
+                Assert.Equal(createdConfigurationAssignment2.Location, createdConfigurationAssignment1.Location);
+                Assert.Equal(createdConfigurationAssignment2.MaintenanceConfigurationId, createdConfigurationAssignment1.MaintenanceConfigurationId);
+                Assert.Equal(createdConfigurationAssignment2.Filter.Locations.Count, createdConfigurationAssignment1.Filter.Locations.Count);
+                Assert.True(createdConfigurationAssignment2.Filter.Locations.Contains("eastus2euap"));
+                Assert.True(createdConfigurationAssignment2.Filter.Locations.Contains("centraluseuap"));
+
+
+                createdConfigurationAssignment1 = maintenanceClient.ConfigurationAssignmentsForResourceGroup.CreateOrUpdate(configurationAssignmentResourceGroupName, configurationAssignmentName1, new ConfigurationAssignment()
+                {
+                    Location = resourceGroup.Location,
+                    MaintenanceConfigurationId = createdMaintenanceConfiguration1.Id,
+                    Filter = new ConfigurationAssignmentFilterProperties()
+                    {
+                        Locations = new List<string> { "eastus2euap", "centraluseuap" },
+                        TagSettings = new TagSettingsProperties()
+                        {
+                            FilterOperator = TagOperators.Any,
+                            Tags = new Dictionary<string, IList<string>>
+                            {
+                                ["tagKey1"] = new List<string> { "tagKey1Value1", "tagKey1Value2" },
+                                ["tagKey2"] = new List<string> { "tagKey2Value1", "tagKey2Value2", "tagKey2Value3" }
+                            }
+                        }
+                    }
+                });
+
+                createdConfigurationAssignment2 = maintenanceClient.ConfigurationAssignmentsForResourceGroup.Get(configurationAssignmentResourceGroupName, configurationAssignmentName1);
+
+                Assert.Equal(createdConfigurationAssignment2.Location, createdConfigurationAssignment1.Location);
+                Assert.Equal(createdConfigurationAssignment2.MaintenanceConfigurationId, createdConfigurationAssignment1.MaintenanceConfigurationId);
+                Assert.Equal(createdConfigurationAssignment2.Filter.Locations.Count, createdConfigurationAssignment1.Filter.Locations.Count);
+                Assert.True(createdConfigurationAssignment2.Filter.Locations.Contains("eastus2euap"));
+                Assert.True(createdConfigurationAssignment2.Filter.Locations.Contains("centraluseuap"));
+                Assert.Equal(2, createdConfigurationAssignment2.Filter.TagSettings.Tags.Count);
+                Assert.Equal(2, createdConfigurationAssignment2.Filter.TagSettings.Tags["tagKey1"].Count);
+                Assert.Equal(3, createdConfigurationAssignment2.Filter.TagSettings.Tags["tagKey2"].Count);
+                Assert.True(createdConfigurationAssignment2.Filter.TagSettings.Tags["tagKey2"].Contains("tagKey2Value1"));
+                Assert.True(createdConfigurationAssignment2.Filter.TagSettings.Tags["tagKey2"].Contains("tagKey2Value2"));
+                Assert.True(createdConfigurationAssignment2.Filter.TagSettings.Tags["tagKey2"].Contains("tagKey2Value3"));
+                Assert.True(createdConfigurationAssignment2.Filter.TagSettings.Tags["tagKey1"].Contains("tagKey1Value1"));
+                Assert.True(createdConfigurationAssignment2.Filter.TagSettings.Tags["tagKey1"].Contains("tagKey1Value2"));
+
+                //Delete
+                maintenanceClient.ConfigurationAssignmentsForResourceGroup.Delete(configurationAssignmentResourceGroupName, configurationAssignmentName1);
             }
         }
     }

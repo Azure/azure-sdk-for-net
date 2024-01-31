@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Resources.Models
 
         public static ArmDeploymentMode ToArmDeploymentMode(this string value)
         {
-            if (string.Equals(value, "Incremental", StringComparison.InvariantCultureIgnoreCase)) return ArmDeploymentMode.Incremental;
-            if (string.Equals(value, "Complete", StringComparison.InvariantCultureIgnoreCase)) return ArmDeploymentMode.Complete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Incremental")) return ArmDeploymentMode.Incremental;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Complete")) return ArmDeploymentMode.Complete;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ArmDeploymentMode value.");
         }
     }

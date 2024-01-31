@@ -3037,6 +3037,80 @@ namespace Storage.Tests
                 StorageManagementTestUtilities.VerifyAccountProperties(account, false);
                 Assert.Equal(DnsEndpointType.AzureDnsZone, account.DnsEndpointType);
             }
-        }      
+        }
+
+        [Fact]
+        public void StorageAccountCreateSetGetFileAAdKERB()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                var rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = TestUtilities.GenerateName("sto");
+                ActiveDirectoryProperties activeDirectoryProperties = new ActiveDirectoryProperties();
+                activeDirectoryProperties.DomainName = "testaadkerb.com";
+                activeDirectoryProperties.DomainGuid = "aebfc118-1111-1111-1111-d98e41a77cd5";
+                var parameters = new StorageAccountCreateParameters
+                {
+                    Sku = new Sku { Name = SkuName.StandardGRS },
+                    Kind = Kind.StorageV2,
+                    AzureFilesIdentityBasedAuthentication = new AzureFilesIdentityBasedAuthentication(DirectoryServiceOptions.AADKERB, activeDirectoryProperties),
+                    Location = StorageManagementTestUtilities.DefaultLocation
+                };
+                var account = storageMgmtClient.StorageAccounts.Create(rgname, accountName, parameters);
+                Assert.Equal(DirectoryServiceOptions.AADKERB, account.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+                Assert.Equal(activeDirectoryProperties.DomainName, account.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
+                Assert.Equal(activeDirectoryProperties.DomainGuid, account.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
+                
+                // Validate
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                Assert.Equal(DirectoryServiceOptions.AADKERB, account.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+                Assert.Equal(activeDirectoryProperties.DomainName, account.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
+                Assert.Equal(activeDirectoryProperties.DomainGuid, account.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
+
+                // Update storage account to None
+                var updateParameters = new StorageAccountUpdateParameters
+                {
+                    AzureFilesIdentityBasedAuthentication = new AzureFilesIdentityBasedAuthentication(DirectoryServiceOptions.None)
+                };
+                account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
+                Assert.Equal(DirectoryServiceOptions.None, account.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+
+                // Update storage account to AADKERB
+                updateParameters = new StorageAccountUpdateParameters
+                {
+                    AzureFilesIdentityBasedAuthentication = new AzureFilesIdentityBasedAuthentication(DirectoryServiceOptions.AADKERB)
+                };
+                account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
+                Assert.Equal(DirectoryServiceOptions.AADKERB, account.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+
+                // Validate
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                Assert.Equal(DirectoryServiceOptions.AADKERB, account.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+
+                // Update storage account to AADKERB + properties
+                updateParameters = new StorageAccountUpdateParameters
+                {
+                    AzureFilesIdentityBasedAuthentication = new AzureFilesIdentityBasedAuthentication(DirectoryServiceOptions.AADKERB, activeDirectoryProperties)
+                };
+                account = storageMgmtClient.StorageAccounts.Update(rgname, accountName, updateParameters);
+                Assert.Equal(DirectoryServiceOptions.AADKERB, account.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+                Assert.Equal(activeDirectoryProperties.DomainName, account.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
+                Assert.Equal(activeDirectoryProperties.DomainGuid, account.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
+
+                // Validate
+                account = storageMgmtClient.StorageAccounts.GetProperties(rgname, accountName);
+                Assert.Equal(DirectoryServiceOptions.AADKERB, account.AzureFilesIdentityBasedAuthentication.DirectoryServiceOptions);
+                Assert.Equal(activeDirectoryProperties.DomainName, account.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainName);
+                Assert.Equal(activeDirectoryProperties.DomainGuid, account.AzureFilesIdentityBasedAuthentication.ActiveDirectoryProperties.DomainGuid);
+            }
+        }
     }
 }

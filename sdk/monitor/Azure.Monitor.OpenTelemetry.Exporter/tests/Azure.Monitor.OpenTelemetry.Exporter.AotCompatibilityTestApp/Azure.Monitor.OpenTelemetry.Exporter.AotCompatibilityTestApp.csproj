@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>net7.0;net6.0;net462</TargetFrameworks>
+    <IsTestSupportProject>true</IsTestSupportProject>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net7.0'">
+    <PublishAot>true</PublishAot>
+    <TrimmerSingleWarn>false</TrimmerSingleWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
+    <TrimmerRootAssembly Include="Azure.Monitor.OpenTelemetry.Exporter" />
+  </ItemGroup>
+
+  <!--Temp fix for "error : No files matching ;NU5105;CA1812;"-->
+  <!--Real fix coming in .NET 8 RC2: https://github.com/dotnet/runtime/issues/91965-->
+  <ItemGroup>
+    <_NoWarn Include="$(NoWarn)" />
+  </ItemGroup>
+  <PropertyGroup>
+    <NoWarn>@(_NoWarn)</NoWarn>
+  </PropertyGroup>
+
+</Project>

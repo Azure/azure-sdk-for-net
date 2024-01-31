@@ -6,27 +6,25 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The key authorization type integration runtime. </summary>
     public partial class LinkedIntegrationRuntimeKeyAuthorization : LinkedIntegrationRuntimeType
     {
-        /// <summary> Initializes a new instance of LinkedIntegrationRuntimeKeyAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeKeyAuthorization"/>. </summary>
         /// <param name="key"> The key used for authorization. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public LinkedIntegrationRuntimeKeyAuthorization(SecureString key)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             Key = key;
             AuthorizationType = "Key";
         }
 
-        /// <summary> Initializes a new instance of LinkedIntegrationRuntimeKeyAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeKeyAuthorization"/>. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
         /// <param name="key"> The key used for authorization. </param>
         internal LinkedIntegrationRuntimeKeyAuthorization(string authorizationType, SecureString key) : base(authorizationType)

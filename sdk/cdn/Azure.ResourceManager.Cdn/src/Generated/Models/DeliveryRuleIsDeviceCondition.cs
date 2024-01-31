@@ -6,36 +6,41 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Defines the IsDevice condition for the delivery rule. </summary>
     public partial class DeliveryRuleIsDeviceCondition : DeliveryRuleCondition
     {
-        /// <summary> Initializes a new instance of DeliveryRuleIsDeviceCondition. </summary>
-        /// <param name="parameters"> Defines the parameters for the condition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public DeliveryRuleIsDeviceCondition(IsDeviceMatchConditionParameters parameters)
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleIsDeviceCondition"/>. </summary>
+        /// <param name="properties"> Defines the parameters for the condition. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public DeliveryRuleIsDeviceCondition(IsDeviceMatchCondition properties)
         {
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(properties, nameof(properties));
 
-            Parameters = parameters;
+            Properties = properties;
             Name = MatchVariable.IsDevice;
         }
 
-        /// <summary> Initializes a new instance of DeliveryRuleIsDeviceCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleIsDeviceCondition"/>. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
-        /// <param name="parameters"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleIsDeviceCondition(MatchVariable name, IsDeviceMatchConditionParameters parameters) : base(name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Defines the parameters for the condition. </param>
+        internal DeliveryRuleIsDeviceCondition(MatchVariable name, IDictionary<string, BinaryData> serializedAdditionalRawData, IsDeviceMatchCondition properties) : base(name, serializedAdditionalRawData)
         {
-            Parameters = parameters;
+            Properties = properties;
             Name = name;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleIsDeviceCondition"/> for deserialization. </summary>
+        internal DeliveryRuleIsDeviceCondition()
+        {
+        }
+
         /// <summary> Defines the parameters for the condition. </summary>
-        public IsDeviceMatchConditionParameters Parameters { get; set; }
+        public IsDeviceMatchCondition Properties { get; set; }
     }
 }

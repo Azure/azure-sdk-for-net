@@ -84,6 +84,58 @@ namespace Microsoft.Azure.HDInsight.Job
         }
 
         /// <summary>
+        /// Initializes a new instance of the HDInsightJobClient class.
+        /// </summary>
+        /// <param name="endpoint">
+        /// Required. The cluster dns name against which the job management is
+        /// to be performed.
+        /// </param>
+        /// <param name='credentials'>
+        /// Required. Service client credentials for job submission.
+        /// <param name='retryPolicy'>
+        /// Optional. Retry Policy for Http Transient errors.
+        /// </param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public HDInsightJobClient(string endpoint, ServiceClientCredentials credentials, RetryPolicy retryPolicy = null)
+            : this(credentials)
+        {
+            if (retryPolicy == null)
+            {
+                // If No retry policy is provided then use default retry policy
+                retryPolicy = HDInsightJobClient.HDInsightRetryPolicy;
+            }
+
+            this.Endpoint = endpoint ?? throw new ArgumentNullException("endpoint");
+            this.SetRetryPolicy(retryPolicy);
+        }
+
+
+        /// <summary>
+        /// Initializes a new instance of the HDInsightJobClient class.
+        /// </summary>
+        /// <param name="endpoint">
+        /// Required. The cluster dns name against which the job management is
+        /// to be performed.
+        /// </param>
+        /// <param name='credentials'>
+        /// Required. Service client credentials for job submission.
+        /// <param name="httpClient">
+        /// The http client.
+        /// </param>
+        /// <param name="disposeHttpClient">
+        /// Optional. The flag that indicates if dispose the http client, default value: true.
+        /// </param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public HDInsightJobClient(string endpoint, ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient = true)
+            : this(httpClient, disposeHttpClient)
+        {
+            this.Endpoint = endpoint ?? throw new ArgumentNullException("endpoint");
+            this.Credentials = credentials ?? throw new ArgumentNullException("credentials");
+
+            this.Credentials.InitializeServiceClient(this);
+        }
+
+        /// <summary>
         /// An optional partial-method to perform custom initialization.
         /// </summary>
         partial void CustomInitialize()

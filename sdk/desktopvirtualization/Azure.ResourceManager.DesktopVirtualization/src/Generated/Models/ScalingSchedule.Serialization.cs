@@ -6,25 +6,34 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class ScalingSchedule : IUtf8JsonSerializable
+    public partial class ScalingSchedule : IUtf8JsonSerializable, IJsonModel<ScalingSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingSchedule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ScalingSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalingSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScalingSchedule)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsCollectionDefined(DaysOfWeek))
             {
-                writer.WritePropertyName("daysOfWeek");
+                writer.WritePropertyName("daysOfWeek"u8);
                 writer.WriteStartArray();
                 foreach (var item in DaysOfWeek)
                 {
@@ -32,121 +41,155 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RampUpStartOn))
+            if (Optional.IsDefined(RampUpStartTime))
             {
-                writer.WritePropertyName("rampUpStartTime");
-                writer.WriteStringValue(RampUpStartOn.Value, "O");
+                writer.WritePropertyName("rampUpStartTime"u8);
+                writer.WriteObjectValue(RampUpStartTime);
             }
             if (Optional.IsDefined(RampUpLoadBalancingAlgorithm))
             {
-                writer.WritePropertyName("rampUpLoadBalancingAlgorithm");
+                writer.WritePropertyName("rampUpLoadBalancingAlgorithm"u8);
                 writer.WriteStringValue(RampUpLoadBalancingAlgorithm.Value.ToString());
             }
             if (Optional.IsDefined(RampUpMinimumHostsPct))
             {
-                writer.WritePropertyName("rampUpMinimumHostsPct");
+                writer.WritePropertyName("rampUpMinimumHostsPct"u8);
                 writer.WriteNumberValue(RampUpMinimumHostsPct.Value);
             }
             if (Optional.IsDefined(RampUpCapacityThresholdPct))
             {
-                writer.WritePropertyName("rampUpCapacityThresholdPct");
+                writer.WritePropertyName("rampUpCapacityThresholdPct"u8);
                 writer.WriteNumberValue(RampUpCapacityThresholdPct.Value);
             }
-            if (Optional.IsDefined(PeakStartOn))
+            if (Optional.IsDefined(PeakStartTime))
             {
-                writer.WritePropertyName("peakStartTime");
-                writer.WriteStringValue(PeakStartOn.Value, "O");
+                writer.WritePropertyName("peakStartTime"u8);
+                writer.WriteObjectValue(PeakStartTime);
             }
             if (Optional.IsDefined(PeakLoadBalancingAlgorithm))
             {
-                writer.WritePropertyName("peakLoadBalancingAlgorithm");
+                writer.WritePropertyName("peakLoadBalancingAlgorithm"u8);
                 writer.WriteStringValue(PeakLoadBalancingAlgorithm.Value.ToString());
             }
-            if (Optional.IsDefined(RampDownStartOn))
+            if (Optional.IsDefined(RampDownStartTime))
             {
-                writer.WritePropertyName("rampDownStartTime");
-                writer.WriteStringValue(RampDownStartOn.Value, "O");
+                writer.WritePropertyName("rampDownStartTime"u8);
+                writer.WriteObjectValue(RampDownStartTime);
             }
             if (Optional.IsDefined(RampDownLoadBalancingAlgorithm))
             {
-                writer.WritePropertyName("rampDownLoadBalancingAlgorithm");
+                writer.WritePropertyName("rampDownLoadBalancingAlgorithm"u8);
                 writer.WriteStringValue(RampDownLoadBalancingAlgorithm.Value.ToString());
             }
             if (Optional.IsDefined(RampDownMinimumHostsPct))
             {
-                writer.WritePropertyName("rampDownMinimumHostsPct");
+                writer.WritePropertyName("rampDownMinimumHostsPct"u8);
                 writer.WriteNumberValue(RampDownMinimumHostsPct.Value);
             }
             if (Optional.IsDefined(RampDownCapacityThresholdPct))
             {
-                writer.WritePropertyName("rampDownCapacityThresholdPct");
+                writer.WritePropertyName("rampDownCapacityThresholdPct"u8);
                 writer.WriteNumberValue(RampDownCapacityThresholdPct.Value);
             }
             if (Optional.IsDefined(RampDownForceLogoffUsers))
             {
-                writer.WritePropertyName("rampDownForceLogoffUsers");
+                writer.WritePropertyName("rampDownForceLogoffUsers"u8);
                 writer.WriteBooleanValue(RampDownForceLogoffUsers.Value);
             }
             if (Optional.IsDefined(RampDownStopHostsWhen))
             {
-                writer.WritePropertyName("rampDownStopHostsWhen");
+                writer.WritePropertyName("rampDownStopHostsWhen"u8);
                 writer.WriteStringValue(RampDownStopHostsWhen.Value.ToString());
             }
             if (Optional.IsDefined(RampDownWaitTimeMinutes))
             {
-                writer.WritePropertyName("rampDownWaitTimeMinutes");
+                writer.WritePropertyName("rampDownWaitTimeMinutes"u8);
                 writer.WriteNumberValue(RampDownWaitTimeMinutes.Value);
             }
             if (Optional.IsDefined(RampDownNotificationMessage))
             {
-                writer.WritePropertyName("rampDownNotificationMessage");
+                writer.WritePropertyName("rampDownNotificationMessage"u8);
                 writer.WriteStringValue(RampDownNotificationMessage);
             }
-            if (Optional.IsDefined(OffPeakStartOn))
+            if (Optional.IsDefined(OffPeakStartTime))
             {
-                writer.WritePropertyName("offPeakStartTime");
-                writer.WriteStringValue(OffPeakStartOn.Value, "O");
+                writer.WritePropertyName("offPeakStartTime"u8);
+                writer.WriteObjectValue(OffPeakStartTime);
             }
             if (Optional.IsDefined(OffPeakLoadBalancingAlgorithm))
             {
-                writer.WritePropertyName("offPeakLoadBalancingAlgorithm");
+                writer.WritePropertyName("offPeakLoadBalancingAlgorithm"u8);
                 writer.WriteStringValue(OffPeakLoadBalancingAlgorithm.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ScalingSchedule DeserializeScalingSchedule(JsonElement element)
+        ScalingSchedule IJsonModel<ScalingSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalingSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScalingSchedule)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScalingSchedule(document.RootElement, options);
+        }
+
+        internal static ScalingSchedule DeserializeScalingSchedule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IList<ScalingScheduleDaysOfWeekItem>> daysOfWeek = default;
-            Optional<DateTimeOffset> rampUpStartTime = default;
+            Optional<ScalingActionTime> rampUpStartTime = default;
             Optional<SessionHostLoadBalancingAlgorithm> rampUpLoadBalancingAlgorithm = default;
             Optional<int> rampUpMinimumHostsPct = default;
             Optional<int> rampUpCapacityThresholdPct = default;
-            Optional<DateTimeOffset> peakStartTime = default;
+            Optional<ScalingActionTime> peakStartTime = default;
             Optional<SessionHostLoadBalancingAlgorithm> peakLoadBalancingAlgorithm = default;
-            Optional<DateTimeOffset> rampDownStartTime = default;
+            Optional<ScalingActionTime> rampDownStartTime = default;
             Optional<SessionHostLoadBalancingAlgorithm> rampDownLoadBalancingAlgorithm = default;
             Optional<int> rampDownMinimumHostsPct = default;
             Optional<int> rampDownCapacityThresholdPct = default;
             Optional<bool> rampDownForceLogoffUsers = default;
-            Optional<StopHostsWhen> rampDownStopHostsWhen = default;
+            Optional<DesktopVirtualizationStopHostsWhen> rampDownStopHostsWhen = default;
             Optional<int> rampDownWaitTimeMinutes = default;
             Optional<string> rampDownNotificationMessage = default;
-            Optional<DateTimeOffset> offPeakStartTime = default;
+            Optional<ScalingActionTime> offPeakStartTime = default;
             Optional<SessionHostLoadBalancingAlgorithm> offPeakLoadBalancingAlgorithm = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("daysOfWeek"))
+                if (property.NameEquals("daysOfWeek"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ScalingScheduleDaysOfWeekItem> array = new List<ScalingScheduleDaysOfWeekItem>();
@@ -157,163 +200,184 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     daysOfWeek = array;
                     continue;
                 }
-                if (property.NameEquals("rampUpStartTime"))
+                if (property.NameEquals("rampUpStartTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rampUpStartTime = property.Value.GetDateTimeOffset("O");
+                    rampUpStartTime = ScalingActionTime.DeserializeScalingActionTime(property.Value);
                     continue;
                 }
-                if (property.NameEquals("rampUpLoadBalancingAlgorithm"))
+                if (property.NameEquals("rampUpLoadBalancingAlgorithm"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rampUpLoadBalancingAlgorithm = new SessionHostLoadBalancingAlgorithm(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rampUpMinimumHostsPct"))
+                if (property.NameEquals("rampUpMinimumHostsPct"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rampUpMinimumHostsPct = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rampUpCapacityThresholdPct"))
+                if (property.NameEquals("rampUpCapacityThresholdPct"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rampUpCapacityThresholdPct = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("peakStartTime"))
+                if (property.NameEquals("peakStartTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    peakStartTime = property.Value.GetDateTimeOffset("O");
+                    peakStartTime = ScalingActionTime.DeserializeScalingActionTime(property.Value);
                     continue;
                 }
-                if (property.NameEquals("peakLoadBalancingAlgorithm"))
+                if (property.NameEquals("peakLoadBalancingAlgorithm"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     peakLoadBalancingAlgorithm = new SessionHostLoadBalancingAlgorithm(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rampDownStartTime"))
+                if (property.NameEquals("rampDownStartTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rampDownStartTime = property.Value.GetDateTimeOffset("O");
+                    rampDownStartTime = ScalingActionTime.DeserializeScalingActionTime(property.Value);
                     continue;
                 }
-                if (property.NameEquals("rampDownLoadBalancingAlgorithm"))
+                if (property.NameEquals("rampDownLoadBalancingAlgorithm"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rampDownLoadBalancingAlgorithm = new SessionHostLoadBalancingAlgorithm(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rampDownMinimumHostsPct"))
+                if (property.NameEquals("rampDownMinimumHostsPct"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rampDownMinimumHostsPct = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rampDownCapacityThresholdPct"))
+                if (property.NameEquals("rampDownCapacityThresholdPct"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rampDownCapacityThresholdPct = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rampDownForceLogoffUsers"))
+                if (property.NameEquals("rampDownForceLogoffUsers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rampDownForceLogoffUsers = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("rampDownStopHostsWhen"))
+                if (property.NameEquals("rampDownStopHostsWhen"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rampDownStopHostsWhen = new StopHostsWhen(property.Value.GetString());
+                    rampDownStopHostsWhen = new DesktopVirtualizationStopHostsWhen(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rampDownWaitTimeMinutes"))
+                if (property.NameEquals("rampDownWaitTimeMinutes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rampDownWaitTimeMinutes = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("rampDownNotificationMessage"))
+                if (property.NameEquals("rampDownNotificationMessage"u8))
                 {
                     rampDownNotificationMessage = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("offPeakStartTime"))
+                if (property.NameEquals("offPeakStartTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    offPeakStartTime = property.Value.GetDateTimeOffset("O");
+                    offPeakStartTime = ScalingActionTime.DeserializeScalingActionTime(property.Value);
                     continue;
                 }
-                if (property.NameEquals("offPeakLoadBalancingAlgorithm"))
+                if (property.NameEquals("offPeakLoadBalancingAlgorithm"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     offPeakLoadBalancingAlgorithm = new SessionHostLoadBalancingAlgorithm(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ScalingSchedule(name.Value, Optional.ToList(daysOfWeek), Optional.ToNullable(rampUpStartTime), Optional.ToNullable(rampUpLoadBalancingAlgorithm), Optional.ToNullable(rampUpMinimumHostsPct), Optional.ToNullable(rampUpCapacityThresholdPct), Optional.ToNullable(peakStartTime), Optional.ToNullable(peakLoadBalancingAlgorithm), Optional.ToNullable(rampDownStartTime), Optional.ToNullable(rampDownLoadBalancingAlgorithm), Optional.ToNullable(rampDownMinimumHostsPct), Optional.ToNullable(rampDownCapacityThresholdPct), Optional.ToNullable(rampDownForceLogoffUsers), Optional.ToNullable(rampDownStopHostsWhen), Optional.ToNullable(rampDownWaitTimeMinutes), rampDownNotificationMessage.Value, Optional.ToNullable(offPeakStartTime), Optional.ToNullable(offPeakLoadBalancingAlgorithm));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ScalingSchedule(name.Value, Optional.ToList(daysOfWeek), rampUpStartTime.Value, Optional.ToNullable(rampUpLoadBalancingAlgorithm), Optional.ToNullable(rampUpMinimumHostsPct), Optional.ToNullable(rampUpCapacityThresholdPct), peakStartTime.Value, Optional.ToNullable(peakLoadBalancingAlgorithm), rampDownStartTime.Value, Optional.ToNullable(rampDownLoadBalancingAlgorithm), Optional.ToNullable(rampDownMinimumHostsPct), Optional.ToNullable(rampDownCapacityThresholdPct), Optional.ToNullable(rampDownForceLogoffUsers), Optional.ToNullable(rampDownStopHostsWhen), Optional.ToNullable(rampDownWaitTimeMinutes), rampDownNotificationMessage.Value, offPeakStartTime.Value, Optional.ToNullable(offPeakLoadBalancingAlgorithm), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ScalingSchedule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalingSchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ScalingSchedule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ScalingSchedule IPersistableModel<ScalingSchedule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalingSchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeScalingSchedule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ScalingSchedule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ScalingSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

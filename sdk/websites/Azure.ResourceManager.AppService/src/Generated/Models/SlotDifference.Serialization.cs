@@ -5,35 +5,134 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SlotDifference : IUtf8JsonSerializable
+    public partial class SlotDifference : IUtf8JsonSerializable, IJsonModel<SlotDifference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SlotDifference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SlotDifference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SlotDifference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SlotDifference)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("properties");
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Level))
+            {
+                writer.WritePropertyName("level"u8);
+                writer.WriteStringValue(Level);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SettingType))
+            {
+                writer.WritePropertyName("settingType"u8);
+                writer.WriteStringValue(SettingType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DiffRule))
+            {
+                writer.WritePropertyName("diffRule"u8);
+                writer.WriteStringValue(DiffRule);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SettingName))
+            {
+                writer.WritePropertyName("settingName"u8);
+                writer.WriteStringValue(SettingName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ValueInCurrentSlot))
+            {
+                writer.WritePropertyName("valueInCurrentSlot"u8);
+                writer.WriteStringValue(ValueInCurrentSlot);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ValueInTargetSlot))
+            {
+                writer.WritePropertyName("valueInTargetSlot"u8);
+                writer.WriteStringValue(ValueInTargetSlot);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SlotDifference DeserializeSlotDifference(JsonElement element)
+        SlotDifference IJsonModel<SlotDifference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SlotDifference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SlotDifference)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSlotDifference(document.RootElement, options);
+        }
+
+        internal static SlotDifference DeserializeSlotDifference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> level = default;
             Optional<string> settingType = default;
             Optional<string> diffRule = default;
@@ -41,34 +140,40 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> valueInCurrentSlot = default;
             Optional<string> valueInTargetSlot = default;
             Optional<string> description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,37 +182,37 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("level"))
+                        if (property0.NameEquals("level"u8))
                         {
                             level = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("settingType"))
+                        if (property0.NameEquals("settingType"u8))
                         {
                             settingType = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("diffRule"))
+                        if (property0.NameEquals("diffRule"u8))
                         {
                             diffRule = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("settingName"))
+                        if (property0.NameEquals("settingName"u8))
                         {
                             settingName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("valueInCurrentSlot"))
+                        if (property0.NameEquals("valueInCurrentSlot"u8))
                         {
                             valueInCurrentSlot = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("valueInTargetSlot"))
+                        if (property0.NameEquals("valueInTargetSlot"u8))
                         {
                             valueInTargetSlot = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("description"))
+                        if (property0.NameEquals("description"u8))
                         {
                             description = property0.Value.GetString();
                             continue;
@@ -115,8 +220,44 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SlotDifference(id, name, type, systemData, kind.Value, level.Value, settingType.Value, diffRule.Value, settingName.Value, valueInCurrentSlot.Value, valueInTargetSlot.Value, description.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SlotDifference(id, name, type, systemData.Value, level.Value, settingType.Value, diffRule.Value, settingName.Value, valueInCurrentSlot.Value, valueInTargetSlot.Value, description.Value, kind.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SlotDifference>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SlotDifference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SlotDifference)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SlotDifference IPersistableModel<SlotDifference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SlotDifference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSlotDifference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SlotDifference)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SlotDifference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

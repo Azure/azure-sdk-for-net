@@ -26,11 +26,13 @@ namespace Microsoft.Azure.Batch
         {
             public readonly PropertyAccessor<IList<string>> ContainerImageNamesProperty;
             public readonly PropertyAccessor<IList<ContainerRegistry>> ContainerRegistriesProperty;
+            public readonly PropertyAccessor<string> TypeProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
                 this.ContainerImageNamesProperty = this.CreatePropertyAccessor<IList<string>>(nameof(ContainerImageNames), BindingAccess.Read | BindingAccess.Write);
                 this.ContainerRegistriesProperty = this.CreatePropertyAccessor<IList<ContainerRegistry>>(nameof(ContainerRegistries), BindingAccess.Read | BindingAccess.Write);
+                this.TypeProperty = this.CreatePropertyAccessor<string>(nameof(Type), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.ContainerConfiguration protocolObject) : base(BindingState.Bound)
@@ -42,6 +44,10 @@ namespace Microsoft.Azure.Batch
                 this.ContainerRegistriesProperty = this.CreatePropertyAccessor(
                     ContainerRegistry.ConvertFromProtocolCollectionAndFreeze(protocolObject.ContainerRegistries),
                     nameof(ContainerRegistries),
+                    BindingAccess.Read);
+                this.TypeProperty = this.CreatePropertyAccessor(
+                    protocolObject.Type,
+                    nameof(Type),
                     BindingAccess.Read);
             }
         }
@@ -99,6 +105,15 @@ namespace Microsoft.Azure.Batch
             }
         }
 
+        /// <summary>
+        /// Gets or sets the container technology to be used.
+        /// </summary>
+        public string Type
+        {
+            get { return this.propertyContainer.TypeProperty.Value; }
+            set { this.propertyContainer.TypeProperty.Value = value; }
+        }
+
         #endregion // ContainerConfiguration
 
         #region IPropertyMetadata
@@ -127,6 +142,7 @@ namespace Microsoft.Azure.Batch
             {
                 ContainerImageNames = this.ContainerImageNames,
                 ContainerRegistries = UtilitiesInternal.ConvertToProtocolCollection(this.ContainerRegistries),
+                Type = this.Type,
             };
 
             return result;

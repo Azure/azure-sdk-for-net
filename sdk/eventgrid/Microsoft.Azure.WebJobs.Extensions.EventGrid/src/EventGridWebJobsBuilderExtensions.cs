@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using Microsoft.Azure.WebJobs.Extensions.EventGrid.Config;
+using Microsoft.Extensions.Azure;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
@@ -22,7 +25,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid
                 throw new ArgumentNullException(nameof(builder));
             }
 
+            builder.Services.AddAzureClientsCore();
             builder.Services.TryAddSingleton<HttpRequestProcessor>();
+            builder.Services.AddSingleton<EventGridAsyncCollectorFactory>();
             builder.AddExtension<EventGridExtensionConfigProvider>();
             return builder;
         }

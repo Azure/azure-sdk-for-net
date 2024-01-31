@@ -6,33 +6,28 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
     /// <summary> HTTP header credentials. </summary>
     public partial class HttpHeaderCredentials : CredentialsBase
     {
-        /// <summary> Initializes a new instance of HttpHeaderCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpHeaderCredentials"/>. </summary>
         /// <param name="headerName"> HTTP header name. </param>
         /// <param name="headerValue"> HTTP header value. It is recommended that this value is parameterized as a secret string in order to prevent this value to be returned as part of the resource on API requests. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headerName"/> or <paramref name="headerValue"/> is null. </exception>
         public HttpHeaderCredentials(string headerName, string headerValue)
         {
-            if (headerName == null)
-            {
-                throw new ArgumentNullException(nameof(headerName));
-            }
-            if (headerValue == null)
-            {
-                throw new ArgumentNullException(nameof(headerValue));
-            }
+            Argument.AssertNotNull(headerName, nameof(headerName));
+            Argument.AssertNotNull(headerValue, nameof(headerValue));
 
             HeaderName = headerName;
             HeaderValue = headerValue;
             Type = "#Microsoft.VideoAnalyzer.HttpHeaderCredentials";
         }
 
-        /// <summary> Initializes a new instance of HttpHeaderCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpHeaderCredentials"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="headerName"> HTTP header name. </param>
         /// <param name="headerValue"> HTTP header value. It is recommended that this value is parameterized as a secret string in order to prevent this value to be returned as part of the resource on API requests. </param>

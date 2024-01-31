@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -30,12 +29,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the Encryption class.
         /// </summary>
+        /// <param name="services">List of services which support
+        /// encryption.</param>
         /// <param name="keySource">The encryption keySource (provider).
         /// Possible values (case-insensitive):  Microsoft.Storage,
         /// Microsoft.Keyvault. Possible values include: 'Microsoft.Storage',
         /// 'Microsoft.Keyvault'</param>
-        /// <param name="services">List of services which support
-        /// encryption.</param>
         /// <param name="requireInfrastructureEncryption">A boolean indicating
         /// whether or not the service applies a secondary layer of encryption
         /// with platform managed keys for data at rest.</param>
@@ -43,7 +42,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// vault.</param>
         /// <param name="encryptionIdentity">The identity to be used with
         /// service-side encryption at rest.</param>
-        public Encryption(string keySource, EncryptionServices services = default(EncryptionServices), bool? requireInfrastructureEncryption = default(bool?), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), EncryptionIdentity encryptionIdentity = default(EncryptionIdentity))
+        public Encryption(EncryptionServices services = default(EncryptionServices), string keySource = default(string), bool? requireInfrastructureEncryption = default(bool?), KeyVaultProperties keyVaultProperties = default(KeyVaultProperties), EncryptionIdentity encryptionIdentity = default(EncryptionIdentity))
         {
             Services = services;
             KeySource = keySource;
@@ -93,18 +92,5 @@ namespace Microsoft.Azure.Management.Storage.Models
         [JsonProperty(PropertyName = "identity")]
         public EncryptionIdentity EncryptionIdentity { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (KeySource == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "KeySource");
-            }
-        }
     }
 }

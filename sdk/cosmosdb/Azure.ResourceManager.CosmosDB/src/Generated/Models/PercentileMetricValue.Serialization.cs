@@ -6,15 +6,129 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class PercentileMetricValue
+    public partial class PercentileMetricValue : IUtf8JsonSerializable, IJsonModel<PercentileMetricValue>
     {
-        internal static PercentileMetricValue DeserializePercentileMetricValue(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PercentileMetricValue>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PercentileMetricValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PercentileMetricValue>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PercentileMetricValue)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(P10))
+            {
+                writer.WritePropertyName("P10"u8);
+                writer.WriteNumberValue(P10.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(P25))
+            {
+                writer.WritePropertyName("P25"u8);
+                writer.WriteNumberValue(P25.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(P50))
+            {
+                writer.WritePropertyName("P50"u8);
+                writer.WriteNumberValue(P50.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(P75))
+            {
+                writer.WritePropertyName("P75"u8);
+                writer.WriteNumberValue(P75.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(P90))
+            {
+                writer.WritePropertyName("P90"u8);
+                writer.WriteNumberValue(P90.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(P95))
+            {
+                writer.WritePropertyName("P95"u8);
+                writer.WriteNumberValue(P95.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(P99))
+            {
+                writer.WritePropertyName("P99"u8);
+                writer.WriteNumberValue(P99.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("_count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Average))
+            {
+                writer.WritePropertyName("average"u8);
+                writer.WriteNumberValue(Average.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Maximum))
+            {
+                writer.WritePropertyName("maximum"u8);
+                writer.WriteNumberValue(Maximum.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Minimum))
+            {
+                writer.WritePropertyName("minimum"u8);
+                writer.WriteNumberValue(Minimum.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Timestamp))
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(Total))
+            {
+                writer.WritePropertyName("total"u8);
+                writer.WriteNumberValue(Total.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PercentileMetricValue IJsonModel<PercentileMetricValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PercentileMetricValue>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PercentileMetricValue)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePercentileMetricValue(document.RootElement, options);
+        }
+
+        internal static PercentileMetricValue DeserializePercentileMetricValue(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> p10 = default;
             Optional<double> p25 = default;
             Optional<double> p50 = default;
@@ -28,140 +142,165 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<double> minimum = default;
             Optional<DateTimeOffset> timestamp = default;
             Optional<double> total = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("P10"))
+                if (property.NameEquals("P10"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     p10 = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("P25"))
+                if (property.NameEquals("P25"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     p25 = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("P50"))
+                if (property.NameEquals("P50"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     p50 = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("P75"))
+                if (property.NameEquals("P75"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     p75 = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("P90"))
+                if (property.NameEquals("P90"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     p90 = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("P95"))
+                if (property.NameEquals("P95"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     p95 = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("P99"))
+                if (property.NameEquals("P99"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     p99 = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("_count"))
+                if (property.NameEquals("_count"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("average"))
+                if (property.NameEquals("average"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     average = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("maximum"))
+                if (property.NameEquals("maximum"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maximum = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("minimum"))
+                if (property.NameEquals("minimum"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minimum = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("timestamp"))
+                if (property.NameEquals("timestamp"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("total"))
+                if (property.NameEquals("total"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     total = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PercentileMetricValue(Optional.ToNullable(count), Optional.ToNullable(average), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(timestamp), Optional.ToNullable(total), Optional.ToNullable(p10), Optional.ToNullable(p25), Optional.ToNullable(p50), Optional.ToNullable(p75), Optional.ToNullable(p90), Optional.ToNullable(p95), Optional.ToNullable(p99));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PercentileMetricValue(Optional.ToNullable(count), Optional.ToNullable(average), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(timestamp), Optional.ToNullable(total), serializedAdditionalRawData, Optional.ToNullable(p10), Optional.ToNullable(p25), Optional.ToNullable(p50), Optional.ToNullable(p75), Optional.ToNullable(p90), Optional.ToNullable(p95), Optional.ToNullable(p99));
         }
+
+        BinaryData IPersistableModel<PercentileMetricValue>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PercentileMetricValue>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PercentileMetricValue)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PercentileMetricValue IPersistableModel<PercentileMetricValue>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PercentileMetricValue>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePercentileMetricValue(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PercentileMetricValue)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PercentileMetricValue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

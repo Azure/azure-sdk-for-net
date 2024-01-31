@@ -17,17 +17,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             if (Optional.IsDefined(MediaUri))
             {
-                writer.WritePropertyName("mediaUri");
+                writer.WritePropertyName("mediaUri"u8);
                 writer.WriteObjectValue(MediaUri);
             }
             if (Optional.IsDefined(VideoEncoderConfiguration))
             {
-                writer.WritePropertyName("videoEncoderConfiguration");
+                writer.WritePropertyName("videoEncoderConfiguration"u8);
                 writer.WriteObjectValue(VideoEncoderConfiguration);
             }
             writer.WriteEndObject();
@@ -35,31 +35,33 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static MediaProfile DeserializeMediaProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<object> mediaUri = default;
             Optional<VideoEncoderConfiguration> videoEncoderConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("mediaUri"))
+                if (property.NameEquals("mediaUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mediaUri = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("videoEncoderConfiguration"))
+                if (property.NameEquals("videoEncoderConfiguration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     videoEncoderConfiguration = VideoEncoderConfiguration.DeserializeVideoEncoderConfiguration(property.Value);

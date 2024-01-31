@@ -15,9 +15,9 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("min");
+            writer.WritePropertyName("min"u8);
             writer.WriteStringValue(Min.ToString());
-            writer.WritePropertyName("max");
+            writer.WritePropertyName("max"u8);
             writer.WriteStringValue(Max.ToString());
             writer.WriteEndObject();
         }

@@ -15,16 +15,19 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static SearchInstancesResponse DeserializeSearchInstancesResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<InstanceHit>> hits = default;
             Optional<int> hitCount = default;
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("hits"))
+                if (property.NameEquals("hits"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<InstanceHit> array = new List<InstanceHit>();
@@ -35,17 +38,16 @@ namespace Azure.IoT.TimeSeriesInsights
                     hits = array;
                     continue;
                 }
-                if (property.NameEquals("hitCount"))
+                if (property.NameEquals("hitCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hitCount = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("continuationToken"))
+                if (property.NameEquals("continuationToken"u8))
                 {
                     continuationToken = property.Value.GetString();
                     continue;

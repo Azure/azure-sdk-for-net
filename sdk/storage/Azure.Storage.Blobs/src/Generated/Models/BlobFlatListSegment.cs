@@ -8,26 +8,24 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
     /// <summary> The BlobFlatListSegment. </summary>
     internal partial class BlobFlatListSegment
     {
-        /// <summary> Initializes a new instance of BlobFlatListSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobFlatListSegment"/>. </summary>
         /// <param name="blobItems"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobItems"/> is null. </exception>
         internal BlobFlatListSegment(IEnumerable<BlobItemInternal> blobItems)
         {
-            if (blobItems == null)
-            {
-                throw new ArgumentNullException(nameof(blobItems));
-            }
+            Argument.AssertNotNull(blobItems, nameof(blobItems));
 
             BlobItems = blobItems.ToList();
         }
 
-        /// <summary> Initializes a new instance of BlobFlatListSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobFlatListSegment"/>. </summary>
         /// <param name="blobItems"></param>
         internal BlobFlatListSegment(IReadOnlyList<BlobItemInternal> blobItems)
         {

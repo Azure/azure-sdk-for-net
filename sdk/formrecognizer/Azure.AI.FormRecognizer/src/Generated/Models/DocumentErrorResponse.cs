@@ -6,21 +6,19 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Error response object. </summary>
     internal partial class DocumentErrorResponse
     {
-        /// <summary> Initializes a new instance of DocumentErrorResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentErrorResponse"/>. </summary>
         /// <param name="error"> Error info. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
         internal DocumentErrorResponse(Error error)
         {
-            if (error == null)
-            {
-                throw new ArgumentNullException(nameof(error));
-            }
+            Argument.AssertNotNull(error, nameof(error));
 
             Error = error;
         }

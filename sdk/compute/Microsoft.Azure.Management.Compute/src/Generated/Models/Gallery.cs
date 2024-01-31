@@ -42,8 +42,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="description">The description of this Shared Image
         /// Gallery resource. This property is updatable.</param>
-        /// <param name="provisioningState">The current state of the
-        /// gallery.</param>
+        /// <param name="provisioningState">Possible values include:
+        /// 'Creating', 'Updating', 'Failed', 'Succeeded', 'Deleting',
+        /// 'Migrating'</param>
         public Gallery(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), GalleryIdentifier identifier = default(GalleryIdentifier), string provisioningState = default(string), SharingProfile sharingProfile = default(SharingProfile), SoftDeletePolicy softDeletePolicy = default(SoftDeletePolicy), SharingStatus sharingStatus = default(SharingStatus))
             : base(location, id, name, type, tags)
         {
@@ -74,13 +75,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         public GalleryIdentifier Identifier { get; set; }
 
         /// <summary>
-        /// Gets the current state of the gallery.
-        /// </summary>
-        /// <remarks>
-        /// The provisioning state, which only appears in the response.
-        /// Possible values include: 'Creating', 'Updating', 'Failed',
+        /// Gets possible values include: 'Creating', 'Updating', 'Failed',
         /// 'Succeeded', 'Deleting', 'Migrating'
-        /// </remarks>
+        /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 

@@ -17,38 +17,42 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Delimiter))
             {
-                writer.WritePropertyName("delimiter");
+                writer.WritePropertyName("delimiter"u8);
                 writer.WriteStringValue(Delimiter.Value);
             }
             if (Optional.IsDefined(Replacement))
             {
-                writer.WritePropertyName("replacement");
+                writer.WritePropertyName("replacement"u8);
                 writer.WriteStringValue(Replacement.Value);
             }
             if (Optional.IsDefined(MaxTokenLength))
             {
-                writer.WritePropertyName("maxTokenLength");
+                writer.WritePropertyName("maxTokenLength"u8);
                 writer.WriteNumberValue(MaxTokenLength.Value);
             }
             if (Optional.IsDefined(ReverseTokenOrder))
             {
-                writer.WritePropertyName("reverse");
+                writer.WritePropertyName("reverse"u8);
                 writer.WriteBooleanValue(ReverseTokenOrder.Value);
             }
             if (Optional.IsDefined(NumberOfTokensToSkip))
             {
-                writer.WritePropertyName("skip");
+                writer.WritePropertyName("skip"u8);
                 writer.WriteNumberValue(NumberOfTokensToSkip.Value);
             }
-            writer.WritePropertyName("@odata.type");
+            writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WriteEndObject();
         }
 
         internal static PathHierarchyTokenizer DeserializePathHierarchyTokenizer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<char> delimiter = default;
             Optional<char> replacement = default;
             Optional<int> maxTokenLength = default;
@@ -58,62 +62,57 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("delimiter"))
+                if (property.NameEquals("delimiter"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     delimiter = property.Value.GetChar();
                     continue;
                 }
-                if (property.NameEquals("replacement"))
+                if (property.NameEquals("replacement"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     replacement = property.Value.GetChar();
                     continue;
                 }
-                if (property.NameEquals("maxTokenLength"))
+                if (property.NameEquals("maxTokenLength"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxTokenLength = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("reverse"))
+                if (property.NameEquals("reverse"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reverse = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("skip"))
+                if (property.NameEquals("skip"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     skip = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("@odata.type"u8))
                 {
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;

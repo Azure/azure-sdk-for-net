@@ -5,26 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the DeletedSite data model. </summary>
-    public partial class DeletedSiteData : ProxyOnlyResource
+    /// <summary>
+    /// A class representing the DeletedSite data model.
+    /// A deleted app.
+    /// </summary>
+    public partial class DeletedSiteData : ResourceData
     {
-        /// <summary> Initializes a new instance of DeletedSiteData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DeletedSiteData"/>. </summary>
         public DeletedSiteData()
         {
         }
 
-        /// <summary> Initializes a new instance of DeletedSiteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeletedSiteData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="deletedSiteId"> Numeric id for the deleted site. </param>
         /// <param name="deletedTimestamp"> Time in UTC when the app was deleted. </param>
         /// <param name="subscription"> Subscription containing the deleted site. </param>
@@ -33,7 +68,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="slot"> Slot of the deleted site. </param>
         /// <param name="kindPropertiesKind"> Kind of site that was deleted. </param>
         /// <param name="geoRegionName"> Geo Region of the deleted site. </param>
-        internal DeletedSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, int? deletedSiteId, string deletedTimestamp, string subscription, string resourceGroup, string deletedSiteName, string slot, string kindPropertiesKind, string geoRegionName) : base(id, name, resourceType, systemData, kind)
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeletedSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? deletedSiteId, string deletedTimestamp, string subscription, string resourceGroup, string deletedSiteName, string slot, string kindPropertiesKind, string geoRegionName, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DeletedSiteId = deletedSiteId;
             DeletedTimestamp = deletedTimestamp;
@@ -43,6 +80,8 @@ namespace Azure.ResourceManager.AppService
             Slot = slot;
             KindPropertiesKind = kindPropertiesKind;
             GeoRegionName = geoRegionName;
+            Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Numeric id for the deleted site. </summary>
@@ -61,5 +100,7 @@ namespace Azure.ResourceManager.AppService
         public string KindPropertiesKind { get; }
         /// <summary> Geo Region of the deleted site. </summary>
         public string GeoRegionName { get; }
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

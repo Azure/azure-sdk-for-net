@@ -4,6 +4,8 @@
     <_IsCodeCoverable Condition="'$(IsClientLibrary)' == 'true'">true</_IsCodeCoverable>
   </PropertyGroup>
 
+  <!-- BUGBUG: When a specific framework is passed IsCrossTargetingBuild is unset but IsInnerBuild is still true. Cannot clean up past TestResults, but seemingly an edge case. -->
+
   <PropertyGroup Condition="'$(CollectCoverage)' == 'true' and '$(_IsCodeCoverable)' == 'true' and '$(IsTestProject)' == 'true' and '$(ExcludeFromCodeCoverage)' != 'true'">
     <CodeCoverageDirectory Condition="'$(CodeCoverageDirectory)' == ''">$([System.IO.Path]::GetFullPath("$(MSBuildProjectDirectory)\.."))</CodeCoverageDirectory>
     <SkipCoverageReport Condition="'$(SkipCoverageReport)' == '' and ('$(ContinuousIntegrationBuild)' == 'true' or '$(TF_BUILD)' == 'true')">true</SkipCoverageReport>
@@ -27,7 +29,7 @@
   <!-- Clean up previous TestResults so reports are recent. -->
   <Target Name="_CleanPreviousCodeCoverage"
           BeforeTargets="VSTest"
-          Condition="'$(_CollectCoverage)' == 'true'">
+          Condition="'$(_CollectCoverage)' == 'true' and '$(IsCrossTargetingBuild)' == 'true'">
     <RemoveDir Directories="$(_TestResultsDirectory)" />
   </Target>
 
@@ -52,7 +54,7 @@
   <Target Name="GenerateCodeCoverageReport"
           AfterTargets="VSTest"
           DependsOnTargets="_SetCoverageCollected"
-          Condition="'$(_CollectCoverage)' == 'true' and '$(SkipCoverageReport)' != 'true' and '$(_CoverageCollected)' == 'true'">
+          Condition="'$(_CollectCoverage)' == 'true' and '$(SkipCoverageReport)' != 'true' and '$(_CoverageCollected)' == 'true' and '$(IsCrossTargetingBuild)' == 'true'">
     <PropertyGroup>
       <CoverageReportCommandLine>dotnet tool run reportgenerator --</CoverageReportCommandLine>
       <CoverageReportCommandLine>$(CoverageReportCommandLine) "-reports:$(_TestResultsDirectory)\**\coverage.cobertura.xml"</CoverageReportCommandLine>
@@ -63,7 +65,12 @@
     <Exec Command="$(CoverageReportCommandLine)"
           IgnoreExitCode="true"
           StandardErrorImportance="high"
-          StandardOutputImportance="low" />
+          StandardOutputImportance="low">
+      <Output TaskParameter="ExitCode" PropertyName="_ReportGeneratorExitCode" />
+    </Exec>
+    <Message Importance="high"
+             Condition="'$(_ReportGeneratorExitCode)' == '0'"
+             Text="Coverage report -> $([System.IO.Path]::Join('$(_TestResultsDirectory)', 'index.html'))" />
   </Target>
 
   <Target Name="_ValidateSourceFileNames"
@@ -85,16 +92,6 @@
     This needs to be available in all projects.
   -->
   <ItemGroup>
-    <SourceRoot Include="$(NuGetPackageRoot)" />
+    <SourceRoot Include="$([MSBuild]::EnsureTrailingSlash($(NuGetPackageRoot)))" />
   </ItemGroup>
-
-  <Target Name="CoverletGetPathMap"
-          DependsOnTargets="InitializeSourceRootMappedPaths"
-          Returns="@(_LocalTopLevelSourceRoot)"
-          Condition="'$(DeterministicSourcePaths)' == 'true'">
-    <ItemGroup>
-      <_LocalTopLevelSourceRoot Include="@(SourceRoot)"
-                                Condition="'%(SourceRoot.NestedRoot)' == ''"/>
-    </ItemGroup>
-  </Target>
 </Project>

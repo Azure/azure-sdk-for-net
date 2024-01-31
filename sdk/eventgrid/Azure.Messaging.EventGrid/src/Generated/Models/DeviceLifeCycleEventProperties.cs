@@ -10,13 +10,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a device life cycle event (DeviceCreated, DeviceDeleted). </summary>
     public partial class DeviceLifeCycleEventProperties
     {
-        /// <summary> Initializes a new instance of DeviceLifeCycleEventProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceLifeCycleEventProperties"/>. </summary>
         internal DeviceLifeCycleEventProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceLifeCycleEventProperties. </summary>
-        /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ &apos;. </param>
+        /// <summary> Initializes a new instance of <see cref="DeviceLifeCycleEventProperties"/>. </summary>
+        /// <param name="deviceId"> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ '. </param>
         /// <param name="hubName"> Name of the IoT Hub where the device was created or deleted. </param>
         /// <param name="twin"> Information about the device twin, which is the cloud representation of application device metadata. </param>
         internal DeviceLifeCycleEventProperties(string deviceId, string hubName, DeviceTwinInfo twin)
@@ -26,7 +26,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Twin = twin;
         }
 
-        /// <summary> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ &apos;. </summary>
+        /// <summary> The unique identifier of the device. This case-sensitive string can be up to 128 characters long, and supports ASCII 7-bit alphanumeric characters plus the following special characters: - : . + % _ &amp;#35; * ? ! ( ) , = @ ; $ '. </summary>
         public string DeviceId { get; }
         /// <summary> Name of the IoT Hub where the device was created or deleted. </summary>
         public string HubName { get; }

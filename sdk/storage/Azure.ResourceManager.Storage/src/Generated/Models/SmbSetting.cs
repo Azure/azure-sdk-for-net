@@ -5,29 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Setting for SMB protocol. </summary>
     public partial class SmbSetting
     {
-        /// <summary> Initializes a new instance of SmbSetting. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SmbSetting"/>. </summary>
         public SmbSetting()
         {
         }
 
-        /// <summary> Initializes a new instance of SmbSetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmbSetting"/>. </summary>
         /// <param name="multichannel"> Multichannel setting. Applies to Premium FileStorage only. </param>
-        /// <param name="versions"> SMB protocol versions supported by server. Valid values are SMB2.1, SMB3.0, SMB3.1.1. Should be passed as a string with delimiter &apos;;&apos;. </param>
-        /// <param name="authenticationMethods"> SMB authentication methods supported by server. Valid values are NTLMv2, Kerberos. Should be passed as a string with delimiter &apos;;&apos;. </param>
-        /// <param name="kerberosTicketEncryption"> Kerberos ticket encryption supported by server. Valid values are RC4-HMAC, AES-256. Should be passed as a string with delimiter &apos;;&apos;. </param>
-        /// <param name="channelEncryption"> SMB channel encryption supported by server. Valid values are AES-128-CCM, AES-128-GCM, AES-256-GCM. Should be passed as a string with delimiter &apos;;&apos;. </param>
-        internal SmbSetting(Multichannel multichannel, string versions, string authenticationMethods, string kerberosTicketEncryption, string channelEncryption)
+        /// <param name="versions"> SMB protocol versions supported by server. Valid values are SMB2.1, SMB3.0, SMB3.1.1. Should be passed as a string with delimiter ';'. </param>
+        /// <param name="authenticationMethods"> SMB authentication methods supported by server. Valid values are NTLMv2, Kerberos. Should be passed as a string with delimiter ';'. </param>
+        /// <param name="kerberosTicketEncryption"> Kerberos ticket encryption supported by server. Valid values are RC4-HMAC, AES-256. Should be passed as a string with delimiter ';'. </param>
+        /// <param name="channelEncryption"> SMB channel encryption supported by server. Valid values are AES-128-CCM, AES-128-GCM, AES-256-GCM. Should be passed as a string with delimiter ';'. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SmbSetting(Multichannel multichannel, string versions, string authenticationMethods, string kerberosTicketEncryption, string channelEncryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Multichannel = multichannel;
             Versions = versions;
             AuthenticationMethods = authenticationMethods;
             KerberosTicketEncryption = kerberosTicketEncryption;
             ChannelEncryption = channelEncryption;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Multichannel setting. Applies to Premium FileStorage only. </summary>
@@ -44,13 +81,13 @@ namespace Azure.ResourceManager.Storage.Models
             }
         }
 
-        /// <summary> SMB protocol versions supported by server. Valid values are SMB2.1, SMB3.0, SMB3.1.1. Should be passed as a string with delimiter &apos;;&apos;. </summary>
+        /// <summary> SMB protocol versions supported by server. Valid values are SMB2.1, SMB3.0, SMB3.1.1. Should be passed as a string with delimiter ';'. </summary>
         public string Versions { get; set; }
-        /// <summary> SMB authentication methods supported by server. Valid values are NTLMv2, Kerberos. Should be passed as a string with delimiter &apos;;&apos;. </summary>
+        /// <summary> SMB authentication methods supported by server. Valid values are NTLMv2, Kerberos. Should be passed as a string with delimiter ';'. </summary>
         public string AuthenticationMethods { get; set; }
-        /// <summary> Kerberos ticket encryption supported by server. Valid values are RC4-HMAC, AES-256. Should be passed as a string with delimiter &apos;;&apos;. </summary>
+        /// <summary> Kerberos ticket encryption supported by server. Valid values are RC4-HMAC, AES-256. Should be passed as a string with delimiter ';'. </summary>
         public string KerberosTicketEncryption { get; set; }
-        /// <summary> SMB channel encryption supported by server. Valid values are AES-128-CCM, AES-128-GCM, AES-256-GCM. Should be passed as a string with delimiter &apos;;&apos;. </summary>
+        /// <summary> SMB channel encryption supported by server. Valid values are AES-128-CCM, AES-128-GCM, AES-256-GCM. Should be passed as a string with delimiter ';'. </summary>
         public string ChannelEncryption { get; set; }
     }
 }

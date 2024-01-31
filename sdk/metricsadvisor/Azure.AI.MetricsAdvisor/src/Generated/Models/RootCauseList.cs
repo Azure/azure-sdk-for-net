@@ -8,26 +8,24 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The RootCauseList. </summary>
     internal partial class RootCauseList
     {
-        /// <summary> Initializes a new instance of RootCauseList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RootCauseList"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal RootCauseList(IEnumerable<IncidentRootCause> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of RootCauseList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RootCauseList"/>. </summary>
         /// <param name="value"></param>
         internal RootCauseList(IReadOnlyList<IncidentRootCause> value)
         {

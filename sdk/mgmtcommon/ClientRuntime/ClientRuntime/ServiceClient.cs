@@ -127,58 +127,6 @@ namespace Microsoft.Rest
         //#endregion
 
         /// <summary>
-        /// List of default info that gets added to DefaultHeaders.UserAgent of HttpClient
-        /// </summary>
-        //private List<ProductInfoHeaderValue> DefaultUserAgentInfoList
-        //{
-        //    get
-        //    {
-        //        if (_defaultUserAgentInfoList == null)
-        //        {
-        //            _defaultUserAgentInfoList = new List<ProductInfoHeaderValue>();
-        //        }
-
-        //        UpdateDefaultUserAgentList(FXVERSION, FrameworkVersion);
-        //        UpdateDefaultUserAgentList(OSNAME, OsName);
-        //        UpdateDefaultUserAgentList(OSVERSION, OsVersion);
-
-        //        return _defaultUserAgentInfoList;
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Updates the Default User Agent list with HeaderName and HeaderValue
-        ///// </summary>
-        ///// <param name="headerName">HeaderName</param>
-        ///// <param name="headerValue">HeaderValue</param>
-        //private void UpdateDefaultUserAgentList(string headerName, string headerValue)
-        //{
-        //    ProductInfoHeaderValue piInfoHv = null;
-        //    if (!string.IsNullOrWhiteSpace(headerName))
-        //    {
-        //        if (!string.IsNullOrWhiteSpace(headerValue))
-        //        {
-        //            piInfoHv = new ProductInfoHeaderValue(headerName, headerValue);
-        //        }
-        //    }
-
-        //    if(piInfoHv != null)
-        //    {
-        //        if(_defaultUserAgentInfoList == null)
-        //        {
-        //            _defaultUserAgentInfoList = new List<ProductInfoHeaderValue>();
-        //        }
-
-        //        var filterHeaderName = _defaultUserAgentInfoList.Where<ProductInfoHeaderValue>((pi) => pi.Product.Name.Equals(headerName, StringComparison.OrdinalIgnoreCase));
-
-        //        if(!filterHeaderName.Any<ProductInfoHeaderValue>())
-        //        {
-        //            _defaultUserAgentInfoList.Add(piInfoHv);
-        //        }
-        //    }
-        //}
-
-        /// <summary>
         /// Gets the AssemblyInformationalVersion if available
         /// if not it gets the AssemblyFileVerion
         /// if neither are available it will default to the Assembly Version of a service client.
@@ -580,23 +528,5 @@ namespace Microsoft.Rest
             SetUserAgent(OSVERSION, OsVersion);
             SetUserAgent(this.GetType().FullName, ClientVersion);
         }
-
-        /// <summary>
-        /// Finds if default UserAgent info is already set in UserAgent collection, if not it will add it
-        /// We do this because, now we accept passed in HttpClient.
-        /// So for any reason the passed HttpClient has our default UserAgent info (based on key name), we will not verify and check the values and will honor those values
-        /// </summary>
-        //private void MergeUserAgentInfo(List<ProductInfoHeaderValue> defaultUserAgentInfoList)
-        //{
-        //    // If you want to log ProductName in userAgent, it has to be without spaces
-        //    foreach (ProductInfoHeaderValue piHv in defaultUserAgentInfoList)
-        //    {
-        //        if (!HttpClient.DefaultRequestHeaders.UserAgent.Any<ProductInfoHeaderValue>((hv) => hv.Product.Name.Equals(piHv.Product.Name, StringComparison.OrdinalIgnoreCase))
-        //            && !string.IsNullOrWhiteSpace(piHv.Product.Version))
-        //        {
-        //            HttpClient.DefaultRequestHeaders.UserAgent.Add(piHv);
-        //        }
-        //    }
-        //}
     }
 }

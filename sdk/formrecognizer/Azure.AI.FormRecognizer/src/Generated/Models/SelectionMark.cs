@@ -8,30 +8,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
     /// <summary> Information about the extracted selection mark. </summary>
     internal partial class SelectionMark
     {
-        /// <summary> Initializes a new instance of SelectionMark. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelectionMark"/>. </summary>
         /// <param name="boundingBox"> Bounding box of the selection mark. </param>
         /// <param name="confidence"> Confidence value. </param>
         /// <param name="state"> State of the selection mark. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> is null. </exception>
         internal SelectionMark(IEnumerable<float> boundingBox, float confidence, SelectionMarkState state)
         {
-            if (boundingBox == null)
-            {
-                throw new ArgumentNullException(nameof(boundingBox));
-            }
+            Argument.AssertNotNull(boundingBox, nameof(boundingBox));
 
             BoundingBox = boundingBox.ToList();
             Confidence = confidence;
             State = state;
         }
 
-        /// <summary> Initializes a new instance of SelectionMark. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelectionMark"/>. </summary>
         /// <param name="boundingBox"> Bounding box of the selection mark. </param>
         /// <param name="confidence"> Confidence value. </param>
         /// <param name="state"> State of the selection mark. </param>

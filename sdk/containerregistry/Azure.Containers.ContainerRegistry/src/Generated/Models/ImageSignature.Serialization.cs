@@ -14,27 +14,30 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static ImageSignature DeserializeImageSignature(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<JWK> header = default;
             Optional<string> signature = default;
             Optional<string> @protected = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("header"))
+                if (property.NameEquals("header"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     header = JWK.DeserializeJWK(property.Value);
                     continue;
                 }
-                if (property.NameEquals("signature"))
+                if (property.NameEquals("signature"u8))
                 {
                     signature = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protected"))
+                if (property.NameEquals("protected"u8))
                 {
                     @protected = property.Value.GetString();
                     continue;

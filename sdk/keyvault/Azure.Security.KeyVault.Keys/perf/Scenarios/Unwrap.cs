@@ -38,21 +38,11 @@ namespace Azure.Security.KeyVault.Keys.Perf.Scenarios
         public override void Run(CancellationToken cancellationToken)
         {
             UnwrapResult result = CryptographyClient.UnwrapKey(KeyWrapAlgorithm.RsaOaep256, _encryptedKey);
-            byte[] key = result.Key;
-
-#if DEBUG
-            Assert.AreEqual(_aes.Key, key);
-#endif
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
             UnwrapResult result = await CryptographyClient.UnwrapKeyAsync(s_algorithm, _encryptedKey);
-            byte[] key = result.Key;
-
-#if DEBUG
-            Assert.AreEqual(_aes.Key, key);
-#endif
         }
 
         public override void Dispose(bool disposing)

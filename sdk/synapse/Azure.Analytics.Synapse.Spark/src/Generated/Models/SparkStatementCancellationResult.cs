@@ -10,19 +10,19 @@ namespace Azure.Analytics.Synapse.Spark.Models
     /// <summary> The SparkStatementCancellationResult. </summary>
     public partial class SparkStatementCancellationResult
     {
-        /// <summary> Initializes a new instance of SparkStatementCancellationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkStatementCancellationResult"/>. </summary>
         internal SparkStatementCancellationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SparkStatementCancellationResult. </summary>
-        /// <param name="message"> The msg property from the Livy API. The value is always &quot;canceled&quot;. </param>
+        /// <summary> Initializes a new instance of <see cref="SparkStatementCancellationResult"/>. </summary>
+        /// <param name="message"> The msg property from the Livy API. The value is always "canceled". </param>
         internal SparkStatementCancellationResult(string message)
         {
             Message = message;
         }
 
-        /// <summary> The msg property from the Livy API. The value is always &quot;canceled&quot;. </summary>
+        /// <summary> The msg property from the Livy API. The value is always "canceled". </summary>
         public string Message { get; }
     }
 }

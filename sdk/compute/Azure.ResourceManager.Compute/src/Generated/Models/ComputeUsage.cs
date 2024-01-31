@@ -6,50 +6,88 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes Compute Resource Usage. </summary>
     public partial class ComputeUsage
     {
-        /// <summary> Initializes a new instance of ComputeUsage. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComputeUsage"/>. </summary>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name of the type of usage. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal ComputeUsage(int currentValue, long limit, UsageName name)
+        internal ComputeUsage(int currentValue, long limit, ComputeUsageName name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
-            Unit = "Count";
+            Unit = ComputeUsageUnit.Count;
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of ComputeUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeUsage"/>. </summary>
         /// <param name="unit"> An enum describing the unit of usage measurement. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="name"> The name of the type of usage. </param>
-        internal ComputeUsage(string unit, int currentValue, long limit, UsageName name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComputeUsage(ComputeUsageUnit unit, int currentValue, long limit, ComputeUsageName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ComputeUsage"/> for deserialization. </summary>
+        internal ComputeUsage()
+        {
         }
 
         /// <summary> An enum describing the unit of usage measurement. </summary>
-        public string Unit { get; }
+        public ComputeUsageUnit Unit { get; }
         /// <summary> The current usage of the resource. </summary>
         public int CurrentValue { get; }
         /// <summary> The maximum permitted usage of the resource. </summary>
         public long Limit { get; }
         /// <summary> The name of the type of usage. </summary>
-        public UsageName Name { get; }
+        public ComputeUsageName Name { get; }
     }
 }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.TextAnalytics
 {
-    /// <summary> Type of relation. Examples include: `DosageOfMedication` or &apos;FrequencyOfMedication&apos;, etc. </summary>
+    /// <summary> Type of relation. Examples include: `DosageOfMedication` or 'FrequencyOfMedication', etc. </summary>
     public readonly partial struct HealthcareEntityRelationType : IEquatable<HealthcareEntityRelationType>
     {
         private readonly string _value;
@@ -23,17 +23,30 @@ namespace Azure.AI.TextAnalytics
         }
 
         private const string AbbreviationValue = "Abbreviation";
+        private const string BodySiteOfConditionValue = "BodySiteOfCondition";
+        private const string BodySiteOfTreatmentValue = "BodySiteOfTreatment";
+        private const string CourseOfConditionValue = "CourseOfCondition";
+        private const string CourseOfExaminationValue = "CourseOfExamination";
+        private const string CourseOfMedicationValue = "CourseOfMedication";
+        private const string CourseOfTreatmentValue = "CourseOfTreatment";
         private const string DirectionOfBodyStructureValue = "DirectionOfBodyStructure";
         private const string DirectionOfConditionValue = "DirectionOfCondition";
         private const string DirectionOfExaminationValue = "DirectionOfExamination";
         private const string DirectionOfTreatmentValue = "DirectionOfTreatment";
         private const string DosageOfMedicationValue = "DosageOfMedication";
+        private const string ExaminationFindsConditionValue = "ExaminationFindsCondition";
+        private const string ExpressionOfGeneValue = "ExpressionOfGene";
+        private const string ExpressionOfVariantValue = "ExpressionOfVariant";
         private const string FormOfMedicationValue = "FormOfMedication";
+        private const string FrequencyOfConditionValue = "FrequencyOfCondition";
         private const string FrequencyOfMedicationValue = "FrequencyOfMedication";
         private const string FrequencyOfTreatmentValue = "FrequencyOfTreatment";
+        private const string MutationTypeOfGeneValue = "MutationTypeOfGene";
+        private const string MutationTypeOfVariantValue = "MutationTypeOfVariant";
         private const string QualifierOfConditionValue = "QualifierOfCondition";
         private const string RelationOfExaminationValue = "RelationOfExamination";
         private const string RouteOfMedicationValue = "RouteOfMedication";
+        private const string ScaleOfConditionValue = "ScaleOfCondition";
         private const string TimeOfConditionValue = "TimeOfCondition";
         private const string TimeOfEventValue = "TimeOfEvent";
         private const string TimeOfExaminationValue = "TimeOfExamination";
@@ -43,9 +56,22 @@ namespace Azure.AI.TextAnalytics
         private const string UnitOfExaminationValue = "UnitOfExamination";
         private const string ValueOfConditionValue = "ValueOfCondition";
         private const string ValueOfExaminationValue = "ValueOfExamination";
+        private const string VariantOfGeneValue = "VariantOfGene";
 
         /// <summary> Abbreviation. </summary>
         public static HealthcareEntityRelationType Abbreviation { get; } = new HealthcareEntityRelationType(AbbreviationValue);
+        /// <summary> BodySiteOfCondition. </summary>
+        public static HealthcareEntityRelationType BodySiteOfCondition { get; } = new HealthcareEntityRelationType(BodySiteOfConditionValue);
+        /// <summary> BodySiteOfTreatment. </summary>
+        public static HealthcareEntityRelationType BodySiteOfTreatment { get; } = new HealthcareEntityRelationType(BodySiteOfTreatmentValue);
+        /// <summary> CourseOfCondition. </summary>
+        public static HealthcareEntityRelationType CourseOfCondition { get; } = new HealthcareEntityRelationType(CourseOfConditionValue);
+        /// <summary> CourseOfExamination. </summary>
+        public static HealthcareEntityRelationType CourseOfExamination { get; } = new HealthcareEntityRelationType(CourseOfExaminationValue);
+        /// <summary> CourseOfMedication. </summary>
+        public static HealthcareEntityRelationType CourseOfMedication { get; } = new HealthcareEntityRelationType(CourseOfMedicationValue);
+        /// <summary> CourseOfTreatment. </summary>
+        public static HealthcareEntityRelationType CourseOfTreatment { get; } = new HealthcareEntityRelationType(CourseOfTreatmentValue);
         /// <summary> DirectionOfBodyStructure. </summary>
         public static HealthcareEntityRelationType DirectionOfBodyStructure { get; } = new HealthcareEntityRelationType(DirectionOfBodyStructureValue);
         /// <summary> DirectionOfCondition. </summary>
@@ -56,18 +82,32 @@ namespace Azure.AI.TextAnalytics
         public static HealthcareEntityRelationType DirectionOfTreatment { get; } = new HealthcareEntityRelationType(DirectionOfTreatmentValue);
         /// <summary> DosageOfMedication. </summary>
         public static HealthcareEntityRelationType DosageOfMedication { get; } = new HealthcareEntityRelationType(DosageOfMedicationValue);
+        /// <summary> ExaminationFindsCondition. </summary>
+        public static HealthcareEntityRelationType ExaminationFindsCondition { get; } = new HealthcareEntityRelationType(ExaminationFindsConditionValue);
+        /// <summary> ExpressionOfGene. </summary>
+        public static HealthcareEntityRelationType ExpressionOfGene { get; } = new HealthcareEntityRelationType(ExpressionOfGeneValue);
+        /// <summary> ExpressionOfVariant. </summary>
+        public static HealthcareEntityRelationType ExpressionOfVariant { get; } = new HealthcareEntityRelationType(ExpressionOfVariantValue);
         /// <summary> FormOfMedication. </summary>
         public static HealthcareEntityRelationType FormOfMedication { get; } = new HealthcareEntityRelationType(FormOfMedicationValue);
+        /// <summary> FrequencyOfCondition. </summary>
+        public static HealthcareEntityRelationType FrequencyOfCondition { get; } = new HealthcareEntityRelationType(FrequencyOfConditionValue);
         /// <summary> FrequencyOfMedication. </summary>
         public static HealthcareEntityRelationType FrequencyOfMedication { get; } = new HealthcareEntityRelationType(FrequencyOfMedicationValue);
         /// <summary> FrequencyOfTreatment. </summary>
         public static HealthcareEntityRelationType FrequencyOfTreatment { get; } = new HealthcareEntityRelationType(FrequencyOfTreatmentValue);
+        /// <summary> MutationTypeOfGene. </summary>
+        public static HealthcareEntityRelationType MutationTypeOfGene { get; } = new HealthcareEntityRelationType(MutationTypeOfGeneValue);
+        /// <summary> MutationTypeOfVariant. </summary>
+        public static HealthcareEntityRelationType MutationTypeOfVariant { get; } = new HealthcareEntityRelationType(MutationTypeOfVariantValue);
         /// <summary> QualifierOfCondition. </summary>
         public static HealthcareEntityRelationType QualifierOfCondition { get; } = new HealthcareEntityRelationType(QualifierOfConditionValue);
         /// <summary> RelationOfExamination. </summary>
         public static HealthcareEntityRelationType RelationOfExamination { get; } = new HealthcareEntityRelationType(RelationOfExaminationValue);
         /// <summary> RouteOfMedication. </summary>
         public static HealthcareEntityRelationType RouteOfMedication { get; } = new HealthcareEntityRelationType(RouteOfMedicationValue);
+        /// <summary> ScaleOfCondition. </summary>
+        public static HealthcareEntityRelationType ScaleOfCondition { get; } = new HealthcareEntityRelationType(ScaleOfConditionValue);
         /// <summary> TimeOfCondition. </summary>
         public static HealthcareEntityRelationType TimeOfCondition { get; } = new HealthcareEntityRelationType(TimeOfConditionValue);
         /// <summary> TimeOfEvent. </summary>
@@ -86,6 +126,8 @@ namespace Azure.AI.TextAnalytics
         public static HealthcareEntityRelationType ValueOfCondition { get; } = new HealthcareEntityRelationType(ValueOfConditionValue);
         /// <summary> ValueOfExamination. </summary>
         public static HealthcareEntityRelationType ValueOfExamination { get; } = new HealthcareEntityRelationType(ValueOfExaminationValue);
+        /// <summary> VariantOfGene. </summary>
+        public static HealthcareEntityRelationType VariantOfGene { get; } = new HealthcareEntityRelationType(VariantOfGeneValue);
         /// <summary> Determines if two <see cref="HealthcareEntityRelationType"/> values are the same. </summary>
         public static bool operator ==(HealthcareEntityRelationType left, HealthcareEntityRelationType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HealthcareEntityRelationType"/> values are not the same. </summary>

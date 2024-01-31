@@ -12,8 +12,12 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Administration
 {
-    /// <summary> The HookInfo. </summary>
-    public partial class NotificationHook
+    /// <summary>
+    /// The HookInfo.
+    /// Please note <see cref="NotificationHook"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="EmailNotificationHook"/> and <see cref="WebNotificationHook"/>.
+    /// </summary>
+    public abstract partial class NotificationHook
     {
     }
 }

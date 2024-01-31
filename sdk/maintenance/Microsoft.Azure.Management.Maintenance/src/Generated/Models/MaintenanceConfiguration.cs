@@ -47,8 +47,9 @@ namespace Microsoft.Azure.Management.Maintenance.Models
         /// <param name="extensionProperties">Gets or sets extensionProperties
         /// of the maintenanceConfiguration</param>
         /// <param name="maintenanceScope">Gets or sets maintenanceScope of the
-        /// configuration. Possible values include: 'Host', 'OSImage',
-        /// 'Extension', 'InGuestPatch', 'SQLDB', 'SQLManagedInstance'</param>
+        /// configuration. Possible values include: 'Host', 'Resource',
+        /// 'OSImage', 'Extension', 'InGuestPatch', 'SQLDB',
+        /// 'SQLManagedInstance'</param>
         /// <param name="startDateTime">Effective start date of the maintenance
         /// window in YYYY-MM-DD hh:mm format. The start date can be set to
         /// either the current date or future date. The window will be created
@@ -140,8 +141,8 @@ namespace Microsoft.Azure.Management.Maintenance.Models
 
         /// <summary>
         /// Gets or sets maintenanceScope of the configuration. Possible values
-        /// include: 'Host', 'OSImage', 'Extension', 'InGuestPatch', 'SQLDB',
-        /// 'SQLManagedInstance'
+        /// include: 'Host', 'Resource', 'OSImage', 'Extension',
+        /// 'InGuestPatch', 'SQLDB', 'SQLManagedInstance'
         /// </summary>
         [JsonProperty(PropertyName = "properties.maintenanceScope")]
         public string MaintenanceScope { get; set; }

@@ -8,26 +8,24 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The AnomalyResultList. </summary>
     internal partial class AnomalyResultList
     {
-        /// <summary> Initializes a new instance of AnomalyResultList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyResultList"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal AnomalyResultList(IEnumerable<DataPointAnomaly> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of AnomalyResultList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyResultList"/>. </summary>
         /// <param name="nextLink"></param>
         /// <param name="value"></param>
         internal AnomalyResultList(string nextLink, IReadOnlyList<DataPointAnomaly> value)

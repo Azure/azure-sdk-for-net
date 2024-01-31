@@ -6,23 +6,30 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
     /// <summary> Request to get search string suggestions for time series instances search based on prefix text. </summary>
     internal partial class InstancesSuggestRequest
     {
-        /// <summary> Initializes a new instance of InstancesSuggestRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancesSuggestRequest"/>. </summary>
         /// <param name="searchString"> Search string for which suggestions are required. Empty is allowed, but not null. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchString"/> is null. </exception>
         public InstancesSuggestRequest(string searchString)
         {
-            if (searchString == null)
-            {
-                throw new ArgumentNullException(nameof(searchString));
-            }
+            Argument.AssertNotNull(searchString, nameof(searchString));
 
             SearchString = searchString;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InstancesSuggestRequest"/>. </summary>
+        /// <param name="searchString"> Search string for which suggestions are required. Empty is allowed, but not null. </param>
+        /// <param name="take"> Maximum number of suggestions expected in the result. Defaults to 10 when not set. </param>
+        internal InstancesSuggestRequest(string searchString, int? take)
+        {
+            SearchString = searchString;
+            Take = take;
         }
 
         /// <summary> Search string for which suggestions are required. Empty is allowed, but not null. </summary>

@@ -7,26 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> The Azure Blob storage. </summary>
     public partial class AzureBlobDataset : Dataset
     {
-        /// <summary> Initializes a new instance of AzureBlobDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public AzureBlobDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
         {
-            if (linkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedServiceName));
-            }
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
 
             Type = "AzureBlob";
         }
 
-        /// <summary> Initializes a new instance of AzureBlobDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -39,9 +37,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="folderPath"> The path of the Azure Blob storage. Type: string (or Expression with resultType string). </param>
         /// <param name="tableRootLocation"> The root of blob path. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> The name of the Azure Blob. Type: string (or Expression with resultType string). </param>
-        /// <param name="modifiedDatetimeStart"> The start of Azure Blob&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
-        /// <param name="modifiedDatetimeEnd"> The end of Azure Blob&apos;s modified datetime. Type: string (or Expression with resultType string). </param>
-        /// <param name="format"> The format of the Azure Blob storage. </param>
+        /// <param name="modifiedDatetimeStart"> The start of Azure Blob's modified datetime. Type: string (or Expression with resultType string). </param>
+        /// <param name="modifiedDatetimeEnd"> The end of Azure Blob's modified datetime. Type: string (or Expression with resultType string). </param>
+        /// <param name="format">
+        /// The format of the Azure Blob storage.
+        /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AvroFormat"/>, <see cref="JsonFormat"/>, <see cref="OrcFormat"/>, <see cref="ParquetFormat"/> and <see cref="TextFormat"/>.
+        /// </param>
         /// <param name="compression"> The data compression method used for the blob storage. </param>
         internal AzureBlobDataset(string type, string description, object structure, object schema, LinkedServiceReference linkedServiceName, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, DatasetFolder folder, IDictionary<string, object> additionalProperties, object folderPath, object tableRootLocation, object fileName, object modifiedDatetimeStart, object modifiedDatetimeEnd, DatasetStorageFormat format, DatasetCompression compression) : base(type, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
@@ -61,11 +63,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object TableRootLocation { get; set; }
         /// <summary> The name of the Azure Blob. Type: string (or Expression with resultType string). </summary>
         public object FileName { get; set; }
-        /// <summary> The start of Azure Blob&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The start of Azure Blob's modified datetime. Type: string (or Expression with resultType string). </summary>
         public object ModifiedDatetimeStart { get; set; }
-        /// <summary> The end of Azure Blob&apos;s modified datetime. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The end of Azure Blob's modified datetime. Type: string (or Expression with resultType string). </summary>
         public object ModifiedDatetimeEnd { get; set; }
-        /// <summary> The format of the Azure Blob storage. </summary>
+        /// <summary>
+        /// The format of the Azure Blob storage.
+        /// Please note <see cref="DatasetStorageFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AvroFormat"/>, <see cref="JsonFormat"/>, <see cref="OrcFormat"/>, <see cref="ParquetFormat"/> and <see cref="TextFormat"/>.
+        /// </summary>
         public DatasetStorageFormat Format { get; set; }
         /// <summary> The data compression method used for the blob storage. </summary>
         public DatasetCompression Compression { get; set; }

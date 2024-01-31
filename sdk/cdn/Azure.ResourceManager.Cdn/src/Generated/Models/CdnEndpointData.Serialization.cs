@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,31 +15,62 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class CdnEndpointData : IUtf8JsonSerializable
+    public partial class CdnEndpointData : IUtf8JsonSerializable, IJsonModel<CdnEndpointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnEndpointData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CdnEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                throw new FormatException($"The model {nameof(CdnEndpointData)} does not support '{format}' format.");
             }
-            writer.WriteEndObject();
-            writer.WritePropertyName("location");
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(OriginPath))
             {
-                writer.WritePropertyName("originPath");
+                writer.WritePropertyName("originPath"u8);
                 writer.WriteStringValue(OriginPath);
             }
             if (Optional.IsCollectionDefined(ContentTypesToCompress))
             {
-                writer.WritePropertyName("contentTypesToCompress");
+                writer.WritePropertyName("contentTypesToCompress"u8);
                 writer.WriteStartArray();
                 foreach (var item in ContentTypesToCompress)
                 {
@@ -47,34 +80,34 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(OriginHostHeader))
             {
-                writer.WritePropertyName("originHostHeader");
+                writer.WritePropertyName("originHostHeader"u8);
                 writer.WriteStringValue(OriginHostHeader);
             }
             if (Optional.IsDefined(IsCompressionEnabled))
             {
-                writer.WritePropertyName("isCompressionEnabled");
+                writer.WritePropertyName("isCompressionEnabled"u8);
                 writer.WriteBooleanValue(IsCompressionEnabled.Value);
             }
             if (Optional.IsDefined(IsHttpAllowed))
             {
-                writer.WritePropertyName("isHttpAllowed");
+                writer.WritePropertyName("isHttpAllowed"u8);
                 writer.WriteBooleanValue(IsHttpAllowed.Value);
             }
             if (Optional.IsDefined(IsHttpsAllowed))
             {
-                writer.WritePropertyName("isHttpsAllowed");
+                writer.WritePropertyName("isHttpsAllowed"u8);
                 writer.WriteBooleanValue(IsHttpsAllowed.Value);
             }
             if (Optional.IsDefined(QueryStringCachingBehavior))
             {
-                writer.WritePropertyName("queryStringCachingBehavior");
+                writer.WritePropertyName("queryStringCachingBehavior"u8);
                 writer.WriteStringValue(QueryStringCachingBehavior.Value.ToSerialString());
             }
             if (Optional.IsDefined(OptimizationType))
             {
                 if (OptimizationType != null)
                 {
-                    writer.WritePropertyName("optimizationType");
+                    writer.WritePropertyName("optimizationType"u8);
                     writer.WriteStringValue(OptimizationType.Value.ToString());
                 }
                 else
@@ -84,12 +117,12 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(ProbePath))
             {
-                writer.WritePropertyName("probePath");
+                writer.WritePropertyName("probePath"u8);
                 writer.WriteStringValue(ProbePath);
             }
             if (Optional.IsCollectionDefined(GeoFilters))
             {
-                writer.WritePropertyName("geoFilters");
+                writer.WritePropertyName("geoFilters"u8);
                 writer.WriteStartArray();
                 foreach (var item in GeoFilters)
                 {
@@ -101,7 +134,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (DefaultOriginGroup != null)
                 {
-                    writer.WritePropertyName("defaultOriginGroup");
+                    writer.WritePropertyName("defaultOriginGroup"u8);
                     writer.WriteObjectValue(DefaultOriginGroup);
                 }
                 else
@@ -109,13 +142,13 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("defaultOriginGroup");
                 }
             }
-            if (Optional.IsCollectionDefined(UrlSigningKeys))
+            if (Optional.IsCollectionDefined(UriSigningKeys))
             {
-                if (UrlSigningKeys != null)
+                if (UriSigningKeys != null)
                 {
-                    writer.WritePropertyName("urlSigningKeys");
+                    writer.WritePropertyName("urlSigningKeys"u8);
                     writer.WriteStartArray();
-                    foreach (var item in UrlSigningKeys)
+                    foreach (var item in UriSigningKeys)
                     {
                         writer.WriteObjectValue(item);
                     }
@@ -130,7 +163,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (DeliveryPolicy != null)
                 {
-                    writer.WritePropertyName("deliveryPolicy");
+                    writer.WritePropertyName("deliveryPolicy"u8);
                     writer.WriteObjectValue(DeliveryPolicy);
                 }
                 else
@@ -142,7 +175,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 if (WebApplicationFirewallPolicyLink != null)
                 {
-                    writer.WritePropertyName("webApplicationFirewallPolicyLink");
+                    writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
                     writer.WriteObjectValue(WebApplicationFirewallPolicyLink);
                 }
                 else
@@ -150,9 +183,14 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("webApplicationFirewallPolicyLink");
                 }
             }
+            if (options.Format != "W" && Optional.IsDefined(HostName))
+            {
+                writer.WritePropertyName("hostName"u8);
+                writer.WriteStringValue(HostName);
+            }
             if (Optional.IsCollectionDefined(Origins))
             {
-                writer.WritePropertyName("origins");
+                writer.WritePropertyName("origins"u8);
                 writer.WriteStartArray();
                 foreach (var item in Origins)
                 {
@@ -162,7 +200,7 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsCollectionDefined(OriginGroups))
             {
-                writer.WritePropertyName("originGroups");
+                writer.WritePropertyName("originGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in OriginGroups)
                 {
@@ -170,18 +208,71 @@ namespace Azure.ResourceManager.Cdn
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(CustomDomains))
+            {
+                writer.WritePropertyName("customDomains"u8);
+                writer.WriteStartArray();
+                foreach (var item in CustomDomains)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            {
+                writer.WritePropertyName("resourceState"u8);
+                writer.WriteStringValue(ResourceState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CdnEndpointData DeserializeCdnEndpointData(JsonElement element)
+        CdnEndpointData IJsonModel<CdnEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            IDictionary<string, string> tags = default;
+            var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CdnEndpointData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCdnEndpointData(document.RootElement, options);
+        }
+
+        internal static CdnEndpointData DeserializeCdnEndpointData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
-            SystemData systemData = default;
+            ResourceType type = default;
+            Optional<SystemData> systemData = default;
             Optional<string> originPath = default;
             Optional<IList<string>> contentTypesToCompress = default;
             Optional<string> originHostHeader = default;
@@ -193,19 +284,25 @@ namespace Azure.ResourceManager.Cdn
             Optional<string> probePath = default;
             Optional<IList<GeoFilter>> geoFilters = default;
             Optional<EndpointPropertiesUpdateParametersDefaultOriginGroup> defaultOriginGroup = default;
-            Optional<IList<UrlSigningKey>> urlSigningKeys = default;
-            Optional<EndpointPropertiesUpdateParametersDeliveryPolicy> deliveryPolicy = default;
+            Optional<IList<UriSigningKey>> uriSigningKeys = default;
+            Optional<EndpointDeliveryPolicy> deliveryPolicy = default;
             Optional<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink> webApplicationFirewallPolicyLink = default;
             Optional<string> hostName = default;
             Optional<IList<DeepCreatedOrigin>> origins = default;
             Optional<IList<DeepCreatedOriginGroup>> originGroups = default;
             Optional<IReadOnlyList<CdnCustomDomainData>> customDomains = default;
             Optional<EndpointResourceState> resourceState = default;
-            Optional<string> provisioningState = default;
+            Optional<CdnEndpointProvisioningState> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -214,32 +311,36 @@ namespace Azure.ResourceManager.Cdn
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -248,16 +349,15 @@ namespace Azure.ResourceManager.Cdn
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("originPath"))
+                        if (property0.NameEquals("originPath"u8))
                         {
                             originPath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("contentTypesToCompress"))
+                        if (property0.NameEquals("contentTypesToCompress"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -268,52 +368,48 @@ namespace Azure.ResourceManager.Cdn
                             contentTypesToCompress = array;
                             continue;
                         }
-                        if (property0.NameEquals("originHostHeader"))
+                        if (property0.NameEquals("originHostHeader"u8))
                         {
                             originHostHeader = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("isCompressionEnabled"))
+                        if (property0.NameEquals("isCompressionEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isCompressionEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("isHttpAllowed"))
+                        if (property0.NameEquals("isHttpAllowed"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isHttpAllowed = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("isHttpsAllowed"))
+                        if (property0.NameEquals("isHttpsAllowed"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isHttpsAllowed = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("queryStringCachingBehavior"))
+                        if (property0.NameEquals("queryStringCachingBehavior"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             queryStringCachingBehavior = property0.Value.GetString().ToQueryStringCachingBehavior();
                             continue;
                         }
-                        if (property0.NameEquals("optimizationType"))
+                        if (property0.NameEquals("optimizationType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -323,16 +419,15 @@ namespace Azure.ResourceManager.Cdn
                             optimizationType = new OptimizationType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("probePath"))
+                        if (property0.NameEquals("probePath"u8))
                         {
                             probePath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("geoFilters"))
+                        if (property0.NameEquals("geoFilters"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<GeoFilter> array = new List<GeoFilter>();
@@ -343,7 +438,7 @@ namespace Azure.ResourceManager.Cdn
                             geoFilters = array;
                             continue;
                         }
-                        if (property0.NameEquals("defaultOriginGroup"))
+                        if (property0.NameEquals("defaultOriginGroup"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -353,32 +448,32 @@ namespace Azure.ResourceManager.Cdn
                             defaultOriginGroup = EndpointPropertiesUpdateParametersDefaultOriginGroup.DeserializeEndpointPropertiesUpdateParametersDefaultOriginGroup(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("urlSigningKeys"))
+                        if (property0.NameEquals("urlSigningKeys"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                urlSigningKeys = null;
+                                uriSigningKeys = null;
                                 continue;
                             }
-                            List<UrlSigningKey> array = new List<UrlSigningKey>();
+                            List<UriSigningKey> array = new List<UriSigningKey>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(UrlSigningKey.DeserializeUrlSigningKey(item));
+                                array.Add(UriSigningKey.DeserializeUriSigningKey(item));
                             }
-                            urlSigningKeys = array;
+                            uriSigningKeys = array;
                             continue;
                         }
-                        if (property0.NameEquals("deliveryPolicy"))
+                        if (property0.NameEquals("deliveryPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 deliveryPolicy = null;
                                 continue;
                             }
-                            deliveryPolicy = EndpointPropertiesUpdateParametersDeliveryPolicy.DeserializeEndpointPropertiesUpdateParametersDeliveryPolicy(property0.Value);
+                            deliveryPolicy = EndpointDeliveryPolicy.DeserializeEndpointDeliveryPolicy(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("webApplicationFirewallPolicyLink"))
+                        if (property0.NameEquals("webApplicationFirewallPolicyLink"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -388,16 +483,15 @@ namespace Azure.ResourceManager.Cdn
                             webApplicationFirewallPolicyLink = EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink.DeserializeEndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("hostName"))
+                        if (property0.NameEquals("hostName"u8))
                         {
                             hostName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("origins"))
+                        if (property0.NameEquals("origins"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DeepCreatedOrigin> array = new List<DeepCreatedOrigin>();
@@ -408,11 +502,10 @@ namespace Azure.ResourceManager.Cdn
                             origins = array;
                             continue;
                         }
-                        if (property0.NameEquals("originGroups"))
+                        if (property0.NameEquals("originGroups"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DeepCreatedOriginGroup> array = new List<DeepCreatedOriginGroup>();
@@ -423,11 +516,10 @@ namespace Azure.ResourceManager.Cdn
                             originGroups = array;
                             continue;
                         }
-                        if (property0.NameEquals("customDomains"))
+                        if (property0.NameEquals("customDomains"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<CdnCustomDomainData> array = new List<CdnCustomDomainData>();
@@ -438,26 +530,65 @@ namespace Azure.ResourceManager.Cdn
                             customDomains = array;
                             continue;
                         }
-                        if (property0.NameEquals("resourceState"))
+                        if (property0.NameEquals("resourceState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceState = new EndpointResourceState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new CdnEndpointProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CdnEndpointData(id, name, type, systemData, tags, location, originPath.Value, Optional.ToList(contentTypesToCompress), originHostHeader.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(isHttpAllowed), Optional.ToNullable(isHttpsAllowed), Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(optimizationType), probePath.Value, Optional.ToList(geoFilters), defaultOriginGroup.Value, Optional.ToList(urlSigningKeys), deliveryPolicy.Value, webApplicationFirewallPolicyLink.Value, hostName.Value, Optional.ToList(origins), Optional.ToList(originGroups), Optional.ToList(customDomains), Optional.ToNullable(resourceState), provisioningState.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CdnEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, originPath.Value, Optional.ToList(contentTypesToCompress), originHostHeader.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(isHttpAllowed), Optional.ToNullable(isHttpsAllowed), Optional.ToNullable(queryStringCachingBehavior), Optional.ToNullable(optimizationType), probePath.Value, Optional.ToList(geoFilters), defaultOriginGroup.Value, Optional.ToList(uriSigningKeys), deliveryPolicy.Value, webApplicationFirewallPolicyLink.Value, hostName.Value, Optional.ToList(origins), Optional.ToList(originGroups), Optional.ToList(customDomains), Optional.ToNullable(resourceState), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CdnEndpointData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CdnEndpointData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CdnEndpointData IPersistableModel<CdnEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCdnEndpointData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CdnEndpointData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CdnEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -47,6 +47,9 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// description</param>
         /// <param name="systemData">The system meta data relating to this
         /// resource.</param>
+        /// <param name="minimumTlsVersion">The minimum TLS version for the
+        /// cluster to support, e.g. '1.2'. Possible values include: '1.0',
+        /// '1.1', '1.2'</param>
         /// <param name="provisioningState">Provisioning state of the
         /// Namespace.</param>
         /// <param name="status">Status of the Namespace.</param>
@@ -59,6 +62,9 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// metrics.</param>
         /// <param name="isAutoInflateEnabled">Value that indicates whether
         /// AutoInflate is enabled for eventhub namespace.</param>
+        /// <param name="publicNetworkAccess">This determines if traffic is
+        /// allowed over public network. By default it is enabled. Possible
+        /// values include: 'Enabled', 'Disabled', 'SecuredByPerimeter'</param>
         /// <param name="maximumThroughputUnits">Upper limit of throughput
         /// units when AutoInflate is enabled, value should be within 0 to 20
         /// throughput units. ( '0' if AutoInflateEnabled = true)</param>
@@ -75,12 +81,13 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// authentication for the Event Hubs namespace.</param>
         /// <param name="alternateName">Alternate name specified when alias and
         /// namespace names are same.</param>
-        public EHNamespace(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Identity identity = default(Identity), SystemData systemData = default(SystemData), string provisioningState = default(string), string status = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string clusterArmId = default(string), string metricId = default(string), bool? isAutoInflateEnabled = default(bool?), int? maximumThroughputUnits = default(int?), bool? kafkaEnabled = default(bool?), bool? zoneRedundant = default(bool?), Encryption encryption = default(Encryption), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), bool? disableLocalAuth = default(bool?), string alternateName = default(string))
+        public EHNamespace(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Identity identity = default(Identity), SystemData systemData = default(SystemData), string minimumTlsVersion = default(string), string provisioningState = default(string), string status = default(string), System.DateTime? createdAt = default(System.DateTime?), System.DateTime? updatedAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string clusterArmId = default(string), string metricId = default(string), bool? isAutoInflateEnabled = default(bool?), string publicNetworkAccess = default(string), int? maximumThroughputUnits = default(int?), bool? kafkaEnabled = default(bool?), bool? zoneRedundant = default(bool?), Encryption encryption = default(Encryption), IList<PrivateEndpointConnection> privateEndpointConnections = default(IList<PrivateEndpointConnection>), bool? disableLocalAuth = default(bool?), string alternateName = default(string))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
             Identity = identity;
             SystemData = systemData;
+            MinimumTlsVersion = minimumTlsVersion;
             ProvisioningState = provisioningState;
             Status = status;
             CreatedAt = createdAt;
@@ -89,6 +96,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
             ClusterArmId = clusterArmId;
             MetricId = metricId;
             IsAutoInflateEnabled = isAutoInflateEnabled;
+            PublicNetworkAccess = publicNetworkAccess;
             MaximumThroughputUnits = maximumThroughputUnits;
             KafkaEnabled = kafkaEnabled;
             ZoneRedundant = zoneRedundant;
@@ -121,6 +129,13 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "systemData")]
         public SystemData SystemData { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the minimum TLS version for the cluster to support,
+        /// e.g. '1.2'. Possible values include: '1.0', '1.1', '1.2'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.minimumTlsVersion")]
+        public string MinimumTlsVersion { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the Namespace.
@@ -170,6 +185,14 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.isAutoInflateEnabled")]
         public bool? IsAutoInflateEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets this determines if traffic is allowed over public
+        /// network. By default it is enabled. Possible values include:
+        /// 'Enabled', 'Disabled', 'SecuredByPerimeter'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
 
         /// <summary>
         /// Gets or sets upper limit of throughput units when AutoInflate is

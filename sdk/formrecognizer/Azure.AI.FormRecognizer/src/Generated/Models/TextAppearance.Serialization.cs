@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -14,10 +13,14 @@ namespace Azure.AI.FormRecognizer.Models
     {
         internal static TextAppearance DeserializeTextAppearance(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Style style = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("style"))
+                if (property.NameEquals("style"u8))
                 {
                     style = FormRecognizer.Models.Style.DeserializeStyle(property.Value);
                     continue;

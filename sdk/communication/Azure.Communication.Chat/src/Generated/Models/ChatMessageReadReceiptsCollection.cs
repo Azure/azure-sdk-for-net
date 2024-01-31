@@ -8,26 +8,24 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
     /// <summary> A paged collection of chat message read receipts. </summary>
     internal partial class ChatMessageReadReceiptsCollection
     {
-        /// <summary> Initializes a new instance of ChatMessageReadReceiptsCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatMessageReadReceiptsCollection"/>. </summary>
         /// <param name="value"> Collection of chat message read receipts. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ChatMessageReadReceiptsCollection(IEnumerable<ChatMessageReadReceiptInternal> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of ChatMessageReadReceiptsCollection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatMessageReadReceiptsCollection"/>. </summary>
         /// <param name="value"> Collection of chat message read receipts. </param>
         /// <param name="nextLink"> If there are more chat message read receipts that can be retrieved, the next link will be populated. </param>
         internal ChatMessageReadReceiptsCollection(IReadOnlyList<ChatMessageReadReceiptInternal> value, string nextLink)

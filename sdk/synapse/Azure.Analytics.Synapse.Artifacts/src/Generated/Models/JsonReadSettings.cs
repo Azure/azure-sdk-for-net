@@ -12,23 +12,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Json read settings. </summary>
     public partial class JsonReadSettings : FormatReadSettings
     {
-        /// <summary> Initializes a new instance of JsonReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonReadSettings"/>. </summary>
         public JsonReadSettings()
         {
             Type = "JsonReadSettings";
         }
 
-        /// <summary> Initializes a new instance of JsonReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="JsonReadSettings"/>. </summary>
         /// <param name="type"> The read setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="compressionProperties"> Compression settings. </param>
+        /// <param name="compressionProperties">
+        /// Compression settings.
+        /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="TarGZipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
+        /// </param>
         internal JsonReadSettings(string type, IDictionary<string, object> additionalProperties, CompressionReadSettings compressionProperties) : base(type, additionalProperties)
         {
             CompressionProperties = compressionProperties;
             Type = type ?? "JsonReadSettings";
         }
 
-        /// <summary> Compression settings. </summary>
+        /// <summary>
+        /// Compression settings.
+        /// Please note <see cref="CompressionReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="TarGZipReadSettings"/>, <see cref="TarReadSettings"/> and <see cref="ZipDeflateReadSettings"/>.
+        /// </summary>
         public CompressionReadSettings CompressionProperties { get; set; }
     }
 }

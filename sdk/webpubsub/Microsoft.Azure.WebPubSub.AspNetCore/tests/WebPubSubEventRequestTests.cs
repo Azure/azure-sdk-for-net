@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#if NETCOREAPP3_1_OR_GREATER
+#if NETCOREAPP
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -77,13 +77,14 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         [Test]
         public void TestConnectEventDeserialize()
         {
-            var request = "{\"claims\":{\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\":[\"ddd\"],\"nbf\":[\"1629183374\"],\"exp\":[\"1629186974\"],\"iat\":[\"1629183374\"],\"aud\":[\"http://localhost:8080/client/hubs/chat\"],\"sub\":[\"ddd\"]},\"query\":{\"access_token\":[\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZGQiLCJuYmYiOjE2MjkxODMzNzQsImV4cCI6MTYyOTE4Njk3NCwiaWF0IjoxNjI5MTgzMzc0LCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvY2xpZW50L2h1YnMvY2hhdCJ9.tqD8ykjv5NmYw6gzLKglUAv-c-AVWu-KNZOptRKkgMM\"]},\"subprotocols\":[\"protocol1\",\"protocol2\"],\"clientCertificates\":[]}";
+            var request = "{\"claims\":{\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\":[\"ddd\"],\"nbf\":[\"1629183374\"],\"exp\":[\"1629186974\"],\"iat\":[\"1629183374\"],\"aud\":[\"http://localhost:8080/client/hubs/chat\"],\"sub\":[\"ddd\"]},\"query\":{\"access_token\":[\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZGQiLCJuYmYiOjE2MjkxODMzNzQsImV4cCI6MTYyOTE4Njk3NCwiaWF0IjoxNjI5MTgzMzc0LCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvY2xpZW50L2h1YnMvY2hhdCJ9.tqD8ykjv5NmYw6gzLKglUAv-c-AVWu-KNZOptRKkgMM\"]},\"subprotocols\":[\"protocol1\",\"protocol2\"],\"clientCertificates\":[],\"headers\":{\"request-id\":[\"aaa\"],\"bbb\":[\"bbb\"]}}";
 
             var converted = JsonSerializer.Deserialize<ConnectEventRequest>(request);
 
             Assert.AreEqual(6, converted.Claims.Count);
             Assert.AreEqual(1, converted.Query.Count);
             Assert.AreEqual(2, converted.Subprotocols.Count);
+            Assert.AreEqual(2, converted.Headers.Count);
             Assert.AreEqual(new string[] { "protocol1", "protocol2" }, converted.Subprotocols);
             Assert.NotNull(converted.ClientCertificates);
             Assert.AreEqual(0, converted.ClientCertificates.Count);
@@ -155,7 +156,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         [Test]
         public async Task TestParseConnectRequest()
         {
-            var body = "{\"claims\":{\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\":[\"ddd\"],\"nbf\":[\"1629183374\"],\"exp\":[\"1629186974\"],\"iat\":[\"1629183374\"],\"aud\":[\"http://localhost:8080/client/hubs/chat\"],\"sub\":[\"ddd\"]},\"query\":{\"access_token\":[\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZGQiLCJuYmYiOjE2MjkxODMzNzQsImV4cCI6MTYyOTE4Njk3NCwiaWF0IjoxNjI5MTgzMzc0LCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvY2xpZW50L2h1YnMvY2hhdCJ9.tqD8ykjv5NmYw6gzLKglUAv-c-AVWu-KNZOptRKkgMM\"]},\"subprotocols\":[\"protocol1\", \"protocol2\"],\"clientCertificates\":[]}";
+            var body = "{\"claims\":{\"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier\":[\"ddd\"],\"nbf\":[\"1629183374\"],\"exp\":[\"1629186974\"],\"iat\":[\"1629183374\"],\"aud\":[\"http://localhost:8080/client/hubs/chat\"],\"sub\":[\"ddd\"]},\"query\":{\"access_token\":[\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkZGQiLCJuYmYiOjE2MjkxODMzNzQsImV4cCI6MTYyOTE4Njk3NCwiaWF0IjoxNjI5MTgzMzc0LCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAvY2xpZW50L2h1YnMvY2hhdCJ9.tqD8ykjv5NmYw6gzLKglUAv-c-AVWu-KNZOptRKkgMM\"]},\"subprotocols\":[\"protocol1\", \"protocol2\"],\"clientCertificates\":[],\"headers\":{\"request-id\":[\"aaa\"],\"bbb\":[\"bbb\"]}}";
             var context = PrepareHttpContext(TestUri, WebPubSubEventType.System, Constants.Events.ConnectEvent, body: body);
 
             var request = await context.Request.ReadWebPubSubEventAsync(TestValidator);
@@ -165,6 +166,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             var connectRequest = request as ConnectEventRequest;
 
             Assert.NotNull(connectRequest.ConnectionContext);
+            Assert.NotNull(connectRequest.Headers);
+            Assert.AreEqual(2, connectRequest.Headers.Count);
             Assert.AreEqual(TestUri.Host, connectRequest.ConnectionContext.Origin);
         }
 
@@ -210,7 +213,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
                 signature: "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
                 origin: TestUri.Host);
-            var options = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new ServiceEndpoint($"Endpoint={TestUri};AccessKey={accessKey};Version=1.0;") }));
+            var options = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint={TestUri};AccessKey={accessKey};Version=1.0;") }));
             var result = options.IsValidSignature(connectionContext);
             Assert.AreEqual(valid, result);
         }
@@ -235,7 +238,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
                 signature: "sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561",
                 origin: TestUri.Host);
-            var validator = new RequestValidator(Options.Create(new WebPubSubOptions{ ServiceEndpoint = new ServiceEndpoint($"Endpoint={TestUri};Version=1.0;") }));
+            var validator = new RequestValidator(Options.Create(new WebPubSubOptions{ ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint={TestUri};Version=1.0;") }));
             var result = validator.IsValidSignature(connectionContext);
             Assert.True(result);
         }
@@ -247,16 +250,33 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
                 WebPubSubEventType.System,
                 null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
                 origin: TestUri.Host);
-            var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new ServiceEndpoint($"Endpoint={TestUri};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;") }));
+            var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint={TestUri};AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;") }));
             var result = validator.IsValidSignature(connectionContext);
             Assert.False(result);
         }
 
+        [TestCase("sha256=something,sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561")]
+        [TestCase("sha256=something, sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561")]
+        [TestCase("sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561, sha256=something")]
+        [TestCase("sha256=7767effcb3946f3e1de039df4b986ef02c110b1469d02c0a06f41b3b727ab561,sha256=something")]
+        public void TestSignatureCheck_MultiSignatureSuccess(string signatures)
+        {
+            var connectionContext = new WebPubSubConnectionContext(
+                WebPubSubEventType.System,
+                null, null, "0f9c97a2f0bf4706afe87a14e0797b11",
+                signature: signatures,
+                origin: TestUri.Host);
+            var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint={TestUri};Version=1.0;") }));
+            var result = validator.IsValidSignature(connectionContext);
+            Assert.True(result);
+        }
+
         [TestCase("OPTIONS", true)]
         [TestCase("DELETE", false)]
-        public void TestAbuseProtection(string httpMethod, bool valid)
+        [TestCase("OPTIONS", true, true)]
+        public void TestAbuseProtection(string httpMethod, bool valid, bool multiDomains = false)
         {
-            var context = PrepareHttpContext(TestUri, WebPubSubEventType.System, Constants.Events.ConnectEvent, httpMethod: httpMethod);
+            var context = PrepareHttpContext(TestUri, WebPubSubEventType.System, Constants.Events.ConnectEvent, httpMethod: httpMethod, multiDomains: multiDomains);
 
             var result = context.Request.IsPreflightRequest(out var requestHosts);
 
@@ -266,6 +286,14 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             {
                 Assert.NotNull(requestHosts);
                 Assert.AreEqual(TestUri.Host, requestHosts[0]);
+                if (multiDomains)
+                {
+                    Assert.AreEqual(2, requestHosts.Count);
+                }
+                else
+                {
+                    Assert.AreEqual(1, requestHosts.Count);
+                }
             }
         }
 
@@ -275,7 +303,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
         [TestCase("http://localhost", false)]
         public void TestAbuseProtectionCompare(string requestHost, bool expected)
         {
-            var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new ServiceEndpoint($"Endpoint=https://my-host.com;AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;") }));
+            var validator = new RequestValidator(Options.Create(new WebPubSubOptions { ServiceEndpoint = new WebPubSubServiceEndpoint($"Endpoint=https://my-host.com;AccessKey=7aab239577fd4f24bc919802fb629f5f;Version=1.0;") }));
 
             Assert.AreEqual(expected, validator.IsValidOrigin(new List<string> { requestHost }));
         }
@@ -290,7 +318,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             string httpMethod = "POST",
             string userId = "testuser",
             string body = null,
-            string contentType = Constants.ContentTypes.PlainTextContentType)
+            string contentType = Constants.ContentTypes.PlainTextContentType,
+            bool multiDomains = false)
         {
             var context = new DefaultHttpContext();
             var services = new ServiceCollection();
@@ -318,7 +347,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests
             if (!string.IsNullOrEmpty(uri.Host))
             {
                 headers.Add("Host", uri.Host);
-                headers.Add(Constants.Headers.WebHookRequestOrigin, uri.Host);
+                var origins = uri.Host;
+                if (multiDomains)
+                {
+                    origins += ", custom.domain.com";
+                }
+                headers.Add(Constants.Headers.WebHookRequestOrigin, origins);
             }
 
             if (userId != null)

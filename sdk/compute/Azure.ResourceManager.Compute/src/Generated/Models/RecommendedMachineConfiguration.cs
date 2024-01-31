@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The properties describe the recommended machine configuration for this Image Definition. These properties are updatable. </summary>
     public partial class RecommendedMachineConfiguration
     {
-        /// <summary> Initializes a new instance of RecommendedMachineConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RecommendedMachineConfiguration"/>. </summary>
         public RecommendedMachineConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of RecommendedMachineConfiguration. </summary>
-        /// <param name="vcpUs"> Describes the resource range. </param>
+        /// <summary> Initializes a new instance of <see cref="RecommendedMachineConfiguration"/>. </summary>
+        /// <param name="vCpus"> Describes the resource range. </param>
         /// <param name="memory"> Describes the resource range. </param>
-        internal RecommendedMachineConfiguration(ResourceRange vcpUs, ResourceRange memory)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecommendedMachineConfiguration(ResourceRange vCpus, ResourceRange memory, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            VCPUs = vcpUs;
+            VCpus = vCpus;
             Memory = memory;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Describes the resource range. </summary>
-        public ResourceRange VCPUs { get; set; }
+        public ResourceRange VCpus { get; set; }
         /// <summary> Describes the resource range. </summary>
         public ResourceRange Memory { get; set; }
     }

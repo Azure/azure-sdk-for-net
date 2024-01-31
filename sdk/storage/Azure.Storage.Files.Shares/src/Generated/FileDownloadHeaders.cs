@@ -26,17 +26,17 @@ namespace Azure.Storage.Files.Shares
         public IDictionary<string, string> Metadata => _response.Headers.TryGetValue("x-ms-meta-", out IDictionary<string, string> value) ? value : null;
         /// <summary> The number of bytes present in the response body. </summary>
         public long? ContentLength => _response.Headers.TryGetValue("Content-Length", out long? value) ? value : null;
-        /// <summary> The content type specified for the file. The default content type is &apos;application/octet-stream&apos;. </summary>
+        /// <summary> The content type specified for the file. The default content type is 'application/octet-stream'. </summary>
         public string ContentType => _response.Headers.TryGetValue("Content-Type", out string value) ? value : null;
         /// <summary> Indicates the range of bytes returned if the client requested a subset of the file by setting the Range request header. </summary>
         public string ContentRange => _response.Headers.TryGetValue("Content-Range", out string value) ? value : null;
-        /// <summary> If the file has an MD5 hash and the request is to read the full file, this response header is returned so that the client can check for message content integrity. If the request is to read a specified range and the &apos;x-ms-range-get-content-md5&apos; is set to true, then the request returns an MD5 hash for the range, as long as the range size is less than or equal to 4 MB. If neither of these sets of conditions is true, then no value is returned for the &apos;Content-MD5&apos; header. </summary>
+        /// <summary> If the file has an MD5 hash and the request is to read the full file, this response header is returned so that the client can check for message content integrity. If the request is to read a specified range and the 'x-ms-range-get-content-md5' is set to true, then the request returns an MD5 hash for the range, as long as the range size is less than or equal to 4 MB. If neither of these sets of conditions is true, then no value is returned for the 'Content-MD5' header. </summary>
         public byte[] ContentMD5 => _response.Headers.TryGetValue("Content-MD5", out byte[] value) ? value : null;
         /// <summary> Returns the value that was specified for the Content-Encoding request header. </summary>
         public string ContentEncoding => _response.Headers.TryGetValue("Content-Encoding", out string value) ? value : null;
         /// <summary> Returned if it was previously specified for the file. </summary>
         public string CacheControl => _response.Headers.TryGetValue("Cache-Control", out string value) ? value : null;
-        /// <summary> Returns the value that was specified for the &apos;x-ms-content-disposition&apos; header and specifies how to process the response. </summary>
+        /// <summary> Returns the value that was specified for the 'x-ms-content-disposition' header and specifies how to process the response. </summary>
         public string ContentDisposition => _response.Headers.TryGetValue("Content-Disposition", out string value) ? value : null;
         /// <summary> Returns the value that was specified for the Content-Language request header. </summary>
         public string ContentLanguage => _response.Headers.TryGetValue("Content-Language", out string value) ? value : null;
@@ -54,9 +54,9 @@ namespace Azure.Storage.Files.Shares
         public string CopyProgress => _response.Headers.TryGetValue("x-ms-copy-progress", out string value) ? value : null;
         /// <summary> URL up to 2KB in length that specifies the source file used in the last attempted Copy File operation where this file was the destination file. </summary>
         public string CopySource => _response.Headers.TryGetValue("x-ms-copy-source", out string value) ? value : null;
-        /// <summary> State of the copy operation identified by &apos;x-ms-copy-id&apos;. </summary>
+        /// <summary> State of the copy operation identified by 'x-ms-copy-id'. </summary>
         public CopyStatus? CopyStatus => _response.Headers.TryGetValue("x-ms-copy-status", out string value) ? value.ToCopyStatus() : null;
-        /// <summary> If the file has a MD5 hash, and if request contains range header (Range or x-ms-range), this response header is returned with the value of the whole file&apos;s MD5 value. This value may or may not be equal to the value returned in Content-MD5 header, with the latter calculated from the requested range. </summary>
+        /// <summary> If the file has a MD5 hash, and if request contains range header (Range or x-ms-range), this response header is returned with the value of the whole file's MD5 value. This value may or may not be equal to the value returned in Content-MD5 header, with the latter calculated from the requested range. </summary>
         public byte[] FileContentMD5 => _response.Headers.TryGetValue("x-ms-content-md5", out byte[] value) ? value : null;
         /// <summary> The value of this header is set to true if the file data and application metadata are completely encrypted using the specified algorithm. Otherwise, the value is set to false (when the file is unencrypted, or if only parts of the file/application metadata are encrypted). </summary>
         public bool? IsServerEncrypted => _response.Headers.TryGetValue("x-ms-server-encrypted", out bool? value) ? value : null;

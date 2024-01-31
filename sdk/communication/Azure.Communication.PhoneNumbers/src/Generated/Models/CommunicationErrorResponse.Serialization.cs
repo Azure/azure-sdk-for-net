@@ -6,24 +6,10 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
     internal partial class CommunicationErrorResponse
     {
-        internal static CommunicationErrorResponse DeserializeCommunicationErrorResponse(JsonElement element)
-        {
-            CommunicationError error = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("error"))
-                {
-                    error = CommunicationError.DeserializeCommunicationError(property.Value);
-                    continue;
-                }
-            }
-            return new CommunicationErrorResponse(error);
-        }
     }
 }

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
 using System;
 using System.Net.Sockets;
 using System.Threading.Tasks;

@@ -41,9 +41,11 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// keys:
         /// rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value
         /// etc.</param>
-        /// <param name="redisVersion">Redis version. Only major version will
-        /// be used in PUT/PATCH request with current valid values: (4,
-        /// 6)</param>
+        /// <param name="redisVersion">Redis version. This should be in the
+        /// form 'major[.minor]' (only 'major' is required) or the value
+        /// 'latest' which refers to the latest stable Redis version that is
+        /// available. Supported versions: 4.0, 6.0 (latest). Default value is
+        /// 'latest'.</param>
         /// <param name="enableNonSslPort">Specifies whether the non-ssl Redis
         /// server port (6379) is enabled.</param>
         /// <param name="replicasPerMaster">The number of replicas to be
@@ -107,8 +109,10 @@ namespace Microsoft.Azure.Management.Redis.Models
         public RedisCommonPropertiesRedisConfiguration RedisConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets redis version. Only major version will be used in
-        /// PUT/PATCH request with current valid values: (4, 6)
+        /// Gets or sets redis version. This should be in the form
+        /// 'major[.minor]' (only 'major' is required) or the value 'latest'
+        /// which refers to the latest stable Redis version that is available.
+        /// Supported versions: 4.0, 6.0 (latest). Default value is 'latest'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.redisVersion")]
         public string RedisVersion { get; set; }

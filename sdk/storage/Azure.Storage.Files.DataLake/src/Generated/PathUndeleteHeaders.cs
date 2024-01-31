@@ -17,7 +17,7 @@ namespace Azure.Storage.Files.DataLake
         {
             _response = response;
         }
-        /// <summary> The type of the resource.  The value may be &quot;file&quot; or &quot;directory&quot;.  If not set, the value is &quot;file&quot;. </summary>
+        /// <summary> The type of the resource.  The value may be "file" or "directory".  If not set, the value is "file". </summary>
         public string ResourceType => _response.Headers.TryGetValue("x-ms-resource-type", out string value) ? value : null;
         /// <summary> Indicates the version of the Blob service used to execute the request. This header is returned for requests made against version 2009-09-19 and above. </summary>
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;

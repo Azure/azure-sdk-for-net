@@ -5,32 +5,73 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns.Models
 {
     /// <summary> Represents a single Azure resource and its referencing DNS records. </summary>
     public partial class DnsResourceReference
     {
-        /// <summary> Initializes a new instance of DnsResourceReference. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DnsResourceReference"/>. </summary>
         internal DnsResourceReference()
         {
-            DnsResources = new ChangeTrackingList<SubResource>();
+            DnsResources = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of DnsResourceReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResourceReference"/>. </summary>
         /// <param name="dnsResources"> A list of dns Records. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
-        internal DnsResourceReference(IReadOnlyList<SubResource> dnsResources, SubResource targetResource)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DnsResourceReference(IReadOnlyList<WritableSubResource> dnsResources, WritableSubResource targetResource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DnsResources = dnsResources;
             TargetResource = targetResource;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A list of dns Records. </summary>
-        public IReadOnlyList<SubResource> DnsResources { get; }
+        public IReadOnlyList<WritableSubResource> DnsResources { get; }
         /// <summary> A reference to an azure resource from where the dns resource value is taken. </summary>
-        public SubResource TargetResource { get; }
+        internal WritableSubResource TargetResource { get; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier TargetResourceId
+        {
+            get => TargetResource?.Id;
+        }
     }
 }

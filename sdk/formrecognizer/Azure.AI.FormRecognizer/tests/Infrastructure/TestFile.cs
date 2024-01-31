@@ -4,13 +4,13 @@
 namespace Azure.AI.FormRecognizer.Tests
 {
     /// <summary>
-    /// A static class that lumps together the filenames of all forms to be used for tests.
-    /// A single constant string must be added to this class for each new form added to the
+    /// A static class that lumps together the filenames of all documents to be used for tests.
+    /// A single constant string must be added to this class for each new document added to the
     /// test assets folder.
     /// </summary>
     public static class TestFile
     {
-        /// <summary>A single-page blank form.</summary>
+        /// <summary>A single-page blank document.</summary>
         public const string Blank = "blank.pdf";
 
         /// <summary>A driver's license.</summary>
@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Tests
         public const string ReceiptPng = "contoso-allinone.png";
 
         /// <summary>A file with multiple receipts, one per page.</summary>
-        public const string ReceipMultipage = "multipleReceipt.pdf";
+        public const string ReceiptMultipage = "multipleReceipt.pdf";
 
         /// <summary>A three-page receipt file in which the second page is blank.</summary>
         public const string ReceipMultipageWithBlankPage = "multipageReceiptBlankPage.pdf";
@@ -66,5 +66,8 @@ namespace Azure.AI.FormRecognizer.Tests
 
         /// <summary>A form with a table that has fixed rows and empty cells.</summary>
         public const string FormTableFixedRows = "label_table_fixed_rows1.pdf";
+
+        /// <summary>A set of IRS-1040 forms to test document classifiers.</summary>
+        public const string Irs1040 = "IRS-1040_2.pdf";
     }
 }

@@ -17,32 +17,32 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Encoding))
             {
-                writer.WritePropertyName("encoding");
+                writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());
             }
             if (Optional.IsDefined(Quality))
             {
-                writer.WritePropertyName("quality");
+                writer.WritePropertyName("quality"u8);
                 writer.WriteNumberValue(Quality.Value);
             }
             if (Optional.IsDefined(Resolution))
             {
-                writer.WritePropertyName("resolution");
+                writer.WritePropertyName("resolution"u8);
                 writer.WriteObjectValue(Resolution);
             }
             if (Optional.IsDefined(RateControl))
             {
-                writer.WritePropertyName("rateControl");
+                writer.WritePropertyName("rateControl"u8);
                 writer.WriteObjectValue(RateControl);
             }
             if (Optional.IsDefined(H264))
             {
-                writer.WritePropertyName("h264");
+                writer.WritePropertyName("h264"u8);
                 writer.WriteObjectValue(H264);
             }
             if (Optional.IsDefined(Mpeg4))
             {
-                writer.WritePropertyName("mpeg4");
+                writer.WritePropertyName("mpeg4"u8);
                 writer.WriteObjectValue(Mpeg4);
             }
             writer.WriteEndObject();
@@ -50,6 +50,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static VideoEncoderConfiguration DeserializeVideoEncoderConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VideoEncoding> encoding = default;
             Optional<float> quality = default;
             Optional<VideoResolution> resolution = default;
@@ -58,61 +62,55 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Optional<Mpeg4Configuration> mpeg4 = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("encoding"))
+                if (property.NameEquals("encoding"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encoding = new VideoEncoding(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("quality"))
+                if (property.NameEquals("quality"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     quality = property.Value.GetSingle();
                     continue;
                 }
-                if (property.NameEquals("resolution"))
+                if (property.NameEquals("resolution"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resolution = VideoResolution.DeserializeVideoResolution(property.Value);
                     continue;
                 }
-                if (property.NameEquals("rateControl"))
+                if (property.NameEquals("rateControl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rateControl = RateControl.DeserializeRateControl(property.Value);
                     continue;
                 }
-                if (property.NameEquals("h264"))
+                if (property.NameEquals("h264"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     h264 = H264Configuration.DeserializeH264Configuration(property.Value);
                     continue;
                 }
-                if (property.NameEquals("mpeg4"))
+                if (property.NameEquals("mpeg4"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mpeg4 = Mpeg4Configuration.DeserializeMpeg4Configuration(property.Value);

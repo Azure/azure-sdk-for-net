@@ -5,44 +5,132 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    /// <summary> A class representing the DataCollectionRule data model. </summary>
+    /// <summary>
+    /// A class representing the DataCollectionRule data model.
+    /// Definition of ARM tracked top level resource.
+    /// </summary>
     public partial class DataCollectionRuleData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DataCollectionRuleData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DataCollectionRuleData(AzureLocation location) : base(location)
         {
+            StreamDeclarations = new ChangeTrackingDictionary<string, DataStreamDeclaration>();
+            DataFlows = new ChangeTrackingList<DataFlow>();
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> Resource properties. </param>
         /// <param name="kind"> The kind of the resource. </param>
+        /// <param name="identity"> Managed service identity of the resource. </param>
         /// <param name="etag"> Resource entity tag (ETag). </param>
-        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionRuleProperties properties, KnownDataCollectionRuleResourceKind? kind, string etag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="description"> Description of the data collection rule. </param>
+        /// <param name="immutableId"> The immutable ID of this data collection rule. This property is READ-ONLY. </param>
+        /// <param name="dataCollectionEndpointId"> The resource ID of the data collection endpoint that this rule can be used with. </param>
+        /// <param name="metadata"> Metadata about the resource. </param>
+        /// <param name="streamDeclarations"> Declaration of custom streams used in this rule. </param>
+        /// <param name="dataSources">
+        /// The specification of data sources.
+        /// This property is optional and can be omitted if the rule is meant to be used via direct calls to the provisioned endpoint.
+        /// </param>
+        /// <param name="destinations"> The specification of destinations. </param>
+        /// <param name="dataFlows"> The specification of data flows. </param>
+        /// <param name="provisioningState"> The resource provisioning state. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionRuleResourceKind? kind, ManagedServiceIdentity identity, ETag? etag, string description, string immutableId, ResourceIdentifier dataCollectionEndpointId, DataCollectionRuleMetadata metadata, IDictionary<string, DataStreamDeclaration> streamDeclarations, DataCollectionRuleDataSources dataSources, DataCollectionRuleDestinations destinations, IList<DataFlow> dataFlows, DataCollectionRuleProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Properties = properties;
             Kind = kind;
-            Etag = etag;
+            Identity = identity;
+            ETag = etag;
+            Description = description;
+            ImmutableId = immutableId;
+            DataCollectionEndpointId = dataCollectionEndpointId;
+            Metadata = metadata;
+            StreamDeclarations = streamDeclarations;
+            DataSources = dataSources;
+            Destinations = destinations;
+            DataFlows = dataFlows;
+            ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource properties. </summary>
-        public DataCollectionRuleProperties Properties { get; set; }
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleData"/> for deserialization. </summary>
+        internal DataCollectionRuleData()
+        {
+        }
+
         /// <summary> The kind of the resource. </summary>
-        public KnownDataCollectionRuleResourceKind? Kind { get; set; }
+        public DataCollectionRuleResourceKind? Kind { get; set; }
+        /// <summary> Managed service identity of the resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource entity tag (ETag). </summary>
-        public string Etag { get; }
+        public ETag? ETag { get; }
+        /// <summary> Description of the data collection rule. </summary>
+        public string Description { get; set; }
+        /// <summary> The immutable ID of this data collection rule. This property is READ-ONLY. </summary>
+        public string ImmutableId { get; }
+        /// <summary> The resource ID of the data collection endpoint that this rule can be used with. </summary>
+        public ResourceIdentifier DataCollectionEndpointId { get; set; }
+        /// <summary> Metadata about the resource. </summary>
+        public DataCollectionRuleMetadata Metadata { get; }
+        /// <summary> Declaration of custom streams used in this rule. </summary>
+        public IDictionary<string, DataStreamDeclaration> StreamDeclarations { get; }
+        /// <summary>
+        /// The specification of data sources.
+        /// This property is optional and can be omitted if the rule is meant to be used via direct calls to the provisioned endpoint.
+        /// </summary>
+        public DataCollectionRuleDataSources DataSources { get; set; }
+        /// <summary> The specification of destinations. </summary>
+        public DataCollectionRuleDestinations Destinations { get; set; }
+        /// <summary> The specification of data flows. </summary>
+        public IList<DataFlow> DataFlows { get; }
+        /// <summary> The resource provisioning state. </summary>
+        public DataCollectionRuleProvisioningState? ProvisioningState { get; }
     }
 }

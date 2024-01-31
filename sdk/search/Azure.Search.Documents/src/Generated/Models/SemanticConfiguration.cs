@@ -6,26 +6,21 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> Defines a specific configuration to be used in the context of semantic capabilities. </summary>
     public partial class SemanticConfiguration
     {
-        /// <summary> Initializes a new instance of SemanticConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SemanticConfiguration"/>. </summary>
         /// <param name="name"> The name of the semantic configuration. </param>
         /// <param name="prioritizedFields"> Describes the title, content, and keyword fields to be used for semantic ranking, captions, highlights, and answers. At least one of the three sub properties (titleField, prioritizedKeywordsFields and prioritizedContentFields) need to be set. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="prioritizedFields"/> is null. </exception>
-        public SemanticConfiguration(string name, PrioritizedFields prioritizedFields)
+        public SemanticConfiguration(string name, SemanticPrioritizedFields prioritizedFields)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (prioritizedFields == null)
-            {
-                throw new ArgumentNullException(nameof(prioritizedFields));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(prioritizedFields, nameof(prioritizedFields));
 
             Name = name;
             PrioritizedFields = prioritizedFields;
@@ -34,6 +29,6 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> The name of the semantic configuration. </summary>
         public string Name { get; set; }
         /// <summary> Describes the title, content, and keyword fields to be used for semantic ranking, captions, highlights, and answers. At least one of the three sub properties (titleField, prioritizedKeywordsFields and prioritizedContentFields) need to be set. </summary>
-        public PrioritizedFields PrioritizedFields { get; set; }
+        public SemanticPrioritizedFields PrioritizedFields { get; set; }
     }
 }

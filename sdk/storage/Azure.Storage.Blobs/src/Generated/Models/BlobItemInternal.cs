@@ -14,7 +14,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> An Azure Storage blob. </summary>
     internal partial class BlobItemInternal
     {
-        /// <summary> Initializes a new instance of BlobItemInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobItemInternal"/>. </summary>
         /// <param name="name"></param>
         /// <param name="deleted"></param>
         /// <param name="snapshot"></param>
@@ -22,18 +22,9 @@ namespace Azure.Storage.Blobs.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="snapshot"/> or <paramref name="properties"/> is null. </exception>
         internal BlobItemInternal(BlobName name, bool deleted, string snapshot, BlobPropertiesInternal properties)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (snapshot == null)
-            {
-                throw new ArgumentNullException(nameof(snapshot));
-            }
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(snapshot, nameof(snapshot));
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Name = name;
             Deleted = deleted;
@@ -43,7 +34,7 @@ namespace Azure.Storage.Blobs.Models
             OrMetadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of BlobItemInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobItemInternal"/>. </summary>
         /// <param name="name"></param>
         /// <param name="deleted"></param>
         /// <param name="snapshot"></param>

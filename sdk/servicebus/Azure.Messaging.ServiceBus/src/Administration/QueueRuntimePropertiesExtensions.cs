@@ -12,7 +12,7 @@ namespace Azure.Messaging.ServiceBus.Administration
 {
     internal static class QueueRuntimePropertiesExtensions
     {
-        public static async Task<QueueRuntimeProperties> ParseResponseAsync(Response response, ClientDiagnostics diagnostics)
+        public static async Task<QueueRuntimeProperties> ParseResponseAsync(Response response)
         {
             try
             {
@@ -22,7 +22,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 {
                     if (xDoc.Name.LocalName == "entry")
                     {
-                        return await ParseFromEntryElementAsync(xDoc, response, diagnostics).ConfigureAwait(false);
+                        return ParseFromEntryElement(xDoc, response);
                     }
                 }
             }
@@ -34,10 +34,10 @@ namespace Azure.Messaging.ServiceBus.Administration
             throw new ServiceBusException(
                 "Queue was not found",
                 ServiceBusFailureReason.MessagingEntityNotFound,
-                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                innerException: new RequestFailedException(response));
         }
 
-        private static async Task<QueueRuntimeProperties> ParseFromEntryElementAsync(XElement xEntry, Response response, ClientDiagnostics diagnostics)
+        private static QueueRuntimeProperties ParseFromEntryElement(XElement xEntry, Response response)
         {
             var name = xEntry.Element(XName.Get("title", AdministrationClientConstants.AtomNamespace)).Value;
             var qRuntime = new QueueRuntimeProperties(name);
@@ -50,7 +50,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 throw new ServiceBusException(
                     "Queue was not found",
                     ServiceBusFailureReason.MessagingEntityNotFound,
-                    innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                    innerException: new RequestFailedException(response));
             }
 
             foreach (var element in qdXml.Elements())
@@ -101,7 +101,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return qRuntime;
         }
 
-        public static async Task<List<QueueRuntimeProperties>> ParsePagedResponseAsync(Response response, ClientDiagnostics diagnostics)
+        public static async Task<List<QueueRuntimeProperties>> ParsePagedResponseAsync(Response response)
         {
             try
             {
@@ -116,7 +116,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                         var entryList = xDoc.Elements(XName.Get("entry", AdministrationClientConstants.AtomNamespace));
                         foreach (var entry in entryList)
                         {
-                            queueList.Add(await ParseFromEntryElementAsync(entry, response, diagnostics).ConfigureAwait(false));
+                            queueList.Add(ParseFromEntryElement(entry, response));
                         }
 
                         return queueList;
@@ -131,7 +131,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             throw new ServiceBusException(
                 "No queues were found",
                 ServiceBusFailureReason.MessagingEntityNotFound,
-                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                innerException: new RequestFailedException(response));
         }
     }
 }

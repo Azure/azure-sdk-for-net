@@ -3371,5 +3371,58 @@ namespace DataFactory.Tests.JsonSamples
         }
     }
 }";
+        [JsonSample]
+        public const string DataworldLinkedService = @"
+{
+    name: ""LinkedService-Dataworld"",
+    properties:
+    {
+        type: ""Dataworld"",
+        typeProperties: {
+            apiToken: {
+                value : ""fakeApiToken"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
+        [JsonSample]
+        public const string RestLinkedServiceOAuth2 = @"
+{
+    name: ""LinkedService-Rest"",
+    properties:
+    {
+        type: ""RestService"",
+        typeProperties: {
+            url: ""http://example.com"",
+            enableServerCertificateValidation: true,
+            authenticationType: ""OAuth2ClientCredential"",
+            clientId: ""fakeClientId"",
+            clientSecret: {
+                type: ""SecureString"",
+                value: ""somesecretClientSecret""
+            },
+            tokenEndpoint: ""fakeTokenEndpoint"",
+            resource: ""fakeResource"",
+            scope: ""fakeScope""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string GoogleSheetsLinkedService = @"
+{
+    name: ""LinkedService-GoogleSheets"",
+    properties:
+    {
+        type: ""GoogleSheets"",
+        typeProperties: {
+            apiToken: {
+                value : ""fakeApiToken"",
+                type : ""SecureString""
+            }
+        }
+    }
+}";
     }
 }

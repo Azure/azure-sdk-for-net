@@ -1,0 +1,27 @@
+matrix:
+  scenarios:
+    sendrec:
+      scenarioName: "SendRec"
+      parallel: 2
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+    sendrecbatch:
+      scenarioName: "SendRecBatch"
+      parallel: 2
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+    sesssendrec:
+      scenarioName: "SessionSendRec"
+      parallel: 2
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+    sesssendproc:
+      scenarioName: "SessionSendProc"
+      parallel: 2
+      image: Dockerfile
+      imageBuildDir: "../../../.."
+    sendproc:
+      scenarioName: "SendProc"
+      parallel: 2
+      image: Dockerfile
+      imageBuildDir: "../../../.."

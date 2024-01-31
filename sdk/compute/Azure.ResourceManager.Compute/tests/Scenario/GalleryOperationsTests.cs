@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Compute.Tests.Helpers;
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Tests
             var name = Recording.GenerateAssetName("testGallery_");
             var gallery = await CreateGalleryAsync(name);
             var description = "This is a gallery for test";
-            var update = new PatchableGalleryData()
+            var update = new GalleryPatch()
             {
                 Description = description
             };
@@ -66,10 +67,14 @@ namespace Azure.ResourceManager.Compute.Tests
             Assert.AreEqual(description, updatedGallery.Data.Description);
         }
 
-        [TestCase]
         [RecordedTest]
-        public async Task SetTags()
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/36714")]
+        public async Task SetTags(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             var name = Recording.GenerateAssetName("testGallery_");
             var gallery = await CreateGalleryAsync(name);
             var tags = new Dictionary<string, string>()
@@ -79,6 +84,31 @@ namespace Azure.ResourceManager.Compute.Tests
             GalleryResource updatedGallery = await gallery.SetTagsAsync(tags);
 
             Assert.AreEqual(tags, updatedGallery.Data.Tags);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task CreateGallerywithPublisherUri()
+        {
+            _resourceGroup = await CreateResourceGroupAsync();
+            var collection = _resourceGroup.GetGalleries();
+            var name = Recording.GenerateAssetName("galleryName");
+            var input = new GalleryData(AzureLocation.EastUS)
+            {
+                SharingProfile = new SharingProfile()
+                {
+                    Permission = GallerySharingPermissionType.Community,
+                    CommunityGalleryInfo = new CommunityGalleryInfo()
+                    {
+                        PublisherUriString = "www.gallerytestxxx.com",
+                        PublisherContact = "gallerytest@163.com",
+                        PublicNamePrefix = "gallerytest",
+                    }
+                }
+            };
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
+            var gallery = lro.Value;
+            Assert.AreEqual(gallery.Data.Name, name);
         }
     }
 }

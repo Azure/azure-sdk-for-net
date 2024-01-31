@@ -34,11 +34,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the CapacityReservationUtilization
         /// class.
         /// </summary>
+        /// <param name="currentCapacity">The value provides the current
+        /// capacity of the VM size which was reserved successfully and for
+        /// which the customer is getting billed. Minimum api-version:
+        /// 2022-08-01.</param>
         /// <param name="virtualMachinesAllocated">A list of all virtual
         /// machines resource ids allocated against the capacity
         /// reservation.</param>
-        public CapacityReservationUtilization(IList<SubResourceReadOnly> virtualMachinesAllocated = default(IList<SubResourceReadOnly>))
+        public CapacityReservationUtilization(int? currentCapacity = default(int?), IList<SubResourceReadOnly> virtualMachinesAllocated = default(IList<SubResourceReadOnly>))
         {
+            CurrentCapacity = currentCapacity;
             VirtualMachinesAllocated = virtualMachinesAllocated;
             CustomInit();
         }
@@ -47,6 +52,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets the value provides the current capacity of the VM size which
+        /// was reserved successfully and for which the customer is getting
+        /// billed. Minimum api-version: 2022-08-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "currentCapacity")]
+        public int? CurrentCapacity { get; private set; }
 
         /// <summary>
         /// Gets a list of all virtual machines resource ids allocated against

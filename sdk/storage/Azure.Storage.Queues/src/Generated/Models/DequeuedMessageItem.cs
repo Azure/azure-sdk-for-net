@@ -6,13 +6,14 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
     /// <summary> The object returned in the QueueMessageList array when calling Get Messages on a Queue. </summary>
     internal partial class DequeuedMessageItem
     {
-        /// <summary> Initializes a new instance of DequeuedMessageItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DequeuedMessageItem"/>. </summary>
         /// <param name="messageId"> The Id of the Message. </param>
         /// <param name="insertionTime"> The time the Message was inserted into the Queue. </param>
         /// <param name="expirationTime"> The time that the Message will expire and be automatically deleted. </param>
@@ -23,18 +24,9 @@ namespace Azure.Storage.Queues.Models
         /// <exception cref="ArgumentNullException"> <paramref name="messageId"/>, <paramref name="popReceipt"/> or <paramref name="messageText"/> is null. </exception>
         internal DequeuedMessageItem(string messageId, DateTimeOffset insertionTime, DateTimeOffset expirationTime, string popReceipt, DateTimeOffset timeNextVisible, long dequeueCount, string messageText)
         {
-            if (messageId == null)
-            {
-                throw new ArgumentNullException(nameof(messageId));
-            }
-            if (popReceipt == null)
-            {
-                throw new ArgumentNullException(nameof(popReceipt));
-            }
-            if (messageText == null)
-            {
-                throw new ArgumentNullException(nameof(messageText));
-            }
+            Argument.AssertNotNull(messageId, nameof(messageId));
+            Argument.AssertNotNull(popReceipt, nameof(popReceipt));
+            Argument.AssertNotNull(messageText, nameof(messageText));
 
             MessageId = messageId;
             InsertionTime = insertionTime;

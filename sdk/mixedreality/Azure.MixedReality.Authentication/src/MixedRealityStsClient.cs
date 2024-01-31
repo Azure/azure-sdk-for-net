@@ -14,6 +14,12 @@ namespace Azure.MixedReality.Authentication
     /// </summary>
     public class MixedRealityStsClient
     {
+        /// <summary>
+        /// The token request scope.
+        /// See https://docs.microsoft.com/azure/spatial-anchors/concepts/authentication.
+        /// </summary>
+        private const string TokenRequestScope = "https://sts.mixedreality.azure.com//.default";
+
         private readonly ClientDiagnostics _clientDiagnostics;
 
         private readonly HttpPipeline _pipeline;
@@ -78,7 +84,7 @@ namespace Azure.MixedReality.Authentication
             AccountId = accountId;
             Endpoint = endpoint;
             _clientDiagnostics = new ClientDiagnostics(options);
-            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, GetDefaultScope(endpoint)));
+            _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, TokenRequestScope));
             _restClient = new MixedRealityStsRestClient(_clientDiagnostics, _pipeline, endpoint, options.Version);
         }
 
@@ -106,7 +112,6 @@ namespace Azure.MixedReality.Authentication
             MixedRealityTokenRequestOptions headerOptions = MixedRealityTokenRequestOptions.GenerateNew();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MixedRealityStsClient)}.{nameof(GetToken)}");
-            scope.AddAttribute(nameof(headerOptions.ClientRequestId), headerOptions.ClientRequestId);
             scope.Start();
 
             try
@@ -132,7 +137,6 @@ namespace Azure.MixedReality.Authentication
             MixedRealityTokenRequestOptions headerOptions = MixedRealityTokenRequestOptions.GenerateNew();
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(MixedRealityStsClient)}.{nameof(GetToken)}");
-            scope.AddAttribute(nameof(headerOptions.ClientRequestId), headerOptions.ClientRequestId);
             scope.Start();
 
             try
@@ -147,8 +151,5 @@ namespace Azure.MixedReality.Authentication
                 throw;
             }
         }
-
-        private static string GetDefaultScope(Uri uri)
-            => $"{uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped)}/.default";
     }
 }

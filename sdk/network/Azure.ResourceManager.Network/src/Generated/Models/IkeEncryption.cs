@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.Network.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string DESValue = "DES";
-        private const string DES3Value = "DES3";
-        private const string AES128Value = "AES128";
-        private const string AES192Value = "AES192";
-        private const string AES256Value = "AES256";
-        private const string Gcmaes256Value = "GCMAES256";
-        private const string Gcmaes128Value = "GCMAES128";
+        private const string DesValue = "DES";
+        private const string Des3Value = "DES3";
+        private const string Aes128Value = "AES128";
+        private const string Aes192Value = "AES192";
+        private const string Aes256Value = "AES256";
+        private const string GcmAes256Value = "GCMAES256";
+        private const string GcmAes128Value = "GCMAES128";
 
         /// <summary> DES. </summary>
-        public static IkeEncryption DES { get; } = new IkeEncryption(DESValue);
+        public static IkeEncryption Des { get; } = new IkeEncryption(DesValue);
         /// <summary> DES3. </summary>
-        public static IkeEncryption DES3 { get; } = new IkeEncryption(DES3Value);
+        public static IkeEncryption Des3 { get; } = new IkeEncryption(Des3Value);
         /// <summary> AES128. </summary>
-        public static IkeEncryption AES128 { get; } = new IkeEncryption(AES128Value);
+        public static IkeEncryption Aes128 { get; } = new IkeEncryption(Aes128Value);
         /// <summary> AES192. </summary>
-        public static IkeEncryption AES192 { get; } = new IkeEncryption(AES192Value);
+        public static IkeEncryption Aes192 { get; } = new IkeEncryption(Aes192Value);
         /// <summary> AES256. </summary>
-        public static IkeEncryption AES256 { get; } = new IkeEncryption(AES256Value);
+        public static IkeEncryption Aes256 { get; } = new IkeEncryption(Aes256Value);
         /// <summary> GCMAES256. </summary>
-        public static IkeEncryption Gcmaes256 { get; } = new IkeEncryption(Gcmaes256Value);
+        public static IkeEncryption GcmAes256 { get; } = new IkeEncryption(GcmAes256Value);
         /// <summary> GCMAES128. </summary>
-        public static IkeEncryption Gcmaes128 { get; } = new IkeEncryption(Gcmaes128Value);
+        public static IkeEncryption GcmAes128 { get; } = new IkeEncryption(GcmAes128Value);
         /// <summary> Determines if two <see cref="IkeEncryption"/> values are the same. </summary>
         public static bool operator ==(IkeEncryption left, IkeEncryption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="IkeEncryption"/> values are not the same. </summary>

@@ -13,11 +13,17 @@ using NUnit.Framework;
 namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
-        KeyClientOptions.ServiceVersion.V7_0,
-        KeyClientOptions.ServiceVersion.V7_1,
+        KeyClientOptions.ServiceVersion.V7_5_Preview_1,
+        KeyClientOptions.ServiceVersion.V7_4,
+        KeyClientOptions.ServiceVersion.V7_3,
         KeyClientOptions.ServiceVersion.V7_2,
-        KeyClientOptions.ServiceVersion.V7_3)]
-    [NonParallelizable]
+        KeyClientOptions.ServiceVersion.V7_1,
+        KeyClientOptions.ServiceVersion.V7_0)]
+    [IgnoreServiceError(
+        409,
+        "Conflict",
+        Message = "User triggered Restore operation is in progress",
+        Reason = "Test assemblies run in parallel so a restore operation triggered by the Administration package may be in progress.")]
     public abstract class KeysTestBase : RecordedTestBase<KeyVaultTestEnvironment>
     {
         protected TimeSpan PollingInterval => Recording.Mode == RecordedTestMode.Playback

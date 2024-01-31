@@ -14,7 +14,7 @@ namespace Azure.AI.TextAnalytics
         None,
         /// <summary>
         /// Protected Health Information entities.
-        /// For more information see <see href="https://aka.ms/tanerpii"/>.
+        /// For more information, see <see href="https://aka.ms/azsdk/language/pii"/>.
         /// </summary>
         ProtectedHealthInformation
     }

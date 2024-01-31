@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.ResourceManager;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Models
 {
@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Models
     [PropertyReferenceType]
     public partial class UserAssignedIdentity
     {
-        /// <summary> Initializes a new instance of UserAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserAssignedIdentity"/>. </summary>
         [InitializationConstructor]
         public UserAssignedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of UserAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="UserAssignedIdentity"/>. </summary>
         /// <param name="principalId"> The principal ID of the assigned identity. </param>
         /// <param name="clientId"> The client ID of the assigned identity. </param>
         [SerializationConstructor]

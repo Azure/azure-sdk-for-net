@@ -17,6 +17,11 @@ namespace Azure.Communication.Chat
             Id = sendChatMessageResultInternal.Id;
         }
 
+        internal SendChatMessageResult(string id)
+        {
+            Id = id;
+        }
+
         /// <summary> A server-generated message id. </summary>
         public string Id { get; }
     }

@@ -15,14 +15,17 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static EventSchema DeserializeEventSchema(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<TimeSeriesInsightsEventProperty>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TimeSeriesInsightsEventProperty> array = new List<TimeSeriesInsightsEventProperty>();

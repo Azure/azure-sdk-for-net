@@ -17,23 +17,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Namespace))
             {
-                writer.WritePropertyName("ns");
+                writer.WritePropertyName("ns"u8);
                 writer.WriteStringValue(Namespace);
             }
-            writer.WritePropertyName("name");
+            writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (Optional.IsDefined(DataPointType))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(DataPointType.Value.ToString());
             }
-            writer.WritePropertyName("value");
+            writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
             if (Optional.IsDefined(Count))
             {
                 if (Count != null)
                 {
-                    writer.WritePropertyName("count");
+                    writer.WritePropertyName("count"u8);
                     writer.WriteNumberValue(Count.Value);
                 }
                 else
@@ -45,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 if (Min != null)
                 {
-                    writer.WritePropertyName("min");
+                    writer.WritePropertyName("min"u8);
                     writer.WriteNumberValue(Min.Value);
                 }
                 else
@@ -57,7 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 if (Max != null)
                 {
-                    writer.WritePropertyName("max");
+                    writer.WritePropertyName("max"u8);
                     writer.WriteNumberValue(Max.Value);
                 }
                 else
@@ -69,7 +69,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 if (StdDev != null)
                 {
-                    writer.WritePropertyName("stdDev");
+                    writer.WritePropertyName("stdDev"u8);
                     writer.WriteNumberValue(StdDev.Value);
                 }
                 else

@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.Security.Models
     using System.Linq;
 
     /// <summary>
-    /// Contact details for security issues
+    /// Contact details and configurations for notifications coming from
+    /// Microsoft Defender for Cloud.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class SecurityContact : Resource
@@ -32,25 +33,25 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <summary>
         /// Initializes a new instance of the SecurityContact class.
         /// </summary>
-        /// <param name="email">The email of this security contact</param>
-        /// <param name="alertNotifications">Whether to send security alerts
-        /// notifications to the security contact. Possible values include:
-        /// 'On', 'Off'</param>
-        /// <param name="alertsToAdmins">Whether to send security alerts
-        /// notifications to subscription admins. Possible values include:
-        /// 'On', 'Off'</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        /// <param name="phone">The phone number of this security
-        /// contact</param>
-        public SecurityContact(string email, string alertNotifications, string alertsToAdmins, string id = default(string), string name = default(string), string type = default(string), string phone = default(string))
+        /// <param name="emails">List of email addresses which will get
+        /// notifications from Microsoft Defender for Cloud by the
+        /// configurations defined in this security contact.</param>
+        /// <param name="phone">The security contact's phone number</param>
+        /// <param name="alertNotifications">Defines whether to send email
+        /// notifications about new security alerts</param>
+        /// <param name="notificationsByRole">Defines whether to send email
+        /// notifications from Microsoft Defender for Cloud to persons with
+        /// specific RBAC roles on the subscription.</param>
+        public SecurityContact(string id = default(string), string name = default(string), string type = default(string), string emails = default(string), string phone = default(string), SecurityContactPropertiesAlertNotifications alertNotifications = default(SecurityContactPropertiesAlertNotifications), SecurityContactPropertiesNotificationsByRole notificationsByRole = default(SecurityContactPropertiesNotificationsByRole))
             : base(id, name, type)
         {
-            Email = email;
+            Emails = emails;
             Phone = phone;
             AlertNotifications = alertNotifications;
-            AlertsToAdmins = alertsToAdmins;
+            NotificationsByRole = notificationsByRole;
             CustomInit();
         }
 
@@ -60,51 +61,33 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the email of this security contact
+        /// Gets or sets list of email addresses which will get notifications
+        /// from Microsoft Defender for Cloud by the configurations defined in
+        /// this security contact.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.email")]
-        public string Email { get; set; }
+        [JsonProperty(PropertyName = "properties.emails")]
+        public string Emails { get; set; }
 
         /// <summary>
-        /// Gets or sets the phone number of this security contact
+        /// Gets or sets the security contact's phone number
         /// </summary>
         [JsonProperty(PropertyName = "properties.phone")]
         public string Phone { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to send security alerts notifications to the
-        /// security contact. Possible values include: 'On', 'Off'
+        /// Gets or sets defines whether to send email notifications about new
+        /// security alerts
         /// </summary>
         [JsonProperty(PropertyName = "properties.alertNotifications")]
-        public string AlertNotifications { get; set; }
+        public SecurityContactPropertiesAlertNotifications AlertNotifications { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to send security alerts notifications to
-        /// subscription admins. Possible values include: 'On', 'Off'
+        /// Gets or sets defines whether to send email notifications from
+        /// Microsoft Defender for Cloud to persons with specific RBAC roles on
+        /// the subscription.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.alertsToAdmins")]
-        public string AlertsToAdmins { get; set; }
+        [JsonProperty(PropertyName = "properties.notificationsByRole")]
+        public SecurityContactPropertiesNotificationsByRole NotificationsByRole { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Email == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Email");
-            }
-            if (AlertNotifications == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AlertNotifications");
-            }
-            if (AlertsToAdmins == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AlertsToAdmins");
-            }
-        }
     }
 }

@@ -1,0 +1,40 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/devcenter/ci.yml
+    - sdk/devcenter/Azure.Developer.DevCenter/
+    - sdk/devcenter/service.projects
+    - sdk/devcenter/test-resources.bicep
+    - sdk/devcenter/tests.yml
+
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/devcenter/ci.yml
+    - sdk/devcenter/Azure.Developer.DevCenter/
+    - sdk/devcenter/service.projects
+    - sdk/devcenter/test-resources.bicep
+    - sdk/devcenter/tests.yml
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    SDKType: client 
+    ServiceDirectory: devcenter
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.Developer.DevCenter
+      safeName: AzureDeveloperDevCenter

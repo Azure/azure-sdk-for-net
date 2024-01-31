@@ -7,12 +7,27 @@
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    /// <summary> The DataSourceCredentialPatch. </summary>
+    /// <summary>
+    /// The DataSourceCredentialPatch.
+    /// Please note <see cref="DataSourceCredentialPatch"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="AzureSQLConnectionStringCredentialPatch"/>, <see cref="DataLakeGen2SharedKeyCredentialPatch"/>, <see cref="ServicePrincipalCredentialPatch"/> and <see cref="ServicePrincipalInKVCredentialPatch"/>.
+    /// </summary>
     internal partial class DataSourceCredentialPatch
     {
-        /// <summary> Initializes a new instance of DataSourceCredentialPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataSourceCredentialPatch"/>. </summary>
         public DataSourceCredentialPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataSourceCredentialPatch"/>. </summary>
+        /// <param name="dataSourceCredentialType"> Type of data source credential. </param>
+        /// <param name="dataSourceCredentialName"> Name of data source credential. </param>
+        /// <param name="dataSourceCredentialDescription"> Description of data source credential. </param>
+        internal DataSourceCredentialPatch(DataSourceCredentialKind dataSourceCredentialType, string dataSourceCredentialName, string dataSourceCredentialDescription)
+        {
+            DataSourceCredentialType = dataSourceCredentialType;
+            DataSourceCredentialName = dataSourceCredentialName;
+            DataSourceCredentialDescription = dataSourceCredentialDescription;
         }
 
         /// <summary> Type of data source credential. </summary>

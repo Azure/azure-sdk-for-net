@@ -57,10 +57,11 @@ namespace Azure.AI.Translation.Document
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
 
-            _options = options;
             _clientDiagnostics = new ClientDiagnostics(options);
+            _options = options;
+            string defaultScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? DocumentTranslationAudience.AzurePublicCloud : options.Audience)}/.default";
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, Constants.DefaultCognitiveScope));
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, defaultScope));
             _serviceRestClient = new DocumentTranslationRestClient(_clientDiagnostics, pipeline, endpoint.AbsoluteUri);
         }
 

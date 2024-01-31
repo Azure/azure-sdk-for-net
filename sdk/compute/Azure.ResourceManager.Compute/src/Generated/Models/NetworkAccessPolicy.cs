@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The disk can be exported or uploaded to from any network. </summary>
         public static NetworkAccessPolicy AllowAll { get; } = new NetworkAccessPolicy(AllowAllValue);
-        /// <summary> The disk can be exported or uploaded to using a DiskAccess resource&apos;s private endpoints. </summary>
+        /// <summary> The disk can be exported or uploaded to using a DiskAccess resource's private endpoints. </summary>
         public static NetworkAccessPolicy AllowPrivate { get; } = new NetworkAccessPolicy(AllowPrivateValue);
         /// <summary> The disk cannot be exported. </summary>
         public static NetworkAccessPolicy DenyAll { get; } = new NetworkAccessPolicy(DenyAllValue);

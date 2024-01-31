@@ -5,99 +5,245 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    public partial class VMwareClusterData : IUtf8JsonSerializable
+    public partial class VMwareClusterData : IUtf8JsonSerializable, IJsonModel<VMwareClusterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VMwareClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VMwareClusterData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
             {
-                writer.WritePropertyName("extendedLocation");
-                writer.WriteObjectValue(ExtendedLocation);
+                writer.WritePropertyName("extendedLocation"u8);
+                JsonSerializer.Serialize(writer, ExtendedLocation);
             }
             if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("kind");
+                writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            writer.WritePropertyName("tags");
-            writer.WriteStartObject();
-            foreach (var item in Tags)
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndObject();
-            writer.WritePropertyName("location");
+            writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            writer.WritePropertyName("properties");
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Uuid))
+            {
+                writer.WritePropertyName("uuid"u8);
+                writer.WriteStringValue(Uuid);
+            }
             if (Optional.IsDefined(VCenterId))
             {
-                writer.WritePropertyName("vCenterId");
+                writer.WritePropertyName("vCenterId"u8);
                 writer.WriteStringValue(VCenterId);
             }
             if (Optional.IsDefined(MoRefId))
             {
-                writer.WritePropertyName("moRefId");
+                writer.WritePropertyName("moRefId"u8);
                 writer.WriteStringValue(MoRefId);
             }
             if (Optional.IsDefined(InventoryItemId))
             {
-                writer.WritePropertyName("inventoryItemId");
+                writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
+            if (options.Format != "W" && Optional.IsDefined(MoName))
+            {
+                writer.WritePropertyName("moName"u8);
+                writer.WriteStringValue(MoName);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
+            {
+                writer.WritePropertyName("statuses"u8);
+                writer.WriteStartArray();
+                foreach (var item in Statuses)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(CustomResourceName))
+            {
+                writer.WritePropertyName("customResourceName"u8);
+                writer.WriteStringValue(CustomResourceName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UsedMemoryGB))
+            {
+                writer.WritePropertyName("usedMemoryGB"u8);
+                writer.WriteNumberValue(UsedMemoryGB.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalMemoryGB))
+            {
+                writer.WritePropertyName("totalMemoryGB"u8);
+                writer.WriteNumberValue(TotalMemoryGB.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UsedCpuMHz))
+            {
+                writer.WritePropertyName("usedCpuMHz"u8);
+                writer.WriteNumberValue(UsedCpuMHz.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalCpuMHz))
+            {
+                writer.WritePropertyName("totalCpuMHz"u8);
+                writer.WriteNumberValue(TotalCpuMHz.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(DatastoreIds))
+            {
+                writer.WritePropertyName("datastoreIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in DatastoreIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkIds))
+            {
+                writer.WritePropertyName("networkIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in NetworkIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VMwareClusterData DeserializeVMwareClusterData(JsonElement element)
+        VMwareClusterData IJsonModel<VMwareClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareClusterData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VMwareClusterData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVMwareClusterData(document.RootElement, options);
+        }
+
+        internal static VMwareClusterData DeserializeVMwareClusterData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<string> kind = default;
-            IDictionary<string, string> tags = default;
+            Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            SystemData systemData = default;
+            Optional<SystemData> systemData = default;
             Optional<string> uuid = default;
             Optional<string> vCenterId = default;
             Optional<string> moRefId = default;
             Optional<string> inventoryItemId = default;
             Optional<string> moName = default;
-            Optional<IReadOnlyList<ResourceStatus>> statuses = default;
+            Optional<IReadOnlyList<VMwareResourceStatus>> statuses = default;
             Optional<string> customResourceName = default;
+            Optional<long> usedMemoryGB = default;
+            Optional<long> totalMemoryGB = default;
+            Optional<long> usedCpuMHz = default;
+            Optional<long> totalCpuMHz = default;
             Optional<IReadOnlyList<string>> datastoreIds = default;
             Optional<IReadOnlyList<string>> networkIds = default;
-            Optional<string> provisioningState = default;
+            Optional<VMwareResourceProvisioningState> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("extendedLocation"))
+                if (property.NameEquals("extendedLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("kind"))
+                if (property.NameEquals("kind"u8))
                 {
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tags"))
+                if (property.NameEquals("tags"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -106,32 +252,36 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"))
+                if (property.NameEquals("location"u8))
                 {
-                    location = property.Value.GetString();
+                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString();
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -140,56 +290,90 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("uuid"))
+                        if (property0.NameEquals("uuid"u8))
                         {
                             uuid = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("vCenterId"))
+                        if (property0.NameEquals("vCenterId"u8))
                         {
                             vCenterId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("moRefId"))
+                        if (property0.NameEquals("moRefId"u8))
                         {
                             moRefId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("inventoryItemId"))
+                        if (property0.NameEquals("inventoryItemId"u8))
                         {
                             inventoryItemId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("moName"))
+                        if (property0.NameEquals("moName"u8))
                         {
                             moName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("statuses"))
+                        if (property0.NameEquals("statuses"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ResourceStatus> array = new List<ResourceStatus>();
+                            List<VMwareResourceStatus> array = new List<VMwareResourceStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceStatus.DeserializeResourceStatus(item));
+                                array.Add(VMwareResourceStatus.DeserializeVMwareResourceStatus(item));
                             }
                             statuses = array;
                             continue;
                         }
-                        if (property0.NameEquals("customResourceName"))
+                        if (property0.NameEquals("customResourceName"u8))
                         {
                             customResourceName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("datastoreIds"))
+                        if (property0.NameEquals("usedMemoryGB"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            usedMemoryGB = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("totalMemoryGB"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            totalMemoryGB = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("usedCpuMHz"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            usedCpuMHz = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("totalCpuMHz"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            totalCpuMHz = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("datastoreIds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -200,11 +384,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             datastoreIds = array;
                             continue;
                         }
-                        if (property0.NameEquals("networkIds"))
+                        if (property0.NameEquals("networkIds"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -215,16 +398,56 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             networkIds = array;
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new VMwareResourceProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VMwareClusterData(id, name, type, systemData, tags, location, extendedLocation.Value, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, Optional.ToList(statuses), customResourceName.Value, Optional.ToList(datastoreIds), Optional.ToList(networkIds), provisioningState.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VMwareClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, Optional.ToList(statuses), customResourceName.Value, Optional.ToNullable(usedMemoryGB), Optional.ToNullable(totalMemoryGB), Optional.ToNullable(usedCpuMHz), Optional.ToNullable(totalCpuMHz), Optional.ToList(datastoreIds), Optional.ToList(networkIds), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VMwareClusterData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareClusterData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VMwareClusterData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VMwareClusterData IPersistableModel<VMwareClusterData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareClusterData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVMwareClusterData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VMwareClusterData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VMwareClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

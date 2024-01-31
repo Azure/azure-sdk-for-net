@@ -6,28 +6,26 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Pipeline reference type. </summary>
     public partial class PipelineReference
     {
-        /// <summary> Initializes a new instance of PipelineReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineReference"/>. </summary>
         /// <param name="type"> Pipeline reference type. </param>
         /// <param name="referenceName"> Reference pipeline name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
         public PipelineReference(PipelineReferenceType type, string referenceName)
         {
-            if (referenceName == null)
-            {
-                throw new ArgumentNullException(nameof(referenceName));
-            }
+            Argument.AssertNotNull(referenceName, nameof(referenceName));
 
             Type = type;
             ReferenceName = referenceName;
         }
 
-        /// <summary> Initializes a new instance of PipelineReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineReference"/>. </summary>
         /// <param name="type"> Pipeline reference type. </param>
         /// <param name="referenceName"> Reference pipeline name. </param>
         /// <param name="name"> Reference name. </param>

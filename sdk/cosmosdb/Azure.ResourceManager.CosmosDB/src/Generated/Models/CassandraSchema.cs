@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,57 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB Cassandra table schema. </summary>
     public partial class CassandraSchema
     {
-        /// <summary> Initializes a new instance of CassandraSchema. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraSchema"/>. </summary>
         public CassandraSchema()
         {
             Columns = new ChangeTrackingList<CassandraColumn>();
             PartitionKeys = new ChangeTrackingList<CassandraPartitionKey>();
-            ClusterKeys = new ChangeTrackingList<ClusterKey>();
+            ClusterKeys = new ChangeTrackingList<CassandraClusterKey>();
         }
 
-        /// <summary> Initializes a new instance of CassandraSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraSchema"/>. </summary>
         /// <param name="columns"> List of Cassandra table columns. </param>
         /// <param name="partitionKeys"> List of partition key. </param>
         /// <param name="clusterKeys"> List of cluster key. </param>
-        internal CassandraSchema(IList<CassandraColumn> columns, IList<CassandraPartitionKey> partitionKeys, IList<ClusterKey> clusterKeys)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraSchema(IList<CassandraColumn> columns, IList<CassandraPartitionKey> partitionKeys, IList<CassandraClusterKey> clusterKeys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Columns = columns;
             PartitionKeys = partitionKeys;
             ClusterKeys = clusterKeys;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Cassandra table columns. </summary>
@@ -37,6 +72,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> List of partition key. </summary>
         public IList<CassandraPartitionKey> PartitionKeys { get; }
         /// <summary> List of cluster key. </summary>
-        public IList<ClusterKey> ClusterKeys { get; }
+        public IList<CassandraClusterKey> ClusterKeys { get; }
     }
 }

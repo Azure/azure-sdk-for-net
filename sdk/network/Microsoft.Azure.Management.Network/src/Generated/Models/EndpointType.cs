@@ -22,5 +22,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public const string ExternalAddress = "ExternalAddress";
         public const string MMAWorkspaceMachine = "MMAWorkspaceMachine";
         public const string MMAWorkspaceNetwork = "MMAWorkspaceNetwork";
+        public const string AzureArcVM = "AzureArcVM";
+        public const string AzureVMSS = "AzureVMSS";
     }
 }

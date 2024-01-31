@@ -38,7 +38,10 @@ namespace Azure.Messaging.EventHubs.Amqp
         private const string WebSocketsPathSuffix = "/$servicebus/websocket/";
 
         /// <summary>The URI scheme to apply when using web sockets for service communication.</summary>
-        private const string WebSocketsUriScheme = "wss";
+        private const string WebSocketsSecureUriScheme = "wss";
+
+        /// <summary>The URI scheme to apply when using web sockets for service communication.</summary>
+        private const string WebSocketsInsecureUriScheme = "ws";
 
         /// <summary>The string formatting mask to apply to the service endpoint to consume events for a given consumer group and partition.</summary>
         private const string ConsumerPathSuffixMask = "{0}/ConsumerGroups/{1}/Partitions/{2}";
@@ -109,13 +112,6 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// </summary>
         ///
         private static TimeSpan AuthorizationTokenExpirationBuffer { get; } = AuthorizationRefreshBuffer.Add(TimeSpan.FromMinutes(2));
-
-        /// <summary>
-        ///   The recommended timeout to associate with an AMQP session.  It is recommended that this
-        ///   interval be used when creating or opening AMQP links and related constructs.
-        /// </summary>
-        ///
-        public TimeSpan SessionTimeout { get; } = TimeSpan.FromSeconds(30);
 
         /// <summary>
         ///   The amount of time to allow a connection to have no observed traffic before considering it idle.
@@ -239,8 +235,8 @@ namespace Azure.Messaging.EventHubs.Amqp
                                    IWebProxy proxy,
                                    TimeSpan idleTimeout,
                                    string identifier = default,
-                                   int sendBufferSizeBytes = AmqpConstants.TransportBufferSize,
-                                   int receiveBufferSizeBytes = AmqpConstants.TransportBufferSize,
+                                   int sendBufferSizeBytes = -1,
+                                   int receiveBufferSizeBytes = -1,
                                    RemoteCertificateValidationCallback certificateValidationCallback = default)
         {
             Argument.AssertNotNull(serviceEndpoint, nameof(serviceEndpoint));
@@ -285,8 +281,7 @@ namespace Azure.Messaging.EventHubs.Amqp
         /// <returns>A link for use with management operations.</returns>
         ///
         /// <remarks>
-        ///   The authorization for this link does not require periodic
-        ///   refreshing.
+        ///   The authorization for this link does not require periodic refreshing.
         /// </remarks>
         ///
         public virtual async Task<RequestResponseAmqpLink> OpenManagementLinkAsync(TimeSpan operationTimeout,
@@ -526,8 +521,8 @@ namespace Azure.Messaging.EventHubs.Amqp
                 var connectionSetings = CreateAmqpConnectionSettings(serviceEndpoint.Host, scopeIdentifier, ConnectionIdleTimeoutMilliseconds);
 
                 var transportSettings = transportType.IsWebSocketTransport()
-                    ? CreateTransportSettingsForWebSockets(connectionEndpoint.Host, proxy, sendBufferSizeBytes, receiveBufferSizeBytes)
-                    : CreateTransportSettingsforTcp(connectionEndpoint.Host, connectionEndpoint.Port, sendBufferSizeBytes, receiveBufferSizeBytes, certificateValidationCallback);
+                    ? CreateTransportSettingsForWebSockets(connectionEndpoint, proxy, sendBufferSizeBytes, receiveBufferSizeBytes)
+                    : CreateTransportSettingsforTcp(connectionEndpoint, sendBufferSizeBytes, receiveBufferSizeBytes, certificateValidationCallback);
 
                 // Create and open the connection, respecting the timeout constraint
                 // that was received.
@@ -593,7 +588,6 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             var session = default(AmqpSession);
             var link = default(RequestResponseAmqpLink);
-            var stopWatch = ValueStopwatch.StartNew();
 
             try
             {
@@ -607,7 +601,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 // Create and open the link.
 
                 var linkSettings = new AmqpLinkSettings { OperationTimeout = operationTimeout };
-                linkSettings.AddProperty(AmqpProperty.Timeout, (uint)linkTimeout.CalculateRemaining(stopWatch.GetElapsedTime()).TotalMilliseconds);
+                linkSettings.AddProperty(AmqpProperty.Timeout, (uint)linkTimeout.TotalMilliseconds);
 
                 link = new RequestResponseAmqpLink(AmqpManagement.LinkType, session, AmqpManagement.Address, linkSettings.Properties);
 
@@ -663,14 +657,13 @@ namespace Azure.Messaging.EventHubs.Amqp
             var session = default(AmqpSession);
             var link = default(ReceivingAmqpLink);
             var refreshTimer = default(Timer);
-            var stopWatch = ValueStopwatch.StartNew();
 
             try
             {
                 // Perform the initial authorization for the link.
 
                 var authClaims = new[] { EventHubsClaim.Listen };
-                var authExpirationUtc = await RequestAuthorizationUsingCbsAsync(connection, TokenProvider, endpoint, endpoint.AbsoluteUri, endpoint.AbsoluteUri, authClaims, linkTimeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                var authExpirationUtc = await RequestAuthorizationUsingCbsAsync(connection, TokenProvider, endpoint, endpoint.AbsoluteUri, endpoint.AbsoluteUri, authClaims, linkTimeout).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // Create and open the AMQP session associated with the link.
@@ -782,14 +775,15 @@ namespace Azure.Messaging.EventHubs.Amqp
             var session = default(AmqpSession);
             var link = default(SendingAmqpLink);
             var refreshTimer = default(Timer);
-            var stopWatch = ValueStopwatch.StartNew();
 
             try
             {
+                var stopWatch = ValueStopwatch.StartNew();
+
                 // Perform the initial authorization for the link.
 
                 var authClaims = new[] { EventHubsClaim.Send };
-                var authExpirationUtc = await RequestAuthorizationUsingCbsAsync(connection, TokenProvider, endpoint, endpoint.AbsoluteUri, endpoint.AbsoluteUri, authClaims, linkTimeout.CalculateRemaining(stopWatch.GetElapsedTime())).ConfigureAwait(false);
+                var authExpirationUtc = await RequestAuthorizationUsingCbsAsync(connection, TokenProvider, endpoint, endpoint.AbsoluteUri, endpoint.AbsoluteUri, authClaims, linkTimeout).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
                 // Create and open the AMQP session associated with the link.
@@ -1229,32 +1223,41 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///  Creates the transport settings for use with TCP.
         /// </summary>
         ///
-        /// <param name="hostName">The host name of the Event Hubs service endpoint.</param>
-        /// <param name="port">The port to use for connecting to the endpoint.</param>
+        /// <param name="connectionEndpoint">The Event Hubs service endpoint to connect to.</param>
         /// <param name="sendBufferSizeBytes">The size, in bytes, of the buffer to use for sending via the transport.</param>
         /// <param name="receiveBufferSizeBytes">The size, in bytes, of the buffer to use for receiving from the transport.</param>
         /// <param name="certificateValidationCallback">The validation callback to register for participation in the SSL handshake.</param>
         ///
         /// <returns>The settings to use for transport.</returns>
         ///
-        private static TransportSettings CreateTransportSettingsforTcp(string hostName,
-                                                                       int port,
+        private static TransportSettings CreateTransportSettingsforTcp(Uri connectionEndpoint,
                                                                        int sendBufferSizeBytes,
                                                                        int receiveBufferSizeBytes,
                                                                        RemoteCertificateValidationCallback certificateValidationCallback)
         {
+            var useTls = ShouldUseTls(connectionEndpoint.Scheme);
+            var port = connectionEndpoint.Port < 0 ? (useTls ? AmqpConstants.DefaultSecurePort : AmqpConstants.DefaultPort) : connectionEndpoint.Port;
+
             var tcpSettings = new TcpTransportSettings
             {
-                Host = hostName,
-                Port = port < 0 ? AmqpConstants.DefaultSecurePort : port,
+                Host = connectionEndpoint.Host,
+                Port = port,
                 SendBufferSize = sendBufferSizeBytes,
                 ReceiveBufferSize = receiveBufferSizeBytes,
             };
 
-            return new TlsTransportSettings(tcpSettings)
+            // If TLS is explicitly disabled, then use the TCP settings as-is.  Otherwise,
+            // wrap them for TLS usage.
+
+            return useTls switch
             {
-                TargetHost = hostName,
-                CertificateValidationCallback = certificateValidationCallback
+                false => tcpSettings,
+
+                _ => new TlsTransportSettings(tcpSettings)
+                {
+                    TargetHost = connectionEndpoint.Host,
+                    CertificateValidationCallback = certificateValidationCallback
+                }
             };
         }
 
@@ -1262,23 +1265,25 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///  Creates the transport settings for use with web sockets.
         /// </summary>
         ///
-        /// <param name="hostName">The host name of the Event Hubs service endpoint.</param>
+        /// <param name="connectionEndpoint">The Event Hubs service endpoint to connect to.</param>
         /// <param name="proxy">The proxy to use for connecting to the endpoint.</param>
         /// <param name="sendBufferSizeBytes">The size, in bytes, of the buffer to use for sending via the transport.</param>
         /// <param name="receiveBufferSizeBytes">The size, in bytes, of the buffer to use for receiving from the transport.</param>
         ///
         /// <returns>The settings to use for transport.</returns>
         ///
-        private static TransportSettings CreateTransportSettingsForWebSockets(string hostName,
+        private static TransportSettings CreateTransportSettingsForWebSockets(Uri connectionEndpoint,
                                                                               IWebProxy proxy,
                                                                               int sendBufferSizeBytes,
                                                                               int receiveBufferSizeBytes)
         {
-            var uriBuilder = new UriBuilder(hostName)
+            var useTls = ShouldUseTls(connectionEndpoint.Scheme);
+
+            var uriBuilder = new UriBuilder(connectionEndpoint.Host)
             {
                 Path = WebSocketsPathSuffix,
-                Scheme = WebSocketsUriScheme,
-                Port = -1
+                Scheme = useTls ? WebSocketsSecureUriScheme : WebSocketsInsecureUriScheme,
+                Port = connectionEndpoint.Port < 0 ? -1 : connectionEndpoint.Port
             };
 
             return new WebSocketTransportSettings
@@ -1312,7 +1317,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 HostName = hostName
             };
 
-            foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.EnumerateProperties())
+            foreach (KeyValuePair<string, string> property in ClientLibraryInformation.Current.SerializedProperties)
             {
                 connectionSettings.AddProperty(property.Key, property.Value);
             }
@@ -1334,5 +1339,21 @@ namespace Azure.Messaging.EventHubs.Amqp
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.UnknownConnectionType, transport), nameof(transport));
             }
         }
+
+        /// <summary>
+        ///   Determines if the specified URL scheme should use TLS when creating an AMQP connection.
+        /// </summary>
+        ///
+        /// <param name="urlScheme">The URL scheme to consider.</param>
+        ///
+        /// <returns><c>true</c> if the connection should use TLS; otherwise, <c>false</c>.</returns>
+        ///
+        private static bool ShouldUseTls(string urlScheme) => urlScheme switch
+        {
+            "ws" => false,
+            "amqp" => false,
+            "http" => false,
+            _ => true
+        };
     }
 }

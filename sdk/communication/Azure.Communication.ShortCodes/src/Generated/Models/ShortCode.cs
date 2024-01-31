@@ -14,16 +14,16 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> Represents a number, ShortCode or AlphaId, acquired in a given country. </summary>
     public partial class ShortCode
     {
-        /// <summary> Initializes a new instance of ShortCode. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShortCode"/>. </summary>
         internal ShortCode()
         {
             ProgramBriefIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ShortCode. </summary>
-        /// <param name="number"> The value of the ShortCode or the alpha numeric e.g. &apos;555555&apos;, &apos;CONTOSO&apos;, etc. </param>
-        /// <param name="numberType"> The type of number e.g. &apos;ShortCode&apos;, &apos;AlphaId&apos;. </param>
-        /// <param name="countryCode"> ISO 3166 2-char code representing the country e.g. &apos;US&apos;. </param>
+        /// <summary> Initializes a new instance of <see cref="ShortCode"/>. </summary>
+        /// <param name="number"> The value of the ShortCode or the alpha numeric e.g. '555555', 'CONTOSO', etc. </param>
+        /// <param name="numberType"> The type of number e.g. 'ShortCode', 'AlphaId'. </param>
+        /// <param name="countryCode"> ISO 3166 2-char code representing the country e.g. 'US'. </param>
         /// <param name="programBriefIds"> Program Brief Name. </param>
         /// <param name="purchaseDate"> Date in which number was purchased. </param>
         internal ShortCode(string number, NumberType? numberType, string countryCode, IReadOnlyList<string> programBriefIds, DateTimeOffset? purchaseDate)
@@ -35,11 +35,11 @@ namespace Azure.Communication.ShortCodes.Models
             PurchaseDate = purchaseDate;
         }
 
-        /// <summary> The value of the ShortCode or the alpha numeric e.g. &apos;555555&apos;, &apos;CONTOSO&apos;, etc. </summary>
+        /// <summary> The value of the ShortCode or the alpha numeric e.g. '555555', 'CONTOSO', etc. </summary>
         public string Number { get; }
-        /// <summary> The type of number e.g. &apos;ShortCode&apos;, &apos;AlphaId&apos;. </summary>
+        /// <summary> The type of number e.g. 'ShortCode', 'AlphaId'. </summary>
         public NumberType? NumberType { get; }
-        /// <summary> ISO 3166 2-char code representing the country e.g. &apos;US&apos;. </summary>
+        /// <summary> ISO 3166 2-char code representing the country e.g. 'US'. </summary>
         public string CountryCode { get; }
         /// <summary> Program Brief Name. </summary>
         public IReadOnlyList<string> ProgramBriefIds { get; }

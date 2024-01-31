@@ -13,6 +13,7 @@ using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Azure.Storage.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 
@@ -172,6 +173,77 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             StringAssert.Contains("ss=bqtf", transport.SingleRequest.Uri.ToString());
+        }
+
+        [RecordedTest]
+        public async Task Ctor_DefaultAudience()
+        {
+            // Act - Create new blob client with the OAuth Credential and Audience
+            BlobClientOptions options = GetOptionsWithAudience(BlobAudience.DefaultAudience);
+
+            BlobServiceClient aadService = InstrumentClient(new BlobServiceClient(
+                new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            Response<BlobServiceProperties> properties = await aadService.GetPropertiesAsync();
+            Assert.IsNotNull(properties);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_CustomAudience()
+        {
+            // Arrange
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint));
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            BlobClientOptions options = GetOptionsWithAudience(new BlobAudience($"https://{uriBuilder.AccountName}.blob.core.windows.net/"));
+
+            BlobServiceClient aadService = InstrumentClient(new BlobServiceClient(
+                new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            Response<BlobServiceProperties> properties = await aadService.GetPropertiesAsync();
+            Assert.IsNotNull(properties);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_StorageAccountAudience()
+        {
+            // Arrange
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint));
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            BlobClientOptions options = GetOptionsWithAudience(BlobAudience.CreateBlobServiceAccountAudience(uriBuilder.AccountName));
+
+            BlobServiceClient aadService = InstrumentClient(new BlobServiceClient(
+                new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            Response<BlobServiceProperties> properties = await aadService.GetPropertiesAsync();
+            Assert.IsNotNull(properties);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_AudienceError()
+        {
+            // Act - Create new blob client with the OAuth Credential and Audience
+            BlobClientOptions options = GetOptionsWithAudience(new BlobAudience("https://badaudience.blob.core.windows.net"));
+
+            BlobServiceClient aadContainer = InstrumentClient(new BlobServiceClient(
+                new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint),
+                new MockCredential(),
+                options));
+
+            // Assert
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                aadContainer.GetPropertiesAsync(),
+                e => Assert.AreEqual(BlobErrorCode.InvalidAuthenticationInfo.ToString(), e.ErrorCode));
         }
 
         [RecordedTest]
@@ -570,6 +642,7 @@ namespace Azure.Storage.Blobs.Test
 
         // Note: read-access geo-redundant replication must be enabled for test account, or this test will fail.
         [RecordedTest]
+        [PlaybackOnly(".NET autorest generator bug - https://github.com/Azure/azure-sdk-for-net/issues/28979")]
         public async Task GetStatisticsAsync()
         {
             // Arrange
@@ -662,6 +735,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
+        [RetryOnException(5, typeof(NullReferenceException))]
         public async Task FindBlobsByTagAsync()
         {
             // Arrange

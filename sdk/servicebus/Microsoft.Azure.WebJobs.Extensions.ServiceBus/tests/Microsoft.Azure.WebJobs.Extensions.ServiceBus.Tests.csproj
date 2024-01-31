@@ -15,6 +15,7 @@
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
+		<PackageReference Include="Microsoft.Azure.WebJobs.Host.Storage" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,9 +25,12 @@
     <Compile Include="..\..\Azure.Messaging.ServiceBus\tests\Infrastructure\ServiceBusTestEnvironment.cs" LinkBase="Shared" />
     <Compile Include="..\..\Azure.Messaging.ServiceBus\tests\Infrastructure\ServiceBusScope.cs" LinkBase="Shared" />
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Authorization\SharedAccessSignature.cs" LinkBase="Shared" />
+    <!--This is only included so that SharedAccessSignature will build - the actual resources are not used. We should consider-->
+    <!--moving away from using resources. https://github.com/Azure/azure-sdk-for-net/issues/31124-->
+    <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Resources.Designer.cs" LinkBase="Shared" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
     <Reference Include="System.Transactions" />
   </ItemGroup>
-</Project>  
+</Project>

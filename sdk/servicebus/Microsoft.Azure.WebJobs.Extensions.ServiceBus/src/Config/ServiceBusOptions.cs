@@ -3,6 +3,7 @@
 
 using System;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus;
@@ -73,6 +74,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         /// Gets or sets the maximum duration within which the lock will be renewed automatically. This
         /// value should be greater than the longest message lock duration; for example, the LockDuration Property.
         /// The default value is 5 minutes. This does not apply for functions that receive a batch of messages.
+        /// To specify an infinite duration, use <see cref="Timeout.InfiniteTimeSpan"/> or <value>-00:00:00.0010000</value>
+        /// if specifying via host.json.
         /// </summary>
         public TimeSpan MaxAutoLockRenewalDuration
         {
@@ -80,7 +83,11 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
             set
             {
-                Argument.AssertNotNegative(value, nameof(MaxAutoLockRenewalDuration));
+                if (value != Timeout.InfiniteTimeSpan)
+                {
+                    Argument.AssertNotNegative(value, nameof(MaxAutoLockRenewalDuration));
+                }
+
                 _maxAutoRenewDuration = value;
             }
         }
@@ -106,7 +113,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
         /// <summary>
         /// Gets or sets the maximum number of sessions that can be processed concurrently by a function.
-        /// The default value is 8. This does not apply for functions that receive a batch of messages.
+        /// The default value is 8. This applies only to functions that set <see cref="ServiceBusTriggerAttribute.IsSessionsEnabled"/>
+        /// to <c>true</c>. This does not apply for functions that receive a batch of messages.
         /// When <see cref="ConcurrencyOptions.DynamicConcurrencyEnabled"/> is true, this value will be ignored,
         /// and concurrency will be increased/decreased dynamically.
         /// </summary>
@@ -120,9 +128,32 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 _maxConcurrentSessions = value;
             }
         }
-        // TODO the default value in Track 1 was the default value from the Track 1 SDK, which was 2000.
-        // Verify that we are okay to diverge here.
         private int _maxConcurrentSessions = 8;
+
+        /// <summary>
+        /// Gets or sets the maximum number of concurrent calls to the function per session.
+        /// Thus the total number of concurrent calls will be equal to MaxConcurrentSessions * MaxConcurrentCallsPerSession.
+        /// The default value is 1. This applies only to functions that set <see cref="ServiceBusTriggerAttribute.IsSessionsEnabled"/>
+        /// to <c>true</c>. This does not apply for functions that receive a batch of messages.
+        /// When <see cref="ConcurrencyOptions.DynamicConcurrencyEnabled"/> is true, this value will be ignored,
+        /// and concurrency will be increased/decreased dynamically.
+        /// </summary>
+        ///
+        /// <value>The maximum number of concurrent calls to the message handler for each session that is being processed.</value>
+        /// <exception cref="ArgumentOutOfRangeException">
+        ///   A value that is not positive is attempted to be set for the property.
+        /// </exception>
+        public int MaxConcurrentCallsPerSession
+        {
+            get => _maxConcurrentCallsPerSessions;
+
+            set
+            {
+                Argument.AssertAtLeast(value, 1, nameof(MaxConcurrentCallsPerSession));
+                _maxConcurrentCallsPerSessions = value;
+            }
+        }
+        private int _maxConcurrentCallsPerSessions = 1;
 
         /// <summary>
         /// Gets or sets an optional error handler that will be invoked if an exception occurs while attempting to process
@@ -131,10 +162,44 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public Func<ProcessErrorEventArgs, Task> ProcessErrorAsync { get; set; }
 
         /// <summary>
+        /// Optional handler that can be set to be notified when a new session is about to be processed.
+        /// </summary>
+        public Func<ProcessSessionEventArgs, Task> SessionInitializingAsync { get; set; }
+
+        /// <summary>
+        /// Optional handler that can be set to be notified when a session is about to be closed for processing.
+        /// </summary>
+        public Func<ProcessSessionEventArgs, Task> SessionClosingAsync { get; set; }
+
+        /// <summary>
         /// Gets or sets the maximum number of messages that will be passed to each function call. This only applies for functions that receive
         /// a batch of messages. The default value is 1000.
         /// </summary>
         public int MaxMessageBatchSize { get; set; } = 1000;
+
+        /// <summary>
+        /// Gets or sets the minimum number of messages desired for a batch. This setting applies only to functions that
+        /// receive multiple messages. This value must be less than <see cref="MaxMessageBatchSize"/> and is used in
+        /// conjunction with <see cref="MaxBatchWaitTime"/>. If <see cref="MaxBatchWaitTime"/> passes and less than
+        /// <see cref="MinMessageBatchSize"/> has been received, the function will be invoked with a partial batch.
+        /// Default 1.
+        /// </summary>
+        /// <remarks>
+        /// The minimum size is not a strict guarantee, as a partial batch will be dispatched if a full batch cannot be
+        /// prepared before the <see cref="MaxBatchWaitTime"/> has elapsed.
+        /// </remarks>
+        public int MinMessageBatchSize { get; set; } = 1;
+
+        /// <summary>
+        /// Gets or sets the maximum time that the trigger should wait to fill a batch before invoking the function.
+        /// This is only considered when <see cref="MinMessageBatchSize"/> is set to larger than 1 and is otherwise unused.
+        /// If less than <see cref="MinMessageBatchSize" /> messages were available before the wait time elapses, the function
+        /// will be invoked with a partial batch. This value should be no longer then 50% of the entity message lock duration.
+        /// Therefore, the maximum allowed value is 2 minutes and 30 seconds.
+        /// Otherwise, you may get lock exceptions when messages are pulled from the cache.
+        /// The default value is 30 seconds.
+        /// </summary>
+        public TimeSpan MaxBatchWaitTime { get; set; } = TimeSpan.FromSeconds(30);
 
         /// <summary>
         /// Gets or sets the maximum amount of time to wait for a message to be received for the
@@ -190,7 +255,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 { nameof(MaxAutoLockRenewalDuration), MaxAutoLockRenewalDuration },
                 { nameof(MaxConcurrentCalls), MaxConcurrentCalls },
                 { nameof(MaxConcurrentSessions), MaxConcurrentSessions },
+                { nameof(MaxConcurrentCallsPerSession), MaxConcurrentCallsPerSession },
                 { nameof(MaxMessageBatchSize), MaxMessageBatchSize },
+                { nameof(MinMessageBatchSize), MinMessageBatchSize },
+                { nameof(MaxBatchWaitTime), MaxBatchWaitTime },
                 { nameof(SessionIdleTimeout), SessionIdleTimeout.ToString() ?? string.Empty },
                 { nameof(EnableCrossEntityTransactions), EnableCrossEntityTransactions }
             };
@@ -200,9 +268,28 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
 
         internal async Task ExceptionReceivedHandler(ProcessErrorEventArgs args)
         {
-            if (ProcessErrorAsync != null)
+            var processErrorAsync = ProcessErrorAsync;
+            if (processErrorAsync != null)
             {
-                await ProcessErrorAsync(args).ConfigureAwait(false);
+                await processErrorAsync(args).ConfigureAwait(false);
+            }
+        }
+
+        internal async Task SessionInitializingHandler(ProcessSessionEventArgs args)
+        {
+            var sessionInitializingAsync = SessionInitializingAsync;
+            if (sessionInitializingAsync != null)
+            {
+                await sessionInitializingAsync(args).ConfigureAwait(false);
+            }
+        }
+
+        internal async Task SessionClosingHandler(ProcessSessionEventArgs args)
+        {
+            var sessionClosingAsync = SessionClosingAsync;
+            if (sessionClosingAsync != null)
+            {
+                await sessionClosingAsync(args).ConfigureAwait(false);
             }
         }
 
@@ -244,10 +331,14 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
                 // when DC is enabled, session concurrency starts at 1 and will be dynamically adjusted over time
                 // by UpdateConcurrency.
                 processorOptions.MaxConcurrentSessions = 1;
+
+                // Currently dynamic concurrency does not scale the number of concurrent calls per session.
+                processorOptions.MaxConcurrentCallsPerSession = 1;
             }
             else
             {
                 processorOptions.MaxConcurrentSessions = MaxConcurrentSessions;
+                processorOptions.MaxConcurrentCallsPerSession = MaxConcurrentCallsPerSession;
             }
 
             return processorOptions;

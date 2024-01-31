@@ -1,6 +1,93 @@
 # Release History
 
-## 12.10.0-beta.1 (Unreleased)
+## 12.18.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.18.0-beta.1 (2023-12-05)
+- Added support for service version 2024-02-04.
+- Fixed bug where SAS Directory Depth ("sdd") value 10 or over will add 6 to the sdd value
+
+## 12.17.1 (2023-11-13)
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+
+## 12.17.0 (2023-11-06)
+- Includes all features from 12.17.0-beta.1.
+
+## 12.17.0-beta.1 (2023-10-16)
+- Added support for service version 2023-11-03.
+- Added support for DataLakeClientOptions.Audience
+
+## 12.16.0 (2023-09-12)
+- Includes all features from 12.16.0-beta.1.
+
+## 12.16.0-beta.1 (2023-08-08)
+- Added support for service version 2023-05-03 and 2023-08-03.
+- Added support for paginated directory delete when using AAD authentication.  Note that this feature only applies to HNS storage accounts.
+
+## 12.15.0 (2023-07-11)
+- Includes all features from 12.15.0-beta.1.
+- Fixed bug where DatalakePathClient.Rename was using the filesystem name parameter for the destination path and vice versa.
+
+## 12.15.0-beta.1 (2023-05-30)
+- Added support for service version 2023-01-03.
+- Added Owner, Group, and Permissions properties to PathProperties.
+- Added EncryptionContext property to DataLakeFileUploadOptions.
+
+## 12.14.0 (2023-04-11)
+- Includes all features from 12.14.0-beta.1.
+
+## 12.14.0-beta.1 (2023-03-28)
+- Fixed bug where sticky bit and execution bit were not formed and parsed correctly in PathPermissions
+- Added support for service version 2022-11-02.
+- Added support for Encryption Context.
+
+## 12.13.1 (2023-03-24)
+- Bumped Azure.Core dependency from 1.28 and 1.30, fixing issue with headers being non-resilient to double dispose of the request.
+
+## 12.13.0 (2023-02-21)
+- Includes all features from 12.13.0-beta.1.
+- Added FileDownloadDetails.CreatedOn property.
+
+## 12.13.0-beta.1 (2023-02-07)
+- Added support for service version 2021-12-02.
+- Added support for leasing operations on DataLakeFileClient.Append(), .AppendAsync(), .Flush(), and .FlushAsync().
+- Added support for sticky bit and execution bit to both be set on permissions of a path.
+
+## 12.12.1 (2022-10-13)
+- Fixed bug where DataLakeQueryCsvTextOptions was not properly sending the RecordSeparator when calling DataLakeFileClient.Query()
+
+## 12.12.0 (2022-10-12)
+- Includes all features from 12.12.0-beta.1.
+
+## 12.12.0-beta.1 (2022-08-23)
+- Added support for service version 2021-10-04.
+- Added support for SDK-calculated transactional checksums on data transfer.
+- Added support for flush parameter to DataLakeFileClient.Append() and .AppendAsync().
+- Added support for encryption scopes.
+- Added support for encryption scope SAS.
+- Fixed bug where DataLakeFileSystemClient.GetParentServiceClient() persisted the filesystem name in the URL of the returned DataLakeServiceClient
+- Fixed bug where PathItem.ETag was not being deserialized correctly.
+
+## 12.11.0 (2022-07-07)
+- Includes all features from 12.11.0-beta.1.
+- Fixed bug where DataLakePathClient.Rename() was not passing the AzureSasCredential to the source.
+
+## 12.11.0-beta.1 (2022-06-15)
+- Added support for service version 2021-08-06.
+- Added ability to set permission, umask, owner, group, ACL, lease, and expiry time on DataLakeFileClient.Create() and .CreateAsync(), DataLakeDirectoryClient.Create() and .CreateAsync(), and DataLakePathClient.Create() and .CreateAsync().
+- Fixed bug where DataLakeDirectoryClient.GetPaths() and DataLakeFileSystemClient.GetPaths() called on a storage account without HNS enabled throws a FormatException when parsing the Date Time.
+
+## 12.10.0 (2022-05-02)
+- Includes all features from 12.10.0-beta.1.
+
+## 12.10.0-beta.1 (2022-04-12)
 - Added support for service version 2021-06-08.
 - Added support for Customer Provided Key server-side encryption of files.
 - Added ability to retrieve path CreatedOn and ExpiresOn times with DataLakeFileSystemClient.GetPaths() and .GetPathsAsync().

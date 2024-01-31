@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> The geofence geometry. </summary>
     public partial class MapsGeofenceGeometry
     {
-        /// <summary> Initializes a new instance of MapsGeofenceGeometry. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsGeofenceGeometry"/>. </summary>
         internal MapsGeofenceGeometry()
         {
         }
 
-        /// <summary> Initializes a new instance of MapsGeofenceGeometry. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsGeofenceGeometry"/>. </summary>
         /// <param name="deviceId"> ID of the device. </param>
         /// <param name="distance"> Distance from the coordinate to the closest border of the geofence. Positive means the coordinate is outside of the geofence. If the coordinate is outside of the geofence, but more than the value of searchBuffer away from the closest geofence border, then the value is 999. Negative means the coordinate is inside of the geofence. If the coordinate is inside the polygon, but more than the value of searchBuffer away from the closest geofencing border,then the value is -999. A value of 999 means that there is great confidence the coordinate is well outside the geofence. A value of -999 means that there is great confidence the coordinate is well within the geofence. </param>
         /// <param name="geometryId"> The unique ID for the geofence geometry. </param>

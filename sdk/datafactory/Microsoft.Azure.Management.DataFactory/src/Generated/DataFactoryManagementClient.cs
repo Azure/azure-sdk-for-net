@@ -161,6 +161,11 @@ namespace Microsoft.Azure.Management.DataFactory
         public virtual IManagedPrivateEndpointsOperations ManagedPrivateEndpoints { get; private set; }
 
         /// <summary>
+        /// Gets the ICredentialOperations.
+        /// </summary>
+        public virtual ICredentialOperations CredentialOperations { get; private set; }
+
+        /// <summary>
         /// Gets the IPrivateEndPointConnectionsOperations.
         /// </summary>
         public virtual IPrivateEndPointConnectionsOperations PrivateEndPointConnections { get; private set; }
@@ -174,6 +179,11 @@ namespace Microsoft.Azure.Management.DataFactory
         /// Gets the IPrivateLinkResourcesOperations.
         /// </summary>
         public virtual IPrivateLinkResourcesOperations PrivateLinkResources { get; private set; }
+
+        /// <summary>
+        /// Gets the IGlobalParametersOperations.
+        /// </summary>
+        public virtual IGlobalParametersOperations GlobalParameters { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the DataFactoryManagementClient class.
@@ -433,9 +443,11 @@ namespace Microsoft.Azure.Management.DataFactory
             DataFlowDebugSession = new DataFlowDebugSessionOperations(this);
             ManagedVirtualNetworks = new ManagedVirtualNetworksOperations(this);
             ManagedPrivateEndpoints = new ManagedPrivateEndpointsOperations(this);
+            CredentialOperations = new CredentialOperations(this);
             PrivateEndPointConnections = new PrivateEndPointConnectionsOperations(this);
             PrivateEndpointConnection = new PrivateEndpointConnectionOperations(this);
             PrivateLinkResources = new PrivateLinkResourcesOperations(this);
+            GlobalParameters = new GlobalParametersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-06-01";
             AcceptLanguage = "en-US";

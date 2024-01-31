@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static MediaLiveEventIncomingVideoStreamsOutOfSyncEventData DeserializeMediaLiveEventIncomingVideoStreamsOutOfSyncEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> firstTimestamp = default;
             Optional<string> firstDuration = default;
             Optional<string> secondTimestamp = default;
@@ -24,27 +28,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Optional<string> timescale = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("firstTimestamp"))
+                if (property.NameEquals("firstTimestamp"u8))
                 {
                     firstTimestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("firstDuration"))
+                if (property.NameEquals("firstDuration"u8))
                 {
                     firstDuration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondTimestamp"))
+                if (property.NameEquals("secondTimestamp"u8))
                 {
                     secondTimestamp = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondDuration"))
+                if (property.NameEquals("secondDuration"u8))
                 {
                     secondDuration = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("timescale"))
+                if (property.NameEquals("timescale"u8))
                 {
                     timescale = property.Value.GetString();
                     continue;

@@ -28,6 +28,56 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void TryGetTypeKeyedPropertyReturnsFalseIfNotExist()
+        {
+            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
+
+            Assert.False(message.TryGetProperty(typeof(string), out _));
+        }
+
+        [Test]
+        public void TryGetTypeKeyedPropertyReturnsValueIfSet()
+        {
+            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
+            message.SetProperty(typeof(string), "value");
+
+            Assert.True(message.TryGetProperty(typeof(string), out object value));
+            Assert.AreEqual("value", value);
+        }
+
+        [Test]
+        public void TryGetTypeKeyedPropertyReturnsCorrectValues()
+        {
+            HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
+            int readLoops = 10;
+            var t3 = new T3() { Value = 1234 };
+            message.SetProperty(typeof(T1), new T1() { Value = 1111 });
+            message.SetProperty(typeof(T2), new T2() { Value = 2222 });
+            message.SetProperty(typeof(T3), new T3() { Value = 3333 });
+            message.SetProperty(typeof(T4), new T4() { Value = 4444 });
+
+            message.TryGetProperty(typeof(T1), out var value);
+            Assert.AreEqual(1111, ((T1)value).Value);
+            message.TryGetProperty(typeof(T2), out value);
+            Assert.AreEqual(2222, ((T2)value).Value);
+            message.TryGetProperty(typeof(T3), out value);
+            Assert.AreEqual(3333, ((T3)value).Value);
+            message.TryGetProperty(typeof(T4), out value);
+            Assert.AreEqual(4444, ((T4)value).Value);
+
+            for (int i = 0; i < readLoops; i++)
+            {
+                t3.Value = i;
+                message.SetProperty(typeof(T3), t3);
+                message.TryGetProperty(typeof(T3), out value);
+                Assert.AreEqual(i, ((T3)value).Value);
+            }
+
+            message.TryGetProperty(typeof(T4), out value);
+            Assert.AreEqual(4444, ((T4)value).Value);
+        }
+
+        [Test]
         public void TryGetPropertyIsCaseSensitive()
         {
             HttpMessage message = new HttpMessage(new MockRequest(), ResponseClassifier.Shared);
@@ -372,6 +422,31 @@ namespace Azure.Core.Tests
                     _ => true
                 };
             }
+        }
+
+        private struct T1
+        {
+            public int Value { get; set; }
+        }
+
+        private struct T2
+        {
+            public int Value { get; set; }
+        }
+
+        private struct T3
+        {
+            public int Value { get; set; }
+        }
+
+        private struct T4
+        {
+            public int Value { get; set; }
+        }
+
+        private struct T5
+        {
+            public int Value { get; set; }
         }
         #endregion
     }

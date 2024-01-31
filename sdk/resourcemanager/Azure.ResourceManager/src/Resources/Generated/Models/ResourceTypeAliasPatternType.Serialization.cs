@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Resources.Models
 
         public static ResourceTypeAliasPatternType ToResourceTypeAliasPatternType(this string value)
         {
-            if (string.Equals(value, "NotSpecified", StringComparison.InvariantCultureIgnoreCase)) return ResourceTypeAliasPatternType.NotSpecified;
-            if (string.Equals(value, "Extract", StringComparison.InvariantCultureIgnoreCase)) return ResourceTypeAliasPatternType.Extract;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSpecified")) return ResourceTypeAliasPatternType.NotSpecified;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Extract")) return ResourceTypeAliasPatternType.Extract;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResourceTypeAliasPatternType value.");
         }
     }

@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// </summary>
     public static class WebApplicationFirewallTransform
     {
+        public const string Uppercase = "Uppercase";
         public const string Lowercase = "Lowercase";
         public const string Trim = "Trim";
         public const string UrlDecode = "UrlDecode";

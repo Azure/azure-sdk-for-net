@@ -6,52 +6,61 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class CloningInfo : IUtf8JsonSerializable
+    public partial class CloningInfo : IUtf8JsonSerializable, IJsonModel<CloningInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloningInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CloningInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CloningInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloningInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CorrelationId))
             {
-                writer.WritePropertyName("correlationId");
+                writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId.Value);
             }
-            if (Optional.IsDefined(Overwrite))
+            if (Optional.IsDefined(CanOverwrite))
             {
-                writer.WritePropertyName("overwrite");
-                writer.WriteBooleanValue(Overwrite.Value);
+                writer.WritePropertyName("overwrite"u8);
+                writer.WriteBooleanValue(CanOverwrite.Value);
             }
             if (Optional.IsDefined(CloneCustomHostNames))
             {
-                writer.WritePropertyName("cloneCustomHostNames");
+                writer.WritePropertyName("cloneCustomHostNames"u8);
                 writer.WriteBooleanValue(CloneCustomHostNames.Value);
             }
             if (Optional.IsDefined(CloneSourceControl))
             {
-                writer.WritePropertyName("cloneSourceControl");
+                writer.WritePropertyName("cloneSourceControl"u8);
                 writer.WriteBooleanValue(CloneSourceControl.Value);
             }
-            writer.WritePropertyName("sourceWebAppId");
+            writer.WritePropertyName("sourceWebAppId"u8);
             writer.WriteStringValue(SourceWebAppId);
             if (Optional.IsDefined(SourceWebAppLocation))
             {
-                writer.WritePropertyName("sourceWebAppLocation");
-                writer.WriteStringValue(SourceWebAppLocation);
+                writer.WritePropertyName("sourceWebAppLocation"u8);
+                writer.WriteStringValue(SourceWebAppLocation.Value);
             }
             if (Optional.IsDefined(HostingEnvironment))
             {
-                writer.WritePropertyName("hostingEnvironment");
+                writer.WritePropertyName("hostingEnvironment"u8);
                 writer.WriteStringValue(HostingEnvironment);
             }
             if (Optional.IsCollectionDefined(AppSettingsOverrides))
             {
-                writer.WritePropertyName("appSettingsOverrides");
+                writer.WritePropertyName("appSettingsOverrides"u8);
                 writer.WriteStartObject();
                 foreach (var item in AppSettingsOverrides)
                 {
@@ -62,97 +71,131 @@ namespace Azure.ResourceManager.AppService.Models
             }
             if (Optional.IsDefined(ConfigureLoadBalancing))
             {
-                writer.WritePropertyName("configureLoadBalancing");
+                writer.WritePropertyName("configureLoadBalancing"u8);
                 writer.WriteBooleanValue(ConfigureLoadBalancing.Value);
             }
             if (Optional.IsDefined(TrafficManagerProfileId))
             {
-                writer.WritePropertyName("trafficManagerProfileId");
+                writer.WritePropertyName("trafficManagerProfileId"u8);
                 writer.WriteStringValue(TrafficManagerProfileId);
             }
             if (Optional.IsDefined(TrafficManagerProfileName))
             {
-                writer.WritePropertyName("trafficManagerProfileName");
+                writer.WritePropertyName("trafficManagerProfileName"u8);
                 writer.WriteStringValue(TrafficManagerProfileName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static CloningInfo DeserializeCloningInfo(JsonElement element)
+        CloningInfo IJsonModel<CloningInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CloningInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloningInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloningInfo(document.RootElement, options);
+        }
+
+        internal static CloningInfo DeserializeCloningInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> correlationId = default;
             Optional<bool> overwrite = default;
             Optional<bool> cloneCustomHostNames = default;
             Optional<bool> cloneSourceControl = default;
-            string sourceWebAppId = default;
-            Optional<string> sourceWebAppLocation = default;
+            ResourceIdentifier sourceWebAppId = default;
+            Optional<AzureLocation> sourceWebAppLocation = default;
             Optional<string> hostingEnvironment = default;
             Optional<IDictionary<string, string>> appSettingsOverrides = default;
             Optional<bool> configureLoadBalancing = default;
-            Optional<string> trafficManagerProfileId = default;
+            Optional<ResourceIdentifier> trafficManagerProfileId = default;
             Optional<string> trafficManagerProfileName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("correlationId"))
+                if (property.NameEquals("correlationId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     correlationId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("overwrite"))
+                if (property.NameEquals("overwrite"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     overwrite = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("cloneCustomHostNames"))
+                if (property.NameEquals("cloneCustomHostNames"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cloneCustomHostNames = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("cloneSourceControl"))
+                if (property.NameEquals("cloneSourceControl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cloneSourceControl = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("sourceWebAppId"))
+                if (property.NameEquals("sourceWebAppId"u8))
                 {
-                    sourceWebAppId = property.Value.GetString();
+                    sourceWebAppId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceWebAppLocation"))
+                if (property.NameEquals("sourceWebAppLocation"u8))
                 {
-                    sourceWebAppLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceWebAppLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("hostingEnvironment"))
+                if (property.NameEquals("hostingEnvironment"u8))
                 {
                     hostingEnvironment = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appSettingsOverrides"))
+                if (property.NameEquals("appSettingsOverrides"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -163,28 +206,67 @@ namespace Azure.ResourceManager.AppService.Models
                     appSettingsOverrides = dictionary;
                     continue;
                 }
-                if (property.NameEquals("configureLoadBalancing"))
+                if (property.NameEquals("configureLoadBalancing"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     configureLoadBalancing = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("trafficManagerProfileId"))
+                if (property.NameEquals("trafficManagerProfileId"u8))
                 {
-                    trafficManagerProfileId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    trafficManagerProfileId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("trafficManagerProfileName"))
+                if (property.NameEquals("trafficManagerProfileName"u8))
                 {
                     trafficManagerProfileName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CloningInfo(Optional.ToNullable(correlationId), Optional.ToNullable(overwrite), Optional.ToNullable(cloneCustomHostNames), Optional.ToNullable(cloneSourceControl), sourceWebAppId, sourceWebAppLocation.Value, hostingEnvironment.Value, Optional.ToDictionary(appSettingsOverrides), Optional.ToNullable(configureLoadBalancing), trafficManagerProfileId.Value, trafficManagerProfileName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CloningInfo(Optional.ToNullable(correlationId), Optional.ToNullable(overwrite), Optional.ToNullable(cloneCustomHostNames), Optional.ToNullable(cloneSourceControl), sourceWebAppId, Optional.ToNullable(sourceWebAppLocation), hostingEnvironment.Value, Optional.ToDictionary(appSettingsOverrides), Optional.ToNullable(configureLoadBalancing), trafficManagerProfileId.Value, trafficManagerProfileName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CloningInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloningInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CloningInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CloningInfo IPersistableModel<CloningInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloningInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCloningInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CloningInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CloningInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

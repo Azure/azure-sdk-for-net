@@ -15,9 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -158,11 +156,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 Converters = new List<JsonConverter>
                 {
-                    new StringEnumConverter(),
                     new BinaryDataJsonConverter(),
                     new ConnectionStatesNewtonsoftConverter(),
+                    new WebPubSubDataTypeJsonConverter(),
+                    new WebPubSubEventTypeJsonConverter(),
                 },
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
             };
         }
 

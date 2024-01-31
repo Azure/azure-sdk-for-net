@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29709.97
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.33630.43
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.ServiceBus", "src\Azure.Messaging.ServiceBus.csproj", "{F687535D-6675-4592-95A0-C621338AD298}"
 EndProject
@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CONTRIBUTING.md = CONTRIBUTING.md
 		MigrationGuide.md = MigrationGuide.md
 		README.md = README.md
+		TROUBLESHOOTING.md = TROUBLESHOOTING.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{4A864BCB-6AD7-4F89-8778-C2953379EAAC}"
@@ -20,7 +21,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{8B8C7CA6-452C-4041-A66D-78DC6F762C62}"
 	ProjectSection(SolutionItems) = preProject
 		samples\README.md = samples\README.md
-		samples\Sample01_HelloWorld.md = samples\Sample01_HelloWorld.md
+		samples\Sample00_AuthenticateClient.md = samples\Sample00_AuthenticateClient.md
+		samples\Sample01_SendReceive.md = samples\Sample01_SendReceive.md
 		samples\Sample02_MessageSettlement.md = samples\Sample02_MessageSettlement.md
 		samples\Sample03_SendReceiveSessions.md = samples\Sample03_SendReceiveSessions.md
 		samples\Sample04_Processor.md = samples\Sample04_Processor.md
@@ -30,17 +32,24 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{8B8C
 		samples\Sample08_Interop.md = samples\Sample08_Interop.md
 		samples\Sample09_Extensibility.md = samples\Sample09_Extensibility.md
 		samples\Sample10_ClaimCheck.md = samples\Sample10_ClaimCheck.md
+		samples\Sample11_CloudEvents.md = samples\Sample11_CloudEvents.md
+		samples\Sample12_ManagingRules.md = samples\Sample12_ManagingRules.md
+		samples\Sample13_AdvancedConfiguration.md = samples\Sample13_AdvancedConfiguration.md
+		samples\Sample14_AMQPMessage.md = samples\Sample14_AMQPMessage.md
+		samples\Sample15_MockingClientTypes.md = samples\Sample15_MockingClientTypes.md
+		samples\Sample16_CrossReceiverMessageSettlement.md = samples\Sample16_CrossReceiverMessageSettlement.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Amqp", "..\..\core\Azure.Core.Amqp\src\Azure.Core.Amqp.csproj", "{2ADA26CA-77E5-4793-927A-A6185FD8AA29}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Amqp.Tests", "..\..\core\Azure.Core.Amqp\tests\Azure.Core.Amqp.Tests.csproj", "{0C1C6691-FC09-4507-92B8-1406251A1273}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Messaging.ServiceBus.Perf", "perf\Azure.Messaging.ServiceBus.Perf.csproj", "{D740589B-D898-4C51-B334-61BBC1E82CFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Messaging.ServiceBus.Perf", "perf\Azure.Messaging.ServiceBus.Perf.csproj", "{D740589B-D898-4C51-B334-61BBC1E82CFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Test.Perf", "..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{A6A7CEAE-C1F9-4B9B-A19F-4AA38ADF5209}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Test.Perf", "..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj", "{A6A7CEAE-C1F9-4B9B-A19F-4AA38ADF5209}"
 EndProject
-
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PluginSample", "samples\PluginSample\PluginSample.csproj", "{8FA70CB7-4230-4913-8BF0-61FC39707A3E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,10 +68,6 @@ Global
 		{4A864BCB-6AD7-4F89-8778-C2953379EAAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A864BCB-6AD7-4F89-8778-C2953379EAAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A864BCB-6AD7-4F89-8778-C2953379EAAC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9CD1905A-19B9-4F71-8BE6-D25CF49DA5B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9CD1905A-19B9-4F71-8BE6-D25CF49DA5B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9CD1905A-19B9-4F71-8BE6-D25CF49DA5B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9CD1905A-19B9-4F71-8BE6-D25CF49DA5B3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2ADA26CA-77E5-4793-927A-A6185FD8AA29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2ADA26CA-77E5-4793-927A-A6185FD8AA29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2ADA26CA-77E5-4793-927A-A6185FD8AA29}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -79,10 +84,10 @@ Global
 		{A6A7CEAE-C1F9-4B9B-A19F-4AA38ADF5209}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6A7CEAE-C1F9-4B9B-A19F-4AA38ADF5209}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6A7CEAE-C1F9-4B9B-A19F-4AA38ADF5209}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B42578D2-76CD-4F4E-9999-CDB466477488}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B42578D2-76CD-4F4E-9999-CDB466477488}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B42578D2-76CD-4F4E-9999-CDB466477488}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B42578D2-76CD-4F4E-9999-CDB466477488}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FA70CB7-4230-4913-8BF0-61FC39707A3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FA70CB7-4230-4913-8BF0-61FC39707A3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FA70CB7-4230-4913-8BF0-61FC39707A3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FA70CB7-4230-4913-8BF0-61FC39707A3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

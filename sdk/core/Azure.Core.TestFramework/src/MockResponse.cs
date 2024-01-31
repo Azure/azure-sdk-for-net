@@ -107,5 +107,82 @@ namespace Azure.Core.TestFramework
         {
             IsDisposed = true;
         }
+
+        /// <summary>
+        /// Fluent API to add an <see cref="HttpHeader"/> to the <see cref="MockResponse"/>.
+        /// </summary>
+        /// <param name="header">The <see cref="HttpHeader"/> to add.</param>
+        /// <returns>The modified <see cref="MockResponse"/>.</returns>
+        /// <remarks>
+        /// Add a byte stream to the <see cref="MockResponse"/>.
+        /// <code><![CDATA[
+        /// MockResponse response = new MockResponse(200)
+        ///     .WithHeader(HttpHeader.Common.OctetStreamContentType)
+        ///     .WithContent(new byte[] { 0x74, 0x65, 0x73, 0x74 });
+        /// ]]></code>
+        /// </remarks>
+        public MockResponse WithHeader(HttpHeader header)
+        {
+            AddHeader(header);
+            return this;
+        }
+
+        /// <summary>
+        /// Fluent API to add an <see cref="HttpHeader"/> to the <see cref="MockResponse"/>.
+        /// </summary>
+        /// <param name="name">Name of the header to add.</param>
+        /// <param name="value">Value of the header to add.</param>
+        /// <returns>The modified <see cref="MockResponse"/>.</returns>
+        /// <remarks>
+        /// Add a byte stream to the <see cref="MockResponse"/>.
+        /// <code><![CDATA[
+        /// MockResponse response = new MockResponse(200)
+        ///     .WithHeader("Content-Type", "application/x-octet-stream")
+        ///     .WithContent(new byte[] { 0x74, 0x65, 0x73, 0x74 });
+        /// ]]></code>
+        /// </remarks>
+        public MockResponse WithHeader(string name, string value)
+        {
+            AddHeader(name, value);
+            return this;
+        }
+
+        /// <summary>
+        /// Fluent API to add content to the <see cref="MockResponse"/>.
+        /// </summary>
+        /// <param name="content">The string content to add.</param>
+        /// <returns>The modified <see cref="MockResponse"/>.</returns>
+        /// <remarks>
+        /// Add a byte stream to the <see cref="MockResponse"/>.
+        /// <code><![CDATA[
+        /// MockResponse response = new MockResponse(200)
+        ///     .WithHeader(HttpHeader.Common.OctetStreamContentType)
+        ///     .WithContent(new byte[] { 0x74, 0x65, 0x73, 0x74 });
+        /// ]]></code>
+        /// </remarks>
+        public MockResponse WithContent(string content)
+        {
+            SetContent(content);
+            return this;
+        }
+
+        /// <summary>
+        /// Fluent API to add JSON content and content-type header to the <see cref="MockResponse"/>.
+        /// </summary>
+        /// <param name="json">The JSON content to add.</param>
+        /// <returns>The modified <see cref="MockResponse"/>.</returns>
+        /// <remarks>
+        /// Add JSON to the <see cref="MockResponse"/>.
+        /// <code><![CDATA[
+        /// MockResponse response = new MockResponse(200)
+        ///     .WithJson(@"{""foo"":""bar"",""baz"":false}");
+        /// ]]></code>
+        /// </remarks>
+        public MockResponse WithJson(string json)
+        {
+            AddHeader(HttpHeader.Common.JsonContentType);
+            SetContent(json);
+            return this;
+        }
     }
 }

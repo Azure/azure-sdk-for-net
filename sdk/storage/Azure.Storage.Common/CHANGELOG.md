@@ -1,6 +1,70 @@
 # Release History
 
-## 12.11.0-beta.1 (Unreleased)
+## 12.19.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.19.0-beta.1 (2023-12-05)
+- Fixed bug where parsing the "sdd" value of a SAS would increment the value by 6 if the value was 10 or over.
+
+## 12.18.1 (2023-11-13)
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+
+## 12.18.0 (2023-11-06)
+- Includes all features from 12.18.0-beta.1.
+
+## 12.18.0-beta.1 (2023-10-16)
+- This release contains bug fixes to improve quality.
+
+## 12.17.0 (2023-09-12)
+- Includes all features from 12.17.0-beta.1.
+
+## 12.17.0-beta.1 (2023-08-08)
+- This release contains bug fixes to improve quality.
+
+## 12.16.0 (2023-07-11)
+- Includes all features from 12.16.0-beta.1.
+
+## 12.16.0-beta.1 (2023-05-30)
+- This release contains bug fixes to improve quality.
+
+## 12.15.0 (2023-04-11)
+- Includes all features from 12.15.0-beta.1.
+
+## 12.15.0-beta.1 (2023-03-28)
+- This release contains bug fixes to improve quality.
+
+## 12.14.1 (2023-03-24)
+- Bumped Azure.Core dependency from 1.28 and 1.30, fixing issue with headers being non-resilient to double dispose of the request.
+
+## 12.14.0 (2023-02-21)
+- Includes all features from 12.14.0-beta.1.
+
+## 12.14.0-beta.1 (2023-02-07)
+- This release contains bug fixes to improve quality.
+
+## 12.13.0 (2022-10-12)
+- Includes all features from 12.13.0-beta.1.
+
+## 12.13.0-beta.1 (2022-08-23)
+- Fixed bug where Account SAS with the resources type value not in the order "sco" would get reordered to that order, which would invalidate the Account SAS signature from the string to sign
+
+## 12.12.0 (2022-07-07)
+- Includes all features from 12.12.0-beta.1.
+
+## 12.12.0-beta.1 (2022-06-15)
+- This release contains bug fixes to improve quality.
+
+## 12.11.0 (2022-05-02)
+- Includes all features from 12.11.0-beta.1.
+
+## 12.11.0-beta.1 (2022-04-12)
 - This release contains bug fixes to improve quality.
 
 ## 12.10.0 (2022-03-10)

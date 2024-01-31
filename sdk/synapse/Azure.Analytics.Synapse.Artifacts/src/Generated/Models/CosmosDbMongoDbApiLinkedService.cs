@@ -7,33 +7,28 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Linked service for CosmosDB (MongoDB API) data source. </summary>
     public partial class CosmosDbMongoDbApiLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of CosmosDbMongoDbApiLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDbMongoDbApiLinkedService"/>. </summary>
         /// <param name="connectionString"> The CosmosDB (MongoDB API) connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="database"> The name of the CosmosDB (MongoDB API) database that you want to access. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="database"/> is null. </exception>
         public CosmosDbMongoDbApiLinkedService(object connectionString, object database)
         {
-            if (connectionString == null)
-            {
-                throw new ArgumentNullException(nameof(connectionString));
-            }
-            if (database == null)
-            {
-                throw new ArgumentNullException(nameof(database));
-            }
+            Argument.AssertNotNull(connectionString, nameof(connectionString));
+            Argument.AssertNotNull(database, nameof(database));
 
             ConnectionString = connectionString;
             Database = database;
             Type = "CosmosDbMongoDbApi";
         }
 
-        /// <summary> Initializes a new instance of CosmosDbMongoDbApiLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDbMongoDbApiLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

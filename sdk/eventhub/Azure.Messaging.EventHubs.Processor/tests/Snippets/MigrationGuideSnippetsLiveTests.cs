@@ -100,9 +100,13 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             {
                 var metadata = new Dictionary<string, string>()
                 {
-                    { offsetKey, checkpoint.Offset.ToString(CultureInfo.InvariantCulture) },
-                    { sequenceKey, checkpoint.SequenceNumber.ToString(CultureInfo.InvariantCulture) }
+                    { offsetKey, checkpoint.Offset.ToString(CultureInfo.InvariantCulture) }
                 };
+
+                if (checkpoint.SequenceNumber.HasValue)
+                {
+                    metadata[sequenceKey] = checkpoint.SequenceNumber.Value.ToString(CultureInfo.InvariantCulture);
+                }
 
                 BlobClient blobClient = storageClient.GetBlobClient($"{ prefix }{ checkpoint.PartitionId }");
 
@@ -140,6 +144,14 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 ""Epoch"":1,
                 ""Offset"":""78"",
                 ""SequenceNumber"":39
+            },
+            {
+                ""PartitionId"":""3"",
+                ""Owner"":""eecd42df-a253-49d1-bb04-e5f00c106cfc"",
+                ""Token"":""6271aadb-801f-4ec7-a011-a008808a656c"",
+                ""Epoch"":1,
+                ""Offset"":""123"",
+                ""SequenceNumber"":null
             }]";
 
             return JsonSerializer.Deserialize<MigrationCheckpoint[]>(checkpointJson);
@@ -172,7 +184,11 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 await (storageClient.GetBlobClient(blobItem.Name)).DownloadToAsync(blobContentStream);
 
                 var checkpoint = JsonSerializer.Deserialize<MigrationCheckpoint>(Encoding.UTF8.GetString(blobContentStream.ToArray()));
-                checkpoints.Add(checkpoint);
+
+                if (!string.IsNullOrEmpty(checkpoint.Offset))
+                {
+                    checkpoints.Add(checkpoint);
+                }
             }
 
             return checkpoints;
@@ -186,7 +202,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
         {
             public string PartitionId { get; set; }
             public string Offset { get; set; }
-            public long SequenceNumber { get; set; }
+            public long? SequenceNumber { get; set; }
         }
 
         #endregion

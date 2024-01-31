@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using Azure.Core;
 
 [assembly:CodeGenSuppressType("CreatedByType")]
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Models
             return new AzureLocation(location.Name, location.DisplayName);
         }
 
-                /// <summary> Initializes a new instance of LocationExpanded. </summary>
+        /// <summary> Initializes a new instance of LocationExpanded. </summary>
         /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/00000000-0000-0000-0000-000000000000/locations/westus. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="name"> The location name. </param>
@@ -28,7 +29,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="displayName"> The display name of the location. </param>
         /// <param name="regionalDisplayName"> The display name of the location and its region. </param>
         /// <param name="metadata"> Metadata of the location, such as lat/long, paired region, and others. </param>
-        internal LocationExpanded(string id, string subscriptionId, string name, LocationType? locationType, string displayName, string regionalDisplayName, LocationMetadata metadata)
+        /// <param name="availabilityZoneMappings"> The availability zone mappings for this region. </param>
+        internal LocationExpanded(string id, string subscriptionId, string name, LocationType? locationType, string displayName, string regionalDisplayName, LocationMetadata metadata, IReadOnlyList<AvailabilityZoneMappings> availabilityZoneMappings)
         {
             Id = id;
             ResourceIdentifier subId = new ResourceIdentifier(id);
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
             DisplayName = displayName;
             RegionalDisplayName = regionalDisplayName;
             Metadata = metadata;
+            AvailabilityZoneMappings = availabilityZoneMappings;
         }
     }
 }

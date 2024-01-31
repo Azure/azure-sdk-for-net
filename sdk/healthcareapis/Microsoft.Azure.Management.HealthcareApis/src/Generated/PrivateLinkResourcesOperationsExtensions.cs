@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
             /// <param name='resourceName'>
             /// The name of the service instance.
             /// </param>
-            public static PrivateLinkResourceListResult ListByService(this IPrivateLinkResourcesOperations operations, string resourceGroupName, string resourceName)
+            public static PrivateLinkResourceListResultDescription ListByService(this IPrivateLinkResourcesOperations operations, string resourceGroupName, string resourceName)
             {
                 return operations.ListByServiceAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
             }
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateLinkResourceListResult> ListByServiceAsync(this IPrivateLinkResourcesOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrivateLinkResourceListResultDescription> ListByServiceAsync(this IPrivateLinkResourcesOperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
             /// <param name='groupName'>
             /// The name of the private link resource group.
             /// </param>
-            public static PrivateLinkResource Get(this IPrivateLinkResourcesOperations operations, string resourceGroupName, string resourceName, string groupName)
+            public static PrivateLinkResourceDescription Get(this IPrivateLinkResourcesOperations operations, string resourceGroupName, string resourceName, string groupName)
             {
                 return operations.GetAsync(resourceGroupName, resourceName, groupName).GetAwaiter().GetResult();
             }
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.HealthcareApis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PrivateLinkResource> GetAsync(this IPrivateLinkResourcesOperations operations, string resourceGroupName, string resourceName, string groupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PrivateLinkResourceDescription> GetAsync(this IPrivateLinkResourcesOperations operations, string resourceGroupName, string resourceName, string groupName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, resourceName, groupName, null, cancellationToken).ConfigureAwait(false))
                 {

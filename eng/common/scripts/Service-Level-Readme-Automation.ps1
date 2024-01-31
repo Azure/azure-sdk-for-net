@@ -1,0 +1,130 @@
+<#
+.SYNOPSIS
+The script is to generate service level readme if it is missing.
+For exist ones, we do 2 things here:
+1. Generate the client but not import to the existing service level readme.
+2. Update the metadata of service level readme
+
+.DESCRIPTION
+Given a doc repo location, and the credential for fetching the ms.author.
+Generate missing service level readme and updating metadata of the existing ones.
+
+.PARAMETER DocRepoLocation
+Location of the documentation repo. This repo may be sparsely checked out
+depending on the requirements for the domain
+
+.PARAMETER ReadmeFolderRoot
+The readme folder root path, use default value here for backward compability. E.g. docs-ref-services in Java, JS, Python, api/overview/azure
+#>
+
+param(
+  [Parameter(Mandatory = $true)]
+  [string] $DocRepoLocation,
+
+  [Parameter(Mandatory = $false)]
+  [string]$ReadmeFolderRoot = "docs-ref-services",
+
+  [Parameter(Mandatory = $false)]
+  [array]$Monikers = @('latest', 'preview', 'legacy')
+)
+. $PSScriptRoot/common.ps1
+. $PSScriptRoot/Helpers/Service-Level-Readme-Automation-Helpers.ps1
+. $PSScriptRoot/Helpers/Metadata-Helpers.ps1
+. $PSScriptRoot/Helpers/Package-Helpers.ps1
+
+Set-StrictMode -Version 3
+
+$fullMetadata = Get-CSVMetadata
+foreach($moniker in $Monikers) {
+  # The onboarded packages return is key-value pair, which key is the package index, and value is the package info from {metadata}.json
+  # E.g.
+  # Key as: @azure/storage-blob
+  # Value as:
+  # {
+  #   "Name": "@azure/storage-blob",
+  #   "Version": "12.10.0-beta.1",
+  #   "DevVersion": null,
+  #   "DirectoryPath": "sdk/storage/storage-blob",
+  #   "ServiceDirectory": "storage",
+  #   "ReadMePath": "sdk/storage/storage-blob/README.md",
+  #   "ChangeLogPath": "sdk/storage/storage-blob/CHANGELOG.md",
+  #   "Group": null,
+  #   "SdkType": "client",
+  #   "IsNewSdk": true,
+  #   "ArtifactName": "azure-storage-blob",
+  #   "ReleaseStatus": "2022-04-19"
+  # }
+  $onboardedPackages = &$GetOnboardedDocsMsPackagesForMonikerFn `
+    -DocRepoLocation $DocRepoLocation -moniker $moniker
+  $csvMetadata = @()
+
+  foreach($metadataEntry in $fullMetadata) {
+    if ($metadataEntry.Package -and $metadataEntry.Hide -ne 'true') {
+      $pkgKey = GetPackageKey $metadataEntry
+
+      if (!$onboardedPackages.ContainsKey($pkgKey)) {
+        continue
+      }
+
+      $package = $onboardedPackages[$pkgKey]
+
+      if (!$package) {
+        $csvMetadata += $metadataEntry
+        continue
+      }
+
+      # If the metadata JSON entry has a DirectoryPath, but the CSV entry
+      # does not, add the DirectoryPath to the CSV entry
+      if (($package.PSObject.Members.Name -contains 'DirectoryPath') `
+        -and !($metadataEntry.PSObject.Members.Name -contains "DirectoryPath") ) {
+
+        Add-Member -InputObject $metadataEntry `
+          -MemberType NoteProperty `
+          -Name DirectoryPath `
+          -Value $package.DirectoryPath
+      }
+
+      $csvMetadata += $metadataEntry
+
+    }
+  }
+
+  $packagesForService = @{}
+  $allPackages = GetPackageLookup $csvMetadata
+  foreach ($metadataKey in $allPackages.Keys) {
+    $metadataEntry = $allPackages[$metadataKey]
+    if (!$metadataEntry.ServiceName) {
+      LogWarning "Empty ServiceName for package `"$metadataKey`". Skipping."
+      continue
+    }
+    $packagesForService[$metadataKey] = $metadataEntry
+  }
+  $services = @{}
+  foreach ($package in $packagesForService.Values) {
+    if ($package.ServiceName -eq 'Other') {
+      # Skip packages under the service category "Other". Those will be handled
+      # later
+      continue
+    }
+    if (!$services.ContainsKey($package.ServiceName)) {
+      $services[$package.ServiceName] = $true
+    }
+  }
+  foreach ($service in $services.Keys) {
+    Write-Host "Building service: $service"
+    $servicePackages = $packagesForService.Values.Where({ $_.ServiceName -eq $service })
+    $serviceReadmeBaseName = ServiceLevelReadmeNameStyle -serviceName $service
+
+    # Add ability to override
+    # Fetch the service readme name
+    $msService = GetDocsMsService -packageInfo $servicePackages[0] -serviceName $service
+    generate-service-level-readme `
+      -docRepoLocation $DocRepoLocation `
+      -readmeBaseName $serviceReadmeBaseName `
+      -pathPrefix $ReadmeFolderRoot `
+      -packageInfos $servicePackages `
+      -serviceName $service `
+      -moniker $moniker `
+      -msService $msService  
+  }
+}

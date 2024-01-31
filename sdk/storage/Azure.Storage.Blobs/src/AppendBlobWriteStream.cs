@@ -20,15 +20,13 @@ namespace Azure.Storage.Blobs
             long bufferSize,
             long position,
             AppendBlobRequestConditions conditions,
-            IProgress<long> progressHandler
-            // TODO #27253
-            //UploadTransactionalHashingOptions hashingOptions
+            IProgress<long> progressHandler,
+            UploadTransferValidationOptions transferValidation
             ) : base(
                 position,
                 bufferSize,
-                progressHandler
-                // TODO #27253
-                //hashingOptions
+                progressHandler,
+                transferValidation
                 )
         {
             ValidateBufferSize(bufferSize);
@@ -37,6 +35,7 @@ namespace Azure.Storage.Blobs
         }
 
         protected override async Task AppendInternal(
+            UploadTransferValidationOptions validationOptions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -46,14 +45,7 @@ namespace Azure.Storage.Blobs
 
                 Response<BlobAppendInfo> response = await _appendBlobClient.AppendBlockInternal(
                     content: _buffer,
-                    // TODO #27253
-                    //new AppendBlobAppendBlockOptions()
-                    //{
-                    //    TransactionalHashingOptions = _hashingOptions,
-                    //    Conditions = _conditions,
-                    //    ProgressHandler = _progressHandler
-                    //},
-                    transactionalContentMD5: default,
+                    validationOptions,
                     _conditions,
                     _progressHandler,
                     async: async,
@@ -61,13 +53,8 @@ namespace Azure.Storage.Blobs
                     .ConfigureAwait(false);
 
                 _conditions.IfMatch = response.Value.ETag;
-
-                _buffer.Clear();
             }
         }
-
-        protected override async Task FlushInternal(bool async, CancellationToken cancellationToken)
-            => await AppendInternal(async, cancellationToken).ConfigureAwait(false);
 
         protected override void ValidateBufferSize(long bufferSize)
         {

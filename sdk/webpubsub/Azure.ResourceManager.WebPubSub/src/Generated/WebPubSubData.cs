@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -12,26 +13,61 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    /// <summary> A class representing the WebPubSub data model. </summary>
+    /// <summary>
+    /// A class representing the WebPubSub data model.
+    /// A class represent a resource.
+    /// </summary>
     public partial class WebPubSubData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of WebPubSubData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebPubSubData"/>. </summary>
         /// <param name="location"> The location. </param>
         public WebPubSubData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<PrivateEndpointConnectionData>();
-            SharedPrivateLinkResources = new ChangeTrackingList<SharedPrivateLinkData>();
+            PrivateEndpointConnections = new ChangeTrackingList<WebPubSubPrivateEndpointConnectionData>();
+            SharedPrivateLinkResources = new ChangeTrackingList<WebPubSubSharedPrivateLinkData>();
         }
 
-        /// <summary> Initializes a new instance of WebPubSubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebPubSubData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="sku"> The billing information of the resource.(e.g. Free, Standard). </param>
-        /// <param name="identity"> The managed identity response. </param>
+        /// <param name="sku"> The billing information of the resource. </param>
+        /// <param name="identity"> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="externalIP"> The publicly accessible IP of the resource. </param>
         /// <param name="hostName"> FQDN of the service instance. </param>
@@ -40,31 +76,28 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="version"> Version of the resource. Probably you need the same or higher version of client SDKs. </param>
         /// <param name="privateEndpointConnections"> Private endpoint connections to the resource. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources. </param>
-        /// <param name="tls"> TLS settings. </param>
+        /// <param name="tls"> TLS settings for the resource. </param>
         /// <param name="hostNamePrefix"> Deprecated. </param>
         /// <param name="liveTraceConfiguration"> Live trace configuration of a Microsoft.SignalRService resource. </param>
-        /// <param name="resourceLogConfiguration">
-        /// Resource log configuration of a Microsoft.SignalRService resource.
-        /// If resourceLogConfiguration isn&apos;t null or empty, it will override options &quot;EnableConnectivityLog&quot; and &quot;EnableMessagingLogs&quot; in features.
-        /// Otherwise, use options &quot;EnableConnectivityLog&quot; and &quot;EnableMessagingLogs&quot; in features.
-        /// </param>
-        /// <param name="networkAcls"> Network ACLs. </param>
+        /// <param name="resourceLogConfiguration"> Resource log configuration of a Microsoft.SignalRService resource. </param>
+        /// <param name="networkAcls"> Network ACLs for the resource. </param>
         /// <param name="publicNetworkAccess">
-        /// Enable or disable public network access. Default to &quot;Enabled&quot;.
-        /// When it&apos;s Enabled, network ACLs still apply.
-        /// When it&apos;s Disabled, public network access is always disabled no matter what you set in network ACLs.
+        /// Enable or disable public network access. Default to "Enabled".
+        /// When it's Enabled, network ACLs still apply.
+        /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
         /// </param>
-        /// <param name="disableLocalAuth">
+        /// <param name="isLocalAuthDisabled">
         /// DisableLocalAuth
         /// Enable or disable local auth with AccessKey
-        /// When set as true, connection with AccessKey=xxx won&apos;t work.
+        /// When set as true, connection with AccessKey=xxx won't work.
         /// </param>
-        /// <param name="disableAadAuth">
+        /// <param name="isAadAuthDisabled">
         /// DisableLocalAuth
         /// Enable or disable aad auth
-        /// When set as true, connection with AuthType=aad won&apos;t work.
+        /// When set as true, connection with AuthType=aad won't work.
         /// </param>
-        internal WebPubSubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WebPubSubSku sku, ManagedIdentity identity, ProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<PrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<SharedPrivateLinkData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkAcls networkAcls, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebPubSubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BillingInfoSku sku, ManagedServiceIdentity identity, WebPubSubProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkAcls networkAcls, string publicNetworkAccess, bool? isLocalAuthDisabled, bool? isAadAuthDisabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -82,16 +115,22 @@ namespace Azure.ResourceManager.WebPubSub
             ResourceLogConfiguration = resourceLogConfiguration;
             NetworkAcls = networkAcls;
             PublicNetworkAccess = publicNetworkAccess;
-            DisableLocalAuth = disableLocalAuth;
-            DisableAadAuth = disableAadAuth;
+            IsLocalAuthDisabled = isLocalAuthDisabled;
+            IsAadAuthDisabled = isAadAuthDisabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The billing information of the resource.(e.g. Free, Standard). </summary>
-        public WebPubSubSku Sku { get; set; }
-        /// <summary> The managed identity response. </summary>
-        public ManagedIdentity Identity { get; set; }
+        /// <summary> Initializes a new instance of <see cref="WebPubSubData"/> for deserialization. </summary>
+        internal WebPubSubData()
+        {
+        }
+
+        /// <summary> The billing information of the resource. </summary>
+        public BillingInfoSku Sku { get; set; }
+        /// <summary> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public WebPubSubProvisioningState? ProvisioningState { get; }
         /// <summary> The publicly accessible IP of the resource. </summary>
         public string ExternalIP { get; }
         /// <summary> FQDN of the service instance. </summary>
@@ -103,20 +142,20 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Version of the resource. Probably you need the same or higher version of client SDKs. </summary>
         public string Version { get; }
         /// <summary> Private endpoint connections to the resource. </summary>
-        public IReadOnlyList<PrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<WebPubSubPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> The list of shared private link resources. </summary>
-        public IReadOnlyList<SharedPrivateLinkData> SharedPrivateLinkResources { get; }
-        /// <summary> TLS settings. </summary>
+        public IReadOnlyList<WebPubSubSharedPrivateLinkData> SharedPrivateLinkResources { get; }
+        /// <summary> TLS settings for the resource. </summary>
         internal WebPubSubTlsSettings Tls { get; set; }
         /// <summary> Request client certificate during TLS handshake if enabled. </summary>
-        public bool? ClientCertEnabled
+        public bool? IsClientCertEnabled
         {
-            get => Tls is null ? default : Tls.ClientCertEnabled;
+            get => Tls is null ? default : Tls.IsClientCertEnabled;
             set
             {
                 if (Tls is null)
                     Tls = new WebPubSubTlsSettings();
-                Tls.ClientCertEnabled = value;
+                Tls.IsClientCertEnabled = value;
             }
         }
 
@@ -124,11 +163,7 @@ namespace Azure.ResourceManager.WebPubSub
         public string HostNamePrefix { get; }
         /// <summary> Live trace configuration of a Microsoft.SignalRService resource. </summary>
         public LiveTraceConfiguration LiveTraceConfiguration { get; set; }
-        /// <summary>
-        /// Resource log configuration of a Microsoft.SignalRService resource.
-        /// If resourceLogConfiguration isn&apos;t null or empty, it will override options &quot;EnableConnectivityLog&quot; and &quot;EnableMessagingLogs&quot; in features.
-        /// Otherwise, use options &quot;EnableConnectivityLog&quot; and &quot;EnableMessagingLogs&quot; in features.
-        /// </summary>
+        /// <summary> Resource log configuration of a Microsoft.SignalRService resource. </summary>
         internal ResourceLogConfiguration ResourceLogConfiguration { get; set; }
         /// <summary> Gets or sets the list of category configurations. </summary>
         public IList<ResourceLogCategory> ResourceLogCategories
@@ -141,25 +176,25 @@ namespace Azure.ResourceManager.WebPubSub
             }
         }
 
-        /// <summary> Network ACLs. </summary>
+        /// <summary> Network ACLs for the resource. </summary>
         public WebPubSubNetworkAcls NetworkAcls { get; set; }
         /// <summary>
-        /// Enable or disable public network access. Default to &quot;Enabled&quot;.
-        /// When it&apos;s Enabled, network ACLs still apply.
-        /// When it&apos;s Disabled, public network access is always disabled no matter what you set in network ACLs.
+        /// Enable or disable public network access. Default to "Enabled".
+        /// When it's Enabled, network ACLs still apply.
+        /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
         /// </summary>
         public string PublicNetworkAccess { get; set; }
         /// <summary>
         /// DisableLocalAuth
         /// Enable or disable local auth with AccessKey
-        /// When set as true, connection with AccessKey=xxx won&apos;t work.
+        /// When set as true, connection with AccessKey=xxx won't work.
         /// </summary>
-        public bool? DisableLocalAuth { get; set; }
+        public bool? IsLocalAuthDisabled { get; set; }
         /// <summary>
         /// DisableLocalAuth
         /// Enable or disable aad auth
-        /// When set as true, connection with AuthType=aad won&apos;t work.
+        /// When set as true, connection with AuthType=aad won't work.
         /// </summary>
-        public bool? DisableAadAuth { get; set; }
+        public bool? IsAadAuthDisabled { get; set; }
     }
 }

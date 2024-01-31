@@ -13,131 +13,147 @@ namespace Azure.AI.TextAnalytics.Samples
         [Test]
         public async Task AnalyzeHealthcareEntitiesConvenienceAsync()
         {
-            // create a text analytics client
-            string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
+            Uri endpoint = new(TestEnvironment.Endpoint);
+            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
-            var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey), CreateSampleOptions());
+            #region Snippet:Sample7_AnalyzeHealthcareEntitiesConvenienceAsync_All
+            #region Snippet:Sample7_AnalyzeHealthcareEntitiesConvenienceAsync_PerformOperation
+            string documentA =
+                "RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM |"
+                + " CORONARY ARTERY DISEASE | Signed | DIS |"
+                + Environment.NewLine
+                + " Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001"
+                + " ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE."
+                + Environment.NewLine
+                + " HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive"
+                + " angina over the past several months. The patient had a cardiac catheterization in July of this"
+                + " year revealing total occlusion of the RCA and 50% left main disease, with a strong family history"
+                + " of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and"
+                + " another brother who is status post coronary artery bypass grafting. The patient had a stress"
+                + " echocardiogram done on July, 2001, which showed no wall motion abnormalities, but this was a"
+                + " difficult study due to body habitus. The patient went for six minutes with minimal ST depressions"
+                + " in the anterior lateral leads, thought due to fatigue and wrist pain, his anginal equivalent. Due"
+                + " to the patient'sincreased symptoms and family history and history left main disease with total"
+                + " occasional of his RCA was referred for revascularization with open heart surgery.";
 
-            #region Snippet:TextAnalyticsAnalyzeHealthcareEntitiesConvenienceAsyncAll
-            #region Snippet:TextAnalyticsAnalyzeHealthcareEntitiesConvenienceAsync
-            // get input documents
-            string document1 = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS | \
-                                Admission Date: 5/22/2001 Report Status: Signed Discharge Date: 4/24/2001 ADMISSION DIAGNOSIS: CORONARY ARTERY DISEASE. \
-                                HISTORY OF PRESENT ILLNESS: The patient is a 54-year-old gentleman with a history of progressive angina over the past several months. \
-                                The patient had a cardiac catheterization in July of this year revealing total occlusion of the RCA and 50% left main disease ,\
-                                with a strong family history of coronary artery disease with a brother dying at the age of 52 from a myocardial infarction and \
-                                another brother who is status post coronary artery bypass grafting. The patient had a stress echocardiogram done on July , 2001 , \
-                                which showed no wall motion abnormalities , but this was a difficult study due to body habitus. The patient went for six minutes with \
-                                minimal ST depressions in the anterior lateral leads , thought due to fatigue and wrist pain , his anginal equivalent. Due to the patient's \
-                                increased symptoms and family history and history left main disease with total occasional of his RCA was referred for revascularization with open heart surgery.";
+            string documentB = "Prescribed 100mg ibuprofen, taken twice daily.";
 
-            string document2 = "Prescribed 100mg ibuprofen, taken twice daily.";
-
-            // prepare analyze operation input
-            List<string> batchInput = new List<string>()
+            // Prepare the input of the text analysis operation. You can add multiple documents to this list and
+            // perform the same operation on all of them simultaneously.
+            List<string> batchedDocuments = new()
             {
-                document1,
-                document2
+                documentA,
+                documentB
             };
 
-            // start analysis process
-            AnalyzeHealthcareEntitiesOperation healthOperation = await client.StartAnalyzeHealthcareEntitiesAsync(batchInput);
-            await healthOperation.WaitForCompletionAsync();
-            #endregion Snippet:TextAnalyticsAnalyzeHealthcareEntitiesConvenienceAsync
+            #region Snippet:Sample7_AnalyzeHealthcareEntitiesConvenienceAsync_WaitForCompletion
+            // Perform the text analysis operation.
+            AnalyzeHealthcareEntitiesOperation operation = await client.AnalyzeHealthcareEntitiesAsync(WaitUntil.Completed, batchedDocuments);
+            #endregion Snippet:Sample7_AnalyzeHealthcareEntitiesConvenienceAsync_WaitForCompletion
+            #endregion Snippet:Sample7_AnalyzeHealthcareEntitiesConvenienceAsync_PerformOperation
 
-            #region Snippet:TextAnalyticsSampleHealthcareOperationStatus
-            // view operation status
-            Console.WriteLine($"Created On   : {healthOperation.CreatedOn}");
-            Console.WriteLine($"Expires On   : {healthOperation.ExpiresOn}");
-            Console.WriteLine($"Status       : {healthOperation.Status}");
-            Console.WriteLine($"Last Modified: {healthOperation.LastModified}");
-            #endregion Snippet:TextAnalyticsSampleHealthcareOperationStatus
+            Console.WriteLine($"The operation has completed.");
+            Console.WriteLine();
 
-            #region Snippet:TextAnalyticsSampleHealthcareConvenienceAsyncViewResults
-            // view operation results
-            await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in healthOperation.Value)
+            // View the operation status.
+            Console.WriteLine($"Created On   : {operation.CreatedOn}");
+            Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
+            Console.WriteLine($"Id           : {operation.Id}");
+            Console.WriteLine($"Status       : {operation.Status}");
+            Console.WriteLine($"Last Modified: {operation.LastModified}");
+            Console.WriteLine();
+
+            #region Snippet:Sample7_AnalyzeHealthcareEntitiesConvenienceAsync_ViewResults
+            // View the operation results.
+            await foreach (AnalyzeHealthcareEntitiesResultCollection documentsInPage in operation.Value)
             {
-                Console.WriteLine($"Results of Azure Text Analytics \"Healthcare Async\" Model, version: \"{documentsInPage.ModelVersion}\"");
-                Console.WriteLine("");
+                Console.WriteLine($"Analyze Healthcare Entities, model version: \"{documentsInPage.ModelVersion}\"");
+                Console.WriteLine();
 
-                foreach (AnalyzeHealthcareEntitiesResult entitiesInDoc in documentsInPage)
+                foreach (AnalyzeHealthcareEntitiesResult documentResult in documentsInPage)
                 {
-                    if (!entitiesInDoc.HasError)
+                    if (documentResult.HasError)
                     {
-                        foreach (var entity in entitiesInDoc.Entities)
-                        {
-                            // view recognized healthcare entities
-                            Console.WriteLine($"  Entity: {entity.Text}");
-                            Console.WriteLine($"  Category: {entity.Category}");
-                            Console.WriteLine($"  Offset: {entity.Offset}");
-                            Console.WriteLine($"  Length: {entity.Length}");
-                            Console.WriteLine($"  NormalizedText: {entity.NormalizedText}");
-                            Console.WriteLine($"  Links:");
-
-                            // view entity data sources
-                            foreach (EntityDataSource entityDataSource in entity.DataSources)
-                            {
-                                Console.WriteLine($"    Entity ID in Data Source: {entityDataSource.EntityId}");
-                                Console.WriteLine($"    DataSource: {entityDataSource.Name}");
-                            }
-
-                            // view assertion
-                            if (entity.Assertion != null)
-                            {
-                                Console.WriteLine($"  Assertions:");
-
-                                if (entity.Assertion?.Association != null)
-                                {
-                                    Console.WriteLine($"    Association: {entity.Assertion?.Association}");
-                                }
-
-                                if (entity.Assertion?.Certainty != null)
-                                {
-                                    Console.WriteLine($"    Certainty: {entity.Assertion?.Certainty}");
-                                }
-                                if (entity.Assertion?.Conditionality != null)
-                                {
-                                    Console.WriteLine($"    Conditionality: {entity.Assertion?.Conditionality}");
-                                }
-                            }
-                        }
-
-                        Console.WriteLine($"  We found {entitiesInDoc.EntityRelations.Count} relations in the current document:");
-                        Console.WriteLine("");
-
-                        // view recognized healthcare relations
-                        foreach (HealthcareEntityRelation relations in entitiesInDoc.EntityRelations)
-                        {
-                            Console.WriteLine($"    Relation: {relations.RelationType}");
-                            Console.WriteLine($"    For this relation there are {relations.Roles.Count} roles");
-
-                            // view relation roles
-                            foreach (HealthcareEntityRelationRole role in relations.Roles)
-                            {
-                                Console.WriteLine($"      Role Name: {role.Name}");
-
-                                Console.WriteLine($"      Associated Entity Text: {role.Entity.Text}");
-                                Console.WriteLine($"      Associated Entity Category: {role.Entity.Category}");
-                                Console.WriteLine("");
-                            }
-
-                            Console.WriteLine("");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("  Error!");
-                        Console.WriteLine($"  Document error code: {entitiesInDoc.Error.ErrorCode}.");
-                        Console.WriteLine($"  Message: {entitiesInDoc.Error.Message}");
+                        Console.WriteLine($"  Error!");
+                        Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+                        Console.WriteLine($"  Message: {documentResult.Error.Message}");
+                        continue;
                     }
 
-                    Console.WriteLine("");
+                    Console.WriteLine($"  Recognized the following {documentResult.Entities.Count} healthcare entities:");
+                    Console.WriteLine();
+
+                    // View the healthcare entities that were recognized.
+                    foreach (HealthcareEntity entity in documentResult.Entities)
+                    {
+                        Console.WriteLine($"  Entity: {entity.Text}");
+                        Console.WriteLine($"  Category: {entity.Category}");
+                        Console.WriteLine($"  Offset: {entity.Offset}");
+                        Console.WriteLine($"  Length: {entity.Length}");
+                        Console.WriteLine($"  NormalizedText: {entity.NormalizedText}");
+                        Console.WriteLine($"  Links:");
+
+                        // View the entity data sources.
+                        foreach (EntityDataSource entityDataSource in entity.DataSources)
+                        {
+                            Console.WriteLine($"    Entity ID in Data Source: {entityDataSource.EntityId}");
+                            Console.WriteLine($"    DataSource: {entityDataSource.Name}");
+                        }
+
+                        // View the entity assertions.
+                        if (entity.Assertion is not null)
+                        {
+                            Console.WriteLine($"  Assertions:");
+
+                            if (entity.Assertion?.Association is not null)
+                            {
+                                Console.WriteLine($"    Association: {entity.Assertion?.Association}");
+                            }
+
+                            if (entity.Assertion?.Certainty is not null)
+                            {
+                                Console.WriteLine($"    Certainty: {entity.Assertion?.Certainty}");
+                            }
+
+                            if (entity.Assertion?.Conditionality is not null)
+                            {
+                                Console.WriteLine($"    Conditionality: {entity.Assertion?.Conditionality}");
+                            }
+                        }
+                    }
+
+                    Console.WriteLine($"  We found {documentResult.EntityRelations.Count} relations in the current document:");
+                    Console.WriteLine();
+
+                    // View the healthcare entity relations that were recognized.
+                    foreach (HealthcareEntityRelation relation in documentResult.EntityRelations)
+                    {
+                        Console.WriteLine($"    Relation: {relation.RelationType}");
+                        if (relation.ConfidenceScore is not null)
+                        {
+                            Console.WriteLine($"    ConfidenceScore: {relation.ConfidenceScore}");
+                        }
+                        Console.WriteLine($"    For this relation there are {relation.Roles.Count} roles");
+
+                        // View the relation roles.
+                        foreach (HealthcareEntityRelationRole role in relation.Roles)
+                        {
+                            Console.WriteLine($"      Role Name: {role.Name}");
+
+                            Console.WriteLine($"      Associated Entity Text: {role.Entity.Text}");
+                            Console.WriteLine($"      Associated Entity Category: {role.Entity.Category}");
+                            Console.WriteLine();
+                        }
+
+                        Console.WriteLine();
+                    }
+
+                    Console.WriteLine();
                 }
             }
-            #endregion Snippet:TextAnalyticsSampleHealthcareConvenienceAsyncViewResults
-
-            #endregion Snippet:TextAnalyticsAnalyzeHealthcareEntitiesConvenienceAsyncAll
+            #endregion Snippet:Sample7_AnalyzeHealthcareEntitiesConvenienceAsync_ViewResults
+            #endregion Snippet:Sample7_AnalyzeHealthcareEntitiesConvenienceAsync_All
         }
     }
 }

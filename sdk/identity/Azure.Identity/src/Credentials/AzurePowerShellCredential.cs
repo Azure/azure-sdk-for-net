@@ -1,8 +1,7 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -13,23 +12,22 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Identitiy;
 
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using Azure PowerShell to obtain an access token.
+    /// Enables authentication to Microsoft Entra ID using Azure PowerShell to obtain an access token.
     /// </summary>
     public class AzurePowerShellCredential : TokenCredential
     {
         private readonly CredentialPipeline _pipeline;
         private readonly IProcessService _processService;
-        private const int PowerShellProcessTimeoutMs = 10000;
+        internal TimeSpan ProcessTimeout { get; private set; }
         internal bool UseLegacyPowerShell { get; set; }
+        internal TenantIdResolverBase TenantIdResolver { get; }
 
         private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/powershellcredential/troubleshoot";
-        private const string AzurePowerShellFailedError = "Azure PowerShell authentication failed due to an unknown error. " + Troubleshooting;
-        private const string AzurePowerShellTimeoutError = "Azure PowerShell authentication timed out.";
+        internal const string AzurePowerShellFailedError = "Azure PowerShell authentication failed due to an unknown error. " + Troubleshooting;
         private const string RunConnectAzAccountToLogin = "Run Connect-AzAccount to login";
         private const string NoAccountsWereFoundInTheCache = "No accounts were found in the cache";
         private const string CannotRetrieveAccessToken = "cannot retrieve access token";
@@ -37,13 +35,15 @@ namespace Azure.Identity
         private static readonly string DefaultWorkingDirWindows = Environment.GetFolderPath(Environment.SpecialFolder.System);
         private const string DefaultWorkingDirNonWindows = "/bin/";
         private static readonly string DefaultWorkingDir = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultWorkingDirWindows : DefaultWorkingDirNonWindows;
-        private readonly string _tenantId;
-        private const int ERROR_FILE_NOT_FOUND = 2;
+        internal string TenantId { get; }
+        internal string[] AdditionallyAllowedTenantIds { get; }
         private readonly bool _logPII;
         private readonly bool _logAccountDetails;
+        internal readonly bool _isChainedCredential;
         internal const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
-        internal const string AzurePowerShellModuleNotInstalledError = "Az.Account module >= 2.2.0 is not installed.";
+        internal const string AzurePowerShellModuleNotInstalledError = "Az.Accounts module >= 2.2.0 is not installed.";
         internal const string PowerShellNotInstalledError = "PowerShell is not installed.";
+        internal const string AzurePowerShellTimeoutError = "Azure PowerShell authentication timed out.";
 
         /// <summary>
         /// Creates a new instance of the <see cref="AzurePowerShellCredential"/>.
@@ -62,11 +62,15 @@ namespace Azure.Identity
         internal AzurePowerShellCredential(AzurePowerShellCredentialOptions options, CredentialPipeline pipeline, IProcessService processService)
         {
             UseLegacyPowerShell = false;
-            _logPII = options?.IsLoggingPIIEnabled ?? false;
+            _logPII = options?.IsUnsafeSupportLoggingEnabled ?? false;
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
-            _tenantId = options?.TenantId;
+            TenantId = Validations.ValidateTenantId(options?.TenantId, $"{nameof(options)}.{nameof(options.TenantId)}", true);
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             _processService = processService ?? ProcessService.Default;
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
+            ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(10);
+            _isChainedCredential = options?.IsChainedCredential ?? false;
         }
 
         /// <summary>
@@ -101,11 +105,14 @@ namespace Azure.Identity
                 if (_logAccountDetails)
                 {
                     var accountDetails = TokenHelper.ParseAccountInfoFromToken(token.Token);
-                    AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? _tenantId, accountDetails.Upn, accountDetails.ObjectId);
+                    AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? TenantId, accountDetails.Upn, accountDetails.ObjectId);
                 }
                 return scope.Succeeded(token);
             }
-            catch (Win32Exception ex) when (ex.NativeErrorCode == ERROR_FILE_NOT_FOUND && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            // External execution is wrapped in a "cmd /c" command which will never throw a native Win32Exception ERROR_FILE_NOT_FOUND
+            // Check against the message for constant PowerShellNotInstalledError
+            // Do not retry if already using legacy PowerShell to prevent delays, also used in tests to ensure a single process result
+            catch (CredentialUnavailableException ex) when (UseLegacyPowerShell == false && ex.Message == PowerShellNotInstalledError && RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 UseLegacyPowerShell = true;
                 try
@@ -114,19 +121,19 @@ namespace Azure.Identity
 
                     if (_logAccountDetails)
                     {
-                        AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(null, _tenantId, null, null);
+                        AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(null, TenantId, null, null);
                     }
 
                     return scope.Succeeded(token);
                 }
                 catch (Exception e)
                 {
-                    throw scope.FailWrapAndThrow(e);
+                    throw scope.FailWrapAndThrow(e, isCredentialUnavailable: _isChainedCredential);
                 }
             }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e, isCredentialUnavailable: _isChainedCredential);
             }
         }
 
@@ -134,14 +141,17 @@ namespace Azure.Identity
         {
             string resource = ScopeUtilities.ScopesToResource(context.Scopes);
 
+            var tenantId = TenantIdResolver.Resolve(TenantId, context, AdditionallyAllowedTenantIds);
+
+            Validations.ValidateTenantId(tenantId, nameof(context.TenantId), true);
+
             ScopeUtilities.ValidateScope(resource);
-            var tenantId = TenantIdResolver.Resolve(_tenantId, context);
 
             GetFileNameAndArguments(resource, tenantId, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzurePowerShellProcessStartInfo(fileName, argument);
             using var processRunner = new ProcessRunner(
                 _processService.Create(processStartInfo),
-                TimeSpan.FromMilliseconds(PowerShellProcessTimeoutMs),
+                ProcessTimeout,
                 _logPII,
                 cancellationToken);
 
@@ -159,15 +169,24 @@ namespace Azure.Identity
             catch (InvalidOperationException exception)
             {
                 CheckForErrors(exception.Message);
-                throw new AuthenticationFailedException($"{AzurePowerShellFailedError} {exception.Message}");
+                if (_isChainedCredential)
+                {
+                    throw new CredentialUnavailableException($"{AzurePowerShellFailedError} {exception.Message}");
+                }
+                else
+                {
+                    throw new AuthenticationFailedException($"{AzurePowerShellFailedError} {exception.Message}");
+                }
             }
             return DeserializeOutput(output);
         }
 
         private static void CheckForErrors(string output)
         {
-            bool noPowerShell = output.IndexOf("not found", StringComparison.OrdinalIgnoreCase) != -1 ||
-                                output.IndexOf("is not recognized", StringComparison.OrdinalIgnoreCase) != -1;
+            bool noPowerShell = (output.IndexOf("not found", StringComparison.OrdinalIgnoreCase) != -1 ||
+                                output.IndexOf("is not recognized", StringComparison.OrdinalIgnoreCase) != -1) &&
+                                // If the error contains AADSTS, this should be treated as a general error to be bubbled to the user
+                                output.IndexOf("AADSTS", StringComparison.OrdinalIgnoreCase) == -1;
             if (noPowerShell)
             {
                 throw new CredentialUnavailableException(PowerShellNotInstalledError);
@@ -175,10 +194,6 @@ namespace Azure.Identity
             if (output.IndexOf(AzurePowerShellNoAzAccountModule, StringComparison.OrdinalIgnoreCase) != -1)
             {
                 throw new CredentialUnavailableException(AzurePowerShellModuleNotInstalledError);
-            }
-            if (output.IndexOf("is not recognized as an internal or external command", StringComparison.OrdinalIgnoreCase) != -1)
-            {
-                throw new Win32Exception(ERROR_FILE_NOT_FOUND);
             }
 
             var needsLogin = output.IndexOf(RunConnectAzAccountToLogin, StringComparison.OrdinalIgnoreCase) != -1 ||
@@ -192,7 +207,7 @@ namespace Azure.Identity
 
         private static void ValidateResult(string output)
         {
-            if (output.IndexOf("Microsoft.Azure.Commands.Profile.Models.PSAccessToken", StringComparison.OrdinalIgnoreCase) < 0)
+            if (output.IndexOf(@"<Property Name=""Token"" Type=""System.String"">", StringComparison.OrdinalIgnoreCase) < 0)
             {
                 throw new CredentialUnavailableException("PowerShell did not return a valid response.");
             }
@@ -236,8 +251,11 @@ if (! $m) {{
 }}
 
 $token = Get-AzAccessToken -ResourceUrl '{resource}'{tenantIdArg}
+$customToken = New-Object -TypeName psobject
+$customToken | Add-Member -MemberType NoteProperty -Name Token -Value $token.Token
+$customToken | Add-Member -MemberType NoteProperty -Name ExpiresOn -Value $token.ExpiresOn.ToUnixTimeSeconds()
 
-$x = $token | ConvertTo-Xml
+$x = $customToken | ConvertTo-Xml
 return $x.Objects.FirstChild.OuterXml
 ";
 
@@ -246,7 +264,7 @@ return $x.Objects.FirstChild.OuterXml
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 fileName = Path.Combine(DefaultWorkingDirWindows, "cmd.exe");
-                argument = $"/c \"{powershellExe} \"{commandBase64}\" \"";
+                argument = $"/d /c \"{powershellExe} \"{commandBase64}\" \"";
             }
             else
             {
@@ -275,7 +293,7 @@ return $x.Objects.FirstChild.OuterXml
                         break;
 
                     case "ExpiresOn":
-                        expiresOn = DateTimeOffset.Parse(e.Value, CultureInfo.CurrentCulture).ToUniversalTime();
+                        expiresOn = DateTimeOffset.FromUnixTimeSeconds(long.Parse(e.Value));
                         break;
                 }
 

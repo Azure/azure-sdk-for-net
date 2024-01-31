@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static FrontEndServiceType ToFrontEndServiceType(this string value)
         {
-            if (string.Equals(value, "NodePort", StringComparison.InvariantCultureIgnoreCase)) return FrontEndServiceType.NodePort;
-            if (string.Equals(value, "LoadBalancer", StringComparison.InvariantCultureIgnoreCase)) return FrontEndServiceType.LoadBalancer;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NodePort")) return FrontEndServiceType.NodePort;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LoadBalancer")) return FrontEndServiceType.LoadBalancer;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FrontEndServiceType value.");
         }
     }

@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
         }
 
+        protected NetworkServiceClientTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = null)
+            : base(isAsync, resourceType, apiVersion, mode)
+        {
+        }
+
         public bool IsTestTenant = false;
         public static TimeSpan ZeroPollingInterval { get; } = TimeSpan.FromSeconds(0);
         public Dictionary<string, string> Tags { get; internal set; }
@@ -65,7 +70,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             return (await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, name, new ResourceGroupData(TestEnvironment.Location))).Value;
         }
-        protected async Task<ResourceGroupResource> CreateResourceGroup(string name,string location)
+        protected async Task<ResourceGroupResource> CreateResourceGroup(string name, string location)
         {
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
             return (await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, name, new ResourceGroupData(location))).Value;
@@ -256,7 +261,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
 
             var vmId = new ResourceIdentifier($"{resourceGroup.Id}/providers/Microsoft.Compute/virtualMachines/{vmName}");
             SubscriptionResource subscription = await ArmClient.GetDefaultSubscriptionAsync();
-            var genericResouces = subscription.GetGenericResources();
+            var genericResouces = subscription.GetGenericResourcesAsync();
             GenericResourceData data = new GenericResourceData(location)
             {
                 Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>
@@ -294,7 +299,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     { "osProfile", new Dictionary<string, object>
                         {
                             { "adminUsername", Recording.GenerateAssetName("admin") },
-                            { "adminPassword", Recording.GenerateAlphaNumericId("adminPass") },
+                            { "adminPassword", Recording.GenerateAlphaNumericId("adminPass!") },
                             { "computerName", vmName }
                         }
                     },
@@ -390,19 +395,18 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         //    await deploymentWait.WaitForCompletionAsync();
         //}
 
-        // TODO: we should decide after preview whehter we need to support compute resources like vmss in Network SDK
-        //public async Task CreateVmss(ResourcesManagementClient resourcesClient, string resourceGroupName, string deploymentName)
-        //{
-        //    string templateString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TestData", "VmssDeploymentTemplate.json"));
+        public async Task CreateVmss(ResourceGroupResource resourceGroup, string deploymentName)
+        {
+            string templateString = File.ReadAllText(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "TestData", "VmssDeploymentTemplate.json"));
 
-        //    DeploymentProperties deploymentProperties = new DeploymentProperties(DeploymentMode.Incremental)
-        //    {
-        //        Template = templateString
-        //    };
-        //    Deployment deploymentModel = new Deployment(deploymentProperties);
-        //    Operation<DeploymentExtended> deploymentWait = await resourcesClient.Deployments.CreateOrUpdateAsync(resourceGroupName, deploymentName, deploymentModel);
-        //    await deploymentWait.WaitForCompletionAsync();
-        //}
+            var deploymentProperties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
+            {
+                Template = BinaryData.FromString(templateString)
+            };
+            var deploymentModel = new ArmDeploymentContent(deploymentProperties);
+            var deploymentWait = await resourceGroup.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, deploymentModel);
+            await deploymentWait.WaitForCompletionAsync();
+        }
 
         public async Task<ExpressRouteCircuitResource> CreateDefaultExpressRouteCircuit(Resources.ResourceGroupResource resourceGroup, string circuitName, string location)
         {
@@ -534,7 +538,31 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+                PublicIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                DnsSettings = new PublicIPAddressDnsSettings() { DomainNameLabel = domainNameLabel }
+            };
+
+            // Put nic1PublicIpAddress
+            Operation<PublicIPAddressResource> putPublicIpAddressOperation = await publicIPAddressCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, publicIp);
+            Response<PublicIPAddressResource> putPublicIpAddressResponse = await putPublicIpAddressOperation.WaitForCompletionAsync();
+            Assert.AreEqual("Succeeded", putPublicIpAddressResponse.Value.Data.ProvisioningState.ToString());
+            Response<PublicIPAddressResource> getPublicIpAddressResponse = await publicIPAddressCollection.GetAsync(name);
+
+            return getPublicIpAddressResponse;
+        }
+
+        public async Task<PublicIPAddressResource> CreateStaticPublicIpAddress(string name, string domainNameLabel, string location, PublicIPAddressCollection publicIPAddressCollection)
+        {
+            var publicIp = new PublicIPAddressData()
+            {
+                Location = location,
+                Tags = { { "key", "value" } },
+                Sku = new PublicIPAddressSku()
+                {
+                    Name = PublicIPAddressSkuName.Standard,
+                    Tier = PublicIPAddressSkuTier.Regional
+                },
+                PublicIPAllocationMethod = NetworkIPAllocationMethod.Static,
                 DnsSettings = new PublicIPAddressDnsSettings() { DomainNameLabel = domainNameLabel }
             };
 
@@ -553,7 +581,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             {
                 Location = location,
                 Tags = { { "key", "value" } },
-                PublicIPAllocationMethod = IPAllocationMethod.Dynamic,
+                PublicIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
                 DnsSettings = new PublicIPAddressDnsSettings() { DomainNameLabel = domainNameLabel }
             };
 
@@ -578,8 +606,8 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     new NetworkInterfaceIPConfigurationData()
                     {
                          Name = ipConfigName,
-                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                         Subnet = new SubnetData() { Id = subnetId }
+                         PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                         Subnet = new SubnetData() { Id = new ResourceIdentifier(subnetId) }
                     }
                 }
             };
@@ -603,7 +631,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
             return getNicResponse;
         }
 
-        public async Task<NetworkInterfaceResource> CreateNetworkInterface(string name,  string publicIpAddressId, string subnetId,
+        public async Task<NetworkInterfaceResource> CreateNetworkInterface(string name, string publicIpAddressId, string subnetId,
             string location, string ipConfigName, NetworkInterfaceCollection networkInterfaceCollection)
         {
             var nicParameters = new NetworkInterfaceData()
@@ -614,8 +642,8 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                     new NetworkInterfaceIPConfigurationData()
                     {
                          Name = ipConfigName,
-                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                         Subnet = new SubnetData() { Id = subnetId }
+                         PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
+                         Subnet = new SubnetData() { Id = new ResourceIdentifier(subnetId) }
                     }
                 }
             };
@@ -761,6 +789,15 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         protected VirtualNetworkGatewayCollection GetVirtualNetworkGatewayCollection(string resourceGroupName)
         {
             return GetResourceGroup(resourceGroupName).GetVirtualNetworkGateways();
+        }
+
+        protected async Task<BackendAddressPoolResource> GetFirstPoolAsync(LoadBalancerResource loadBalancer)
+        {
+            await foreach (var pool in loadBalancer.GetBackendAddressPools())
+            {
+                return pool;
+            }
+            throw new InvalidOperationException($"Pool list was empty for {loadBalancer.Id}");
         }
     }
 }

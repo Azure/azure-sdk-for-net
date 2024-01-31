@@ -773,7 +773,7 @@ namespace CognitiveServices.Tests
                     string accountName = TestUtilities.GenerateName("csa");
                     var parameters = new Account
                     {
-                        Location = "CENTRALUSEUAP",
+                        Location = TestHelper.DefaultLocation,
                         Tags = TestHelper.DefaultTags,
                         Sku = new Sku { Name = "S0" },
                         Kind = "Face",
@@ -798,7 +798,7 @@ namespace CognitiveServices.Tests
                     string accountName = TestUtilities.GenerateName("csa");
                     var parameters = new Account
                     {
-                        Location = "CENTRALUSEUAP",
+                        Location = TestHelper.DefaultLocation,
                         Tags = TestHelper.DefaultTags,
                         Sku = new Sku { Name = "S0" },
                         Kind = "Face",
@@ -840,7 +840,7 @@ namespace CognitiveServices.Tests
                     string accountName = TestUtilities.GenerateName("csa");
                     var parameters = new Account
                     {
-                        Location = "CENTRALUSEUAP",
+                        Location = TestHelper.DefaultLocation,
                         Tags = TestHelper.DefaultTags,
                         Sku = new Sku { Name = "E0" },
                         Kind = "Face",
@@ -855,8 +855,8 @@ namespace CognitiveServices.Tests
                         new KeyVaultProperties()
                         {
                             KeyName = "TestKey",
-                            KeyVersion = "dcb017f640db4818ba240751674f975f",
-                            KeyVaultUri = "https://sdk-test-mi.vault.azure.net/",
+                            KeyVersion = "649d33694df9450cbf2d03c885f7a72f",
+                            KeyVaultUri = "https://sdk-test-mi-usc.vault.azure.net/",
                             IdentityClientId = "9feb3cc7-408c-449d-8baf-f3dd44ad292b"
                         },
                         KeySource.MicrosoftKeyVault);
@@ -884,7 +884,7 @@ namespace CognitiveServices.Tests
                     string accountName = TestUtilities.GenerateName("csa");
                     var parameters = new Account
                     {
-                        Location = "CENTRALUSEUAP",
+                        Location = TestHelper.DefaultLocation,
                         Tags = TestHelper.DefaultTags,
                         Sku = new Sku { Name = "E0" },
                         Kind = "Face",
@@ -903,8 +903,8 @@ namespace CognitiveServices.Tests
                         new KeyVaultProperties()
                         {
                             KeyName = "TestKey",
-                            KeyVersion = "dcb017f640db4818ba240751674f975f",
-                            KeyVaultUri = "https://sdk-test-mi.vault.azure.net/",
+                            KeyVersion = "649d33694df9450cbf2d03c885f7a72f",
+                            KeyVaultUri = "https://sdk-test-mi-usc.vault.azure.net/",
                             IdentityClientId = "9feb3cc7-408c-449d-8baf-f3dd44ad292b"
                         },
                         KeySource.MicrosoftKeyVault);
@@ -1035,7 +1035,7 @@ namespace CognitiveServices.Tests
                     string accountName = TestUtilities.GenerateName("csa");
                     var parameters = new Account
                     {
-                        Location = "CENTRALUSEUAP",
+                        Location = TestHelper.DefaultLocation,
                         Tags = TestHelper.DefaultTags,
                         Sku = new Sku { Name = "S0" },
                         Kind = "Face",
@@ -1181,7 +1181,7 @@ namespace CognitiveServices.Tests
                     string accountName = TestUtilities.GenerateName("csa");
                     var parameters = new Account
                     {
-                        Location = "EASTUS",
+                        Location = "SOUTHCENTRALUS",
                         Tags = TestHelper.DefaultTags,
                         Sku = new Sku { Name = "S0" },
                         Kind = "OpenAI",
@@ -1199,11 +1199,10 @@ namespace CognitiveServices.Tests
                     dpy.Properties = new DeploymentProperties();
                     dpy.Properties.Model = new DeploymentModel();
                     dpy.Properties.Model.Format = "OpenAI";
-                    dpy.Properties.Model.Name = "ada";
+                    dpy.Properties.Model.Name = "text-ada-001";
                     dpy.Properties.Model.Version = "1";
                     dpy.Properties.ScaleSettings = new DeploymentScaleSettings();
-                    dpy.Properties.ScaleSettings.Capacity = 1;
-                    dpy.Properties.ScaleSettings.ScaleType = "Manual";
+                    dpy.Properties.ScaleSettings.ScaleType = "Standard";
 
                     var dpyResp = cognitiveServicesMgmtClient.Deployments.BeginCreateOrUpdate(rgname, accountName, "deployment", dpy);
                     Assert.Equal(dpy.Properties.Model.Format, dpyResp.Properties.Model.Format);

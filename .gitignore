@@ -11,6 +11,9 @@ developer/
 launch.json
 launchSettings.json
 
+# Default Assets restore directory
+.assets
+
 # Build results
 binaries/
 [Dd]ebug*/
@@ -165,7 +168,11 @@ node_modules/
 # MSBuild binary log files
 msbuild.binlog
 
-# BenchmarkDotNet 
+# BenchmarkDotNet
 BenchmarkDotNet.Artifacts
 
 artifacts
+.assets
+
+# Temporary typespec folders for typespec generation
+TempTypeSpecFiles/

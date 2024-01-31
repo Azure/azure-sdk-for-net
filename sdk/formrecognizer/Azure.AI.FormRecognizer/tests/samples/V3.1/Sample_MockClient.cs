@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.AI.FormRecognizer.Training;
+using Azure.Core.TestFramework;
 using Moq;
 using NUnit.Framework;
 
@@ -15,7 +16,7 @@ namespace Azure.AI.FormRecognizer.Samples
 {
     public partial class FormRecognizerSamples
     {
-        [Test]
+        [RecordedTest]
         public async Task RecognizeCustomFormsAsync()
         {
             #region Snippet:FormRecognizerCreateMocks
@@ -84,7 +85,7 @@ namespace Azure.AI.FormRecognizer.Samples
         }
         #endregion
 
-        [Test]
+        [RecordedTest]
         public async Task GetCustomModelsAsync()
         {
             var fakeReadyModelId = Guid.NewGuid().ToString();

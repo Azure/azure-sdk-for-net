@@ -1,0 +1,25 @@
+{
+  "packages": [
+    {
+      "packageName": "Azure.IoT.DeviceUpdate.Demo",
+      "path": [
+        ".\\sdk\\deviceupdate\\Azure.IoT.DeviceUpdate.Demo"
+      ],
+      "language": ".Net",
+      "apiViewArtifact": ".\\artifacts\\packages\\Debug\\Azure.IoT.DeviceUpdate.Demo\\Azure.IoT.DeviceUpdate.Demo.1.0.0-alpha.20220726.1.nupkg",
+      "installInstructions": {
+        "full": "Download the Azure.IoT.DeviceUpdate.Demo package from [here](https://openapihub.test.azure-devex-tools.com/api/sdk-dl-pub?p=openapi-env-test/3146/azure-sdk-for-net-track2//Azure.IoT.DeviceUpdate.Demo.1.0.0-alpha.20220726.1.nupkg)",
+        "lite": "Download the Azure.IoT.DeviceUpdate.Demo package from [here](https://openapihub.test.azure-devex-tools.com/api/sdk-dl-pub?p=openapi-env-test/3146/azure-sdk-for-net-track2//Azure.IoT.DeviceUpdate.Demo.1.0.0-alpha.20220726.1.nupkg)"
+      },
+      "result": "succeeded",
+      "artifacts": [
+        ".\\artifacts\\packages\\Debug\\Azure.IoT.DeviceUpdate.Demo\\Azure.IoT.DeviceUpdate.Demo.1.0.0-alpha.20220726.1.nupkg"
+      ],
+      "changelog": {
+        "content": null,
+        "hasBreakingChange": false
+      },
+      "packageFolder": "/home/azure-sdk-for-net/sdk/deviceupdate/Azure.IoT.DeviceUpdate.Demo"
+    }
+  ]
+}

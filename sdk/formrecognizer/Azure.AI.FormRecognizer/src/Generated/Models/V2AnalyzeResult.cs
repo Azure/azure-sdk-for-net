@@ -14,15 +14,12 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Analyze operation result. </summary>
     internal partial class V2AnalyzeResult
     {
-        /// <summary> Initializes a new instance of V2AnalyzeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="V2AnalyzeResult"/>. </summary>
         /// <param name="version"> Version of schema used for this result. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
         internal V2AnalyzeResult(string version)
         {
-            if (version == null)
-            {
-                throw new ArgumentNullException(nameof(version));
-            }
+            Argument.AssertNotNull(version, nameof(version));
 
             Version = version;
             ReadResults = new ChangeTrackingList<ReadResult>();
@@ -31,7 +28,7 @@ namespace Azure.AI.FormRecognizer.Models
             Errors = new ChangeTrackingList<FormRecognizerError>();
         }
 
-        /// <summary> Initializes a new instance of V2AnalyzeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="V2AnalyzeResult"/>. </summary>
         /// <param name="version"> Version of schema used for this result. </param>
         /// <param name="readResults"> Text extracted from the input. </param>
         /// <param name="pageResults"> Page-level information extracted from the input. </param>

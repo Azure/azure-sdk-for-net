@@ -1,0 +1,10 @@
+<Project>
+
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.targets))\Directory.Build.targets"
+          Condition="'$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.targets))' != ''" />
+
+  <!-- Disable targets not necessary for samples -->
+  <Target Name="ValidateTargetFrameworks" />
+  <Target Name="VerifyProjectReferencesReferences" />
+
+</Project>

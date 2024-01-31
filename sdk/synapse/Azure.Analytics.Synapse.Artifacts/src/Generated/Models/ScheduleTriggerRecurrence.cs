@@ -14,13 +14,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The workflow trigger recurrence. </summary>
     public partial class ScheduleTriggerRecurrence
     {
-        /// <summary> Initializes a new instance of ScheduleTriggerRecurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleTriggerRecurrence"/>. </summary>
         public ScheduleTriggerRecurrence()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of ScheduleTriggerRecurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleTriggerRecurrence"/>. </summary>
         /// <param name="frequency"> The frequency. </param>
         /// <param name="interval"> The interval. </param>
         /// <param name="startTime"> The start time. </param>

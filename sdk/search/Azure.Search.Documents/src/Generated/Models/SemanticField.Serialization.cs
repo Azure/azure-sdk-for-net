@@ -15,26 +15,27 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FieldName))
-            {
-                writer.WritePropertyName("fieldName");
-                writer.WriteStringValue(FieldName);
-            }
+            writer.WritePropertyName("fieldName"u8);
+            writer.WriteStringValue(FieldName);
             writer.WriteEndObject();
         }
 
         internal static SemanticField DeserializeSemanticField(JsonElement element)
         {
-            Optional<string> fieldName = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string fieldName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fieldName"))
+                if (property.NameEquals("fieldName"u8))
                 {
                     fieldName = property.Value.GetString();
                     continue;
                 }
             }
-            return new SemanticField(fieldName.Value);
+            return new SemanticField(fieldName);
         }
     }
 }

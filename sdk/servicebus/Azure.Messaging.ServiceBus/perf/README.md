@@ -4,7 +4,7 @@ The assets in this area comprise a set of performance tests for the [Azure Servi
 
 ## Running performance tests
 
-The Service Bus client library performance are run via a console app. In order to run, specify either via command line or within IDE build arguments the test and set of arguments to use. For example, to run the `SendMessages` test, you can add `SendMessages` to the Application arguments within Visual Studio.
+The Service Bus client library performance tests are run via a console app. In order to run, specify either via command line or within IDE build arguments the test and set of arguments to use. For example, to run the `SendMessages` test, you can add `SendMessages` to the Application arguments within Visual Studio.
 The performance tests rely on the same set of environment variables used by the Service Bus client library's test suite.  Full details can be found in the [Running tests](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/CONTRIBUTING.md#running-tests) section of the contributing guide.
   
 ## Contributing  

@@ -81,10 +81,10 @@ namespace Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents
             string activityId = null;
             string traceState = null;
             Activity currentActivity = Activity.Current;
-            if (currentActivity != null && currentActivity.IsW3CFormat())
+            if (currentActivity != null && (currentActivity.IdFormat == ActivityIdFormat.W3C))
             {
                 activityId = currentActivity.Id;
-                traceState = currentActivity.GetTraceState();
+                traceState = currentActivity.TraceStateString;
             }
 
             using var stream = new MemoryStream();

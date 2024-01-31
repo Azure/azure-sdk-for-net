@@ -10,16 +10,20 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> Azure Synapse nested object which serves as a compute resource for activities. </summary>
-    public partial class IntegrationRuntime
+    /// <summary>
+    /// Azure Synapse nested object which serves as a compute resource for activities.
+    /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
+    /// </summary>
+    public abstract partial class IntegrationRuntime
     {
-        /// <summary> Initializes a new instance of IntegrationRuntime. </summary>
-        public IntegrationRuntime()
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntime"/>. </summary>
+        protected IntegrationRuntime()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntime"/>. </summary>
         /// <param name="type"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>

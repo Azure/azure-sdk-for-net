@@ -8,26 +8,24 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A list of linked service resources. </summary>
     internal partial class LinkedServiceListResponse
     {
-        /// <summary> Initializes a new instance of LinkedServiceListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedServiceListResponse"/>. </summary>
         /// <param name="value"> List of linked services. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal LinkedServiceListResponse(IEnumerable<LinkedServiceResource> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of LinkedServiceListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedServiceListResponse"/>. </summary>
         /// <param name="value"> List of linked services. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal LinkedServiceListResponse(IReadOnlyList<LinkedServiceResource> value, string nextLink)

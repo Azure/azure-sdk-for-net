@@ -56,10 +56,5 @@ Console.WriteLine($"Failed Document: {docsFailed}");
 Console.WriteLine($"Canceled Documents: {docsCanceled}");
 ```
 
-To see the full example source files, see:
-
-* [Synchronously OperationsHistory ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_OperationsHistory.cs)
-* [Asynchronously OperationsHistory ](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/tests/samples/Sample_OperationsHistoryAsync.cs)
-
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [README]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/translation/Azure.AI.Translation.Document/README.md

@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    [CodeGenType("AzureFileStorageModelFactory")]
+    [CodeGenType("StorageFilesSharesModelFactory")]
     public static partial class ShareModelFactory
     {
         /// <summary>
@@ -214,9 +214,61 @@ namespace Azure.Storage.Files.Shares.Models
             };
         }
 
+        ///// <summary>
+        ///// Creates a new ShareFileHandle instance for mocking.
+        ///// </summary>
+        //public static ShareFileHandle ShareFileHandle(
+        //    string handleId,
+        //    string path,
+        //    string fileId,
+        //    string sessionId,
+        //    string clientIp,
+        //    string clientName,
+        //    string parentId = default,
+        //    DateTimeOffset? openedOn = default,
+        //    DateTimeOffset? lastReconnectedOn = default,
+        //    ShareFileHandleAccessRights? accessRights = default)
+        //    => new ShareFileHandle(
+        //        handleId,
+        //        path,
+        //        fileId,
+        //        parentId,
+        //        sessionId,
+        //        clientIp,
+        //        clientName,
+        //        openedOn,
+        //        lastReconnectedOn,
+        //        accessRights);
+
         /// <summary>
         /// Creates a new ShareFileHandle instance for mocking.
         /// </summary>
+        public static ShareFileHandle ShareFileHandle(
+            string handleId,
+            string path,
+            string fileId,
+            string sessionId,
+            string clientIp,
+            string parentId = default,
+            DateTimeOffset? openedOn = default,
+            DateTimeOffset? lastReconnectedOn = default,
+            ShareFileHandleAccessRights? accessRights = default)
+            => new ShareFileHandle(
+                handleId,
+                path,
+                fileId,
+                parentId,
+                sessionId,
+                clientIp,
+                null,
+                openedOn,
+                lastReconnectedOn,
+                accessRights);
+
+        /// <summary>
+        /// Creates a new ShareFileHandle instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ShareFileHandle ShareFileHandle(
             string handleId,
             string path,
@@ -233,8 +285,10 @@ namespace Azure.Storage.Files.Shares.Models
                 parentId,
                 sessionId,
                 clientIp,
+                null,
                 openedOn,
-                lastReconnectedOn);
+                lastReconnectedOn,
+                null);
 
         /// <summary>
         /// Creates a new ShareFileCopyInfo instance for mocking.

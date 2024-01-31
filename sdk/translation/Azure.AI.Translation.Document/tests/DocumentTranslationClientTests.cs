@@ -107,5 +107,23 @@ namespace Azure.AI.Translation.Document.Tests
             Assert.AreEqual("PartialError", result.Error.Code);
             Assert.AreEqual("There were some errors.", result.Error.Message);
         }
+
+        [Test]
+        public void AccessingOperationProperties()
+        {
+            var client = new DocumentTranslationClient(new Uri("https://contoso-textanalytics.cognitiveservices.azure.com/"), new AzureKeyCredential("FakeapiKey"));
+            var operation = new DocumentTranslationOperation("2a96a91f-7edf-4931-a880-3fdee1d56f15", client);
+
+            Assert.Throws<InvalidOperationException>(() => _ = operation.Value);
+            Assert.Throws<InvalidOperationException>(() => _ = operation.CreatedOn);
+            Assert.Throws<InvalidOperationException>(() => _ = operation.DocumentsCanceled);
+            Assert.Throws<InvalidOperationException>(() => _ = operation.DocumentsFailed);
+            Assert.Throws<InvalidOperationException>(() => _ = operation.DocumentsInProgress);
+            Assert.Throws<InvalidOperationException>(() => _ = operation.DocumentsNotStarted);
+            Assert.Throws<InvalidOperationException>(() => _ = operation.DocumentsSucceeded);
+            Assert.Throws<InvalidOperationException>(() => _ = operation.DocumentsTotal);
+            Assert.Throws<InvalidOperationException>(() => _ = operation.LastModified);
+            Assert.Throws<InvalidOperationException>(() => _ = operation.Status);
+        }
     }
 }

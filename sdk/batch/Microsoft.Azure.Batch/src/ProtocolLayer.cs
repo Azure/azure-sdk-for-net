@@ -872,6 +872,7 @@
             Models.CertificateReference[] certRefs,
             Models.ApplicationPackageReference[] applicationPackageReferences,
             Models.MetadataItem[] metaData,
+            Models.NodeCommunicationMode? targetNodeCommunicationMode,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
@@ -881,7 +882,7 @@
             metaData = metaData ?? new Models.MetadataItem[0];
             applicationPackageReferences = applicationPackageReferences ?? new Models.ApplicationPackageReference[0];
 
-            var parameters = new Models.PoolUpdatePropertiesParameter(certRefs, applicationPackageReferences, metaData, startTask);
+            var parameters = new Models.PoolUpdatePropertiesParameter(certRefs, applicationPackageReferences, metaData, startTask, targetNodeCommunicationMode);
             var request = new PoolUpdatePropertiesBatchRequest(this._client, parameters, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Pool.UpdatePropertiesWithHttpMessagesAsync(
@@ -902,10 +903,11 @@
             Models.CertificateReference[] certificateReferences,
             Models.ApplicationPackageReference[] applicationPackageReferences,
             Models.MetadataItem[] metadata,
+            Models.NodeCommunicationMode? targetNodeCommunicationMode,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken)
         {
-            var parameters = new Models.PoolPatchParameter(startTask, certificateReferences, applicationPackageReferences, metadata);
+            var parameters = new Models.PoolPatchParameter(startTask, certificateReferences, applicationPackageReferences, metadata, targetNodeCommunicationMode);
             var request = new PoolPatchBatchRequest(this._client, parameters, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Pool.PatchWithHttpMessagesAsync(
@@ -1536,34 +1538,7 @@
             return asyncTask;
         }
 
-        public Task<AzureOperationResponse<Models.JobStatistics, Models.JobGetAllLifetimeStatisticsHeaders>> GetAllJobLifetimeStats(BehaviorManager bhMgr, CancellationToken cancellationToken)
-        {
-            var request = new JobGetAllJobsLifetimeStatisticsBatchRequest(this._client, cancellationToken);
-
-            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Job.GetAllLifetimeStatisticsWithHttpMessagesAsync(
-                request.Options,
-                request.CustomHeaders,
-                lambdaCancelToken);
-
-            var asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
-
-            return asyncTask;
-        }
-
-        public Task<AzureOperationResponse<Models.PoolStatistics, Models.PoolGetAllLifetimeStatisticsHeaders>> GetAllPoolLifetimeStats(BehaviorManager bhMgr, CancellationToken cancellationToken)
-        {
-            var request = new PoolGetAllPoolsLifetimeStatisticsBatchRequest(this._client, cancellationToken);
-
-            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Pool.GetAllLifetimeStatisticsWithHttpMessagesAsync(
-                request.Options,
-                request.CustomHeaders,
-                lambdaCancelToken);
-
-            var asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
-
-            return asyncTask;
-        }
-
+        [Obsolete("This operation is deprecated and will be removed after February, 2024. Please use the Azure KeyVault Extension instead.", false)]
         public Task<AzureOperationResponse<Models.Certificate, Models.CertificateGetHeaders>> GetCertificate(string thumbprintAlgorithm, string thumbprint, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var request = new CertificateGetBatchRequest(this._client, cancellationToken);
@@ -1656,6 +1631,7 @@
             return asyncTask;
         }
 
+        [Obsolete("This operation is deprecated and will be removed after February, 2024. Please use the Azure KeyVault Extension instead.", false)]
         public Task<AzureOperationResponse<IPage<Models.Certificate>, Models.CertificateListHeaders>> ListCertificates(string skipToken, BehaviorManager bhMgr, DetailLevel detailLevel, CancellationToken cancellationToken)
         {
             Task<AzureOperationResponse<IPage<Models.Certificate>, Models.CertificateListHeaders>> asyncTask;
@@ -1684,6 +1660,7 @@
             return asyncTask;
         }
 
+        [Obsolete("This operation is deprecated and will be removed after February, 2024. Please use the Azure KeyVault Extension instead.", false)]
         public Task<AzureOperationHeaderResponse<Models.CertificateAddHeaders>> AddCertificate(Models.CertificateAddParameter protoCert, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var request = new CertificateAddBatchRequest(this._client, protoCert, cancellationToken);
@@ -1699,6 +1676,7 @@
             return asyncTask;
         }
 
+        [Obsolete("This operation is deprecated and will be removed after February, 2024. Please use the Azure KeyVault Extension instead.", false)]
         public Task<AzureOperationHeaderResponse<Models.CertificateDeleteHeaders>> DeleteCertificate(string thumbprintAlgorithm, string thumbprint, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var request = new CertificateDeleteBatchRequest(this._client, cancellationToken);
@@ -1715,6 +1693,7 @@
             return asyncTask;
         }
 
+        [Obsolete("This operation is deprecated and will be removed after February, 2024. Please use the Azure KeyVault Extension instead.", false)]
         public Task<AzureOperationHeaderResponse<Models.CertificateCancelDeletionHeaders>> CancelDeleteCertificate(string thumbprintAlgorithm, string thumbprint, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var request = new CertificateCancelDeletionBatchRequest(this._client, cancellationToken);

@@ -105,8 +105,18 @@ namespace Azure.Storage.Blobs.ChangeFeed
             HttpRange range = new HttpRange(_offset, _blockSize);
 
             response = async
-                ? await _blobClient.DownloadStreamingAsync(range, cancellationToken: cancellationToken).ConfigureAwait(false)
-                : _blobClient.DownloadStreaming(range, cancellationToken: cancellationToken);
+                ? await _blobClient.DownloadStreamingAsync(
+                    new BlobDownloadOptions
+                    {
+                        Range = range
+                    },
+                    cancellationToken: cancellationToken).ConfigureAwait(false)
+                : _blobClient.DownloadStreaming(
+                    new BlobDownloadOptions
+                    {
+                        Range = range
+                    },
+                    cancellationToken: cancellationToken);
             _stream = response.Value.Content;
             _offset += response.Value.Details.ContentLength;
             _lastDownloadBytes = response.Value.Details.ContentLength;

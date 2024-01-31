@@ -5,8 +5,7 @@
     <PackageId>DigitalTwins.Tests</PackageId>
     <Description>DigitalTwins.Tests Class Library</Description>
     <AssemblyName>DigitalTwins.Tests</AssemblyName>
-    <VersionPrefix>2020-12-01</VersionPrefix>
-    <LangVersion>8.0</LangVersion>
+    <VersionPrefix>2022-05-31</VersionPrefix>
   </PropertyGroup>
   
   <PropertyGroup>

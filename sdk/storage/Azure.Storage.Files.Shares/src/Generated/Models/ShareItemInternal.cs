@@ -14,27 +14,21 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> A listed Azure Storage share item. </summary>
     internal partial class ShareItemInternal
     {
-        /// <summary> Initializes a new instance of ShareItemInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareItemInternal"/>. </summary>
         /// <param name="name"></param>
         /// <param name="properties"> Properties of a share. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
         internal ShareItemInternal(string name, SharePropertiesInternal properties)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (properties == null)
-            {
-                throw new ArgumentNullException(nameof(properties));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(properties, nameof(properties));
 
             Name = name;
             Properties = properties;
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ShareItemInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="ShareItemInternal"/>. </summary>
         /// <param name="name"></param>
         /// <param name="snapshot"></param>
         /// <param name="deleted"></param>

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.PhoneNumbers
 {
-    /// <summary> The assignment type of the phone numbers to search for. A phone number can be assigned to a person, or to an application. </summary>
+    /// <summary> Represents the assignment type of the offering. </summary>
     public readonly partial struct PhoneNumberAssignmentType : IEquatable<PhoneNumberAssignmentType>
     {
         private readonly string _value;

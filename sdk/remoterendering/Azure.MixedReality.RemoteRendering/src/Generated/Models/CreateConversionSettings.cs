@@ -6,21 +6,19 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.MixedReality.RemoteRendering
 {
     /// <summary> Request to start a conversion. </summary>
     internal partial class CreateConversionSettings
     {
-        /// <summary> Initializes a new instance of CreateConversionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateConversionSettings"/>. </summary>
         /// <param name="settings"> Conversion settings describe the origin of input files and destination of output files. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="settings"/> is null. </exception>
         public CreateConversionSettings(AssetConversionOptions settings)
         {
-            if (settings == null)
-            {
-                throw new ArgumentNullException(nameof(settings));
-            }
+            Argument.AssertNotNull(settings, nameof(settings));
 
             Settings = settings;
         }

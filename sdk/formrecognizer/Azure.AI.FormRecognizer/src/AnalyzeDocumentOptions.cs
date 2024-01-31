@@ -22,10 +22,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
         }
 
-        // TODO: why is it modeled as a string in v3? Consider linking supported locales if kept as string.
         /// <summary>
         /// Sets the locale information for the document.
-        /// Supported locales include: en-AU, en-CA, en-GB, en-IN, en-US.
+        /// See the <see href="https://aka.ms/azsdk/formrecognizer/supportedlocales">service documentation</see> for a complete list of supported locales.
         /// </summary>
         public string Locale { get; set; }
 
@@ -37,9 +36,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </para>
         /// <para>
         /// Although this collection cannot be set, it can be modified.
-        /// See <see href="https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/object-and-collection-initializers#collection-initializers">collection initializer</see>.
+        /// See <see href="https://docs.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/object-and-collection-initializers#object-initializers-with-collection-read-only-property-initialization">Object initializers with collection read-only property initialization</see>.
         /// </para>
         /// </summary>
         public IList<string> Pages { get; } = new List<string>();
+
+        /// <summary>
+        /// The add-on capabilities to enable during document analysis.
+        /// For more information, see <see href="https://aka.ms/azsdk/formrecognizer/features">Azure Form Recognizer add-on capabilities</see>.
+        /// </summary>
+        public IList<DocumentAnalysisFeature> Features { get; } = new List<DocumentAnalysisFeature>();
     }
 }

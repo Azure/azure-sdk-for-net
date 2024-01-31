@@ -10,6 +10,7 @@ namespace ServiceBus.Tests.ScenarioTests
     using Microsoft.Azure.Management.ServiceBus.Models;
     using Microsoft.Azure.Management.KeyVault;
     using Microsoft.Azure.Management.KeyVault.Models;
+    using Microsoft.Azure.Management.ManagedServiceIdentity;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using TestHelper;
     using Xunit;
@@ -29,15 +30,17 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 var resourceGroupCluster = ServiceBusManagementHelper.ResourceGroupCluster;
 
-                //var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
-                //if (string.IsNullOrWhiteSpace(resourceGroup))
-                //{
-                //    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
-                //    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
-                //}
+                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                if (string.IsNullOrWhiteSpace(resourceGroup))
+                {
+                    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
+                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                }
 
                 var keyVaultName = "SDKTestingKey1";
                 var KeyName = "sdktestingkey11";
+                var KeyName2 = "sdktestingkey12";
+                var KeyName3 = "sdktestingkey13";
 
                 // Create Namespace
                 var namespaceName = TestUtilities.GenerateName(ServiceBusManagementHelper.NamespacePrefix);
@@ -45,7 +48,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 //Check namespace name available
                 var checknamespaceavailable = ServiceBusManagementClient.Namespaces.CheckNameAvailabilityMethod(new CheckNameAvailability() { Name = namespaceName });
 
-                var createNamespaceResponse = this.ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroupCluster, namespaceName,
+                var createNamespaceResponse = this.ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
                     new SBNamespace()
                     {
                         Location = location,
@@ -64,6 +67,17 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 Assert.NotNull(createNamespaceResponse);
                 Assert.Equal(createNamespaceResponse.Name, namespaceName);
+                Assert.Equal(ManagedServiceIdentityType.SystemAssigned, createNamespaceResponse.Identity.Type);
+
+                createNamespaceResponse.Identity = new Identity() { Type = ManagedServiceIdentityType.None };
+
+                createNamespaceResponse = ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName, createNamespaceResponse);
+                Assert.Null(createNamespaceResponse.Identity);
+
+                createNamespaceResponse.Identity = new Identity() { Type = ManagedServiceIdentityType.SystemAssigned };
+
+                createNamespaceResponse = ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName, createNamespaceResponse);
+                Assert.Equal(ManagedServiceIdentityType.SystemAssigned, createNamespaceResponse.Identity.Type);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
@@ -91,7 +105,7 @@ namespace ServiceBus.Tests.ScenarioTests
                                 
                 // Encrypt data in Event Hub namespace Customer managed key from keyvault
 
-                var getNamespaceResponse = ServiceBusManagementClient.Namespaces.Get(resourceGroupCluster, namespaceName);
+                var getNamespaceResponse = ServiceBusManagementClient.Namespaces.Get(resourceGroup, namespaceName);
 
                 getNamespaceResponse.Encryption = new Encryption()
                 {
@@ -106,7 +120,7 @@ namespace ServiceBus.Tests.ScenarioTests
                         }
                 };
 
-                var updateNamespaceResponse = this.ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroupCluster, namespaceName, getNamespaceResponse);
+                var updateNamespaceResponse = this.ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName, getNamespaceResponse);
 
                 Vault getVaultRsponse1 = KeyVaultManagementClient.Vaults.Get(resourceGroupCluster, keyVaultName);
                 vaultparams = new VaultCreateOrUpdateParameters(getVaultRsponse.Location, getVaultRsponse.Properties);
@@ -115,8 +129,130 @@ namespace ServiceBus.Tests.ScenarioTests
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
                 //Delete the namesapce within the cluster
 
+                //Create User Assigned Identities and give permissions to access keyvault
+                //----------------------------------------------------------------
+
+                var identityName1 = TestUtilities.GenerateName(ServiceBusManagementHelper.IdentityPrefix);
+                var identityName2 = TestUtilities.GenerateName(ServiceBusManagementHelper.IdentityPrefix);
+                Microsoft.Azure.Management.ManagedServiceIdentity.Models.Identity identity1 = new Microsoft.Azure.Management.ManagedServiceIdentity.Models.Identity() { Location = "westus" };
+
+                Microsoft.Azure.Management.ManagedServiceIdentity.Models.Identity identity2 = new Microsoft.Azure.Management.ManagedServiceIdentity.Models.Identity() { Location = "westus" };
+
+                var userAssignedIdentity1 = IdentityManagementClient.UserAssignedIdentities.CreateOrUpdate(resourceGroup, identityName1, identity1);
+
+                var userAssignedIdentity2 = IdentityManagementClient.UserAssignedIdentities.CreateOrUpdate(resourceGroup, identityName2, identity2);
+
+                var accessPolicies = new Microsoft.Azure.Management.KeyVault.Models.AccessPolicyEntry()
+                {
+                    ObjectId = userAssignedIdentity1.PrincipalId.ToString(),
+                    TenantId = (Guid)userAssignedIdentity1.TenantId,
+                    Permissions = new Microsoft.Azure.Management.KeyVault.Models.Permissions()
+                    {
+                        Keys = new List<string> { "get", "wrapKey", "unwrapKey" }
+                    }
+                };
+
+                var accessPolicies2 = new Microsoft.Azure.Management.KeyVault.Models.AccessPolicyEntry()
+                {
+                    ObjectId = userAssignedIdentity2.PrincipalId.ToString(),
+                    TenantId = (Guid)userAssignedIdentity2.TenantId,
+                    Permissions = new Microsoft.Azure.Management.KeyVault.Models.Permissions()
+                    {
+                        Keys = new List<string> { "get", "wrapKey", "unwrapKey" }
+                    }
+                };
+
+                getVaultRsponse = KeyVaultManagementClient.Vaults.Get(resourceGroupCluster, keyVaultName);
+
+                vaultparams = new VaultCreateOrUpdateParameters(getVaultRsponse.Location, getVaultRsponse.Properties);
+
+                vaultparams.Properties.AccessPolicies.Add(accessPolicies);
+                vaultparams.Properties.AccessPolicies.Add(accessPolicies2);
+
+                updateVault = KeyVaultManagementClient.Vaults.CreateOrUpdate(resourceGroupCluster, keyVaultName, vaultparams);
+                //--------------------------------------------------------
+
+                TestUtilities.Wait(TimeSpan.FromSeconds(5));
+
+                //Enable User Assigned Identity Encryption
+                //---------------------------------------------
+                createNamespaceResponse = this.ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
+                    new SBNamespace()
+                    {
+                        Location = location,
+                        Sku = new Microsoft.Azure.Management.ServiceBus.Models.SBSku
+                        {
+                            Name = Microsoft.Azure.Management.ServiceBus.Models.SkuName.Premium,
+                            Tier = SkuTier.Premium
+                        },
+                        Identity = new Identity()
+                        {
+                            Type = ManagedServiceIdentityType.UserAssigned,
+                            UserAssignedIdentities = new Dictionary<string, UserAssignedIdentity>()
+                            {
+                                { userAssignedIdentity1.Id, new UserAssignedIdentity() },
+                                { userAssignedIdentity2.Id, new UserAssignedIdentity() }
+                            },
+                        },
+                        Encryption = new Encryption()
+                        {
+                            KeySource = KeySource.MicrosoftKeyVault,
+                            KeyVaultProperties = new List<KeyVaultProperties> {
+                                    new KeyVaultProperties()
+                                    {
+                                        KeyName = KeyName2,
+                                        KeyVaultUri = updateVault.Properties.VaultUri,
+                                        KeyVersion = "",
+                                        Identity = new UserAssignedIdentityProperties()
+                                        {
+                                            UserAssignedIdentity = userAssignedIdentity1.Id
+                                        }
+                                    },
+                                    new KeyVaultProperties()
+                                    {
+                                        KeyName = KeyName3,
+                                        KeyVaultUri = updateVault.Properties.VaultUri,
+                                        KeyVersion = "",
+                                        Identity = new UserAssignedIdentityProperties()
+                                        {
+                                            UserAssignedIdentity = userAssignedIdentity1.Id
+                                        }
+                                    }
+                            }
+                        }
+                    }
+                );
+
+                Assert.Equal(ManagedServiceIdentityType.UserAssigned, createNamespaceResponse.Identity.Type);
+                Assert.Equal(2, createNamespaceResponse.Encryption.KeyVaultProperties.Count);
+                Assert.Equal(KeyName2, createNamespaceResponse.Encryption.KeyVaultProperties[0].KeyName);
+                Assert.Equal(KeyName3, createNamespaceResponse.Encryption.KeyVaultProperties[1].KeyName);
+                Assert.Equal(updateVault.Properties.VaultUri, createNamespaceResponse.Encryption.KeyVaultProperties[0].KeyVaultUri + "/");
+                Assert.Equal(updateVault.Properties.VaultUri, createNamespaceResponse.Encryption.KeyVaultProperties[1].KeyVaultUri + "/");
+                Assert.Equal(userAssignedIdentity1.Id, createNamespaceResponse.Encryption.KeyVaultProperties[0].Identity.UserAssignedIdentity);
+                Assert.Equal(userAssignedIdentity1.Id, createNamespaceResponse.Encryption.KeyVaultProperties[1].Identity.UserAssignedIdentity);
+                Assert.Equal(2, createNamespaceResponse.Identity.UserAssignedIdentities.Count);
+                //-------------------------------------------------------------------------------------
+
+                //Test if identity can be set to System and User assigned.
+                //---------------------------------------------------------------------------------
+                createNamespaceResponse.Identity.Type = ManagedServiceIdentityType.SystemAssignedUserAssigned;
+
+                createNamespaceResponse = ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName, createNamespaceResponse);
+
+                Assert.Equal(ManagedServiceIdentityType.SystemAssignedUserAssigned, createNamespaceResponse.Identity.Type);
+                Assert.Equal(2, createNamespaceResponse.Encryption.KeyVaultProperties.Count);
+                Assert.Equal(KeyName2, createNamespaceResponse.Encryption.KeyVaultProperties[0].KeyName);
+                Assert.Equal(KeyName3, createNamespaceResponse.Encryption.KeyVaultProperties[1].KeyName);
+                Assert.Equal(updateVault.Properties.VaultUri, createNamespaceResponse.Encryption.KeyVaultProperties[0].KeyVaultUri + "/");
+                Assert.Equal(updateVault.Properties.VaultUri, createNamespaceResponse.Encryption.KeyVaultProperties[1].KeyVaultUri + "/");
+                Assert.Equal(userAssignedIdentity1.Id, createNamespaceResponse.Encryption.KeyVaultProperties[0].Identity.UserAssignedIdentity);
+                Assert.Equal(userAssignedIdentity1.Id, createNamespaceResponse.Encryption.KeyVaultProperties[1].Identity.UserAssignedIdentity);
+                Assert.Equal(2, createNamespaceResponse.Identity.UserAssignedIdentities.Count);
+                //----------------------------------------------------------------------------------
+
                 // Delete namespace
-                ServiceBusManagementClient.Namespaces.DeleteWithHttpMessagesAsync(resourceGroupCluster, namespaceName, null, new CancellationToken()).ConfigureAwait(false);
+                ServiceBusManagementClient.Namespaces.DeleteWithHttpMessagesAsync(resourceGroup, namespaceName, null, new CancellationToken()).ConfigureAwait(false);
             }
         }
     }

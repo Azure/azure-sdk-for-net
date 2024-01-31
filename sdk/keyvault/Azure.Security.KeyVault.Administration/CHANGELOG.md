@@ -1,6 +1,6 @@
 # Release History
 
-## 4.2.0-beta.1 (Unreleased)
+## 4.4.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,59 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.4.0-beta.2 (2023-11-13)
+
+### Other Changes
+
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+
+## 4.4.0-beta.1 (2023-11-09)
+
+### Features Added
+
+- The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartBackup` and `StartBackupAsync`. Managed Identity will be used instead if `sasToken` is null.
+- The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartRestore` and `StartRestoreAsync`. Managed Identity will be used instead if `sasToken` is null.
+- The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartSelectiveKeyRestore` and `StartSelectiveKeyRestoreAsync`. Managed Identity will be used instead if `sasToken` is null.
+
+### Bugs Fixed
+
+- When a Key Vault is moved to another tenant, the client is reauthenticated.
+
+### Other Changes
+
+- The default service version is now "7.5-preview.1".
+
+## 4.3.0 (2023-03-14)
+
+### Breaking Changes
+
+The following changes are only breaking from the previous beta. They are not breaking since version 4.4.0 when those types and members did not exist.
+
+- Service version "7.4-preview.1" is not supported.
+- Removed `KeyVaultSetting.AsBoolean` and `AsString`, and added `AsBoolean` to new `KeyVaultSetting.Value` property type, `KeyVaultSettingValue`.
+
+### Other Changes
+
+- The default service version is now "7.4".
+
+## 4.3.0-beta.1 (2022-11-09)
+
+### Features Added
+
+- Added `KeyVaultSettingsClient` to get and update Managed HSM settings.
+
+### Other Changes
+
+- The default service version is now "7.4-preview.1".
+
+## 4.2.0 (2022-09-20)
+
+### Breaking Changes
+
+- Verify the challenge resource matches the vault domain.
+  This should affect few customers who can set `KeyVaultAdministrationClientOptions.DisableChallengeResourceVerification` to `true` to disable.
+  See https://aka.ms/azsdk/blog/vault-uri for more information.
 
 ## 4.1.0 (2022-03-24)
 
@@ -88,7 +141,7 @@ Changes from both the last release and the last beta include:
 - Refactor `RestoreOperation` to return `RestoreResult`
 - Renamed `KeyVaultPermissions` Not\* properties to Deny\*
 - Renamed `KeyVaultRoleAssignment` `Type` property to `RoleAssignmentType`
-- Made `KeyVaultRoleAssignmentProperties` internal and moved its properties to method parameters for `CreateRoleAssignment` 
+- Made `KeyVaultRoleAssignmentProperties` internal and moved its properties to method parameters for `CreateRoleAssignment`
 
 ## 4.0.0-beta.2 (2020-10-06)
 

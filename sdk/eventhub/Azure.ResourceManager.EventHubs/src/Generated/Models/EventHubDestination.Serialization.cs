@@ -6,74 +6,119 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubDestination : IUtf8JsonSerializable
+    public partial class EventHubDestination : IUtf8JsonSerializable, IJsonModel<EventHubDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubDestination>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EventHubDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventHubDestination)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
-                writer.WritePropertyName("name");
+                writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageAccountResourceId))
             {
-                writer.WritePropertyName("storageAccountResourceId");
+                writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
             if (Optional.IsDefined(BlobContainer))
             {
-                writer.WritePropertyName("blobContainer");
+                writer.WritePropertyName("blobContainer"u8);
                 writer.WriteStringValue(BlobContainer);
             }
             if (Optional.IsDefined(ArchiveNameFormat))
             {
-                writer.WritePropertyName("archiveNameFormat");
+                writer.WritePropertyName("archiveNameFormat"u8);
                 writer.WriteStringValue(ArchiveNameFormat);
             }
             if (Optional.IsDefined(DataLakeSubscriptionId))
             {
-                writer.WritePropertyName("dataLakeSubscriptionId");
+                writer.WritePropertyName("dataLakeSubscriptionId"u8);
                 writer.WriteStringValue(DataLakeSubscriptionId.Value);
             }
             if (Optional.IsDefined(DataLakeAccountName))
             {
-                writer.WritePropertyName("dataLakeAccountName");
+                writer.WritePropertyName("dataLakeAccountName"u8);
                 writer.WriteStringValue(DataLakeAccountName);
             }
             if (Optional.IsDefined(DataLakeFolderPath))
             {
-                writer.WritePropertyName("dataLakeFolderPath");
+                writer.WritePropertyName("dataLakeFolderPath"u8);
                 writer.WriteStringValue(DataLakeFolderPath);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventHubDestination DeserializeEventHubDestination(JsonElement element)
+        EventHubDestination IJsonModel<EventHubDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventHubDestination)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventHubDestination(document.RootElement, options);
+        }
+
+        internal static EventHubDestination DeserializeEventHubDestination(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
-            Optional<string> storageAccountResourceId = default;
+            Optional<ResourceIdentifier> storageAccountResourceId = default;
             Optional<string> blobContainer = default;
             Optional<string> archiveNameFormat = default;
             Optional<Guid> dataLakeSubscriptionId = default;
             Optional<string> dataLakeAccountName = default;
             Optional<string> dataLakeFolderPath = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -82,37 +127,40 @@ namespace Azure.ResourceManager.EventHubs.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("storageAccountResourceId"))
+                        if (property0.NameEquals("storageAccountResourceId"u8))
                         {
-                            storageAccountResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            storageAccountResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("blobContainer"))
+                        if (property0.NameEquals("blobContainer"u8))
                         {
                             blobContainer = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("archiveNameFormat"))
+                        if (property0.NameEquals("archiveNameFormat"u8))
                         {
                             archiveNameFormat = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("dataLakeSubscriptionId"))
+                        if (property0.NameEquals("dataLakeSubscriptionId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataLakeSubscriptionId = property0.Value.GetGuid();
                             continue;
                         }
-                        if (property0.NameEquals("dataLakeAccountName"))
+                        if (property0.NameEquals("dataLakeAccountName"u8))
                         {
                             dataLakeAccountName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("dataLakeFolderPath"))
+                        if (property0.NameEquals("dataLakeFolderPath"u8))
                         {
                             dataLakeFolderPath = property0.Value.GetString();
                             continue;
@@ -120,8 +168,44 @@ namespace Azure.ResourceManager.EventHubs.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventHubDestination(name.Value, storageAccountResourceId.Value, blobContainer.Value, archiveNameFormat.Value, Optional.ToNullable(dataLakeSubscriptionId), dataLakeAccountName.Value, dataLakeFolderPath.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventHubDestination(name.Value, storageAccountResourceId.Value, blobContainer.Value, archiveNameFormat.Value, Optional.ToNullable(dataLakeSubscriptionId), dataLakeAccountName.Value, dataLakeFolderPath.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EventHubDestination>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubDestination>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EventHubDestination)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EventHubDestination IPersistableModel<EventHubDestination>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventHubDestination>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEventHubDestination(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EventHubDestination)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EventHubDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

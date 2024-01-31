@@ -29,15 +29,19 @@ namespace Azure.Analytics.Synapse.Spark
 
         /// <summary> Initializes a new instance of SparkBatchClient. </summary>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="livyApiVersion"> Valid api-version for the request. The default value is "2019-11-01-preview". </param>
         /// <param name="sparkPoolName"> Name of the spark pool. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="livyApiVersion"> Valid api-version for the request. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        public SparkBatchClient(Uri endpoint, string sparkPoolName, TokenCredential credential, string livyApiVersion = "2019-11-01-preview", SparkClientOptions options = null)
+        public SparkBatchClient(Uri endpoint, string livyApiVersion, string sparkPoolName, TokenCredential credential, SparkClientOptions options = null)
         {
             if (endpoint == null)
             {
                 throw new ArgumentNullException(nameof(endpoint));
+            }
+            if (livyApiVersion == null)
+            {
+                throw new ArgumentNullException(nameof(livyApiVersion));
             }
             if (sparkPoolName == null)
             {
@@ -47,28 +51,24 @@ namespace Azure.Analytics.Synapse.Spark
             {
                 throw new ArgumentNullException(nameof(credential));
             }
-            if (livyApiVersion == null)
-            {
-                throw new ArgumentNullException(nameof(livyApiVersion));
-            }
 
             options ??= new SparkClientOptions();
             _clientDiagnostics = new ClientDiagnostics(options);
             string[] scopes = { "https://dev.azuresynapse.net/.default" };
             _pipeline = HttpPipelineBuilder.Build(options, new BearerTokenAuthenticationPolicy(credential, scopes));
-            RestClient = new SparkBatchRestClient(_clientDiagnostics, _pipeline, endpoint, sparkPoolName, livyApiVersion);
+            RestClient = new SparkBatchRestClient(_clientDiagnostics, _pipeline, endpoint, livyApiVersion, sparkPoolName);
         }
 
         /// <summary> Initializes a new instance of SparkBatchClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> The workspace development endpoint, for example https://myworkspace.dev.azuresynapse.net. </param>
+        /// <param name="livyApiVersion"> Valid api-version for the request. The default value is "2019-11-01-preview". </param>
         /// <param name="sparkPoolName"> Name of the spark pool. </param>
-        /// <param name="livyApiVersion"> Valid api-version for the request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/>, <paramref name="sparkPoolName"/> or <paramref name="livyApiVersion"/> is null. </exception>
-        internal SparkBatchClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string sparkPoolName, string livyApiVersion = "2019-11-01-preview")
+        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/>, <paramref name="livyApiVersion"/> or <paramref name="sparkPoolName"/> is null. </exception>
+        internal SparkBatchClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string livyApiVersion, string sparkPoolName)
         {
-            RestClient = new SparkBatchRestClient(clientDiagnostics, pipeline, endpoint, sparkPoolName, livyApiVersion);
+            RestClient = new SparkBatchRestClient(clientDiagnostics, pipeline, endpoint, livyApiVersion, sparkPoolName);
             _clientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
         }

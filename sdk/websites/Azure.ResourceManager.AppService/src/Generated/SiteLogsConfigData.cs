@@ -5,68 +5,111 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the SiteLogsConfig data model. </summary>
-    public partial class SiteLogsConfigData : ProxyOnlyResource
+    /// <summary>
+    /// A class representing the SiteLogsConfig data model.
+    /// Configuration of App Service site logs.
+    /// </summary>
+    public partial class SiteLogsConfigData : ResourceData
     {
-        /// <summary> Initializes a new instance of SiteLogsConfigData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteLogsConfigData"/>. </summary>
         public SiteLogsConfigData()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteLogsConfigData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteLogsConfigData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> Kind of resource. </param>
         /// <param name="applicationLogs"> Application logs configuration. </param>
         /// <param name="httpLogs"> HTTP logs configuration. </param>
-        /// <param name="failedRequestsTracing"> Failed requests tracing configuration. </param>
-        /// <param name="detailedErrorMessages"> Detailed error messages configuration. </param>
-        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ApplicationLogsConfig applicationLogs, HttpLogsConfig httpLogs, EnabledConfig failedRequestsTracing, EnabledConfig detailedErrorMessages) : base(id, name, resourceType, systemData, kind)
+        /// <param name="isFailedRequestsTracing"> Failed requests tracing configuration. </param>
+        /// <param name="isDetailedErrorMessages"> Detailed error messages configuration. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApplicationLogsConfig applicationLogs, AppServiceHttpLogsConfig httpLogs, WebAppEnabledConfig isFailedRequestsTracing, WebAppEnabledConfig isDetailedErrorMessages, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ApplicationLogs = applicationLogs;
             HttpLogs = httpLogs;
-            FailedRequestsTracing = failedRequestsTracing;
-            DetailedErrorMessages = detailedErrorMessages;
+            IsFailedRequestsTracing = isFailedRequestsTracing;
+            IsDetailedErrorMessages = isDetailedErrorMessages;
+            Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Application logs configuration. </summary>
         public ApplicationLogsConfig ApplicationLogs { get; set; }
         /// <summary> HTTP logs configuration. </summary>
-        public HttpLogsConfig HttpLogs { get; set; }
+        public AppServiceHttpLogsConfig HttpLogs { get; set; }
         /// <summary> Failed requests tracing configuration. </summary>
-        internal EnabledConfig FailedRequestsTracing { get; set; }
+        internal WebAppEnabledConfig IsFailedRequestsTracing { get; set; }
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
-        public bool? FailedRequestsTracingEnabled
+        public bool? IsFailedRequestsTracingEnabled
         {
-            get => FailedRequestsTracing is null ? default : FailedRequestsTracing.Enabled;
+            get => IsFailedRequestsTracing is null ? default : IsFailedRequestsTracing.Enabled;
             set
             {
-                if (FailedRequestsTracing is null)
-                    FailedRequestsTracing = new EnabledConfig();
-                FailedRequestsTracing.Enabled = value;
+                if (IsFailedRequestsTracing is null)
+                    IsFailedRequestsTracing = new WebAppEnabledConfig();
+                IsFailedRequestsTracing.Enabled = value;
             }
         }
 
         /// <summary> Detailed error messages configuration. </summary>
-        internal EnabledConfig DetailedErrorMessages { get; set; }
+        internal WebAppEnabledConfig IsDetailedErrorMessages { get; set; }
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
-        public bool? DetailedErrorMessagesEnabled
+        public bool? IsDetailedErrorMessagesEnabled
         {
-            get => DetailedErrorMessages is null ? default : DetailedErrorMessages.Enabled;
+            get => IsDetailedErrorMessages is null ? default : IsDetailedErrorMessages.Enabled;
             set
             {
-                if (DetailedErrorMessages is null)
-                    DetailedErrorMessages = new EnabledConfig();
-                DetailedErrorMessages.Enabled = value;
+                if (IsDetailedErrorMessages is null)
+                    IsDetailedErrorMessages = new WebAppEnabledConfig();
+                IsDetailedErrorMessages.Enabled = value;
             }
         }
+
+        /// <summary> Kind of resource. </summary>
+        public string Kind { get; set; }
     }
 }

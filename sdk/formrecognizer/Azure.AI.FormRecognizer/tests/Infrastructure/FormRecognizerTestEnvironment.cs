@@ -13,15 +13,7 @@ namespace Azure.AI.FormRecognizer.Tests
     /// </summary>
     public class FormRecognizerTestEnvironment: TestEnvironment
     {
-        public FormRecognizerTestEnvironment()
-        {
-        }
-
-        /// <summary>The name of the environment variable from which the Form Recognizer resource's endpoint will be extracted for the live tests.</summary>
-        internal const string EndpointEnvironmentVariableName = "FORM_RECOGNIZER_ENDPOINT";
-
-        /// <summary>The name of the environment variable from which the Form Recognizer resource's API key will be extracted for the live tests.</summary>
-        internal const string ApiKeyEnvironmentVariableName = "FORM_RECOGNIZER_API_KEY";
+        private const string SanitizedSasUrl = "https://sanitized.blob.core.windows.net";
 
         /// <summary>The name of the folder in which test assets are stored.</summary>
         private const string AssetsFolderName = "Assets";
@@ -29,43 +21,52 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <summary>The format to generate the GitHub URIs of the files to be used for tests.</summary>
         private const string FileUriFormat = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/main/sdk/formrecognizer/Azure.AI.FormRecognizer/tests/{0}/{1}";
 
-        /// <summary>The name of the environment variable for the Blob Container SAS URL to use for storing documents used for live tests.</summary>
-        internal const string BlobContainerSasUrlV2EnvironmentVariableName = "FORM_RECOGNIZER_BLOB_CONTAINER_SAS_URL_V2";
-
-        /// <summary>The name of the environment variable for the multipage Blob Container SAS URL to use for storing documents used for live tests.</summary>
-        internal const string MultipageBlobContainerSasUrlV2EnvironmentVariableName = "FORM_RECOGNIZER_MULTIPAGE_BLOB_CONTAINER_SAS_URL_V2";
-
-        /// <summary>The name of the environment variable for the Blob Container SAS URL to use for storing documents that have selection marks used for live tests.</summary>
-        internal const string SelectionMarkBlobContainerSasUrlV2EnvironmentVariableName = "FORM_RECOGNIZER_SELECTION_MARK_BLOB_CONTAINER_SAS_URL_V2";
-
-        /// <summary>The name of the environment variable for the Blob Container SAS URL to use for storing documents that have tables with dynamic rows used for live tests.</summary>
-        internal const string TableDynamicRowsBlobContainerSasUrlV2EnvironmentVariableName = "FORM_RECOGNIZER_TABLE_VARIABLE_ROWS_BLOB_CONTAINER_SAS_URL_V2";
-
-        /// <summary>The name of the environment variable for the Blob Container SAS URL to use for storing documents that have tables with fixed rows used for live tests.</summary>
-        internal const string TableFixedRowsBlobContainerSasUrlV2EnvironmentVariableName = "FORM_RECOGNIZER_TABLE_FIXED_ROWS_BLOB_CONTAINER_SAS_URL_V2";
-
-        /// <summary>The name of the environment variable for the target resource identifier to use for copying custom models live tests.</summary>
-        internal const string TargetResourceIdEnvironmentVariableName = "FORM_RECOGNIZER_TARGET_RESOURCE_ID";
-
-        /// <summary>The name of the environment variable for the target resource region to use for copying custom models live tests.</summary>
-        internal const string TargetResourceRegionEnvironmentVariableName = "FORM_RECOGNIZER_TARGET_RESOURCE_REGION";
-
-        public string ApiKey => GetRecordedVariable(ApiKeyEnvironmentVariableName, options => options.IsSecret());
-        public string Endpoint => GetRecordedVariable(EndpointEnvironmentVariableName);
-
-        public string BlobContainerSasUrlV2 => GetRecordedVariable(BlobContainerSasUrlV2EnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
-        public string SelectionMarkBlobContainerSasUrlV2 => GetRecordedVariable(SelectionMarkBlobContainerSasUrlV2EnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
-        public string MultipageBlobContainerSasUrlV2 => GetRecordedVariable(MultipageBlobContainerSasUrlV2EnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
-        public string TableDynamicRowsContainerSasUrlV2 => GetRecordedVariable(TableDynamicRowsBlobContainerSasUrlV2EnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
-        public string TableFixedRowsContainerSasUrlV2 => GetRecordedVariable(TableFixedRowsBlobContainerSasUrlV2EnvironmentVariableName, options => options.IsSecret("https://sanitized.blob.core.windows.net"));
-        public string TargetResourceId => GetRecordedVariable(TargetResourceIdEnvironmentVariableName);
-        public string TargetResourceRegion => GetRecordedVariable(TargetResourceRegionEnvironmentVariableName);
+        private static readonly string s_currentWorkingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
         /// <summary>
-        /// The absolute path of the directory where the running assembly is located.
+        /// The endpoint of the Form Recognizer resource used in live tests.
         /// </summary>
-        /// <value>The absolute path of the current working directory.</value>
-        private static string CurrentWorkingDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        public string Endpoint => GetRecordedVariable("ENDPOINT");
+
+        /// <summary>
+        /// The API key to access the Form Recognizer resource used in live tests.
+        /// </summary>
+        public string ApiKey => GetRecordedVariable("API_KEY", options => options.IsSecret());
+
+        /// <summary>
+        /// The ID of the Form Recognizer resource used in live tests.
+        /// </summary>
+        public string ResourceId => GetRecordedVariable("RESOURCE_ID");
+
+        /// <summary>
+        /// The region of the Form Recognizer resource used in live tests.
+        /// </summary>
+        public string ResourceRegion => GetRecordedVariable("RESOURCE_REGION");
+
+        /// <summary>
+        /// A Blob Container SAS URL used to build document models in live tests. Used when analyzing single-paged documents.
+        /// </summary>
+        public string BlobContainerSasUrl => GetRecordedVariable("SINGLEPAGE_BLOB_CONTAINER_SAS_URL_V2", options => options.IsSecret(SanitizedSasUrl));
+
+        /// <summary>
+        /// A Blob Container SAS URL used to build document models in live tests. Used when analyzing multi-paged documents.
+        /// </summary>
+        public string MultipageBlobContainerSasUrl => GetRecordedVariable("MULTIPAGE_BLOB_CONTAINER_SAS_URL_V2", options => options.IsSecret(SanitizedSasUrl));
+
+        /// <summary>
+        /// A Blob Container SAS URL used to build document models in live tests. Used when analyzing documents with selection marks.
+        /// </summary>
+        public string SelectionMarkBlobContainerSasUrl => GetRecordedVariable("SELECTION_MARK_BLOB_CONTAINER_SAS_URL_V2", options => options.IsSecret(SanitizedSasUrl));
+
+        /// <summary>
+        /// A Blob Container SAS URL used to build document models in live tests. Used when analyzing documents with tables with dynamic rows.
+        /// </summary>
+        public string TableDynamicRowsContainerSasUrl => GetRecordedVariable("TABLE_DYNAMIC_ROWS_BLOB_CONTAINER_SAS_URL_V2", options => options.IsSecret(SanitizedSasUrl));
+
+        /// <summary>
+        /// A Blob Container SAS URL used to build document models in live tests. Used when analyzing documents with tables with fixed rows.
+        /// </summary>
+        public string TableFixedRowsContainerSasUrl => GetRecordedVariable("TABLE_FIXED_ROWS_BLOB_CONTAINER_SAS_URL_V2", options => options.IsSecret(SanitizedSasUrl));
 
         /// <summary>
         /// Creates an absolute path to a file contained in the local test assets folder.
@@ -73,20 +74,10 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <param name="filename">The name of the file to create a path to.</param>
         /// <returns>An absolute path to the specified file.</returns>
         public static string CreatePath(string filename) =>
-            Path.Combine(CurrentWorkingDirectory, AssetsFolderName, filename);
+            Path.Combine(s_currentWorkingDirectory, AssetsFolderName, filename);
 
         /// <summary>
-        /// Creates a URI string to a file contained in the test assets folder stored in
-        /// the azure-sdk-for-net GitHub repo.
-        /// </summary>
-        /// <param name="filename">The name of the file to create a URI string to.</param>
-        /// <returns>A URI string to the specified file.</returns>
-        public static string CreateUriString(string filename) =>
-            string.Format(FileUriFormat, AssetsFolderName, filename);
-
-        /// <summary>
-        /// Creates a <see cref="FileStream"/> to read file contained in the local test
-        /// assets folder.
+        /// Creates a <see cref="FileStream"/> to read file contained in the local test assets folder.
         /// </summary>
         /// <param name="filename">The name of the file to read with the stream.</param>
         /// <returns>A <see cref="FileStream"/> to read the specified file.</returns>
@@ -97,12 +88,15 @@ namespace Azure.AI.FormRecognizer.Tests
             new FileStream(CreatePath(filename), FileMode.Open);
 
         /// <summary>
-        /// Creates a URI to a file contained in the test assets folder stored in the
-        /// azure-sdk-for-net GitHub repo.
+        /// Creates a URI to a file contained in the test assets folder stored in the azure-sdk-for-net GitHub repo.
         /// </summary>
         /// <param name="filename">The name of the file to create a URI to.</param>
         /// <returns>A URI to the specified file.</returns>
-        public static Uri CreateUri(string filename) =>
-            new Uri(CreateUriString(filename));
+        public static Uri CreateUri(string filename)
+        {
+            var uriString = string.Format(FileUriFormat, AssetsFolderName, filename);
+
+            return new Uri(uriString);
+        }
     }
 }

@@ -150,7 +150,21 @@ var basicTwin = new BasicDigitalTwin
 {
     Id = basicDtId,
     // model Id of digital twin
-    Metadata = { ModelId = modelId },
+    Metadata =
+    {
+        ModelId = modelId,
+        PropertyMetadata = new Dictionary<string, DigitalTwinPropertyMetadata>
+        {
+            {
+                "Prop2",
+                new DigitalTwinPropertyMetadata
+                {
+                    // must always be serialized as ISO 8601
+                    SourceTime = DateTimeOffset.UtcNow,
+                }
+            }
+        },
+    },
     Contents =
     {
         // digital twin properties
@@ -161,6 +175,18 @@ var basicTwin = new BasicDigitalTwin
             "Component1",
             new BasicDigitalTwinComponent
             {
+                // writeable component metadata
+                Metadata =  new Dictionary<string, DigitalTwinPropertyMetadata>
+                {
+                    {
+                        "ComponentProp2",
+                        new DigitalTwinPropertyMetadata
+                        {
+                            // must always be serialized as ISO 8601
+                            SourceTime = DateTimeOffset.UtcNow,
+                        }
+                    }
+                },
                 // component properties
                 Contents =
                 {
@@ -214,10 +240,12 @@ var component1 = JsonSerializer.Deserialize<BasicDigitalTwinComponent>(component
 Console.WriteLine($"Retrieved and deserialized digital twin {basicDt.Id}:\n\t" +
     $"ETag: {basicDt.ETag}\n\t" +
     $"ModelId: {basicDt.Metadata.ModelId}\n\t" +
-    $"Prop1: {basicDt.Contents["Prop1"]} and last updated on {basicDt.Metadata.PropertyMetadata["Prop1"].LastUpdatedOn}\n\t" +
-    $"Prop2: {basicDt.Contents["Prop2"]} and last updated on {basicDt.Metadata.PropertyMetadata["Prop2"].LastUpdatedOn}\n\t" +
-    $"Component1.Prop1: {component1.Contents["ComponentProp1"]} and  last updated on: {component1.Metadata["ComponentProp1"].LastUpdatedOn}\n\t" +
-    $"Component1.Prop2: {component1.Contents["ComponentProp2"]} and last updated on: {component1.Metadata["ComponentProp2"].LastUpdatedOn}");
+    $"LastUpdatedOn: {basicDt.LastUpdatedOn}\n\t" +
+    $"Prop1: {basicDt.Contents["Prop1"]}, last updated on {basicDt.Metadata.PropertyMetadata["Prop1"].LastUpdatedOn}\n\t" +
+    $"Prop2: {basicDt.Contents["Prop2"]}, last updated on {basicDt.Metadata.PropertyMetadata["Prop2"].LastUpdatedOn} and sourced at {basicDt.Metadata.PropertyMetadata["Prop2"].SourceTime}\n\t" +
+    $"Component1.LastUpdatedOn: {component1.LastUpdatedOn}\n\t" +
+    $"Component1.Prop1: {component1.Contents["ComponentProp1"]}, last updated on: {component1.Metadata["ComponentProp1"].LastUpdatedOn}\n\t" +
+    $"Component1.Prop2: {component1.Contents["ComponentProp2"]}, last updated on: {component1.Metadata["ComponentProp2"].LastUpdatedOn} and sourced at: {component1.Metadata["ComponentProp2"].SourceTime}");
 ```
 
 Getting and deserializing a digital twin into a custom data type is extremely easy.
@@ -489,4 +517,57 @@ await client.PublishComponentTelemetryAsync(
     Guid.NewGuid().ToString(),
     JsonSerializer.Serialize(telemetryPayload));
 Console.WriteLine($"Published component telemetry message to twin '{twinId}'.");
+```
+
+## Create, list, cancel and delete import jobs of digital twins
+
+### Create import jobs
+
+To create an import job, provide an Id of an import job such as "sampleImportJob" and import job data containing the blob file endpoint and optional output blob file endpoint like the example shown below.
+
+```C# Snippet:DigitalTwinsSampleCreateImportJob
+await client.ImportGraphAsync(sampleImportJobId, sampleImportJob);
+Console.WriteLine($"Created jobs '{sampleImportJobId}' and '{sampleImportJob}'.");
+```
+
+### List import jobs
+
+List a specific import job given import job Id `GetImportJobAsync`.
+
+```C# Snippet:DigitalTwinsSampleGetImportJob
+Response<ImportJob> sampleImportJobResponse = await client.GetImportJobAsync(sampleImportJobId);
+Console.WriteLine($"Retrieved job '{sampleImportJobResponse.Value.Id}'.");
+```
+
+### Cancel import job
+
+Cancel an import job given import job Id.
+
+```C# Snippet:DigitalTwinsSampleCancelImportJob
+try
+{
+    await client.CancelImportJobAsync(sampleImportJobId);
+    Console.WriteLine($"Cancelled job '{sampleImportJobId}'.");
+}
+catch (RequestFailedException ex)
+{
+    FatalError($"Failed to cancel import job '{sampleImportJobId}' due to:\n{ex}");
+}
+```
+
+
+### Delete import jobs
+
+Delete an import job given import job Id.
+
+```C# Snippet:DigitalTwinsSampleDeleteImportJob
+try
+{
+    await client.DeleteImportJobAsync(sampleImportJobId);
+    Console.WriteLine($"Deleted job '{sampleImportJobId}'.");
+}
+catch (RequestFailedException ex)
+{
+    FatalError($"Failed to delete import job '{sampleImportJobId}' due to:\n{ex}");
+}
 ```

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.NetworkTraversal
 {
-    /// <summary> The routing methodology to where the ICE server will be located from the client. &quot;any&quot; will have higher reliability while &quot;nearest&quot; will have lower latency. It is recommended to default to use the &quot;any&quot; routing method unless there are specific scenarios which minimizing latency is critical. </summary>
+    /// <summary> The routing methodology to where the ICE server will be located from the client. "any" will have higher reliability while "nearest" will have lower latency. It is recommended to default to use the "any" routing method unless there are specific scenarios which minimizing latency is critical. </summary>
     public readonly partial struct RouteType : IEquatable<RouteType>
     {
         private readonly string _value;

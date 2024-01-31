@@ -1,3 +1,21 @@
+resources:
+  repositories:
+    - repository: azure-sdk-build-tools
+      type: git
+      name: internal/azure-sdk-build-tools
+      ref: refs/tags/azure-sdk-build-tools_20230829.1
+
+parameters: 
+- name: ShouldPublishToNuget
+  type: boolean
+  default: false
+- name: ShouldPublishToDevOps
+  type: boolean
+  default: false
+- name: Scope
+  type: string
+  default: ''
+
 trigger: none
 pr:
   branches:
@@ -12,6 +30,7 @@ pr:
     - mgmt.proj
     - eng/mgmt.proj
     - eng/pipelines/mgmt.yml
+    - eng/pipelines/templates/jobs/ci.mgmt.yml
     - eng/mgmt
     - sdk/mgmtcommon
     - sdk/advisor/Microsoft.Azure.Management.Advisor
@@ -178,7 +197,19 @@ variables:
   value: /p:PullRequestNumber=$(system.pullrequest.pullrequestnumber) /p:RepoHtmlUrl=https://github.com/$(build.repository.id) /p:CIBuildId=$(OfficialBuildId)
 - name: timeoutInMinutes
   value: 120
-jobs:
-- template: /eng/pipelines/templates/jobs/ci.mgmt.yml
-  parameters:
-    Scope: $(Scope)
+
+stages:
+  - stage: Build
+    jobs:
+      - template: /eng/pipelines/templates/jobs/ci.mgmt.yml
+        parameters:
+          Scope: ${{ parameters.Scope }}
+          ${{ if or(eq(parameters.ShouldPublishToNuget, 'true'), eq(parameters.ShouldPublishToDevOps, 'true')) }}:
+            ShouldPublish: true
+
+      - ${{ if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal')) }}:
+        - template: /eng/pipelines/templates/jobs/mgmt-release.yml
+          parameters:
+            DependsOn: Build
+            ShouldPublishToNuget: ${{ parameters.ShouldPublishToNuget }}
+            ShouldPublishToDevOps: ${{ parameters.ShouldPublishToDevOps }}

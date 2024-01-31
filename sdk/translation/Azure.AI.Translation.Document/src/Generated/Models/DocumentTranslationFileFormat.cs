@@ -15,25 +15,16 @@ namespace Azure.AI.Translation.Document
     /// <summary> The FileFormat. </summary>
     public partial class DocumentTranslationFileFormat
     {
-        /// <summary> Initializes a new instance of DocumentTranslationFileFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentTranslationFileFormat"/>. </summary>
         /// <param name="format"> Name of the format. </param>
         /// <param name="fileExtensions"> Supported file extension for this format. </param>
         /// <param name="contentTypes"> Supported Content-Types for this format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="format"/>, <paramref name="fileExtensions"/> or <paramref name="contentTypes"/> is null. </exception>
         internal DocumentTranslationFileFormat(string format, IEnumerable<string> fileExtensions, IEnumerable<string> contentTypes)
         {
-            if (format == null)
-            {
-                throw new ArgumentNullException(nameof(format));
-            }
-            if (fileExtensions == null)
-            {
-                throw new ArgumentNullException(nameof(fileExtensions));
-            }
-            if (contentTypes == null)
-            {
-                throw new ArgumentNullException(nameof(contentTypes));
-            }
+            Argument.AssertNotNull(format, nameof(format));
+            Argument.AssertNotNull(fileExtensions, nameof(fileExtensions));
+            Argument.AssertNotNull(contentTypes, nameof(contentTypes));
 
             Format = format;
             FileExtensions = fileExtensions.ToList();
@@ -41,7 +32,7 @@ namespace Azure.AI.Translation.Document
             FormatVersions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DocumentTranslationFileFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentTranslationFileFormat"/>. </summary>
         /// <param name="format"> Name of the format. </param>
         /// <param name="fileExtensions"> Supported file extension for this format. </param>
         /// <param name="contentTypes"> Supported Content-Types for this format. </param>

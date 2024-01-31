@@ -16,30 +16,53 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("storageConnectionString");
+            writer.WritePropertyName("storageConnectionString"u8);
             writer.WriteStringValue(StorageConnectionString);
-            writer.WritePropertyName("projections");
+            writer.WritePropertyName("projections"u8);
             writer.WriteStartArray();
             foreach (var item in Projections)
             {
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (Optional.IsDefined(Identity))
+            {
+                if (Identity != null)
+                {
+                    writer.WritePropertyName("identity"u8);
+                    writer.WriteObjectValue(Identity);
+                }
+                else
+                {
+                    writer.WriteNull("identity");
+                }
+            }
+            if (Optional.IsDefined(Parameters))
+            {
+                writer.WritePropertyName("parameters"u8);
+                writer.WriteObjectValue(Parameters);
+            }
             writer.WriteEndObject();
         }
 
         internal static KnowledgeStore DeserializeKnowledgeStore(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string storageConnectionString = default;
             IList<KnowledgeStoreProjection> projections = default;
+            Optional<SearchIndexerDataIdentity> identity = default;
+            Optional<SearchIndexerKnowledgeStoreParameters> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("storageConnectionString"))
+                if (property.NameEquals("storageConnectionString"u8))
                 {
                     storageConnectionString = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("projections"))
+                if (property.NameEquals("projections"u8))
                 {
                     List<KnowledgeStoreProjection> array = new List<KnowledgeStoreProjection>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -49,8 +72,27 @@ namespace Azure.Search.Documents.Indexes.Models
                     projections = array;
                     continue;
                 }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        identity = null;
+                        continue;
+                    }
+                    identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("parameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parameters = SearchIndexerKnowledgeStoreParameters.DeserializeSearchIndexerKnowledgeStoreParameters(property.Value);
+                    continue;
+                }
             }
-            return new KnowledgeStore(storageConnectionString, projections);
+            return new KnowledgeStore(storageConnectionString, projections, identity.Value, parameters.Value);
         }
     }
 }

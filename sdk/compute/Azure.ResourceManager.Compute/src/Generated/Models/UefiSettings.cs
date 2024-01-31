@@ -5,28 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-12-01. </summary>
+    /// <summary> Specifies the security settings like secure boot and vTPM used while creating the virtual machine. Minimum api-version: 2020-12-01. </summary>
     public partial class UefiSettings
     {
-        /// <summary> Initializes a new instance of UefiSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UefiSettings"/>. </summary>
         public UefiSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of UefiSettings. </summary>
-        /// <param name="secureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-12-01. </param>
-        /// <param name="vTpmEnabled"> Specifies whether vTPM should be enabled on the virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-12-01. </param>
-        internal UefiSettings(bool? secureBootEnabled, bool? vTpmEnabled)
+        /// <summary> Initializes a new instance of <see cref="UefiSettings"/>. </summary>
+        /// <param name="isSecureBootEnabled"> Specifies whether secure boot should be enabled on the virtual machine. Minimum api-version: 2020-12-01. </param>
+        /// <param name="isVirtualTpmEnabled"> Specifies whether vTPM should be enabled on the virtual machine. Minimum api-version: 2020-12-01. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UefiSettings(bool? isSecureBootEnabled, bool? isVirtualTpmEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SecureBootEnabled = secureBootEnabled;
-            VTpmEnabled = vTpmEnabled;
+            IsSecureBootEnabled = isSecureBootEnabled;
+            IsVirtualTpmEnabled = isVirtualTpmEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies whether secure boot should be enabled on the virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-12-01. </summary>
-        public bool? SecureBootEnabled { get; set; }
-        /// <summary> Specifies whether vTPM should be enabled on the virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-12-01. </summary>
-        public bool? VTpmEnabled { get; set; }
+        /// <summary> Specifies whether secure boot should be enabled on the virtual machine. Minimum api-version: 2020-12-01. </summary>
+        public bool? IsSecureBootEnabled { get; set; }
+        /// <summary> Specifies whether vTPM should be enabled on the virtual machine. Minimum api-version: 2020-12-01. </summary>
+        public bool? IsVirtualTpmEnabled { get; set; }
     }
 }

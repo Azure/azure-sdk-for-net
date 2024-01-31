@@ -8,26 +8,24 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary> The IncidentResultList. </summary>
     internal partial class IncidentResultList
     {
-        /// <summary> Initializes a new instance of IncidentResultList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncidentResultList"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal IncidentResultList(IEnumerable<AnomalyIncident> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of IncidentResultList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncidentResultList"/>. </summary>
         /// <param name="nextLink"></param>
         /// <param name="value"></param>
         internal IncidentResultList(string nextLink, IReadOnlyList<AnomalyIncident> value)
