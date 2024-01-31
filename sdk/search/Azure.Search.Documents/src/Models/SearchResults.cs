@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
@@ -282,6 +283,22 @@ namespace Azure.Search.Documents.Models
     /// </summary>
     public class SemanticSearchResults
     {
+        /// <summary> Initializes a new instance of <see cref="SemanticSearchResults"/>. </summary>
+        internal SemanticSearchResults()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SemanticSearchResults"/>. </summary>
+        /// <param name="answers"> The answers query results for the search operation. </param>
+        /// <param name="errorReason"> Reason that a partial response was returned for a semantic search request. </param>
+        /// <param name="resultsType"> Type of partial response that was returned for a semantic search request. </param>
+        internal SemanticSearchResults(IReadOnlyList<QueryAnswerResult> answers, SemanticErrorReason? errorReason, SemanticSearchResultsType? resultsType)
+        {
+            Answers = answers;
+            ErrorReason = errorReason;
+            ResultsType = resultsType;
+        }
+
         /// <summary> The answers query results for the search operation;
         /// <c>null</c> if the <see cref="QueryAnswer.AnswerType"/> parameter was not specified or set to <see cref="QueryAnswerType.None"/>. </summary>
         public IReadOnlyList<QueryAnswerResult> Answers { get; internal set; }
@@ -442,6 +459,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="coverage">A value indicating the percentage of the index that was included in the query</param>
         /// <param name="rawResponse">The raw Response that obtained these results from the service.</param>
         /// <returns>A new SearchResults instance for mocking.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchResults<T> SearchResults<T>(
             IEnumerable<SearchResult<T>> values,
             long? totalCount,
@@ -459,6 +477,49 @@ namespace Azure.Search.Documents.Models
             results.Values.AddRange(values);
             return results;
         }
+
+        /// <summary> Initializes a new instance of SearchResults. </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type can
+        /// be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="values">The search result values.</param>
+        /// <param name="totalCount">The total count of results found by the search operation.</param>
+        /// <param name="facets">The facet query results for the search operation.</param>
+        /// <param name="coverage">A value indicating the percentage of the index that was included in the query</param>
+        /// <param name="rawResponse">The raw Response that obtained these results from the service.</param>
+        /// <param name="semanticSearch">The semantic search result.</param>
+        /// <returns>A new SearchResults instance for mocking.</returns>
+        public static SearchResults<T> SearchResults<T>(
+            IEnumerable<SearchResult<T>> values,
+            long? totalCount,
+            IDictionary<string, IList<FacetResult>> facets,
+            double? coverage,
+            Response rawResponse,
+            SemanticSearchResults semanticSearch)
+        {
+            var results = new SearchResults<T>()
+            {
+                TotalCount = totalCount,
+                Coverage = coverage,
+                Facets = facets,
+                RawResponse = rawResponse,
+                SemanticSearch = semanticSearch
+            };
+            results.Values.AddRange(values);
+            return results;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SemanticSearchResults"/>. </summary>
+        /// <param name="answers"> The answers query results for the search operation. </param>
+        /// <param name="errorReason"> Reason that a partial response was returned for a semantic search request. </param>
+        /// <param name="resultsType"> Type of partial response that was returned for a semantic search request. </param>
+        /// <returns> A new <see cref="Models.SemanticSearchResults"/> instance for mocking. </returns>
+        public static SemanticSearchResults SemanticSearchResults(
+            IReadOnlyList<QueryAnswerResult> answers,
+            SemanticErrorReason? errorReason,
+            SemanticSearchResultsType? resultsType) =>
+            new SemanticSearchResults(answers, errorReason, resultsType);
 
         /// <summary> Initializes a new instance of SearchResultsPage. </summary>
         /// <typeparam name="T">
