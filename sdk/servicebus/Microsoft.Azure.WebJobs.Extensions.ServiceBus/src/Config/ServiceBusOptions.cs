@@ -111,6 +111,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         }
         private int _maxConcurrentCalls = Utility.GetProcessorCount() * 16;
 
+        public int TargetUnprocessedEventThreshold { get; set; }
+
         /// <summary>
         /// Gets or sets the maximum number of sessions that can be processed concurrently by a function.
         /// The default value is 8. This applies only to functions that set <see cref="ServiceBusTriggerAttribute.IsSessionsEnabled"/>

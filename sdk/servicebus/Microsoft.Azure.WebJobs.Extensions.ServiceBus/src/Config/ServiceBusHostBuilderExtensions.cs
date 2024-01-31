@@ -77,6 +77,11 @@ namespace Microsoft.Extensions.Hosting
                         "MessageHandlerOptions:MaxConcurrentCalls",
                         options.MaxConcurrentCalls);
 
+                    options.TargetUnprocessedEventThreshold =
+                        section.GetValue(
+                        "MessageHandlerOptions:TargetUnprocessedEventThreshold",
+                        options.TargetUnprocessedEventThreshold);
+
                     options.MaxConcurrentSessions = section.GetValue(
                         "SessionHandlerOptions:MaxConcurrentSessions",
                         options.MaxConcurrentSessions);

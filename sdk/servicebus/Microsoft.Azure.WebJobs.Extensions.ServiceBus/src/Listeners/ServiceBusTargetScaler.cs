@@ -80,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
                     }
                     else
                     {
-                        concurrency = _options.MaxConcurrentCalls;
+                        concurrency = _options.TargetUnprocessedEventThreshold;
                     }
                 }
             }
