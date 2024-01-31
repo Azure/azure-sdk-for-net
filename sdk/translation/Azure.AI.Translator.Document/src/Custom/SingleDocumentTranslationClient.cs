@@ -16,7 +16,6 @@ namespace Azure.AI.Translator.Document
     [CodeGenSuppress("DocumentTranslateAsync", typeof(string), typeof(DocumentTranslateContent), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
     [CodeGenSuppress("DocumentTranslate", typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
     [CodeGenSuppress("DocumentTranslateAsync", typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
-    [CodeGenSuppress("DocumentTranslateAsync", typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
     [CodeGenSuppress("FromCancellationToken", typeof(CancellationToken))]
 
     public partial class SingleDocumentTranslationClient
@@ -51,10 +50,33 @@ namespace Azure.AI.Translator.Document
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(sourceDocument, nameof(sourceDocument));
+            MultipartFormDataContent requestContent = GetMultipartFormDataContent(sourceDocument, sourceGlossaries);
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await DocumentTranslateAsync(targetLanguage, sourceDocument, sourceGlossaries, sourceLanguage, category, allowFallback, context).ConfigureAwait(false);
+            Response response = await DocumentTranslateAsync(targetLanguage, requestContent, sourceLanguage, category, allowFallback, context).ConfigureAwait(false);
             return Response.FromValue(response.Content, response);
+        }
+
+        private MultipartFormDataContent GetMultipartFormDataContent(MultipartFormFileData sourceDocument, IEnumerable<MultipartFormFileData> sourceGlossaries)
+        {
+            var requestContent = new MultipartFormDataContent();
+            requestContent.Add(sourceDocument.Content, "document", sourceDocument.Name, new Dictionary<string, string>(sourceDocument.Headers)
+            {
+                {"Content-Type", sourceDocument.ContentType }
+            });
+
+            if (sourceGlossaries != null)
+            {
+                foreach (MultipartFormFileData glossary in sourceGlossaries)
+                {
+                    requestContent.Add(glossary.Content, "glossary", glossary.Name, new Dictionary<string, string>(glossary.Headers)
+                {
+                    { "Content-Type", glossary.ContentType }
+                });
+                }
+            }
+
+            return requestContent;
         }
 
         /// <summary> API to translate a document. </summary>
@@ -85,9 +107,9 @@ namespace Azure.AI.Translator.Document
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(sourceDocument, nameof(sourceDocument));
-
+            MultipartFormDataContent requestContent = GetMultipartFormDataContent(sourceDocument, sourceGlossaries);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = DocumentTranslate(targetLanguage, sourceDocument, sourceGlossaries, sourceLanguage, category, allowFallback, context);
+            Response response = DocumentTranslate(targetLanguage, requestContent, sourceLanguage, category, allowFallback, context);
             return Response.FromValue(response.Content, response);
         }
 
@@ -108,8 +130,7 @@ namespace Azure.AI.Translator.Document
         /// The target language must be one of the supported languages included in the translation scope.
         /// For example if you want to translate the document in German language, then use targetLanguage=de
         /// </param>
-        /// <param name="sourceDocument"> Document to Translate. </param>
-        /// <param name="sourceGlossaries"> Glossaries / translation memory will be used during translation. </param>
+        /// <param name="requestContent"> Document to Translate. </param>
         /// <param name="sourceLanguage">
         /// Specifies source language of the input document.
         /// If this parameter isn't specified, automatic language detection is applied to determine the source language.
@@ -125,19 +146,19 @@ namespace Azure.AI.Translator.Document
         ///     Possible values are: true (default) or false.
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="sourceDocument"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="requestContent"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> DocumentTranslateAsync(string targetLanguage, MultipartFormFileData sourceDocument, IEnumerable<MultipartFormFileData> sourceGlossaries = null, string sourceLanguage = null, string category = null, bool? allowFallback = null, RequestContext context = null)
+        internal virtual async Task<Response> DocumentTranslateAsync(string targetLanguage, RequestContent requestContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, RequestContext context = null)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
-            Argument.AssertNotNull(sourceDocument, nameof(sourceDocument));
+            Argument.AssertNotNull(requestContent, nameof(requestContent));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SingleDocumentTranslationClient.DocumentTranslate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDocumentTranslateRequest(targetLanguage, sourceDocument, sourceGlossaries, sourceLanguage, category, allowFallback, context);
+                using HttpMessage message = CreateDocumentTranslateRequest(targetLanguage, requestContent, sourceLanguage, category, allowFallback, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -164,8 +185,7 @@ namespace Azure.AI.Translator.Document
         /// The target language must be one of the supported languages included in the translation scope.
         /// For example if you want to translate the document in German language, then use targetLanguage=de
         /// </param>
-        /// <param name="sourceDocument"> Document to Translate. </param>
-        /// <param name="sourceGlossaries"> Glossaries / translation memory will be used during translation. </param>
+        /// <param name="requestContent"> Document to Translate. </param>
         /// <param name="sourceLanguage">
         /// Specifies source language of the input document.
         /// If this parameter isn't specified, automatic language detection is applied to determine the source language.
@@ -181,19 +201,19 @@ namespace Azure.AI.Translator.Document
         ///     Possible values are: true (default) or false.
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="sourceDocument"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="requestContent"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response DocumentTranslate(string targetLanguage, MultipartFormFileData sourceDocument, IEnumerable<MultipartFormFileData> sourceGlossaries = null, string sourceLanguage = null, string category = null, bool? allowFallback = null, RequestContext context = null)
+        internal virtual Response DocumentTranslate(string targetLanguage, RequestContent requestContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, RequestContext context = null)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
-            Argument.AssertNotNull(sourceDocument, nameof(sourceDocument));
+            Argument.AssertNotNull(requestContent, nameof(requestContent));
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SingleDocumentTranslationClient.DocumentTranslate");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDocumentTranslateRequest(targetLanguage, sourceDocument, sourceGlossaries, sourceLanguage, category, allowFallback, context);
+                using HttpMessage message = CreateDocumentTranslateRequest(targetLanguage, requestContent, sourceLanguage, category, allowFallback, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -213,7 +233,7 @@ namespace Azure.AI.Translator.Document
             return new RequestContext() { CancellationToken = cancellationToken };
         }
 
-        internal HttpMessage CreateDocumentTranslateRequest(string targetLanguage, MultipartFormFileData sourceDocument, IEnumerable<MultipartFormFileData> sourceGlossaries, string sourceLanguage, string category, bool? allowFallback, RequestContext context)
+        internal HttpMessage CreateDocumentTranslateRequest(string targetLanguage, RequestContent requestContent, string sourceLanguage, string category, bool? allowFallback, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -236,25 +256,10 @@ namespace Azure.AI.Translator.Document
                 uri.AppendQuery("allowFallback", allowFallback.Value, true);
             }
             request.Uri = uri;
-
-            var requestContent = new MultipartFormDataContent();
-            requestContent.Add(sourceDocument.Content, "document", sourceDocument.Name, new Dictionary<string, string>(sourceDocument.Headers)
-            {
-                {"Content-Type", sourceDocument.ContentType }
-            });
-
-            if (sourceGlossaries != null)
-            {
-                foreach (MultipartFormFileData glossary in sourceGlossaries)
-                {
-                    requestContent.Add(glossary.Content, "glossary", glossary.Name, new Dictionary<string, string>(glossary.Headers)
-                {
-                    {"Content-Type", glossary.ContentType }
-                });
-                }
-            }
-
-            requestContent.ApplyToRequest(request);
+            request.Headers.Add("Accept", "application/octet-stream");
+            request.Headers.Add("content-type", "multipart/form-data");
+            request.Content = requestContent;
+            (requestContent as MultipartFormDataContent).ApplyToRequest(request);
             return message;
         }
     }
