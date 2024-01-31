@@ -878,7 +878,7 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         internal FileDownloadDetails() { }
         public string AcceptRanges { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> AccessControlList { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> AccessControlList { get { throw null; } }
         public string CacheControl { get { throw null; } }
         public string ContentDisposition { get { throw null; } }
         public string ContentEncoding { get { throw null; } }
