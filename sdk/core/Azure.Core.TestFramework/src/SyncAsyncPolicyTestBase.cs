@@ -67,6 +67,31 @@ namespace Azure.Core.TestFramework
             }, policy, responseClassifier, bufferResponse, cancellationToken);
         }
 
+        protected async Task<Response> SendGetRequest(HttpPipelineTransport transport, TimeSpan networkTimeout, bool? bufferResponse = default, CancellationToken cancellationToken = default)
+        {
+            HttpPipeline pipeline = new HttpPipeline(transport);
+            HttpMessage message = pipeline.CreateMessage();
+            message.Request.Method = RequestMethod.Get;
+            message.Request.Uri.Reset(new Uri("http://example.com"));
+            message.NetworkTimeout = networkTimeout;
+
+            if (bufferResponse is not null)
+            {
+                message.BufferResponse = bufferResponse.Value;
+            }
+
+            if (IsAsync)
+            {
+                await pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            }
+            else
+            {
+                pipeline.Send(message, cancellationToken);
+            }
+
+            return message.Response;
+        }
+
         protected async Task<HttpMessage> SendMessageGetRequest(HttpPipeline pipeline, HttpMessage message, ResponseClassifier responseClassifier = null, bool bufferResponse = true, Uri uri = null, CancellationToken cancellationToken = default)
         {
             await Task.Yield();
