@@ -374,7 +374,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 {
                     using var backgroundCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
                     var drainTask = link.DrainAsyc(cancellationToken).ConfigureAwait(false);
-
+                    List<AmqpMessage> additionalMessages = new();
                     try
                     {
                         _ = Task.Run(async () =>
@@ -382,11 +382,13 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             while (!backgroundCts.Token.IsCancellationRequested)
                             {
                                 var additionalMessage = await link.ReceiveMessageAsync(maxWaitTime ?? timeout, cancellationToken).ConfigureAwait(false);
-                                link.ReleaseMessage(additionalMessage);
+                                additionalMessages.Add(additionalMessage);
                             }
                         }, cancellationToken);
                         await drainTask;
                         backgroundCts.Cancel();
+                        messagesReceived = messagesReceived.Concat(additionalMessages);
+                        messageList = messagesReceived as IReadOnlyCollection<AmqpMessage> ?? messagesReceived?.ToList() ?? s_emptyAmqpMessageList;
                     }
                     catch (TaskCanceledException)
                     {
