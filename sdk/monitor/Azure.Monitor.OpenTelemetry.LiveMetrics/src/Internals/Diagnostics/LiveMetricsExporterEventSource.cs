@@ -171,5 +171,17 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
 
         [Event(10, Message = "Service call failed. Name: {0}. Status Code: {1}. Code: {2}. Message: {3}. Exception: {4}.", Level = EventLevel.Error)]
         public void ServiceCallFailedWithServiceError(string name, int statusCode, string code, string message, string exception) => WriteEvent(10, name, statusCode, code, message, exception);
+
+        [NonEvent]
+        public void StateMachineFailedWithUnknownException(System.Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                StateMachineFailedWithUnknownException(ex.ToInvariantString());
+            }
+        }
+
+        [Event(11, Message = "LiveMetrics State Machine failed with exception: {0}", Level = EventLevel.Error)]
+        public void StateMachineFailedWithUnknownException(string exceptionMessage) => WriteEvent(11, exceptionMessage);
     }
 }
