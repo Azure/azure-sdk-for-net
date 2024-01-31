@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Communication.Messages.Models.Channels;
 using NUnit.Framework;
@@ -21,7 +22,40 @@ namespace Azure.Communication.Messages.Tests
         public const string DocumentUrl = "https://go.microsoft.com/fwlink/?linkid=2131549";
 
         [Test]
-        public async Task SendMessageShouldSucceed()
+        public void Constructor_NullEndpoint_ShouldThrowArgumentNullException()
+        {
+            // Arrange
+            Uri endpoint = null;
+            AzureKeyCredential credential = new AzureKeyCredential(TestEnvironment.LiveTestDynamicAccessKey);
+
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(() => new NotificationMessagesClient(endpoint, credential));
+        }
+
+        [Test]
+        public void Constructor_InvalidConnectionString_ShouldThrow()
+        {
+            Assert.Throws<ArgumentNullException>(() => new NotificationMessagesClient(null));
+            Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(string.Empty));
+            Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(""));
+            Assert.Throws<InvalidOperationException>(() => new NotificationMessagesClient("  "));
+            Assert.Throws<InvalidOperationException>(() => new NotificationMessagesClient("test"));
+        }
+
+        [Test]
+        public void CreateClient_InvalidCredential_ShouldThrow()
+        {
+            // Arrange
+            var validEndpoint = TestEnvironment.LiveTestDynamicEndpoint;
+
+            // Act and Assert
+            Assert.Throws<ArgumentNullException>(() => new NotificationMessagesClient(validEndpoint, new AzureKeyCredential(null)));
+            Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(validEndpoint, new AzureKeyCredential(string.Empty)));
+            Assert.Throws<ArgumentException>(() => new NotificationMessagesClient(validEndpoint, new AzureKeyCredential("")));
+        }
+
+        [Test]
+        public async Task SendTextMessage_ShouldSucceed()
         {
             // Arrange
             NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
@@ -35,7 +69,7 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
-        public async Task SendMessageWithAzureKeyCredentialShouldSucceed()
+        public async Task SendTextMessage_WithAzureKeyCredential_ShouldSucceed()
         {
             // Arrange
             NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClientWithAzureKeyCredential();
@@ -49,7 +83,7 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
-        public async Task SendShippingConfirmationTemplateMessageShouldSucceed()
+        public async Task SendShippingConfirmationTemplateMessage_ShouldSucceed()
         {
             // Arrange
             NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
@@ -76,7 +110,7 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
-        public async Task SendPurchaseFeedbackTemplateMessageShouldSucceed()
+        public async Task SendPurchaseFeedbackTemplateMessage_ShouldSucceed()
         {
             // Arrange
             NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
@@ -104,7 +138,7 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
-        public async Task SendIssueResolutionTemplateMessageShouldSucceed()
+        public async Task SendIssueResolutionTemplateMessage_ShouldSucceed()
         {
             // Arrange
             NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
@@ -138,7 +172,7 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
-        public async Task SendHappyHourAnnocementTemplateMessageShouldSucceed()
+        public async Task SendHappyHourAnnocementTemplateMessage_ShouldSucceed()
         {
             // Arrange
             NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
@@ -170,7 +204,7 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
-        public async Task SendFlightConfirmationTemplateMessageShouldSucceed()
+        public async Task SendFlightConfirmationTemplateMessage_ShouldSucceed()
         {
             // Arrange
             NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
@@ -205,7 +239,7 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
-        public async Task SendMovieTicketConfirmationTemplateMessageShouldSucceed()
+        public async Task SendMovieTicketConfirmationTemplateMessage_ShouldSucceed()
         {
             // Arrange
             NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
@@ -243,7 +277,7 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
-        public Task SendMessageWithEmptyContentShouldFail()
+        public Task SendTextMessage_WithEmptyContent_ShouldFail()
         {
             // Arrange
             NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
@@ -251,12 +285,18 @@ namespace Azure.Communication.Messages.Tests
                 new List<string> { TestEnvironment.RecipientIdentifier }, string.Empty);
 
             // Act and Assert
-            Assert.ThrowsAsync<ArgumentException>(async () => await notificationMessagesClient.SendAsync(content));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await notificationMessagesClient.SendAsync(content));
+
+            // Assert the expected error code and message
+            Assert.AreEqual(400, ex.Status);
+            Assert.AreEqual("BadRequest", ex.ErrorCode);
+            Assert.IsTrue(ex.Message.Contains("A non-empty \"Content\" is required when message type is Text."));
+
             return Task.CompletedTask;
         }
 
         [Test]
-        public Task SendTemplateMessageWithInvalidTemplateShouldFail()
+        public Task SendTemplateMessage_WithInvalidTemplate_ShouldFail()
         {
             // Arrange
             NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
@@ -269,11 +309,55 @@ namespace Azure.Communication.Messages.Tests
             NotificationContent content = new TemplateNotificationContent(channelRegistrationId, recipients, template);
 
             // Act and Assert
-            Assert.ThrowsAsync<ArgumentException>(async () => await notificationMessagesClient.SendAsync(content));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await notificationMessagesClient.SendAsync(content));
+
+            // Assert the expected error code and message
+            Assert.AreEqual(404, ex.Status);
+            Assert.AreEqual("TemplateNotFound", ex.ErrorCode);
+            Assert.IsTrue(ex.Message.Contains("Template does not exist"));
             return Task.CompletedTask;
         }
 
         [Test]
+        public Task SendTextNessage_WithInvalidRecipient_ShouldFail()
+        {
+            // Arrange
+            NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
+            TextNotificationContent content = new(new Guid(TestEnvironment.SenderChannelRegistrationId),
+                new List<string> { "InvalidRecipient" }, "LiveTest");
+
+            // Act and Assert
+            Assert.ThrowsAsync<RequestFailedException>(async () => await notificationMessagesClient.SendAsync(content));
+            return Task.CompletedTask;
+        }
+
+        [Test]
+        public Task SendSuperLongTextMessage_ShouldSucceed()
+        {
+            // Arrange
+            NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
+
+            // Create a super long text message
+            string superLongText = new string('A', 1000000); // 1 million characters
+
+            TextNotificationContent content = new TextNotificationContent(
+                new Guid(TestEnvironment.SenderChannelRegistrationId),
+                new List<string> { TestEnvironment.RecipientIdentifier },
+                superLongText);
+
+            // Act and Assert
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await notificationMessagesClient.SendAsync(content));
+
+            // Assert the expected error code and message
+            Assert.AreEqual(400, ex.Status);
+            Assert.AreEqual("BadRequest", ex.ErrorCode);
+            Assert.IsTrue(ex.Message.Contains("InvalidParameter: (#100) Param text['body'] must be at most 4096 characters long."));
+
+            return Task.CompletedTask;
+        }
+
+        [Test]
+        [Ignore("wait until service side changes are in PROD to run tests.")]
         public async Task DownloadMedia_ShouldSucceed()
         {
             // Arrange
@@ -289,6 +373,24 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
+        [Ignore("wait until service side changes are in PROD to run tests.")]
+        public Task DownloadMedia_InvalidMediaContentId_ShouldFail()
+        {
+            // Arrange
+            NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
+
+            // Act & Assert
+            Assert.Throws<ArgumentNullException>(async () => await notificationMessagesClient.DownloadMediaAsync(null));
+            Assert.Throws<ArgumentException>(async () => await notificationMessagesClient.DownloadMediaAsync(string.Empty));
+            Assert.Throws<ArgumentException>(async () => await notificationMessagesClient.DownloadMediaAsync(""));
+            Assert.Throws<ArgumentException>(async () => await notificationMessagesClient.DownloadMediaAsync("  "));
+            Assert.Throws<ArgumentException>(async () => await notificationMessagesClient.DownloadMediaAsync("test"));
+
+            return Task.CompletedTask;
+        }
+
+        [Test]
+        [Ignore("wait until service side changes are in PROD to run tests.")]
         public async Task DownloadMediaToStream_ShouldSucceed()
         {
             // Arrange
@@ -306,6 +408,7 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
+        [Ignore("wait until service side changes are in PROD to run tests.")]
         public async Task DownloadMediaToFilePath_ShouldSucceed()
         {
             // Arrange

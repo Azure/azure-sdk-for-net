@@ -81,7 +81,7 @@ namespace Azure.Communication.Messages.Tests
         {
             Assert.Throws<ArgumentNullException>(() => new MessageTemplateClient(null));
             Assert.Throws<ArgumentException>(() => new MessageTemplateClient(string.Empty));
-            Assert.Throws<InvalidOperationException>(() => new MessageTemplateClient(""));
+            Assert.Throws<ArgumentException>(() => new MessageTemplateClient(""));
             Assert.Throws<InvalidOperationException>(() => new MessageTemplateClient("  "));
             Assert.Throws<InvalidOperationException>(() => new MessageTemplateClient("test"));
         }
@@ -94,10 +94,8 @@ namespace Azure.Communication.Messages.Tests
 
             // Act & Assert
             Assert.Throws<ArgumentNullException>(() => messageTemplateClient.GetTemplatesAsync(null));
-            Assert.Throws<ArgumentNullException>(() => messageTemplateClient.GetTemplatesAsync(string.Empty));
-            Assert.Throws<ArgumentNullException>(() => messageTemplateClient.GetTemplatesAsync(""));
-            Assert.Throws<ArgumentNullException>(() => messageTemplateClient.GetTemplatesAsync("  "));
-            Assert.Throws<ArgumentNullException>(() => messageTemplateClient.GetTemplatesAsync("test"));
+            Assert.Throws<ArgumentException>(() => messageTemplateClient.GetTemplatesAsync(string.Empty));
+            Assert.Throws<ArgumentException>(() => messageTemplateClient.GetTemplatesAsync(""));
         }
 
         [Test]
