@@ -10,7 +10,7 @@ namespace Azure.Communication.Messages.Tests
     /// </summary>
     public class MessagesTestEnvironment : CommunicationTestEnvironment
     {
-        public string SenderChannelRegistrationId => "75da05b7-831f-45cf-923d-98e9a9f4c16a";
-        public string RecipientIdentifier => "+16043609258";
+        public string SenderChannelRegistrationId => GetRecordedVariable("SENDER_CHANNEL_REGISTRATION_ID");
+        public string RecipientIdentifier => GetRecordedVariable("RECIPIENT_IDENTIFIER");
     }
 }
