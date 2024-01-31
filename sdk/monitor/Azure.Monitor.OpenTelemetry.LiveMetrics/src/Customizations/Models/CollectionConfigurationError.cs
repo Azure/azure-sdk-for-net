@@ -10,7 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         public static CollectionConfigurationError CreateError(
             CollectionConfigurationErrorType errorType,
             string message,
-            Exception exception,
+            System.Exception? exception,
             params Tuple<string, string>[] data)
         {
             return new CollectionConfigurationError(

@@ -48,6 +48,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             DocumentBuffer filledBuffer = _documentBuffer.FlipDocumentBuffers();
             foreach (var item in filledBuffer.ReadAllAndClear())
             {
+                //TODO: Apply filters
+                //foreach (CalculatedMetric<TTelemetry> metric in metrics)
+                //    if (metric.CheckFilters(telemetry, out filteringErrors))
+
                 dataPoint.Documents.Add(item);
 
                 if (item.DocumentType == DocumentIngressDocumentType.Request)
