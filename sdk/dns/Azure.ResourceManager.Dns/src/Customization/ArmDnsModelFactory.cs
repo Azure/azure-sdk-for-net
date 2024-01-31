@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure;
@@ -28,9 +29,13 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="provisioningState"> provisioning State of the record set. </param>
         /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <param name="aaaaRecords"> The list of AAAA records in the record set. </param>
+        /// <returns> A new <see cref="Dns.DnsAaaaRecordData"/> instance for mocking. </returns>
         public static DnsAaaaRecordData DnsAaaaRecordData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = default, IDictionary<string, string> metadata = null, long? ttl  = null, string fqdn = null, string provisioningState = null, WritableSubResource targetResource = null, IList<DnsAaaaRecordInfo> aaaaRecords = null)
         {
-            return new DnsAaaaRecordData(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource, aaaaRecords);
+            metadata ??= new Dictionary<string, string>();
+            aaaaRecords ??= new List<DnsAaaaRecordInfo>();
+
+            return new DnsAaaaRecordData(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource, aaaaRecords?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }
