@@ -17,7 +17,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
         /// Name of the Tag (and subsequent OpenTelemetry attribute) that
         /// records the profiling session ID.
         /// </summary>
-        internal const string TagName = "profiling.session";
+        /// <remarks>
+        /// Experimental until formalization of OTEP profiles data format.
+        /// See https://github.com/open-telemetry/oteps/pull/239.
+        /// </remarks>
+        internal const string TagName = "profile_id_experimental";
 
         /// <inheritdoc/>
         public override void OnEnd(Activity activity)
