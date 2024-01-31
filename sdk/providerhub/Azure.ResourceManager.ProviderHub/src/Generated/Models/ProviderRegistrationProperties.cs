@@ -31,10 +31,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="capabilities"></param>
         /// <param name="metadata"> Anything. </param>
         /// <param name="templateDeploymentOptions"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="providerHubMetadata"></param>
         /// <param name="provisioningState"></param>
         /// <param name="subscriptionLifecycleNotificationSpecifications"></param>
-        internal ProviderRegistrationProperties(ResourceProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, FeaturesRule featuresRule, RequestHeaderOptions requestHeaderOptions, ResourceProviderManagement management, IList<ResourceProviderCapabilities> capabilities, BinaryData metadata, TemplateDeploymentOptions templateDeploymentOptions, ProviderHubMetadata providerHubMetadata, ProviderHubProvisioningState? provisioningState, SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications) : base(providerAuthentication, providerAuthorizations, @namespace, providerVersion, providerType, requiredFeatures, featuresRule, requestHeaderOptions, management, capabilities, metadata, templateDeploymentOptions)
+        internal ProviderRegistrationProperties(ResourceProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, FeaturesRule featuresRule, RequestHeaderOptions requestHeaderOptions, ResourceProviderManagement management, IList<ResourceProviderCapabilities> capabilities, BinaryData metadata, TemplateDeploymentOptions templateDeploymentOptions, IDictionary<string, BinaryData> serializedAdditionalRawData, ProviderHubMetadata providerHubMetadata, ProviderHubProvisioningState? provisioningState, SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications) : base(providerAuthentication, providerAuthorizations, @namespace, providerVersion, providerType, requiredFeatures, featuresRule, requestHeaderOptions, management, capabilities, metadata, templateDeploymentOptions, serializedAdditionalRawData)
         {
             ProviderHubMetadata = providerHubMetadata;
             ProvisioningState = provisioningState;

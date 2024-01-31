@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SampleUtterance : IUtf8JsonSerializable
+    public partial class SampleUtterance : IUtf8JsonSerializable, IJsonModel<SampleUtterance>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SampleUtterance>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SampleUtterance>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SampleUtterance>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SampleUtterance)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Text))
             {
@@ -36,11 +46,40 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("qid"u8);
                 writer.WriteStringValue(Qid);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SampleUtterance DeserializeSampleUtterance(JsonElement element)
+        SampleUtterance IJsonModel<SampleUtterance>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SampleUtterance>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SampleUtterance)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSampleUtterance(document.RootElement, options);
+        }
+
+        internal static SampleUtterance DeserializeSampleUtterance(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +87,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> text = default;
             Optional<IList<string>> links = default;
             Optional<string> qid = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -74,8 +115,44 @@ namespace Azure.ResourceManager.AppService.Models
                     qid = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SampleUtterance(text.Value, Optional.ToList(links), qid.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SampleUtterance(text.Value, Optional.ToList(links), qid.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SampleUtterance>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SampleUtterance>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SampleUtterance)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SampleUtterance IPersistableModel<SampleUtterance>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SampleUtterance>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSampleUtterance(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SampleUtterance)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SampleUtterance>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    public partial class CompanyInfo : IUtf8JsonSerializable
+    public partial class CompanyInfo : IUtf8JsonSerializable, IJsonModel<CompanyInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CompanyInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CompanyInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CompanyInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CompanyInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Domain))
             {
@@ -40,11 +51,40 @@ namespace Azure.ResourceManager.Elastic.Models
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CompanyInfo DeserializeCompanyInfo(JsonElement element)
+        CompanyInfo IJsonModel<CompanyInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CompanyInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CompanyInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCompanyInfo(document.RootElement, options);
+        }
+
+        internal static CompanyInfo DeserializeCompanyInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +94,8 @@ namespace Azure.ResourceManager.Elastic.Models
             Optional<string> employeesNumber = default;
             Optional<string> state = default;
             Optional<string> country = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domain"u8))
@@ -81,8 +123,44 @@ namespace Azure.ResourceManager.Elastic.Models
                     country = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CompanyInfo(domain.Value, business.Value, employeesNumber.Value, state.Value, country.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CompanyInfo(domain.Value, business.Value, employeesNumber.Value, state.Value, country.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CompanyInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CompanyInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CompanyInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CompanyInfo IPersistableModel<CompanyInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CompanyInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCompanyInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CompanyInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CompanyInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

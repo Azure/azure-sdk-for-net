@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Properties of the Queue info for event subscription. </summary>
     public partial class QueueInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="QueueInfo"/>. </summary>
         public QueueInfo()
         {
@@ -46,12 +79,14 @@ namespace Azure.ResourceManager.EventGrid.Models
         ///     - \'P0DT23H12M\' or \'PT23H12M\': for duration of 23 hours and 12 minutes.
         ///     - \'P1D\' or \'P1DT0H0M0S\': for duration of 1 day.
         /// </param>
-        internal QueueInfo(int? receiveLockDurationInSeconds, int? maxDeliveryCount, DeadLetterWithResourceIdentity deadLetterDestinationWithResourceIdentity, TimeSpan? eventTimeToLive)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueueInfo(int? receiveLockDurationInSeconds, int? maxDeliveryCount, DeadLetterWithResourceIdentity deadLetterDestinationWithResourceIdentity, TimeSpan? eventTimeToLive, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ReceiveLockDurationInSeconds = receiveLockDurationInSeconds;
             MaxDeliveryCount = maxDeliveryCount;
             DeadLetterDestinationWithResourceIdentity = deadLetterDestinationWithResourceIdentity;
             EventTimeToLive = eventTimeToLive;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

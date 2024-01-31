@@ -32,6 +32,12 @@ Because of this, it is important to carefully consider how many `EventProcessorC
 
 As part of its normal operation, an `EventProcessorClient` needs to enumerate the blobs in its container on a recurring basis.  In order to guarantee that this performs well and doesn't interfere with the processor's operation, it is strongly recommended that you disable blob versioning and soft delete on the Azure Storage account used by the `EventProcessorClient`.  It is also recommended that you use a unique blob container for each Event Hub and consumer group; this container should not contain other blobs nor be shared with processors working in a different context.
 
+## Controlling processor identity
+
+When constructing an `EventProcessorClient`, it is recommended that you set a stable unique identifier for the instance.  This can be done by setting the [Identifier](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclientoptions.identifier?view=azure-dotnet#azure-messaging-eventhubs-eventprocessorclientoptions-identifier) property of  [EventProcessorClientOptions](https://learn.microsoft.com/dotnet/api/azure.messaging.eventhubs.eventprocessorclientoptions) and passing the options to the constructor.  
+
+A stable identifier allows the processor to recover partition ownership when an application or host instance is restarted.  It also aids readability in Azure SDK logs and allows for more easily correlating logs to a specific processor instance.
+
 ## Influencing load balancing behavior
 
 To scale event processing, you can run multiple instances of the `EventProcessorClient` and they will coordinate to balance work between them. The responsibility for processing is distributed among each of the active processors configured to read from the same Event Hub and using the same consumer group.  To balance work, each active `EventProcessorClient` instance will assume responsibility for processing a set of Event Hub partitions, referred to as "owning" the partitions.  The processors collaborate on ownership using storage as a central point of coordination.  

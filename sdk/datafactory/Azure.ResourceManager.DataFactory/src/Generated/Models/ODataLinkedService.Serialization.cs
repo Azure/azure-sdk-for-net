@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<ODataAuthenticationType> authenticationType = default;
             Optional<DataFactoryElement<string>> userName = default;
             Optional<DataFactorySecretBaseDefinition> password = default;
-            Optional<DataFactoryElement<BinaryData>> authHeaders = default;
+            Optional<DataFactoryElement<IDictionary<string, string>>> authHeaders = default;
             Optional<DataFactoryElement<string>> tenant = default;
             Optional<DataFactoryElement<string>> servicePrincipalId = default;
             Optional<DataFactoryElement<string>> azureCloudType = default;
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            authHeaders = JsonSerializer.Deserialize<DataFactoryElement<BinaryData>>(property0.Value.GetRawText());
+                            authHeaders = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, string>>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Dynamic delivery attribute mapping details. </summary>
@@ -19,8 +22,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of <see cref="DynamicDeliveryAttributeMapping"/>. </summary>
         /// <param name="name"> Name of the delivery attribute or header. </param>
         /// <param name="mappingType"> Type of the delivery attribute or header name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sourceField"> JSON path in the event which contains attribute value. </param>
-        internal DynamicDeliveryAttributeMapping(string name, DeliveryAttributeMappingType mappingType, string sourceField) : base(name, mappingType)
+        internal DynamicDeliveryAttributeMapping(string name, DeliveryAttributeMappingType mappingType, IDictionary<string, BinaryData> serializedAdditionalRawData, string sourceField) : base(name, mappingType, serializedAdditionalRawData)
         {
             SourceField = sourceField;
             MappingType = mappingType;

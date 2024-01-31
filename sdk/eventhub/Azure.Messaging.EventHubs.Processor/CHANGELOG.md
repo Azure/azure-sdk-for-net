@@ -2,6 +2,10 @@
 
 ## 5.11.0-beta.1 (Unreleased)
 
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+
+- Dave Trainer _([GitHub](https://github.com/davetrainer))_
+
 ### Features Added
 - Added a `CheckpointPosition` struct to use when updating a checkpoint. The specified position indicates that an event processor should begin reading from the next event. Added new `UpdateCheckpointAsync` overloads to `EventProcessorClient` and `BlobCheckpointStore` that accept the `CheckpointPosition` struct instead of individual values for offset and sequence number.
 
@@ -23,11 +27,23 @@
 
 - Fixed an issue with event processor validation where an exception for quota exceeded may inappropriately be surfaced when starting the processor.
 
+- In the rare case that an event processor's load balancing and health monitoring task cannot recover from an error, it will now properly surrender ownership when processing stops.
+
 ### Other Changes
+
+- A new [sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/README.md#common-samples) that demonstrates using the `EventProcessorClient` with an ASP.NET hosted service is now available.  _(A community contribution, courtesy of [davetrainer](https://github.com/davetrainer))_
 
 - Updated the `Microsoft.Azure.Amqp` dependency to 2.6.4, which enables support for TLS 1.3.
 
 - Removed the custom sizes for the AMQP sending and receiving buffers, allowing the optimized defaults of the host platform to be used.  This offers non-trivial performance increase on Linux-based platforms and a minor improvement on macOS.  Windows performance remains unchanged as the default and custom buffer sizes are equivalent.
+
+- Improved efficiency of partition management during load balancing, reducing the number of operations performed and deferring waiting for lost partitions until the processor is stopped or the partition is reclaimed.  Allocations were also non-trivially reduced.
+
+- Improved the approach used by the processor to manage the background tasks for partition processing and load balancing.  These tasks are now marked as long-running and have improved error recovery.
+
+- Initialization of the load balancing task is now performed in the background and will no longer cause delays when starting the processor.
+
+- In the rare case that an event processor's load balancing and health monitoring task cannot recover from an error, the processor now signals the error handler with a wrapped exception that makes clear that processing will terminate.  Previously, the source exception was surfaced to the error handler and the impact was not clear.
 
 ## 5.10.0 (2023-11-08)
 

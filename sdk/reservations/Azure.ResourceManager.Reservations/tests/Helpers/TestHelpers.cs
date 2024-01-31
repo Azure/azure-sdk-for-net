@@ -11,7 +11,7 @@ namespace Azure.ResourceManager.Reservations.Tests.Helper
         {
             var request = new ReservationPurchaseContent
             {
-                Sku = new ReservationsSkuName("Standard_B1ls"),
+                Sku = new ReservationsSkuName("Standard_B1ls", null),
                 Location = new Core.AzureLocation("westeurope"),
                 ReservedResourceType = new ReservedResourceType("VirtualMachines"),
                 BillingScopeId = new Core.ResourceIdentifier("/subscriptions/aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"),
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Reservations.Tests.Helper
                 DisplayName = "testVM",
                 AppliedScopeType = new AppliedScopeType(scope),
                 IsRenewEnabled = false,
-                ReservedResourceProperties = new PurchaseRequestPropertiesReservedResourceProperties(new InstanceFlexibility("On")),
+                ReservedResourceProperties = new PurchaseRequestPropertiesReservedResourceProperties(new InstanceFlexibility("On"), null),
             };
 
             if (scope.Equals("Single"))

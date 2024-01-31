@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,13 +15,46 @@ using Azure.ResourceManager.Redis.Models;
 
 namespace Azure.ResourceManager.Redis
 {
-    public partial class RedisCacheAccessPolicyAssignmentData : IUtf8JsonSerializable
+    public partial class RedisCacheAccessPolicyAssignmentData : IUtf8JsonSerializable, IJsonModel<RedisCacheAccessPolicyAssignmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisCacheAccessPolicyAssignmentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RedisCacheAccessPolicyAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RedisCacheAccessPolicyAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RedisCacheAccessPolicyAssignmentData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("objectId"u8);
@@ -36,11 +71,40 @@ namespace Azure.ResourceManager.Redis
                 writer.WriteStringValue(AccessPolicyName);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RedisCacheAccessPolicyAssignmentData DeserializeRedisCacheAccessPolicyAssignmentData(JsonElement element)
+        RedisCacheAccessPolicyAssignmentData IJsonModel<RedisCacheAccessPolicyAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RedisCacheAccessPolicyAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RedisCacheAccessPolicyAssignmentData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedisCacheAccessPolicyAssignmentData(document.RootElement, options);
+        }
+
+        internal static RedisCacheAccessPolicyAssignmentData DeserializeRedisCacheAccessPolicyAssignmentData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +117,8 @@ namespace Azure.ResourceManager.Redis
             Optional<Guid> objectId = default;
             Optional<string> objectIdAlias = default;
             Optional<string> accessPolicyName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -119,8 +185,44 @@ namespace Azure.ResourceManager.Redis
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RedisCacheAccessPolicyAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(objectId), objectIdAlias.Value, accessPolicyName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RedisCacheAccessPolicyAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(objectId), objectIdAlias.Value, accessPolicyName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RedisCacheAccessPolicyAssignmentData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RedisCacheAccessPolicyAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RedisCacheAccessPolicyAssignmentData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RedisCacheAccessPolicyAssignmentData IPersistableModel<RedisCacheAccessPolicyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RedisCacheAccessPolicyAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRedisCacheAccessPolicyAssignmentData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RedisCacheAccessPolicyAssignmentData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RedisCacheAccessPolicyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

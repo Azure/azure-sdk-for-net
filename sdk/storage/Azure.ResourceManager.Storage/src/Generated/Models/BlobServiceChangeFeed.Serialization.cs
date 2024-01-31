@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class BlobServiceChangeFeed : IUtf8JsonSerializable
+    public partial class BlobServiceChangeFeed : IUtf8JsonSerializable, IJsonModel<BlobServiceChangeFeed>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobServiceChangeFeed>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BlobServiceChangeFeed>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobServiceChangeFeed>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BlobServiceChangeFeed)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("retentionInDays"u8);
                 writer.WriteNumberValue(RetentionInDays.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BlobServiceChangeFeed DeserializeBlobServiceChangeFeed(JsonElement element)
+        BlobServiceChangeFeed IJsonModel<BlobServiceChangeFeed>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobServiceChangeFeed>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BlobServiceChangeFeed)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBlobServiceChangeFeed(document.RootElement, options);
+        }
+
+        internal static BlobServiceChangeFeed DeserializeBlobServiceChangeFeed(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<bool> enabled = default;
             Optional<int> retentionInDays = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -56,8 +98,44 @@ namespace Azure.ResourceManager.Storage.Models
                     retentionInDays = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BlobServiceChangeFeed(Optional.ToNullable(enabled), Optional.ToNullable(retentionInDays));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BlobServiceChangeFeed(Optional.ToNullable(enabled), Optional.ToNullable(retentionInDays), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BlobServiceChangeFeed>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobServiceChangeFeed>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BlobServiceChangeFeed)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BlobServiceChangeFeed IPersistableModel<BlobServiceChangeFeed>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobServiceChangeFeed>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBlobServiceChangeFeed(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BlobServiceChangeFeed)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BlobServiceChangeFeed>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

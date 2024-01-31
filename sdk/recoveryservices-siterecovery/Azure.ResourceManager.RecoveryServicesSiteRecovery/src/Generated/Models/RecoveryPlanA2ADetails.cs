@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Recovery plan A2A specific details. </summary>
@@ -18,11 +21,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="RecoveryPlanA2ADetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="primaryZone"> The primary zone. </param>
         /// <param name="recoveryZone"> The recovery zone. </param>
         /// <param name="primaryExtendedLocation"> The primary extended location. </param>
         /// <param name="recoveryExtendedLocation"> The recovery extended location. </param>
-        internal RecoveryPlanA2ADetails(string instanceType, string primaryZone, string recoveryZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation) : base(instanceType)
+        internal RecoveryPlanA2ADetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string primaryZone, string recoveryZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation) : base(instanceType, serializedAdditionalRawData)
         {
             PrimaryZone = primaryZone;
             RecoveryZone = recoveryZone;

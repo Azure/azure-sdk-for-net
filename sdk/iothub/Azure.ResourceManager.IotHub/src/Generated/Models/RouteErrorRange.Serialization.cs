@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class RouteErrorRange
+    public partial class RouteErrorRange : IUtf8JsonSerializable, IJsonModel<RouteErrorRange>
     {
-        internal static RouteErrorRange DeserializeRouteErrorRange(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouteErrorRange>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RouteErrorRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteErrorRange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RouteErrorRange)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Start))
+            {
+                writer.WritePropertyName("start"u8);
+                writer.WriteObjectValue(Start);
+            }
+            if (Optional.IsDefined(End))
+            {
+                writer.WritePropertyName("end"u8);
+                writer.WriteObjectValue(End);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RouteErrorRange IJsonModel<RouteErrorRange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteErrorRange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RouteErrorRange)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouteErrorRange(document.RootElement, options);
+        }
+
+        internal static RouteErrorRange DeserializeRouteErrorRange(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<RouteErrorPosition> start = default;
             Optional<RouteErrorPosition> end = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("start"u8))
@@ -40,8 +98,44 @@ namespace Azure.ResourceManager.IotHub.Models
                     end = RouteErrorPosition.DeserializeRouteErrorPosition(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RouteErrorRange(start.Value, end.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RouteErrorRange(start.Value, end.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RouteErrorRange>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteErrorRange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RouteErrorRange)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RouteErrorRange IPersistableModel<RouteErrorRange>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouteErrorRange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRouteErrorRange(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RouteErrorRange)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RouteErrorRange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
