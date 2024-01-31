@@ -56,6 +56,11 @@ namespace Azure.ResourceManager.Monitor.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MultiMetricCriteria"/> for deserialization. </summary>
+        internal MultiMetricCriteria()
+        {
+        }
+
         /// <summary> Specifies the type of threshold criteria. </summary>
         internal CriterionType CriterionType { get; set; }
         /// <summary> Name of the criteria. </summary>

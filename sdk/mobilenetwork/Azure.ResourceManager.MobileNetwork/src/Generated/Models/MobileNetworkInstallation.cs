@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,6 +15,38 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> The installation state of the packet core. </summary>
     public partial class MobileNetworkInstallation
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MobileNetworkInstallation"/>. </summary>
         public MobileNetworkInstallation()
         {
@@ -26,13 +59,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="reinstallRequired"> Whether a reinstall of the packet core is required to pick up the latest configuration changes. </param>
         /// <param name="reasons"> Reason(s) for the current installation state of the packet core. </param>
         /// <param name="operation"> A reference to an in-progress installation operation. </param>
-        internal MobileNetworkInstallation(DesiredInstallationState? desiredState, MobileNetworkInstallationState? state, MobileNetworkReinstallRequired? reinstallRequired, IReadOnlyList<MobileNetworkInstallationReason> reasons, SubResource operation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MobileNetworkInstallation(DesiredInstallationState? desiredState, MobileNetworkInstallationState? state, MobileNetworkReinstallRequired? reinstallRequired, IReadOnlyList<MobileNetworkInstallationReason> reasons, SubResource operation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DesiredState = desiredState;
             State = state;
             ReinstallRequired = reinstallRequired;
             Reasons = reasons;
             Operation = operation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The desired installation state. </summary>

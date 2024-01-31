@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -15,10 +16,18 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    public partial class PacketCoreControlPlaneData : IUtf8JsonSerializable
+    public partial class PacketCoreControlPlaneData : IUtf8JsonSerializable, IJsonModel<PacketCoreControlPlaneData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PacketCoreControlPlaneData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PacketCoreControlPlaneData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PacketCoreControlPlaneData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PacketCoreControlPlaneData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(UserAssignedIdentity))
             {
@@ -38,8 +47,33 @@ namespace Azure.ResourceManager.MobileNetwork
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(Installation))
             {
                 writer.WritePropertyName("installation"u8);
@@ -63,6 +97,16 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InstalledVersion))
+            {
+                writer.WritePropertyName("installedVersion"u8);
+                writer.WriteStringValue(InstalledVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RollbackVersion))
+            {
+                writer.WritePropertyName("rollbackVersion"u8);
+                writer.WriteStringValue(RollbackVersion);
             }
             writer.WritePropertyName("controlPlaneAccessInterface"u8);
             writer.WriteObjectValue(ControlPlaneAccessInterface);
@@ -113,11 +157,40 @@ namespace Azure.ResourceManager.MobileNetwork
 #endif
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PacketCoreControlPlaneData DeserializePacketCoreControlPlaneData(JsonElement element)
+        PacketCoreControlPlaneData IJsonModel<PacketCoreControlPlaneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PacketCoreControlPlaneData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PacketCoreControlPlaneData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePacketCoreControlPlaneData(document.RootElement, options);
+        }
+
+        internal static PacketCoreControlPlaneData DeserializePacketCoreControlPlaneData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -146,6 +219,8 @@ namespace Azure.ResourceManager.MobileNetwork
             Optional<MobileNetworkEventHubConfiguration> eventHub = default;
             Optional<SignalingConfiguration> signaling = default;
             Optional<BinaryData> interopSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -343,8 +418,44 @@ namespace Azure.ResourceManager.MobileNetwork
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PacketCoreControlPlaneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, Optional.ToNullable(provisioningState), installation.Value, sites, platform, Optional.ToNullable(coreNetworkTechnology), version.Value, installedVersion.Value, rollbackVersion.Value, controlPlaneAccessInterface, Optional.ToList(controlPlaneAccessVirtualIPv4Addresses), sku, Optional.ToNullable(ueMtu), localDiagnosticsAccess, diagnosticsUpload.Value, eventHub.Value, signaling.Value, interopSettings.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PacketCoreControlPlaneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, Optional.ToNullable(provisioningState), installation.Value, sites, platform, Optional.ToNullable(coreNetworkTechnology), version.Value, installedVersion.Value, rollbackVersion.Value, controlPlaneAccessInterface, Optional.ToList(controlPlaneAccessVirtualIPv4Addresses), sku, Optional.ToNullable(ueMtu), localDiagnosticsAccess, diagnosticsUpload.Value, eventHub.Value, signaling.Value, interopSettings.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PacketCoreControlPlaneData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PacketCoreControlPlaneData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PacketCoreControlPlaneData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PacketCoreControlPlaneData IPersistableModel<PacketCoreControlPlaneData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PacketCoreControlPlaneData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePacketCoreControlPlaneData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PacketCoreControlPlaneData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PacketCoreControlPlaneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

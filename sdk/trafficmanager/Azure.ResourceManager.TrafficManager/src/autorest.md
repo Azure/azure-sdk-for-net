@@ -15,6 +15,7 @@ sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
 skip-csproj: true
+use-model-reader-writer: true
 
 rename-mapping:
   CheckTrafficManagerRelativeDnsNameAvailabilityParameters: TrafficManagerRelativeDnsNameAvailabilityContent
@@ -110,11 +111,11 @@ directive:
       delete $["x-ms-enum"];
       $["description"] = $["description"] + " Only AzureEndpoints, ExternalEndpoints and NestedEndpoints are allowed here."
     reason: The path parameter endpointType is defined as string in stable version, we can't change it to an enumeration.
-     
+
 #TODO: excluding since the following REST endpoints do not have GetAll method.
 #TODO: e.g. The EndpointCollection (RequestPath: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}) does not have a GetAll method
 list-exception:
- - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName} 
+ - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/{endpointType}/{endpointName}
  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}
 
 request-path-to-resource-name:

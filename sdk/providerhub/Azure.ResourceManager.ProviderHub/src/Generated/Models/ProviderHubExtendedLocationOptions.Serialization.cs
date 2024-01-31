@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ProviderHubExtendedLocationOptions : IUtf8JsonSerializable
+    public partial class ProviderHubExtendedLocationOptions : IUtf8JsonSerializable, IJsonModel<ProviderHubExtendedLocationOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderHubExtendedLocationOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ProviderHubExtendedLocationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderHubExtendedLocationOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProviderHubExtendedLocationOptions)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocationOptionsType))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("supportedPolicy"u8);
                 writer.WriteStringValue(SupportedPolicy);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ProviderHubExtendedLocationOptions DeserializeProviderHubExtendedLocationOptions(JsonElement element)
+        ProviderHubExtendedLocationOptions IJsonModel<ProviderHubExtendedLocationOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderHubExtendedLocationOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ProviderHubExtendedLocationOptions)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeProviderHubExtendedLocationOptions(document.RootElement, options);
+        }
+
+        internal static ProviderHubExtendedLocationOptions DeserializeProviderHubExtendedLocationOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> type = default;
             Optional<string> supportedPolicy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -48,8 +90,44 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     supportedPolicy = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ProviderHubExtendedLocationOptions(type.Value, supportedPolicy.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ProviderHubExtendedLocationOptions(type.Value, supportedPolicy.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ProviderHubExtendedLocationOptions>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderHubExtendedLocationOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ProviderHubExtendedLocationOptions)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ProviderHubExtendedLocationOptions IPersistableModel<ProviderHubExtendedLocationOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ProviderHubExtendedLocationOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeProviderHubExtendedLocationOptions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ProviderHubExtendedLocationOptions)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ProviderHubExtendedLocationOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
