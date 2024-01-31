@@ -8,7 +8,7 @@ namespace System.ClientModel.Primitives;
 
 public partial class HttpClientPipelineTransport
 {
-    private class HttpPipelineResponse : PipelineResponse
+    private class HttpClientPipelineResponse : PipelineResponse
     {
         private readonly HttpResponseMessage _httpResponse;
 
@@ -23,7 +23,7 @@ public partial class HttpClientPipelineTransport
 
         private bool _disposed;
 
-        public HttpPipelineResponse(HttpResponseMessage httpResponse)
+        public HttpClientPipelineResponse(HttpResponseMessage httpResponse)
         {
             _httpResponse = httpResponse ?? throw new ArgumentNullException(nameof(httpResponse));
             _httpResponseContent = _httpResponse.Content;
@@ -35,14 +35,16 @@ public partial class HttpClientPipelineTransport
             => _httpResponse.ReasonPhrase ?? string.Empty;
 
         protected override PipelineResponseHeaders GetHeadersCore()
-            => new HttpClientResponseHeaders(_httpResponse, _httpResponseContent);
+            => new HttpClientResponseHeaders(_httpResponse.Headers, _httpResponseContent);
 
         public override Stream? ContentStream
         {
             get => _contentStream;
             set
             {
-                // Make sure we don't dispose the content if the stream was replaced
+                // We null the HttpResponseMessage.Content property to ensure
+                // that when we dispose the message, we don't also dispose the
+                // content we need for reading header values later on.
                 _httpResponse.Content = null;
 
                 _contentStream = value;

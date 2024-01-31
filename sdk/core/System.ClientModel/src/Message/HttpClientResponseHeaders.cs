@@ -11,23 +11,23 @@ namespace System.ClientModel.Primitives;
 
 internal class HttpClientResponseHeaders : PipelineResponseHeaders
 {
-    private readonly HttpResponseMessage _httpResponse;
+    private readonly HttpHeaders _httpHeaders;
     private readonly HttpContent _httpResponseContent;
 
-    public HttpClientResponseHeaders(HttpResponseMessage response, HttpContent responseContent)
+    public HttpClientResponseHeaders(HttpHeaders headers, HttpContent responseContent)
     {
-        _httpResponse = response;
+        _httpHeaders = headers;
         _httpResponseContent = responseContent;
     }
 
     public override bool TryGetValue(string name, out string? value)
-        => TryGetHeader(_httpResponse.Headers, _httpResponseContent, name, out value);
+        => TryGetHeader(_httpHeaders, _httpResponseContent, name, out value);
 
     public override bool TryGetValues(string name, out IEnumerable<string>? values)
-        => TryGetHeader(_httpResponse.Headers, _httpResponseContent, name, out values);
+        => TryGetHeader(_httpHeaders, _httpResponseContent, name, out values);
 
     public override IEnumerator<KeyValuePair<string, string>> GetEnumerator()
-        => GetHeadersStringValues(_httpResponse.Headers, _httpResponseContent).GetEnumerator();
+        => GetHeadersStringValues(_httpHeaders, _httpResponseContent).GetEnumerator();
 
     #region Performance-optimized/Platform-specific implementation
     private static bool TryGetHeader(HttpHeaders headers, HttpContent? content, string name, [NotNullWhen(true)] out string? value)
@@ -146,35 +146,4 @@ internal class HttpClientResponseHeaders : PipelineResponseHeaders
     }
 #endif
     #endregion
-
-    private static IEnumerable<KeyValuePair<string, IEnumerable<string>>> GetHeadersListValues(HttpHeaders headers, HttpContent? content)
-    {
-#if NET6_0_OR_GREATER
-        foreach (var (key, value) in headers.NonValidated)
-        {
-            yield return new KeyValuePair<string, IEnumerable<string>>(key, value);
-        }
-
-        if (content is not null)
-        {
-            foreach (var (key, value) in content.Headers.NonValidated)
-            {
-                yield return new KeyValuePair<string, IEnumerable<string>>(key, value);
-            }
-        }
-#else
-        foreach (KeyValuePair<string, IEnumerable<string>> header in headers)
-        {
-            yield return new KeyValuePair<string, IEnumerable<string>>(header.Key, header.Value);
-        }
-
-        if (content != null)
-        {
-            foreach (KeyValuePair<string, IEnumerable<string>> header in content.Headers)
-            {
-                yield return new KeyValuePair<string, IEnumerable<string>>(header.Key, header.Value);
-            }
-        }
-#endif
-    }
 }
