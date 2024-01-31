@@ -12,9 +12,9 @@ using NUnit.Framework.Internal;
 
 namespace Azure.Core.Tests;
 
-public class ResponseBufferingTests : SyncAsyncPolicyTestBase
+public class ResponseBodyPolicyTests : SyncAsyncPolicyTestBase
 {
-    public ResponseBufferingTests(bool isAsync) : base(isAsync)
+    public ResponseBodyPolicyTests(bool isAsync) : base(isAsync)
     {
     }
 

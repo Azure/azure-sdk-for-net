@@ -39,6 +39,17 @@ namespace Azure.Core.TestFramework
             };
         }
 
+        // Buffering in the transport will replace any mock stream a test is using
+        // to validate the functional case it is testing. Use this method to create
+        // a mock transport when the test needs the stream to be preserved to function
+        // correctly.
+        protected MockTransport CreateNonBufferingTransport(params MockResponse[] responses)
+        {
+            MockTransport transport = CreateMockTransport(responses);
+            transport.BufferResponse = false;
+            return transport;
+        }
+
         protected Stream WrapStream(Stream stream)
         {
             return new AsyncValidatingStream(IsAsync, stream);

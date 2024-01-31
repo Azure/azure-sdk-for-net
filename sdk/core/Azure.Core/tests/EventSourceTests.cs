@@ -647,14 +647,14 @@ namespace Azure.Core.Tests
             }
             setupRequest?.Invoke(mockResponse);
 
-            MockTransport mockTransport = CreateMockTransport(mockResponse);
+            MockTransport mockTransport = CreateNonBufferingTransport(mockResponse);
             var pipeline = new HttpPipeline(mockTransport, new[] { new LoggingPolicy(logContent: true, maxLength, _sanitizer, "Test-SDK") });
 
             Response response = await SendRequestAsync(pipeline, request =>
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(new Uri("https://contoso.a.io"));
-            }, bufferResponse: false);
+            });
 
             var buffer = new byte[11];
 

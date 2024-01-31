@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 
@@ -20,6 +19,8 @@ namespace Azure.Core.TestFramework
         public List<MockRequest> Requests { get; } = new List<MockRequest>();
 
         public bool? ExpectSyncPipeline { get; set; }
+
+        public bool? BufferResponse { get; set; }
 
         public MockTransport()
         {
@@ -98,6 +99,11 @@ namespace Azure.Core.TestFramework
             if (message.Response.ContentStream != null && ExpectSyncPipeline != null)
             {
                 message.Response.ContentStream = new AsyncValidatingStream(!ExpectSyncPipeline.Value, message.Response.ContentStream);
+            }
+
+            if (BufferResponse is not null)
+            {
+                message.BufferResponse = BufferResponse.Value;
             }
         }
 
