@@ -3132,7 +3132,7 @@ namespace Azure.Storage.Files.Shares.Tests
             {
                 Snapshot = snapshotResponse1.Value.Snapshot,
                 PreviousSnapshot = snapshotResponse0.Value.Snapshot,
-                SupportRename = renameSupport
+                IncludeRenames = renameSupport
             };
 
             try

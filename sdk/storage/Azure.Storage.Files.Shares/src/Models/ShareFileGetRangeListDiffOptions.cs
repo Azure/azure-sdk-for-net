@@ -45,6 +45,6 @@ namespace Azure.Storage.Files.Shares.Models
         /// If the value is true, the valid changed ranges for the file will be returned. If the value is false, the operation will result in a failure with 409 (Conflict) response.
         /// The default value is false.
         /// </summary>
-        public bool? SupportRename { get; set; }
+        public bool? IncludeRenames { get; set; }
     }
 }
