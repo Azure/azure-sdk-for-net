@@ -96,7 +96,7 @@ For more concepts and deeper discussion, see: [Service Bus Advanced Features](ht
 
 The `ServiceBusClient`, senders, receivers, and processors are safe to cache and use as a singleton for the lifetime of the application, which is best practice when messages are being sent or received regularly. They are responsible for efficient management of network, CPU, and memory use, working to keep usage low during periods of inactivity.
 
-These types are disposable and calling either `DisposeAsync` or `CloseAsync` is required to ensure that network resources and other unmanaged objects are properly cleaned up.  It is important to note that when a `ServiceBusClient` instance is disposed, it will automatically close and cleanup any senders, receivers, and processors that were created using it.
+These types are disposable and calling either `DisposeAsync` or `CloseAsync` is required to ensure that network resources and other unmanaged objects are properly cleaned up.  It is important to note that when a `ServiceBusClient` instance is disposed, the underlying AMQP connection is closed, therefore any senders, receivers, and processors that were created using it can no longer be used, whether or not the senders, receivers, and processors were explicitly closed. The best practice is to close the senders, receivers, and processors to ensure cleanup of the AMQP links, and then to close the `ServiceBusClient` to ensure the AMQP connection is closed.
 
 ### Thread safety
 

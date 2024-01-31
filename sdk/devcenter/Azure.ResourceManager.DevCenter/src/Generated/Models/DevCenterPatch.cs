@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -22,8 +23,9 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="DevCenterPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identity"> Managed identity properties. </param>
-        internal DevCenterPatch(IDictionary<string, string> tags, AzureLocation? location, ManagedServiceIdentity identity) : base(tags, location)
+        internal DevCenterPatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, ManagedServiceIdentity identity) : base(tags, location, serializedAdditionalRawData)
         {
             Identity = identity;
         }

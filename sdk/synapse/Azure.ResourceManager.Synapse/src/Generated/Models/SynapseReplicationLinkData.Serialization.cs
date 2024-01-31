@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,19 +15,131 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseReplicationLinkData : IUtf8JsonSerializable
+    public partial class SynapseReplicationLinkData : IUtf8JsonSerializable, IJsonModel<SynapseReplicationLinkData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseReplicationLinkData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SynapseReplicationLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseReplicationLinkData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseReplicationLinkData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(IsTerminationAllowed))
+            {
+                writer.WritePropertyName("isTerminationAllowed"u8);
+                writer.WriteBooleanValue(IsTerminationAllowed.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReplicationMode))
+            {
+                writer.WritePropertyName("replicationMode"u8);
+                writer.WriteStringValue(ReplicationMode);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PartnerServer))
+            {
+                writer.WritePropertyName("partnerServer"u8);
+                writer.WriteStringValue(PartnerServer);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PartnerDatabase))
+            {
+                writer.WritePropertyName("partnerDatabase"u8);
+                writer.WriteStringValue(PartnerDatabase);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PartnerLocation))
+            {
+                writer.WritePropertyName("partnerLocation"u8);
+                writer.WriteStringValue(PartnerLocation.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Role))
+            {
+                writer.WritePropertyName("role"u8);
+                writer.WriteStringValue(Role.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(PartnerRole))
+            {
+                writer.WritePropertyName("partnerRole"u8);
+                writer.WriteStringValue(PartnerRole.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
+            {
+                writer.WritePropertyName("percentComplete"u8);
+                writer.WriteNumberValue(PercentComplete.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReplicationState))
+            {
+                writer.WritePropertyName("replicationState"u8);
+                writer.WriteStringValue(ReplicationState.Value.ToString());
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SynapseReplicationLinkData DeserializeSynapseReplicationLinkData(JsonElement element)
+        SynapseReplicationLinkData IJsonModel<SynapseReplicationLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseReplicationLinkData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseReplicationLinkData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseReplicationLinkData(document.RootElement, options);
+        }
+
+        internal static SynapseReplicationLinkData DeserializeSynapseReplicationLinkData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +159,8 @@ namespace Azure.ResourceManager.Synapse
             Optional<DateTimeOffset> startTime = default;
             Optional<int> percentComplete = default;
             Optional<SynapseReplicationState> replicationState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -170,8 +286,44 @@ namespace Azure.ResourceManager.Synapse
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SynapseReplicationLinkData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(isTerminationAllowed), replicationMode.Value, partnerServer.Value, partnerDatabase.Value, Optional.ToNullable(partnerLocation), Optional.ToNullable(role), Optional.ToNullable(partnerRole), Optional.ToNullable(startTime), Optional.ToNullable(percentComplete), Optional.ToNullable(replicationState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SynapseReplicationLinkData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(isTerminationAllowed), replicationMode.Value, partnerServer.Value, partnerDatabase.Value, Optional.ToNullable(partnerLocation), Optional.ToNullable(role), Optional.ToNullable(partnerRole), Optional.ToNullable(startTime), Optional.ToNullable(percentComplete), Optional.ToNullable(replicationState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SynapseReplicationLinkData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseReplicationLinkData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SynapseReplicationLinkData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SynapseReplicationLinkData IPersistableModel<SynapseReplicationLinkData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseReplicationLinkData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSynapseReplicationLinkData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SynapseReplicationLinkData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SynapseReplicationLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -68,7 +72,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties, MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableDatadogSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties(e), MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableDatadogSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -82,6 +86,10 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -90,7 +98,7 @@ namespace Azure.ResourceManager.Datadog.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplaceAgreementsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplaceAgreementsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties, MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableDatadogSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties(e), MarketplaceAgreementsClientDiagnostics, Pipeline, "MockableDatadogSubscriptionResource.GetMarketplaceAgreements", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -103,6 +111,10 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,6 +147,10 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="body"> The <see cref="DatadogAgreementResourceProperties"/> to use. </param>
@@ -166,6 +182,14 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// <term>Operation Id</term>
         /// <description>Monitors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -187,6 +211,14 @@ namespace Azure.ResourceManager.Datadog.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

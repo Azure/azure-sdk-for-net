@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
@@ -13,11 +15,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class SubscriptionContractData : IUtf8JsonSerializable
+    public partial class SubscriptionContractData : IUtf8JsonSerializable, IJsonModel<SubscriptionContractData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionContractData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SubscriptionContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionContractData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SubscriptionContractData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(OwnerId))
@@ -39,6 +69,11 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdDate"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(StartOn))
             {
@@ -81,11 +116,40 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteBooleanValue(AllowTracing.Value);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SubscriptionContractData DeserializeSubscriptionContractData(JsonElement element)
+        SubscriptionContractData IJsonModel<SubscriptionContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionContractData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SubscriptionContractData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubscriptionContractData(document.RootElement, options);
+        }
+
+        internal static SubscriptionContractData DeserializeSubscriptionContractData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -107,6 +171,8 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<string> secondaryKey = default;
             Optional<string> stateComment = default;
             Optional<bool> allowTracing = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -238,8 +304,44 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SubscriptionContractData(id, name, type, systemData.Value, ownerId.Value, scope.Value, displayName.Value, Optional.ToNullable(state), Optional.ToNullable(createdDate), Optional.ToNullable(startDate), Optional.ToNullable(expirationDate), Optional.ToNullable(endDate), Optional.ToNullable(notificationDate), primaryKey.Value, secondaryKey.Value, stateComment.Value, Optional.ToNullable(allowTracing));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SubscriptionContractData(id, name, type, systemData.Value, ownerId.Value, scope.Value, displayName.Value, Optional.ToNullable(state), Optional.ToNullable(createdDate), Optional.ToNullable(startDate), Optional.ToNullable(expirationDate), Optional.ToNullable(endDate), Optional.ToNullable(notificationDate), primaryKey.Value, secondaryKey.Value, stateComment.Value, Optional.ToNullable(allowTracing), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SubscriptionContractData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionContractData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SubscriptionContractData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SubscriptionContractData IPersistableModel<SubscriptionContractData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionContractData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSubscriptionContractData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SubscriptionContractData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SubscriptionContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

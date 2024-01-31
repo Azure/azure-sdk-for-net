@@ -1,21 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{D3DF0FB5-157D-4C53-875B-D80CBE3A443B}") = "Azure.ResourceManager.PowerBIDedicated", "src\Azure.ResourceManager.PowerBIDedicated.csproj", "{B4C5C246-E01C-40C0-BC31-AA30958604CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.PowerBIDedicated", "src\Azure.ResourceManager.PowerBIDedicated.csproj", "{B4C5C246-E01C-40C0-BC31-AA30958604CF}"
 EndProject
-Project("{D3DF0FB5-157D-4C53-875B-D80CBE3A443B}") = "Azure.ResourceManager.PowerBIDedicated.Tests", "tests\Azure.ResourceManager.PowerBIDedicated.Tests.csproj", "{41153563-7B40-4182-B10C-F79011300A5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.PowerBIDedicated.Tests", "tests\Azure.ResourceManager.PowerBIDedicated.Tests.csproj", "{41153563-7B40-4182-B10C-F79011300A5D}"
 EndProject
-Project("{D3DF0FB5-157D-4C53-875B-D80CBE3A443B}") = "Azure.ResourceManager.PowerBIDedicated.Samples", "samples\Azure.ResourceManager.PowerBIDedicated.Samples.csproj", "{4C3E4409-FBEC-4360-8A4D-CC6D2A79FF78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.PowerBIDedicated.Samples", "samples\Azure.ResourceManager.PowerBIDedicated.Samples.csproj", "{4C3E4409-FBEC-4360-8A4D-CC6D2A79FF78}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {5B174155-E813-40D0-9973-BAB00B8F8628}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -49,5 +43,23 @@ Global
 		{41153563-7B40-4182-B10C-F79011300A5D}.Release|x64.Build.0 = Release|Any CPU
 		{41153563-7B40-4182-B10C-F79011300A5D}.Release|x86.ActiveCfg = Release|Any CPU
 		{41153563-7B40-4182-B10C-F79011300A5D}.Release|x86.Build.0 = Release|Any CPU
+		{4C3E4409-FBEC-4360-8A4D-CC6D2A79FF78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C3E4409-FBEC-4360-8A4D-CC6D2A79FF78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C3E4409-FBEC-4360-8A4D-CC6D2A79FF78}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4C3E4409-FBEC-4360-8A4D-CC6D2A79FF78}.Debug|x64.Build.0 = Debug|Any CPU
+		{4C3E4409-FBEC-4360-8A4D-CC6D2A79FF78}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4C3E4409-FBEC-4360-8A4D-CC6D2A79FF78}.Debug|x86.Build.0 = Debug|Any CPU
+		{4C3E4409-FBEC-4360-8A4D-CC6D2A79FF78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C3E4409-FBEC-4360-8A4D-CC6D2A79FF78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C3E4409-FBEC-4360-8A4D-CC6D2A79FF78}.Release|x64.ActiveCfg = Release|Any CPU
+		{4C3E4409-FBEC-4360-8A4D-CC6D2A79FF78}.Release|x64.Build.0 = Release|Any CPU
+		{4C3E4409-FBEC-4360-8A4D-CC6D2A79FF78}.Release|x86.ActiveCfg = Release|Any CPU
+		{4C3E4409-FBEC-4360-8A4D-CC6D2A79FF78}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5B174155-E813-40D0-9973-BAB00B8F8628}
 	EndGlobalSection
 EndGlobal

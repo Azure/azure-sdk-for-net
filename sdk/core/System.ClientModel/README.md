@@ -1,6 +1,8 @@
 # System.ClientModel library for .NET
 
-`System.ClientModel` provides shared primitives, abstractions, and helpers for .NET service client libraries.
+`System.ClientModel` contains building blocks for communicating with cloud services.  It provides shared primitives, abstractions, and helpers for .NET service client libraries.
+
+`System.ClientModel` allows client libraries built from its components to expose common functionality in a consistent fashion, so that once you learn how to use these APIs in one client library, you'll know how to use them in other client libraries as well.
 
 [Source code][source] | [Package (NuGet)][package]
 
@@ -21,15 +23,45 @@ dotnet add package System.ClientModel
 
 None needed for `System.ClientModel`.
 
+### Authenticate the client
+
+The `System.ClientModel` package provides a `KeyCredential` type for authentication.
+
 ## Key concepts
 
 The main shared concepts of `System.ClientModel` include:
 
-- Providing APIs to read and write models in different formats.
+- Configuring service clients (`ClientPipelineOptions`).
+- Accessing HTTP response details (`ClientResult`, `ClientResult<T>`).
+- Exceptions for reporting errors from service requests in a consistent fashion (`ClientResultException`).
+- Customizing requests (`RequestOptions`).
+- Providing APIs to read and write models in different formats (`ModelReaderWriter`).
 
 ## Examples
 
-### Simple ModelReaderWriter usage
+### Send a message using the MessagePipeline
+
+A very basic client implementation might use the following approach:
+
+```csharp
+ApiKeyCredential credential = new ApiKeyCredential(key);
+ApiKeyAuthenticationPolicy authenticationPolicy = ApiKeyAuthenticationPolicy.CreateBearerAuthorizationPolicy(credential);
+ClientPipeline pipeline = ClientPipeline.Create(pipelineOptions, authenticationPolicy);
+
+PipelineMessage message = pipeline.CreateMessage();
+message.Apply(requestOptions);
+message.MessageClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+
+PipelineRequest request = message.Request;
+request.Method = "GET";
+request.Uri = new Uri("https://www.example.com/");
+request.Headers.Add("Accept", "application/json");
+
+pipeline.Send(message);
+Console.WriteLine(message.Response.Status);
+```
+
+### Read and write persistable models
 
 As a library author you can implement `IPersistableModel<T>` or `IJsonModel<T>` which will give library users the ability to read and write your models.
 
@@ -50,6 +82,12 @@ string json = @"{
 }";
 OutputModel? model = ModelReaderWriter.Read<OutputModel>(BinaryData.FromString(json));
 ```
+
+## Troubleshooting
+
+You can troubleshoot `System.ClientModel`-based clients by inspecting the result of any `ClientResultException` thrown from a pipeline's `Send` method.
+
+## Next steps
 
 ## Contributing
 

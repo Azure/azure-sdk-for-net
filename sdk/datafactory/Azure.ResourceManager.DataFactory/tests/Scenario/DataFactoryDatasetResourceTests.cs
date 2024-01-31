@@ -36,7 +36,6 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Ignore this until https://github.com/Azure/azure-sdk-for-net/issues/40940 is fixed")]
         public async Task Dataset_Create_Exists_Get_List_Delete()
         {
             // Get the resource group
@@ -393,7 +392,6 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Ignore this until https://github.com/Azure/azure-sdk-for-net/issues/40940 is fixed")]
         public async Task Dataset_FileShare_Create()
         {
             await DatasetCreate("file", CreateFileServerLinkedService, (string linkedServiceName) =>
@@ -532,7 +530,6 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Ignore this until https://github.com/Azure/azure-sdk-for-net/issues/40940 is fixed")]
         public async Task Dataset_HttpFile_Create()
         {
             await DatasetCreate("http", CreateHttpLinkedService, (string linkedServiceName) =>
@@ -1694,7 +1691,10 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryLinkedServiceResource> CreateMySqlLinkedService(DataFactoryResource dataFactory, string linkedServiceName)
         {
-            DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new MySqlLinkedService(DataFactoryElement<string>.FromSecretString("server=10.0.0.122;port=3306;database=db;user=https:\\\\test.com;sslmode=1;usesystemtruststore=0")) { });
+            DataFactoryLinkedServiceData linkedService = new DataFactoryLinkedServiceData(new MySqlLinkedService()
+            {
+                ConnectionString = DataFactoryElement<string>.FromSecretString("server=10.0.0.122;port=3306;database=db;user=https:\\\\test.com;sslmode=1;usesystemtruststore=0")
+            });
             var result = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, linkedService);
             return result.Value;
         }

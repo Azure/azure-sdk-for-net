@@ -6,16 +6,105 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class DatabaseBackupInfo
+    public partial class DatabaseBackupInfo : IUtf8JsonSerializable, IJsonModel<DatabaseBackupInfo>
     {
-        internal static DatabaseBackupInfo DeserializeDatabaseBackupInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseBackupInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DatabaseBackupInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseBackupInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatabaseBackupInfo)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            {
+                writer.WritePropertyName("databaseName"u8);
+                writer.WriteStringValue(DatabaseName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BackupType))
+            {
+                writer.WritePropertyName("backupType"u8);
+                writer.WriteStringValue(BackupType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(BackupFiles))
+            {
+                writer.WritePropertyName("backupFiles"u8);
+                writer.WriteStartArray();
+                foreach (var item in BackupFiles)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Position))
+            {
+                writer.WritePropertyName("position"u8);
+                writer.WriteNumberValue(Position.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsDamaged))
+            {
+                writer.WritePropertyName("isDamaged"u8);
+                writer.WriteBooleanValue(IsDamaged.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsCompressed))
+            {
+                writer.WritePropertyName("isCompressed"u8);
+                writer.WriteBooleanValue(IsCompressed.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FamilyCount))
+            {
+                writer.WritePropertyName("familyCount"u8);
+                writer.WriteNumberValue(FamilyCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BackupFinishOn))
+            {
+                writer.WritePropertyName("backupFinishDate"u8);
+                writer.WriteStringValue(BackupFinishOn.Value, "O");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DatabaseBackupInfo IJsonModel<DatabaseBackupInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseBackupInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatabaseBackupInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatabaseBackupInfo(document.RootElement, options);
+        }
+
+        internal static DatabaseBackupInfo DeserializeDatabaseBackupInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +117,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<bool> isCompressed = default;
             Optional<int> familyCount = default;
             Optional<DateTimeOffset> backupFinishDate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -103,8 +194,44 @@ namespace Azure.ResourceManager.DataMigration.Models
                     backupFinishDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DatabaseBackupInfo(databaseName.Value, Optional.ToNullable(backupType), Optional.ToList(backupFiles), Optional.ToNullable(position), Optional.ToNullable(isDamaged), Optional.ToNullable(isCompressed), Optional.ToNullable(familyCount), Optional.ToNullable(backupFinishDate));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DatabaseBackupInfo(databaseName.Value, Optional.ToNullable(backupType), Optional.ToList(backupFiles), Optional.ToNullable(position), Optional.ToNullable(isDamaged), Optional.ToNullable(isCompressed), Optional.ToNullable(familyCount), Optional.ToNullable(backupFinishDate), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DatabaseBackupInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseBackupInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseBackupInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DatabaseBackupInfo IPersistableModel<DatabaseBackupInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseBackupInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDatabaseBackupInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseBackupInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DatabaseBackupInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

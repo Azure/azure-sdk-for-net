@@ -6,20 +6,72 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class AssessmentLinks
+    internal partial class AssessmentLinks : IUtf8JsonSerializable, IJsonModel<AssessmentLinks>
     {
-        internal static AssessmentLinks DeserializeAssessmentLinks(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssessmentLinks>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AssessmentLinks>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AssessmentLinks>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AssessmentLinks)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(AzurePortalUri))
+            {
+                writer.WritePropertyName("azurePortalUri"u8);
+                writer.WriteStringValue(AzurePortalUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AssessmentLinks IJsonModel<AssessmentLinks>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssessmentLinks>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AssessmentLinks)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAssessmentLinks(document.RootElement, options);
+        }
+
+        internal static AssessmentLinks DeserializeAssessmentLinks(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<Uri> azurePortalUri = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azurePortalUri"u8))
@@ -31,8 +83,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     azurePortalUri = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AssessmentLinks(azurePortalUri.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AssessmentLinks(azurePortalUri.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AssessmentLinks>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssessmentLinks>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AssessmentLinks)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AssessmentLinks IPersistableModel<AssessmentLinks>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssessmentLinks>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAssessmentLinks(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AssessmentLinks)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AssessmentLinks>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SelfHelpDiagnosticInsight SelfHelpDiagnosticInsight(string id = null, string title = null, string results = null, SelfHelpImportanceLevel? insightImportanceLevel = null)
         {
-            return new SelfHelpDiagnosticInsight(id, title, results, insightImportanceLevel);
+            return new SelfHelpDiagnosticInsight(id, title, results, insightImportanceLevel, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of SelfHelpSolutionMetadata. </summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SelfHelpSolutionMetadata SelfHelpSolutionMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string solutionId, string solutionType, string description, IEnumerable<IList<string>> requiredParameterSets)
         {
-            return new SelfHelpSolutionMetadata(id, name, resourceType, systemData, default);
+            return new SelfHelpSolutionMetadata(id, name, resourceType, systemData, default, serializedAdditionalRawData: null);
         }
     }
 }

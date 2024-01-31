@@ -6,16 +6,31 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class BigDataPoolLibraryRequirements : IUtf8JsonSerializable
+    public partial class BigDataPoolLibraryRequirements : IUtf8JsonSerializable, IJsonModel<BigDataPoolLibraryRequirements>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BigDataPoolLibraryRequirements>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BigDataPoolLibraryRequirements>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BigDataPoolLibraryRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BigDataPoolLibraryRequirements)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            {
+                writer.WritePropertyName("time"u8);
+                writer.WriteStringValue(UpdatedOn.Value, "O");
+            }
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
@@ -26,11 +41,40 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BigDataPoolLibraryRequirements DeserializeBigDataPoolLibraryRequirements(JsonElement element)
+        BigDataPoolLibraryRequirements IJsonModel<BigDataPoolLibraryRequirements>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BigDataPoolLibraryRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BigDataPoolLibraryRequirements)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBigDataPoolLibraryRequirements(document.RootElement, options);
+        }
+
+        internal static BigDataPoolLibraryRequirements DeserializeBigDataPoolLibraryRequirements(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,6 +82,8 @@ namespace Azure.ResourceManager.Synapse.Models
             Optional<DateTimeOffset> time = default;
             Optional<string> content = default;
             Optional<string> filename = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"u8))
@@ -59,8 +105,44 @@ namespace Azure.ResourceManager.Synapse.Models
                     filename = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BigDataPoolLibraryRequirements(Optional.ToNullable(time), content.Value, filename.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BigDataPoolLibraryRequirements(Optional.ToNullable(time), content.Value, filename.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BigDataPoolLibraryRequirements>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BigDataPoolLibraryRequirements>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BigDataPoolLibraryRequirements)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BigDataPoolLibraryRequirements IPersistableModel<BigDataPoolLibraryRequirements>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BigDataPoolLibraryRequirements>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBigDataPoolLibraryRequirements(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BigDataPoolLibraryRequirements)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BigDataPoolLibraryRequirements>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

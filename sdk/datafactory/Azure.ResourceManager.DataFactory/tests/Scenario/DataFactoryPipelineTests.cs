@@ -284,7 +284,10 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryDatasetResource> CreateDefaultMySqlTableDataset(DataFactoryResource dataFactory, string linkedServiceName, string datasetName)
         {
-            DataFactoryLinkedServiceData lkWebSource = new DataFactoryLinkedServiceData(new MySqlLinkedService("server=10.0.0.122;port=3306;database=db;user=https:\\\\test.com;sslmode=1;usesystemtruststore=0"));
+            DataFactoryLinkedServiceData lkWebSource = new DataFactoryLinkedServiceData(new MySqlLinkedService()
+            {
+                ConnectionString = "server=10.0.0.122;port=3306;database=db;user=https:\\\\test.com;sslmode=1;usesystemtruststore=0"
+            });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkWebSource);
 
             DataFactoryDatasetData dsWebSource = new DataFactoryDatasetData(new MySqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
@@ -1842,7 +1845,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                         new CopyActivity(taskName, new AzureSqlSource()
                             {
                                 SqlReaderQuery = "SELECT TOP 1 * FROM DBO.TestTable",
-                                PartitionOption = BinaryData.FromString("\"DynamicRange\""),
+                                PartitionOption = "DynamicRange",
                                 PartitionSettings = new SqlPartitionSettings()
                                 {
                                     PartitionColumnName = "partitionColumnName",
@@ -6242,7 +6245,6 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        [Ignore("Ignore this until https://github.com/Azure/azure-sdk-for-net/issues/40940 is fixed")]
         public async Task Pipeline_DelimitedText_GoogleCloud_Create()
         {
             string taskName = Recording.GenerateAssetName($"adf-pipeline-task-");
@@ -6791,7 +6793,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             Source = new SqlMISource()
                             {
                                 SqlReaderQuery = "select * from my_table",
-                                PartitionOption = BinaryData.FromString("\"DynamicRange\""),
+                                PartitionOption = "DynamicRange",
                                 PartitionSettings = new SqlPartitionSettings()
                                 {
                                     PartitionColumnName = "column",
@@ -6803,7 +6805,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             {
                                 SqlWriterTableType = "MarketingType",
                                 SqlWriterUseTableLock = true,
-                                WriteBehavior = BinaryData.FromString("\"Upsert\""),
+                                WriteBehavior = "Upsert",
                                 UpsertSettings = new SqlUpsertSettings()
                                 {
                                     UseTempDB = true,

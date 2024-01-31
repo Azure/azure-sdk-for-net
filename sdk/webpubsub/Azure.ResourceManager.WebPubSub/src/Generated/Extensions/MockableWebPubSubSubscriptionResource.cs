@@ -60,6 +60,14 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <term>Operation Id</term>
         /// <description>WebPubSub_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> the region. </param>
@@ -94,6 +102,14 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebPubSub_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,6 +146,14 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <term>Operation Id</term>
         /// <description>WebPubSub_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,6 +175,14 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebPubSub_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,6 +206,10 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> the location like "eastus". </param>
@@ -183,7 +219,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SignalRServiceUsage.DeserializeSignalRServiceUsage, UsagesClientDiagnostics, Pipeline, "MockableWebPubSubSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SignalRServiceUsage.DeserializeSignalRServiceUsage(e), UsagesClientDiagnostics, Pipeline, "MockableWebPubSubSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -197,6 +233,10 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> the location like "eastus". </param>
@@ -206,7 +246,7 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SignalRServiceUsage.DeserializeSignalRServiceUsage, UsagesClientDiagnostics, Pipeline, "MockableWebPubSubSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SignalRServiceUsage.DeserializeSignalRServiceUsage(e), UsagesClientDiagnostics, Pipeline, "MockableWebPubSubSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

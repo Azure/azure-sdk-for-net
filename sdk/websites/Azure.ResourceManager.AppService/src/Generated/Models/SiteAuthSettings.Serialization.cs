@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,15 +14,43 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SiteAuthSettings : IUtf8JsonSerializable
+    public partial class SiteAuthSettings : IUtf8JsonSerializable, IJsonModel<SiteAuthSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteAuthSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SiteAuthSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteAuthSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -250,11 +280,40 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStringValue(ConfigVersion);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SiteAuthSettings DeserializeSiteAuthSettings(JsonElement element)
+        SiteAuthSettings IJsonModel<SiteAuthSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteAuthSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteAuthSettings(document.RootElement, options);
+        }
+
+        internal static SiteAuthSettings DeserializeSiteAuthSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -302,6 +361,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> isAuthFromFile = default;
             Optional<string> authFilePath = default;
             Optional<string> configVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -622,8 +683,44 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteAuthSettings(id, name, type, systemData.Value, Optional.ToNullable(enabled), runtimeVersion.Value, Optional.ToNullable(unauthenticatedClientAction), Optional.ToNullable(tokenStoreEnabled), Optional.ToList(allowedExternalRedirectUrls), Optional.ToNullable(defaultProvider), Optional.ToNullable(tokenRefreshExtensionHours), clientId.Value, clientSecret.Value, clientSecretSettingName.Value, clientSecretCertificateThumbprint.Value, issuer.Value, Optional.ToNullable(validateIssuer), Optional.ToList(allowedAudiences), Optional.ToList(additionalLoginParams), aadClaimsAuthorization.Value, googleClientId.Value, googleClientSecret.Value, googleClientSecretSettingName.Value, Optional.ToList(googleOAuthScopes), facebookAppId.Value, facebookAppSecret.Value, facebookAppSecretSettingName.Value, Optional.ToList(facebookOAuthScopes), gitHubClientId.Value, gitHubClientSecret.Value, gitHubClientSecretSettingName.Value, Optional.ToList(gitHubOAuthScopes), twitterConsumerKey.Value, twitterConsumerSecret.Value, twitterConsumerSecretSettingName.Value, microsoftAccountClientId.Value, microsoftAccountClientSecret.Value, microsoftAccountClientSecretSettingName.Value, Optional.ToList(microsoftAccountOAuthScopes), isAuthFromFile.Value, authFilePath.Value, configVersion.Value, kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteAuthSettings(id, name, type, systemData.Value, Optional.ToNullable(enabled), runtimeVersion.Value, Optional.ToNullable(unauthenticatedClientAction), Optional.ToNullable(tokenStoreEnabled), Optional.ToList(allowedExternalRedirectUrls), Optional.ToNullable(defaultProvider), Optional.ToNullable(tokenRefreshExtensionHours), clientId.Value, clientSecret.Value, clientSecretSettingName.Value, clientSecretCertificateThumbprint.Value, issuer.Value, Optional.ToNullable(validateIssuer), Optional.ToList(allowedAudiences), Optional.ToList(additionalLoginParams), aadClaimsAuthorization.Value, googleClientId.Value, googleClientSecret.Value, googleClientSecretSettingName.Value, Optional.ToList(googleOAuthScopes), facebookAppId.Value, facebookAppSecret.Value, facebookAppSecretSettingName.Value, Optional.ToList(facebookOAuthScopes), gitHubClientId.Value, gitHubClientSecret.Value, gitHubClientSecretSettingName.Value, Optional.ToList(gitHubOAuthScopes), twitterConsumerKey.Value, twitterConsumerSecret.Value, twitterConsumerSecretSettingName.Value, microsoftAccountClientId.Value, microsoftAccountClientSecret.Value, microsoftAccountClientSecretSettingName.Value, Optional.ToList(microsoftAccountOAuthScopes), isAuthFromFile.Value, authFilePath.Value, configVersion.Value, kind.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SiteAuthSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SiteAuthSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SiteAuthSettings IPersistableModel<SiteAuthSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSiteAuthSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteAuthSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SiteAuthSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
