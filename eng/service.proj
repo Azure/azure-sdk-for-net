@@ -47,7 +47,7 @@
   <Target Name="GenerateCode">
     <MSBuild Projects="@(ProjectReference)"
              Targets="GenerateCode"
-             BuildInParallel="$(BuildInParallel)"
+             BuildInParallel="false"
              SkipNonexistentProjects="false"
              SkipNonexistentTargets="true" />
   </Target>
