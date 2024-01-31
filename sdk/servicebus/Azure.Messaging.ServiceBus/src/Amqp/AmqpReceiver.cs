@@ -381,11 +381,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         {
                             while (!backgroundCts.Token.IsCancellationRequested)
                             {
-                                var additionalMessages = await link.ReceiveMessagesAsync(maxMessages, TimeSpan.FromMilliseconds(20), maxWaitTime ?? timeout, cancellationToken).ConfigureAwait(false);
-                                foreach (var message in additionalMessages)
-                                {
-                                    link.ReleaseMessage(message);
-                                }
+                                var additionalMessage = await link.ReceiveMessageAsync(maxWaitTime ?? timeout, cancellationToken).ConfigureAwait(false);
+                                link.ReleaseMessage(additionalMessage);
                             }
                         }, cancellationToken);
                         await drainTask;
