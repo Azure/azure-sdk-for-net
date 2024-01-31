@@ -144,8 +144,6 @@ namespace Azure.Communication.CallAutomation
                     return TranscriptionUpdated.Deserialize(eventData);
                 case nameof(TranscriptionStopped):
                     return TranscriptionStopped.Deserialize(eventData);
-                case nameof(TranscriptionResumed):
-                    return TranscriptionResumed.Deserialize(eventData);
                 case nameof(TranscriptionFailed):
                     return TranscriptionFailed.Deserialize(eventData);
                 #region Dialog
@@ -165,8 +163,6 @@ namespace Azure.Communication.CallAutomation
                     return DialogSensitivityUpdate.Deserialize(eventData);
                 case nameof(DialogLanguageChange):
                     return DialogLanguageChange.Deserialize(eventData);
-                case nameof(DialogUpdated):
-                    return DialogUpdated.Deserialize(eventData);
                 #endregion
                 default:
                     return null;
