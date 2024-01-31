@@ -35,6 +35,8 @@ namespace Azure.Communication.CallAutomation
         public string DialogId { get; }
         /// <summary> Determines the type of the dialog. </summary>
         public BaseDialog Dialog { get; }
+        /// <summary> The value of the operation callback URI. </summary>
+        public string OperationCallbackUri { get; set; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
     }

@@ -195,7 +195,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                         RecordingFormat = RecordingFormat.Mp4,
                         AudioChannelParticipantOrdering = { new CommunicationUserIdentifier("test") },
                         ChannelAffinity = testChannelAffinities,
-                        PauseOnStart = false,
                     })
                 },
                 new Func<CallRecording, TestDelegate>?[]
@@ -237,7 +236,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                        RecordingChannel = RecordingChannel.Mixed,
                        RecordingFormat = RecordingFormat.Mp4,
                        ChannelAffinity = testChannelAffinities,
-                       PauseOnStart = false,
                        AudioChannelParticipantOrdering = { new CommunicationUserIdentifier("test"),}
                    }).ConfigureAwait(false),
                 },

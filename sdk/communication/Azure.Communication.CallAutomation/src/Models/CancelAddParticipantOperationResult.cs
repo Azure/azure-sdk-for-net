@@ -93,22 +93,14 @@ namespace Azure.Communication.CallAutomation
                     {
                         var successEvent = returnedEvent as CancelAddParticipantSucceeded;
 
-                        return new CancelAddParticipantEventResult(
-                            true,
-                            successEvent,
-                            null,
-                            successEvent?.InvitationId);
+                        return new CancelAddParticipantEventResult(true, successEvent, null);
                     }
 
                 case CancelAddParticipantFailed:
                     {
                         var failedEvent = returnedEvent as CancelAddParticipantFailed;
 
-                        return new CancelAddParticipantEventResult(
-                            false,
-                            null,
-                            failedEvent,
-                            failedEvent?.InvitationId);
+                        return new CancelAddParticipantEventResult(false, null, failedEvent);
                     }
 
                 default:

@@ -120,7 +120,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="dialogId"></param>
         /// <param name="operationCallbackUri"></param>
         /// <param name="cancellationToken"></param>
-        public virtual async Task<Response<DialogResult>> StopDialogAsync(string dialogId, Uri operationCallbackUri = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DialogResult>> StopDialogAsync(string dialogId, string operationCallbackUri = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallDialog)}.{nameof(StopDialog)}");
             scope.Start();
@@ -129,7 +129,7 @@ namespace Azure.Communication.CallAutomation
                 var response = await CallDialogRestClient.StopDialogAsync
                     (CallConnectionId,
                     dialogId,
-                    operationCallbackUri?.AbsoluteUri,
+                    new Uri(operationCallbackUri)?.AbsoluteUri,
                     cancellationToken).ConfigureAwait(false);
 
                 var result = new DialogResult(dialogId);
@@ -150,7 +150,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="dialogId"></param>
         /// <param name="operationCallbackUri"></param>
         /// <param name="cancellationToken"></param>
-        public virtual Response<DialogResult> StopDialog(string dialogId, Uri operationCallbackUri = default, CancellationToken cancellationToken = default)
+        public virtual Response<DialogResult> StopDialog(string dialogId, string operationCallbackUri = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallDialog)}.{nameof(StopDialog)}");
             scope.Start();
@@ -159,7 +159,7 @@ namespace Azure.Communication.CallAutomation
                 var response = CallDialogRestClient.StopDialog
                     (CallConnectionId,
                     dialogId,
-                    operationCallbackUri?.AbsoluteUri,
+                    new Uri(operationCallbackUri)?.AbsoluteUri,
                     cancellationToken);
 
                 var result = new DialogResult(dialogId);

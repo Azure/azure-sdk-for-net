@@ -141,16 +141,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
 
         private static readonly CallMediaRecognizeOptions _emptyRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 1);
 
-        private static readonly StartHoldMusicOptions _startHoldMusicOptions = new StartHoldMusicOptions(new CommunicationUserIdentifier("targetUserId"), _textSource)
-        {
-            OperationContext = "operationContext"
-        };
-
-        private static readonly StopHoldMusicOptions _stopHoldMusicOptions = new StopHoldMusicOptions(new CommunicationUserIdentifier("targetUserId"))
-        {
-            OperationContext = "operationContext"
-        };
-
         private static CallMedia? _callMedia;
 
         [SetUp]
