@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.WebPubSub
         public virtual AsyncPageable<WebPubSubSku> GetSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, WebPubSubSku.DeserializeWebPubSubSku, _webPubSubClientDiagnostics, Pipeline, "WebPubSubResource.GetSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => WebPubSubSku.DeserializeWebPubSubSku(e), _webPubSubClientDiagnostics, Pipeline, "WebPubSubResource.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.WebPubSub
         public virtual Pageable<WebPubSubSku> GetSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, WebPubSubSku.DeserializeWebPubSubSku, _webPubSubClientDiagnostics, Pipeline, "WebPubSubResource.GetSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => WebPubSubSku.DeserializeWebPubSubSku(e), _webPubSubClientDiagnostics, Pipeline, "WebPubSubResource.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webPubSubPrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, WebPubSubPrivateLink.DeserializeWebPubSubPrivateLink, _webPubSubPrivateLinkResourcesClientDiagnostics, Pipeline, "WebPubSubResource.GetWebPubSubPrivateLinkResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => WebPubSubPrivateLink.DeserializeWebPubSubPrivateLink(e), _webPubSubPrivateLinkResourcesClientDiagnostics, Pipeline, "WebPubSubResource.GetWebPubSubPrivateLinkResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webPubSubPrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _webPubSubPrivateLinkResourcesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, WebPubSubPrivateLink.DeserializeWebPubSubPrivateLink, _webPubSubPrivateLinkResourcesClientDiagnostics, Pipeline, "WebPubSubResource.GetWebPubSubPrivateLinkResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => WebPubSubPrivateLink.DeserializeWebPubSubPrivateLink(e), _webPubSubPrivateLinkResourcesClientDiagnostics, Pipeline, "WebPubSubResource.GetWebPubSubPrivateLinkResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

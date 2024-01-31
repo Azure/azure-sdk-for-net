@@ -49,9 +49,9 @@ public partial class ChatRequestUserMessage : ChatRequestMessage
     /// <paramref name="content"/> is null or empty.
     /// </exception>
     public ChatRequestUserMessage(string content)
-        : base(ChatRole.User)
     {
         Argument.AssertNotNullOrEmpty(content, nameof(content));
+        Role = ChatRole.User;
         Content = content;
     }
 
@@ -63,9 +63,9 @@ public partial class ChatRequestUserMessage : ChatRequestMessage
     /// <paramref name="content"/> is null or empty.
     /// </exception>
     public ChatRequestUserMessage(IEnumerable<ChatMessageContentItem> content)
-        : base(ChatRole.User)
     {
         Argument.AssertNotNullOrEmpty(content, nameof(content));
+        Role = ChatRole.User;
         MultimodalContentItems = content.ToList();
     }
 
@@ -77,9 +77,9 @@ public partial class ChatRequestUserMessage : ChatRequestMessage
     /// <paramref name="content"/> is null or empty.
     /// </exception>
     public ChatRequestUserMessage(params ChatMessageContentItem[] content)
-        : base(ChatRole.User)
     {
         Argument.AssertNotNullOrEmpty(content, nameof(content));
+        Role = ChatRole.User;
         MultimodalContentItems = content.ToList();
     }
 

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -22,13 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="FileShareRestoreContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryType"> Type of this recovery. </param>
         /// <param name="sourceResourceId"> Source storage account ARM Id. </param>
         /// <param name="copyOptions"> Options to resolve copy conflicts. </param>
         /// <param name="restoreRequestType"> Restore Type (FullShareRestore or ItemLevelRestore). </param>
         /// <param name="restoreFileSpecs"> List of Source Files/Folders(which need to recover) and TargetFolderPath details. </param>
         /// <param name="targetDetails"> Target File Share Details. </param>
-        internal FileShareRestoreContent(string objectType, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, FileShareCopyOption? copyOptions, FileShareRestoreType? restoreRequestType, IList<RestoreFileSpecs> restoreFileSpecs, TargetAfsRestoreInfo targetDetails) : base(objectType)
+        internal FileShareRestoreContent(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, FileShareRecoveryType? recoveryType, ResourceIdentifier sourceResourceId, FileShareCopyOption? copyOptions, FileShareRestoreType? restoreRequestType, IList<RestoreFileSpecs> restoreFileSpecs, TargetAfsRestoreInfo targetDetails) : base(objectType, serializedAdditionalRawData)
         {
             RecoveryType = recoveryType;
             SourceResourceId = sourceResourceId;

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageMover.Models
 {
     /// <summary> The properties of SMB share endpoint to update. </summary>
@@ -19,8 +22,9 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <summary> Initializes a new instance of <see cref="SmbMountEndpointUpdateProperties"/>. </summary>
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentials"> The Azure Key Vault secret URIs which store the required credentials to access the SMB share. </param>
-        internal SmbMountEndpointUpdateProperties(EndpointType endpointType, string description, AzureKeyVaultSmbCredentials credentials) : base(endpointType, description)
+        internal SmbMountEndpointUpdateProperties(EndpointType endpointType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureKeyVaultSmbCredentials credentials) : base(endpointType, description, serializedAdditionalRawData)
         {
             Credentials = credentials;
             EndpointType = endpointType;

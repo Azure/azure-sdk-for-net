@@ -3,12 +3,16 @@
     <ProjectReference Include="..\src\Azure.ResourceManager.Sql.csproj" />
     <PackageReference Include="Azure.ResourceManager.Network" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Azure.Identity" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Folder Include="SessionRecords\ServerTrustGroupTests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
+    <Compile Include="..\..\..\..\common\ManagementTestShared\Temp\*.cs" LinkBase="TestShared" />
   </ItemGroup>
 </Project>

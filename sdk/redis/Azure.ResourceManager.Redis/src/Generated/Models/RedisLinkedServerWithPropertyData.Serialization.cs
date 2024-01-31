@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -12,11 +15,39 @@ using Azure.ResourceManager.Redis.Models;
 
 namespace Azure.ResourceManager.Redis
 {
-    public partial class RedisLinkedServerWithPropertyData : IUtf8JsonSerializable
+    public partial class RedisLinkedServerWithPropertyData : IUtf8JsonSerializable, IJsonModel<RedisLinkedServerWithPropertyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisLinkedServerWithPropertyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RedisLinkedServerWithPropertyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RedisLinkedServerWithPropertyData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedRedisCacheId))
@@ -34,12 +65,56 @@ namespace Azure.ResourceManager.Redis
                 writer.WritePropertyName("serverRole"u8);
                 writer.WriteStringValue(ServerRole.Value.ToSerialString());
             }
+            if (options.Format != "W" && Optional.IsDefined(GeoReplicatedPrimaryHostName))
+            {
+                writer.WritePropertyName("geoReplicatedPrimaryHostName"u8);
+                writer.WriteStringValue(GeoReplicatedPrimaryHostName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrimaryHostName))
+            {
+                writer.WritePropertyName("primaryHostName"u8);
+                writer.WriteStringValue(PrimaryHostName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RedisLinkedServerWithPropertyData DeserializeRedisLinkedServerWithPropertyData(JsonElement element)
+        RedisLinkedServerWithPropertyData IJsonModel<RedisLinkedServerWithPropertyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RedisLinkedServerWithPropertyData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRedisLinkedServerWithPropertyData(document.RootElement, options);
+        }
+
+        internal static RedisLinkedServerWithPropertyData DeserializeRedisLinkedServerWithPropertyData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +129,8 @@ namespace Azure.ResourceManager.Redis
             Optional<string> geoReplicatedPrimaryHostName = default;
             Optional<string> primaryHostName = default;
             Optional<string> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -134,8 +211,44 @@ namespace Azure.ResourceManager.Redis
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RedisLinkedServerWithPropertyData(id, name, type, systemData.Value, linkedRedisCacheId.Value, Optional.ToNullable(linkedRedisCacheLocation), Optional.ToNullable(serverRole), geoReplicatedPrimaryHostName.Value, primaryHostName.Value, provisioningState.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RedisLinkedServerWithPropertyData(id, name, type, systemData.Value, linkedRedisCacheId.Value, Optional.ToNullable(linkedRedisCacheLocation), Optional.ToNullable(serverRole), geoReplicatedPrimaryHostName.Value, primaryHostName.Value, provisioningState.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RedisLinkedServerWithPropertyData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RedisLinkedServerWithPropertyData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RedisLinkedServerWithPropertyData IPersistableModel<RedisLinkedServerWithPropertyData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RedisLinkedServerWithPropertyData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRedisLinkedServerWithPropertyData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RedisLinkedServerWithPropertyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

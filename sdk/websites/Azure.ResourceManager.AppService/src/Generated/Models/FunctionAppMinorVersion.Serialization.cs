@@ -5,15 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class FunctionAppMinorVersion
+    public partial class FunctionAppMinorVersion : IUtf8JsonSerializable, IJsonModel<FunctionAppMinorVersion>
     {
-        internal static FunctionAppMinorVersion DeserializeFunctionAppMinorVersion(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionAppMinorVersion>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FunctionAppMinorVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FunctionAppMinorVersion>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FunctionAppMinorVersion)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(DisplayText))
+            {
+                writer.WritePropertyName("displayText"u8);
+                writer.WriteStringValue(DisplayText);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StackSettings))
+            {
+                writer.WritePropertyName("stackSettings"u8);
+                writer.WriteObjectValue(StackSettings);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        FunctionAppMinorVersion IJsonModel<FunctionAppMinorVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FunctionAppMinorVersion>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FunctionAppMinorVersion)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFunctionAppMinorVersion(document.RootElement, options);
+        }
+
+        internal static FunctionAppMinorVersion DeserializeFunctionAppMinorVersion(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +82,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> displayText = default;
             Optional<string> value = default;
             Optional<FunctionAppRuntimes> stackSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayText"u8))
@@ -42,8 +105,44 @@ namespace Azure.ResourceManager.AppService.Models
                     stackSettings = FunctionAppRuntimes.DeserializeFunctionAppRuntimes(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FunctionAppMinorVersion(displayText.Value, value.Value, stackSettings.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FunctionAppMinorVersion(displayText.Value, value.Value, stackSettings.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FunctionAppMinorVersion>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FunctionAppMinorVersion>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FunctionAppMinorVersion)} does not support '{options.Format}' format.");
+            }
+        }
+
+        FunctionAppMinorVersion IPersistableModel<FunctionAppMinorVersion>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FunctionAppMinorVersion>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFunctionAppMinorVersion(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FunctionAppMinorVersion)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FunctionAppMinorVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
