@@ -42,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             {
                 if (RequestStatus == RequestStatusType.Failed || RequestStatus == RequestStatusType.ValidationError)
                 {
-                    Response.MarkAsFailed(new Exception(string.IsNullOrEmpty(StatusMessage) ? AuthenticationEventResource.Ex_Gen_Failure : StatusMessage), true);
+                    Response.MarkAsFailed(new Exception(string.IsNullOrEmpty(StatusMessage) ? AuthenticationEventResource.Ex_Gen_Failure : StatusMessage), false);
                 }
                 else if (RequestStatus == RequestStatusType.TokenInvalid)
                 {
