@@ -50,7 +50,7 @@ namespace Azure.Core.Tests
         [Test]
         public void SetStateFails()
         {
-            var operationInternal = OperationInternal.Failed(InitialResponse, new RequestFailedException(InitialResponse), null);
+            var operationInternal = OperationInternal.Failed(InitialResponse, new RequestFailedException(InitialResponse));
             Assert.IsTrue(operationInternal.HasCompleted);
         }
 

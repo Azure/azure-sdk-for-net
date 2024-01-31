@@ -60,7 +60,7 @@ namespace Azure.Core
         /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
         /// <param name="operationFailedException">The exception that will be thrown by <c>UpdateStatusAsync</c>.</param>
         /// <param name="rehydrationToken">rehydration token</param>
-        public static OperationInternal Failed(Response rawResponse, RequestFailedException operationFailedException, RehydrationToken? rehydrationToken) => new(OperationState.Failure(rawResponse, operationFailedException), rehydrationToken);
+        public static OperationInternal Failed(Response rawResponse, RequestFailedException operationFailedException, RehydrationToken? rehydrationToken = null) => new(OperationState.Failure(rawResponse, operationFailedException), rehydrationToken);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class.

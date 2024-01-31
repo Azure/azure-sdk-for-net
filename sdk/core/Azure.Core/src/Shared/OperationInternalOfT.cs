@@ -56,7 +56,7 @@ namespace Azure.Core
     {
         private readonly IOperation<T> _operation;
         private readonly AsyncLockWithValue<OperationState<T>> _stateLock;
-        private Response? _rawResponse;
+        private Response _rawResponse;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final successful state.
@@ -72,7 +72,7 @@ namespace Azure.Core
         /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
         /// <param name="operationFailedException">The exception that will be thrown by <c>UpdateStatusAsync</c>.</param>
         /// <param name="rehydrationToken">rehydration token</param>
-        public static OperationInternal<T> Failed(Response rawResponse, RequestFailedException operationFailedException, RehydrationToken? rehydrationToken) => new(OperationState<T>.Failure(rawResponse, operationFailedException), rehydrationToken);
+        public static OperationInternal<T> Failed(Response rawResponse, RequestFailedException operationFailedException, RehydrationToken? rehydrationToken = null) => new(OperationState<T>.Failure(rawResponse, operationFailedException), rehydrationToken);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal{T}"/> class.
@@ -110,22 +110,6 @@ namespace Azure.Core
             _rawResponse = rawResponse;
             _stateLock = new AsyncLockWithValue<OperationState<T>>();
         }
-
-        //TEMP for backcompat with AutoRest
-        public OperationInternal(
-            ClientDiagnostics clientDiagnostics,
-            IOperation<T> operation,
-            Response? rawResponse,
-            string? operationTypeName = null,
-            IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategy? fallbackStrategy = null)
-            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
-        {
-            _operation = operation;
-            _rawResponse = rawResponse;
-            _stateLock = new AsyncLockWithValue<OperationState<T>>();
-        }
-        //end TEMP for backcompat with AutoRest
 
         private OperationInternal(OperationState<T> finalState, RehydrationToken? rehydrationToken)
             : base(finalState.RawResponse, rehydrationToken)
@@ -312,7 +296,7 @@ namespace Azure.Core
                 return state.RawResponse;
             }
 
-            // if this is a fake delete lro with 404, just return response
+            // if this is a fake delete lro with 404, just return empty response with 200
             if (RequestMethod.Delete == requestmethod && state.RawResponse.Status == 404)
             {
                 return new EmptyResponse(HttpStatusCode.OK);
