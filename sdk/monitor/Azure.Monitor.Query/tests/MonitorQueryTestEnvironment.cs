@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 
@@ -69,6 +71,28 @@ namespace Azure.Monitor.Query.Tests
             }
 
             throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");
+        }
+
+        protected override async ValueTask<bool> IsEnvironmentReadyAsync()
+        {
+            // Check that the dynamic resource is ready.
+            MetricsQueryClientOptions metricsOptions = new() { Audience = GetMetricsAudience() };
+            LogsQueryClientOptions logsOptions = new() { Audience = GetLogsAudience() };
+
+            try
+            {
+                MetricsQueryClient metricsClient = new(new Uri(GetMetricsAudience()), new DefaultAzureCredential(), metricsOptions);
+                await metricsClient.DetectLanguageAsync("Ready!");
+
+                LogsQueryClient logsClient = new(new Uri(GetLogsAudience() + "/v1"), new DefaultAzureCredential(), logsOptions);
+                await logsClient.DetectLanguageAsync("Ready!");
+            }
+            catch (RequestFailedException e) when (e.Status == 401)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
