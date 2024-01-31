@@ -101,6 +101,8 @@ internal class StructuredMessageEncodingStream : Stream
     private SMRegion _currentRegion = SMRegion.StreamHeader;
     private int _currentRegionPosition = 0;
 
+    private long _maxSeekPosition = 0;
+
     public override long Position
     {
         get
@@ -130,7 +132,7 @@ internal class StructuredMessageEncodingStream : Stream
         }
         set
         {
-            Argument.AssertInRange(value, 0, Length, nameof(value));
+            Argument.AssertInRange(value, 0, _maxSeekPosition, nameof(value));
             if (value < _streamHeaderLength)
             {
                 _currentRegion = SMRegion.StreamHeader;
@@ -218,6 +220,7 @@ internal class StructuredMessageEncodingStream : Stream
     public override void SetLength(long value) => throw new NotSupportedException();
     #endregion
 
+    #region Read
     public override int Read(byte[] buffer, int offset, int count)
         => ReadInternal(buffer, offset, count, async: false, cancellationToken: default).EnsureCompleted();
 
@@ -250,6 +253,7 @@ internal class StructuredMessageEncodingStream : Stream
                     // don't double read from stream. Allow caller to multi-read when desired.
                     if (readInner)
                     {
+                        UpdateLatestPosition();
                         return totalRead;
                     }
                     totalRead += await ReadFromInnerStreamInternal(
@@ -260,6 +264,7 @@ internal class StructuredMessageEncodingStream : Stream
                     break;
             }
         }
+        UpdateLatestPosition();
         return totalRead;
     }
 
@@ -288,6 +293,7 @@ internal class StructuredMessageEncodingStream : Stream
                     // don't double read from stream. Allow caller to multi-read when desired.
                     if (readInner)
                     {
+                        UpdateLatestPosition();
                         return totalRead;
                     }
                     totalRead += ReadFromInnerStream(buffer.Slice(totalRead));
@@ -297,6 +303,7 @@ internal class StructuredMessageEncodingStream : Stream
                     break;
             }
         }
+        UpdateLatestPosition();
         return totalRead;
     }
 
@@ -324,6 +331,7 @@ internal class StructuredMessageEncodingStream : Stream
                     // don't double read from stream. Allow caller to multi-read when desired.
                     if (readInner)
                     {
+                        UpdateLatestPosition();
                         return totalRead;
                     }
                     totalRead += await ReadFromInnerStreamAsync(buffer.Slice(totalRead), cancellationToken).ConfigureAwait(false);
@@ -333,6 +341,7 @@ internal class StructuredMessageEncodingStream : Stream
                     break;
             }
         }
+        UpdateLatestPosition();
         return totalRead;
     }
 #endif
@@ -469,7 +478,17 @@ internal class StructuredMessageEncodingStream : Stream
         return read;
     }
 #endif
-#endregion
+    #endregion
+
+    // don't allow stream to seek too far forward. track how far the stream has been naturally read.
+    private void UpdateLatestPosition()
+    {
+        if (_maxSeekPosition < Position)
+        {
+            _maxSeekPosition = Position;
+        }
+    }
+    #endregion
 
     public override long Seek(long offset, SeekOrigin origin)
     {

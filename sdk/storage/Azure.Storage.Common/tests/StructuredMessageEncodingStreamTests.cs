@@ -225,6 +225,61 @@ namespace Azure.Storage.Tests
             Assert.That(new Span<byte>(encodedData1).Slice(targetRewindOffset).SequenceEqual(encodedData2));
         }
 
+        [Test]
+        public async Task SupportsFastForward()
+        {
+            const int segmentLength = 512;
+            const int dataLength = 2055;
+            byte[] data = new byte[dataLength];
+            new Random().NextBytes(data);
+
+            // must have read stream to fastforward. so read whole stream upfront & save result to check later
+            Stream encodingStream = new StructuredMessageEncodingStream(new MemoryStream(data), segmentLength, Flags.CrcSegment);
+            byte[] encodedData;
+            using (MemoryStream dest = new())
+            {
+                await CopyStream(encodingStream, dest);
+                encodedData = dest.ToArray();
+            }
+
+            encodingStream.Position = 0;
+
+            bool skip = false;
+            const int increment = 499;
+            while (encodingStream.Position < encodingStream.Length)
+            {
+                if (skip)
+                {
+                    encodingStream.Position = Math.Min(dataLength, encodingStream.Position + increment);
+                    skip = !skip;
+                    continue;
+                }
+                ReadOnlyMemory<byte> expected = new(encodedData, (int)encodingStream.Position,
+                    (int)Math.Min(increment, encodedData.Length - encodingStream.Position));
+                ReadOnlyMemory<byte> actual;
+                using (MemoryStream dest = new(increment))
+                {
+                    await CopyStream(WindowStream.GetWindow(encodingStream, increment), dest);
+                    actual = dest.ToArray();
+                }
+                Assert.That(expected.Span.SequenceEqual(actual.Span));
+                skip = !skip;
+            }
+        }
+
+        [Test]
+        public void NotSupportsFastForwardBeyondLatestRead()
+        {
+            const int segmentLength = 512;
+            const int dataLength = 2055;
+            byte[] data = new byte[dataLength];
+            new Random().NextBytes(data);
+
+            Stream encodingStream = new StructuredMessageEncodingStream(new MemoryStream(data), segmentLength, Flags.CrcSegment);
+
+            Assert.That(() => encodingStream.Position = 123, Throws.TypeOf<ArgumentOutOfRangeException>());
+        }
+
         private static void AssertExpectedStreamHeader(ReadOnlySpan<byte> actual, int originalDataLength, Flags flags, int expectedSegments)
         {
             int expectedFooterLen = flags.HasFlag(Flags.CrcSegment) ? Crc64Length : 0;
