@@ -15,15 +15,15 @@ using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Samples
 {
-    public partial class Sample_AppConfigurationPrivateLinkResourceCollection
+    public partial class Sample_AppConfigurationReplicaCollection
     {
-        // PrivateLinkResources_ListGroupIds
+        // Replicas_ListByConfigurationStore
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_PrivateLinkResourcesListGroupIds()
+        public async Task GetAll_ReplicasListByConfigurationStore()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/PrivateLinkResourcesListByConfigurationStore.json
-            // this example is just showing the usage of "PrivateLinkResources_ListByConfigurationStore" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresListReplicas.json
+            // this example is just showing the usage of "Replicas_ListByConfigurationStore" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             ResourceIdentifier appConfigurationStoreResourceId = AppConfigurationStoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configStoreName);
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
-            // get the collection of this AppConfigurationPrivateLinkResource
-            AppConfigurationPrivateLinkResourceCollection collection = appConfigurationStore.GetAppConfigurationPrivateLinkResources();
+            // get the collection of this AppConfigurationReplicaResource
+            AppConfigurationReplicaCollection collection = appConfigurationStore.GetAppConfigurationReplicas();
 
             // invoke the operation and iterate over the result
-            await foreach (AppConfigurationPrivateLinkResource item in collection.GetAllAsync())
+            await foreach (AppConfigurationReplicaResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AppConfigurationPrivateLinkResourceData resourceData = item.Data;
+                AppConfigurationReplicaData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -54,13 +54,13 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             Console.WriteLine($"Succeeded");
         }
 
-        // PrivateLinkResources_Get
+        // Replicas_Get
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_PrivateLinkResourcesGet()
+        public async Task Get_ReplicasGet()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/PrivateLinkResourceGet.json
-            // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresGetReplica.json
+            // this example is just showing the usage of "Replicas_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -75,27 +75,27 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             ResourceIdentifier appConfigurationStoreResourceId = AppConfigurationStoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configStoreName);
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
-            // get the collection of this AppConfigurationPrivateLinkResource
-            AppConfigurationPrivateLinkResourceCollection collection = appConfigurationStore.GetAppConfigurationPrivateLinkResources();
+            // get the collection of this AppConfigurationReplicaResource
+            AppConfigurationReplicaCollection collection = appConfigurationStore.GetAppConfigurationReplicas();
 
             // invoke the operation
-            string groupName = "configurationStores";
-            AppConfigurationPrivateLinkResource result = await collection.GetAsync(groupName);
+            string replicaName = "myReplicaEus";
+            AppConfigurationReplicaResource result = await collection.GetAsync(replicaName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AppConfigurationPrivateLinkResourceData resourceData = result.Data;
+            AppConfigurationReplicaData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // PrivateLinkResources_Get
+        // Replicas_Get
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_PrivateLinkResourcesGet()
+        public async Task Exists_ReplicasGet()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/PrivateLinkResourceGet.json
-            // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresGetReplica.json
+            // this example is just showing the usage of "Replicas_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -110,23 +110,23 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             ResourceIdentifier appConfigurationStoreResourceId = AppConfigurationStoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configStoreName);
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
-            // get the collection of this AppConfigurationPrivateLinkResource
-            AppConfigurationPrivateLinkResourceCollection collection = appConfigurationStore.GetAppConfigurationPrivateLinkResources();
+            // get the collection of this AppConfigurationReplicaResource
+            AppConfigurationReplicaCollection collection = appConfigurationStore.GetAppConfigurationReplicas();
 
             // invoke the operation
-            string groupName = "configurationStores";
-            bool result = await collection.ExistsAsync(groupName);
+            string replicaName = "myReplicaEus";
+            bool result = await collection.ExistsAsync(replicaName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // PrivateLinkResources_Get
+        // Replicas_Get
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_PrivateLinkResourcesGet()
+        public async Task GetIfExists_ReplicasGet()
         {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/PrivateLinkResourceGet.json
-            // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresGetReplica.json
+            // this example is just showing the usage of "Replicas_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -141,13 +141,13 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             ResourceIdentifier appConfigurationStoreResourceId = AppConfigurationStoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configStoreName);
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
-            // get the collection of this AppConfigurationPrivateLinkResource
-            AppConfigurationPrivateLinkResourceCollection collection = appConfigurationStore.GetAppConfigurationPrivateLinkResources();
+            // get the collection of this AppConfigurationReplicaResource
+            AppConfigurationReplicaCollection collection = appConfigurationStore.GetAppConfigurationReplicas();
 
             // invoke the operation
-            string groupName = "configurationStores";
-            NullableResponse<AppConfigurationPrivateLinkResource> response = await collection.GetIfExistsAsync(groupName);
-            AppConfigurationPrivateLinkResource result = response.HasValue ? response.Value : null;
+            string replicaName = "myReplicaEus";
+            NullableResponse<AppConfigurationReplicaResource> response = await collection.GetIfExistsAsync(replicaName);
+            AppConfigurationReplicaResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -157,10 +157,50 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                AppConfigurationPrivateLinkResourceData resourceData = result.Data;
+                AppConfigurationReplicaData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
+        }
+
+        // Replicas_Create
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdate_ReplicasCreate()
+        {
+            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2023-03-01/examples/ConfigurationStoresCreateReplica.json
+            // this example is just showing the usage of "Replicas_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AppConfigurationStoreResource created on azure
+            // for more information of creating AppConfigurationStoreResource, please refer to the document of AppConfigurationStoreResource
+            string subscriptionId = "c80fb759-c965-4c6a-9110-9b2b2d038882";
+            string resourceGroupName = "myResourceGroup";
+            string configStoreName = "contoso";
+            ResourceIdentifier appConfigurationStoreResourceId = AppConfigurationStoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configStoreName);
+            AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
+
+            // get the collection of this AppConfigurationReplicaResource
+            AppConfigurationReplicaCollection collection = appConfigurationStore.GetAppConfigurationReplicas();
+
+            // invoke the operation
+            string replicaName = "myReplicaEus";
+            AppConfigurationReplicaData data = new AppConfigurationReplicaData()
+            {
+                Location = new AzureLocation("eastus"),
+            };
+            ArmOperation<AppConfigurationReplicaResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, replicaName, data);
+            AppConfigurationReplicaResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AppConfigurationReplicaData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }
