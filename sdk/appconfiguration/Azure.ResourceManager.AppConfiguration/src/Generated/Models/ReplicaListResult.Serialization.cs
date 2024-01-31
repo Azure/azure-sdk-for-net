@@ -14,16 +14,16 @@ using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    internal partial class AppConfigurationKeyValueListResult : IUtf8JsonSerializable, IJsonModel<AppConfigurationKeyValueListResult>
+    internal partial class ReplicaListResult : IUtf8JsonSerializable, IJsonModel<ReplicaListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppConfigurationKeyValueListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicaListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<AppConfigurationKeyValueListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ReplicaListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationKeyValueListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReplicaListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppConfigurationKeyValueListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplicaListResult)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             writer.WriteEndObject();
         }
 
-        AppConfigurationKeyValueListResult IJsonModel<AppConfigurationKeyValueListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ReplicaListResult IJsonModel<ReplicaListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationKeyValueListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReplicaListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppConfigurationKeyValueListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplicaListResult)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAppConfigurationKeyValueListResult(document.RootElement, options);
+            return DeserializeReplicaListResult(document.RootElement, options);
         }
 
-        internal static AppConfigurationKeyValueListResult DeserializeAppConfigurationKeyValueListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ReplicaListResult DeserializeReplicaListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppConfigurationKeyValueData>> value = default;
+            Optional<IReadOnlyList<AppConfigurationReplicaData>> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     {
                         continue;
                     }
-                    List<AppConfigurationKeyValueData> array = new List<AppConfigurationKeyValueData>();
+                    List<AppConfigurationReplicaData> array = new List<AppConfigurationReplicaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppConfigurationKeyValueData.DeserializeAppConfigurationKeyValueData(item));
+                        array.Add(AppConfigurationReplicaData.DeserializeAppConfigurationReplicaData(item));
                     }
                     value = array;
                     continue;
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppConfigurationKeyValueListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ReplicaListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AppConfigurationKeyValueListResult>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ReplicaListResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationKeyValueListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReplicaListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppConfigurationKeyValueListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplicaListResult)} does not support '{options.Format}' format.");
             }
         }
 
-        AppConfigurationKeyValueListResult IPersistableModel<AppConfigurationKeyValueListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ReplicaListResult IPersistableModel<ReplicaListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationKeyValueListResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReplicaListResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAppConfigurationKeyValueListResult(document.RootElement, options);
+                        return DeserializeReplicaListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppConfigurationKeyValueListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplicaListResult)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AppConfigurationKeyValueListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ReplicaListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

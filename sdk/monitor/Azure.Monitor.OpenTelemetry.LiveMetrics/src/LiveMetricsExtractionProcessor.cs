@@ -83,6 +83,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 {
                     try
                     {
+                        _manager.Dispose();
                     }
                     catch (System.Exception)
                     {
