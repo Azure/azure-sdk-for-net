@@ -25,6 +25,7 @@ namespace Azure.AI.Translator.Document.Tests
         // Enable this test when this is fixed => https://github.com/Azure/azure-sdk-for-net/issues/41674
         //[RecordedTest]
         //[TestCase(false)]
+        //[TestCase(true)]
         public async Task Translate_TextDocumentAsync(bool usetokenCredential)
         {
             var client = GetClient(useTokenCredential: usetokenCredential);
@@ -41,6 +42,7 @@ namespace Azure.AI.Translator.Document.Tests
         // Enable this test when this is fixed => https://github.com/Azure/azure-sdk-for-net/issues/41674
         //[RecordedTest]
         //[TestCase(false)]
+        //[TestCase(true)]
         public async Task Translate_TextDocument_Single_CsvGlossary(bool usetokenCredential)
         {
             var client = GetClient(useTokenCredential: usetokenCredential);
@@ -65,6 +67,7 @@ namespace Azure.AI.Translator.Document.Tests
         // Enable this test when this is fixed => https://github.com/Azure/azure-sdk-for-net/issues/41674
         //[RecordedTest]
         //[TestCase(false)]
+        //[TestCase(true)]
         public async Task Translate_TextDocument_Multiple_CsvGlossary(bool usetokenCredential)
         {
             var client = GetClient(useTokenCredential: usetokenCredential);
