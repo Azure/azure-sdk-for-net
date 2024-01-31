@@ -9,7 +9,7 @@ using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 {
-    internal partial class Manager : IDisposable
+    internal sealed partial class Manager : IDisposable
     {
         private readonly QuickPulseSDKClientAPIsRestClient _quickPulseSDKClientAPIsRestClient;
         private readonly ConnectionVars _connectionVars;
@@ -78,20 +78,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
         public void Dispose()
         {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
             if (!_disposedValue)
             {
-                if (disposing)
-                {
-                    ShutdownState();
-                }
-
+                ShutdownState();
                 _disposedValue = true;
             }
         }

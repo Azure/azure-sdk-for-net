@@ -23,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
     internal partial class Manager
     {
         private Thread? _backgroundThread;
-        private static readonly ManualResetEvent _shutdownEvent = new(false);
+        private readonly ManualResetEvent _shutdownEvent = new(false);
 
         private readonly State _state = new();
         private TimeSpan _period;
@@ -41,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
         private void InitializeState()
         {
-            _backgroundThread = new Thread(() => Run())
+            _backgroundThread = new Thread(Run)
             {
                 Name = "LiveMetrics State Machine",
                 IsBackground = true,
@@ -114,14 +114,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 {
                     var callbackStarted = DateTimeOffset.UtcNow;
 
-                    _callbackAction.Invoke();
+                    _callbackAction();
 
                     var timeSpentInThisCallback = DateTimeOffset.UtcNow - callbackStarted;
 
                     TimeSpan nextTick;
 
                     // Check if we need to backoff.
-                    if (_evaluateBackoff.Invoke())
+                    if (_evaluateBackoff())
                     {
                         Debug.WriteLine($"{DateTime.Now}: Backing off.");
                         SetBackoffState();
