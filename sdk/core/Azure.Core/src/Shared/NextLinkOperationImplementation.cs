@@ -83,7 +83,6 @@ namespace Azure.Core
             if (!lroDetails.TryGetValue("NextRequestUri", out var nextRequestUri))
                 throw new InvalidOperationException("Invalid next request URI");
             RequestMethod requestMethod = new RequestMethod(lroDetails["RequestMethod"]);
-            bool originalResponseHasLocation = bool.Parse(lroDetails["OriginalResponseHasLocation"]);
             string lastKnownLocation = lroDetails["LastKnownLocation"];
             if (!Enum.TryParse(lroDetails["FinalStateVia"], out OperationFinalStateVia finalStateVia))
                 finalStateVia = OperationFinalStateVia.Location;
@@ -91,7 +90,7 @@ namespace Azure.Core
             if (!Enum.TryParse(lroDetails["HeaderSource"], out HeaderSource headerSource))
                 headerSource = HeaderSource.None;
 
-            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, originalResponseHasLocation, lastKnownLocation, finalStateVia, apiVersionStr);
+            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, apiVersionStr);
         }
 
         public static IOperation<T>? Create<T>(
@@ -140,7 +139,7 @@ namespace Azure.Core
 
         public RehydrationToken? GetRehydrationToken()
         {
-            var parameters = new object?[] { null, null, _headerSource.ToString(), _nextRequestUri, _startRequestUri.AbsoluteUri, _requestMethod, _originalResponseHasLocation, _lastKnownLocation, _finalStateVia };
+            var parameters = new object?[] { null, null, _headerSource.ToString(), _nextRequestUri, _startRequestUri.AbsoluteUri, _requestMethod, _lastKnownLocation, _finalStateVia };
             var rehydrationToken = Activator.CreateInstance(typeof(RehydrationToken), BindingFlags.NonPublic | BindingFlags.Instance, parameters, null);
             return rehydrationToken is null ? null : (RehydrationToken)rehydrationToken;
         }
