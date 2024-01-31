@@ -18,8 +18,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
+use-model-reader-writer: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:

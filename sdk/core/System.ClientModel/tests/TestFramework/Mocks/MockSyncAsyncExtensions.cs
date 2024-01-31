@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
@@ -57,6 +58,30 @@ public static class MockSyncAsyncExtensions
         else
         {
             policy.ProcessNext(message, pipeline, currentIndex, isAsync);
+        }
+    }
+
+    public static async Task ProcessSyncOrAsync(this HttpClientPipelineTransport transport, PipelineMessage message, bool isAsync)
+    {
+        if (isAsync)
+        {
+            await transport.ProcessAsync(message).ConfigureAwait(false);
+        }
+        else
+        {
+            transport.Process(message);
+        }
+    }
+
+    public static async Task WaitSyncOrAsync(this MockRetryPolicy policy, TimeSpan delay, CancellationToken cancellationToken, bool isAsync)
+    {
+        if (isAsync)
+        {
+            await policy.DoWaitAsync(delay, cancellationToken).ConfigureAwait(false);
+        }
+        else
+        {
+            policy.DoWait(delay, cancellationToken);
         }
     }
 }

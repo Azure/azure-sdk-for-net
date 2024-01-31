@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningContainerResourceSettings : IUtf8JsonSerializable
+    public partial class MachineLearningContainerResourceSettings : IUtf8JsonSerializable, IJsonModel<MachineLearningContainerResourceSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningContainerResourceSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningContainerResourceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningContainerResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Cpu))
             {
@@ -51,11 +62,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("memory");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningContainerResourceSettings DeserializeMachineLearningContainerResourceSettings(JsonElement element)
+        MachineLearningContainerResourceSettings IJsonModel<MachineLearningContainerResourceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningContainerResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningContainerResourceSettings(document.RootElement, options);
+        }
+
+        internal static MachineLearningContainerResourceSettings DeserializeMachineLearningContainerResourceSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -63,6 +103,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> cpu = default;
             Optional<string> gpu = default;
             Optional<string> memory = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cpu"u8))
@@ -95,8 +137,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     memory = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningContainerResourceSettings(cpu.Value, gpu.Value, memory.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningContainerResourceSettings(cpu.Value, gpu.Value, memory.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineLearningContainerResourceSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningContainerResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningContainerResourceSettings IPersistableModel<MachineLearningContainerResourceSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningContainerResourceSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningContainerResourceSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningContainerResourceSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningContainerResourceSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

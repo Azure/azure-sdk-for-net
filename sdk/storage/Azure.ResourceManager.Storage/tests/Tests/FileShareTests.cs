@@ -335,11 +335,11 @@ namespace Azure.ResourceManager.Storage.Tests
             var sig1 = new StorageSignedIdentifier("testSig1",
                 new StorageServiceAccessPolicy(startOn: start1,
                     expireOn: end1,
-                    permission: "rw"));
+                    permission: "rw", null), null);
             var sig2 = new StorageSignedIdentifier("testSig2",
                 new StorageServiceAccessPolicy(startOn: start2,
                     expireOn: end2,
-                    permission: "rwdl"));
+                    permission: "rwdl", null), null);
             updateParameters2.SignedIdentifiers.Add(sig1);
             updateParameters2.SignedIdentifiers.Add(sig2);
 

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Redis.Models
             instances ??= new List<RedisInstanceDetails>();
             privateEndpointConnections ??= new List<RedisPrivateEndpointConnectionData>();
 
-            return new RedisData(id, name, resourceType, systemData, tags, location, zones?.ToList(), identity, redisConfiguration, redisVersion, enableNonSslPort, replicasPerMaster, replicasPerPrimary, tenantSettings, shardCount, minimumTlsVersion, publicNetworkAccess, default, sku, subnetId, staticIP, provisioningState, hostName, port, sslPort, accessKeys, linkedServers?.ToList(), instances?.ToList(), privateEndpointConnections?.ToList());
+            return new RedisData(id, name, resourceType, systemData, tags, location, zones?.ToList(), identity, redisConfiguration, redisVersion, enableNonSslPort, replicasPerMaster, replicasPerPrimary, tenantSettings, shardCount, minimumTlsVersion, publicNetworkAccess, default, sku, subnetId, staticIP, provisioningState, hostName, port, sslPort, accessKeys, linkedServers?.ToList(), instances?.ToList(), privateEndpointConnections?.ToList(), null);
         }
     }
 }

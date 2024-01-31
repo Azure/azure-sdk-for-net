@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
             IList<WebPubSubRequestType> allow = new List<WebPubSubRequestType>();
             IList<WebPubSubRequestType> deny = new List<WebPubSubRequestType>();
             deny.Add(new WebPubSubRequestType("RESTAPI"));
-            PublicNetworkAcls publicNetwork = new PublicNetworkAcls(allow, deny);
+            PublicNetworkAcls publicNetwork = new PublicNetworkAcls(allow, deny, null);
             IList<PrivateEndpointAcl> privateEndpoints = new List<PrivateEndpointAcl>();
 
             List<ResourceLogCategory> resourceLogCategory = new List<ResourceLogCategory>()
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.WebPubSub.Tests.Samples
             {
                 Sku = new BillingInfoSku("Standard_S1"),
                 LiveTraceConfiguration = new LiveTraceConfiguration("true", categories),
-                NetworkAcls = new WebPubSubNetworkAcls(aclAction, publicNetwork, privateEndpoints),
-                ResourceLogConfiguration = new ResourceLogConfiguration(resourceLogCategory),
+                NetworkAcls = new WebPubSubNetworkAcls(aclAction, publicNetwork, privateEndpoints, null),
+                ResourceLogConfiguration = new ResourceLogConfiguration(resourceLogCategory, null),
             };
 
             WebPubSubResource webPubSub = await (await WebPubSubColletion.CreateOrUpdateAsync(WaitUntil.Started, webPubSubName, data)).WaitForCompletionAsync();

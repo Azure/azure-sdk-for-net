@@ -17,3 +17,4 @@ description: Samples for the Azure.AI.Vision.ImageAnalysis client library.
 - [Smart Crops - Cropped thumbnail generation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample05_SmartCrops.md)
 - [People - People detection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample06_People.md)
 - [Read - Read text from image](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample07_Read.md)
+- [All - Analyze an image using all VisualFeatures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample08_AllFeatures.md)

@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +19,6 @@ using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Processor;
-using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.EventHubs.Primitives
 {
@@ -43,6 +41,9 @@ namespace Azure.Messaging.EventHubs.Primitives
     ///   when all processing is complete or as the application is shutting down will ensure that network resources and other unmanaged objects are properly cleaned up.
     /// </remarks>
     ///
+    /// <seealso href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples">Event Hubs samples and discussion</seealso>
+    /// <seealso href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples">Event Hubs event processor samples and discussion</seealso>
+    ///
     [SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")]
     public abstract class EventProcessor<TPartition> where TPartition : EventProcessorPartition, new()
     {
@@ -53,10 +54,10 @@ namespace Azure.Messaging.EventHubs.Primitives
         private const bool InvalidateConsumerWhenPartitionIsStolen = true;
 
         /// <summary>The minimum duration to allow for a delay between load balancing cycles.</summary>
-        private readonly TimeSpan MinimumLoadBalancingDelay = TimeSpan.FromMilliseconds(15);
+        private static readonly TimeSpan MinimumLoadBalancingDelay = TimeSpan.FromMilliseconds(15);
 
         /// <summary>Defines the warning threshold for the upper limit percentage of total ownership interval spent on load balancing.</summary>
-        private readonly double LoadBalancingDurationWarnThreshold = 0.70;
+        private static readonly double LoadBalancingDurationWarnThreshold = 0.70;
 
         /// <summary>The primitive for synchronizing access when starting and stopping the processor.</summary>
         private readonly SemaphoreSlim ProcessorRunningGuard = new SemaphoreSlim(1, 1);
@@ -103,6 +104,17 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <summary>
         ///   A unique name used to identify this event processor.
         /// </summary>
+        ///
+        /// <remarks>
+        ///   The identifier can be set using the <see cref="EventProcessorOptions.Identifier"/> property on the
+        ///   <see cref="EventProcessorOptions"/> passed when constructing the processor.  If not specified, a
+        ///   random identifier will be generated.
+        ///
+        ///   It is recommended that you set a stable unique identifier for processor instances, as this allows
+        ///   the processor to recover partition ownership when an application or host instance is restarted.  It
+        ///   also aids readability in Azure SDK logs and allows for more easily correlating logs to a specific
+        ///   processor instance.
+        /// </remarks>
         ///
         public string Identifier { get; }
 
@@ -690,7 +702,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             finally
             {
-                Logger.EventProcessorProcessingHandlerComplete(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation, watch.GetElapsedTime().TotalSeconds);
+                Logger.EventProcessorProcessingHandlerComplete(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation, watch.GetElapsedTime().TotalSeconds, eventBatch.Count);
             }
         }
 
@@ -972,12 +984,16 @@ namespace Azure.Messaging.EventHubs.Primitives
                 throw new TaskCanceledException();
             }
 
-            // Start processing in the background and return the processor
-            // metadata.
+            // Start processing in the background and return the processor metadata.  Since the task is
+            // expected to run continually until the processor is stopped or ownership changes, mark it as
+            // long-running.  Other than the long-running designation, the options used intentionally match
+            // the recommended defaults used by Task.Run.
+            //
+            // For more context, see: https://devblogs.microsoft.com/pfxteam/task-run-vs-task-factory-startnew/
 
             return new PartitionProcessor
             (
-                Task.Run(performProcessing),
+                Task.Factory.StartNew(performProcessing, cancellationSource.Token, TaskCreationOptions.LongRunning | TaskCreationOptions.DenyChildAttach, TaskScheduler.Default).Unwrap(),
                 partition,
                 readLastEnqueuedEventProperties,
                 cancellationSource
@@ -1087,9 +1103,14 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
-        /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
-        /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
+        /// <param name="offset">The offset to associate with the checkpoint, intended as informational metadata. This will only be used for positioning if there is no value provided for <paramref name="sequenceNumber"/>.</param>
+        /// <param name="sequenceNumber">The sequence number to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
+        ///
+        /// <remarks>
+        ///   This overload exists to preserve backwards compatibility; it is highly recommended that <see cref="UpdateCheckpointAsync(string, CheckpointPosition, CancellationToken)" />
+        ///   be called instead.
+        /// </remarks>
         ///
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected virtual Task UpdateCheckpointAsync(string partitionId,
@@ -1333,8 +1354,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                     ProcessorRunningGuard.Wait(cancellationToken);
                 }
 
-                _statusOverride = EventProcessorStatus.Starting;
-
                 // If the processor is already running, then it was started before the
                 // semaphore was acquired; there is no work to be done.
 
@@ -1343,6 +1362,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                     return;
                 }
 
+                _statusOverride = EventProcessorStatus.Starting;
+
                 // There should be no cancellation source, but guard against leaking resources in the
                 // event of a processing crash or other exception.
 
@@ -1350,10 +1371,15 @@ namespace Azure.Messaging.EventHubs.Primitives
                 _runningProcessorCancellationSource?.Dispose();
                 _runningProcessorCancellationSource = new CancellationTokenSource();
 
-                // Start processing events.
+                // Start processing in the background. Since the task is expected to run continually
+                // until the processor is stopped or ownership changes, mark it as long-running.
+                // Other than the long-running designation, the options used intentionally match
+                // the recommended defaults used by Task.Run.
+                //
+                // For more context, see: https://devblogs.microsoft.com/pfxteam/task-run-vs-task-factory-startnew/
 
                 ActivePartitionProcessors.Clear();
-                _runningProcessorTask = RunProcessingAsync(_runningProcessorCancellationSource.Token);
+                _runningProcessorTask = Task.Factory.StartNew(() => RunProcessingAsync(_runningProcessorCancellationSource.Token), _runningProcessorCancellationSource.Token, TaskCreationOptions.LongRunning | TaskCreationOptions.DenyChildAttach, TaskScheduler.Default).Unwrap();
 
                 // Validate the processor configuration and ensuring basic permissions are held for
                 // service operations.
@@ -1479,8 +1505,6 @@ namespace Azure.Messaging.EventHubs.Primitives
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.EventProcessorStop(Identifier, EventHubName, ConsumerGroup);
 
-            var processingException = default(Exception);
-
             try
             {
                 // Acquire the semaphore used to synchronize processor starts and stops, respecting
@@ -1538,16 +1562,9 @@ namespace Azure.Messaging.EventHubs.Primitives
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
                     }
                 }
-                catch (TaskCanceledException)
+                catch
                 {
-                    // This is expected; no action is needed.
-                }
-                catch (Exception ex)
-                {
-                    // Preserve the exception to surface once the tasks needed to fully stop are complete;
-                    // logging and invoking of the error handler will have already taken place.
-
-                    processingException = ex;
+                    // No action is needed.  The task logs and surfaces the exception itself.
                 }
 
                 // With the processing task having completed, perform the necessary cleanup of partition processing tasks
@@ -1606,14 +1623,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                     ProcessorRunningGuard.Release();
                 }
             }
-
-            // Surface any exception that was captured when the processing task was
-            // initially awaited.
-
-            if (processingException != default)
-            {
-                ExceptionDispatchInfo.Capture(processingException).Throw();
-            }
         }
 
         /// <summary>
@@ -1665,34 +1674,56 @@ namespace Azure.Messaging.EventHubs.Primitives
                     // Execute the current load balancing cycle.
 
                     Logger.EventProcessorLoadBalancingCycleStart(Identifier, EventHubName, partitionIds?.Length ?? 0, startingOwnedPartitionCount);
+                    TimeSpan remainingTimeUntilNextCycle;
 
-                    var totalPartitions = partitionIds?.Length ?? 0;
-                    var remainingTimeUntilNextCycle = await PerformLoadBalancingAsync(cycleDuration, partitionIds, cancellationToken).ConfigureAwait(false);
-                    var endingOwnedPartitionCount = LoadBalancer.OwnedPartitionCount;
-                    var cycleElapsedSeconds = cycleDuration.GetElapsedTime().TotalSeconds;
-
-                    Logger.EventProcessorLoadBalancingCycleComplete(Identifier, EventHubName, totalPartitions, endingOwnedPartitionCount, cycleElapsedSeconds, remainingTimeUntilNextCycle.TotalSeconds);
-
-                    // If the duration of the load balancing cycle was long enough to potentially impact ownership stability,
-                    // emit warnings.  This is impactful enough that the error handler will be pinged to ensure visibility for the
-                    // host application.
-
-                    if (cycleElapsedSeconds >= LoadBalancingCycleMaximumExecutionSeconds)
+                    try
                     {
-                        var ownershipIntervalSeconds = LoadBalancer.OwnershipExpirationInterval.TotalSeconds;
-                        Logger.EventProcessorLoadBalancingCycleSlowWarning(Identifier, EventHubName, cycleElapsedSeconds, ownershipIntervalSeconds);
+                        var totalPartitions = partitionIds?.Length ?? 0;
+                        remainingTimeUntilNextCycle = await PerformLoadBalancingAsync(cycleDuration, partitionIds, cancellationToken).ConfigureAwait(false);
 
-                        var message = string.Format(CultureInfo.InvariantCulture, Resources.ProcessorLoadBalancingCycleSlowMask, cycleElapsedSeconds, ownershipIntervalSeconds);
-                        var slowException = new EventHubsException(true, EventHubName, message, EventHubsException.FailureReason.GeneralError);
-                        _ = InvokeOnProcessingErrorAsync(slowException, null, Resources.OperationEventProcessingLoop, CancellationToken.None);
+                        var endingOwnedPartitionCount = LoadBalancer.OwnedPartitionCount;
+                        var cycleElapsedSeconds = cycleDuration.GetElapsedTime().TotalSeconds;
+
+                        Logger.EventProcessorLoadBalancingCycleComplete(Identifier, EventHubName, totalPartitions, endingOwnedPartitionCount, cycleElapsedSeconds, remainingTimeUntilNextCycle.TotalSeconds);
+
+                        // If the duration of the load balancing cycle was long enough to potentially impact ownership stability,
+                        // emit warnings.  This is impactful enough that the error handler will be pinged to ensure visibility for the
+                        // host application.
+
+                        if (cycleElapsedSeconds >= LoadBalancingCycleMaximumExecutionSeconds)
+                        {
+                            var ownershipIntervalSeconds = LoadBalancer.OwnershipExpirationInterval.TotalSeconds;
+                            Logger.EventProcessorLoadBalancingCycleSlowWarning(Identifier, EventHubName, cycleElapsedSeconds, ownershipIntervalSeconds);
+
+                            var message = string.Format(CultureInfo.InvariantCulture, Resources.ProcessorLoadBalancingCycleSlowMask, cycleElapsedSeconds, ownershipIntervalSeconds);
+                            var slowException = new EventHubsException(true, EventHubName, message, EventHubsException.FailureReason.GeneralError);
+                            _ = InvokeOnProcessingErrorAsync(slowException, null, Resources.OperationEventProcessingLoop, CancellationToken.None);
+                        }
+
+                        // If the number of partitions owned has changed since the cycle started and is above maximum advisable set, emit a warning.  This is
+                        // a loose heuristic and does not apply to all workloads.  The error handler will not be pinged to avoid false positive notifications.
+
+                        if ((startingOwnedPartitionCount != endingOwnedPartitionCount) && (endingOwnedPartitionCount > MaximumAdvisedOwnedPartitions))
+                        {
+                            Logger.EventProcessorHighPartitionOwnershipWarning(Identifier, EventHubName, totalPartitions, endingOwnedPartitionCount, MaximumAdvisedOwnedPartitions);
+                        }
                     }
-
-                    // If the number of partitions owned has changed since the cycle started and is above maximum advisable set, emit a warning.  This is
-                    // a loose heuristic and does not apply to all workloads.  The error handler will not be pinged to avoid false positive notifications.
-
-                    if ((startingOwnedPartitionCount != endingOwnedPartitionCount) && (endingOwnedPartitionCount > MaximumAdvisedOwnedPartitions))
+                    catch (Exception ex) when ((ex.IsNotType<TaskCanceledException>()) && (!ex.IsFatalException()))
                     {
-                        Logger.EventProcessorHighPartitionOwnershipWarning(Identifier, EventHubName, totalPartitions, endingOwnedPartitionCount, MaximumAdvisedOwnedPartitions);
+                        // Do not invoke the error handler when the processor is stopping.  Instead, signal cancellation to
+                        // short-circuit and avoid trying to run another load balancing cycle.
+
+                        if (cancellationToken.IsCancellationRequested)
+                        {
+                            throw new TaskCanceledException();
+                        }
+
+                        _ = InvokeOnProcessingErrorAsync(ex, null, Resources.OperationGetPartitionIds, CancellationToken.None);
+                        Logger.EventProcessorTaskError(Identifier, EventHubName, ConsumerGroup, ex.Message);
+
+                        // In the case of a load balancing failure, run another cycle again with minimal delay.
+
+                        remainingTimeUntilNextCycle = MinimumLoadBalancingDelay;
                     }
 
                     // Evaluate the time remaining before the next cycle and delay.
@@ -1714,6 +1745,9 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (Exception ex) when (ex.IsFatalException())
             {
+                // It is not safe to allocate or log here, as this class of errors includes those such as
+                // OutOfMemoryException and StackOverflowException.  It is assumed the process is crashing.
+
                 throw;
             }
             catch (Exception ex)
@@ -1721,10 +1755,26 @@ namespace Azure.Messaging.EventHubs.Primitives
                 // The error handler is invoked as a fire-and-forget task; the processor does not assume responsibility
                 // for observing or surfacing exceptions that may occur in the handler.
 
-                _ = InvokeOnProcessingErrorAsync(ex, null, Resources.OperationEventProcessingLoop, CancellationToken.None);
-                Logger.EventProcessorTaskError(Identifier, EventHubName, ConsumerGroup, ex.Message);
+                var fatalException = new EventHubsException(false, EventHubName, string.Format(CultureInfo.InvariantCulture, Resources.ProcessorLoadBalancingFatalErrorMask, ex.Message), EventHubsException.FailureReason.InvalidClientState, ex);
+                _ = InvokeOnProcessingErrorAsync(fatalException, null, Resources.OperationEventProcessingLoop, CancellationToken.None);
 
-                throw;
+                Logger.EventProcessorFatalTaskError(Identifier, EventHubName, ConsumerGroup, ex.Message);
+
+                // Attempt to stop the processor as a best effort.  This needs to take place in the background
+                // as it awaits the task that this method is running in and will otherwise deadlock.
+
+                _ = Task.Run(() =>
+                {
+                    StopProcessingInternalAsync(true, CancellationToken.None)
+                        .ContinueWith(stopTask =>
+                        {
+                            var stopEx = stopTask.Exception.Flatten().InnerException;
+                            _ = InvokeOnProcessingErrorAsync(stopEx, null, Resources.OperationLoadBalancing, CancellationToken.None);
+                        },
+                        TaskContinuationOptions.OnlyOnFaulted | TaskContinuationOptions.RunContinuationsAsynchronously);
+                });
+
+                throw fatalException;
             }
         }
 
@@ -2002,22 +2052,9 @@ namespace Azure.Messaging.EventHubs.Primitives
                 Logger.EventProcessorPartitionProcessingStop(partitionId, Identifier, EventHubName, ConsumerGroup);
                 partition = partitionProcessor.Partition;
 
-                // If developer code in a handler registered a callback for cancellation, it is possible that
-                // the attempt to cancel will throw.  Capture this as a warning and do not prevent the partition processing
-                // task from being cleaned up.
-
-                try
-                {
-                    partitionProcessor.CancellationSource.Cancel();
-                }
-                catch (Exception ex)
-                {
-                    Logger.PartitionProcessorStoppingCancellationWarning(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
-                }
-
                 // To ensure that callers do not have to wait until the processing task has fully stopped,
-                // schedule an explicit continuation for the task and return immediately.  This allows the
-                // cleanup to happen in the background.
+                // schedule an explicit continuation for the task.  This allows the cleanup to happen in the
+                // background, if desired, and be awaited via the partition processor task at a later time.
 
                 var stopContinuation = partitionProcessor.ProcessingTask.ContinueWith(async (task, state) =>
                 {
@@ -2101,12 +2138,26 @@ namespace Azure.Messaging.EventHubs.Primitives
                     {
                         disposeProcessor.Dispose();
                     }
-                }, (partitionId, reason, stopWatch), default, TaskContinuationOptions.RunContinuationsAsynchronously, TaskScheduler.Current);
+                }, (partitionId, reason, stopWatch), default, TaskContinuationOptions.RunContinuationsAsynchronously, TaskScheduler.Default);
 
                 // Set the processing task to the continuation, which allows it to be awaited when the processor is
                 // stopping or otherwise needs to be ensure completion.
 
                 partitionProcessor.RegisterCleanupTask(stopContinuation);
+
+                // If developer code in a handler registered a callback for cancellation, it is possible that
+                // the attempt to cancel will throw.  Capture this as a warning and do not prevent the partition processing
+                // task from being cleaned up.
+
+                try
+                {
+                    partitionProcessor.CancellationSource.Cancel();
+                }
+                catch (Exception ex)
+                {
+                    Logger.PartitionProcessorStoppingCancellationWarning(partitionId, Identifier, EventHubName, ConsumerGroup, ex.Message);
+                }
+
                 return stopContinuation;
             }
             catch (Exception ex) when (ex.IsNotType<TaskCanceledException>())

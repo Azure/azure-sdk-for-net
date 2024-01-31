@@ -17,8 +17,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests
         protected ArmClient Client { get; private set; }
         protected ReportResourceCollection ReportResources { get; private set; }
 
-        protected AppComplianceAutomationManagementTestBase(bool isAsync, RecordedTestMode mode)
-        : base(isAsync, RecordedTestMode.Playback)
+        protected AppComplianceAutomationManagementTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
         {
             SanitizedHeaders.Add(UserTokenPolicy.UserTokenHeader);
         }
