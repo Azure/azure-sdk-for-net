@@ -5,21 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    public partial class CropRegion
+    public partial class CropRegion : IUtf8JsonSerializable, IJsonModel<CropRegion>
     {
-        internal static CropRegion DeserializeCropRegion(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CropRegion>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CropRegion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CropRegion>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CropRegion)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("aspectRatio"u8);
+            writer.WriteNumberValue(AspectRatio);
+            writer.WritePropertyName("boundingBox"u8);
+            writer.WriteObjectValue(BoundingBox);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CropRegion IJsonModel<CropRegion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CropRegion>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CropRegion)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCropRegion(document.RootElement, options);
+        }
+
+        internal static CropRegion DeserializeCropRegion(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             float aspectRatio = default;
             ImageBoundingBox boundingBox = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aspectRatio"u8))
@@ -32,9 +85,45 @@ namespace Azure.AI.Vision.ImageAnalysis
                     boundingBox = ImageBoundingBox.DeserializeImageBoundingBox(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CropRegion(aspectRatio, boundingBox);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CropRegion(aspectRatio, boundingBox, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CropRegion>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CropRegion>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CropRegion)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CropRegion IPersistableModel<CropRegion>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CropRegion>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCropRegion(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CropRegion)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CropRegion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -42,6 +131,14 @@ namespace Azure.AI.Vision.ImageAnalysis
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeCropRegion(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

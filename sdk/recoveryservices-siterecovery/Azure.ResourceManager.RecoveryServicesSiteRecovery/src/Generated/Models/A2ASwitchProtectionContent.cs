@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -23,6 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="A2ASwitchProtectionContent"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryContainerId"> The recovery container Id. </param>
         /// <param name="vmDisks"> The list of vm disk details. </param>
         /// <param name="vmManagedDisks"> The list of vm managed disk details. </param>
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryVirtualMachineScaleSetId"> The virtual machine scale set id. </param>
         /// <param name="recoveryCapacityReservationGroupId"> The recovery capacity reservation group Id. </param>
         /// <param name="diskEncryptionInfo"> The recovery disk encryption information. </param>
-        internal A2ASwitchProtectionContent(string instanceType, ResourceIdentifier recoveryContainerId, IList<A2AVmDiskDetails> vmDisks, IList<A2AVmManagedDiskDetails> vmManagedDisks, ResourceIdentifier recoveryResourceGroupId, string recoveryCloudServiceId, ResourceIdentifier recoveryAvailabilitySetId, ResourceIdentifier policyId, ResourceIdentifier recoveryBootDiagStorageAccountId, string recoveryAvailabilityZone, ResourceIdentifier recoveryProximityPlacementGroupId, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo) : base(instanceType)
+        internal A2ASwitchProtectionContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier recoveryContainerId, IList<A2AVmDiskDetails> vmDisks, IList<A2AVmManagedDiskDetails> vmManagedDisks, ResourceIdentifier recoveryResourceGroupId, string recoveryCloudServiceId, ResourceIdentifier recoveryAvailabilitySetId, ResourceIdentifier policyId, ResourceIdentifier recoveryBootDiagStorageAccountId, string recoveryAvailabilityZone, ResourceIdentifier recoveryProximityPlacementGroupId, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo) : base(instanceType, serializedAdditionalRawData)
         {
             RecoveryContainerId = recoveryContainerId;
             VmDisks = vmDisks;

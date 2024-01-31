@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.Sql.Models
             JobExecutionId = jobExecutionId;
         }
 
+        /// <summary> Initializes a new instance of <see cref="SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions"/> for deserialization. </summary>
+        internal SqlServerJobExecutionCollectionGetJobTargetExecutionsOptions()
+        {
+        }
+
         /// <summary> The id of the job execution. </summary>
         public Guid JobExecutionId { get; }
         /// <summary> If specified, only job executions created at or after the specified time are included. </summary>

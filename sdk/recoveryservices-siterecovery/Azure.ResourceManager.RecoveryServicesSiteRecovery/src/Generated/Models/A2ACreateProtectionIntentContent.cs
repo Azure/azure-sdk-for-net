@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="A2ACreateProtectionIntentContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
         /// <param name="primaryLocation"> The primary location for the virtual machine. </param>
         /// <param name="recoveryLocation"> The recovery location for the virtual machine. </param>
@@ -87,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="agentAutoUpdateStatus"> A value indicating whether the auto update is enabled. </param>
         /// <param name="automationAccountAuthenticationType"> A value indicating the authentication type for automation account. The default value is "RunAsAccount". </param>
         /// <param name="automationAccountArmId"> The automation account arm id. </param>
-        internal A2ACreateProtectionIntentContent(string instanceType, ResourceIdentifier fabricObjectId, AzureLocation primaryLocation, AzureLocation recoveryLocation, string recoverySubscriptionId, A2ARecoveryAvailabilityType recoveryAvailabilityType, ProtectionProfileCustomDetails protectionProfileCustomContent, ResourceIdentifier recoveryResourceGroupId, StorageAccountCustomDetails primaryStagingStorageAccountCustomContent, RecoveryAvailabilitySetCustomDetails recoveryAvailabilitySetCustomContent, RecoveryVirtualNetworkCustomDetails recoveryVirtualNetworkCustomContent, RecoveryProximityPlacementGroupCustomDetails recoveryProximityPlacementGroupCustomContent, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, IList<A2AProtectionIntentDiskDetails> vmDisks, IList<A2AProtectionIntentManagedDiskDetails> vmManagedDisks, string multiVmGroupName, string multiVmGroupId, StorageAccountCustomDetails recoveryBootDiagStorageAccount, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, string recoveryAvailabilityZone, SiteRecoveryAgentAutoUpdateStatus? agentAutoUpdateStatus, AutomationAccountAuthenticationType? automationAccountAuthenticationType, ResourceIdentifier automationAccountArmId) : base(instanceType)
+        internal A2ACreateProtectionIntentContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier fabricObjectId, AzureLocation primaryLocation, AzureLocation recoveryLocation, string recoverySubscriptionId, A2ARecoveryAvailabilityType recoveryAvailabilityType, ProtectionProfileCustomDetails protectionProfileCustomContent, ResourceIdentifier recoveryResourceGroupId, StorageAccountCustomDetails primaryStagingStorageAccountCustomContent, RecoveryAvailabilitySetCustomDetails recoveryAvailabilitySetCustomContent, RecoveryVirtualNetworkCustomDetails recoveryVirtualNetworkCustomContent, RecoveryProximityPlacementGroupCustomDetails recoveryProximityPlacementGroupCustomContent, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, IList<A2AProtectionIntentDiskDetails> vmDisks, IList<A2AProtectionIntentManagedDiskDetails> vmManagedDisks, string multiVmGroupName, string multiVmGroupId, StorageAccountCustomDetails recoveryBootDiagStorageAccount, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, string recoveryAvailabilityZone, SiteRecoveryAgentAutoUpdateStatus? agentAutoUpdateStatus, AutomationAccountAuthenticationType? automationAccountAuthenticationType, ResourceIdentifier automationAccountArmId) : base(instanceType, serializedAdditionalRawData)
         {
             FabricObjectId = fabricObjectId;
             PrimaryLocation = primaryLocation;
@@ -112,6 +113,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             AutomationAccountAuthenticationType = automationAccountAuthenticationType;
             AutomationAccountArmId = automationAccountArmId;
             InstanceType = instanceType ?? "A2A";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="A2ACreateProtectionIntentContent"/> for deserialization. </summary>
+        internal A2ACreateProtectionIntentContent()
+        {
         }
 
         /// <summary> The fabric specific object Id of the virtual machine. </summary>
