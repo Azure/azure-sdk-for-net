@@ -3,12 +3,12 @@
 
 using Azure.Storage.Blobs.Models;
 
-namespace Azure.Storage.Blobs.Batch.Models
+namespace Azure.Storage.Blobs.Batch
 {
     /// <summary>
     /// Options for a delete blob operation within a batch request.
     /// </summary>
-    public class DeleteBlobOptions
+    public class BatchDeleteBlobOptions
     {
         /// <summary>
         /// Specifies options for deleting blob snapshots.
@@ -24,6 +24,6 @@ namespace Azure.Storage.Blobs.Batch.Models
         /// <summary>
         /// Version ID of the blob to delete.
         /// </summary>
-        public string VersionID { get; set; }
+        public string VersionId { get; set; }
     }
 }

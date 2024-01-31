@@ -496,7 +496,7 @@ namespace Azure.Storage.Blobs.Test
             for (int i = 0; i < blobs.Length; i++)
             {
                 BlobClient blob = blobs[i];
-                responses[i] = batch.DeleteBlob(blob.BlobContainerName, blob.Name, new DeleteBlobOptions
+                responses[i] = batch.DeleteBlob(blob.BlobContainerName, blob.Name, new BatchDeleteBlobOptions
                 {
                     VersionID = versions[blob.Uri].First()
                 });
