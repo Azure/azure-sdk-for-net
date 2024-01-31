@@ -9,7 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Re-establish request object supplied in the body of the operation. </summary>
+    /// <summary>
+    /// Re-establish request object supplied in the body of the operation.
+    /// Serialized Name: ReestablishReplicationRequest
+    /// </summary>
     public partial class NetAppVolumeReestablishReplicationContent
     {
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeReestablishReplicationContent"/>. </summary>
@@ -17,7 +20,10 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary> Resource id of the source volume for the replication. </summary>
+        /// <summary>
+        /// Resource id of the source volume for the replication
+        /// Serialized Name: ReestablishReplicationRequest.sourceVolumeId
+        /// </summary>
         public ResourceIdentifier SourceVolumeId { get; set; }
     }
 }

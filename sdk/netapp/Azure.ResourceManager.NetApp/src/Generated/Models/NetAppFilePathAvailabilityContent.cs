@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> File path availability request content - availability is based on the name and the subnetId. </summary>
+    /// <summary>
+    /// File path availability request content - availability is based on the name and the subnetId.
+    /// Serialized Name: FilePathAvailabilityRequest
+    /// </summary>
     public partial class NetAppFilePathAvailabilityContent
     {
         /// <summary> Initializes a new instance of <see cref="NetAppFilePathAvailabilityContent"/>. </summary>
-        /// <param name="name"> File path to verify. </param>
-        /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
+        /// <param name="name">
+        /// File path to verify.
+        /// Serialized Name: FilePathAvailabilityRequest.name
+        /// </param>
+        /// <param name="subnetId">
+        /// The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes
+        /// Serialized Name: FilePathAvailabilityRequest.subnetId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="subnetId"/> is null. </exception>
         public NetAppFilePathAvailabilityContent(string name, ResourceIdentifier subnetId)
         {
@@ -26,9 +35,15 @@ namespace Azure.ResourceManager.NetApp.Models
             SubnetId = subnetId;
         }
 
-        /// <summary> File path to verify. </summary>
+        /// <summary>
+        /// File path to verify.
+        /// Serialized Name: FilePathAvailabilityRequest.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </summary>
+        /// <summary>
+        /// The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes
+        /// Serialized Name: FilePathAvailabilityRequest.subnetId
+        /// </summary>
         public ResourceIdentifier SubnetId { get; }
     }
 }

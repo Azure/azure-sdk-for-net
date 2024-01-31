@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Snapshot policy Details for create and update. </summary>
+    /// <summary>
+    /// Snapshot policy Details for create and update
+    /// Serialized Name: SnapshotPolicyPatch
+    /// </summary>
     public partial class SnapshotPolicyPatch : TrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="SnapshotPolicyPatch"/>. </summary>
@@ -19,17 +22,35 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary> Schedule for hourly snapshots. </summary>
+        /// <summary>
+        /// Schedule for hourly snapshots
+        /// Serialized Name: SnapshotPolicyPatch.properties.hourlySchedule
+        /// </summary>
         public SnapshotPolicyHourlySchedule HourlySchedule { get; set; }
-        /// <summary> Schedule for daily snapshots. </summary>
+        /// <summary>
+        /// Schedule for daily snapshots
+        /// Serialized Name: SnapshotPolicyPatch.properties.dailySchedule
+        /// </summary>
         public SnapshotPolicyDailySchedule DailySchedule { get; set; }
-        /// <summary> Schedule for weekly snapshots. </summary>
+        /// <summary>
+        /// Schedule for weekly snapshots
+        /// Serialized Name: SnapshotPolicyPatch.properties.weeklySchedule
+        /// </summary>
         public SnapshotPolicyWeeklySchedule WeeklySchedule { get; set; }
-        /// <summary> Schedule for monthly snapshots. </summary>
+        /// <summary>
+        /// Schedule for monthly snapshots
+        /// Serialized Name: SnapshotPolicyPatch.properties.monthlySchedule
+        /// </summary>
         public SnapshotPolicyMonthlySchedule MonthlySchedule { get; set; }
-        /// <summary> The property to decide policy is enabled or not. </summary>
+        /// <summary>
+        /// The property to decide policy is enabled or not
+        /// Serialized Name: SnapshotPolicyPatch.properties.enabled
+        /// </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> Azure lifecycle management. </summary>
+        /// <summary>
+        /// Azure lifecycle management
+        /// Serialized Name: SnapshotPolicyPatch.properties.provisioningState
+        /// </summary>
         public string ProvisioningState { get; }
     }
 }

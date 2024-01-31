@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Relocate volume request. </summary>
+    /// <summary>
+    /// Relocate volume request
+    /// Serialized Name: RelocateVolumeRequest
+    /// </summary>
     public partial class RelocateVolumeContent
     {
         /// <summary> Initializes a new instance of <see cref="RelocateVolumeContent"/>. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary> New creation token for the volume that controls the mount point name. </summary>
+        /// <summary>
+        /// New creation token for the volume that controls the mount point name
+        /// Serialized Name: RelocateVolumeRequest.creationToken
+        /// </summary>
         public string CreationToken { get; set; }
     }
 }

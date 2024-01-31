@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Backup policy Details for create and update. </summary>
+    /// <summary>
+    /// Backup policy Details for create and update
+    /// Serialized Name: BackupPolicyPatch
+    /// </summary>
     public partial class NetAppBackupPolicyPatch : TrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="NetAppBackupPolicyPatch"/>. </summary>
@@ -21,21 +24,45 @@ namespace Azure.ResourceManager.NetApp.Models
             VolumeBackups = new ChangeTrackingList<NetAppVolumeBackupDetail>();
         }
 
-        /// <summary> Backup Policy Resource ID. </summary>
+        /// <summary>
+        /// Backup Policy Resource ID
+        /// Serialized Name: BackupPolicyPatch.properties.backupPolicyId
+        /// </summary>
         public ResourceIdentifier BackupPolicyId { get; }
-        /// <summary> Azure lifecycle management. </summary>
+        /// <summary>
+        /// Azure lifecycle management
+        /// Serialized Name: BackupPolicyPatch.properties.provisioningState
+        /// </summary>
         public string ProvisioningState { get; }
-        /// <summary> Daily backups count to keep. </summary>
+        /// <summary>
+        /// Daily backups count to keep
+        /// Serialized Name: BackupPolicyPatch.properties.dailyBackupsToKeep
+        /// </summary>
         public int? DailyBackupsToKeep { get; set; }
-        /// <summary> Weekly backups count to keep. </summary>
+        /// <summary>
+        /// Weekly backups count to keep
+        /// Serialized Name: BackupPolicyPatch.properties.weeklyBackupsToKeep
+        /// </summary>
         public int? WeeklyBackupsToKeep { get; set; }
-        /// <summary> Monthly backups count to keep. </summary>
+        /// <summary>
+        /// Monthly backups count to keep
+        /// Serialized Name: BackupPolicyPatch.properties.monthlyBackupsToKeep
+        /// </summary>
         public int? MonthlyBackupsToKeep { get; set; }
-        /// <summary> Volumes using current backup policy. </summary>
+        /// <summary>
+        /// Volumes using current backup policy
+        /// Serialized Name: BackupPolicyPatch.properties.volumesAssigned
+        /// </summary>
         public int? VolumesAssigned { get; }
-        /// <summary> The property to decide policy is enabled or not. </summary>
+        /// <summary>
+        /// The property to decide policy is enabled or not
+        /// Serialized Name: BackupPolicyPatch.properties.enabled
+        /// </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> A list of volumes assigned to this policy. </summary>
+        /// <summary>
+        /// A list of volumes assigned to this policy
+        /// Serialized Name: BackupPolicyPatch.properties.volumeBackups
+        /// </summary>
         public IReadOnlyList<NetAppVolumeBackupDetail> VolumeBackups { get; }
     }
 }

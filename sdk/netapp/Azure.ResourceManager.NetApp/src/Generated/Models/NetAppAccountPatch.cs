@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> NetApp account patch resource. </summary>
+    /// <summary>
+    /// NetApp account patch resource
+    /// Serialized Name: NetAppAccountPatch
+    /// </summary>
     public partial class NetAppAccountPatch : TrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="NetAppAccountPatch"/>. </summary>
@@ -21,15 +24,40 @@ namespace Azure.ResourceManager.NetApp.Models
             ActiveDirectories = new ChangeTrackingList<NetAppAccountActiveDirectory>();
         }
 
-        /// <summary> The identity used for the resource. </summary>
+        /// <summary>
+        /// The identity used for the resource.
+        /// Serialized Name: NetAppAccountPatch.identity
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Azure lifecycle management. </summary>
+        /// <summary>
+        /// Azure lifecycle management
+        /// Serialized Name: NetAppAccountPatch.properties.provisioningState
+        /// </summary>
         public string ProvisioningState { get; }
-        /// <summary> Active Directories. </summary>
+        /// <summary>
+        /// Active Directories
+        /// Serialized Name: NetAppAccountPatch.properties.activeDirectories
+        /// </summary>
         public IList<NetAppAccountActiveDirectory> ActiveDirectories { get; }
-        /// <summary> Encryption settings. </summary>
+        /// <summary>
+        /// Encryption settings
+        /// Serialized Name: NetAppAccountPatch.properties.encryption
+        /// </summary>
         public NetAppAccountEncryption Encryption { get; set; }
-        /// <summary> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </summary>
+        /// <summary>
+        /// Shows the status of disableShowmount for all volumes under the subscription, null equals false
+        /// Serialized Name: NetAppAccountPatch.properties.disableShowmount
+        /// </summary>
         public bool? DisableShowmount { get; }
+        /// <summary>
+        /// Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes.
+        /// Serialized Name: NetAppAccountPatch.properties.nfsV4IDDomain
+        /// </summary>
+        public string NfsV4IdDomain { get; set; }
+        /// <summary>
+        /// This will have true value only if account is Multiple AD enabled.
+        /// Serialized Name: NetAppAccountPatch.properties.isMultiAdEnabled
+        /// </summary>
+        public bool? IsMultiAdEnabled { get; }
     }
 }

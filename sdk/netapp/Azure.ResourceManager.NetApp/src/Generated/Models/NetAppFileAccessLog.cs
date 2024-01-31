@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Flag indicating whether file access logs are enabled for the volume, based on active diagnostic settings present on the volume. </summary>
+    /// <summary>
+    /// Flag indicating whether file access logs are enabled for the volume, based on active diagnostic settings present on the volume.
+    /// Serialized Name: FileAccessLogs
+    /// </summary>
     public readonly partial struct NetAppFileAccessLog : IEquatable<NetAppFileAccessLog>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> fileAccessLogs are enabled. </summary>
+        /// <summary>
+        /// fileAccessLogs are enabled
+        /// Serialized Name: FileAccessLogs.Enabled
+        /// </summary>
         public static NetAppFileAccessLog Enabled { get; } = new NetAppFileAccessLog(EnabledValue);
-        /// <summary> fileAccessLogs are not enabled. </summary>
+        /// <summary>
+        /// fileAccessLogs are not enabled
+        /// Serialized Name: FileAccessLogs.Disabled
+        /// </summary>
         public static NetAppFileAccessLog Disabled { get; } = new NetAppFileAccessLog(DisabledValue);
         /// <summary> Determines if two <see cref="NetAppFileAccessLog"/> values are the same. </summary>
         public static bool operator ==(NetAppFileAccessLog left, NetAppFileAccessLog right) => left.Equals(right);

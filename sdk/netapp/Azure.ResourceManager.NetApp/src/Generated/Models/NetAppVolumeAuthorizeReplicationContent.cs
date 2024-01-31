@@ -9,7 +9,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Authorize request. </summary>
+    /// <summary>
+    /// Authorize request
+    /// Serialized Name: AuthorizeRequest
+    /// </summary>
     public partial class NetAppVolumeAuthorizeReplicationContent
     {
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeAuthorizeReplicationContent"/>. </summary>
@@ -17,7 +20,10 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary> Resource id of the remote volume. </summary>
+        /// <summary>
+        /// Resource id of the remote volume
+        /// Serialized Name: AuthorizeRequest.remoteVolumeResourceId
+        /// </summary>
         public ResourceIdentifier RemoteVolumeResourceId { get; set; }
     }
 }

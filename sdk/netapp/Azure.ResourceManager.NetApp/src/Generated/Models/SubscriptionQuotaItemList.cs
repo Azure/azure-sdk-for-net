@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of Subscription Quota Items. </summary>
+    /// <summary>
+    /// List of Subscription Quota Items
+    /// Serialized Name: SubscriptionQuotaItemList
+    /// </summary>
     internal partial class SubscriptionQuotaItemList
     {
         /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaItemList"/>. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionQuotaItemList"/>. </summary>
-        /// <param name="value"> A list of SubscriptionQuotaItems. </param>
+        /// <param name="value">
+        /// A list of SubscriptionQuotaItems
+        /// Serialized Name: SubscriptionQuotaItemList.value
+        /// </param>
         internal SubscriptionQuotaItemList(IReadOnlyList<NetAppSubscriptionQuotaItem> value)
         {
             Value = value;
         }
 
-        /// <summary> A list of SubscriptionQuotaItems. </summary>
+        /// <summary>
+        /// A list of SubscriptionQuotaItems
+        /// Serialized Name: SubscriptionQuotaItemList.value
+        /// </summary>
         public IReadOnlyList<NetAppSubscriptionQuotaItem> Value { get; }
     }
 }

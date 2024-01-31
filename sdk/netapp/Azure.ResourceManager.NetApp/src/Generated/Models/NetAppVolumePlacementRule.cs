@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Application specific parameters for the placement of volumes in the volume group. </summary>
+    /// <summary>
+    /// Application specific parameters for the placement of volumes in the volume group
+    /// Serialized Name: PlacementKeyValuePairs
+    /// </summary>
     public partial class NetAppVolumePlacementRule
     {
         /// <summary> Initializes a new instance of <see cref="NetAppVolumePlacementRule"/>. </summary>
-        /// <param name="key"> Key for an application specific parameter for the placement of volumes in the volume group. </param>
-        /// <param name="value"> Value for an application specific parameter for the placement of volumes in the volume group. </param>
+        /// <param name="key">
+        /// Key for an application specific parameter for the placement of volumes in the volume group
+        /// Serialized Name: PlacementKeyValuePairs.key
+        /// </param>
+        /// <param name="value">
+        /// Value for an application specific parameter for the placement of volumes in the volume group
+        /// Serialized Name: PlacementKeyValuePairs.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public NetAppVolumePlacementRule(string key, string value)
         {
@@ -26,9 +35,15 @@ namespace Azure.ResourceManager.NetApp.Models
             Value = value;
         }
 
-        /// <summary> Key for an application specific parameter for the placement of volumes in the volume group. </summary>
+        /// <summary>
+        /// Key for an application specific parameter for the placement of volumes in the volume group
+        /// Serialized Name: PlacementKeyValuePairs.key
+        /// </summary>
         public string Key { get; set; }
-        /// <summary> Value for an application specific parameter for the placement of volumes in the volume group. </summary>
+        /// <summary>
+        /// Value for an application specific parameter for the placement of volumes in the volume group
+        /// Serialized Name: PlacementKeyValuePairs.value
+        /// </summary>
         public string Value { get; set; }
     }
 }

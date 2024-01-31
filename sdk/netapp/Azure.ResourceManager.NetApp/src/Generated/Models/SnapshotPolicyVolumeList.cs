@@ -11,7 +11,10 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Volumes associated with snapshot policy. </summary>
+    /// <summary>
+    /// Volumes associated with snapshot policy
+    /// Serialized Name: SnapshotPolicyVolumeList
+    /// </summary>
     internal partial class SnapshotPolicyVolumeList
     {
         /// <summary> Initializes a new instance of <see cref="SnapshotPolicyVolumeList"/>. </summary>
@@ -21,13 +24,19 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SnapshotPolicyVolumeList"/>. </summary>
-        /// <param name="value"> List of volumes. </param>
+        /// <param name="value">
+        /// List of volumes
+        /// Serialized Name: SnapshotPolicyVolumeList.value
+        /// </param>
         internal SnapshotPolicyVolumeList(IReadOnlyList<NetAppVolumeData> value)
         {
             Value = value;
         }
 
-        /// <summary> List of volumes. </summary>
+        /// <summary>
+        /// List of volumes
+        /// Serialized Name: SnapshotPolicyVolumeList.value
+        /// </summary>
         public IReadOnlyList<NetAppVolumeData> Value { get; }
     }
 }

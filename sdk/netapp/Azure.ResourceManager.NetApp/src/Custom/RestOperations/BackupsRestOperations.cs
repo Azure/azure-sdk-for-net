@@ -617,5 +617,34 @@ namespace Azure.ResourceManager.NetApp
                     throw new RequestFailedException(message.Response);
             }
         }
+
+        #region Backup vault filter workaround, swagger has paramter named filter service expects volumeResourceId
+        internal HttpMessage CreateListByVaultRequest(string subscriptionId, string resourceGroupName, string accountName, string backupVaultName, string filter)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/backupVaults/", false);
+            uri.AppendPath(backupVaultName, true);
+            uri.AppendPath("/backups", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("volumeResourceId", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+        #endregion
     }
 }

@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Information regarding Subscription Quota Item. </summary>
+    /// <summary>
+    /// Information regarding Subscription Quota Item.
+    /// Serialized Name: SubscriptionQuotaItem
+    /// </summary>
     public partial class NetAppSubscriptionQuotaItem : ResourceData
     {
         /// <summary> Initializes a new instance of <see cref="NetAppSubscriptionQuotaItem"/>. </summary>
@@ -23,17 +26,29 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="current"> The current quota value. </param>
-        /// <param name="default"> The default quota value. </param>
+        /// <param name="current">
+        /// The current quota value.
+        /// Serialized Name: SubscriptionQuotaItem.properties.current
+        /// </param>
+        /// <param name="default">
+        /// The default quota value.
+        /// Serialized Name: SubscriptionQuotaItem.properties.default
+        /// </param>
         internal NetAppSubscriptionQuotaItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? current, int? @default) : base(id, name, resourceType, systemData)
         {
             Current = current;
             Default = @default;
         }
 
-        /// <summary> The current quota value. </summary>
+        /// <summary>
+        /// The current quota value.
+        /// Serialized Name: SubscriptionQuotaItem.properties.current
+        /// </summary>
         public int? Current { get; }
-        /// <summary> The default quota value. </summary>
+        /// <summary>
+        /// The default quota value.
+        /// Serialized Name: SubscriptionQuotaItem.properties.default
+        /// </summary>
         public int? Default { get; }
     }
 }

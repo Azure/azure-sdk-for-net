@@ -10,8 +10,24 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class AvailabilityZoneMapping
+    public partial class AvailabilityZoneMapping : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AvailabilityZone))
+            {
+                writer.WritePropertyName("availabilityZone"u8);
+                writer.WriteStringValue(AvailabilityZone);
+            }
+            if (Optional.IsDefined(IsAvailable))
+            {
+                writer.WritePropertyName("isAvailable"u8);
+                writer.WriteBooleanValue(IsAvailable.Value);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static AvailabilityZoneMapping DeserializeAvailabilityZoneMapping(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

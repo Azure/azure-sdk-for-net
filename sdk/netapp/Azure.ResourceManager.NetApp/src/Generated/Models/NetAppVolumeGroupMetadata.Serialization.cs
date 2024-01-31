@@ -41,11 +41,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DeploymentSpecId))
-            {
-                writer.WritePropertyName("deploymentSpecId"u8);
-                writer.WriteStringValue(DeploymentSpecId);
-            }
             writer.WriteEndObject();
         }
 
@@ -59,7 +54,6 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<NetAppApplicationType> applicationType = default;
             Optional<string> applicationIdentifier = default;
             Optional<IList<NetAppVolumePlacementRule>> globalPlacementRules = default;
-            Optional<string> deploymentSpecId = default;
             Optional<long> volumesCount = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -96,11 +90,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     globalPlacementRules = array;
                     continue;
                 }
-                if (property.NameEquals("deploymentSpecId"u8))
-                {
-                    deploymentSpecId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("volumesCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -111,7 +100,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppVolumeGroupMetadata(groupDescription.Value, Optional.ToNullable(applicationType), applicationIdentifier.Value, Optional.ToList(globalPlacementRules), deploymentSpecId.Value, Optional.ToNullable(volumesCount));
+            return new NetAppVolumeGroupMetadata(groupDescription.Value, Optional.ToNullable(applicationType), applicationIdentifier.Value, Optional.ToList(globalPlacementRules), Optional.ToNullable(volumesCount));
         }
     }
 }

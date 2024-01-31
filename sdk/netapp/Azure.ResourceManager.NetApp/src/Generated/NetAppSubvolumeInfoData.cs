@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.NetApp
     /// <summary>
     /// A class representing the NetAppSubvolumeInfo data model.
     /// Subvolume Information properties
+    /// Serialized Name: SubvolumeInfo
     /// </summary>
     public partial class NetAppSubvolumeInfoData : ResourceData
     {
@@ -26,10 +27,22 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="path"> Path to the subvolume. </param>
-        /// <param name="size"> Truncate subvolume to the provided size in bytes. </param>
-        /// <param name="parentPath"> parent path to the subvolume. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="path">
+        /// Path to the subvolume
+        /// Serialized Name: SubvolumeInfo.properties.path
+        /// </param>
+        /// <param name="size">
+        /// Truncate subvolume to the provided size in bytes
+        /// Serialized Name: SubvolumeInfo.properties.size
+        /// </param>
+        /// <param name="parentPath">
+        /// parent path to the subvolume
+        /// Serialized Name: SubvolumeInfo.properties.parentPath
+        /// </param>
+        /// <param name="provisioningState">
+        /// Azure lifecycle management
+        /// Serialized Name: SubvolumeInfo.properties.provisioningState
+        /// </param>
         internal NetAppSubvolumeInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string path, long? size, string parentPath, string provisioningState) : base(id, name, resourceType, systemData)
         {
             Path = path;
@@ -38,13 +51,25 @@ namespace Azure.ResourceManager.NetApp
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Path to the subvolume. </summary>
+        /// <summary>
+        /// Path to the subvolume
+        /// Serialized Name: SubvolumeInfo.properties.path
+        /// </summary>
         public string Path { get; set; }
-        /// <summary> Truncate subvolume to the provided size in bytes. </summary>
+        /// <summary>
+        /// Truncate subvolume to the provided size in bytes
+        /// Serialized Name: SubvolumeInfo.properties.size
+        /// </summary>
         public long? Size { get; set; }
-        /// <summary> parent path to the subvolume. </summary>
+        /// <summary>
+        /// parent path to the subvolume
+        /// Serialized Name: SubvolumeInfo.properties.parentPath
+        /// </summary>
         public string ParentPath { get; set; }
-        /// <summary> Azure lifecycle management. </summary>
+        /// <summary>
+        /// Azure lifecycle management
+        /// Serialized Name: SubvolumeInfo.properties.provisioningState
+        /// </summary>
         public string ProvisioningState { get; }
     }
 }

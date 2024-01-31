@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetAppAccountBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetAppAccountBackupResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<NetAppAccountBackupResource> GetAllAsync(CancellationToken cancellationToken )
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppAccountBackupAccountBackupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new NetAppAccountBackupResource(Client, NetAppBackupData.DeserializeNetAppBackupData(e)), _netAppAccountBackupAccountBackupsClientDiagnostics, Pipeline, "NetAppAccountBackupCollection.GetAll", "value", null, cancellationToken);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetAppAccountBackupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetAppAccountBackupResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<NetAppAccountBackupResource> GetAll(CancellationToken cancellationToken)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppAccountBackupAccountBackupsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new NetAppAccountBackupResource(Client, NetAppBackupData.DeserializeNetAppBackupData(e)), _netAppAccountBackupAccountBackupsClientDiagnostics, Pipeline, "NetAppAccountBackupCollection.GetAll", "value", null, cancellationToken);
@@ -313,19 +313,19 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        IEnumerator<NetAppAccountBackupResource> IEnumerable<NetAppAccountBackupResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
+        //IEnumerator<NetAppAccountBackupResource> IEnumerable<NetAppAccountBackupResource>.GetEnumerator()
+        //{
+        //    return GetAll(null).GetEnumerator();
+        //}
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
+        //IEnumerator IEnumerable.GetEnumerator()
+        //{
+        //    return GetAll(null).GetEnumerator();
+        //}
 
-        IAsyncEnumerator<NetAppAccountBackupResource> IAsyncEnumerable<NetAppAccountBackupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
-        }
+        //IAsyncEnumerator<NetAppAccountBackupResource> IAsyncEnumerable<NetAppAccountBackupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        //{
+        //    return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+        //}
     }
 }

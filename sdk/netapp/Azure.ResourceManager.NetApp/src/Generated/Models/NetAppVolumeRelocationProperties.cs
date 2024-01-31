@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Volume relocation properties. </summary>
+    /// <summary>
+    /// Volume relocation properties
+    /// Serialized Name: VolumeRelocationProperties
+    /// </summary>
     public partial class NetAppVolumeRelocationProperties
     {
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeRelocationProperties"/>. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeRelocationProperties"/>. </summary>
-        /// <param name="isRelocationRequested"> Has relocation been requested for this volume. </param>
-        /// <param name="isReadyToBeFinalized"> Has relocation finished and is ready to be cleaned up. </param>
+        /// <param name="isRelocationRequested">
+        /// Has relocation been requested for this volume
+        /// Serialized Name: VolumeRelocationProperties.relocationRequested
+        /// </param>
+        /// <param name="isReadyToBeFinalized">
+        /// Has relocation finished and is ready to be cleaned up
+        /// Serialized Name: VolumeRelocationProperties.readyToBeFinalized
+        /// </param>
         internal NetAppVolumeRelocationProperties(bool? isRelocationRequested, bool? isReadyToBeFinalized)
         {
             IsRelocationRequested = isRelocationRequested;
             IsReadyToBeFinalized = isReadyToBeFinalized;
         }
 
-        /// <summary> Has relocation been requested for this volume. </summary>
+        /// <summary>
+        /// Has relocation been requested for this volume
+        /// Serialized Name: VolumeRelocationProperties.relocationRequested
+        /// </summary>
         public bool? IsRelocationRequested { get; set; }
-        /// <summary> Has relocation finished and is ready to be cleaned up. </summary>
+        /// <summary>
+        /// Has relocation finished and is ready to be cleaned up
+        /// Serialized Name: VolumeRelocationProperties.readyToBeFinalized
+        /// </summary>
         public bool? IsReadyToBeFinalized { get; }
     }
 }

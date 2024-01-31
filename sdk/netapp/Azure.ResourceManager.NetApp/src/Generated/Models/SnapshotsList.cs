@@ -11,7 +11,10 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of Snapshots. </summary>
+    /// <summary>
+    /// List of Snapshots
+    /// Serialized Name: SnapshotsList
+    /// </summary>
     internal partial class SnapshotsList
     {
         /// <summary> Initializes a new instance of <see cref="SnapshotsList"/>. </summary>
@@ -21,13 +24,19 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SnapshotsList"/>. </summary>
-        /// <param name="value"> A list of Snapshots. </param>
+        /// <param name="value">
+        /// A list of Snapshots
+        /// Serialized Name: SnapshotsList.value
+        /// </param>
         internal SnapshotsList(IReadOnlyList<NetAppVolumeSnapshotData> value)
         {
             Value = value;
         }
 
-        /// <summary> A list of Snapshots. </summary>
+        /// <summary>
+        /// A list of Snapshots
+        /// Serialized Name: SnapshotsList.value
+        /// </summary>
         public IReadOnlyList<NetAppVolumeSnapshotData> Value { get; }
     }
 }

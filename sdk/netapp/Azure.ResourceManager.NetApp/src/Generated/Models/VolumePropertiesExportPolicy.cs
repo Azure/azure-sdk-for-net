@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Set of export policy rules. </summary>
+    /// <summary>
+    /// Set of export policy rules
+    /// Serialized Name: VolumePropertiesExportPolicy
+    /// </summary>
     internal partial class VolumePropertiesExportPolicy
     {
         /// <summary> Initializes a new instance of <see cref="VolumePropertiesExportPolicy"/>. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VolumePropertiesExportPolicy"/>. </summary>
-        /// <param name="rules"> Export policy rule. </param>
+        /// <param name="rules">
+        /// Export policy rule
+        /// Serialized Name: VolumePropertiesExportPolicy.rules
+        /// </param>
         internal VolumePropertiesExportPolicy(IList<NetAppVolumeExportPolicyRule> rules)
         {
             Rules = rules;
         }
 
-        /// <summary> Export policy rule. </summary>
+        /// <summary>
+        /// Export policy rule
+        /// Serialized Name: VolumePropertiesExportPolicy.rules
+        /// </summary>
         public IList<NetAppVolumeExportPolicyRule> Rules { get; }
     }
 }

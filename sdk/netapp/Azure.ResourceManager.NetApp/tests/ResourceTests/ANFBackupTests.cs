@@ -26,7 +26,9 @@ namespace Azure.ResourceManager.NetApp.Tests
         internal NetAppAccountBackupCollection _accountBackupCollection;
         internal NetAppVolumeBackupCollection _volumeBackupCollection;
         internal NetAppVolumeResource _volumeResource;
-
+        internal BackupVaultCollection _backupVaultCollection { get => _netAppAccount.GetBackupVaults(); }
+        internal BackupVaultResource _backupVaultResource;
+        internal NetAppBackupVaultBackupCollection _backupCollection { get => _backupVaultResource.GetNetAppBackupVaultBackups(); }
         public ANFBackupTests(bool isAsync) : base(isAsync)
         {
         }
@@ -36,6 +38,10 @@ namespace Azure.ResourceManager.NetApp.Tests
             _resourceGroup = await CreateResourceGroupAsync(location:DefaultLocation);
             string accountName = await CreateValidAccountNameAsync(_accountNamePrefix, _resourceGroup, DefaultLocation);
             _netAppAccount = (await _netAppAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultNetAppAccountParameters(location:DefaultLocation))).Value;
+            BackupVaultData backupVaultData = new BackupVaultData(DefaultLocation);
+            string backupVaultName = Recording.GenerateAssetName("backupVault-");
+            ArmOperation<BackupVaultResource> lro = await _backupVaultCollection.CreateOrUpdateAsync(WaitUntil.Completed, backupVaultName, backupVaultData);
+            _backupVaultResource = lro.Value;
 
             CapacityPoolData capactiyPoolData = new(DefaultLocation, _poolSize.Value, NetAppFileServiceLevel.Premium);
             capactiyPoolData.Tags.InitializeFrom(DefaultTags);
@@ -102,12 +108,10 @@ namespace Azure.ResourceManager.NetApp.Tests
                 //await _capacityPool.DeleteAsync(WaitUntil.Completed);
                 //await LiveDelay(40000);
                 NetAppAccountBackupCollection accountBackupCollection = _netAppAccount.GetNetAppAccountBackups();
-                if (!string.IsNullOrWhiteSpace(lastBackupName))
-                {
-                    NetAppAccountBackupResource backupResource = await accountBackupCollection.GetAsync(lastBackupName);
-                    await backupResource.DeleteAsync(WaitUntil.Completed);
-                }
+
                 await LiveDelay(20000);
+                await _backupVaultResource.DeleteAsync(WaitUntil.Completed);
+                await LiveDelay(30000);
                 await _netAppAccount.DeleteAsync(WaitUntil.Completed);
             }
             _resourceGroup = null;
@@ -358,7 +362,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             await WaitForBackupSucceeded(_volumeBackupCollection, backupName);
 
             //create second Backup
-            NetAppBackupData backupData2 = new(DefaultLocation);
+            NetAppBackupData backupData2 = new(volumeResource1.Id);
             backupData2.Label = "adHocBackup2";
             NetAppVolumeBackupResource backup2Resource1 = (await _volumeBackupCollection.CreateOrUpdateAsync(WaitUntil.Completed, backupName2, backupData2)).Value;
             Assert.IsNotNull(backup2Resource1);
@@ -369,6 +373,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             await WaitForBackupSucceeded(_volumeBackupCollection, backupName2);
 
             //Validate AccountBackups
+            //NetAppAccountBackupVaultBackupResource item in collection.GetAllAsync()
             List<NetAppAccountBackupResource> accountBackupList = await _accountBackupCollection.GetAllAsync().ToEnumerableAsync();
             accountBackupList.Should().HaveCountGreaterOrEqualTo(2);
             //get backups from account
@@ -514,6 +519,163 @@ namespace Azure.ResourceManager.NetApp.Tests
             //await _restoredVolumeResource.DeleteAsync(WaitUntil.Completed);
         }
 
+        [RecordedTest]
+        public async Task CreateDeleteWithBackupVault()
+        {
+            var backupName = Recording.GenerateAssetName("backup-");
+            await SetUp();
+
+            //Update volume to enable backups
+            NetAppVolumeBackupConfiguration backupPolicyProperties = new()
+            {
+                IsBackupEnabled = true,
+                BackupVaultId = _backupVaultResource.Id
+            };
+            NetAppVolumePatchDataProtection dataProtectionProperties = new();
+            dataProtectionProperties.Backup = backupPolicyProperties;
+            NetAppVolumePatch volumePatch = new(DefaultLocation);
+            volumePatch.DataProtection = dataProtectionProperties;
+            NetAppVolumeResource volumeResource1 = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
+            await LiveDelay(5000);
+
+            //Validate volume is backup enabled
+            NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
+            Assert.IsNotNull(backupVolumeResource.Data.DataProtection);
+            Assert.IsNull(backupVolumeResource.Data.DataProtection.Snapshot);
+            Assert.IsNull(backupVolumeResource.Data.DataProtection.Replication);
+            Assert.IsTrue(backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
+            Assert.AreEqual(_backupVaultResource.Id, backupVolumeResource.Data.DataProtection.Backup.BackupVaultId);
+
+            //create Backup
+            NetAppBackupData backupData = new(volumeResourceId:volumeResource1.Id);
+            backupData.Label = "adHocBackup";
+            _backupVaultResource.GetNetAppBackupVaultBackups();
+            NetAppBackupVaultBackupResource backupResource1 = (await _backupCollection.CreateOrUpdateAsync(WaitUntil.Completed, backupName, backupData)).Value;
+            Assert.IsNotNull(backupResource1);
+            Assert.AreEqual(backupName, backupResource1.Id.Name);
+            //await WaitForBackupSucceeded(_volumeBackupCollection, backupName);
+            ////Validate
+            NetAppBackupVaultBackupResource backupResource2 = await _backupCollection.GetAsync(backupName);
+            Assert.IsNotNull(backupResource2);
+            Assert.AreEqual(backupName, backupResource2.Id.Name);
+            //check if exists
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _backupCollection.GetAsync(backupName + "1"); });
+            Assert.AreEqual(404, exception.Status);
+            Assert.IsTrue(await _backupCollection.ExistsAsync(backupResource2.Id.Name));
+            Assert.IsFalse(await _backupCollection.ExistsAsync(backupName + "1"));
+
+            ////Update backup
+            NetAppBackupVaultBackupPatch backupPatch = new();
+            backupPatch.Label = "updatedLabel";
+            NetAppBackupVaultBackupResource backupResource3 = (await backupResource2.UpdateAsync(WaitUntil.Completed, backupPatch)).Value;
+            await WaitForBackupSucceeded(_backupCollection, backupName);
+            //Validate
+            NetAppBackupVaultBackupResource backupResource4 = await _backupCollection.GetAsync(backupName);
+            Assert.IsNotNull(backupResource4);
+
+            List<NetAppBackupVaultBackupResource> backupList = await _backupCollection.GetAllAsync(filter: _volumeResource.Id).ToEnumerableAsync();
+            Assert.IsNotNull(backupList);
+            backupList.Should().HaveCount(1);
+
+            volumePatch.DataProtection.Backup.IsBackupEnabled = false;
+            volumeResource1 = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
+
+            await volumeResource1.DeleteAsync(WaitUntil.Completed);
+            await LiveDelay(30000);
+            //await backupResource1.DeleteAsync(WaitUntil.Completed);
+            await LiveDelay(30000);
+            //Currently there is a serivce side bug where label does not get updated uncomment when fixed
+            //Assert.AreEqual(backupPatch.Label, backupResource4.Data.Label);
+        }
+
+        [RecordedTest]
+        public async Task ListBackupsPerVolumeWithBackupVault()
+        {
+            var backupName = Recording.GenerateAssetName("backup-");
+            var vol2backupName = Recording.GenerateAssetName("vol2backup-");
+            var volumeName2 = Recording.GenerateAssetName("volume-");
+            await SetUp();
+
+            //Create second volume
+            NetAppVolumeResource volume2Resource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName2);
+
+            //Update volume to enable backups
+            NetAppVolumeBackupConfiguration backupPolicyProperties = new()
+            {
+                IsBackupEnabled = true,
+                BackupVaultId = _backupVaultResource.Id
+            };
+            NetAppVolumePatchDataProtection dataProtectionProperties = new();
+            dataProtectionProperties.Backup = backupPolicyProperties;
+            NetAppVolumePatch volumePatch = new(DefaultLocation);
+            volumePatch.DataProtection = dataProtectionProperties;
+            NetAppVolumeResource volumeResource1 = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
+            volume2Resource = (await volume2Resource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
+            await LiveDelay(5000);
+
+            //Validate volume is backup enabled
+            NetAppVolumeResource backupVolumeResource = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
+            NetAppVolumeResource backupVolume2Resource = await _volumeCollection.GetAsync(volume2Resource.Id.Name);
+            Assert.IsNotNull(backupVolumeResource.Data.DataProtection);
+            Assert.IsNull(backupVolumeResource.Data.DataProtection.Snapshot);
+            Assert.IsNull(backupVolumeResource.Data.DataProtection.Replication);
+            Assert.IsTrue(backupVolumeResource.Data.DataProtection.Backup.IsBackupEnabled);
+            Assert.AreEqual(_backupVaultResource.Id, backupVolumeResource.Data.DataProtection.Backup.BackupVaultId);
+            Assert.AreEqual(_backupVaultResource.Id, backupVolume2Resource.Data.DataProtection.Backup.BackupVaultId);
+
+            //create Backup
+            NetAppBackupData backupData = new(volumeResourceId: volumeResource1.Id);
+            backupData.Label = "adHocBackup";
+            NetAppBackupVaultBackupResource backupResource1 = (await _backupCollection.CreateOrUpdateAsync(WaitUntil.Completed, backupName, backupData)).Value;
+            Assert.IsNotNull(backupResource1);
+            Assert.AreEqual(backupName, backupResource1.Id.Name);
+
+            //create Backup for second volume
+            NetAppBackupData vol2backupData = new(volumeResourceId: volume2Resource.Id);
+            vol2backupData.Label = "adHocBackup";
+            NetAppBackupVaultBackupResource vol2backupResource = (await _backupCollection.CreateOrUpdateAsync(WaitUntil.Completed, vol2backupName, vol2backupData)).Value;
+            Assert.IsNotNull(vol2backupResource);
+            Assert.AreEqual(vol2backupName, vol2backupResource.Id.Name);
+
+            //await WaitForBackupSucceeded(_volumeBackupCollection, backupName);
+            ////Validate
+            NetAppBackupVaultBackupResource backupResource2 = await _backupCollection.GetAsync(backupName);
+            Assert.IsNotNull(backupResource2);
+            Assert.AreEqual(backupName, backupResource2.Id.Name);
+
+            //Validate we can get all backups in vault
+            List<NetAppBackupVaultBackupResource> backupList = await _backupCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotNull(backupList);
+            backupList.Should().HaveCount(2);
+
+            //Validate filtering for volume1
+            List<NetAppBackupVaultBackupResource> backupListFiltered = await _backupCollection.GetAllAsync(filter: _volumeResource.Id).ToEnumerableAsync();
+            Assert.IsNotNull(backupListFiltered);
+            backupListFiltered.Should().HaveCount(1);
+            Assert.AreEqual(backupName, backupListFiltered[0].Id.Name);
+            Assert.AreEqual(_volumeResource.Id, backupListFiltered[0].Data.VolumeResourceId);
+
+            //Validate filtering for volume2
+            List<NetAppBackupVaultBackupResource> backupListFilteredVol2 = await _backupCollection.GetAllAsync(filter: volume2Resource.Id).ToEnumerableAsync();
+            Assert.IsNotNull(backupListFiltered);
+            backupListFilteredVol2.Should().HaveCount(1);
+            Assert.AreEqual(vol2backupName, backupListFilteredVol2[0].Id.Name);
+            Assert.AreEqual(volume2Resource.Id, backupListFilteredVol2[0].Data.VolumeResourceId);
+
+            volumePatch.DataProtection.Backup.IsBackupEnabled = false;
+            volumeResource1 = (await _volumeResource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
+            volume2Resource = (await volume2Resource.UpdateAsync(WaitUntil.Completed, volumePatch)).Value;
+
+            await LiveDelay(30000);
+            await volumeResource1.DeleteAsync(WaitUntil.Completed);
+            await volume2Resource.DeleteAsync(WaitUntil.Completed);
+
+            //await backupResource1.DeleteAsync(WaitUntil.Completed);
+            await LiveDelay(30000);
+            //Currently there is a serivce side bug where label does not get updated uncomment when fixed
+            //Assert.AreEqual(backupPatch.Label, backupResource4.Data.Label);
+        }
+
         private async Task WaitForBackupSucceeded(NetAppVolumeBackupCollection volumeBackupCollection, string backupName)
         {
             Console.WriteLine($"WaitForBackupSucceeded for Backup {volumeBackupCollection.Id}/backups/{backupName}");
@@ -562,6 +724,63 @@ namespace Azure.ResourceManager.NetApp.Tests
                             return false;
                         }
                     }
+                );
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Final Throw {ex.Message}");
+                throw;
+            }
+        }
+
+        private async Task WaitForBackupSucceeded(NetAppBackupVaultBackupCollection backupCollection, string backupName)
+        {
+            Console.WriteLine($"WaitForBackupSucceeded for Backup {backupCollection.Id}/backups/{backupName}");
+            var maxDelay = TimeSpan.FromSeconds(500);
+            int count = 0;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                maxDelay = TimeSpan.FromMilliseconds(50);
+            }
+            Console.WriteLine($"...decorrelated maxdelay {maxDelay}");
+            IEnumerable<TimeSpan> delay = Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(20), retryCount: 500)
+                    .Select(s => TimeSpan.FromTicks(Math.Min(s.Ticks, maxDelay.Ticks))); // use jitter strategy in the retry algorithm to prevent retries bunching into further spikes of load, with ceiling on delays (for larger retrycount)
+
+            Polly.Retry.AsyncRetryPolicy<bool> retryPolicy = Policy
+                .HandleResult<bool>(false) // retry if delegate executed asynchronously returns false
+                .WaitAndRetryAsync(delay);
+
+            try
+            {
+                await retryPolicy.ExecuteAsync(async () =>
+                {
+                    count++;
+                    NetAppBackupVaultBackupResource backup = await backupCollection.GetAsync(backupName);
+                    Console.WriteLine($"{DateTime.Now.ToLongTimeString()} GetBackupStatus run: {count} provisioning state is {backup.Data.ProvisioningState}");
+                    if (backup.Data.ProvisioningState.Equals("Succeeded") || backup.Data.ProvisioningState.Equals("Failed"))
+                    {
+                        //Check status as well
+                        NetAppVolumeBackupStatus backupStatus = (await _volumeResource.GetBackupStatusAsync()).Value;
+                        if (backup.Data.ProvisioningState.Equals("Failed"))  //we want to report the backupStatus and FailureReason
+                        {
+                            //no use retrying
+                            throw new Exception($"Backup failed ProvisioningState: {backup.Data.ProvisioningState} FailureReason: \"{backup.Data.FailureReason}\" BackupStatus.MirrorState: {backupStatus.MirrorState}, BackupStatus.ErrorMessage: \"{backupStatus.ErrorMessage}\",  BackupStatus.Relationship status {backupStatus.RelationshipStatus}");
+                        }
+                        Console.WriteLine($"Get BackupStatus state run {count} BackupStatus.MirrorState: {backupStatus.MirrorState}, BackupStatus.RelationshipStatus: {backupStatus.RelationshipStatus}");
+                        if (backupStatus.MirrorState == NetAppMirrorState.Mirrored)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
                 );
             }
             catch (Exception ex)

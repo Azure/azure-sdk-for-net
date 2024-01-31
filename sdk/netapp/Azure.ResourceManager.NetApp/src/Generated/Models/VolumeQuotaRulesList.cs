@@ -11,7 +11,10 @@ using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of Volume Quota Rules. </summary>
+    /// <summary>
+    /// List of Volume Quota Rules
+    /// Serialized Name: VolumeQuotaRulesList
+    /// </summary>
     internal partial class VolumeQuotaRulesList
     {
         /// <summary> Initializes a new instance of <see cref="VolumeQuotaRulesList"/>. </summary>
@@ -21,13 +24,19 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VolumeQuotaRulesList"/>. </summary>
-        /// <param name="value"> A list of Volume Quota Rules. </param>
+        /// <param name="value">
+        /// A list of Volume Quota Rules
+        /// Serialized Name: VolumeQuotaRulesList.value
+        /// </param>
         internal VolumeQuotaRulesList(IReadOnlyList<NetAppVolumeQuotaRuleData> value)
         {
             Value = value;
         }
 
-        /// <summary> A list of Volume Quota Rules. </summary>
+        /// <summary>
+        /// A list of Volume Quota Rules
+        /// Serialized Name: VolumeQuotaRulesList.value
+        /// </summary>
         public IReadOnlyList<NetAppVolumeQuotaRuleData> Value { get; }
     }
 }

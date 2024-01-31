@@ -33,6 +33,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("backupEnabled");
                 writer.WriteBooleanValue(IsBackupEnabled.Value);
             }
+            if (Optional.IsDefined(BackupVaultId))
+            {
+                writer.WritePropertyName("backupVaultId");
+                writer.WriteStringValue(BackupVaultId);
+            }
             writer.WriteEndObject();
         }
 
@@ -43,6 +48,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 return null;
             }
             Optional<ResourceIdentifier> backupPolicyId = default;
+            Optional<ResourceIdentifier> backupVaultId = default;
             Optional<bool> policyEnforced = default;
             Optional<bool> backupEnabled = default;
             Optional<ResourceIdentifier> vaultId = default;
@@ -88,8 +94,18 @@ namespace Azure.ResourceManager.NetApp.Models
                     vaultId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("backupVaultId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    backupVaultId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
             }
-            return new NetAppVolumeBackupConfiguration(backupPolicyId.Value, Optional.ToNullable(policyEnforced), vaultId.Value, Optional.ToNullable(backupEnabled));
+            return new NetAppVolumeBackupConfiguration(backupPolicyId.Value, Optional.ToNullable(policyEnforced), vaultId.Value, Optional.ToNullable(backupEnabled)) { BackupVaultId = backupVaultId };
         }
     }
 }

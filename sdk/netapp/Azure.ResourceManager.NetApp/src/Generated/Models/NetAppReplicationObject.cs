@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Replication properties. </summary>
+    /// <summary>
+    /// Replication properties
+    /// Serialized Name: ReplicationObject
+    /// </summary>
     public partial class NetAppReplicationObject
     {
         /// <summary> Initializes a new instance of <see cref="NetAppReplicationObject"/>. </summary>
-        /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
+        /// <param name="remoteVolumeResourceId">
+        /// The resource ID of the remote volume. Required for cross region and cross zone replication
+        /// Serialized Name: ReplicationObject.remoteVolumeResourceId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="remoteVolumeResourceId"/> is null. </exception>
         public NetAppReplicationObject(ResourceIdentifier remoteVolumeResourceId)
         {
@@ -24,26 +30,63 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppReplicationObject"/>. </summary>
-        /// <param name="replicationId"> Id. </param>
-        /// <param name="endpointType"> Indicates whether the local volume is the source or destination for the Volume Replication. </param>
-        /// <param name="replicationSchedule"> Schedule. </param>
-        /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. </param>
-        /// <param name="remoteVolumeRegion"> The remote region for the other end of the Volume Replication. </param>
-        internal NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, string remoteVolumeRegion)
+        /// <param name="replicationId">
+        /// Id
+        /// Serialized Name: ReplicationObject.replicationId
+        /// </param>
+        /// <param name="endpointType">
+        /// Indicates whether the local volume is the source or destination for the Volume Replication
+        /// Serialized Name: ReplicationObject.endpointType
+        /// </param>
+        /// <param name="replicationSchedule">
+        /// Schedule
+        /// Serialized Name: ReplicationObject.replicationSchedule
+        /// </param>
+        /// <param name="remoteVolumeResourceId">
+        /// The resource ID of the remote volume. Required for cross region and cross zone replication
+        /// Serialized Name: ReplicationObject.remoteVolumeResourceId
+        /// </param>
+        /// <param name="remotePath">
+        /// The full path to a volume that is to be migrated into ANF. Required for Migration volumes
+        /// Serialized Name: ReplicationObject.remotePath
+        /// </param>
+        /// <param name="remoteVolumeRegion">
+        /// The remote region for the other end of the Volume Replication.
+        /// Serialized Name: ReplicationObject.remoteVolumeRegion
+        /// </param>
+        internal NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, RemotePath remotePath, string remoteVolumeRegion)
         {
             ReplicationId = replicationId;
             EndpointType = endpointType;
             ReplicationSchedule = replicationSchedule;
             RemoteVolumeResourceId = remoteVolumeResourceId;
+            RemotePath = remotePath;
             RemoteVolumeRegion = remoteVolumeRegion;
         }
-        /// <summary> Indicates whether the local volume is the source or destination for the Volume Replication. </summary>
+        /// <summary>
+        /// Indicates whether the local volume is the source or destination for the Volume Replication
+        /// Serialized Name: ReplicationObject.endpointType
+        /// </summary>
         public NetAppEndpointType? EndpointType { get; set; }
-        /// <summary> Schedule. </summary>
+        /// <summary>
+        /// Schedule
+        /// Serialized Name: ReplicationObject.replicationSchedule
+        /// </summary>
         public NetAppReplicationSchedule? ReplicationSchedule { get; set; }
-        /// <summary> The resource ID of the remote volume. </summary>
+        /// <summary>
+        /// The resource ID of the remote volume. Required for cross region and cross zone replication
+        /// Serialized Name: ReplicationObject.remoteVolumeResourceId
+        /// </summary>
         public ResourceIdentifier RemoteVolumeResourceId { get; set; }
-        /// <summary> The remote region for the other end of the Volume Replication. </summary>
+        /// <summary>
+        /// The full path to a volume that is to be migrated into ANF. Required for Migration volumes
+        /// Serialized Name: ReplicationObject.remotePath
+        /// </summary>
+        public RemotePath RemotePath { get; set; }
+        /// <summary>
+        /// The remote region for the other end of the Volume Replication.
+        /// Serialized Name: ReplicationObject.remoteVolumeRegion
+        /// </summary>
         public string RemoteVolumeRegion { get; set; }
     }
 }

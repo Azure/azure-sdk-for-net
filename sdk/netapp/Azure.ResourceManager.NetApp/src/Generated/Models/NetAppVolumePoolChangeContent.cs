@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Pool change request. </summary>
+    /// <summary>
+    /// Pool change request
+    /// Serialized Name: PoolChangeRequest
+    /// </summary>
     public partial class NetAppVolumePoolChangeContent
     {
         /// <summary> Initializes a new instance of <see cref="NetAppVolumePoolChangeContent"/>. </summary>
-        /// <param name="newPoolResourceId"> Resource id of the pool to move volume to. </param>
+        /// <param name="newPoolResourceId">
+        /// Resource id of the pool to move volume to
+        /// Serialized Name: PoolChangeRequest.newPoolResourceId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="newPoolResourceId"/> is null. </exception>
         public NetAppVolumePoolChangeContent(ResourceIdentifier newPoolResourceId)
         {
@@ -23,7 +29,10 @@ namespace Azure.ResourceManager.NetApp.Models
             NewPoolResourceId = newPoolResourceId;
         }
 
-        /// <summary> Resource id of the pool to move volume to. </summary>
+        /// <summary>
+        /// Resource id of the pool to move volume to
+        /// Serialized Name: PoolChangeRequest.newPoolResourceId
+        /// </summary>
         public ResourceIdentifier NewPoolResourceId { get; }
     }
 }

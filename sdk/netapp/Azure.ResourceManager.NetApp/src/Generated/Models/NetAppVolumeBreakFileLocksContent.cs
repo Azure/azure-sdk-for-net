@@ -9,7 +9,10 @@ using System.Net;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Break file locks request. </summary>
+    /// <summary>
+    /// Break file locks request
+    /// Serialized Name: BreakFileLocksRequest
+    /// </summary>
     public partial class NetAppVolumeBreakFileLocksContent
     {
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeBreakFileLocksContent"/>. </summary>
@@ -17,9 +20,15 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary> To clear file locks on a volume for a particular client. </summary>
+        /// <summary>
+        /// To clear file locks on a volume for a particular client
+        /// Serialized Name: BreakFileLocksRequest.clientIp
+        /// </summary>
         public IPAddress ClientIP { get; set; }
-        /// <summary> Break File locks could be a disruptive operation for application as locks on the volume will be broken, if want to process, set to true. </summary>
+        /// <summary>
+        /// Break File locks could be a disruptive operation for application as locks on the volume will be broken, if want to process, set to true.
+        /// Serialized Name: BreakFileLocksRequest.confirmRunningDisruptiveOperation
+        /// </summary>
         public bool? ConfirmRunningDisruptiveOperation { get; set; }
     }
 }

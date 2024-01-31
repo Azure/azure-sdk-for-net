@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> revert a volume to the snapshot. </summary>
+    /// <summary>
+    /// revert a volume to the snapshot
+    /// Serialized Name: VolumeRevert
+    /// </summary>
     public partial class NetAppVolumeRevertContent
     {
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeRevertContent"/>. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary> Resource id of the snapshot. </summary>
+        /// <summary>
+        /// Resource id of the snapshot
+        /// Serialized Name: VolumeRevert.snapshotId
+        /// </summary>
         public string SnapshotId { get; set; }
     }
 }

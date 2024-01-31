@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Break replication request. </summary>
+    /// <summary>
+    /// Break replication request
+    /// Serialized Name: BreakReplicationRequest
+    /// </summary>
     public partial class NetAppVolumeBreakReplicationContent
     {
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeBreakReplicationContent"/>. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary> If replication is in status transferring and you want to force break the replication, set to true. </summary>
+        /// <summary>
+        /// If replication is in status transferring and you want to force break the replication, set to true
+        /// Serialized Name: BreakReplicationRequest.forceBreakReplication
+        /// </summary>
         public bool? ForceBreakReplication { get; set; }
     }
 }

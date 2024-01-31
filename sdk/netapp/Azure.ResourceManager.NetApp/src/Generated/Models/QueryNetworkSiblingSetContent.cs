@@ -10,12 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Network sibling set query. </summary>
+    /// <summary>
+    /// Network sibling set query.
+    /// Serialized Name: QueryNetworkSiblingSetRequest
+    /// </summary>
     public partial class QueryNetworkSiblingSetContent
     {
         /// <summary> Initializes a new instance of <see cref="QueryNetworkSiblingSetContent"/>. </summary>
-        /// <param name="networkSiblingSetId"> Network Sibling Set ID for a group of volumes sharing networking resources in a subnet. </param>
-        /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. Example /subscriptions/subscriptionId/resourceGroups/resourceGroup/providers/Microsoft.Network/virtualNetworks/testVnet/subnets/{mySubnet}. </param>
+        /// <param name="networkSiblingSetId">
+        /// Network Sibling Set ID for a group of volumes sharing networking resources in a subnet.
+        /// Serialized Name: QueryNetworkSiblingSetRequest.networkSiblingSetId
+        /// </param>
+        /// <param name="subnetId">
+        /// The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. Example /subscriptions/subscriptionId/resourceGroups/resourceGroup/providers/Microsoft.Network/virtualNetworks/testVnet/subnets/{mySubnet}
+        /// Serialized Name: QueryNetworkSiblingSetRequest.subnetId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="networkSiblingSetId"/> or <paramref name="subnetId"/> is null. </exception>
         public QueryNetworkSiblingSetContent(string networkSiblingSetId, ResourceIdentifier subnetId)
         {
@@ -26,9 +35,15 @@ namespace Azure.ResourceManager.NetApp.Models
             SubnetId = subnetId;
         }
 
-        /// <summary> Network Sibling Set ID for a group of volumes sharing networking resources in a subnet. </summary>
+        /// <summary>
+        /// Network Sibling Set ID for a group of volumes sharing networking resources in a subnet.
+        /// Serialized Name: QueryNetworkSiblingSetRequest.networkSiblingSetId
+        /// </summary>
         public string NetworkSiblingSetId { get; }
-        /// <summary> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. Example /subscriptions/subscriptionId/resourceGroups/resourceGroup/providers/Microsoft.Network/virtualNetworks/testVnet/subnets/{mySubnet}. </summary>
+        /// <summary>
+        /// The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. Example /subscriptions/subscriptionId/resourceGroups/resourceGroup/providers/Microsoft.Network/virtualNetworks/testVnet/subnets/{mySubnet}
+        /// Serialized Name: QueryNetworkSiblingSetRequest.subnetId
+        /// </summary>
         public ResourceIdentifier SubnetId { get; }
     }
 }

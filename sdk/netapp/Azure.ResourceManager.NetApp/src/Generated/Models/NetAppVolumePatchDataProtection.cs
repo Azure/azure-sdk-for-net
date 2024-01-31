@@ -9,17 +9,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
+    /// <summary>
+    /// DataProtection type volumes include an object containing details of the replication
+    /// Serialized Name: VolumePatchPropertiesDataProtection
+    /// </summary>
     public partial class NetAppVolumePatchDataProtection
     {
         /// <summary> Initializes a new instance of <see cref="NetAppVolumePatchDataProtection"/>. </summary>
         public NetAppVolumePatchDataProtection()
         {
         }
-
-        /// <summary> Snapshot properties. </summary>
+        /// <summary>
+        /// Snapshot properties.
+        /// Serialized Name: VolumePatchPropertiesDataProtection.snapshot
+        /// </summary>
         internal VolumeSnapshotProperties Snapshot { get; set; }
-        /// <summary> Snapshot Policy ResourceId. </summary>
+        /// <summary>
+        /// Snapshot Policy ResourceId
+        /// Serialized Name: VolumeSnapshotProperties.snapshotPolicyId
+        /// </summary>
         public ResourceIdentifier SnapshotPolicyId
         {
             get => Snapshot is null ? default : Snapshot.SnapshotPolicyId;

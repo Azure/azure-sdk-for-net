@@ -10,11 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Get group Id list for LDAP User request. </summary>
+    /// <summary>
+    /// Get group Id list for LDAP User request
+    /// Serialized Name: GetGroupIdListForLdapUserRequest
+    /// </summary>
     public partial class GetGroupIdListForLdapUserContent
     {
         /// <summary> Initializes a new instance of <see cref="GetGroupIdListForLdapUserContent"/>. </summary>
-        /// <param name="username"> username is required to fetch the group to which user is part of. </param>
+        /// <param name="username">
+        /// username is required to fetch the group to which user is part of
+        /// Serialized Name: GetGroupIdListForLdapUserRequest.username
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="username"/> is null. </exception>
         public GetGroupIdListForLdapUserContent(string username)
         {
@@ -23,7 +29,10 @@ namespace Azure.ResourceManager.NetApp.Models
             Username = username;
         }
 
-        /// <summary> username is required to fetch the group to which user is part of. </summary>
+        /// <summary>
+        /// username is required to fetch the group to which user is part of
+        /// Serialized Name: GetGroupIdListForLdapUserRequest.username
+        /// </summary>
         public string Username { get; }
     }
 }

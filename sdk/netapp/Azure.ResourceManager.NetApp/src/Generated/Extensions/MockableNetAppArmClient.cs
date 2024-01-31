@@ -37,6 +37,18 @@ namespace Azure.ResourceManager.NetApp.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="RegionInfoResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RegionInfoResource.CreateResourceIdentifier" /> to create a <see cref="RegionInfoResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RegionInfoResource"/> object. </returns>
+        public virtual RegionInfoResource GetRegionInfoResource(ResourceIdentifier id)
+        {
+            RegionInfoResource.ValidateResourceId(id);
+            return new RegionInfoResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="NetAppAccountResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetAppAccountResource.CreateResourceIdentifier" /> to create a <see cref="NetAppAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -97,6 +109,18 @@ namespace Azure.ResourceManager.NetApp.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="NetAppBackupVaultBackupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppBackupVaultBackupResource.CreateResourceIdentifier" /> to create a <see cref="NetAppBackupVaultBackupResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetAppBackupVaultBackupResource"/> object. </returns>
+        public virtual NetAppBackupVaultBackupResource GetNetAppBackupVaultBackupResource(ResourceIdentifier id)
+        {
+            NetAppBackupVaultBackupResource.ValidateResourceId(id);
+            return new NetAppBackupVaultBackupResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="NetAppBackupPolicyResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetAppBackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="NetAppBackupPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -142,6 +166,18 @@ namespace Azure.ResourceManager.NetApp.Mocking
         {
             NetAppSubvolumeInfoResource.ValidateResourceId(id);
             return new NetAppSubvolumeInfoResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="BackupVaultResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BackupVaultResource.CreateResourceIdentifier" /> to create a <see cref="BackupVaultResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="BackupVaultResource"/> object. </returns>
+        public virtual BackupVaultResource GetBackupVaultResource(ResourceIdentifier id)
+        {
+            BackupVaultResource.ValidateResourceId(id);
+            return new BackupVaultResource(Client, id);
         }
     }
 }

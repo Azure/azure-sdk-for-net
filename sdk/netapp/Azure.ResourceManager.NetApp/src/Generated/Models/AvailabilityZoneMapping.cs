@@ -7,26 +7,41 @@
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> The AvailabilityZoneMapping. </summary>
+    /// <summary>
+    /// The AvailabilityZoneMapping.
+    /// Serialized Name: RegionInfoAvailabilityZoneMappingsItem
+    /// </summary>
     public partial class AvailabilityZoneMapping
     {
         /// <summary> Initializes a new instance of <see cref="AvailabilityZoneMapping"/>. </summary>
-        internal AvailabilityZoneMapping()
+        public AvailabilityZoneMapping()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="AvailabilityZoneMapping"/>. </summary>
-        /// <param name="availabilityZone"> Logical availability zone. </param>
-        /// <param name="isAvailable"> Available availability zone. </param>
+        /// <param name="availabilityZone">
+        /// Logical availability zone.
+        /// Serialized Name: RegionInfoAvailabilityZoneMappingsItem.availabilityZone
+        /// </param>
+        /// <param name="isAvailable">
+        /// Available availability zone
+        /// Serialized Name: RegionInfoAvailabilityZoneMappingsItem.isAvailable
+        /// </param>
         internal AvailabilityZoneMapping(string availabilityZone, bool? isAvailable)
         {
             AvailabilityZone = availabilityZone;
             IsAvailable = isAvailable;
         }
 
-        /// <summary> Logical availability zone. </summary>
-        public string AvailabilityZone { get; }
-        /// <summary> Available availability zone. </summary>
-        public bool? IsAvailable { get; }
+        /// <summary>
+        /// Logical availability zone.
+        /// Serialized Name: RegionInfoAvailabilityZoneMappingsItem.availabilityZone
+        /// </summary>
+        public string AvailabilityZone { get; set; }
+        /// <summary>
+        /// Available availability zone
+        /// Serialized Name: RegionInfoAvailabilityZoneMappingsItem.isAvailable
+        /// </summary>
+        public bool? IsAvailable { get; set; }
     }
 }

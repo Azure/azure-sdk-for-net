@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Subvolume Patch Request properties. </summary>
+    /// <summary>
+    /// Subvolume Patch Request properties
+    /// Serialized Name: SubvolumePatchRequest
+    /// </summary>
     public partial class NetAppSubvolumeInfoPatch
     {
         /// <summary> Initializes a new instance of <see cref="NetAppSubvolumeInfoPatch"/>. </summary>
@@ -15,9 +18,15 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary> Truncate subvolume to the provided size in bytes. </summary>
+        /// <summary>
+        /// Truncate subvolume to the provided size in bytes
+        /// Serialized Name: SubvolumePatchRequest.properties.size
+        /// </summary>
         public long? Size { get; set; }
-        /// <summary> path to the subvolume. </summary>
+        /// <summary>
+        /// path to the subvolume
+        /// Serialized Name: SubvolumePatchRequest.properties.path
+        /// </summary>
         public string Path { get; set; }
     }
 }

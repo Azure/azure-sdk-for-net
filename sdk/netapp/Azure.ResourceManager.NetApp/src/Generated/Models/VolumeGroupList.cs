@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> List of volume group resources. </summary>
+    /// <summary>
+    /// List of volume group resources
+    /// Serialized Name: VolumeGroupList
+    /// </summary>
     internal partial class VolumeGroupList
     {
         /// <summary> Initializes a new instance of <see cref="VolumeGroupList"/>. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VolumeGroupList"/>. </summary>
-        /// <param name="value"> List of volume Groups. </param>
+        /// <param name="value">
+        /// List of volume Groups
+        /// Serialized Name: VolumeGroupList.value
+        /// </param>
         internal VolumeGroupList(IReadOnlyList<NetAppVolumeGroupResult> value)
         {
             Value = value;
         }
 
-        /// <summary> List of volume Groups. </summary>
+        /// <summary>
+        /// List of volume Groups
+        /// Serialized Name: VolumeGroupList.value
+        /// </summary>
         public IReadOnlyList<NetAppVolumeGroupResult> Value { get; }
     }
 }

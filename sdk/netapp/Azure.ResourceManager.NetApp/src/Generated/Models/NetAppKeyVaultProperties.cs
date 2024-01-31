@@ -10,13 +10,25 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Properties of key vault. </summary>
+    /// <summary>
+    /// Properties of key vault.
+    /// Serialized Name: KeyVaultProperties
+    /// </summary>
     public partial class NetAppKeyVaultProperties
     {
         /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultProperties"/>. </summary>
-        /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
-        /// <param name="keyName"> The name of KeyVault key. </param>
-        /// <param name="keyVaultResourceId"> The resource ID of KeyVault. </param>
+        /// <param name="keyVaultUri">
+        /// The Uri of KeyVault.
+        /// Serialized Name: KeyVaultProperties.keyVaultUri
+        /// </param>
+        /// <param name="keyName">
+        /// The name of KeyVault key.
+        /// Serialized Name: KeyVaultProperties.keyName
+        /// </param>
+        /// <param name="keyVaultResourceId">
+        /// The resource ID of KeyVault.
+        /// Serialized Name: KeyVaultProperties.keyVaultResourceId
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultUri"/>, <paramref name="keyName"/> or <paramref name="keyVaultResourceId"/> is null. </exception>
         public NetAppKeyVaultProperties(Uri keyVaultUri, string keyName, string keyVaultResourceId)
         {
@@ -30,11 +42,26 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppKeyVaultProperties"/>. </summary>
-        /// <param name="keyVaultId"> UUID v4 used to identify the Azure Key Vault configuration. </param>
-        /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
-        /// <param name="keyName"> The name of KeyVault key. </param>
-        /// <param name="keyVaultResourceId"> The resource ID of KeyVault. </param>
-        /// <param name="status"> Status of the KeyVault connection. </param>
+        /// <param name="keyVaultId">
+        /// UUID v4 used to identify the Azure Key Vault configuration
+        /// Serialized Name: KeyVaultProperties.keyVaultId
+        /// </param>
+        /// <param name="keyVaultUri">
+        /// The Uri of KeyVault.
+        /// Serialized Name: KeyVaultProperties.keyVaultUri
+        /// </param>
+        /// <param name="keyName">
+        /// The name of KeyVault key.
+        /// Serialized Name: KeyVaultProperties.keyName
+        /// </param>
+        /// <param name="keyVaultResourceId">
+        /// The resource ID of KeyVault.
+        /// Serialized Name: KeyVaultProperties.keyVaultResourceId
+        /// </param>
+        /// <param name="status">
+        /// Status of the KeyVault connection.
+        /// Serialized Name: KeyVaultProperties.status
+        /// </param>
         internal NetAppKeyVaultProperties(string keyVaultId, Uri keyVaultUri, string keyName, string keyVaultResourceId, NetAppKeyVaultStatus? status)
         {
             KeyVaultId = keyVaultId;
@@ -44,15 +71,30 @@ namespace Azure.ResourceManager.NetApp.Models
             Status = status;
         }
 
-        /// <summary> UUID v4 used to identify the Azure Key Vault configuration. </summary>
+        /// <summary>
+        /// UUID v4 used to identify the Azure Key Vault configuration
+        /// Serialized Name: KeyVaultProperties.keyVaultId
+        /// </summary>
         public string KeyVaultId { get; }
-        /// <summary> The Uri of KeyVault. </summary>
+        /// <summary>
+        /// The Uri of KeyVault.
+        /// Serialized Name: KeyVaultProperties.keyVaultUri
+        /// </summary>
         public Uri KeyVaultUri { get; set; }
-        /// <summary> The name of KeyVault key. </summary>
+        /// <summary>
+        /// The name of KeyVault key.
+        /// Serialized Name: KeyVaultProperties.keyName
+        /// </summary>
         public string KeyName { get; set; }
-        /// <summary> The resource ID of KeyVault. </summary>
+        /// <summary>
+        /// The resource ID of KeyVault.
+        /// Serialized Name: KeyVaultProperties.keyVaultResourceId
+        /// </summary>
         public string KeyVaultResourceId { get; set; }
-        /// <summary> Status of the KeyVault connection. </summary>
+        /// <summary>
+        /// Status of the KeyVault connection.
+        /// Serialized Name: KeyVaultProperties.status
+        /// </summary>
         public NetAppKeyVaultStatus? Status { get; }
     }
 }

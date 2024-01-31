@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Volume patch resource. </summary>
+    /// <summary>
+    /// Volume patch resource
+    /// Serialized Name: VolumePatch
+    /// </summary>
     public partial class NetAppVolumePatch : TrackedResourceData
     {
         /// <summary> Initializes a new instance of <see cref="NetAppVolumePatch"/>. </summary>
@@ -20,13 +23,25 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary> The service level of the file system. </summary>
+        /// <summary>
+        /// The service level of the file system
+        /// Serialized Name: VolumePatch.properties.serviceLevel
+        /// </summary>
         public NetAppFileServiceLevel? ServiceLevel { get; set; }
-        /// <summary> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. Minimum size is 100 GiB. Upper limit is 100TiB, 500Tib for LargeVolume or 2400Tib for LargeVolume on exceptional basis. Specified in bytes. </summary>
+        /// <summary>
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. Minimum size is 100 GiB. Upper limit is 100TiB, 500Tib for LargeVolume or 2400Tib for LargeVolume on exceptional basis. Specified in bytes.
+        /// Serialized Name: VolumePatch.properties.usageThreshold
+        /// </summary>
         public long? UsageThreshold { get; set; }
-        /// <summary> Set of export policy rules. </summary>
+        /// <summary>
+        /// Set of export policy rules
+        /// Serialized Name: VolumePatch.properties.exportPolicy
+        /// </summary>
         internal VolumePatchPropertiesExportPolicy ExportPolicy { get; set; }
-        /// <summary> Export policy rule. </summary>
+        /// <summary>
+        /// Export policy rule
+        /// Serialized Name: VolumePatchPropertiesExportPolicy.rules
+        /// </summary>
         public IList<NetAppVolumeExportPolicyRule> ExportRules
         {
             get
@@ -37,44 +52,63 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        /// <summary> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </summary>
+        /// <summary>
+        /// Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume
+        /// Serialized Name: VolumePatch.properties.throughputMibps
+        /// </summary>
         public float? ThroughputMibps { get; set; }
-        /// <summary> Snapshot Policy ResourceId. </summary>
-        public ResourceIdentifier SnapshotPolicyId
-        {
-            get => DataProtection is null ? default : DataProtection.SnapshotPolicyId;
-            set
-            {
-                if (DataProtection is null)
-                    DataProtection = new NetAppVolumePatchDataProtection();
-                DataProtection.SnapshotPolicyId = value;
-            }
-        }
-
-        /// <summary> Specifies if default quota is enabled for the volume. </summary>
+        /// <summary>
+        /// Specifies if default quota is enabled for the volume.
+        /// Serialized Name: VolumePatch.properties.isDefaultQuotaEnabled
+        /// </summary>
         public bool? IsDefaultQuotaEnabled { get; set; }
-        /// <summary> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </summary>
+        /// <summary>
+        /// Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies .
+        /// Serialized Name: VolumePatch.properties.defaultUserQuotaInKiBs
+        /// </summary>
         public long? DefaultUserQuotaInKiBs { get; set; }
-        /// <summary> Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies. </summary>
+        /// <summary>
+        /// Default group quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies.
+        /// Serialized Name: VolumePatch.properties.defaultGroupQuotaInKiBs
+        /// </summary>
         public long? DefaultGroupQuotaInKiBs { get; set; }
-        /// <summary> UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users. </summary>
+        /// <summary>
+        /// UNIX permissions for NFS volume accepted in octal 4 digit format. First digit selects the set user ID(4), set group ID (2) and sticky (1) attributes. Second digit selects permission for the owner of the file: read (4), write (2) and execute (1). Third selects permissions for other users in the same group. the fourth for other users not in the group. 0755 - gives read/write/execute permissions to owner and read/execute to group and other users.
+        /// Serialized Name: VolumePatch.properties.unixPermissions
+        /// </summary>
         public string UnixPermissions { get; set; }
-        /// <summary> Specifies whether Cool Access(tiering) is enabled for the volume. </summary>
+        /// <summary>
+        /// Specifies whether Cool Access(tiering) is enabled for the volume.
+        /// Serialized Name: VolumePatch.properties.coolAccess
+        /// </summary>
         public bool? IsCoolAccessEnabled { get; set; }
-        /// <summary> Specifies the number of days after which data that is not accessed by clients will be tiered. </summary>
+        /// <summary>
+        /// Specifies the number of days after which data that is not accessed by clients will be tiered.
+        /// Serialized Name: VolumePatch.properties.coolnessPeriod
+        /// </summary>
         public int? CoolnessPeriod { get; set; }
         /// <summary>
         /// coolAccessRetrievalPolicy determines the data retrieval behavior from the cool tier to standard storage based on the read pattern for cool access enabled volumes. The possible values for this field are:
         ///  Default - Data will be pulled from cool tier to standard storage on random reads. This policy is the default.
         ///  OnRead - All client-driven data read is pulled from cool tier to standard storage on both sequential and random reads.
         ///  Never - No client-driven data is pulled from cool tier to standard storage.
+        /// Serialized Name: VolumePatch.properties.coolAccessRetrievalPolicy
         /// </summary>
         public CoolAccessRetrievalPolicy? CoolAccessRetrievalPolicy { get; set; }
-        /// <summary> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots. </summary>
+        /// <summary>
+        /// If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots.
+        /// Serialized Name: VolumePatch.properties.snapshotDirectoryVisible
+        /// </summary>
         public bool? IsSnapshotDirectoryVisible { get; set; }
-        /// <summary> Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+        /// <summary>
+        /// Enables access-based enumeration share property for SMB Shares. Only applicable for SMB/DualProtocol volume
+        /// Serialized Name: VolumePatch.properties.smbAccessBasedEnumeration
+        /// </summary>
         public SmbAccessBasedEnumeration? SmbAccessBasedEnumeration { get; set; }
-        /// <summary> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+        /// <summary>
+        /// Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume
+        /// Serialized Name: VolumePatch.properties.smbNonBrowsable
+        /// </summary>
         public SmbNonBrowsable? SmbNonBrowsable { get; set; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Volume details using the backup policy. </summary>
+    /// <summary>
+    /// Volume details using the backup policy
+    /// Serialized Name: VolumeBackups
+    /// </summary>
     public partial class NetAppVolumeBackupDetail
     {
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupDetail"/>. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupDetail"/>. </summary>
-        /// <param name="volumeName"> Volume name. </param>
-        /// <param name="backupsCount"> Total count of backups for volume. </param>
-        /// <param name="isPolicyEnabled"> Policy enabled. </param>
+        /// <param name="volumeName">
+        /// Volume name
+        /// Serialized Name: VolumeBackups.volumeName
+        /// </param>
+        /// <param name="backupsCount">
+        /// Total count of backups for volume
+        /// Serialized Name: VolumeBackups.backupsCount
+        /// </param>
+        /// <param name="isPolicyEnabled">
+        /// Policy enabled
+        /// Serialized Name: VolumeBackups.policyEnabled
+        /// </param>
         internal NetAppVolumeBackupDetail(string volumeName, int? backupsCount, bool? isPolicyEnabled)
         {
             VolumeName = volumeName;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.NetApp.Models
             IsPolicyEnabled = isPolicyEnabled;
         }
 
-        /// <summary> Volume name. </summary>
+        /// <summary>
+        /// Volume name
+        /// Serialized Name: VolumeBackups.volumeName
+        /// </summary>
         public string VolumeName { get; }
-        /// <summary> Total count of backups for volume. </summary>
+        /// <summary>
+        /// Total count of backups for volume
+        /// Serialized Name: VolumeBackups.backupsCount
+        /// </summary>
         public int? BackupsCount { get; }
-        /// <summary> Policy enabled. </summary>
+        /// <summary>
+        /// Policy enabled
+        /// Serialized Name: VolumeBackups.policyEnabled
+        /// </summary>
         public bool? IsPolicyEnabled { get; }
     }
 }

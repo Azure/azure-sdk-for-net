@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> LDAP search scope. </summary>
+    /// <summary>
+    /// LDAP search scope
+    /// Serialized Name: LdapSearchScopeOpt
+    /// </summary>
     public partial class NetAppLdapSearchScopeConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="NetAppLdapSearchScopeConfiguration"/>. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppLdapSearchScopeConfiguration"/>. </summary>
-        /// <param name="userDN"> This specifies the user DN, which overrides the base DN for user lookups. </param>
-        /// <param name="groupDN"> This specifies the group DN, which overrides the base DN for group lookups. </param>
-        /// <param name="groupMembershipFilter"> This specifies the custom LDAP search filter to be used when looking up group membership from LDAP server. </param>
+        /// <param name="userDN">
+        /// This specifies the user DN, which overrides the base DN for user lookups.
+        /// Serialized Name: LdapSearchScopeOpt.userDN
+        /// </param>
+        /// <param name="groupDN">
+        /// This specifies the group DN, which overrides the base DN for group lookups.
+        /// Serialized Name: LdapSearchScopeOpt.groupDN
+        /// </param>
+        /// <param name="groupMembershipFilter">
+        /// This specifies the custom LDAP search filter to be used when looking up group membership from LDAP server.
+        /// Serialized Name: LdapSearchScopeOpt.groupMembershipFilter
+        /// </param>
         internal NetAppLdapSearchScopeConfiguration(string userDN, string groupDN, string groupMembershipFilter)
         {
             UserDN = userDN;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.NetApp.Models
             GroupMembershipFilter = groupMembershipFilter;
         }
 
-        /// <summary> This specifies the user DN, which overrides the base DN for user lookups. </summary>
+        /// <summary>
+        /// This specifies the user DN, which overrides the base DN for user lookups.
+        /// Serialized Name: LdapSearchScopeOpt.userDN
+        /// </summary>
         public string UserDN { get; set; }
-        /// <summary> This specifies the group DN, which overrides the base DN for group lookups. </summary>
+        /// <summary>
+        /// This specifies the group DN, which overrides the base DN for group lookups.
+        /// Serialized Name: LdapSearchScopeOpt.groupDN
+        /// </summary>
         public string GroupDN { get; set; }
-        /// <summary> This specifies the custom LDAP search filter to be used when looking up group membership from LDAP server. </summary>
+        /// <summary>
+        /// This specifies the custom LDAP search filter to be used when looking up group membership from LDAP server.
+        /// Serialized Name: LdapSearchScopeOpt.groupMembershipFilter
+        /// </summary>
         public string GroupMembershipFilter { get; set; }
     }
 }
