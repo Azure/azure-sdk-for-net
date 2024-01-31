@@ -1,14 +1,12 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0 (2024-01-26)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+This release is the first stable release of the Hybrid Container Service Management library.
 
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.10.1.
 
 ## 1.0.0-beta.5 (2024-01-15)
 
