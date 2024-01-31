@@ -6,42 +6,32 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "456",
+        "Content-Length": "301",
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-ad7b36521ca9cea32d039db34c6ac79b-d15fcc174e81e98f-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240130.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "f68119faa8d666ed74c21b17ea5924f9",
+        "traceparent": "00-f11bc6176641761585181a14ff0c194a-779506de855f6e01-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240131.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "40fcfafbeb74e2d569ebc2b0cf8942ec",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 30 Jan 2024 19:31:06 GMT",
+        "x-ms-date": "Wed, 31 Jan 2024 17:57:12 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "template": {
-          "name": "sample_purchase_feedback",
+          "name": "sample_shipping_confirmation",
           "language": "en_us",
           "values": [
             {
-              "url": "https://upload.wikimedia.org/wikipedia/commons/3/30/Building92microsoft.jpg",
-              "name": "image",
-              "kind": "image"
-            },
-            {
-              "text": "Microsoft Office",
-              "name": "product",
+              "text": "3",
+              "name": "threeDays",
               "kind": "text"
             }
           ],
           "bindings": {
-            "header": [
-              {
-                "refValue": "image"
-              }
-            ],
             "body": [
               {
-                "refValue": "product"
+                "refValue": "threeDays"
               }
             ],
             "kind": "whatsApp"
@@ -59,19 +49,19 @@
         "Connection": "keep-alive",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 30 Jan 2024 19:31:07 GMT",
-        "MS-CV": "pPDhm7\u002BxpU6NtsMpQFpqYg.0",
+        "Date": "Wed, 31 Jan 2024 17:57:14 GMT",
+        "MS-CV": "csI8BjY8SU\u002B74cqoOj0heQ.0",
         "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "x-azure-ref": "20240130T193107Z-8yckms9b854avctg0mg5k53sbn00000007xg00000000cpec",
+        "x-azure-ref": "20240131T175713Z-xhkbvcbuh904z65z6s670wdw5w00000003z000000000k8nw",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "488ms"
+        "X-Processing-Time": "327ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "52af62aa-5250-4b80-8e7f-dd54b54f4a69",
+            "messageId": "71bc2508-652f-4b45-9193-c81661e44386",
             "to": "\u002B16041234567"
           }
         ]
@@ -79,6 +69,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1686177119"
+    "RandomSeed": "247007428"
   }
 }

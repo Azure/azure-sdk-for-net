@@ -1,0 +1,94 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/messages/notifications:send?api-version=2024-02-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "491",
+        "Content-Type": "application/json",
+        "Repeatability-First-Sent": "Sanitized",
+        "Repeatability-Request-ID": "Sanitized",
+        "traceparent": "00-e54749188792a4d7769730ff3f800e92-772a06942328285c-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240131.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "0f176fb650fa2ca3de710eb12d64ef36",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 31 Jan 2024 17:57:16 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "template": {
+          "name": "sample_issue_resolution",
+          "language": "en_us",
+          "values": [
+            {
+              "text": "Gloria",
+              "name": "name",
+              "kind": "text"
+            },
+            {
+              "payload": "Yay!",
+              "name": "yes",
+              "kind": "quickAction"
+            },
+            {
+              "payload": "Nay!",
+              "name": "no",
+              "kind": "quickAction"
+            }
+          ],
+          "bindings": {
+            "body": [
+              {
+                "refValue": "name"
+              }
+            ],
+            "buttons": [
+              {
+                "subType": "quickReply",
+                "refValue": "yes"
+              },
+              {
+                "subType": "quickReply",
+                "refValue": "no"
+              }
+            ],
+            "kind": "whatsApp"
+          }
+        },
+        "channelRegistrationId": "75da05b7-831f-45cf-923d-98e9a9f4c16a",
+        "to": [
+          "\u002B16041234567"
+        ],
+        "kind": "template"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "api-supported-versions": "2023-08-24-preview, 2024-02-01",
+        "Connection": "keep-alive",
+        "Content-Length": "87",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 31 Jan 2024 17:57:17 GMT",
+        "MS-CV": "HE9iuQJ960\u002Bfz2/sqToXXA.0",
+        "Repeatability-Result": "accepted",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "x-azure-ref": "20240131T175717Z-xhkbvcbuh904z65z6s670wdw5w00000003z000000000k90f",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "321ms"
+      },
+      "ResponseBody": {
+        "receipts": [
+          {
+            "messageId": "a6b55977-ac4d-4bf0-9d66-9c7b8f7b135d",
+            "to": "\u002B16041234567"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1669285547"
+  }
+}

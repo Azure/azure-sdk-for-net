@@ -6,58 +6,66 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "577",
+        "Content-Length": "673",
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-30d2d456cf58c51b276a9eb256ed22c8-d19f9b68d0ec8f13-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240130.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "3e128802eb304a1f7eaf345e83d3b449",
+        "traceparent": "00-61fc6ff8160da201a5455bbcf3bf2338-c10edd33651ae057-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240131.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "8764de5e8ed9d8692916822935ef73f9",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 30 Jan 2024 19:31:01 GMT",
+        "x-ms-date": "Wed, 31 Jan 2024 17:57:11 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "template": {
-          "name": "sample_flight_confirmation",
+          "name": "sample_movie_ticket_confirmation",
           "language": "en_us",
           "values": [
             {
-              "url": "https://go.microsoft.com/fwlink/?linkid=2131549",
-              "name": "document",
-              "kind": "document"
+              "url": "https://upload.wikimedia.org/wikipedia/commons/3/30/Building92microsoft.jpg",
+              "name": "image",
+              "kind": "image"
             },
             {
-              "text": "Gloria",
-              "name": "firstName",
+              "text": "Avengers",
+              "name": "title",
               "kind": "text"
             },
             {
-              "text": "Li",
-              "name": "lastName",
+              "text": "July 1st, 2023 12:30PM",
+              "name": "time",
               "kind": "text"
             },
             {
-              "text": "July 1st, 2023",
-              "name": "date",
+              "text": "Cineplex",
+              "name": "venue",
+              "kind": "text"
+            },
+            {
+              "text": "Seat 1A",
+              "name": "seats",
               "kind": "text"
             }
           ],
           "bindings": {
             "header": [
               {
-                "refValue": "document"
+                "refValue": "image"
               }
             ],
             "body": [
               {
-                "refValue": "firstName"
+                "refValue": "title"
               },
               {
-                "refValue": "lastName"
+                "refValue": "time"
               },
               {
-                "refValue": "date"
+                "refValue": "venue"
+              },
+              {
+                "refValue": "seats"
               }
             ],
             "kind": "whatsApp"
@@ -75,19 +83,19 @@
         "Connection": "keep-alive",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 30 Jan 2024 19:31:02 GMT",
-        "MS-CV": "zcKBCDYcrE\u002BtuUugqqxQaQ.0",
+        "Date": "Wed, 31 Jan 2024 17:57:12 GMT",
+        "MS-CV": "QypD31mcHUmsjyE\u002B\u002Bfjjyg.0",
         "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "x-azure-ref": "20240130T193101Z-8yckms9b854avctg0mg5k53sbn00000007xg00000000cnwp",
+        "x-azure-ref": "20240131T175712Z-xhkbvcbuh904z65z6s670wdw5w00000003z000000000k8gm",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "461ms"
+        "X-Processing-Time": "333ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "d48a27c7-525c-4287-a324-90abef6050e5",
+            "messageId": "e533e45e-ba35-4b80-86ff-52d75a7ff6a7",
             "to": "\u002B16041234567"
           }
         ]
@@ -95,6 +103,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "373963406"
+    "RandomSeed": "1455673914"
   }
 }

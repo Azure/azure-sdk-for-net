@@ -1,0 +1,75 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/messages/notifications:send?api-version=2024-02-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "167",
+        "Content-Type": "application/json",
+        "Repeatability-First-Sent": "Sanitized",
+        "Repeatability-Request-ID": "Sanitized",
+        "traceparent": "00-073d55d603f93b8b634c817d7a50aa53-805ebbded1e5497f-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240131.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "f9004eb1b2a300692fdf002be3f6cebc",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 31 Jan 2024 17:57:18 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "template": {
+          "name": "invalid_template",
+          "language": "en_us"
+        },
+        "channelRegistrationId": "75da05b7-831f-45cf-923d-98e9a9f4c16a",
+        "to": [
+          "\u002B16041234567"
+        ],
+        "kind": "template"
+      },
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "api-supported-versions": "2023-08-24-preview, 2024-02-01",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Wed, 31 Jan 2024 17:57:19 GMT",
+        "MS-CV": "He0KhCAmWkqjN\u002B/VQyuCUw.0",
+        "Repeatability-Result": "accepted",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "x-azure-ref": "20240131T175719Z-xhkbvcbuh904z65z6s670wdw5w00000003z000000000k96r",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "175ms"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "TemplateNotFound",
+          "message": "Template does not exist",
+          "innererror": {
+            "code": "WaErrorCode.TemplateNotFound",
+            "message": "TemplateNotFound: (#132001) Template name does not exist in the translation"
+          },
+          "data": {
+            "ClassName": "Microsoft.Azure.Communication.CrossPlatformMessages.Contract.Model.BusinessLogicException\u00601[Microsoft.Azure.Communication.CrossPlatformMessages.Core.HttpClients.WhatsApp.WhatsAppClient\u002BWaErrorCode]",
+            "Message": "TemplateNotFound: (#132001) Template name does not exist in the translation",
+            "Data": null,
+            "InnerException": null,
+            "HelpURL": null,
+            "StackTraceString": "   at Microsoft.Azure.Communication.CrossPlatformMessages.Core.HttpClients.WhatsApp.WhatsAppBaseClient.ValidateResponse(HttpResponseMessage httpResponse, Action\u00602 onError) in C:\\_work\\1\\s\\src\\Core\\HttpClients\\WhatsApp\\WhatsAppBaseClient.cs:line 166\r\n   at Microsoft.Azure.Communication.CrossPlatformMessages.Core.HttpClients.WhatsApp.WhatsAppBaseClient.ValidateResponse[TResponse](HttpResponseMessage httpResponse, Action\u00602 onError) in C:\\_work\\1\\s\\src\\Core\\HttpClients\\WhatsApp\\WhatsAppBaseClient.cs:line 100\r\n   at Microsoft.Azure.Communication.CrossPlatformMessages.Core.HttpClients.WhatsApp.WhatsAppClient.SendMessageAsync(String phoneNumberId, WhatsAppMessageObject messageObject, String accessToken) in C:\\_work\\1\\s\\src\\Core\\HttpClients\\WhatsApp\\WhatsAppClient.cs:line 455\r\n   at Microsoft.Azure.Communication.CrossPlatformMessages.Core.HttpClients.WhatsApp.WhatsAppClient.SendTemplateMessageAsync(String phoneNumberId, String toPhoneNumber, WhatsAppTemplateObject template, String accessToken) in C:\\_work\\1\\s\\src\\Core\\HttpClients\\WhatsApp\\WhatsAppClient.cs:line 218\r\n   at Microsoft.Azure.Communication.CrossPlatformMessages.Core.HttpClients.WhatsApp.WhatsAppClient.SendTemplateMessageAsync(String phoneNumberId, String toPhoneNumber, MessageTemplateInternal template, String accessToken) in C:\\_work\\1\\s\\src\\Core\\HttpClients\\WhatsApp\\WhatsAppClient.cs:line 200\r\n   at Microsoft.Azure.Communication.CrossPlatformMessages.Core.Logic.Messaging.MessagingService.SendWhatsAppMessageAsync(SendNotificationRequestInternal request, String phoneNumberId, AcsResourceId acsResourceId, Geography resourceLocation, Guid channelId) in C:\\_work\\1\\s\\src\\Core\\Logic\\Messaging\\MessagingService.cs:line 270",
+            "RemoteStackTraceString": null,
+            "RemoteStackIndex": 0,
+            "ExceptionMethod": null,
+            "HResult": -2146233088,
+            "Source": "Microsoft.Azure.Communication.CrossPlatformMessages.Core",
+            "WatsonBuckets": null
+          }
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "586440516"
+  }
+}

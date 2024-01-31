@@ -6,50 +6,66 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "517",
+        "Content-Length": "673",
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-902d1d0433dc580024839b03a9986bc4-64622e7f0e647884-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240130.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "59a89aab649edab2a7eba0cc9fa8c814",
+        "traceparent": "00-e328fd981a166a48bd7bffb7727ba83e-61bfb9f2d1def652-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240131.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "6ab6c9ea9a4369c895e5c34f02039d9f",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 30 Jan 2024 19:31:02 GMT",
+        "x-ms-date": "Wed, 31 Jan 2024 17:57:16 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "template": {
-          "name": "sample_happy_hour_announcement",
+          "name": "sample_movie_ticket_confirmation",
           "language": "en_us",
           "values": [
             {
-              "text": "Starbucks",
-              "name": "venue",
+              "url": "https://upload.wikimedia.org/wikipedia/commons/3/30/Building92microsoft.jpg",
+              "name": "image",
+              "kind": "image"
+            },
+            {
+              "text": "Avengers",
+              "name": "title",
               "kind": "text"
             },
             {
-              "text": "Today 2-4PM",
+              "text": "July 1st, 2023 12:30PM",
               "name": "time",
               "kind": "text"
             },
             {
-              "url": "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4",
-              "name": "video",
-              "kind": "video"
+              "text": "Cineplex",
+              "name": "venue",
+              "kind": "text"
+            },
+            {
+              "text": "Seat 1A",
+              "name": "seats",
+              "kind": "text"
             }
           ],
           "bindings": {
             "header": [
               {
-                "refValue": "video"
+                "refValue": "image"
               }
             ],
             "body": [
               {
-                "refValue": "venue"
+                "refValue": "title"
               },
               {
                 "refValue": "time"
+              },
+              {
+                "refValue": "venue"
+              },
+              {
+                "refValue": "seats"
               }
             ],
             "kind": "whatsApp"
@@ -67,19 +83,19 @@
         "Connection": "keep-alive",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 30 Jan 2024 19:31:02 GMT",
-        "MS-CV": "rT7vSPolTEyhLgYyXkqoTg.0",
+        "Date": "Wed, 31 Jan 2024 17:57:17 GMT",
+        "MS-CV": "/KCXJ890nkOsaYfBsAUNzA.0",
         "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "x-azure-ref": "20240130T193102Z-8yckms9b854avctg0mg5k53sbn00000007xg00000000cnya",
+        "x-azure-ref": "20240131T175717Z-xhkbvcbuh904z65z6s670wdw5w00000003z000000000k91s",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "430ms"
+        "X-Processing-Time": "329ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "3c997c37-f717-42ad-82c1-dc0ab81e84a6",
+            "messageId": "012b679b-7199-4082-bd62-623156fb1539",
             "to": "\u002B16041234567"
           }
         ]
@@ -87,6 +103,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "510515600"
+    "RandomSeed": "1889629504"
   }
 }

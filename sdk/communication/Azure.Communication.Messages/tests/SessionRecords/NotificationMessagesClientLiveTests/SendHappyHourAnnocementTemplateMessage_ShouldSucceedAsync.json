@@ -6,52 +6,50 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "491",
+        "Content-Length": "517",
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-aea1f5e3c699a9acd472474cce7f5a54-1f15fd830e58a767-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240130.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "c9bd477bf2508306afa8cf839770f6d8",
+        "traceparent": "00-61d4c7a1854e742ced814dd048cbc788-0839b89dc7b91313-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240131.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "6297e4c970e15b832bdab4680963f9de",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 30 Jan 2024 19:31:02 GMT",
+        "x-ms-date": "Wed, 31 Jan 2024 17:57:15 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "template": {
-          "name": "sample_issue_resolution",
+          "name": "sample_happy_hour_announcement",
           "language": "en_us",
           "values": [
             {
-              "text": "Gloria",
-              "name": "name",
+              "text": "Starbucks",
+              "name": "venue",
               "kind": "text"
             },
             {
-              "payload": "Yay!",
-              "name": "yes",
-              "kind": "quickAction"
+              "text": "Today 2-4PM",
+              "name": "time",
+              "kind": "text"
             },
             {
-              "payload": "Nay!",
-              "name": "no",
-              "kind": "quickAction"
+              "url": "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4",
+              "name": "video",
+              "kind": "video"
             }
           ],
           "bindings": {
-            "body": [
+            "header": [
               {
-                "refValue": "name"
+                "refValue": "video"
               }
             ],
-            "buttons": [
+            "body": [
               {
-                "subType": "quickReply",
-                "refValue": "yes"
+                "refValue": "venue"
               },
               {
-                "subType": "quickReply",
-                "refValue": "no"
+                "refValue": "time"
               }
             ],
             "kind": "whatsApp"
@@ -69,19 +67,19 @@
         "Connection": "keep-alive",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 30 Jan 2024 19:31:03 GMT",
-        "MS-CV": "bR8dc29sdkqSPjFze5TcQw.0",
+        "Date": "Wed, 31 Jan 2024 17:57:16 GMT",
+        "MS-CV": "2ug3qZ8dJUKKmMSngqb7Sw.0",
         "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "x-azure-ref": "20240130T193102Z-8yckms9b854avctg0mg5k53sbn00000007xg00000000cnzg",
+        "x-azure-ref": "20240131T175716Z-xhkbvcbuh904z65z6s670wdw5w00000003z000000000k8yf",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "422ms"
+        "X-Processing-Time": "364ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "48b94437-6bc5-4622-b089-e11bfeb65f06",
+            "messageId": "f6e0b0a3-6fb6-4ef0-a47e-3030db322b62",
             "to": "\u002B16041234567"
           }
         ]
@@ -89,6 +87,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "266126289"
+    "RandomSeed": "792062981"
   }
 }

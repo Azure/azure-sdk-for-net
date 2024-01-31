@@ -6,51 +6,49 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "126",
+        "Content-Length": "125",
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-c3d3c7c17616245f102b5e30b9af8010-ee7f925d4df7756e-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240130.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "a2957a793234667235bc1a00c0474af5",
+        "traceparent": "00-60a347dfcf9bc832adcf1bd767a40146-985571ffab1d598a-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240131.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "f6932224fcd1da3c133438da6ab8a126",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 30 Jan 2024 19:31:04 GMT",
+        "x-ms-date": "Wed, 31 Jan 2024 17:57:19 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "content": "LiveTest",
         "channelRegistrationId": "75da05b7-831f-45cf-923d-98e9a9f4c16a",
         "to": [
-          "\u002B16041234567"
+          "InvalidRecipient"
         ],
         "kind": "text"
       },
-      "StatusCode": 202,
+      "StatusCode": 400,
       "ResponseHeaders": {
         "api-supported-versions": "2023-08-24-preview, 2024-02-01",
         "Connection": "keep-alive",
-        "Content-Length": "87",
-        "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 30 Jan 2024 19:31:05 GMT",
-        "MS-CV": "RRRvn598HESsggWW5Gg8jw.0",
+        "Content-Type": "application/json",
+        "Date": "Wed, 31 Jan 2024 17:57:20 GMT",
+        "MS-CV": "ffStDUwDC0aUwS\u002B/PJFceg.0",
         "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "x-azure-ref": "20240130T193105Z-8yckms9b854avctg0mg5k53sbn00000007xg00000000cp7u",
+        "Transfer-Encoding": "chunked",
+        "x-azure-ref": "20240131T175720Z-xhkbvcbuh904z65z6s670wdw5w00000003z000000000k99a",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "377ms"
+        "X-Processing-Time": "22ms"
       },
       "ResponseBody": {
-        "receipts": [
-          {
-            "messageId": "94002bc0-72e6-41c3-acdb-f91cb51571ae",
-            "to": "\u002B16041234567"
-          }
-        ]
+        "error": {
+          "code": "BadRequest",
+          "message": "The \u0022to\u0022 field contains invalid characters. Only plus signs (\u002B), hyphens (-), parenthesis ((,)), spaces, and digits supported. Recommended format \u0022\u002B12345678901\u0022."
+        }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "325431431"
+    "RandomSeed": "709000665"
   }
 }

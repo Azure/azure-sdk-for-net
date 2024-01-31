@@ -1,0 +1,56 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/messages/notifications:send?api-version=2024-02-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "126",
+        "Content-Type": "application/json",
+        "Repeatability-First-Sent": "Sanitized",
+        "Repeatability-Request-ID": "Sanitized",
+        "traceparent": "00-fedfd7667580147eac617c2b46065655-5615b512adae5183-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240131.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "1dab5ff090a6d79d3438055be8a24c4c",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 31 Jan 2024 17:57:14 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "content": "LiveTest",
+        "channelRegistrationId": "75da05b7-831f-45cf-923d-98e9a9f4c16a",
+        "to": [
+          "\u002B16041234567"
+        ],
+        "kind": "text"
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "api-supported-versions": "2023-08-24-preview, 2024-02-01",
+        "Connection": "keep-alive",
+        "Content-Length": "87",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 31 Jan 2024 17:57:15 GMT",
+        "MS-CV": "TpRN3rIZU0mExsjBippChA.0",
+        "Repeatability-Result": "accepted",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "x-azure-ref": "20240131T175715Z-xhkbvcbuh904z65z6s670wdw5w00000003z000000000k8tk",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "275ms"
+      },
+      "ResponseBody": {
+        "receipts": [
+          {
+            "messageId": "179f14b5-71ed-4322-b3f9-093b8891b3b8",
+            "to": "\u002B16041234567"
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "447270185"
+  }
+}

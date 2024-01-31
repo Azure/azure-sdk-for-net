@@ -1,0 +1,54 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/messages/notifications:send?api-version=2024-02-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "118",
+        "Content-Type": "application/json",
+        "Repeatability-First-Sent": "Sanitized",
+        "Repeatability-Request-ID": "Sanitized",
+        "traceparent": "00-c4b6434a5b8f143f4b7b42346dd7c1d7-7be3f6b2974a45c1-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240131.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "feef7fe644d251d0f17a618db5a1e8b5",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 31 Jan 2024 17:57:19 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "content": "",
+        "channelRegistrationId": "75da05b7-831f-45cf-923d-98e9a9f4c16a",
+        "to": [
+          "\u002B16041234567"
+        ],
+        "kind": "text"
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "api-supported-versions": "2023-08-24-preview, 2024-02-01",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Wed, 31 Jan 2024 17:57:20 GMT",
+        "MS-CV": "rRzUHk4DvU\u002BgcgJxYj4DjA.0",
+        "Repeatability-Result": "accepted",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "x-azure-ref": "20240131T175720Z-xhkbvcbuh904z65z6s670wdw5w00000003z000000000k994",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "23ms"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "BadRequest",
+          "message": "A non-empty \u0022Content\u0022 is required when message type is Text."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1287473726"
+  }
+}

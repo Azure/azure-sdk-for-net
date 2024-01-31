@@ -6,20 +6,20 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "673",
+        "Content-Length": "456",
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-b8c8961ddecd4e8e57578ca6174b8eea-78882669fe166bc5-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240130.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "e51a4dfbb71cad95f32119c13ca15f9b",
+        "traceparent": "00-b9301768936f95df6c2c052fbed29c6e-bc41ecc280c0a473-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240131.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "e9accbc966e5da97f8de2d937d84f6e9",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 30 Jan 2024 19:31:06 GMT",
+        "x-ms-date": "Wed, 31 Jan 2024 17:57:12 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "template": {
-          "name": "sample_movie_ticket_confirmation",
+          "name": "sample_purchase_feedback",
           "language": "en_us",
           "values": [
             {
@@ -28,23 +28,8 @@
               "kind": "image"
             },
             {
-              "text": "Avengers",
-              "name": "title",
-              "kind": "text"
-            },
-            {
-              "text": "July 1st, 2023 12:30PM",
-              "name": "time",
-              "kind": "text"
-            },
-            {
-              "text": "Cineplex",
-              "name": "venue",
-              "kind": "text"
-            },
-            {
-              "text": "Seat 1A",
-              "name": "seats",
+              "text": "Microsoft Office",
+              "name": "product",
               "kind": "text"
             }
           ],
@@ -56,16 +41,7 @@
             ],
             "body": [
               {
-                "refValue": "title"
-              },
-              {
-                "refValue": "time"
-              },
-              {
-                "refValue": "venue"
-              },
-              {
-                "refValue": "seats"
+                "refValue": "product"
               }
             ],
             "kind": "whatsApp"
@@ -83,19 +59,19 @@
         "Connection": "keep-alive",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 30 Jan 2024 19:31:06 GMT",
-        "MS-CV": "55rIrZ/mj063Xju5BXmKVw.0",
+        "Date": "Wed, 31 Jan 2024 17:57:13 GMT",
+        "MS-CV": "a/Az1mAzgk\u002B7Xwi2DrP7Pg.0",
         "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "x-azure-ref": "20240130T193106Z-8yckms9b854avctg0mg5k53sbn00000007xg00000000cpct",
+        "x-azure-ref": "20240131T175713Z-xhkbvcbuh904z65z6s670wdw5w00000003z000000000k8mw",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "501ms"
+        "X-Processing-Time": "323ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "3e09fa88-3e17-463c-bc6d-8d2f23c59e98",
+            "messageId": "8ee81f6b-9a5c-43a4-8a89-53d4bd7a7905",
             "to": "\u002B16041234567"
           }
         ]
@@ -103,6 +79,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1455442854"
+    "RandomSeed": "1767611262"
   }
 }

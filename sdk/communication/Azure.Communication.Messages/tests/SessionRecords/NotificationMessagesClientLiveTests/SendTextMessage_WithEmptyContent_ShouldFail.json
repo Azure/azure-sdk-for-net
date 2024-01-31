@@ -1,0 +1,54 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://sanitized.communication.azure.com/messages/notifications:send?api-version=2024-02-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "118",
+        "Content-Type": "application/json",
+        "Repeatability-First-Sent": "Sanitized",
+        "Repeatability-Request-ID": "Sanitized",
+        "traceparent": "00-24feeb3725153372fe7ea72fcae1e088-62515b609e1b8b63-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240131.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "1f3c02311b53c0dcdf72743a43a8dcaa",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 31 Jan 2024 17:57:15 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "content": "",
+        "channelRegistrationId": "75da05b7-831f-45cf-923d-98e9a9f4c16a",
+        "to": [
+          "\u002B16041234567"
+        ],
+        "kind": "text"
+      },
+      "StatusCode": 400,
+      "ResponseHeaders": {
+        "api-supported-versions": "2023-08-24-preview, 2024-02-01",
+        "Connection": "keep-alive",
+        "Content-Type": "application/json",
+        "Date": "Wed, 31 Jan 2024 17:57:16 GMT",
+        "MS-CV": "p\u002Bei8\u002BsC2UOax3p8dfCI7A.0",
+        "Repeatability-Result": "accepted",
+        "Request-Context": "appId=",
+        "Strict-Transport-Security": "max-age=2592000",
+        "Transfer-Encoding": "chunked",
+        "x-azure-ref": "20240131T175716Z-xhkbvcbuh904z65z6s670wdw5w00000003z000000000k8wn",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Processing-Time": "26ms"
+      },
+      "ResponseBody": {
+        "error": {
+          "code": "BadRequest",
+          "message": "A non-empty \u0022Content\u0022 is required when message type is Text."
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1534544647"
+  }
+}

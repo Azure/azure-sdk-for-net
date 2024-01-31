@@ -6,58 +6,32 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "Content-Length": "577",
+        "Content-Length": "301",
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-655b62b3e1e222521dac7db84a9e14f0-796d9bc4b20a634b-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240130.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "9c05dfc13432d968ce1fac2835edf859",
+        "traceparent": "00-53b806f539b9a176009864b3d065cbc7-f0373317bc899385-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240131.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "e97897f371bb540aa5ac4d1497431f82",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Tue, 30 Jan 2024 19:30:56 GMT",
+        "x-ms-date": "Wed, 31 Jan 2024 17:57:17 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
         "template": {
-          "name": "sample_flight_confirmation",
+          "name": "sample_shipping_confirmation",
           "language": "en_us",
           "values": [
             {
-              "url": "https://go.microsoft.com/fwlink/?linkid=2131549",
-              "name": "document",
-              "kind": "document"
-            },
-            {
-              "text": "Gloria",
-              "name": "firstName",
-              "kind": "text"
-            },
-            {
-              "text": "Li",
-              "name": "lastName",
-              "kind": "text"
-            },
-            {
-              "text": "July 1st, 2023",
-              "name": "date",
+              "text": "3",
+              "name": "threeDays",
               "kind": "text"
             }
           ],
           "bindings": {
-            "header": [
-              {
-                "refValue": "document"
-              }
-            ],
             "body": [
               {
-                "refValue": "firstName"
-              },
-              {
-                "refValue": "lastName"
-              },
-              {
-                "refValue": "date"
+                "refValue": "threeDays"
               }
             ],
             "kind": "whatsApp"
@@ -75,19 +49,19 @@
         "Connection": "keep-alive",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 30 Jan 2024 19:30:57 GMT",
-        "MS-CV": "jqS/utxm00CePab/aecWmw.0",
+        "Date": "Wed, 31 Jan 2024 17:57:18 GMT",
+        "MS-CV": "2dZOaqH84kKhT97k4Wl9VQ.0",
         "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "x-azure-ref": "20240130T193056Z-8yckms9b854avctg0mg5k53sbn00000007xg00000000cn80",
+        "x-azure-ref": "20240131T175718Z-xhkbvcbuh904z65z6s670wdw5w00000003z000000000k944",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "738ms"
+        "X-Processing-Time": "262ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "6129e516-6c15-4f53-b651-77eac52b96c7",
+            "messageId": "2ce877ec-6908-4ff9-81d3-68b0002525f2",
             "to": "\u002B16041234567"
           }
         ]
@@ -95,6 +69,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1608215033"
+    "RandomSeed": "657449025"
   }
 }
