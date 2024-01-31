@@ -1,8 +1,6 @@
 # Release History
 
-## 1.0.0-beta.13 (Unreleased)
-
-### Features Added
+## 1.0.0-beta.13 (2024-02-01)
 
 ### Breaking Changes
 
@@ -11,8 +9,6 @@
 ### Bugs Fixed
 
 - Addressed an issue with the public constructor for `ChatCompletionsFunctionToolCall` that failed to set the tool call type in the corresponding request.
-
-### Other Changes
 
 ## 1.0.0-beta.12 (2023-12-15)
 
