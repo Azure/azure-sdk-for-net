@@ -9,7 +9,7 @@
   The directory path of the service.
 
 .PARAMETER PackageName
-  The name of the package.
+  The name of the package, which is the artifact name in pipeline.
 
 .PARAMETER ArtifactLocation
   The location of the generated artifact for the package.
