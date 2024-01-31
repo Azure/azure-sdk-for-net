@@ -46,7 +46,7 @@ namespace Azure.Monitor.Query
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.Insights/metricDefinitions", false);
-            uri.AppendQuery("api-version", "2018-01-01", true);
+            uri.AppendQuery("api-version", "2023-10-01", true);
             if (metricnamespace != null)
             {
                 uri.AppendQuery("metricnamespace", metricnamespace, true);
@@ -58,7 +58,7 @@ namespace Azure.Monitor.Query
 
         /// <summary> Lists the metric definitions for the resource. </summary>
         /// <param name="resourceUri"> The identifier of the resource. </param>
-        /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
+        /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public async Task<Response<MetricDefinitionCollection>> ListAsync(string resourceUri, string metricnamespace = null, CancellationToken cancellationToken = default)
@@ -86,7 +86,7 @@ namespace Azure.Monitor.Query
 
         /// <summary> Lists the metric definitions for the resource. </summary>
         /// <param name="resourceUri"> The identifier of the resource. </param>
-        /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
+        /// <param name="metricnamespace"> Metric namespace where the metrics you want reside. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public Response<MetricDefinitionCollection> List(string resourceUri, string metricnamespace = null, CancellationToken cancellationToken = default)

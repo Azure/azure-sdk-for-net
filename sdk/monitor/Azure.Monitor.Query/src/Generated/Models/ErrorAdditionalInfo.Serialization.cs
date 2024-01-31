@@ -10,16 +10,16 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
-    internal partial class AdditionalInfoErrorResponseErrorAdditionalInfoItem
+    internal partial class ErrorAdditionalInfo
     {
-        internal static AdditionalInfoErrorResponseErrorAdditionalInfoItem DeserializeAdditionalInfoErrorResponseErrorAdditionalInfoItem(JsonElement element)
+        internal static ErrorAdditionalInfo DeserializeErrorAdditionalInfo(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> type = default;
-            Optional<string> info = default;
+            Optional<object> info = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -29,11 +29,15 @@ namespace Azure.Monitor.Query.Models
                 }
                 if (property.NameEquals("info"u8))
                 {
-                    info = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    info = property.Value.GetObject();
                     continue;
                 }
             }
-            return new AdditionalInfoErrorResponseErrorAdditionalInfoItem(type.Value, info.Value);
+            return new ErrorAdditionalInfo(type.Value, info.Value);
         }
     }
 }

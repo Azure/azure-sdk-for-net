@@ -612,16 +612,37 @@ Note, each resource must be in the same region as the endpoint passed in when in
 ```C# Snippet:QueryBatchMetrics
 string resourceId =
     "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
-MetricsBatchQueryClient client = new MetricsBatchQueryClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
-Response<MetricsBatchResult> metricsResultsResponse = await client.QueryBatchAsync(
-    resourceIds: new List<string> { resourceId },
-    metricNames: new List<string> { "Ingress" },
-    metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
+MetricsClient client = new MetricsClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
 
-MetricsBatchResult metricsQueryResults = metricsResultsResponse.Value;
-foreach (var value in metricsQueryResults.Values)
+MetricsQueryResourcesOptions options = new MetricsQueryResourcesOptions
 {
-    Console.WriteLine(value.Interval);
+    // Set Granularity to 5 minutes.
+    Granularity = new TimeSpan(0, 5, 0),
+    // Set Aggregations to be Average and Count.
+    Aggregations = new List<MetricAggregationType> { MetricAggregationType.Average, MetricAggregationType.Count },
+    // Set Size to 10 for 10 data points.
+    Size = 10
+};
+ResourceIdentifier resourceIdentifier = new ResourceIdentifier(resourceId);
+IEnumerable<ResourceIdentifier> resourceIdentifiers = new List<ResourceIdentifier> { resourceIdentifier };
+Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
+    resourceIds: resourceIdentifiers,
+    metricNames: new List<string> { "Ingress" },
+    metricNamespace: "Microsoft.Storage/storageAccounts",
+    options).ConfigureAwait(false);
+
+MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
+foreach (MetricsQueryResult value in metricsQueryResults.Values)
+{
+    foreach (MetricResult metric in value.Metrics)
+    {
+        Console.WriteLine(metric.Id);
+        Console.WriteLine(metric.Name);
+        Console.WriteLine(metric.TimeSeries);
+    }
+    Console.WriteLine(value.Namespace);
+    Console.WriteLine(value.Granularity);
+    Console.WriteLine(value.ResourceRegion);
 }
 ```
 
