@@ -14,7 +14,7 @@
     /// which defines which field to use as a value, and an aggregation which dictates the algorithm of arriving at 
     /// a single reportable value within a second.
     /// </summary>
-    internal class CalculatedMetric<TTelemetry>
+    internal class DerivedMetric<TTelemetry>
     {
         private const string ProjectionCount = "Count()";
 
@@ -39,7 +39,7 @@
 
         private Func<TTelemetry, double> projectionLambda;
 
-        public CalculatedMetric(CalculatedMetricInfo info, out CollectionConfigurationError[] errors)
+        public DerivedMetric(CalculatedMetricInfo info, out CollectionConfigurationError[] errors)
         {
             if (info == null)
             {
