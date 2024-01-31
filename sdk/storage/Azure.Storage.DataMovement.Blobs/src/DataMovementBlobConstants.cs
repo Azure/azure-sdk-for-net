@@ -22,22 +22,15 @@ namespace Azure.Storage.DataMovement.Blobs
 
             internal const int VersionIndex = 0;
             internal const int BlobTypeIndex = VersionIndex + IntSizeInBytes;
-            internal const int ContentTypeOffsetIndex = BlobTypeIndex + OneByte;
-            internal const int ContentTypeLengthIndex = ContentTypeOffsetIndex + IntSizeInBytes;
-            internal const int ContentEncodingOffsetIndex = ContentTypeLengthIndex + IntSizeInBytes;
-            internal const int ContentEncodingLengthIndex = ContentEncodingOffsetIndex + IntSizeInBytes;
-            internal const int ContentLanguageOffsetIndex = ContentEncodingLengthIndex + IntSizeInBytes;
-            internal const int ContentLanguageLengthIndex = ContentLanguageOffsetIndex + IntSizeInBytes;
-            internal const int ContentDispositionOffsetIndex = ContentLanguageLengthIndex + IntSizeInBytes;
-            internal const int ContentDispositionLengthIndex = ContentDispositionOffsetIndex + IntSizeInBytes;
-            internal const int CacheControlOffsetIndex = ContentDispositionLengthIndex + IntSizeInBytes;
-            internal const int CacheControlLengthIndex = CacheControlOffsetIndex + IntSizeInBytes;
-            internal const int AccessTierIndex = CacheControlLengthIndex + IntSizeInBytes;
-            internal const int MetadataOffsetIndex = AccessTierIndex + OneByte;
-            internal const int MetadataLengthIndex = MetadataOffsetIndex + IntSizeInBytes;
-            internal const int BlobTagsOffsetIndex = MetadataLengthIndex + IntSizeInBytes;
-            internal const int BlobTagsLengthIndex = BlobTagsOffsetIndex + IntSizeInBytes;
-            internal const int VariableLengthStartIndex = BlobTagsLengthIndex + IntSizeInBytes;
+            internal const int PreserveContentTypeIndex = BlobTypeIndex + OneByte;
+            internal const int PreserveContentEncodingIndex = PreserveContentTypeIndex + OneByte;
+            internal const int PreserveContentLanguageIndex = PreserveContentEncodingIndex + OneByte;
+            internal const int PreserveContentDispositionIndex = PreserveContentLanguageIndex + OneByte;
+            internal const int PreserveCacheControlIndex = PreserveContentDispositionIndex + OneByte;
+            internal const int PreserveAccessTierIndex = PreserveCacheControlIndex + OneByte;
+            internal const int PreserveMetadataIndex = PreserveAccessTierIndex + OneByte;
+            internal const int PreserveTagsIndex = PreserveMetadataIndex + OneByte;
+            internal const int OptionalIndexValuesStartIndex = PreserveTagsIndex + OneByte;
         }
     }
 }

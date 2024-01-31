@@ -15,16 +15,6 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         internal string _contentType { get; set; }
 
-#pragma warning disable _cA1819 // Properties should not return arrays
-        /// <summary>
-        /// An MD5 hash of the blob content. This hash is used to verify the
-        /// integrity of the blob during transport.  When this header is
-        /// specified, the storage service checks the hash that has arrived
-        /// with the one that was sent. If the two hashes do not match, the
-        /// operation will fail with error code 400 (Bad Request).
-        /// </summary>
-        internal byte[] _contentHash { get; set; }
-
         /// <summary>
         /// Specifies which content encodings have been applied to the blob.
         /// This value is returned to the client when the Get Blob operation
@@ -65,7 +55,6 @@ namespace Azure.Storage.DataMovement
             ContentDisposition = _contentDisposition,
             ContentEncoding = _contentEncoding,
             ContentLanguage = _contentLanguage,
-            ContentHash = _contentHash,
         };
 
         /// <summary>
@@ -86,7 +75,6 @@ namespace Azure.Storage.DataMovement
             _cacheControl = default;
             _contentDisposition = default;
             _contentEncoding = default;
-            _contentHash = default;
             _contentLanguage = default;
             _contentType = default;
         }
@@ -96,14 +84,12 @@ namespace Azure.Storage.DataMovement
         /// storage resource, if destination supports HttpHeaders.
         /// </summary>
         /// <param name="contentType"></param>
-        /// <param name="contentHash"></param>
         /// <param name="contentEncoding"></param>
         /// <param name="contentLanguage"></param>
         /// <param name="contentDisposition"></param>
         /// <param name="cacheControl"></param>
         public BlobTransferHttpHeadersOptions(
             string contentType,
-            byte[] contentHash,
             string contentEncoding,
             string contentLanguage,
             string contentDisposition,
@@ -113,7 +99,6 @@ namespace Azure.Storage.DataMovement
             _cacheControl = default;
             _contentDisposition = default;
             _contentEncoding = default;
-            _contentHash = default;
             _contentLanguage = default;
             _contentType = default;
         }

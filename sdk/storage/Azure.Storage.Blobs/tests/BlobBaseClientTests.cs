@@ -2184,7 +2184,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task StartCopyFromUriAsync_Source_IfTagsFailed()
         {
             // Arrange
-            await using DisposingContainer test = await GetTestContainerAsync();
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
 
             BlobBaseClient srcBlob = await GetNewBlobClient(test.Container);
             BlobBaseClient destBlob = await GetNewBlobClient(test.Container);

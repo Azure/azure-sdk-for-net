@@ -53,7 +53,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             BlobSourceCheckpointData data = new(blobType);
 
-            using (Stream stream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
+            using (Stream stream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.OptionalIndexValuesStartIndex))
             {
                 data.Serialize(stream);
                 stream.Position = 0;

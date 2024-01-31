@@ -93,7 +93,7 @@ namespace Azure.Storage.DataMovement.Tests
         private Mock<CommitChunkHandler.QueueCommitBlockTaskInternal> GetCommitBlockTask()
         {
             var mock = new Mock<CommitChunkHandler.QueueCommitBlockTaskInternal>(MockBehavior.Strict);
-            mock.Setup(del => del())
+            mock.Setup(del => del(default))
                 .Returns(Task.CompletedTask);
             return mock;
         }
@@ -101,7 +101,7 @@ namespace Azure.Storage.DataMovement.Tests
         private Mock<CommitChunkHandler.QueueCommitBlockTaskInternal> GetExceptionCommitBlockTask()
         {
             var mock = new Mock<CommitChunkHandler.QueueCommitBlockTaskInternal>(MockBehavior.Strict);
-            mock.Setup(del => del())
+            mock.Setup(del => del(default))
                 .Throws(new RequestFailedException("Mock Request Error"));
             return mock;
         }
@@ -161,6 +161,7 @@ namespace Azure.Storage.DataMovement.Tests
                 },
                 DataTransferOrder.Unordered,
                 ClientDiagnostics,
+                default,
                 CancellationToken.None);
 
             // Make one chunk that would meet the expected length
@@ -203,6 +204,7 @@ namespace Azure.Storage.DataMovement.Tests
                 },
                 DataTransferOrder.Unordered,
                 ClientDiagnostics,
+                default,
                 CancellationToken.None);
 
             // Make one chunk that would update the bytes but not cause a commit block list to occur
@@ -265,6 +267,7 @@ namespace Azure.Storage.DataMovement.Tests
                 },
                 DataTransferOrder.Unordered,
                 ClientDiagnostics,
+                default,
                 CancellationToken.None);
 
             // Make one chunk that would update the bytes that would cause the bytes to exceed the expected amount
@@ -310,6 +313,7 @@ namespace Azure.Storage.DataMovement.Tests
                 },
                 DataTransferOrder.Unordered,
                 ClientDiagnostics,
+                default,
                 CancellationToken.None);
 
             List<Task> runningTasks = new List<Task>();
@@ -362,6 +366,7 @@ namespace Azure.Storage.DataMovement.Tests
                 },
                 DataTransferOrder.Sequential,
                 ClientDiagnostics,
+                default,
                 CancellationToken.None);
 
             // Make one chunk that would update the bytes but not cause a commit block list to occur
@@ -424,6 +429,7 @@ namespace Azure.Storage.DataMovement.Tests
                 },
                 DataTransferOrder.Sequential,
                 ClientDiagnostics,
+                default,
                 CancellationToken.None);
 
             // Make one chunk that would update the bytes that would cause the bytes to exceed the expected amount
@@ -468,6 +474,7 @@ namespace Azure.Storage.DataMovement.Tests
                 },
                 transferOrder: DataTransferOrder.Sequential,
                 ClientDiagnostics,
+                default,
                 CancellationToken.None);
 
             // Act
@@ -510,6 +517,7 @@ namespace Azure.Storage.DataMovement.Tests
                 },
                 transferOrder: DataTransferOrder.Unordered,
                 ClientDiagnostics,
+                default,
                 CancellationToken.None);
 
             // Act
@@ -551,6 +559,7 @@ namespace Azure.Storage.DataMovement.Tests
                 },
                 transferOrder: DataTransferOrder.Unordered,
                 ClientDiagnostics,
+                default,
                 CancellationToken.None);
 
             // Act

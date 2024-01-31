@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -82,6 +83,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override Task CompleteTransferAsync(
             bool overwrite,
+            StorageResourceItemProperties sourceProperties,
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -170,12 +171,18 @@ namespace Azure.Storage.DataMovement
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
+        /// <param name="sourceProperties">
+        /// Optional. Specifies the source properties to set in the destination.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>The Task which Commits the list of ids</returns>
-        protected internal abstract Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default);
+        protected internal abstract Task CompleteTransferAsync(
+            bool overwrite,
+            StorageResourceItemProperties sourceProperties = default,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Deletes the respective storage resource.

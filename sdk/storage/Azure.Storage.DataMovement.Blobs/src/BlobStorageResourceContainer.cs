@@ -174,10 +174,14 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             return new BlobDestinationCheckpointData(
                 _options?.BlobType ?? BlobType.Block,
-                _options?.BlobOptions?.HttpHeadersOptions,
+                _options?.BlobOptions?.CacheControl,
+                _options?.BlobOptions?.ContentDisposition,
+                _options?.BlobOptions?.ContentEncoding,
+                _options?.BlobOptions?.ContentLanguage,
+                _options?.BlobOptions?.ContentType,
                 _options?.BlobOptions?.AccessTier,
-                _options?.BlobOptions?.MetadataOptions,
-                _options?.BlobOptions?.TagsOptions);
+                _options?.BlobOptions?.Metadata,
+                _options?.BlobOptions?.Tags);
         }
 
         private string ApplyOptionalPrefix(string path)

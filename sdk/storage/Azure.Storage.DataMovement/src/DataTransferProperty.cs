@@ -1,10 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 #nullable enable
 
@@ -15,10 +12,31 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     public abstract class DataTransferProperty
     {
+        internal bool _preserve;
+
         /// <summary>
         /// Defines whether the preserve the property on the storage resource. True to preserve, false to not.
         /// </summary>
-        public abstract bool Preserve { get; set; }
+        public virtual bool Preserve {
+            get => _preserve;
+            internal set => _preserve = value; }
+
+        /// <summary>
+        /// Default constructor for <see cref="DataTransferProperty"/>. Defaults to preserve the respective property the destination.
+        /// </summary>
+        public DataTransferProperty()
+        {
+            Preserve = true;
+        }
+
+        /// <summary>
+        /// Constructs <see cref="DataTransferProperty"/> to preserves the respective property.
+        /// </summary>
+        /// <param name="preserve"></param>
+        public DataTransferProperty(bool preserve)
+        {
+            Preserve = preserve;
+        }
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

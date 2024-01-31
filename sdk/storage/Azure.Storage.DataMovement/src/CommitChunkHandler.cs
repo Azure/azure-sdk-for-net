@@ -17,7 +17,7 @@ namespace Azure.Storage.DataMovement
 
         #region Delegate Definitions
         public delegate Task QueuePutBlockTaskInternal(long offset, long blockSize, long expectedLength);
-        public delegate Task QueueCommitBlockTaskInternal();
+        public delegate Task QueueCommitBlockTaskInternal(StorageResourceItemProperties sourceProperties);
         public delegate void ReportProgressInBytes(long bytesWritten);
         public delegate Task InvokeFailedEventHandlerInternal(Exception ex);
         #endregion Delegate Definitions
@@ -50,6 +50,7 @@ namespace Azure.Storage.DataMovement
         private readonly long _blockSize;
         private readonly DataTransferOrder _transferOrder;
         private readonly ClientDiagnostics _clientDiagnostics;
+        private readonly StorageResourceItemProperties _sourceProperties;
 
         public CommitChunkHandler(
             long expectedLength,
@@ -57,6 +58,7 @@ namespace Azure.Storage.DataMovement
             Behaviors behaviors,
             DataTransferOrder transferOrder,
             ClientDiagnostics clientDiagnostics,
+            StorageResourceItemProperties sourceProperties,
             CancellationToken cancellationToken)
         {
             if (expectedLength <= 0)
@@ -102,6 +104,7 @@ namespace Azure.Storage.DataMovement
             }
             _commitBlockHandler += ConcurrentBlockEvent;
             _clientDiagnostics = clientDiagnostics;
+            _sourceProperties = sourceProperties;
         }
 
         public void Dispose()
@@ -158,7 +161,7 @@ namespace Azure.Storage.DataMovement
                     if (_bytesTransferred == _expectedLength)
                     {
                         // Add CommitBlockList task to the channel
-                        await _queueCommitBlockTask().ConfigureAwait(false);
+                        await _queueCommitBlockTask(_sourceProperties).ConfigureAwait(false);
                     }
                     else if (_bytesTransferred > _expectedLength)
                     {

@@ -157,7 +157,11 @@ namespace Azure.Storage.DataMovement.Blobs
                 // Default to Upload
                 await BlobClient.UploadAsync(
                     stream,
-                    _options.ToBlobUploadOptions(overwrite, _maxInitialSize),
+                    DataMovementBlobsExtensions.GetBlobUploadOptions(
+                        _options,
+                        overwrite,
+                        _maxInitialSize,
+                        options?.SourceProperties),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
                 return;
             }
@@ -204,7 +208,11 @@ namespace Azure.Storage.DataMovement.Blobs
             // TODO: subject to change as we scale to support resource types outside of blobs.
             await BlobClient.SyncUploadFromUriAsync(
                 sourceResource.Uri,
-                _options.ToSyncUploadFromUriOptions(overwrite, options?.SourceAuthentication),
+                DataMovementBlobsExtensions.GetSyncUploadFromUriOptions(
+                    _options,
+                    overwrite,
+                    options?.SourceAuthentication,
+                    options?.SourceProperties),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
@@ -299,6 +307,9 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="overwrite">
         /// If set to true, will overwrite the blob if exists.
         /// </param>
+        /// <param name="sourceProperties">
+        /// Optional. Specifies the source properties to set in the destination.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -306,6 +317,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>The Task which Commits the list of ids</returns>
         protected override async Task CompleteTransferAsync(
             bool overwrite,
+            StorageResourceItemProperties sourceProperties = default,
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
@@ -314,7 +326,10 @@ namespace Azure.Storage.DataMovement.Blobs
                 IEnumerable<string> blockIds = _blocks.OrderBy(x => x.Key).Select(x => x.Value);
                 await BlobClient.CommitBlockListAsync(
                     blockIds,
-                    _options.ToCommitBlockOptions(overwrite),
+                    DataMovementBlobsExtensions.GetCommitBlockOptions(
+                        _options,
+                        overwrite,
+                        sourceProperties),
                     cancellationToken).ConfigureAwait(false);
                 _blocks.Clear();
             }
@@ -345,10 +360,14 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             return new BlobDestinationCheckpointData(
                 BlobType.Block,
-                _options?.HttpHeadersOptions,
+                _options?.CacheControl,
+                _options?.ContentDisposition,
+                _options?.ContentEncoding,
+                _options?.ContentLanguage,
+                _options?.ContentType,
                 _options?.AccessTier,
-                _options?.MetadataOptions,
-                _options?.TagsOptions);
+                _options?.Metadata,
+                _options?.Tags);
         }
     }
 }

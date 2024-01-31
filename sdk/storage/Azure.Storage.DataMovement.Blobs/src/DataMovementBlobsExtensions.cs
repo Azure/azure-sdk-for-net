@@ -4,6 +4,8 @@
 using Azure.Storage.Blobs.Models;
 using System.Collections.Generic;
 using System.IO;
+using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
@@ -27,10 +29,6 @@ namespace Azure.Storage.DataMovement.Blobs
             if (blobProperties.ContentType != default)
             {
                 properties.Add(DataMovementConstants.ResourceProperties.ContentType, blobProperties.ContentType);
-            }
-            if (blobProperties.ContentHash != default)
-            {
-                properties.Add(DataMovementConstants.ResourceProperties.ContentHash, blobProperties.ContentHash);
             }
             if (blobProperties.ContentEncoding != default)
             {
@@ -74,10 +72,6 @@ namespace Azure.Storage.DataMovement.Blobs
             if (result.Details.ContentType != default)
             {
                 properties.Add(DataMovementConstants.ResourceProperties.ContentType, result.Details.ContentType);
-            }
-            if (result.Details.ContentHash != default)
-            {
-                properties.Add(DataMovementConstants.ResourceProperties.ContentHash, result.Details.ContentHash);
             }
             if (result.Details.ContentEncoding != default)
             {
@@ -128,10 +122,6 @@ namespace Azure.Storage.DataMovement.Blobs
             if (result.Details.ContentType != default)
             {
                 properties.Add(DataMovementConstants.ResourceProperties.ContentType, result.Details.ContentType);
-            }
-            if (result.Details.ContentHash != default)
-            {
-                properties.Add(DataMovementConstants.ResourceProperties.ContentHash, result.Details.ContentHash);
             }
             if (result.Details.ContentEncoding != default)
             {
@@ -246,15 +236,16 @@ namespace Azure.Storage.DataMovement.Blobs
             return result;
         }
 
-        internal static AppendBlobCreateOptions ToCreateOptions(
-            this AppendBlobStorageResourceOptions options,
-            bool overwrite)
+        internal static AppendBlobCreateOptions GetCreateOptions(
+            AppendBlobStorageResourceOptions options,
+            bool overwrite,
+            StorageResourceItemProperties sourceProperties)
         {
             return new AppendBlobCreateOptions()
             {
-                HttpHeaders = options?.HttpHeadersOptions,
-                Metadata = options?.MetadataOptions,
-                Tags = options?.TagsOptions,
+                HttpHeaders = GetHttpHeaders(options, sourceProperties?.RawProperties),
+                Metadata = GetMetadata(options, sourceProperties?.RawProperties),
+                Tags = GetTags(options, sourceProperties?.RawProperties),
                 Conditions = new AppendBlobRequestConditions()
                 {
                     IfMatch = options?.DestinationConditions?.IfMatch,
@@ -321,14 +312,18 @@ namespace Azure.Storage.DataMovement.Blobs
             return result;
         }
 
-        internal static BlobUploadOptions ToBlobUploadOptions(this BlockBlobStorageResourceOptions options, bool overwrite, long initialSize)
+        internal static BlobUploadOptions GetBlobUploadOptions(
+            BlockBlobStorageResourceOptions options,
+            bool overwrite,
+            long initialSize,
+            StorageResourceItemProperties sourceProperties)
         {
             return new BlobUploadOptions()
             {
-                HttpHeaders = options?.HttpHeadersOptions,
-                Metadata = options?.MetadataOptions,
-                Tags = options?.TagsOptions,
-                AccessTier = options?.AccessTier,
+                HttpHeaders = GetHttpHeaders(options, sourceProperties?.RawProperties),
+                Metadata = GetMetadata(options, sourceProperties?.RawProperties),
+                Tags = GetTags(options, sourceProperties?.RawProperties),
+                AccessTier = GetAccessTier(options, sourceProperties?.RawProperties),
                 TransferOptions = new StorageTransferOptions()
                 {
                     InitialTransferSize = initialSize,
@@ -353,10 +348,11 @@ namespace Azure.Storage.DataMovement.Blobs
             };
         }
 
-        internal static BlobSyncUploadFromUriOptions ToSyncUploadFromUriOptions(
-            this BlockBlobStorageResourceOptions options,
+        internal static BlobSyncUploadFromUriOptions GetSyncUploadFromUriOptions(
+            BlockBlobStorageResourceOptions options,
             bool overwrite,
-            HttpAuthorization sourceAuthorization)
+            HttpAuthorization sourceAuthorization,
+            StorageResourceItemProperties sourceProperties)
         {
             // There's a lot of conditions that cannot be applied to a Copy Blob (async) Request.
             // We need to omit them, but still apply them to other requests that do accept them.
@@ -364,9 +360,10 @@ namespace Azure.Storage.DataMovement.Blobs
             // to see what headers are accepted.
             return new BlobSyncUploadFromUriOptions()
             {
-                HttpHeaders = options?.HttpHeadersOptions,
-                Metadata = options?.MetadataOptions,
-                Tags = options?.TagsOptions,
+                HttpHeaders = GetHttpHeaders(options, sourceProperties?.RawProperties),
+                Metadata = GetMetadata(options, sourceProperties?.RawProperties),
+                Tags = GetTags(options, sourceProperties?.RawProperties),
+                AccessTier = GetAccessTier(options, sourceProperties?.RawProperties),
                 SourceConditions = new BlobRequestConditions()
                 {
                     IfMatch = options?.SourceConditions?.IfMatch,
@@ -400,7 +397,10 @@ namespace Azure.Storage.DataMovement.Blobs
             };
         }
 
-        internal static CommitBlockListOptions ToCommitBlockOptions(this BlockBlobStorageResourceOptions options, bool overwrite)
+        internal static CommitBlockListOptions GetCommitBlockOptions(
+            BlockBlobStorageResourceOptions options,
+            bool overwrite,
+            StorageResourceItemProperties sourceProperties)
         {
             // There's a lot of conditions that cannot be applied to a StageBlock Request.
             // We need to omit them, but still apply them to other requests that do accept them.
@@ -408,10 +408,10 @@ namespace Azure.Storage.DataMovement.Blobs
             // to see what headers are accepted.
             return new CommitBlockListOptions()
             {
-                HttpHeaders = options?.HttpHeadersOptions,
-                Metadata = options?.MetadataOptions,
-                Tags = options?.TagsOptions,
-                AccessTier = options?.AccessTier,
+                HttpHeaders = GetHttpHeaders(options, sourceProperties?.RawProperties),
+                Metadata = GetMetadata(options, sourceProperties?.RawProperties),
+                Tags = GetTags(options, sourceProperties?.RawProperties),
+                AccessTier = GetAccessTier(options, sourceProperties?.RawProperties),
                 Conditions = CreateRequestConditions(options?.DestinationConditions, overwrite)
             };
         }
@@ -436,16 +436,17 @@ namespace Azure.Storage.DataMovement.Blobs
             return result;
         }
 
-        internal static PageBlobCreateOptions ToCreateOptions(
-            this PageBlobStorageResourceOptions options,
-            bool overwrite)
+        internal static PageBlobCreateOptions GetCreateOptions(
+            PageBlobStorageResourceOptions options,
+            bool overwrite,
+            StorageResourceItemProperties sourceProperties)
         {
             return new PageBlobCreateOptions()
             {
                 SequenceNumber = options?.SequenceNumber,
-                HttpHeaders = options?.HttpHeadersOptions,
-                Metadata = options?.MetadataOptions,
-                Tags = options?.TagsOptions,
+                HttpHeaders = GetHttpHeaders(options, sourceProperties?.RawProperties),
+                Metadata = GetMetadata(options, sourceProperties?.RawProperties),
+                Tags = GetTags(options, sourceProperties?.RawProperties),
                 Conditions = new PageBlobRequestConditions()
                 {
                     IfMatch = options?.DestinationConditions?.IfMatch,
@@ -510,9 +511,13 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             return new()
             {
-                MetadataOptions = checkpointData.MetadataOptions,
-                TagsOptions = checkpointData.TagsOptions,
-                HttpHeadersOptions = checkpointData.ContentHeaders,
+                Metadata = checkpointData.Metadata,
+                Tags = checkpointData.Tags,
+                CacheControl = checkpointData.CacheControl,
+                ContentDisposition = checkpointData.ContentDisposition,
+                ContentEncoding = checkpointData.ContentEncoding,
+                ContentLanguage = checkpointData.ContentLanguage,
+                ContentType = checkpointData.ContentType,
                 AccessTier = checkpointData.AccessTier,
             };
         }
@@ -558,9 +563,13 @@ namespace Azure.Storage.DataMovement.Blobs
                 BlobDirectoryPrefix = options?.BlobDirectoryPrefix,
                 BlobOptions = new BlobStorageResourceOptions()
                 {
-                    MetadataOptions = options?.BlobOptions?.MetadataOptions,
-                    TagsOptions = options?.BlobOptions?.TagsOptions,
-                    HttpHeadersOptions = options?.BlobOptions?.HttpHeadersOptions,
+                    Metadata = options?.BlobOptions?.Metadata,
+                    Tags = options?.BlobOptions?.Tags,
+                    CacheControl = options?.BlobOptions?.CacheControl,
+                    ContentEncoding = options?.BlobOptions?.ContentEncoding,
+                    ContentDisposition = options?.BlobOptions?.ContentDisposition,
+                    ContentLanguage = options?.BlobOptions?.ContentLanguage,
+                    ContentType = options?.BlobOptions?.ContentType,
                     AccessTier = options?.BlobOptions?.AccessTier,
                 }
             };
@@ -592,10 +601,6 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 properties.Add(DataMovementConstants.ResourceProperties.ContentType, blobItem.Properties.ContentType);
             }
-            if (blobItem.Properties.ContentHash != default)
-            {
-                properties.Add(DataMovementConstants.ResourceProperties.ContentHash, blobItem.Properties.ContentHash);
-            }
             if (blobItem.Properties.ContentEncoding != default)
             {
                 properties.Add(DataMovementConstants.ResourceProperties.ContentEncoding, blobItem.Properties.ContentEncoding);
@@ -619,5 +624,64 @@ namespace Azure.Storage.DataMovement.Blobs
                 lastModifiedTime: blobItem.Properties.LastModified,
                 properties: properties);
         }
+
+        private static BlobHttpHeaders GetHttpHeaders(
+            BlobStorageResourceOptions options,
+            Dictionary<string, object> properties)
+            => new()
+            {
+                ContentType = (options?.ContentType?.Preserve ?? true)
+                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentType, out object contentType) == true
+                        ? (string) contentType
+                        : default
+                    : options?.ContentType?.Value,
+                ContentEncoding = (options?.ContentEncoding?.Preserve ?? true)
+                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentEncoding, out object contentEncoding) == true
+                        ? (string) contentEncoding
+                        : default
+                    : options?.ContentEncoding?.Value,
+                ContentLanguage = (options?.ContentLanguage?.Preserve ?? true)
+                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentLanguage, out object contentLanguage) == true
+                        ? (string) contentLanguage
+                        : default
+                    : options?.ContentLanguage?.Value,
+                ContentDisposition = (options?.ContentDisposition?.Preserve ?? true)
+                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentDisposition, out object contentDisposition) == true
+                        ? (string) contentDisposition
+                        : default
+                : options?.ContentDisposition?.Value,
+                CacheControl = (options?.CacheControl?.Preserve ?? true)
+                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.CacheControl, out object cacheControl) == true
+                        ? (string) cacheControl
+                        : default
+                    : options?.CacheControl?.Value,
+            };
+
+        private static AccessTier? GetAccessTier(
+            BlobStorageResourceOptions options,
+            Dictionary<string, object> properties)
+            => (options?.AccessTier?.Preserve ?? true)
+               ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.AccessTier, out object accessTierObject) == true
+                    ? (AccessTier?)accessTierObject
+                    : default
+               : options?.AccessTier?.Value;
+
+        private static Metadata GetMetadata(
+            BlobStorageResourceOptions options,
+            Dictionary<string, object> properties)
+            => (options?.Metadata?.Preserve ?? true)
+                ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.Metadata, out object metadataObject) == true
+                    ? (Metadata) metadataObject
+                    : default
+               : options?.Metadata?.Value;
+
+        private static Tags GetTags(
+            BlobStorageResourceOptions options,
+            Dictionary<string, object> properties)
+            => (options?.Tags?.Preserve ?? true)
+                ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.Tags, out object tagsObject) == true
+                    ? (Tags) tagsObject
+                    : default
+                : options?.Tags?.Value;
     }
 }

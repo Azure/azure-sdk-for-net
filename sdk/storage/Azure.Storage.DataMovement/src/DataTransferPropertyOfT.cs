@@ -14,20 +14,40 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     /// <typeparam name="T">The property of the storage resource</typeparam>
     #pragma warning disable SA1649 // File name should match first type name
-    public abstract class DataTransferProperty<T> : DataTransferProperty where T : notnull
+    public class DataTransferProperty<T> : DataTransferProperty where T : notnull
 #pragma warning restore SA1649 // File name should match first type name
     {
-        /// <summary>
-        /// Final result of the long-running operation.
-        /// </summary>
-        /// <remarks>
-        /// This property can be accessed only after the operation completes successfully (HasValue is true).
-        /// </remarks>
-        public abstract T Value { get; }
+        internal T? _value;
 
         /// <summary>
-        /// Returns true if the long-running operation completed successfully and has produced final result (accessible by Value property).
+        /// Represents the value of the DataTransferProperty.
         /// </summary>
-        public abstract bool HasValue { get; }
+        /// <remarks>
+        /// This property can be accessed only if the property as been set. (HasValue is true).
+        /// </remarks>
+        public virtual T? Value {
+            get => _value;
+            internal set => _value = value;
+        }
+
+        /// <summary>
+        /// Constructs <see cref="DataTransferProperty"/> to preserves the respective property.
+        /// </summary>
+        /// <param name="preserve"></param>
+        public DataTransferProperty(bool preserve) : base(preserve)
+        {
+            _value = default;
+        }
+
+        /// <summary>
+        /// Constructor for <see cref="DataTransferProperty"/> to set value on the destination.
+        /// This will overwrite the property on the destination with the parameter value.
+        /// </summary>
+        /// <param name="value">The value to set on the property.</param>
+        public DataTransferProperty(T value)
+        {
+            _value = value;
+            Preserve = false;
+        }
     }
 }

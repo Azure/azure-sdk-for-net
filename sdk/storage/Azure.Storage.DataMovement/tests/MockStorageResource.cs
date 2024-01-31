@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -44,7 +45,10 @@ namespace Azure.Storage.DataMovement.Tests
             return new MockStorageResource(default, uri, failAfter, transferOrder);
         }
 
-        protected internal override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
+        protected internal override Task CompleteTransferAsync(
+            bool overwrite,
+            StorageResourceItemProperties sourceProperties,
+            CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }

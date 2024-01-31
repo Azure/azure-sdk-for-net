@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,8 +13,14 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     internal abstract class StorageResourceItemInternal : StorageResourceItem
     {
-        internal Task CompleteTransferInternalAsync(bool overwrite, CancellationToken cancellationToken = default)
-            => CompleteTransferAsync(overwrite, cancellationToken);
+        internal Task CompleteTransferInternalAsync(
+            bool overwrite,
+            StorageResourceItemProperties sourceProperties,
+            CancellationToken cancellationToken = default)
+            => CompleteTransferAsync(
+                overwrite,
+                sourceProperties,
+                cancellationToken);
 
         internal Task CopyBlockFromUriInternalAsync(
             StorageResourceItem sourceResource,

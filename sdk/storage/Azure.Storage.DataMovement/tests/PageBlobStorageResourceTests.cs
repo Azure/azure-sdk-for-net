@@ -3,6 +3,7 @@
 
 extern alias DMBlobs;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -17,12 +18,24 @@ using Azure.Storage.Blobs.Tests;
 using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Test;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
     public class PageBlobStorageResourceTests : DataMovementBlobTestBase
     {
+        private const string DefaultContentType = "text/plain";
+        private const string DefaultContentEncoding = "gzip";
+        private const string DefaultContentLanguage = "en-US";
+        private const string DefaultContentDisposition = "inline";
+        private const string DefaultCacheControl = "no-cache";
+        private Dictionary<string, string> DefaultTags = new Dictionary<string, string>{
+                    { "tag1", "value1" },
+                    { "tag2", "value2" },
+                    { "tag3", "value3" }};
+        private AccessTier DefaultAccessTier = AccessTier.Cold;
+
         public PageBlobStorageResourceTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
@@ -234,6 +247,99 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     Assert.AreEqual(e.ErrorCode, "InvalidHeaderValue");
                 });
             }
+        }
+
+        [Test]
+        public async Task CopyFromStreamAsync_BlobProperties()
+        {
+            // Arrange
+            Mock<PageBlobClient> mock = new(
+                new Uri("https://storageaccount.blob.core.windows.net/container/blob"),
+                new BlobClientOptions());
+            int length = 1024;
+            var data = GetRandomBuffer(length);
+            using var stream = new MemoryStream(data);
+            using var fileContentStream = new MemoryStream();
+            mock.Setup(b => b.CreateAsync(It.IsAny<long>(), It.IsAny<PageBlobCreateOptions>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(
+                    BlobsModelFactory.BlobContentInfo(
+                        eTag: new ETag("eTag"),
+                        lastModified: DateTimeOffset.UtcNow,
+                        contentHash: default,
+                        versionId: "version",
+                        encryptionKeySha256: default,
+                        encryptionScope: default,
+                        blobSequenceNumber: default),
+                    new MockResponse(201))));
+            mock.Setup(b => b.UploadPagesAsync(It.IsAny<Stream>(), It.IsAny<long>(), It.IsAny<PageBlobUploadPagesOptions>(), It.IsAny<CancellationToken>()))
+                .Callback<Stream, long, PageBlobUploadPagesOptions, CancellationToken>(
+                async (stream, offset, options, token) =>
+                {
+                    await stream.CopyToAsync(fileContentStream).ConfigureAwait(false);
+                    fileContentStream.Position = 0;
+                })
+                .Returns(Task.FromResult(Response.FromValue(
+                    BlobsModelFactory.PageInfo(
+                        eTag: new ETag("eTag"),
+                        lastModified: DateTimeOffset.UtcNow,
+                        contentHash: default,
+                        contentCrc64: default,
+                        encryptionKeySha256: default,
+                        encryptionScope: default,
+                        blobSequenceNumber: default),
+                    new MockResponse(201))));
+
+            PageBlobStorageResource storageResource = new PageBlobStorageResource(mock.Object);
+
+            // Act
+            IDictionary<string, string> metadata = BuildMetadata();
+
+            Dictionary<string, object> sourceProperties = new()
+            {
+                { "ContentType", DefaultContentType },
+                { "ContentEncoding", DefaultContentEncoding },
+                { "ContentLanguage", DefaultContentLanguage },
+                { "ContentDisposition", DefaultContentDisposition },
+                { "CacheControl", DefaultCacheControl },
+                { "Metadata", metadata },
+                { "Tags", DefaultTags }
+            };
+            StorageResourceWriteToOffsetOptions copyFromStreamOptions = new()
+            {
+                SourceProperties = new StorageResourceItemProperties(
+                    resourceLength: length,
+                    eTag: new("ETag"),
+                    lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
+                    properties: sourceProperties)
+            };
+            await storageResource.CopyFromStreamInternalAsync(
+                stream: stream,
+                streamLength: length,
+                overwrite: false,
+                options: copyFromStreamOptions,
+                completeLength: length);
+
+            Assert.That(data, Is.EqualTo(fileContentStream.AsBytes().ToArray()));
+            mock.Verify(b => b.CreateAsync(
+                length,
+                It.Is<PageBlobCreateOptions>(
+                    options =>
+                        options.HttpHeaders.ContentType == DefaultContentType &&
+                        options.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
+                        options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
+                        options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
+                        options.HttpHeaders.CacheControl == DefaultCacheControl &&
+                        options.Metadata.SequenceEqual(metadata) &&
+                        options.Tags.SequenceEqual(DefaultTags)),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mock.Verify(b => b.UploadPagesAsync(
+                stream,
+                length,
+                It.IsAny<PageBlobUploadPagesOptions>(),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mock.VerifyNoOtherCalls();
         }
 
         [RecordedTest]

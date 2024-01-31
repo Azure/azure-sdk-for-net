@@ -211,7 +211,8 @@ namespace Azure.Storage.DataMovement
                         expectedLength: length,
                         blockSize: blockSize,
                         this,
-                        _destinationResource.TransferType);
+                        _destinationResource.TransferType,
+                        properties);
 
                     bool destinationCreated = await CreateDestinationResource(blockSize, length, false).ConfigureAwait(false);
                     if (destinationCreated)
@@ -328,13 +329,15 @@ namespace Azure.Storage.DataMovement
             long expectedLength,
             long blockSize,
             StreamToUriJobPart jobPart,
-            DataTransferOrder transferType)
+            DataTransferOrder transferType,
+            StorageResourceItemProperties sourceProperties)
         => new CommitChunkHandler(
             expectedLength,
             blockSize,
             GetBlockListCommitHandlerBehaviors(jobPart),
             transferType,
             ClientDiagnostics,
+            sourceProperties,
             _cancellationToken);
 
         internal static CommitChunkHandler.Behaviors GetBlockListCommitHandlerBehaviors(
@@ -420,13 +423,14 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        internal async Task CompleteTransferAsync()
+        internal async Task CompleteTransferAsync(StorageResourceItemProperties sourceProperties)
         {
             CancellationHelper.ThrowIfCancellationRequested(_cancellationToken);
 
             // Apply necessary transfer completions on the destination.
             await _destinationResource.CompleteTransferAsync(
                 overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
+                sourceProperties: sourceProperties,
                 cancellationToken: _cancellationToken).ConfigureAwait(false);
 
             // Dispose the handlers

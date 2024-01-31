@@ -180,10 +180,11 @@ namespace Azure.Storage.DataMovement
             await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
 
             long? fileLength = _sourceResource.Length;
+            StorageResourceItemProperties sourceProperties = default;
             try
             {
-                StorageResourceItemProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
-                fileLength = properties.ResourceLength;
+                sourceProperties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
+                fileLength = sourceProperties.ResourceLength;
             }
             catch (Exception ex)
             {
@@ -215,7 +216,8 @@ namespace Azure.Storage.DataMovement
                 expectedLength: length,
                 blockSize: blockSize,
                 this,
-                _destinationResource.TransferType);
+                _destinationResource.TransferType,
+                sourceProperties);
             // If we cannot upload in one shot, initiate the parallel block uploader
             if (await CreateDestinationResource(length, blockSize).ConfigureAwait(false))
             {
@@ -295,7 +297,7 @@ namespace Azure.Storage.DataMovement
 
                 if (blockSize == length)
                 {
-                    await CompleteTransferAsync().ConfigureAwait(false);
+                    await CompleteTransferAsync(options.SourceProperties).ConfigureAwait(false);
                     return false;
                 }
                 return true;
@@ -318,13 +320,15 @@ namespace Azure.Storage.DataMovement
             long expectedLength,
             long blockSize,
             ServiceToServiceJobPart jobPart,
-            DataTransferOrder transferType)
+            DataTransferOrder transferType,
+            StorageResourceItemProperties sourceProperties)
         => new CommitChunkHandler(
             expectedLength,
             blockSize,
             GetBlockListCommitHandlerBehaviors(jobPart),
             transferType,
             ClientDiagnostics,
+            sourceProperties,
             _cancellationToken);
 
         internal static CommitChunkHandler.Behaviors GetBlockListCommitHandlerBehaviors(
@@ -340,13 +344,14 @@ namespace Azure.Storage.DataMovement
         }
         #endregion
 
-        internal async Task CompleteTransferAsync()
+        internal async Task CompleteTransferAsync(StorageResourceItemProperties sourceProperties)
         {
             try
             {
                 // Apply necessary transfer completions on the destination.
                 await _destinationResource.CompleteTransferAsync(
                     overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
+                    sourceProperties: sourceProperties,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Dispose the handlers
@@ -483,7 +488,11 @@ namespace Azure.Storage.DataMovement
 
         private async Task<StorageResourceCopyFromUriOptions> GetCopyFromUriOptionsAsync(CancellationToken cancellationToken)
         {
-            StorageResourceCopyFromUriOptions options = default;
+            StorageResourceItemProperties properties = await _sourceResource.GetPropertiesAsync(cancellationToken).ConfigureAwait(false);
+            StorageResourceCopyFromUriOptions options = new()
+            {
+                SourceProperties = properties
+            };
             HttpAuthorization authorization = await _sourceResource.GetCopyAuthorizationHeaderAsync(cancellationToken).ConfigureAwait(false);
             if (authorization != null)
             {

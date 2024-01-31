@@ -3,6 +3,7 @@
 
 extern alias DMBlobs;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -16,13 +17,25 @@ using Azure.Storage.Blobs.Tests;
 using Azure.Storage.DataMovement.Tests;
 using Azure.Storage.Test;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
+using Moq;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
     public class BlockBlobStorageResourceTests : DataMovementBlobTestBase
     {
-        public BlockBlobStorageResourceTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
+        private const string DefaultContentType = "text/plain";
+        private const string DefaultContentEncoding = "gzip";
+        private const string DefaultContentLanguage = "en-US";
+        private const string DefaultContentDisposition = "inline";
+        private const string DefaultCacheControl = "no-cache";
+        private Dictionary<string, string> DefaultTags = new Dictionary<string, string>{
+                    { "tag1", "value1" },
+                    { "tag2", "value2" },
+                    { "tag3", "value3" }};
+        private AccessTier DefaultAccessTier = AccessTier.Cold;
+
+    public BlockBlobStorageResourceTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
@@ -223,6 +236,82 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
         }
 
+        [Test]
+        public async Task CopyFromStreamAsync_BlobProperties()
+        {
+            // Arrange
+            Mock<BlockBlobClient> mock = new(
+                new Uri("https://storageaccount.blob.core.windows.net/container/blob"),
+                new BlobClientOptions());
+            int length = 1024;
+            var data = GetRandomBuffer(length);
+            using var stream = new MemoryStream(data);
+            using var fileContentStream = new MemoryStream();
+            mock.Setup(b => b.UploadAsync(It.IsAny<Stream>(), It.IsAny<BlobUploadOptions>(), It.IsAny<CancellationToken>()))
+                .Callback<Stream, BlobUploadOptions, CancellationToken>(
+                async (stream, options, token) =>
+                {
+                    await stream.CopyToAsync(fileContentStream).ConfigureAwait(false);
+                    fileContentStream.Position = 0;
+                })
+                .Returns(Task.FromResult(Response.FromValue(
+                    BlobsModelFactory.BlobContentInfo(
+                        eTag: new ETag("eTag"),
+                        lastModified: DateTimeOffset.UtcNow,
+                        contentHash: default,
+                        versionId: "version",
+                        encryptionKeySha256: default,
+                        encryptionScope: default,
+                        blobSequenceNumber: default),
+                    new MockResponse(201))));
+
+            BlockBlobStorageResource storageResource = new BlockBlobStorageResource(mock.Object);
+
+            // Act
+            IDictionary<string, string> metadata = BuildMetadata();
+
+            Dictionary<string, object> sourceProperties = new()
+            {
+                { "ContentType", DefaultContentType },
+                { "ContentEncoding", DefaultContentEncoding },
+                { "ContentLanguage", DefaultContentLanguage },
+                { "ContentDisposition", DefaultContentDisposition },
+                { "CacheControl", DefaultCacheControl },
+                { "Metadata", metadata },
+                { "Tags", DefaultTags }
+            };
+            StorageResourceWriteToOffsetOptions copyFromStreamOptions = new()
+            {
+                SourceProperties = new StorageResourceItemProperties(
+                    resourceLength: length,
+                    eTag: new("ETag"),
+                    lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
+                    properties: sourceProperties)
+            };
+            await storageResource.CopyFromStreamInternalAsync(
+                stream: stream,
+                streamLength: length,
+                overwrite: false,
+                options: copyFromStreamOptions,
+                completeLength: length);
+
+            Assert.That(data, Is.EqualTo(fileContentStream.AsBytes().ToArray()));
+            mock.Verify(b => b.UploadAsync(
+                stream,
+                It.Is<BlobUploadOptions>(
+                    options =>
+                        options.HttpHeaders.ContentType == DefaultContentType &&
+                        options.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
+                        options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
+                        options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
+                        options.HttpHeaders.CacheControl == DefaultCacheControl &&
+                        options.Metadata.SequenceEqual(metadata) &&
+                        options.Tags.SequenceEqual(DefaultTags)),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mock.VerifyNoOtherCalls();
+        }
+
         [RecordedTest]
         public async Task CopyFromUriAsync()
         {
@@ -357,6 +446,88 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 {
                     Assert.IsTrue(e.Message.StartsWith("The specified blob does not exist."));
                 });
+        }
+
+        [Test]
+        public async Task CopyFromUriAsync_BlobProperties()
+        {
+            // Arrange
+            Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
+            Mock<BlockBlobClient> mockSource = new(
+                sourceUri,
+                new BlobClientOptions());
+            mockSource.Setup(b => b.Uri).Returns(sourceUri);
+
+            Mock<BlockBlobClient> mockDestination = new(
+                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
+                new BlobClientOptions());
+            int length = 1024;
+            var data = GetRandomBuffer(length);
+            using var stream = new MemoryStream(data);
+            using var fileContentStream = new MemoryStream();
+            mockDestination.Setup(b => b.SyncUploadFromUriAsync(It.IsAny<Uri>(), It.IsAny<BlobSyncUploadFromUriOptions>(), It.IsAny<CancellationToken>()))
+                .Callback<Uri, BlobSyncUploadFromUriOptions, CancellationToken>(
+                async (uri, options, token) =>
+                {
+                    await stream.CopyToAsync(fileContentStream).ConfigureAwait(false);
+                    fileContentStream.Position = 0;
+                })
+                .Returns(Task.FromResult(Response.FromValue(
+                    BlobsModelFactory.BlobContentInfo(
+                        eTag: new ETag("eTag"),
+                        lastModified: DateTimeOffset.UtcNow,
+                        contentHash: default,
+                        versionId: "version",
+                        encryptionKeySha256: default,
+                        encryptionScope: default,
+                        blobSequenceNumber: default),
+                    new MockResponse(201))));
+
+            BlockBlobStorageResource sourceResource = new BlockBlobStorageResource(mockSource.Object);
+            BlockBlobStorageResource destinationResource = new BlockBlobStorageResource(mockDestination.Object);
+
+            // Act
+            IDictionary<string, string> metadata = BuildMetadata();
+
+            Dictionary<string, object> sourceProperties = new()
+            {
+                { "ContentType", DefaultContentType },
+                { "ContentEncoding", DefaultContentEncoding },
+                { "ContentLanguage", DefaultContentLanguage },
+                { "ContentDisposition", DefaultContentDisposition },
+                { "CacheControl", DefaultCacheControl },
+                { "Metadata", metadata },
+                { "Tags", DefaultTags }
+            };
+            StorageResourceCopyFromUriOptions copyFromUriOptions = new()
+            {
+                SourceProperties = new StorageResourceItemProperties(
+                    resourceLength: length,
+                    eTag: new("ETag"),
+                    lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
+                    properties: sourceProperties)
+            };
+            await destinationResource.CopyFromUriInternalAsync(
+                sourceResource: sourceResource,
+                overwrite: false,
+                completeLength: length,
+                options: copyFromUriOptions);
+
+            Assert.That(data, Is.EqualTo(fileContentStream.AsBytes().ToArray()));
+            mockDestination.Verify(b => b.SyncUploadFromUriAsync(
+                sourceUri,
+                It.Is<BlobSyncUploadFromUriOptions>(
+                    options =>
+                        options.HttpHeaders.ContentType == DefaultContentType &&
+                        options.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
+                        options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
+                        options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
+                        options.HttpHeaders.CacheControl == DefaultCacheControl &&
+                        options.Metadata.SequenceEqual(metadata) &&
+                        options.Tags.SequenceEqual(DefaultTags)),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mockDestination.VerifyNoOtherCalls();
         }
 
         [RecordedTest]
@@ -662,6 +833,97 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Assert
             Assert.IsTrue(await blobClient.ExistsAsync());
+        }
+
+        [Test]
+        public async Task CompleteTransferAsync_BlobProperties()
+        {
+            // Arrange
+            Mock<BlockBlobClient> mockDestination = new(
+                new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
+                new BlobClientOptions());
+            int blockLength = 512;
+            int completeLength = 1024;
+            var data = GetRandomBuffer(completeLength);
+            using var stream = new MemoryStream(data);
+            using var fileContentStream = new MemoryStream();
+            mockDestination.Setup(b => b.StageBlockAsync(It.IsAny<string>(), It.IsAny<Stream>(), It.IsAny<BlockBlobStageBlockOptions>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(
+                    BlobsModelFactory.BlockInfo(
+                        contentHash: default,
+                        contentCrc64: default,
+                        encryptionKeySha256: default,
+                        encryptionScope: default),
+                    new MockResponse(201))));
+            mockDestination.Setup(b => b.CommitBlockListAsync(It.IsAny<IEnumerable<string>>(), It.IsAny<CommitBlockListOptions>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(
+                    BlobsModelFactory.BlobContentInfo(
+                        eTag: new ETag("eTag"),
+                        lastModified: DateTimeOffset.UtcNow,
+                        contentHash: default,
+                        versionId: "version",
+                        encryptionKeySha256: default,
+                        encryptionScope: default,
+                        blobSequenceNumber: default),
+                    new MockResponse(201))));
+
+            BlockBlobStorageResource destinationResource = new BlockBlobStorageResource(mockDestination.Object);
+            await destinationResource.CopyFromStreamInternalAsync(
+                stream: stream,
+                streamLength: blockLength,
+                overwrite: false,
+                options: new(){ Position = 0 },
+                completeLength: completeLength);
+            await destinationResource.CopyFromStreamInternalAsync(
+                stream: stream,
+                streamLength: blockLength,
+                overwrite: false,
+                options: new() { Position = blockLength },
+                completeLength: completeLength);
+
+            // Act
+            IDictionary<string, string> metadata = BuildMetadata();
+            Dictionary<string, object> rawProperties = new()
+            {
+                { "ContentType", DefaultContentType },
+                { "ContentEncoding", DefaultContentEncoding },
+                { "ContentLanguage", DefaultContentLanguage },
+                { "ContentDisposition", DefaultContentDisposition },
+                { "CacheControl", DefaultCacheControl },
+                { "Metadata", metadata },
+                { "Tags", DefaultTags },
+                { "AccessTier", DefaultAccessTier },
+            };
+            StorageResourceItemProperties sourceProperties = new(
+                completeLength,
+                new ETag("etag"),
+                DateTimeOffset.UtcNow.AddHours(-1),
+                rawProperties);
+            await destinationResource.CompleteTransferAsync(
+                overwrite: false,
+                sourceProperties: sourceProperties);
+
+            mockDestination.Verify(b => b.CommitBlockListAsync(
+                It.IsAny<IEnumerable<string>>(),
+                It.Is<CommitBlockListOptions>(
+                    options =>
+                        options.HttpHeaders.ContentType == DefaultContentType &&
+                        options.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
+                        options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
+                        options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
+                        options.HttpHeaders.CacheControl == DefaultCacheControl &&
+                        options.Metadata.SequenceEqual(metadata) &&
+                        options.Tags.SequenceEqual(DefaultTags) &&
+                        options.AccessTier == DefaultAccessTier),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mockDestination.Verify(b => b.StageBlockAsync(
+                It.IsAny<string>(),
+                It.IsAny<Stream>(),
+                It.IsAny<BlockBlobStageBlockOptions>(),
+                It.IsAny<CancellationToken>()),
+                Times.Exactly(2));
+            mockDestination.VerifyNoOtherCalls();
         }
 
         [RecordedTest]
