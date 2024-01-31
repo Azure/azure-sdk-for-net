@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -109,6 +110,7 @@ namespace Azure.Communication.CallAutomation
         {
             StartDialogRequestInternal startDialogRequestInternal = new StartDialogRequestInternal(startDialog.Dialog)
             {
+                OperationCallbackUri = startDialog.OperationCallbackUri,
                 OperationContext = startDialog.OperationContext == default ? Guid.NewGuid().ToString() : startDialog.OperationContext
             };
             return startDialogRequestInternal;
@@ -120,7 +122,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="dialogId"></param>
         /// <param name="operationCallbackUri"></param>
         /// <param name="cancellationToken"></param>
-        public virtual async Task<Response<DialogResult>> StopDialogAsync(string dialogId, string operationCallbackUri = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DialogResult>> StopDialogAsync(string dialogId, string operationCallbackUri = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallDialog)}.{nameof(StopDialog)}");
             scope.Start();
@@ -129,7 +131,7 @@ namespace Azure.Communication.CallAutomation
                 var response = await CallDialogRestClient.StopDialogAsync
                     (CallConnectionId,
                     dialogId,
-                    new Uri(operationCallbackUri)?.AbsoluteUri,
+                    operationCallbackUri,
                     cancellationToken).ConfigureAwait(false);
 
                 var result = new DialogResult(dialogId);
@@ -150,7 +152,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="dialogId"></param>
         /// <param name="operationCallbackUri"></param>
         /// <param name="cancellationToken"></param>
-        public virtual Response<DialogResult> StopDialog(string dialogId, string operationCallbackUri = default, CancellationToken cancellationToken = default)
+        public virtual Response<DialogResult> StopDialog(string dialogId, string operationCallbackUri = null, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallDialog)}.{nameof(StopDialog)}");
             scope.Start();
@@ -159,7 +161,7 @@ namespace Azure.Communication.CallAutomation
                 var response = CallDialogRestClient.StopDialog
                     (CallConnectionId,
                     dialogId,
-                    new Uri(operationCallbackUri)?.AbsoluteUri,
+                    operationCallbackUri,
                     cancellationToken);
 
                 var result = new DialogResult(dialogId);
