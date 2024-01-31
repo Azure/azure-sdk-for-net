@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
@@ -77,8 +78,6 @@ namespace Azure.Security.ConfidentialLedger
             }
             return OperationState.Pending(statusResponse);
         }
-
-        string IOperation.GetRehydrationToken() => null;
 
         /// <summary>
         /// The transactionId of the posted ledger entry.

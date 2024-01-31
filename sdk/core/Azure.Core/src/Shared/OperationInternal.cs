@@ -51,8 +51,8 @@ namespace Azure.Core
         /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final successful state.
         /// </summary>
         /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
-        /// <param name="rehydrationToken">rehydration token</param>
-        public static OperationInternal Succeeded(Response rawResponse, RehydrationToken? rehydrationToken = null) => new(OperationState.Success(rawResponse, rehydrationToken), rehydrationToken);
+        /// <param name="rehydrationToken">The rehydration token.</param>
+        public static OperationInternal Succeeded(Response rawResponse, RehydrationToken? rehydrationToken = null) => new(OperationState.Success(rawResponse), rehydrationToken);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final failed state.
@@ -85,32 +85,21 @@ namespace Azure.Core
         /// </param>
         /// <param name="scopeAttributes">The attributes to use during diagnostic scope creation.</param>
         /// <param name="fallbackStrategy"> The delay strategy to use. Default is <see cref="FixedDelayWithNoJitterStrategy"/>.</param>
+        /// <param name="rehydrationToken">The token used to rehydrate an operation.</param>
         public OperationInternal(IOperation operation,
             ClientDiagnostics clientDiagnostics,
             Response rawResponse,
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategy? fallbackStrategy = null)
-            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
-        {
-            _internalOperation = new OperationInternal<VoidValue>(new OperationToOperationOfTProxy(operation), clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy);
-        }
-
-        // TEMP backcompat with AutoRest
-        public OperationInternal(
-            ClientDiagnostics clientDiagnostics,
-            IOperation operation,
-            Response rawResponse,
-            string? operationTypeName = null,
-            IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategy? fallbackStrategy = null)
+            DelayStrategy? fallbackStrategy = null,
+            RehydrationToken? rehydrationToken = null)
             : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
         {
             _internalOperation = new OperationInternal<VoidValue>(new OperationToOperationOfTProxy(operation), clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy);
         }
 
         private OperationInternal(OperationState finalState, RehydrationToken? rehydrationToken)
-            : base(finalState.RawResponse)
+            : base(finalState.RawResponse, rehydrationToken)
         {
             _internalOperation = finalState.HasSucceeded
                 ? OperationInternal<VoidValue>.Succeeded(finalState.RawResponse, default, rehydrationToken)
@@ -123,11 +112,6 @@ namespace Azure.Core
 
         protected override async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken) =>
             async ? await _internalOperation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false) : _internalOperation.UpdateStatus(cancellationToken);
-
-        public virtual string? GetRehydrationToken()
-        {
-            return _internalOperation.GetRehydrationToken();
-        }
 
         // Wrapper type that converts OperationState to OperationState<T> and can be passed to `OperationInternal<T>` constructor.
         private class OperationToOperationOfTProxy : IOperation<VoidValue>
@@ -153,11 +137,6 @@ namespace Azure.Core
                 }
 
                 return OperationState<VoidValue>.Failure(state.RawResponse, state.OperationFailedException);
-            }
-
-            public string? GetRehydrationToken()
-            {
-                return _operation.GetRehydrationToken();
             }
         }
     }
@@ -197,11 +176,6 @@ namespace Azure.Core
         /// </list>
         /// </returns>
         ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken);
-
-        /// <summary>
-        /// To get the token of the operation for rehydration purpose.
-        /// </summary>
-        string? GetRehydrationToken();
     }
 
     /// <summary>
@@ -215,13 +189,12 @@ namespace Azure.Core
     /// </summary>
     internal readonly struct OperationState
     {
-        private OperationState(Response rawResponse, bool hasCompleted, bool hasSucceeded, RequestFailedException? operationFailedException, RehydrationToken? rehydrationToken)
+        private OperationState(Response rawResponse, bool hasCompleted, bool hasSucceeded, RequestFailedException? operationFailedException)
         {
             RawResponse = rawResponse;
             HasCompleted = hasCompleted;
             HasSucceeded = hasSucceeded;
             OperationFailedException = operationFailedException;
-            RehydrationToken = rehydrationToken;
         }
 
         public Response RawResponse { get; }
@@ -232,19 +205,16 @@ namespace Azure.Core
 
         public RequestFailedException? OperationFailedException { get; }
 
-        public RehydrationToken? RehydrationToken { get; }
-
         /// <summary>
         /// Instantiates an <see cref="OperationState"/> indicating the operation has completed successfully.
         /// </summary>
         /// <param name="rawResponse">The HTTP response obtained during the status update.</param>
-        /// <param name="rehydrationToken">rehydration token</param>
         /// <returns>A new <see cref="OperationState"/> instance.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> is <c>null</c>.</exception>
-        public static OperationState Success(Response rawResponse, RehydrationToken? rehydrationToken = null)
+        public static OperationState Success(Response rawResponse)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
-            return new OperationState(rawResponse, true, true, default, rehydrationToken);
+            return new OperationState(rawResponse, true, true, default);
         }
 
         /// <summary>
@@ -255,13 +225,12 @@ namespace Azure.Core
         /// The exception to throw from <c>UpdateStatus</c> because of the operation failure. If left <c>null</c>,
         /// a default exception is created based on the <paramref name="rawResponse"/> parameter.
         /// </param>
-        /// <param name="rehydrationToken">rehydration token</param>
         /// <returns>A new <see cref="OperationState"/> instance.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> is <c>null</c>.</exception>
-        public static OperationState Failure(Response rawResponse, RequestFailedException? operationFailedException = null, RehydrationToken? rehydrationToken = null)
+        public static OperationState Failure(Response rawResponse, RequestFailedException? operationFailedException = null)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
-            return new OperationState(rawResponse, true, false, operationFailedException, rehydrationToken);
+            return new OperationState(rawResponse, true, false, operationFailedException);
         }
 
         /// <summary>
@@ -273,7 +242,7 @@ namespace Azure.Core
         public static OperationState Pending(Response rawResponse)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
-            return new OperationState(rawResponse, false, default, default, default);
+            return new OperationState(rawResponse, false, default, default);
         }
     }
 }

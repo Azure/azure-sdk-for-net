@@ -232,7 +232,5 @@ namespace Azure.AI.FormRecognizer.Models
             }
             return new RecognizedFormCollection(forms);
         }
-
-        string IOperation<RecognizedFormCollection>.GetRehydrationToken() => null;
     }
 }

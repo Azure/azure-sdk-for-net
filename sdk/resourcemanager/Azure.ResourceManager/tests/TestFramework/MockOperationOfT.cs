@@ -129,8 +129,6 @@ namespace Azure.Core.Tests
             return new ValueTask<OperationState<T>>(OnUpdateState(cancellationToken));
         }
 
-        string IOperation<T>.GetRehydrationToken() => null;
-
         internal MockOperationInternal<T> MockOperationInternal { get; }
 
         internal Func<CancellationToken, OperationState<T>> OnUpdateState { get; set; }
