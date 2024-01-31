@@ -284,7 +284,7 @@ namespace Azure.Search.Documents.Models
     public class SemanticSearchResults
     {
         /// <summary> Initializes a new instance of <see cref="SemanticSearchResults"/>. </summary>
-        internal SemanticSearchResults()
+        public SemanticSearchResults()
         {
         }
 

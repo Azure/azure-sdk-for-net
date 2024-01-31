@@ -3612,13 +3612,13 @@ namespace Azure.Search.Documents.Models
     }
     public partial class SemanticSearchResult
     {
-        internal SemanticSearchResult() { }
+        public SemanticSearchResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.QueryCaptionResult> Captions { get { throw null; } }
         public double? RerankerScore { get { throw null; } }
     }
     public partial class SemanticSearchResults
     {
-        internal SemanticSearchResults() { }
+        public SemanticSearchResults() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.QueryAnswerResult> Answers { get { throw null; } }
         public Azure.Search.Documents.Models.SemanticErrorReason? ErrorReason { get { throw null; } }
         public Azure.Search.Documents.Models.SemanticSearchResultsType? ResultsType { get { throw null; } }
