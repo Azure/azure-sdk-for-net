@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConnectedClusterData(id, name, resourceType, systemData, tags, location, identity, agentPublicKeyCertificate, kubernetesVersion, totalNodeCount, totalCoreCount, agentVersion, provisioningState, distribution, infrastructure, offering, managedIdentityCertificateExpirationOn, lastConnectivityOn, connectivityStatus, privateLinkState, privateLinkScopeResourceId);
+            return new ConnectedClusterData(id, name, resourceType, systemData, tags, location, identity, agentPublicKeyCertificate, kubernetesVersion, totalNodeCount, totalCoreCount, agentVersion, provisioningState, distribution, infrastructure, offering, managedIdentityCertificateExpirationOn, lastConnectivityOn, connectivityStatus, privateLinkState, privateLinkScopeResourceId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CredentialResults"/>. </summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         {
             kubeconfigs ??= new List<CredentialResult>();
 
-            return new CredentialResults(hybridConnectionConfig, kubeconfigs?.ToList());
+            return new CredentialResults(hybridConnectionConfig, kubeconfigs?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HybridConnectionConfig"/>. </summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <returns> A new <see cref="Models.HybridConnectionConfig"/> instance for mocking. </returns>
         public static HybridConnectionConfig HybridConnectionConfig(long? expirationTime = null, string hybridConnectionName = null, string relay = null, string token = null)
         {
-            return new HybridConnectionConfig(expirationTime, hybridConnectionName, relay, token);
+            return new HybridConnectionConfig(expirationTime, hybridConnectionName, relay, token, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CredentialResult"/>. </summary>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <returns> A new <see cref="Models.CredentialResult"/> instance for mocking. </returns>
         public static CredentialResult CredentialResult(string name = null, byte[] value = null)
         {
-            return new CredentialResult(name, value);
+            return new CredentialResult(name, value, serializedAdditionalRawData: null);
         }
     }
 }

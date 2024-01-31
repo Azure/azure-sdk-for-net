@@ -5,15 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SiteMachineKey
+    public partial class SiteMachineKey : IUtf8JsonSerializable, IJsonModel<SiteMachineKey>
     {
-        internal static SiteMachineKey DeserializeSiteMachineKey(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteMachineKey>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SiteMachineKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteMachineKey>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteMachineKey)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Validation))
+            {
+                writer.WritePropertyName("validation"u8);
+                writer.WriteStringValue(Validation);
+            }
+            if (Optional.IsDefined(ValidationKey))
+            {
+                writer.WritePropertyName("validationKey"u8);
+                writer.WriteStringValue(ValidationKey);
+            }
+            if (Optional.IsDefined(Decryption))
+            {
+                writer.WritePropertyName("decryption"u8);
+                writer.WriteStringValue(Decryption);
+            }
+            if (Optional.IsDefined(DecryptionKey))
+            {
+                writer.WritePropertyName("decryptionKey"u8);
+                writer.WriteStringValue(DecryptionKey);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteMachineKey IJsonModel<SiteMachineKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteMachineKey>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteMachineKey)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteMachineKey(document.RootElement, options);
+        }
+
+        internal static SiteMachineKey DeserializeSiteMachineKey(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +88,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> validationKey = default;
             Optional<string> decryption = default;
             Optional<string> decryptionKey = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validation"u8))
@@ -44,8 +112,44 @@ namespace Azure.ResourceManager.AppService.Models
                     decryptionKey = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteMachineKey(validation.Value, validationKey.Value, decryption.Value, decryptionKey.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteMachineKey(validation.Value, validationKey.Value, decryption.Value, decryptionKey.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SiteMachineKey>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteMachineKey>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SiteMachineKey)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SiteMachineKey IPersistableModel<SiteMachineKey>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteMachineKey>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSiteMachineKey(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteMachineKey)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SiteMachineKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

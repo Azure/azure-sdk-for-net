@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         public virtual AsyncPageable<CapacitySku> GetSkusCapacitiesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedCapacityCapacitiesRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CapacitySku.DeserializeCapacitySku, DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CapacitySku.DeserializeCapacitySku(e), DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         public virtual Pageable<CapacitySku> GetSkusCapacities(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DedicatedCapacityCapacitiesRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CapacitySku.DeserializeCapacitySku, DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CapacitySku.DeserializeCapacitySku(e), DedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "MockablePowerBIDedicatedSubscriptionResource.GetSkusCapacities", "value", null, cancellationToken);
         }
 
         /// <summary>

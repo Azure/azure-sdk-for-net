@@ -32,6 +32,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
             var pagesOfProperties = pages.Select(
                 page => page.Select(secret => secret.Properties).ToArray()).ToArray();
 
+            mock.Setup(m => m.GetPropertiesOfSecrets(default)).Returns(new MockPageable(pagesOfProperties));
             mock.Setup(m => m.GetPropertiesOfSecretsAsync(default)).Returns(new MockAsyncPageable(pagesOfProperties));
 
             foreach (var page in pages)
@@ -45,6 +46,24 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                             return Response.FromValue(secret, Mock.Of<Response>());
                         }
                     );
+                }
+            }
+        }
+
+        private class MockPageable : Pageable<SecretProperties>
+        {
+            private readonly SecretProperties[][] _pages;
+
+            public MockPageable(SecretProperties[][] pages)
+            {
+                _pages = pages;
+            }
+
+            public override IEnumerable<Page<SecretProperties>> AsPages(string continuationToken = null, int? pageSizeHint = null)
+            {
+                foreach (var page in _pages)
+                {
+                    yield return Page<SecretProperties>.FromValues(page, null, Mock.Of<Response>());
                 }
             }
         }
@@ -353,7 +372,7 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
                 await provider.Wait();
 
                 SetPages(client,
-        new[]
+                    new[]
                     {
                         CreateSecret("Secret1", "Value2"),
                         CreateSecret("Secret2", "Value2", enabled: false)

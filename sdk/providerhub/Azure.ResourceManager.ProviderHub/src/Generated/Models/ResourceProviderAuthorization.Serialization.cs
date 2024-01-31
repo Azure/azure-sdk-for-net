@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceProviderAuthorization : IUtf8JsonSerializable
+    public partial class ResourceProviderAuthorization : IUtf8JsonSerializable, IJsonModel<ResourceProviderAuthorization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceProviderAuthorization>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ResourceProviderAuthorization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceProviderAuthorization)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ApplicationId))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("managedByRoleDefinitionId"u8);
                 writer.WriteStringValue(ManagedByRoleDefinitionId);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ResourceProviderAuthorization DeserializeResourceProviderAuthorization(JsonElement element)
+        ResourceProviderAuthorization IJsonModel<ResourceProviderAuthorization>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceProviderAuthorization)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceProviderAuthorization(document.RootElement, options);
+        }
+
+        internal static ResourceProviderAuthorization DeserializeResourceProviderAuthorization(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<string> applicationId = default;
             Optional<string> roleDefinitionId = default;
             Optional<string> managedByRoleDefinitionId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationId"u8))
@@ -59,8 +101,44 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     managedByRoleDefinitionId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceProviderAuthorization(applicationId.Value, roleDefinitionId.Value, managedByRoleDefinitionId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ResourceProviderAuthorization(applicationId.Value, roleDefinitionId.Value, managedByRoleDefinitionId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResourceProviderAuthorization>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceProviderAuthorization)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ResourceProviderAuthorization IPersistableModel<ResourceProviderAuthorization>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeResourceProviderAuthorization(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceProviderAuthorization)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResourceProviderAuthorization>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

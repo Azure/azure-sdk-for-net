@@ -6,16 +6,85 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationOrderBillingPlanInformation
+    public partial class ReservationOrderBillingPlanInformation : IUtf8JsonSerializable, IJsonModel<ReservationOrderBillingPlanInformation>
     {
-        internal static ReservationOrderBillingPlanInformation DeserializeReservationOrderBillingPlanInformation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationOrderBillingPlanInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ReservationOrderBillingPlanInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationOrderBillingPlanInformation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReservationOrderBillingPlanInformation)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(PricingCurrencyTotal))
+            {
+                writer.WritePropertyName("pricingCurrencyTotal"u8);
+                writer.WriteObjectValue(PricingCurrencyTotal);
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startDate"u8);
+                writer.WriteStringValue(StartOn.Value, "D");
+            }
+            if (Optional.IsDefined(NextPaymentDueOn))
+            {
+                writer.WritePropertyName("nextPaymentDueDate"u8);
+                writer.WriteStringValue(NextPaymentDueOn.Value, "D");
+            }
+            if (Optional.IsCollectionDefined(Transactions))
+            {
+                writer.WritePropertyName("transactions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Transactions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ReservationOrderBillingPlanInformation IJsonModel<ReservationOrderBillingPlanInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationOrderBillingPlanInformation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReservationOrderBillingPlanInformation)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReservationOrderBillingPlanInformation(document.RootElement, options);
+        }
+
+        internal static ReservationOrderBillingPlanInformation DeserializeReservationOrderBillingPlanInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +93,8 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<DateTimeOffset> startDate = default;
             Optional<DateTimeOffset> nextPaymentDueDate = default;
             Optional<IReadOnlyList<PaymentDetail>> transactions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pricingCurrencyTotal"u8))
@@ -67,8 +138,44 @@ namespace Azure.ResourceManager.Reservations.Models
                     transactions = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReservationOrderBillingPlanInformation(pricingCurrencyTotal.Value, Optional.ToNullable(startDate), Optional.ToNullable(nextPaymentDueDate), Optional.ToList(transactions));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ReservationOrderBillingPlanInformation(pricingCurrencyTotal.Value, Optional.ToNullable(startDate), Optional.ToNullable(nextPaymentDueDate), Optional.ToList(transactions), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ReservationOrderBillingPlanInformation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationOrderBillingPlanInformation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ReservationOrderBillingPlanInformation)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ReservationOrderBillingPlanInformation IPersistableModel<ReservationOrderBillingPlanInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationOrderBillingPlanInformation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeReservationOrderBillingPlanInformation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReservationOrderBillingPlanInformation)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ReservationOrderBillingPlanInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

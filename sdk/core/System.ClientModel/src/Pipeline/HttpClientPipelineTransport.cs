@@ -11,20 +11,17 @@ namespace System.ClientModel.Primitives;
 
 public partial class HttpClientPipelineTransport : PipelineTransport, IDisposable
 {
+    private static readonly HttpClient SharedDefaultClient = CreateDefaultClient();
+
     /// <summary>
     /// A shared instance of <see cref="HttpClientPipelineTransport"/> with default parameters.
     /// </summary>
     public static readonly HttpClientPipelineTransport Shared = new();
 
-    private readonly bool _ownsClient;
     private readonly HttpClient _httpClient;
 
-    private bool _disposed;
-
-    public HttpClientPipelineTransport() : this(CreateDefaultClient())
+    public HttpClientPipelineTransport() : this(SharedDefaultClient)
     {
-        // We will dispose the httpClient.
-        _ownsClient = true;
     }
 
     public HttpClientPipelineTransport(HttpClient client)
@@ -32,9 +29,6 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
         Argument.AssertNotNull(client, nameof(client));
 
         _httpClient = client;
-
-        // The caller will dispose the httpClient.
-        _ownsClient = false;
     }
 
     private static HttpClient CreateDefaultClient()
@@ -192,16 +186,11 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 
     protected virtual void Dispose(bool disposing)
     {
-        if (disposing && !_disposed)
-        {
-            if (this != Shared && _ownsClient)
-            {
-                HttpClient httpClient = _httpClient;
-                httpClient?.Dispose();
-            }
-
-            _disposed = true;
-        }
+        // We don't dispose the Shared static transport instance, and if the
+        // custom HttpClient constructor was called, then it is the caller's
+        // responsibility to dispose the passed-in HttpClient.  As such, Dispose
+        // for this implementation is a no-op.  We retain the protected method
+        // to allow subtypes to provide an implementation.
     }
 
     #endregion

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -13,6 +14,38 @@ namespace Azure.AI.OpenAI
     /// <summary> Parameters to use when configuring Elasticsearch® as an Azure OpenAI chat extension. </summary>
     internal partial class ElasticsearchChatExtensionParameters
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ElasticsearchChatExtensionParameters"/>. </summary>
         /// <param name="authentication">
         /// The authentication method to use when accessing the defined data source.
@@ -30,7 +63,8 @@ namespace Azure.AI.OpenAI
         /// <param name="fieldMappingOptions"> The index field mapping options of Elasticsearch®. </param>
         /// <param name="queryType"> The query type of Elasticsearch®. </param>
         /// <param name="embeddingDependency"> The embedding dependency for vector search. </param>
-        internal ElasticsearchChatExtensionParameters(OnYourDataAuthenticationOptions authentication, int? documentCount, bool? shouldRestrictResultScope, int? strictness, string roleInformation, Uri endpoint, string indexName, ElasticsearchIndexFieldMappingOptions fieldMappingOptions, ElasticsearchQueryType? queryType, OnYourDataVectorizationSource embeddingDependency)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticsearchChatExtensionParameters(OnYourDataAuthenticationOptions authentication, int? documentCount, bool? shouldRestrictResultScope, int? strictness, string roleInformation, Uri endpoint, string indexName, ElasticsearchIndexFieldMappingOptions fieldMappingOptions, ElasticsearchQueryType? queryType, OnYourDataVectorizationSource embeddingDependency, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Authentication = authentication;
             DocumentCount = documentCount;
@@ -42,6 +76,7 @@ namespace Azure.AI.OpenAI
             FieldMappingOptions = fieldMappingOptions;
             QueryType = queryType;
             EmbeddingDependency = embeddingDependency;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
