@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Azure.Communication.Messages.Models.Channels;
 using NUnit.Framework;
@@ -239,6 +240,85 @@ namespace Azure.Communication.Messages.Tests
 
             // Assert
             validateResponse(response);
+        }
+
+        [Test]
+        public Task SendMessageWithEmptyContentShouldFail()
+        {
+            // Arrange
+            NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
+            TextNotificationContent content = new(new Guid(TestEnvironment.SenderChannelRegistrationId),
+                new List<string> { TestEnvironment.RecipientIdentifier }, string.Empty);
+
+            // Act and Assert
+            Assert.ThrowsAsync<ArgumentException>(async () => await notificationMessagesClient.SendAsync(content));
+            return Task.CompletedTask;
+        }
+
+        [Test]
+        public Task SendTemplateMessageWithInvalidTemplateShouldFail()
+        {
+            // Arrange
+            NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
+            Guid channelRegistrationId = new(TestEnvironment.SenderChannelRegistrationId);
+            IList<string> recipients = new List<string> { TestEnvironment.RecipientIdentifier };
+
+            // Invalid template without required values
+            MessageTemplate template = new("invalid_template", "en_us");
+
+            NotificationContent content = new TemplateNotificationContent(channelRegistrationId, recipients, template);
+
+            // Act and Assert
+            Assert.ThrowsAsync<ArgumentException>(async () => await notificationMessagesClient.SendAsync(content));
+            return Task.CompletedTask;
+        }
+
+        [Test]
+        public async Task DownloadMedia_ShouldSucceed()
+        {
+            // Arrange
+            NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
+            string mediaContentId = TestEnvironment.MediaContentId;
+
+            // Act
+            Stream mediaStream = await notificationMessagesClient.DownloadMediaAsync(mediaContentId);
+
+            // Assert
+            mediaStream.Position = 0; // Reset stream position for reading
+            Assert.IsTrue(mediaStream.Length > 0);
+        }
+
+        [Test]
+        public async Task DownloadMediaToStream_ShouldSucceed()
+        {
+            // Arrange
+            NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
+            string mediaContentId = TestEnvironment.MediaContentId;
+            Stream destinationStream = new MemoryStream();
+
+            // Act
+            Response downloadResponse = await notificationMessagesClient.DownloadMediaToAsync(mediaContentId, destinationStream);
+
+            // Assert
+            Assert.AreEqual(200, downloadResponse.Status);
+            destinationStream.Position = 0; // Reset stream position for reading
+            Assert.IsTrue(destinationStream.Length > 0);
+        }
+
+        [Test]
+        public async Task DownloadMediaToFilePath_ShouldSucceed()
+        {
+            // Arrange
+            NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
+            string mediaContentId = TestEnvironment.MediaContentId;
+            string destinationPath = TestEnvironment.DownloadDestinationLocalPath;
+
+            // Act
+            Response downloadResponse = await notificationMessagesClient.DownloadMediaToAsync(mediaContentId, destinationPath);
+
+            // Assert
+            Assert.AreEqual(200, downloadResponse.Status);
+            Assert.IsTrue(File.Exists(destinationPath));
         }
 
         private void validateResponse(Response<SendMessageResult> response)

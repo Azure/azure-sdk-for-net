@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Net;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
