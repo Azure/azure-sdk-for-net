@@ -58,11 +58,54 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
                     IPv6Address = IPAddress.Parse("3f0d:8079:32a1:9c1d:dd7c:afc6:fc15:d56")
                 }
             };
-            var aaaa = ArmDnsModelFactory.DnsAaaaRecordData(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource, aaaaRecords);
+            DnsAaaaRecordData aaaa = ArmDnsModelFactory.DnsAaaaRecordData(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource, aaaaRecords);
             BasicAssert(aaaa);
             Assert.AreEqual(id, aaaa.Id);
             Assert.AreEqual(resourceType, aaaa.ResourceType);
             Assert.AreEqual(2, aaaa.DnsAaaaRecords.Count);
+        }
+
+        [Test]
+        public void CnameRecordDataTest()
+        {
+            ResourceIdentifier id = new ResourceIdentifier("{/subscriptions/000000000-0000-0000-0000-000000000/resourceGroups/rg0000/providers/Microsoft.Network/dnszones/contoso.com/CNAME/foo}");
+            ResourceType resourceType = "Microsoft.Network/dnszones/CNAME";
+            string aliasValue = "mycontoso.com";
+
+            DnsCnameRecordData cname = ArmDnsModelFactory.DnsCnameRecordData(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource, aliasValue);
+            BasicAssert(cname);
+            Assert.AreEqual(id, cname.Id);
+            Assert.AreEqual(resourceType, cname.ResourceType);
+            Assert.AreEqual(aliasValue, cname.DnsCnameRecord.Cname);
+        }
+
+        [Test]
+        public void SoaRecordDataTest()
+        {
+            ResourceIdentifier id = new ResourceIdentifier("{/subscriptions/000000000-0000-0000-0000-000000000/resourceGroups/rg0000/providers/Microsoft.Network/dnszones/contoso.com/SOA/foo}");
+            ResourceType resourceType = "Microsoft.Network/dnszones/SOA";
+            DnsSoaRecordInfo soaRecord = new DnsSoaRecordInfo
+            {
+                Email = "azuredns-hostmaster.microsoft.com",
+                ExpireTimeInSeconds = 2419200,
+                RefreshTimeInSeconds = 3600,
+                RetryTimeInSeconds = 300,
+                MinimumTtlInSeconds = 300,
+                SerialNumber = 1,
+                Host = "ns1-03.azure-dns.com."
+            };
+
+            DnsSoaRecordData soa = ArmDnsModelFactory.DnsSoaRecordData(id, name, resourceType, systemData, etag, metadata, ttl, fqdn, provisioningState, targetResource, soaRecord);
+            BasicAssert(soa);
+            Assert.AreEqual(id, soa.Id);
+            Assert.AreEqual(resourceType, soa.ResourceType);
+            Assert.AreEqual("azuredns-hostmaster.microsoft.com", soa.DnsSoaRecord.Email);
+            Assert.AreEqual("ns1-03.azure-dns.com.", soa.DnsSoaRecord.Host);
+            Assert.AreEqual(2419200, soa.DnsSoaRecord.ExpireTimeInSeconds);
+            Assert.AreEqual(3600, soa.DnsSoaRecord.RefreshTimeInSeconds);
+            Assert.AreEqual(300, soa.DnsSoaRecord.RetryTimeInSeconds);
+            Assert.AreEqual(300, soa.DnsSoaRecord.MinimumTtlInSeconds);
+            Assert.AreEqual(1, soa.DnsSoaRecord.SerialNumber);
         }
 
         private static void BasicAssert(DnsBaseRecordData recordData)
