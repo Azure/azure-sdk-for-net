@@ -51,16 +51,15 @@ namespace Azure.Developer.DevCenter.Tests.Samples
 
             // Provision your dev box in the selected pool
             #region Snippet:Azure_DevCenter_CreateDevBox_Scenario
-            var content = new DevBox(targetPoolName);
+            var devBox = new DevBox("MyDevBox", targetPoolName);
 
             Operation<DevBox> devBoxCreateOperation = await devBoxesClient.CreateDevBoxAsync(
                 WaitUntil.Completed,
                 targetProjectName,
                 "me",
-                "MyDevBox",
-                content);
+                devBox);
 
-            DevBox devBox = await devBoxCreateOperation.WaitForCompletionAsync();
+            devBox = await devBoxCreateOperation.WaitForCompletionAsync();
             Console.WriteLine($"Completed provisioning for dev box with status {devBox.ProvisioningState}.");
             #endregion
 

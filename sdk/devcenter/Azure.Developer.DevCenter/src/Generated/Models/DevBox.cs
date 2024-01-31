@@ -15,16 +15,6 @@ namespace Azure.Developer.DevCenter.Models
     public partial class DevBox
     {
         /// <summary> Initializes a new instance of <see cref="DevBox"/>. </summary>
-        /// <param name="poolName"> The name of the Dev Box pool this machine belongs to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
-        public DevBox(string poolName)
-        {
-            Argument.AssertNotNull(poolName, nameof(poolName));
-
-            PoolName = poolName;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DevBox"/>. </summary>
         /// <param name="name"> Display name for the Dev Box. </param>
         /// <param name="projectName"> Name of the project this Dev Box belongs to. </param>
         /// <param name="poolName"> The name of the Dev Box pool this machine belongs to. </param>
@@ -71,9 +61,6 @@ namespace Azure.Developer.DevCenter.Models
             CreatedTime = createdTime;
             LocalAdministratorStatus = localAdministratorStatus;
         }
-
-        /// <summary> Display name for the Dev Box. </summary>
-        public string Name { get; }
         /// <summary> Name of the project this Dev Box belongs to. </summary>
         public string ProjectName { get; }
         /// <summary> The name of the Dev Box pool this machine belongs to. </summary>

@@ -11,7 +11,7 @@ namespace Azure.Developer.DevCenter.Models
     public partial class OSDisk
     {
         /// <summary> Initializes a new instance of <see cref="OSDisk"/>. </summary>
-        public OSDisk()
+        internal OSDisk()
         {
         }
 

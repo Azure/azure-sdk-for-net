@@ -11,14 +11,8 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class DevBoxHardwareProfile : IUtf8JsonSerializable
+    public partial class DevBoxHardwareProfile
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WriteEndObject();
-        }
-
         internal static DevBoxHardwareProfile DeserializeDevBoxHardwareProfile(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -67,14 +61,6 @@ namespace Azure.Developer.DevCenter.Models
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeDevBoxHardwareProfile(document.RootElement);
-        }
-
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
         }
     }
 }

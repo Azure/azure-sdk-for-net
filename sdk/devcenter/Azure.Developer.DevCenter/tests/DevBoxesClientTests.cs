@@ -371,6 +371,7 @@ namespace Azure.Developer.DevCenter.Tests
         {
             DevBox devBox = new DevBox
             (
+                 DevBoxName,
                  TestEnvironment.PoolName
             );
 
@@ -378,7 +379,6 @@ namespace Azure.Developer.DevCenter.Tests
                 WaitUntil.Completed,
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
-                DevBoxName,
                 devBox);
 
             return devBoxCreateOperation.Value;

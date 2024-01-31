@@ -107,16 +107,15 @@ await foreach (DevBoxPool pool in devBoxesClient.GetPoolsAsync(targetProjectName
 To create a new DevBox, provide the pool name in the content and specify the desired DevBox name. Upon successful execution of this operation, a DevBox should appear in the portal.
 
 ```C# Snippet:Azure_DevCenter_CreateDevBox_Scenario
-var content = new DevBox(targetPoolName);
+var devBox = new DevBox("MyDevBox", targetPoolName);
 
 Operation<DevBox> devBoxCreateOperation = await devBoxesClient.CreateDevBoxAsync(
     WaitUntil.Completed,
     targetProjectName,
     "me",
-    "MyDevBox",
-    content);
+    devBox);
 
-DevBox devBox = await devBoxCreateOperation.WaitForCompletionAsync();
+devBox = await devBoxCreateOperation.WaitForCompletionAsync();
 Console.WriteLine($"Completed provisioning for dev box with status {devBox.ProvisioningState}.");
 ```
 

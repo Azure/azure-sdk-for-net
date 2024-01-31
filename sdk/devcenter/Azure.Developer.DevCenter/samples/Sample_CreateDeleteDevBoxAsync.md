@@ -31,16 +31,15 @@ await foreach (DevBoxPool pool in devBoxesClient.GetPoolsAsync(targetProjectName
 Issue a request to create a dev box in a project using a specific pool.
 
 ```C# Snippet:Azure_DevCenter_CreateDevBox_Scenario
-var content = new DevBox(targetPoolName);
+var devBox = new DevBox("MyDevBox", targetPoolName);
 
 Operation<DevBox> devBoxCreateOperation = await devBoxesClient.CreateDevBoxAsync(
     WaitUntil.Completed,
     targetProjectName,
     "me",
-    "MyDevBox",
-    content);
+    devBox);
 
-DevBox devBox = await devBoxCreateOperation.WaitForCompletionAsync();
+devBox = await devBoxCreateOperation.WaitForCompletionAsync();
 Console.WriteLine($"Completed provisioning for dev box with status {devBox.ProvisioningState}.");
 ```
 

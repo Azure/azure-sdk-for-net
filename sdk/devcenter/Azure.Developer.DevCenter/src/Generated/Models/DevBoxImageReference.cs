@@ -13,7 +13,7 @@ namespace Azure.Developer.DevCenter.Models
     public partial class DevBoxImageReference
     {
         /// <summary> Initializes a new instance of <see cref="DevBoxImageReference"/>. </summary>
-        public DevBoxImageReference()
+        internal DevBoxImageReference()
         {
         }
 

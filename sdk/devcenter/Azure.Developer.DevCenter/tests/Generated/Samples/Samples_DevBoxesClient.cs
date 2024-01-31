@@ -1879,32 +1879,6 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DevBoxesClientOperations_CreateDevBox_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
-
-            DevBox devBox = new DevBox("<poolName>");
-            Operation<DevBox> operation = client.CreateDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", devBox);
-            DevBox responseData = operation.Value;
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DevBoxesClientOperations_CreateDevBox_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
-
-            DevBox devBox = new DevBox("<poolName>");
-            Operation<DevBox> operation = await client.CreateDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", devBox);
-            DevBox responseData = operation.Value;
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_DevBoxesClientOperations_CreateDevBox_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
@@ -1991,38 +1965,6 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("imageReference").GetProperty("publishedDate").ToString());
             Console.WriteLine(result.GetProperty("createdTime").ToString());
             Console.WriteLine(result.GetProperty("localAdministrator").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DevBoxesClientOperations_CreateDevBox_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
-
-            DevBox devBox = new DevBox("<poolName>")
-            {
-                LocalAdministratorStatus = LocalAdministratorStatus.Enabled,
-            };
-            Operation<DevBox> operation = client.CreateDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", devBox);
-            DevBox responseData = operation.Value;
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DevBoxesClientOperations_CreateDevBox_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            DevBoxesClient client = new DevBoxesClient(endpoint, credential);
-
-            DevBox devBox = new DevBox("<poolName>")
-            {
-                LocalAdministratorStatus = LocalAdministratorStatus.Enabled,
-            };
-            Operation<DevBox> operation = await client.CreateDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", devBox);
-            DevBox responseData = operation.Value;
         }
 
         [Test]

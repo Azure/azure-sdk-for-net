@@ -11,7 +11,7 @@ namespace Azure.Developer.DevCenter.Models
     public partial class DevBoxHardwareProfile
     {
         /// <summary> Initializes a new instance of <see cref="DevBoxHardwareProfile"/>. </summary>
-        public DevBoxHardwareProfile()
+        internal DevBoxHardwareProfile()
         {
         }
 
