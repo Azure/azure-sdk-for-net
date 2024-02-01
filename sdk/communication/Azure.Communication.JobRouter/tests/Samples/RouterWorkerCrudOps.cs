@@ -16,15 +16,32 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         {
             // create a client
             JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
+            JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
+
+            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D
+            Response<DistributionPolicy> distributionPolicy = routerAdministrationClient.CreateDistributionPolicy(
+                new CreateDistributionPolicyOptions(
+                    distributionPolicyId: "distribution-policy-1",
+                    offerExpiresAfter: TimeSpan.FromDays(1),
+                    mode: new LongestIdleMode())
+            );
+            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D
+
+            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue
+            Response<RouterQueue> queue = routerAdministrationClient.CreateQueue(
+                new CreateQueueOptions(
+                    queueId: "queue-1",
+                    distributionPolicyId: distributionPolicy.Value.Id)
+            );
+            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CreateRouterWorker
-
             string routerWorkerId = "my-router-worker";
 
             Response<RouterWorker> worker = routerClient.CreateWorker(
                 new CreateWorkerOptions(workerId: routerWorkerId, capacity: 100)
                 {
-                    Queues = { "worker-q-1", "worker-q-2" },
+                    Queues = { "queue-1", "queue-1" },
                     Channels =
                     {
                         new RouterChannel("WebChat", 1),
@@ -71,7 +88,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> updateWorker = routerClient.UpdateWorker(
                 new RouterWorker(routerWorkerId)
                 {
-                    Queues = { "worker-q-3", },
+                    Queues = { "queue-1", },
                     Channels = { new RouterChannel("WebChatEscalated", 50), },
                     Labels =
                     {

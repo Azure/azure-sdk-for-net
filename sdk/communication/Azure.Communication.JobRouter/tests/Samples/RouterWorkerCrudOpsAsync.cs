@@ -17,7 +17,22 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         {
             // create a client
             JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
+            JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 
+            // create a distribution policy (this will be referenced by both primary queue and backup queue)
+            string distributionPolicyId = "distribution-policy-id";
+
+            Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(new CreateDistributionPolicyOptions(
+                distributionPolicyId: distributionPolicyId,
+                offerExpiresAfter: TimeSpan.FromMinutes(2),
+                mode: new LongestIdleMode()));
+
+            // create backup queue
+            string backupJobQueueId = "job-queue-2";
+
+            Response<RouterQueue> backupJobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+                queueId: backupJobQueueId,
+                distributionPolicyId: distributionPolicyId));
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CreateRouterWorker_Async
 
             string routerWorkerId = "my-router-worker";
@@ -27,7 +42,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     workerId: routerWorkerId,
                     capacity: 100)
                 {
-                    Queues = { "worker-q-1", "worker-q-2" },
+                    Queues = { "job-queue-2", "job-queue-2" },
                     Channels =
                     {
                         new RouterChannel("WebChat", 1),
@@ -74,7 +89,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             Response<RouterWorker> updateWorker = await routerClient.UpdateWorkerAsync(
                 new RouterWorker(routerWorkerId)
                 {
-                    Queues = { "worker-q-3", },
+                    Queues = { "job-queue-2", },
                     Channels = { new RouterChannel("WebChatEscalated", 50), },
                     Labels =
                     {

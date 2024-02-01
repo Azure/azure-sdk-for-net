@@ -12,10 +12,10 @@ using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.Samples
 {
-    public class RouterJobCrudOps : SamplesBase<RouterTestEnvironment>
+    public class Sample5_RouterJobCrudDeclineOpsAsync : SamplesBase<RouterTestEnvironment>
     {
         [Test]
-        public void RouterCrudOps()
+        public async Task RouterCrudOps()
         {
             // create a client
             JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
@@ -90,10 +90,10 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateRouterJob
 
             Response<RouterJob> updatedJob = routerClient.UpdateJob(new RouterJob(jobId)
-                {
-                    // one or more job properties can be updated
-                    ChannelReference = "45678",
-                });
+            {
+                // one or more job properties can be updated
+                ChannelReference = "45678",
+            });
 
             Console.WriteLine($"Job has been successfully updated. Current value of channelReference: {updatedJob.Value.ChannelReference}"); // "45678"
 
@@ -105,8 +105,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_ReclassifyRouterJob
 
-            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_AcceptJobOffer
-
+            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeclineJobOffer
             // in order for the jobs to be router to a worker, we would need to create a worker with the appropriate queue and channel association
             Response<RouterWorker> worker = routerClient.CreateWorker(
                 options: new CreateWorkerOptions(workerId: "router-worker-id", capacity: 100)
@@ -118,10 +117,26 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // now that we have a registered worker, we can expect offer to be sent to the worker
             // this is an asynchronous process, so we might need to wait for a while
+            int maxAttempts = 5;
+            int attempt = 0;
+            bool offerReceived = false;
 
-            while (routerClient.GetWorker(worker.Value.Id).Value.Offers.All(offer => offer.JobId != jobId))
+            while (!offerReceived && attempt < maxAttempts)
             {
-                Task.Delay(TimeSpan.FromSeconds(1));
+                var workerResponse = routerClient.GetWorker(worker.Value.Id);
+                offerReceived = workerResponse.Value.Offers.Any(offer => offer.JobId == jobId);
+
+                if (!offerReceived)
+                {
+                    attempt++;
+                    await Task.Delay(TimeSpan.FromSeconds(1));
+                }
+            }
+
+            if (!offerReceived)
+            {
+                Console.WriteLine("Offer was not received within the maximum number of attempts.");
+                return;
             }
 
             Response<RouterWorker> queriedWorker = routerClient.GetWorker(worker.Value.Id);
@@ -130,38 +145,11 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             Console.WriteLine($"Worker has been successfully issued to worker with offerId: {issuedOffer.OfferId} and offer expiry time: {issuedOffer.ExpiresAt}");
 
-            // now we accept the offer
+            // A worker can  choose to decline an offer
 
-            Response<AcceptJobOfferResult> acceptedJobOffer = routerClient.AcceptJobOffer(worker.Value.Id, issuedOffer.OfferId);
+            Response declineOffer = routerClient.DeclineJobOffer(new DeclineJobOfferOptions(worker.Value.Id, issuedOffer.OfferId));
 
-            // job has been assigned to the worker
-
-            queriedJob = routerClient.GetJob(jobId);
-
-            Console.WriteLine($"Job has been successfully assigned to worker. Current job status: {queriedJob.Value.Status}"); // "Assigned"
-            Console.WriteLine($"Job has been successfully assigned with a worker with assignment id: {acceptedJobOffer.Value.AssignmentId}");
-
-            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_AcceptJobOffer
-
-            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CompleteRouterJob
-
-            // Once a worker completes the job, it needs to mark the job as completed
-
-            Response completedJobResult = routerClient.CompleteJob(new CompleteJobOptions(jobId, acceptedJobOffer.Value.AssignmentId));
-
-            queriedJob = routerClient.GetJob(jobId);
-            Console.WriteLine($"Job has been successfully completed. Current status: {queriedJob.Value.Status}"); // "Completed"
-
-            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CompleteRouterJob
-
-            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CloseRouterJob
-
-            Response closeJobResult = routerClient.CloseJob(new CloseJobOptions(jobId, acceptedJobOffer.Value.AssignmentId));
-
-            queriedJob = routerClient.GetJob(jobId);
-            Console.WriteLine($"Job has been successfully closed. Current status: {queriedJob.Value.Status}"); // "Closed"
-
-            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CloseRouterJob
+            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeclineJobOffer
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterJobs
 
@@ -175,12 +163,6 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             }
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterJobs
-
-            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeleteRouterJob
-
-            _ = routerClient.DeleteJob(jobId);
-
-            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeleteRouterJob
         }
     }
 }

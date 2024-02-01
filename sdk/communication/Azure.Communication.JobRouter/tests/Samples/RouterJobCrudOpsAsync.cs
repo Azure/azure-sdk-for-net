@@ -144,14 +144,6 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_AcceptJobOffer_Async
 
-            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeclineJobOffer_Async
-
-            // A worker can also choose to decline an offer
-
-            Response declineOffer = await routerClient.DeclineJobOfferAsync(new DeclineJobOfferOptions(worker.Value.Id, issuedOffer.OfferId));
-
-            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeclineJobOffer_Async
-
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CompleteRouterJob_Async
 
             // Once a worker completes the job, it needs to mark the job as completed
