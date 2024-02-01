@@ -283,22 +283,6 @@ namespace Azure.Search.Documents.Models
     /// </summary>
     public class SemanticSearchResults
     {
-        /// <summary> Initializes a new instance of <see cref="SemanticSearchResults"/>. </summary>
-        public SemanticSearchResults()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SemanticSearchResults"/>. </summary>
-        /// <param name="answers"> The answers query results for the search operation. </param>
-        /// <param name="errorReason"> Reason that a partial response was returned for a semantic search request. </param>
-        /// <param name="resultsType"> Type of partial response that was returned for a semantic search request. </param>
-        internal SemanticSearchResults(IReadOnlyList<QueryAnswerResult> answers, SemanticErrorReason? errorReason, SemanticSearchResultsType? resultsType)
-        {
-            Answers = answers;
-            ErrorReason = errorReason;
-            ResultsType = resultsType;
-        }
-
         /// <summary> The answers query results for the search operation;
         /// <c>null</c> if the <see cref="QueryAnswer.AnswerType"/> parameter was not specified or set to <see cref="QueryAnswerType.None"/>. </summary>
         public IReadOnlyList<QueryAnswerResult> Answers { get; internal set; }
@@ -519,7 +503,12 @@ namespace Azure.Search.Documents.Models
             IReadOnlyList<QueryAnswerResult> answers,
             SemanticErrorReason? errorReason,
             SemanticSearchResultsType? resultsType) =>
-            new SemanticSearchResults(answers, errorReason, resultsType);
+            new SemanticSearchResults()
+            {
+                Answers = answers,
+                ErrorReason = errorReason,
+                ResultsType = resultsType
+            };
 
         /// <summary> Initializes a new instance of SearchResultsPage. </summary>
         /// <typeparam name="T">

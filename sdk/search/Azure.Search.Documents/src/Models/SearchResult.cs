@@ -169,20 +169,6 @@ namespace Azure.Search.Documents.Models
     /// </summary>
     public class SemanticSearchResult
     {
-        /// <summary> Initializes a new instance of <see cref="SemanticSearchResult"/>. </summary>
-        public SemanticSearchResult()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SemanticSearchResult"/>. </summary>
-        /// <param name="rerankerScore"> The relevance score computed by the semantic ranker for the top search results. </param>
-        /// <param name="captions"> Captions are the most representative passages from the document relatively to the search query. </param>
-        internal SemanticSearchResult(double? rerankerScore, IReadOnlyList<QueryCaptionResult> captions)
-        {
-            RerankerScore = rerankerScore;
-            Captions = captions;
-        }
-
         /// <summary>
         /// The relevance score computed by the semantic ranker for the top search results.
         /// <para>Search results are sorted by the <see cref="RerankerScore"/> first and then by the <see cref="SearchResult{T}.Score"/>.
@@ -264,6 +250,10 @@ namespace Azure.Search.Documents.Models
         public static SemanticSearchResult SemanticSearchResult(
             double? rerankerScore,
             IReadOnlyList<QueryCaptionResult> captions) =>
-          new SemanticSearchResult(rerankerScore, captions);
+          new SemanticSearchResult()
+          {
+              RerankerScore = rerankerScore,
+              Captions = captions
+          };
     }
 }

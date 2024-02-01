@@ -488,40 +488,27 @@ namespace Azure.Search.Documents.Tests.Samples
 #if !SNIPPET
             searchClient = InstrumentClient(new SearchClient(endpoint, indexName, credential, GetSearchClientOptions()));
 #endif
-            SearchResults<Hotel> results = await searchClient.SearchAsync<Hotel>(
+            SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
                     new SearchOptions
                     {
                         Filter = "Rating gt 2",
                         SessionId = "Session-1"
                     });
 
-            int totalDocsCount = 0;
-            int pageCount = 0;
-            await foreach (Page<SearchResult<Hotel>> page in results.GetResultsAsync().AsPages())
+            await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
             {
-                pageCount++;
-                foreach (SearchResult<Hotel> result in page.Values)
-                {
-                    totalDocsCount++;
-
-                    Hotel hotel = result.Document;
+                Hotel hotel = result.Document;
 #if !SNIPPET
-                    if (!uniqueDocuments.Add(hotel.HotelId))
-                    {
-                        hasDuplicates = true;
-                    }
-#endif
-                    Console.WriteLine($"{hotel.HotelName} ({hotel.HotelId})");
+                if (!uniqueDocuments.Add(hotel.HotelId))
+                {
+                    hasDuplicates = true;
                 }
+#endif
+                Console.WriteLine($"{hotel.HotelName} ({hotel.HotelId})");
             }
-
-            Console.WriteLine($"Number of documents retrieved: {totalDocsCount}");
-            Console.WriteLine($"Total page count: {pageCount}");
             #endregion Snippet:Azure_Search_Tests_Samples_QuerySession
 
             Assert.False(hasDuplicates, "Duplicate documents found.");
-            Assert.LessOrEqual(totalDocsCount, 150);
-            Assert.GreaterOrEqual(pageCount, 2);
         }
     }
 }

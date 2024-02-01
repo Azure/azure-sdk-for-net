@@ -8,29 +8,18 @@ AzureKeyCredential credential = new AzureKeyCredential(Environment.GetEnvironmen
 string indexName = Environment.GetEnvironmentVariable("SEARCH_INDEX");
 
 SearchClient searchClient = new SearchClient(endpoint, indexName, credential);
-SearchResults<Hotel> results = await searchClient.SearchAsync<Hotel>(
+SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
         new SearchOptions
         {
             Filter = "Rating gt 2",
             SessionId = "Session-1"
         });
 
-int totalDocsCount = 0;
-int pageCount = 0;
-await foreach (Page<SearchResult<Hotel>> page in results.GetResultsAsync().AsPages())
+await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
 {
-    pageCount++;
-    foreach (SearchResult<Hotel> result in page.Values)
-    {
-        totalDocsCount++;
-
-        Hotel hotel = result.Document;
-        Console.WriteLine($"{hotel.HotelName} ({hotel.HotelId})");
-    }
+    Hotel hotel = result.Document;
+    Console.WriteLine($"{hotel.HotelName} ({hotel.HotelId})");
 }
-
-Console.WriteLine($"Number of documents retrieved: {totalDocsCount}");
-Console.WriteLine($"Total page count: {pageCount}");
 ```
 
 By consistently using the same sessionId, the system makes a best-effort attempt to target the same replica, improving the overall consistency of search results for users within the specified session. This approach is useful for scenarios where maintaining result consistency throughout a user's session is essential. For more details, please refer the [documentation](https://learn.microsoft.com/azure/search/index-similarity-and-scoring#scoring-statistics-and-sticky-sessions).
