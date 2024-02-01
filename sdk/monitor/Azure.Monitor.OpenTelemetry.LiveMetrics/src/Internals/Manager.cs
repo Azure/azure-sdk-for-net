@@ -9,12 +9,13 @@ using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 {
-    internal partial class Manager
+    internal sealed partial class Manager : IDisposable
     {
         private readonly QuickPulseSDKClientAPIsRestClient _quickPulseSDKClientAPIsRestClient;
         private readonly ConnectionVars _connectionVars;
         private readonly bool _isAadEnabled;
         private readonly string _streamId = Guid.NewGuid().ToString();
+        private bool _disposedValue;
 
         public Manager(LiveMetricsExporterOptions options, IPlatform platform)
         {
@@ -73,6 +74,15 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             }
 
             return new QuickPulseSDKClientAPIsRestClient(new ClientDiagnostics(options), pipeline, host: connectionVars.LiveEndpoint);
+        }
+
+        public void Dispose()
+        {
+            if (!_disposedValue)
+            {
+                ShutdownState();
+                _disposedValue = true;
+            }
         }
     }
 }

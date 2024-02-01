@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="VMwareCbtEnableMigrationContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmwareMachineId"> The ARM Id of the VM discovered in VMware. </param>
         /// <param name="disksToInclude"> The disks to include list. </param>
         /// <param name="licenseType"> License type. </param>
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="seedDiskTags"> The tags for the seed disks. </param>
         /// <param name="targetDiskTags"> The tags for the target disks. </param>
         /// <param name="targetNicTags"> The tags for the target NICs. </param>
-        internal VMwareCbtEnableMigrationContent(string instanceType, ResourceIdentifier vmwareMachineId, IList<VMwareCbtDiskContent> disksToInclude, SiteRecoveryLicenseType? licenseType, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, string performSqlBulkRegistration, ResourceIdentifier dataMoverRunAsAccountId, ResourceIdentifier snapshotRunAsAccountId, string targetVmName, string targetVmSize, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, string targetSubnetName, string testSubnetName, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier confidentialVmKeyVaultId, VMwareCbtSecurityProfileProperties targetVmSecurityProfile, ResourceIdentifier targetBootDiagnosticsStorageAccountId, string performAutoResync, IDictionary<string, string> targetVmTags, IDictionary<string, string> seedDiskTags, IDictionary<string, string> targetDiskTags, IDictionary<string, string> targetNicTags) : base(instanceType)
+        internal VMwareCbtEnableMigrationContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier vmwareMachineId, IList<VMwareCbtDiskContent> disksToInclude, SiteRecoveryLicenseType? licenseType, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, string performSqlBulkRegistration, ResourceIdentifier dataMoverRunAsAccountId, ResourceIdentifier snapshotRunAsAccountId, string targetVmName, string targetVmSize, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, string targetSubnetName, string testSubnetName, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier confidentialVmKeyVaultId, VMwareCbtSecurityProfileProperties targetVmSecurityProfile, ResourceIdentifier targetBootDiagnosticsStorageAccountId, string performAutoResync, IDictionary<string, string> targetVmTags, IDictionary<string, string> seedDiskTags, IDictionary<string, string> targetDiskTags, IDictionary<string, string> targetNicTags) : base(instanceType, serializedAdditionalRawData)
         {
             VMwareMachineId = vmwareMachineId;
             DisksToInclude = disksToInclude;
@@ -100,6 +101,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetDiskTags = targetDiskTags;
             TargetNicTags = targetNicTags;
             InstanceType = instanceType ?? "VMwareCbt";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtEnableMigrationContent"/> for deserialization. </summary>
+        internal VMwareCbtEnableMigrationContent()
+        {
         }
 
         /// <summary> The ARM Id of the VM discovered in VMware. </summary>

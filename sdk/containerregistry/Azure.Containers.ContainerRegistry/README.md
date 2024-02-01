@@ -108,7 +108,7 @@ Please note that each sample assumes there is a `REGISTRY_ENDPOINT` environment 
 
 ### Registry operations
 
-This secion contains `ContainerRegistryClient` samples.
+This section contains `ContainerRegistryClient` samples.
 
 #### List repositories
 

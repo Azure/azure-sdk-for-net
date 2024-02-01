@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ImageLimitSettings : IUtf8JsonSerializable
+    public partial class ImageLimitSettings : IUtf8JsonSerializable, IJsonModel<ImageLimitSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageLimitSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ImageLimitSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ImageLimitSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ImageLimitSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxConcurrentTrials))
             {
@@ -31,11 +41,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ImageLimitSettings DeserializeImageLimitSettings(JsonElement element)
+        ImageLimitSettings IJsonModel<ImageLimitSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ImageLimitSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ImageLimitSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeImageLimitSettings(document.RootElement, options);
+        }
+
+        internal static ImageLimitSettings DeserializeImageLimitSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +82,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<int> maxConcurrentTrials = default;
             Optional<int> maxTrials = default;
             Optional<TimeSpan> timeout = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxConcurrentTrials"u8))
@@ -72,8 +113,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     timeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ImageLimitSettings(Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(maxTrials), Optional.ToNullable(timeout));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ImageLimitSettings(Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(maxTrials), Optional.ToNullable(timeout), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ImageLimitSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ImageLimitSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ImageLimitSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ImageLimitSettings IPersistableModel<ImageLimitSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ImageLimitSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeImageLimitSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ImageLimitSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ImageLimitSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -18,8 +18,10 @@ public partial class AzureCosmosDBChatExtensionConfiguration : AzureChatExtensio
 
     /// <summary> Initializes a new instance of <see cref="AzureCosmosDBChatExtensionConfiguration"/>. </summary>
     public AzureCosmosDBChatExtensionConfiguration()
-        : this(AzureChatExtensionType.AzureCosmosDB, new AzureCosmosDBChatExtensionParameters())
-    { }
+    {
+        Type = AzureChatExtensionType.AzureCosmosDB;
+        Parameters = new AzureCosmosDBChatExtensionParameters();
+    }
 
     internal AzureCosmosDBChatExtensionParameters Parameters { get; }
 

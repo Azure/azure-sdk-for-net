@@ -433,7 +433,8 @@
         "Inprogress",
         "Twilio",
         "Vertica",
-        "Xero"
+        "Xero",
+		    "Soql"
       ]
     },
     {
@@ -961,6 +962,7 @@
     {
       "filename": "**/sdk/servicefabricmanagedclusters/**/*.cs",
       "words": [
+        "dscp",
         "reimage",
         "ssdlrs"
       ]

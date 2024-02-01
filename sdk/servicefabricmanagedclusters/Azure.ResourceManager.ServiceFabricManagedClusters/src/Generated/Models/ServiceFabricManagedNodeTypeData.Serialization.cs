@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +15,18 @@ using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    public partial class ServiceFabricManagedNodeTypeData : IUtf8JsonSerializable
+    public partial class ServiceFabricManagedNodeTypeData : IUtf8JsonSerializable, IJsonModel<ServiceFabricManagedNodeTypeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricManagedNodeTypeData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ServiceFabricManagedNodeTypeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedNodeTypeData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -33,6 +43,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -188,6 +218,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("enableEncryptionAtHost"u8);
                 writer.WriteBooleanValue(IsEncryptionAtHostEnabled.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(IsAcceleratedNetworkingEnabled))
             {
                 writer.WritePropertyName("enableAcceleratedNetworking"u8);
@@ -278,6 +313,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("enableNodePublicIP"u8);
                 writer.WriteBooleanValue(IsNodePublicIPEnabled.Value);
             }
+            if (Optional.IsDefined(IsNodePublicIPv6Enabled))
+            {
+                writer.WritePropertyName("enableNodePublicIPv6"u8);
+                writer.WriteBooleanValue(IsNodePublicIPv6Enabled.Value);
+            }
             if (Optional.IsDefined(VmSharedGalleryImageId))
             {
                 writer.WritePropertyName("vmSharedGalleryImageId"u8);
@@ -293,12 +333,61 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("vmImagePlan"u8);
                 writer.WriteObjectValue(VmImagePlan);
             }
+            if (Optional.IsDefined(ServiceArtifactReferenceId))
+            {
+                writer.WritePropertyName("serviceArtifactReferenceId"u8);
+                writer.WriteStringValue(ServiceArtifactReferenceId);
+            }
+            if (Optional.IsDefined(DscpConfigurationId))
+            {
+                writer.WritePropertyName("dscpConfigurationId"u8);
+                writer.WriteStringValue(DscpConfigurationId);
+            }
+            if (Optional.IsCollectionDefined(AdditionalNetworkInterfaceConfigurations))
+            {
+                writer.WritePropertyName("additionalNetworkInterfaceConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in AdditionalNetworkInterfaceConfigurations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceFabricManagedNodeTypeData DeserializeServiceFabricManagedNodeTypeData(JsonElement element)
+        ServiceFabricManagedNodeTypeData IJsonModel<ServiceFabricManagedNodeTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedNodeTypeData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceFabricManagedNodeTypeData(document.RootElement, options);
+        }
+
+        internal static ServiceFabricManagedNodeTypeData DeserializeServiceFabricManagedNodeTypeData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -349,9 +438,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Optional<ServiceFabricManagedClusterSecurityType> securityType = default;
             Optional<bool> secureBootEnabled = default;
             Optional<bool> enableNodePublicIP = default;
+            Optional<bool> enableNodePublicIPv6 = default;
             Optional<ResourceIdentifier> vmSharedGalleryImageId = default;
             Optional<ResourceIdentifier> natGatewayId = default;
             Optional<VmImagePlan> vmImagePlan = default;
+            Optional<ResourceIdentifier> serviceArtifactReferenceId = default;
+            Optional<ResourceIdentifier> dscpConfigurationId = default;
+            Optional<IList<AdditionalNetworkInterfaceConfiguration>> additionalNetworkInterfaceConfigurations = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -783,6 +878,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             enableNodePublicIP = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("enableNodePublicIPv6"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableNodePublicIPv6 = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("vmSharedGalleryImageId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
@@ -810,11 +914,79 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             vmImagePlan = VmImagePlan.DeserializeVmImagePlan(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("serviceArtifactReferenceId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
+                            {
+                                continue;
+                            }
+                            serviceArtifactReferenceId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("dscpConfigurationId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
+                            {
+                                continue;
+                            }
+                            dscpConfigurationId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("additionalNetworkInterfaceConfigurations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<AdditionalNetworkInterfaceConfiguration> array = new List<AdditionalNetworkInterfaceConfiguration>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(AdditionalNetworkInterfaceConfiguration.DeserializeAdditionalNetworkInterfaceConfiguration(item));
+                            }
+                            additionalNetworkInterfaceConfigurations = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceFabricManagedNodeTypeData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(isPrimary), Optional.ToNullable(vmInstanceCount), Optional.ToNullable(dataDiskSizeGB), Optional.ToNullable(dataDiskType), dataDiskLetter.Value, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), applicationPorts.Value, ephemeralPorts.Value, vmSize.Value, vmImagePublisher.Value, vmImageOffer.Value, vmImageSku.Value, vmImageVersion.Value, Optional.ToList(vmSecrets), Optional.ToList(vmExtensions), vmManagedIdentity.Value, Optional.ToNullable(isStateless), Optional.ToNullable(multiplePlacementGroups), Optional.ToList(frontendConfigurations), Optional.ToList(networkSecurityRules), Optional.ToList(additionalDataDisks), Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(provisioningState), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(useDefaultPublicLoadBalancer), Optional.ToNullable(useTempDataDisk), Optional.ToNullable(enableOverProvisioning), Optional.ToList(zones), Optional.ToNullable(isSpotVm), hostGroupId.Value, Optional.ToNullable(useEphemeralOSDisk), spotRestoreTimeout.Value, Optional.ToNullable(evictionPolicy), vmImageResourceId.Value, subnetId.Value, Optional.ToList(vmSetupActions), Optional.ToNullable(securityType), Optional.ToNullable(secureBootEnabled), Optional.ToNullable(enableNodePublicIP), vmSharedGalleryImageId.Value, natGatewayId.Value, vmImagePlan.Value, Optional.ToDictionary(tags));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServiceFabricManagedNodeTypeData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(isPrimary), Optional.ToNullable(vmInstanceCount), Optional.ToNullable(dataDiskSizeGB), Optional.ToNullable(dataDiskType), dataDiskLetter.Value, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), applicationPorts.Value, ephemeralPorts.Value, vmSize.Value, vmImagePublisher.Value, vmImageOffer.Value, vmImageSku.Value, vmImageVersion.Value, Optional.ToList(vmSecrets), Optional.ToList(vmExtensions), vmManagedIdentity.Value, Optional.ToNullable(isStateless), Optional.ToNullable(multiplePlacementGroups), Optional.ToList(frontendConfigurations), Optional.ToList(networkSecurityRules), Optional.ToList(additionalDataDisks), Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(provisioningState), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(useDefaultPublicLoadBalancer), Optional.ToNullable(useTempDataDisk), Optional.ToNullable(enableOverProvisioning), Optional.ToList(zones), Optional.ToNullable(isSpotVm), hostGroupId.Value, Optional.ToNullable(useEphemeralOSDisk), spotRestoreTimeout.Value, Optional.ToNullable(evictionPolicy), vmImageResourceId.Value, subnetId.Value, Optional.ToList(vmSetupActions), Optional.ToNullable(securityType), Optional.ToNullable(secureBootEnabled), Optional.ToNullable(enableNodePublicIP), Optional.ToNullable(enableNodePublicIPv6), vmSharedGalleryImageId.Value, natGatewayId.Value, vmImagePlan.Value, serviceArtifactReferenceId.Value, dscpConfigurationId.Value, Optional.ToList(additionalNetworkInterfaceConfigurations), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServiceFabricManagedNodeTypeData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedNodeTypeData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ServiceFabricManagedNodeTypeData IPersistableModel<ServiceFabricManagedNodeTypeData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedNodeTypeData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServiceFabricManagedNodeTypeData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServiceFabricManagedNodeTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
