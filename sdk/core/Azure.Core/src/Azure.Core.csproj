@@ -64,7 +64,6 @@
     <Compile Include="Shared\OperationInternalBase.cs" />
     <Compile Include="Shared\TrimmingAttribute.cs" />
     <Compile Include="Shared\VoidValue.cs" />
-    <Compile Include="Shared\OperationFinalStateVia.cs" />
     <Compile Include="Shared\OperationInternal.cs" />
     <Compile Include="Shared\OperationInternalOfT.cs" />
     <Compile Include="Shared\SequentialDelayStrategy.cs" />

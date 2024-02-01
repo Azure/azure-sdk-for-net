@@ -24,7 +24,7 @@ namespace Azure.Core
             string initialUri = string.Empty;
             RequestMethod requestMethod = default;
             string? lastKnownLocation = null;
-            OperationFinalStateVia finalStateVia = default;
+            string finalStateVia = string.Empty;
 
             foreach (var property in element.EnumerateObject())
             {
@@ -72,10 +72,7 @@ namespace Azure.Core
                 }
                 if (property.NameEquals("finalStateVia"u8))
                 {
-                    if (!Enum.TryParse(property.Value.GetString(), out finalStateVia))
-                    {
-                        finalStateVia = default;
-                    }
+                    finalStateVia = property.Value.GetString()!;
                     continue;
                 }
             }

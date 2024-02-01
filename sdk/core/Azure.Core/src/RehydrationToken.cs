@@ -30,9 +30,9 @@ namespace Azure.Core
 
         internal string? LastKnownLocation { get; }
 
-        internal OperationFinalStateVia FinalStateVia { get; }
+        internal string FinalStateVia { get; }
 
-        internal RehydrationToken(Guid? id, string? version, string headerSource, string nextRequestUri, string initialUri, RequestMethod requestMethod, string? lastKnownLocation, OperationFinalStateVia finalStateVia)
+        internal RehydrationToken(Guid? id, string? version, string headerSource, string nextRequestUri, string initialUri, RequestMethod requestMethod, string? lastKnownLocation, string finalStateVia)
         {
             Id = id;
             if (version is not null)
