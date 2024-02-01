@@ -63,6 +63,33 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             Assert.True(TestHelper.DoesPayloadMatch(Payload.TokenIssuanceStart.ExpectedPayload, httpResponseMessage.Content.ReadAsStringAsync().Result));
         }
 
+        /// <summary>Test the request object to verify the correct HttpStatusCode is respond</summary>
+        [Test]
+        [TestCase(RequestStatusType.Successful, HttpStatusCode.OK)]
+        [TestCase(RequestStatusType.Failed, HttpStatusCode.BadRequest)]
+        [TestCase(RequestStatusType.ValidationError, HttpStatusCode.BadRequest)]
+        [TestCase(RequestStatusType.TokenInvalid, HttpStatusCode.Unauthorized)]
+        public async Task TokenIssuanceStartRequestValidationTest(RequestStatusType requestStatusType, HttpStatusCode httpStatusCode)
+        {
+            HttpResponseMessage httpResponseMessage = await TestHelper.EventResponseBaseTest(eventsResponseHandler =>
+            {
+                if (eventsResponseHandler.Request is TokenIssuanceStartRequest request)
+                {
+                    request.Response.Actions.Add(
+                        new ProvideClaimsForToken(
+                            new TokenClaim("DateOfBirth", "01/01/2000"),
+                            new TokenClaim("CustomRoles", "Writer", "Editor")
+                            ));
+
+                    // set the request status type
+                    request.RequestStatus = requestStatusType;
+                    eventsResponseHandler.SetValueAsync(request.Completed().Result, CancellationToken.None);
+                }
+            });
+
+            Assert.AreEqual(httpStatusCode, httpResponseMessage.StatusCode);
+        }
+
         /// <summary>Tests the OnTokenIssuanceStart request and response object model when the response is set to null</summary>
         [Test]
         [Description("Tests the OnTokenIssuanceStart request and response object model when the response is set to null")]
