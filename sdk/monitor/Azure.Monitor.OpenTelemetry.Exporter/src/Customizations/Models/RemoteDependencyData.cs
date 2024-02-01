@@ -13,9 +13,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
     internal partial class RemoteDependencyData
     {
-        // https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/trace/semantic_conventions/database.md#connection-level-attributes
-        internal static readonly HashSet<string?> s_sqlDbs = new HashSet<string?>() { "mssql" };
-
         public RemoteDependencyData(int version, Activity activity, ref ActivityTagsProcessor activityTagsProcessor) : base(version)
         {
             string? dependencyName = null;
@@ -99,7 +96,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Data = dbAttributeTagObjects[0]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Data_MaxLength);
             var (DbName, DbTarget) = dbTagObjects.GetDbDependencyTargetAndName();
             Target = DbTarget?.Truncate(SchemaConstants.RemoteDependencyData_Target_MaxLength);
-            Type = s_sqlDbs.Contains(dbAttributeTagObjects[1]?.ToString()) ? "SQL" : dbAttributeTagObjects[1]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
+            Type = AzMonListExtensions.s_sqlDbs.Contains(dbAttributeTagObjects[1]?.ToString()) ? "SQL" : dbAttributeTagObjects[1]?.ToString().Truncate(SchemaConstants.RemoteDependencyData_Type_MaxLength);
 
             // special case for db.name
             var sanitizedDbName = DbName?.Truncate(SchemaConstants.KVP_MaxValueLength);

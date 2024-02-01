@@ -21,14 +21,19 @@
   <ItemGroup>
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ConnectionString\*.cs" LinkBase="Internals\ConnectionString" />
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\Platform\*.cs" LinkBase="Internals\Platform" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ActivityTagsProcessor.cs" Link="Internals" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ArrayExtensions.cs" Link="Internals" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\AzMonList.cs" Link="Internals" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\AzMonListExtensions.cs" Link="Internals" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\AzMonNewListExtensions.cs" Link="Internals" />
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\AksResourceProcessor.cs" Link="Internals" />
-    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\NullableAttributes.cs" LinkBase="Internals" />
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ExceptionExtensions.cs" LinkBase="Internals" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\NullableAttributes.cs" LinkBase="Internals" />
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\OperationType.cs" Link="Internals" />
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\SchemaConstants.cs" Link="Internals" />
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\SdkVersionUtils.cs" Link="Internals" />
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\SemanticConventions.cs" Link="Internals" />
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\StringExtensions.cs" Link="Internals" />
-
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
