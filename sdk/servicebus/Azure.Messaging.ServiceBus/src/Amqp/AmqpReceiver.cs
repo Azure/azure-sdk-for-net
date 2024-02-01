@@ -372,23 +372,18 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // to ensure FIFO ordering within each session.
                 if (_isSessionReceiver && messageList.Count < maxMessages)
                 {
-                    using var backgroundCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-                    var drainTask = link.DrainAsyc(cancellationToken).ConfigureAwait(false);
-                    List<AmqpMessage> additionalMessages = new();
+                    var drainTask = link.DrainAsyc(cancellationToken);
                     try
                     {
-                        _ = Task.Run(async () =>
+                        if (!drainTask.IsCompleted)
                         {
-                            while (!backgroundCts.Token.IsCancellationRequested)
+                            var additionalMessage = await link.ReceiveMessageAsync(cancellationToken).ConfigureAwait(false);
+                            if (additionalMessage != null)
                             {
-                                var additionalMessage = await link.ReceiveMessageAsync(maxWaitTime ?? timeout, cancellationToken).ConfigureAwait(false);
-                                additionalMessages.Add(additionalMessage);
+                                link.ReleaseMessage(additionalMessage);
                             }
-                        }, cancellationToken);
-                        await drainTask;
-                        backgroundCts.Cancel();
-                        messagesReceived = messagesReceived.Concat(additionalMessages);
-                        messageList = messagesReceived as IReadOnlyCollection<AmqpMessage> ?? messagesReceived?.ToList() ?? s_emptyAmqpMessageList;
+                        }
+                        await drainTask.ConfigureAwait(false);
                     }
                     catch (TaskCanceledException)
                     {
