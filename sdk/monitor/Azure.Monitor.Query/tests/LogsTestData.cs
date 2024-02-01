@@ -99,9 +99,9 @@ namespace Azure.Monitor.Query.Tests
 
         private async Task InitializeData(string workspaceId, string workspaceKey)
         {
-            var succeeded = await VerfiyTableUpload(workspaceId);
+            var count = await QueryCount(workspaceId);
 
-            if (!succeeded)
+            if (count == 0)
             {
                 var senderClient = new LogSenderClient(workspaceId, _testEnvironment.MonitorIngestionEndpoint, workspaceKey);
                 await senderClient.SendAsync(TableANameSent, TableA);
@@ -111,36 +111,30 @@ namespace Azure.Monitor.Query.Tests
                 return;
             }
 
-            while (!succeeded)
+            while (count == 0)
             {
                 await Task.Delay(TimeSpan.FromSeconds(30));
-                succeeded = await VerfiyTableUpload(workspaceId);
+                count = await QueryCount(workspaceId);
             }
         }
 
-        private async Task<bool> VerfiyTableUpload(string workspaceId)
+        private async Task<int> QueryCount(string workspaceId)
         {
             var logsClient = new LogsQueryClient(_testEnvironment.LogsEndpoint, _testEnvironment.Credential);
             try
             {
-                var countResponse = await logsClient.QueryWorkspaceAsync<int>(workspaceId, $"{TableAName} | count", DataTimeRange);
-                var count = countResponse.Value.Single();
                 var customColumnsQuery = await logsClient.QueryWorkspaceAsync<int>(workspaceId, $"{TableAName}" +
                     $" | distinct * |" +
                     $"project {StringColumnName}, {IntColumnName}, {BoolColumnName}, {FloatColumnName} |" +
                     $"count",
                     DataTimeRange);
                 var customColumns = customColumnsQuery.Value.Single();
-                if (count > 0 && customColumns > 0)
-                {
-                    return true;
-                }
+                return customColumns;
             }
             catch
             {
-                return false;
+                return 0;
             }
-            return false;
         }
     }
 }
