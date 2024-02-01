@@ -57,28 +57,6 @@ namespace Azure.AI.Translator.Document
             return Response.FromValue(response.Content, response);
         }
 
-        private MultipartFormDataContent GetMultipartFormDataContent(MultipartFormFileData sourceDocument, IEnumerable<MultipartFormFileData> sourceGlossaries)
-        {
-            var requestContent = new MultipartFormDataContent();
-            requestContent.Add(sourceDocument.Content, "document", sourceDocument.Name, new Dictionary<string, string>(sourceDocument.Headers)
-            {
-                {"Content-Type", sourceDocument.ContentType }
-            });
-
-            if (sourceGlossaries != null)
-            {
-                foreach (MultipartFormFileData glossary in sourceGlossaries)
-                {
-                    requestContent.Add(glossary.Content, "glossary", glossary.Name, new Dictionary<string, string>(glossary.Headers)
-                {
-                    { "Content-Type", glossary.ContentType }
-                });
-                }
-            }
-
-            return requestContent;
-        }
-
         /// <summary> API to translate a document. </summary>
         /// <param name="targetLanguage">
         /// Specifies the language of the output document.
@@ -225,6 +203,28 @@ namespace Azure.AI.Translator.Document
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        internal MultipartFormDataContent GetMultipartFormDataContent(MultipartFormFileData sourceDocument, IEnumerable<MultipartFormFileData> sourceGlossaries)
+        {
+            var requestContent = new MultipartFormDataContent();
+            requestContent.Add(sourceDocument.Content, "document", sourceDocument.Name, new Dictionary<string, string>(sourceDocument.Headers)
+            {
+                {"Content-Type", sourceDocument.ContentType }
+            });
+
+            if (sourceGlossaries != null)
+            {
+                foreach (MultipartFormFileData glossary in sourceGlossaries)
+                {
+                    requestContent.Add(glossary.Content, "glossary", glossary.Name, new Dictionary<string, string>(glossary.Headers)
+                {
+                    { "Content-Type", glossary.ContentType }
+                });
+                }
+            }
+
+            return requestContent;
         }
 
         internal RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
