@@ -215,8 +215,9 @@ namespace Azure.Core.TestFramework
                     else
                     {
                         // If the recording is null but we are in Record Mode this means the Credential is being used
-                        // outside of a test. Attempt to use the env vars, but don't cache the credential so that subsequent
-                        // usages of this property that are within a test will store the variables in the recording.
+                        // outside of a test (for example, in ExtendResourceGroupExpirationAsync method). Attempt to use the env
+                        // vars, but don't cache the credential so that subsequent usages of this property that are within a
+                        // test will store the variables in the recording. For example, in the ExtendResourceGroupExpirationAsync method.
                         if (_recording == null)
                         {
                             return new ClientSecretCredential(
