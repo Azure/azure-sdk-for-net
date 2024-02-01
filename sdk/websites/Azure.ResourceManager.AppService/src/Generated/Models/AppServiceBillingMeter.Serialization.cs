@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceBillingMeter : IUtf8JsonSerializable, IJsonModel<AppServiceBillingMeter>
+    public partial class AppServiceBillingMeter : IUtf8JsonSerializable, IJsonModel<AppServiceBillingMeter>, IPersistableModel<AppServiceBillingMeter>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceBillingMeter>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -230,6 +231,92 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceBillingMeter(id, name, type, systemData.Value, Optional.ToNullable(meterId), Optional.ToNullable(billingLocation), shortName.Value, friendlyName.Value, osType.Value, Optional.ToNullable(multiplier), kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MeterId))
+            {
+                builder.Append("  meterId:");
+                builder.AppendLine($" '{MeterId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BillingLocation))
+            {
+                builder.Append("  billingLocation:");
+                builder.AppendLine($" '{BillingLocation.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ShortName))
+            {
+                builder.Append("  shortName:");
+                builder.AppendLine($" '{ShortName}'");
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsDefined(OSType))
+            {
+                builder.Append("  osType:");
+                builder.AppendLine($" '{OSType}'");
+            }
+
+            if (Optional.IsDefined(Multiplier))
+            {
+                builder.Append("  multiplier:");
+                builder.AppendLine($" '{Multiplier.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AppServiceBillingMeter>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceBillingMeter>)this).GetFormatFromOptions(options) : options.Format;
@@ -238,6 +325,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AppServiceBillingMeter)} does not support '{options.Format}' format.");
             }
@@ -254,6 +343,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAppServiceBillingMeter(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AppServiceBillingMeter)} does not support '{options.Format}' format.");
             }

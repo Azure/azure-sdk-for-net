@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics
 {
-    public partial class StreamingJobTransformationData : IUtf8JsonSerializable, IJsonModel<StreamingJobTransformationData>
+    public partial class StreamingJobTransformationData : IUtf8JsonSerializable, IJsonModel<StreamingJobTransformationData>, IPersistableModel<StreamingJobTransformationData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingJobTransformationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -200,6 +201,73 @@ namespace Azure.ResourceManager.StreamAnalytics
             return new StreamingJobTransformationData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(streamingUnits), Optional.ToList(validStreamingUnits), query.Value, Optional.ToNullable(etag));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(StreamingUnits))
+            {
+                builder.Append("  streamingUnits:");
+                builder.AppendLine($" '{StreamingUnits.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ValidStreamingUnits))
+            {
+                builder.Append("  validStreamingUnits:");
+                builder.AppendLine(" [");
+                foreach (var item in ValidStreamingUnits)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Query))
+            {
+                builder.Append("  query:");
+                builder.AppendLine($" '{Query}'");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<StreamingJobTransformationData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobTransformationData>)this).GetFormatFromOptions(options) : options.Format;
@@ -208,6 +276,8 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StreamingJobTransformationData)} does not support '{options.Format}' format.");
             }
@@ -224,6 +294,8 @@ namespace Azure.ResourceManager.StreamAnalytics
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStreamingJobTransformationData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StreamingJobTransformationData)} does not support '{options.Format}' format.");
             }

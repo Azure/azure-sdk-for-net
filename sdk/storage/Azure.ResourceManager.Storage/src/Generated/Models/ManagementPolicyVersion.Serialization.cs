@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ManagementPolicyVersion : IUtf8JsonSerializable, IJsonModel<ManagementPolicyVersion>
+    public partial class ManagementPolicyVersion : IUtf8JsonSerializable, IJsonModel<ManagementPolicyVersion>, IPersistableModel<ManagementPolicyVersion>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementPolicyVersion>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -152,6 +153,56 @@ namespace Azure.ResourceManager.Storage.Models
             return new ManagementPolicyVersion(tierToCool.Value, tierToArchive.Value, tierToCold.Value, tierToHot.Value, delete.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TierToCool))
+            {
+                builder.Append("  tierToCool:");
+                AppendChildObject(builder, TierToCool, options, 2);
+            }
+
+            if (Optional.IsDefined(TierToArchive))
+            {
+                builder.Append("  tierToArchive:");
+                AppendChildObject(builder, TierToArchive, options, 2);
+            }
+
+            if (Optional.IsDefined(TierToCold))
+            {
+                builder.Append("  tierToCold:");
+                AppendChildObject(builder, TierToCold, options, 2);
+            }
+
+            if (Optional.IsDefined(TierToHot))
+            {
+                builder.Append("  tierToHot:");
+                AppendChildObject(builder, TierToHot, options, 2);
+            }
+
+            if (Optional.IsDefined(Delete))
+            {
+                builder.Append("  delete:");
+                AppendChildObject(builder, Delete, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ManagementPolicyVersion>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicyVersion>)this).GetFormatFromOptions(options) : options.Format;
@@ -160,6 +211,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagementPolicyVersion)} does not support '{options.Format}' format.");
             }
@@ -176,6 +229,8 @@ namespace Azure.ResourceManager.Storage.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeManagementPolicyVersion(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ManagementPolicyVersion)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
 {
-    public partial class StorageSyncServerEndpointData : IUtf8JsonSerializable, IJsonModel<StorageSyncServerEndpointData>
+    public partial class StorageSyncServerEndpointData : IUtf8JsonSerializable, IJsonModel<StorageSyncServerEndpointData>, IPersistableModel<StorageSyncServerEndpointData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageSyncServerEndpointData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -414,6 +415,170 @@ namespace Azure.ResourceManager.StorageSync
             return new StorageSyncServerEndpointData(id, name, type, systemData.Value, serverLocalPath.Value, Optional.ToNullable(cloudTiering), Optional.ToNullable(volumeFreeSpacePercent), Optional.ToNullable(tierFilesOlderThanDays), friendlyName.Value, serverResourceId.Value, provisioningState.Value, lastWorkflowId.Value, lastOperationName.Value, syncStatus.Value, Optional.ToNullable(offlineDataTransfer), offlineDataTransferStorageAccountResourceId.Value, Optional.ToNullable(offlineDataTransferStorageAccountTenantId), offlineDataTransferShareName.Value, cloudTieringStatus.Value, recallStatus.Value, Optional.ToNullable(initialDownloadPolicy), Optional.ToNullable(localCacheMode), Optional.ToNullable(initialUploadPolicy), serverName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ServerLocalPath))
+            {
+                builder.Append("  serverLocalPath:");
+                builder.AppendLine($" '{ServerLocalPath}'");
+            }
+
+            if (Optional.IsDefined(CloudTiering))
+            {
+                builder.Append("  cloudTiering:");
+                builder.AppendLine($" '{CloudTiering.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VolumeFreeSpacePercent))
+            {
+                builder.Append("  volumeFreeSpacePercent:");
+                builder.AppendLine($" '{VolumeFreeSpacePercent.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TierFilesOlderThanDays))
+            {
+                builder.Append("  tierFilesOlderThanDays:");
+                builder.AppendLine($" '{TierFilesOlderThanDays.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsDefined(ServerResourceId))
+            {
+                builder.Append("  serverResourceId:");
+                builder.AppendLine($" '{ServerResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(LastWorkflowId))
+            {
+                builder.Append("  lastWorkflowId:");
+                builder.AppendLine($" '{LastWorkflowId}'");
+            }
+
+            if (Optional.IsDefined(LastOperationName))
+            {
+                builder.Append("  lastOperationName:");
+                builder.AppendLine($" '{LastOperationName}'");
+            }
+
+            if (Optional.IsDefined(SyncStatus))
+            {
+                builder.Append("  syncStatus:");
+                AppendChildObject(builder, SyncStatus, options, 2);
+            }
+
+            if (Optional.IsDefined(OfflineDataTransfer))
+            {
+                builder.Append("  offlineDataTransfer:");
+                builder.AppendLine($" '{OfflineDataTransfer.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OfflineDataTransferStorageAccountResourceId))
+            {
+                builder.Append("  offlineDataTransferStorageAccountResourceId:");
+                builder.AppendLine($" '{OfflineDataTransferStorageAccountResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OfflineDataTransferStorageAccountTenantId))
+            {
+                builder.Append("  offlineDataTransferStorageAccountTenantId:");
+                builder.AppendLine($" '{OfflineDataTransferStorageAccountTenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OfflineDataTransferShareName))
+            {
+                builder.Append("  offlineDataTransferShareName:");
+                builder.AppendLine($" '{OfflineDataTransferShareName}'");
+            }
+
+            if (Optional.IsDefined(CloudTieringStatus))
+            {
+                builder.Append("  cloudTieringStatus:");
+                AppendChildObject(builder, CloudTieringStatus, options, 2);
+            }
+
+            if (Optional.IsDefined(RecallStatus))
+            {
+                builder.Append("  recallStatus:");
+                AppendChildObject(builder, RecallStatus, options, 2);
+            }
+
+            if (Optional.IsDefined(InitialDownloadPolicy))
+            {
+                builder.Append("  initialDownloadPolicy:");
+                builder.AppendLine($" '{InitialDownloadPolicy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LocalCacheMode))
+            {
+                builder.Append("  localCacheMode:");
+                builder.AppendLine($" '{LocalCacheMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InitialUploadPolicy))
+            {
+                builder.Append("  initialUploadPolicy:");
+                builder.AppendLine($" '{InitialUploadPolicy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ServerName))
+            {
+                builder.Append("  serverName:");
+                builder.AppendLine($" '{ServerName}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<StorageSyncServerEndpointData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageSyncServerEndpointData>)this).GetFormatFromOptions(options) : options.Format;
@@ -422,6 +587,8 @@ namespace Azure.ResourceManager.StorageSync
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StorageSyncServerEndpointData)} does not support '{options.Format}' format.");
             }
@@ -438,6 +605,8 @@ namespace Azure.ResourceManager.StorageSync
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStorageSyncServerEndpointData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StorageSyncServerEndpointData)} does not support '{options.Format}' format.");
             }

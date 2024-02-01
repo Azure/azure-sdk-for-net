@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class MigrateMySqlStatusData : IUtf8JsonSerializable, IJsonModel<MigrateMySqlStatusData>
+    public partial class MigrateMySqlStatusData : IUtf8JsonSerializable, IJsonModel<MigrateMySqlStatusData>, IPersistableModel<MigrateMySqlStatusData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateMySqlStatusData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -194,6 +195,75 @@ namespace Azure.ResourceManager.AppService
             return new MigrateMySqlStatusData(id, name, type, systemData.Value, Optional.ToNullable(migrationOperationStatus), operationId.Value, Optional.ToNullable(localMySqlEnabled), kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MigrationOperationStatus))
+            {
+                builder.Append("  migrationOperationStatus:");
+                builder.AppendLine($" '{MigrationOperationStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OperationId))
+            {
+                builder.Append("  operationId:");
+                builder.AppendLine($" '{OperationId}'");
+            }
+
+            if (Optional.IsDefined(IsLocalMySqlEnabled))
+            {
+                builder.Append("  localMySqlEnabled:");
+                var boolValue = IsLocalMySqlEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MigrateMySqlStatusData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlStatusData>)this).GetFormatFromOptions(options) : options.Format;
@@ -202,6 +272,8 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MigrateMySqlStatusData)} does not support '{options.Format}' format.");
             }
@@ -218,6 +290,8 @@ namespace Azure.ResourceManager.AppService
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMigrateMySqlStatusData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MigrateMySqlStatusData)} does not support '{options.Format}' format.");
             }

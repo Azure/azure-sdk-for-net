@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
-    public partial class DiskPoolIscsiTargetCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<DiskPoolIscsiTargetCreateOrUpdateContent>
+    public partial class DiskPoolIscsiTargetCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<DiskPoolIscsiTargetCreateOrUpdateContent>, IPersistableModel<DiskPoolIscsiTargetCreateOrUpdateContent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskPoolIscsiTargetCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -246,6 +247,106 @@ namespace Azure.ResourceManager.StoragePool.Models
             return new DiskPoolIscsiTargetCreateOrUpdateContent(id, name, type, systemData.Value, managedBy.Value, Optional.ToList(managedByExtended), aclMode, targetIqn.Value, Optional.ToList(staticAcls), Optional.ToList(luns), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ManagedBy))
+            {
+                builder.Append("  managedBy:");
+                builder.AppendLine($" '{ManagedBy}'");
+            }
+
+            if (Optional.IsCollectionDefined(ManagedByExtended))
+            {
+                builder.Append("  managedByExtended:");
+                builder.AppendLine(" [");
+                foreach (var item in ManagedByExtended)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(AclMode))
+            {
+                builder.Append("  aclMode:");
+                builder.AppendLine($" '{AclMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetIqn))
+            {
+                builder.Append("  targetIqn:");
+                builder.AppendLine($" '{TargetIqn}'");
+            }
+
+            if (Optional.IsCollectionDefined(StaticAcls))
+            {
+                builder.Append("  staticAcls:");
+                builder.AppendLine(" [");
+                foreach (var item in StaticAcls)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Luns))
+            {
+                builder.Append("  luns:");
+                builder.AppendLine(" [");
+                foreach (var item in Luns)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DiskPoolIscsiTargetCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DiskPoolIscsiTargetCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -254,6 +355,8 @@ namespace Azure.ResourceManager.StoragePool.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DiskPoolIscsiTargetCreateOrUpdateContent)} does not support '{options.Format}' format.");
             }
@@ -270,6 +373,8 @@ namespace Azure.ResourceManager.StoragePool.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDiskPoolIscsiTargetCreateOrUpdateContent(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DiskPoolIscsiTargetCreateOrUpdateContent)} does not support '{options.Format}' format.");
             }

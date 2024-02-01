@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseExtendedSqlPoolBlobAuditingPolicyData : IUtf8JsonSerializable, IJsonModel<SynapseExtendedSqlPoolBlobAuditingPolicyData>
+    public partial class SynapseExtendedSqlPoolBlobAuditingPolicyData : IUtf8JsonSerializable, IJsonModel<SynapseExtendedSqlPoolBlobAuditingPolicyData>, IPersistableModel<SynapseExtendedSqlPoolBlobAuditingPolicyData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseExtendedSqlPoolBlobAuditingPolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -290,6 +291,122 @@ namespace Azure.ResourceManager.Synapse
             return new SynapseExtendedSqlPoolBlobAuditingPolicyData(id, name, type, systemData.Value, predicateExpression.Value, Optional.ToNullable(state), storageEndpoint.Value, storageAccountAccessKey.Value, Optional.ToNullable(retentionDays), Optional.ToList(auditActionsAndGroups), Optional.ToNullable(storageAccountSubscriptionId), Optional.ToNullable(isStorageSecondaryKeyInUse), Optional.ToNullable(isAzureMonitorTargetEnabled), Optional.ToNullable(queueDelayMs), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PredicateExpression))
+            {
+                builder.Append("  predicateExpression:");
+                builder.AppendLine($" '{PredicateExpression}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StorageEndpoint))
+            {
+                builder.Append("  storageEndpoint:");
+                builder.AppendLine($" '{StorageEndpoint}'");
+            }
+
+            if (Optional.IsDefined(StorageAccountAccessKey))
+            {
+                builder.Append("  storageAccountAccessKey:");
+                builder.AppendLine($" '{StorageAccountAccessKey}'");
+            }
+
+            if (Optional.IsDefined(RetentionDays))
+            {
+                builder.Append("  retentionDays:");
+                builder.AppendLine($" '{RetentionDays.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(AuditActionsAndGroups))
+            {
+                builder.Append("  auditActionsAndGroups:");
+                builder.AppendLine(" [");
+                foreach (var item in AuditActionsAndGroups)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(StorageAccountSubscriptionId))
+            {
+                builder.Append("  storageAccountSubscriptionId:");
+                builder.AppendLine($" '{StorageAccountSubscriptionId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsStorageSecondaryKeyInUse))
+            {
+                builder.Append("  isStorageSecondaryKeyInUse:");
+                var boolValue = IsStorageSecondaryKeyInUse.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsAzureMonitorTargetEnabled))
+            {
+                builder.Append("  isAzureMonitorTargetEnabled:");
+                var boolValue = IsAzureMonitorTargetEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(QueueDelayMs))
+            {
+                builder.Append("  queueDelayMs:");
+                builder.AppendLine($" '{QueueDelayMs.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SynapseExtendedSqlPoolBlobAuditingPolicyData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseExtendedSqlPoolBlobAuditingPolicyData>)this).GetFormatFromOptions(options) : options.Format;
@@ -298,6 +415,8 @@ namespace Azure.ResourceManager.Synapse
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SynapseExtendedSqlPoolBlobAuditingPolicyData)} does not support '{options.Format}' format.");
             }
@@ -314,6 +433,8 @@ namespace Azure.ResourceManager.Synapse
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSynapseExtendedSqlPoolBlobAuditingPolicyData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SynapseExtendedSqlPoolBlobAuditingPolicyData)} does not support '{options.Format}' format.");
             }

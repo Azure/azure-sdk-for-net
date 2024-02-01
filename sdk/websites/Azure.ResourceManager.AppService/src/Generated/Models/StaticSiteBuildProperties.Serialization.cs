@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StaticSiteBuildProperties : IUtf8JsonSerializable, IJsonModel<StaticSiteBuildProperties>
+    public partial class StaticSiteBuildProperties : IUtf8JsonSerializable, IJsonModel<StaticSiteBuildProperties>, IPersistableModel<StaticSiteBuildProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticSiteBuildProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -169,6 +170,75 @@ namespace Azure.ResourceManager.AppService.Models
             return new StaticSiteBuildProperties(appLocation.Value, apiLocation.Value, appArtifactLocation.Value, outputLocation.Value, appBuildCommand.Value, apiBuildCommand.Value, Optional.ToNullable(skipGithubActionWorkflowGeneration), githubActionSecretNameOverride.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AppLocation))
+            {
+                builder.Append("  appLocation:");
+                builder.AppendLine($" '{AppLocation}'");
+            }
+
+            if (Optional.IsDefined(ApiLocation))
+            {
+                builder.Append("  apiLocation:");
+                builder.AppendLine($" '{ApiLocation}'");
+            }
+
+            if (Optional.IsDefined(AppArtifactLocation))
+            {
+                builder.Append("  appArtifactLocation:");
+                builder.AppendLine($" '{AppArtifactLocation}'");
+            }
+
+            if (Optional.IsDefined(OutputLocation))
+            {
+                builder.Append("  outputLocation:");
+                builder.AppendLine($" '{OutputLocation}'");
+            }
+
+            if (Optional.IsDefined(AppBuildCommand))
+            {
+                builder.Append("  appBuildCommand:");
+                builder.AppendLine($" '{AppBuildCommand}'");
+            }
+
+            if (Optional.IsDefined(ApiBuildCommand))
+            {
+                builder.Append("  apiBuildCommand:");
+                builder.AppendLine($" '{ApiBuildCommand}'");
+            }
+
+            if (Optional.IsDefined(SkipGithubActionWorkflowGeneration))
+            {
+                builder.Append("  skipGithubActionWorkflowGeneration:");
+                var boolValue = SkipGithubActionWorkflowGeneration.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(GithubActionSecretNameOverride))
+            {
+                builder.Append("  githubActionSecretNameOverride:");
+                builder.AppendLine($" '{GithubActionSecretNameOverride}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<StaticSiteBuildProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StaticSiteBuildProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -177,6 +247,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StaticSiteBuildProperties)} does not support '{options.Format}' format.");
             }
@@ -193,6 +265,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStaticSiteBuildProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StaticSiteBuildProperties)} does not support '{options.Format}' format.");
             }

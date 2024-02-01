@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class HanaDBProviderInstanceProperties : IUtf8JsonSerializable, IJsonModel<HanaDBProviderInstanceProperties>
+    public partial class HanaDBProviderInstanceProperties : IUtf8JsonSerializable, IJsonModel<HanaDBProviderInstanceProperties>, IPersistableModel<HanaDBProviderInstanceProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HanaDBProviderInstanceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -218,6 +219,98 @@ namespace Azure.ResourceManager.Workloads.Models
             return new HanaDBProviderInstanceProperties(providerType, serializedAdditionalRawData, hostname.Value, dbName.Value, sqlPort.Value, instanceNumber.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sslCertificateUri.Value, sslHostNameInCertificate.Value, Optional.ToNullable(sslPreference), sapSid.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Hostname))
+            {
+                builder.Append("  hostname:");
+                builder.AppendLine($" '{Hostname}'");
+            }
+
+            if (Optional.IsDefined(DBName))
+            {
+                builder.Append("  dbName:");
+                builder.AppendLine($" '{DBName}'");
+            }
+
+            if (Optional.IsDefined(SqlPort))
+            {
+                builder.Append("  sqlPort:");
+                builder.AppendLine($" '{SqlPort}'");
+            }
+
+            if (Optional.IsDefined(InstanceNumber))
+            {
+                builder.Append("  instanceNumber:");
+                builder.AppendLine($" '{InstanceNumber}'");
+            }
+
+            if (Optional.IsDefined(DBUsername))
+            {
+                builder.Append("  dbUsername:");
+                builder.AppendLine($" '{DBUsername}'");
+            }
+
+            if (Optional.IsDefined(DBPassword))
+            {
+                builder.Append("  dbPassword:");
+                builder.AppendLine($" '{DBPassword}'");
+            }
+
+            if (Optional.IsDefined(DBPasswordUri))
+            {
+                builder.Append("  dbPasswordUri:");
+                builder.AppendLine($" '{DBPasswordUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(SslCertificateUri))
+            {
+                builder.Append("  sslCertificateUri:");
+                builder.AppendLine($" '{SslCertificateUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(SslHostNameInCertificate))
+            {
+                builder.Append("  sslHostNameInCertificate:");
+                builder.AppendLine($" '{SslHostNameInCertificate}'");
+            }
+
+            if (Optional.IsDefined(SslPreference))
+            {
+                builder.Append("  sslPreference:");
+                builder.AppendLine($" '{SslPreference.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SapSid))
+            {
+                builder.Append("  sapSid:");
+                builder.AppendLine($" '{SapSid}'");
+            }
+
+            if (Optional.IsDefined(ProviderType))
+            {
+                builder.Append("  providerType:");
+                builder.AppendLine($" '{ProviderType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<HanaDBProviderInstanceProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HanaDBProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -226,6 +319,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HanaDBProviderInstanceProperties)} does not support '{options.Format}' format.");
             }
@@ -242,6 +337,8 @@ namespace Azure.ResourceManager.Workloads.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHanaDBProviderInstanceProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HanaDBProviderInstanceProperties)} does not support '{options.Format}' format.");
             }

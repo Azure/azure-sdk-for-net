@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class WebAppBackupData : IUtf8JsonSerializable, IJsonModel<WebAppBackupData>
+    public partial class WebAppBackupData : IUtf8JsonSerializable, IJsonModel<WebAppBackupData>, IPersistableModel<WebAppBackupData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppBackupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -357,6 +358,146 @@ namespace Azure.ResourceManager.AppService
             return new WebAppBackupData(id, name, type, systemData.Value, Optional.ToNullable(id0), storageAccountUrl.Value, blobName.Value, name0.Value, Optional.ToNullable(status), Optional.ToNullable(sizeInBytes), Optional.ToNullable(created), log.Value, Optional.ToList(databases), Optional.ToNullable(scheduled), Optional.ToNullable(lastRestoreTimeStamp), Optional.ToNullable(finishedTimeStamp), correlationId.Value, Optional.ToNullable(websiteSizeInBytes), kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BackupId))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{BackupId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StorageAccountUri))
+            {
+                builder.Append("  storageAccountUrl:");
+                builder.AppendLine($" '{StorageAccountUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(BlobName))
+            {
+                builder.Append("  blobName:");
+                builder.AppendLine($" '{BlobName}'");
+            }
+
+            if (Optional.IsDefined(BackupName))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{BackupName}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SizeInBytes))
+            {
+                builder.Append("  sizeInBytes:");
+                builder.AppendLine($" '{SizeInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  created:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Log))
+            {
+                builder.Append("  log:");
+                builder.AppendLine($" '{Log}'");
+            }
+
+            if (Optional.IsCollectionDefined(Databases))
+            {
+                builder.Append("  databases:");
+                builder.AppendLine(" [");
+                foreach (var item in Databases)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsScheduled))
+            {
+                builder.Append("  scheduled:");
+                var boolValue = IsScheduled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(LastRestoreOn))
+            {
+                builder.Append("  lastRestoreTimeStamp:");
+                builder.AppendLine($" '{LastRestoreOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FinishedOn))
+            {
+                builder.Append("  finishedTimeStamp:");
+                builder.AppendLine($" '{FinishedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CorrelationId))
+            {
+                builder.Append("  correlationId:");
+                builder.AppendLine($" '{CorrelationId}'");
+            }
+
+            if (Optional.IsDefined(WebsiteSizeInBytes))
+            {
+                builder.Append("  websiteSizeInBytes:");
+                builder.AppendLine($" '{WebsiteSizeInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<WebAppBackupData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebAppBackupData>)this).GetFormatFromOptions(options) : options.Format;
@@ -365,6 +506,8 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(WebAppBackupData)} does not support '{options.Format}' format.");
             }
@@ -381,6 +524,8 @@ namespace Azure.ResourceManager.AppService
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeWebAppBackupData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(WebAppBackupData)} does not support '{options.Format}' format.");
             }

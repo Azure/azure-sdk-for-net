@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseIntegrationRuntimeComputeProperties : IUtf8JsonSerializable, IJsonModel<SynapseIntegrationRuntimeComputeProperties>
+    public partial class SynapseIntegrationRuntimeComputeProperties : IUtf8JsonSerializable, IJsonModel<SynapseIntegrationRuntimeComputeProperties>, IPersistableModel<SynapseIntegrationRuntimeComputeProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseIntegrationRuntimeComputeProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -157,6 +158,79 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseIntegrationRuntimeComputeProperties(Optional.ToNullable(location), nodeSize.Value, Optional.ToNullable(numberOfNodes), Optional.ToNullable(maxParallelExecutionsPerNode), dataFlowProperties.Value, vNetProperties.Value, additionalProperties);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NodeSize))
+            {
+                builder.Append("  nodeSize:");
+                builder.AppendLine($" '{NodeSize}'");
+            }
+
+            if (Optional.IsDefined(NumberOfNodes))
+            {
+                builder.Append("  numberOfNodes:");
+                builder.AppendLine($" '{NumberOfNodes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxParallelExecutionsPerNode))
+            {
+                builder.Append("  maxParallelExecutionsPerNode:");
+                builder.AppendLine($" '{MaxParallelExecutionsPerNode.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DataFlowProperties))
+            {
+                builder.Append("  dataFlowProperties:");
+                AppendChildObject(builder, DataFlowProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(VnetProperties))
+            {
+                builder.Append("  vNetProperties:");
+                AppendChildObject(builder, VnetProperties, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(AdditionalProperties))
+            {
+                builder.Append("  AdditionalProperties:");
+                builder.AppendLine(" {");
+                foreach (var item in AdditionalProperties)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value.ToString()}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SynapseIntegrationRuntimeComputeProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -165,6 +239,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeComputeProperties)} does not support '{options.Format}' format.");
             }
@@ -181,6 +257,8 @@ namespace Azure.ResourceManager.Synapse.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSynapseIntegrationRuntimeComputeProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeComputeProperties)} does not support '{options.Format}' format.");
             }

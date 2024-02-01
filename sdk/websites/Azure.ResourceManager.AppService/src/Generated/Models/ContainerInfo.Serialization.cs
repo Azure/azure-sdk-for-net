@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ContainerInfo : IUtf8JsonSerializable, IJsonModel<ContainerInfo>
+    public partial class ContainerInfo : IUtf8JsonSerializable, IJsonModel<ContainerInfo>, IPersistableModel<ContainerInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -189,6 +190,74 @@ namespace Azure.ResourceManager.AppService.Models
             return new ContainerInfo(Optional.ToNullable(currentTimeStamp), Optional.ToNullable(previousTimeStamp), currentCpuStats.Value, previousCpuStats.Value, memoryStats.Value, name.Value, id.Value, eth0.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CurrentTimeStamp))
+            {
+                builder.Append("  currentTimeStamp:");
+                builder.AppendLine($" '{CurrentTimeStamp.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PreviousTimeStamp))
+            {
+                builder.Append("  previousTimeStamp:");
+                builder.AppendLine($" '{PreviousTimeStamp.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CurrentCpuStats))
+            {
+                builder.Append("  currentCpuStats:");
+                AppendChildObject(builder, CurrentCpuStats, options, 2);
+            }
+
+            if (Optional.IsDefined(PreviousCpuStats))
+            {
+                builder.Append("  previousCpuStats:");
+                AppendChildObject(builder, PreviousCpuStats, options, 2);
+            }
+
+            if (Optional.IsDefined(MemoryStats))
+            {
+                builder.Append("  memoryStats:");
+                AppendChildObject(builder, MemoryStats, options, 2);
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id}'");
+            }
+
+            if (Optional.IsDefined(Eth0))
+            {
+                builder.Append("  eth0:");
+                AppendChildObject(builder, Eth0, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ContainerInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -197,6 +266,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerInfo)} does not support '{options.Format}' format.");
             }
@@ -213,6 +284,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerInfo)} does not support '{options.Format}' format.");
             }

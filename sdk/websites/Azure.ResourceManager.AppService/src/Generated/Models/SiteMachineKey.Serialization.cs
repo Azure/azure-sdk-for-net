@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SiteMachineKey : IUtf8JsonSerializable, IJsonModel<SiteMachineKey>
+    public partial class SiteMachineKey : IUtf8JsonSerializable, IJsonModel<SiteMachineKey>, IPersistableModel<SiteMachineKey>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteMachineKey>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -121,6 +122,50 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteMachineKey(validation.Value, validationKey.Value, decryption.Value, decryptionKey.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Validation))
+            {
+                builder.Append("  validation:");
+                builder.AppendLine($" '{Validation}'");
+            }
+
+            if (Optional.IsDefined(ValidationKey))
+            {
+                builder.Append("  validationKey:");
+                builder.AppendLine($" '{ValidationKey}'");
+            }
+
+            if (Optional.IsDefined(Decryption))
+            {
+                builder.Append("  decryption:");
+                builder.AppendLine($" '{Decryption}'");
+            }
+
+            if (Optional.IsDefined(DecryptionKey))
+            {
+                builder.Append("  decryptionKey:");
+                builder.AppendLine($" '{DecryptionKey}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SiteMachineKey>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteMachineKey>)this).GetFormatFromOptions(options) : options.Format;
@@ -129,6 +174,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SiteMachineKey)} does not support '{options.Format}' format.");
             }
@@ -145,6 +192,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSiteMachineKey(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SiteMachineKey)} does not support '{options.Format}' format.");
             }

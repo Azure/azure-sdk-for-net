@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.SqlVirtualMachine.Models;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
-    public partial class SqlVmData : IUtf8JsonSerializable, IJsonModel<SqlVmData>
+    public partial class SqlVmData : IUtf8JsonSerializable, IJsonModel<SqlVmData>, IPersistableModel<SqlVmData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlVmData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -409,6 +410,169 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             return new SqlVmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, virtualMachineResourceId.Value, provisioningState.Value, sqlImageOffer.Value, Optional.ToNullable(sqlServerLicenseType), Optional.ToNullable(sqlManagement), Optional.ToNullable(sqlImageSku), sqlVmGroupResourceId.Value, windowsServerFailoverClusterDomainCredentials.Value, windowsServerFailoverClusterStaticIP.Value, autoPatchingSettings.Value, autoBackupSettings.Value, keyVaultCredentialSettings.Value, serverConfigurationsManagementSettings.Value, storageConfigurationSettings.Value, assessmentSettings.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2);
+            }
+
+            if (Optional.IsDefined(VirtualMachineResourceId))
+            {
+                builder.Append("  virtualMachineResourceId:");
+                builder.AppendLine($" '{VirtualMachineResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(SqlImageOffer))
+            {
+                builder.Append("  sqlImageOffer:");
+                builder.AppendLine($" '{SqlImageOffer}'");
+            }
+
+            if (Optional.IsDefined(SqlServerLicenseType))
+            {
+                builder.Append("  sqlServerLicenseType:");
+                builder.AppendLine($" '{SqlServerLicenseType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SqlManagement))
+            {
+                builder.Append("  sqlManagement:");
+                builder.AppendLine($" '{SqlManagement.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SqlImageSku))
+            {
+                builder.Append("  sqlImageSku:");
+                builder.AppendLine($" '{SqlImageSku.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SqlVmGroupResourceId))
+            {
+                builder.Append("  sqlVirtualMachineGroupResourceId:");
+                builder.AppendLine($" '{SqlVmGroupResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WindowsServerFailoverClusterDomainCredentials))
+            {
+                builder.Append("  wsfcDomainCredentials:");
+                AppendChildObject(builder, WindowsServerFailoverClusterDomainCredentials, options, 2);
+            }
+
+            if (Optional.IsDefined(WindowsServerFailoverClusterStaticIP))
+            {
+                builder.Append("  wsfcStaticIp:");
+                builder.AppendLine($" '{WindowsServerFailoverClusterStaticIP.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AutoPatchingSettings))
+            {
+                builder.Append("  autoPatchingSettings:");
+                AppendChildObject(builder, AutoPatchingSettings, options, 2);
+            }
+
+            if (Optional.IsDefined(AutoBackupSettings))
+            {
+                builder.Append("  autoBackupSettings:");
+                AppendChildObject(builder, AutoBackupSettings, options, 2);
+            }
+
+            if (Optional.IsDefined(KeyVaultCredentialSettings))
+            {
+                builder.Append("  keyVaultCredentialSettings:");
+                AppendChildObject(builder, KeyVaultCredentialSettings, options, 2);
+            }
+
+            if (Optional.IsDefined(ServerConfigurationsManagementSettings))
+            {
+                builder.Append("  serverConfigurationsManagementSettings:");
+                AppendChildObject(builder, ServerConfigurationsManagementSettings, options, 2);
+            }
+
+            if (Optional.IsDefined(StorageConfigurationSettings))
+            {
+                builder.Append("  storageConfigurationSettings:");
+                AppendChildObject(builder, StorageConfigurationSettings, options, 2);
+            }
+
+            if (Optional.IsDefined(AssessmentSettings))
+            {
+                builder.Append("  assessmentSettings:");
+                AppendChildObject(builder, AssessmentSettings, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SqlVmData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlVmData>)this).GetFormatFromOptions(options) : options.Format;
@@ -417,6 +581,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SqlVmData)} does not support '{options.Format}' format.");
             }
@@ -433,6 +599,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSqlVmData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SqlVmData)} does not support '{options.Format}' format.");
             }

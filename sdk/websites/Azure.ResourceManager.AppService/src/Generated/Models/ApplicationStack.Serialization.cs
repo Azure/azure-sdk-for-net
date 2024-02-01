@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ApplicationStack : IUtf8JsonSerializable, IJsonModel<ApplicationStack>
+    public partial class ApplicationStack : IUtf8JsonSerializable, IJsonModel<ApplicationStack>, IPersistableModel<ApplicationStack>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationStack>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -185,6 +186,77 @@ namespace Azure.ResourceManager.AppService.Models
             return new ApplicationStack(name.Value, display.Value, dependency.Value, Optional.ToList(majorVersions), Optional.ToList(frameworks), Optional.ToList(isDeprecated), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Display))
+            {
+                builder.Append("  display:");
+                builder.AppendLine($" '{Display}'");
+            }
+
+            if (Optional.IsDefined(Dependency))
+            {
+                builder.Append("  dependency:");
+                builder.AppendLine($" '{Dependency}'");
+            }
+
+            if (Optional.IsCollectionDefined(MajorVersions))
+            {
+                builder.Append("  majorVersions:");
+                builder.AppendLine(" [");
+                foreach (var item in MajorVersions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Frameworks))
+            {
+                builder.Append("  frameworks:");
+                builder.AppendLine(" [");
+                foreach (var item in Frameworks)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(IsDeprecated))
+            {
+                builder.Append("  isDeprecated:");
+                builder.AppendLine(" [");
+                foreach (var item in IsDeprecated)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ApplicationStack>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationStack>)this).GetFormatFromOptions(options) : options.Format;
@@ -193,6 +265,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApplicationStack)} does not support '{options.Format}' format.");
             }
@@ -209,6 +283,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeApplicationStack(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ApplicationStack)} does not support '{options.Format}' format.");
             }

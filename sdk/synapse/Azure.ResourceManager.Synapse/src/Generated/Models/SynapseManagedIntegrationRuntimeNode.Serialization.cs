@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseManagedIntegrationRuntimeNode : IUtf8JsonSerializable, IJsonModel<SynapseManagedIntegrationRuntimeNode>
+    public partial class SynapseManagedIntegrationRuntimeNode : IUtf8JsonSerializable, IJsonModel<SynapseManagedIntegrationRuntimeNode>, IPersistableModel<SynapseManagedIntegrationRuntimeNode>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseManagedIntegrationRuntimeNode>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -122,6 +123,66 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseManagedIntegrationRuntimeNode(nodeId.Value, Optional.ToNullable(status), Optional.ToList(errors), additionalProperties);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(NodeId))
+            {
+                builder.Append("  nodeId:");
+                builder.AppendLine($" '{NodeId}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                builder.Append("  errors:");
+                builder.AppendLine(" [");
+                foreach (var item in Errors)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(AdditionalProperties))
+            {
+                builder.Append("  AdditionalProperties:");
+                builder.AppendLine(" {");
+                foreach (var item in AdditionalProperties)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value.ToString()}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SynapseManagedIntegrationRuntimeNode>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseManagedIntegrationRuntimeNode>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,6 +191,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SynapseManagedIntegrationRuntimeNode)} does not support '{options.Format}' format.");
             }
@@ -146,6 +209,8 @@ namespace Azure.ResourceManager.Synapse.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSynapseManagedIntegrationRuntimeNode(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SynapseManagedIntegrationRuntimeNode)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseManagedIntegrationRuntimeOperationResult : IUtf8JsonSerializable, IJsonModel<SynapseManagedIntegrationRuntimeOperationResult>
+    public partial class SynapseManagedIntegrationRuntimeOperationResult : IUtf8JsonSerializable, IJsonModel<SynapseManagedIntegrationRuntimeOperationResult>, IPersistableModel<SynapseManagedIntegrationRuntimeOperationResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseManagedIntegrationRuntimeOperationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -155,6 +156,89 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseManagedIntegrationRuntimeOperationResult(type.Value, Optional.ToNullable(startTime), result.Value, errorCode.Value, Optional.ToList(parameters), activityId.Value, additionalProperties);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ManagedIntegrationRuntimeOperationResultType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ManagedIntegrationRuntimeOperationResultType}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startTime:");
+                builder.AppendLine($" '{StartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Result))
+            {
+                builder.Append("  result:");
+                builder.AppendLine($" '{Result}'");
+            }
+
+            if (Optional.IsDefined(ErrorCode))
+            {
+                builder.Append("  errorCode:");
+                builder.AppendLine($" '{ErrorCode}'");
+            }
+
+            if (Optional.IsCollectionDefined(Parameters))
+            {
+                builder.Append("  parameters:");
+                builder.AppendLine(" [");
+                foreach (var item in Parameters)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ActivityId))
+            {
+                builder.Append("  activityId:");
+                builder.AppendLine($" '{ActivityId}'");
+            }
+
+            if (Optional.IsCollectionDefined(AdditionalProperties))
+            {
+                builder.Append("  AdditionalProperties:");
+                builder.AppendLine(" {");
+                foreach (var item in AdditionalProperties)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value.ToString()}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SynapseManagedIntegrationRuntimeOperationResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseManagedIntegrationRuntimeOperationResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -163,6 +247,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SynapseManagedIntegrationRuntimeOperationResult)} does not support '{options.Format}' format.");
             }
@@ -179,6 +265,8 @@ namespace Azure.ResourceManager.Synapse.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSynapseManagedIntegrationRuntimeOperationResult(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SynapseManagedIntegrationRuntimeOperationResult)} does not support '{options.Format}' format.");
             }

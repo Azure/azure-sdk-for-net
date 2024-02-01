@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class DiskVolumeConfiguration : IUtf8JsonSerializable, IJsonModel<DiskVolumeConfiguration>
+    public partial class DiskVolumeConfiguration : IUtf8JsonSerializable, IJsonModel<DiskVolumeConfiguration>, IPersistableModel<DiskVolumeConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskVolumeConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -122,6 +123,44 @@ namespace Azure.ResourceManager.Workloads.Models
             return new DiskVolumeConfiguration(Optional.ToNullable(count), Optional.ToNullable(sizeGB), sku.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Count))
+            {
+                builder.Append("  count:");
+                builder.AppendLine($" '{Count.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SizeInGB))
+            {
+                builder.Append("  sizeGB:");
+                builder.AppendLine($" '{SizeInGB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DiskVolumeConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DiskVolumeConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,6 +169,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DiskVolumeConfiguration)} does not support '{options.Format}' format.");
             }
@@ -146,6 +187,8 @@ namespace Azure.ResourceManager.Workloads.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDiskVolumeConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DiskVolumeConfiguration)} does not support '{options.Format}' format.");
             }

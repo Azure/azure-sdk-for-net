@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StaticSitePatch : IUtf8JsonSerializable, IJsonModel<StaticSitePatch>
+    public partial class StaticSitePatch : IUtf8JsonSerializable, IJsonModel<StaticSitePatch>, IPersistableModel<StaticSitePatch>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticSitePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -369,6 +370,161 @@ namespace Azure.ResourceManager.AppService.Models
             return new StaticSitePatch(id, name, type, systemData.Value, defaultHostname.Value, repositoryUrl.Value, branch.Value, Optional.ToList(customDomains), repositoryToken.Value, buildProperties.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(stagingEnvironmentPolicy), Optional.ToNullable(allowConfigFileUpdates), templateProperties.Value, contentDistributionEndpoint.Value, keyVaultReferenceIdentity.Value, Optional.ToList(userProvidedFunctionApps), provider.Value, kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DefaultHostname))
+            {
+                builder.Append("  defaultHostname:");
+                builder.AppendLine($" '{DefaultHostname}'");
+            }
+
+            if (Optional.IsDefined(RepositoryUri))
+            {
+                builder.Append("  repositoryUrl:");
+                builder.AppendLine($" '{RepositoryUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(Branch))
+            {
+                builder.Append("  branch:");
+                builder.AppendLine($" '{Branch}'");
+            }
+
+            if (Optional.IsCollectionDefined(CustomDomains))
+            {
+                builder.Append("  customDomains:");
+                builder.AppendLine(" [");
+                foreach (var item in CustomDomains)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(RepositoryToken))
+            {
+                builder.Append("  repositoryToken:");
+                builder.AppendLine($" '{RepositoryToken}'");
+            }
+
+            if (Optional.IsDefined(BuildProperties))
+            {
+                builder.Append("  buildProperties:");
+                AppendChildObject(builder, BuildProperties, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                builder.Append("  privateEndpointConnections:");
+                builder.AppendLine(" [");
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(StagingEnvironmentPolicy))
+            {
+                builder.Append("  stagingEnvironmentPolicy:");
+                builder.AppendLine($" '{StagingEnvironmentPolicy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AllowConfigFileUpdates))
+            {
+                builder.Append("  allowConfigFileUpdates:");
+                var boolValue = AllowConfigFileUpdates.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(TemplateProperties))
+            {
+                builder.Append("  templateProperties:");
+                AppendChildObject(builder, TemplateProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(ContentDistributionEndpoint))
+            {
+                builder.Append("  contentDistributionEndpoint:");
+                builder.AppendLine($" '{ContentDistributionEndpoint}'");
+            }
+
+            if (Optional.IsDefined(KeyVaultReferenceIdentity))
+            {
+                builder.Append("  keyVaultReferenceIdentity:");
+                builder.AppendLine($" '{KeyVaultReferenceIdentity}'");
+            }
+
+            if (Optional.IsCollectionDefined(UserProvidedFunctionApps))
+            {
+                builder.Append("  userProvidedFunctionApps:");
+                builder.AppendLine(" [");
+                foreach (var item in UserProvidedFunctionApps)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Provider))
+            {
+                builder.Append("  provider:");
+                builder.AppendLine($" '{Provider}'");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<StaticSitePatch>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StaticSitePatch>)this).GetFormatFromOptions(options) : options.Format;
@@ -377,6 +533,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StaticSitePatch)} does not support '{options.Format}' format.");
             }
@@ -393,6 +551,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStaticSitePatch(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StaticSitePatch)} does not support '{options.Format}' format.");
             }

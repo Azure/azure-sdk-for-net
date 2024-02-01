@@ -7,13 +7,14 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
     [PersistableModelProxy(typeof(UnknownLinkedIntegrationRuntimeType))]
-    public partial class SynapseLinkedIntegrationRuntimeType : IUtf8JsonSerializable, IJsonModel<SynapseLinkedIntegrationRuntimeType>
+    public partial class SynapseLinkedIntegrationRuntimeType : IUtf8JsonSerializable, IJsonModel<SynapseLinkedIntegrationRuntimeType>, IPersistableModel<SynapseLinkedIntegrationRuntimeType>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseLinkedIntegrationRuntimeType>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -77,6 +78,32 @@ namespace Azure.ResourceManager.Synapse.Models
             return UnknownLinkedIntegrationRuntimeType.DeserializeUnknownLinkedIntegrationRuntimeType(element);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AuthorizationType))
+            {
+                builder.Append("  authorizationType:");
+                builder.AppendLine($" '{AuthorizationType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SynapseLinkedIntegrationRuntimeType>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseLinkedIntegrationRuntimeType>)this).GetFormatFromOptions(options) : options.Format;
@@ -85,6 +112,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SynapseLinkedIntegrationRuntimeType)} does not support '{options.Format}' format.");
             }
@@ -101,6 +130,8 @@ namespace Azure.ResourceManager.Synapse.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSynapseLinkedIntegrationRuntimeType(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SynapseLinkedIntegrationRuntimeType)} does not support '{options.Format}' format.");
             }

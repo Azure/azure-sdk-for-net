@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceDomainPatch : IUtf8JsonSerializable, IJsonModel<AppServiceDomainPatch>
+    public partial class AppServiceDomainPatch : IUtf8JsonSerializable, IJsonModel<AppServiceDomainPatch>, IPersistableModel<AppServiceDomainPatch>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceDomainPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -474,6 +475,199 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceDomainPatch(id, name, type, systemData.Value, contactAdmin.Value, contactBilling.Value, contactRegistrant.Value, contactTech.Value, Optional.ToNullable(registrationStatus), Optional.ToNullable(provisioningState), Optional.ToList(nameServers), Optional.ToNullable(privacy), Optional.ToNullable(createdTime), Optional.ToNullable(expirationTime), Optional.ToNullable(lastRenewedTime), Optional.ToNullable(autoRenew), Optional.ToNullable(readyForDnsRecordManagement), Optional.ToList(managedHostNames), consent.Value, Optional.ToList(domainNotRenewableReasons), Optional.ToNullable(dnsType), dnsZoneId.Value, Optional.ToNullable(targetDnsType), authCode.Value, kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ContactAdmin))
+            {
+                builder.Append("  contactAdmin:");
+                AppendChildObject(builder, ContactAdmin, options, 2);
+            }
+
+            if (Optional.IsDefined(ContactBilling))
+            {
+                builder.Append("  contactBilling:");
+                AppendChildObject(builder, ContactBilling, options, 2);
+            }
+
+            if (Optional.IsDefined(ContactRegistrant))
+            {
+                builder.Append("  contactRegistrant:");
+                AppendChildObject(builder, ContactRegistrant, options, 2);
+            }
+
+            if (Optional.IsDefined(ContactTech))
+            {
+                builder.Append("  contactTech:");
+                AppendChildObject(builder, ContactTech, options, 2);
+            }
+
+            if (Optional.IsDefined(RegistrationStatus))
+            {
+                builder.Append("  registrationStatus:");
+                builder.AppendLine($" '{RegistrationStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(NameServers))
+            {
+                builder.Append("  nameServers:");
+                builder.AppendLine(" [");
+                foreach (var item in NameServers)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsDomainPrivacyEnabled))
+            {
+                builder.Append("  privacy:");
+                var boolValue = IsDomainPrivacyEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdTime:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExpireOn))
+            {
+                builder.Append("  expirationTime:");
+                builder.AppendLine($" '{ExpireOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastRenewedOn))
+            {
+                builder.Append("  lastRenewedTime:");
+                builder.AppendLine($" '{LastRenewedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsAutoRenew))
+            {
+                builder.Append("  autoRenew:");
+                var boolValue = IsAutoRenew.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsReadyForDnsRecordManagement))
+            {
+                builder.Append("  readyForDnsRecordManagement:");
+                var boolValue = IsReadyForDnsRecordManagement.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(ManagedHostNames))
+            {
+                builder.Append("  managedHostNames:");
+                builder.AppendLine(" [");
+                foreach (var item in ManagedHostNames)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Consent))
+            {
+                builder.Append("  consent:");
+                AppendChildObject(builder, Consent, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(DomainNotRenewableReasons))
+            {
+                builder.Append("  domainNotRenewableReasons:");
+                builder.AppendLine(" [");
+                foreach (var item in DomainNotRenewableReasons)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(DnsType))
+            {
+                builder.Append("  dnsType:");
+                builder.AppendLine($" '{DnsType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DnsZoneId))
+            {
+                builder.Append("  dnsZoneId:");
+                builder.AppendLine($" '{DnsZoneId}'");
+            }
+
+            if (Optional.IsDefined(TargetDnsType))
+            {
+                builder.Append("  targetDnsType:");
+                builder.AppendLine($" '{TargetDnsType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AuthCode))
+            {
+                builder.Append("  authCode:");
+                builder.AppendLine($" '{AuthCode}'");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AppServiceDomainPatch>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceDomainPatch>)this).GetFormatFromOptions(options) : options.Format;
@@ -482,6 +676,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AppServiceDomainPatch)} does not support '{options.Format}' format.");
             }
@@ -498,6 +694,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAppServiceDomainPatch(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AppServiceDomainPatch)} does not support '{options.Format}' format.");
             }

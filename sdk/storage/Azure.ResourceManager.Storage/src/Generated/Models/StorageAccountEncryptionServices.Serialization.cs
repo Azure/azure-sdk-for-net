@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountEncryptionServices : IUtf8JsonSerializable, IJsonModel<StorageAccountEncryptionServices>
+    public partial class StorageAccountEncryptionServices : IUtf8JsonSerializable, IJsonModel<StorageAccountEncryptionServices>, IPersistableModel<StorageAccountEncryptionServices>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageAccountEncryptionServices>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -137,6 +138,50 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageAccountEncryptionServices(blob.Value, file.Value, table.Value, queue.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Blob))
+            {
+                builder.Append("  blob:");
+                AppendChildObject(builder, Blob, options, 2);
+            }
+
+            if (Optional.IsDefined(File))
+            {
+                builder.Append("  file:");
+                AppendChildObject(builder, File, options, 2);
+            }
+
+            if (Optional.IsDefined(Table))
+            {
+                builder.Append("  table:");
+                AppendChildObject(builder, Table, options, 2);
+            }
+
+            if (Optional.IsDefined(Queue))
+            {
+                builder.Append("  queue:");
+                AppendChildObject(builder, Queue, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<StorageAccountEncryptionServices>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountEncryptionServices>)this).GetFormatFromOptions(options) : options.Format;
@@ -145,6 +190,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StorageAccountEncryptionServices)} does not support '{options.Format}' format.");
             }
@@ -161,6 +208,8 @@ namespace Azure.ResourceManager.Storage.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStorageAccountEncryptionServices(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StorageAccountEncryptionServices)} does not support '{options.Format}' format.");
             }

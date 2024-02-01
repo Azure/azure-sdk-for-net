@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class MetricDimension : IUtf8JsonSerializable, IJsonModel<MetricDimension>
+    public partial class MetricDimension : IUtf8JsonSerializable, IJsonModel<MetricDimension>, IPersistableModel<MetricDimension>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricDimension>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -125,6 +126,51 @@ namespace Azure.ResourceManager.AppService.Models
             return new MetricDimension(name.Value, displayName.Value, internalName.Value, Optional.ToNullable(toBeExportedForShoebox), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(InternalName))
+            {
+                builder.Append("  internalName:");
+                builder.AppendLine($" '{InternalName}'");
+            }
+
+            if (Optional.IsDefined(IsToBeExportedForShoebox))
+            {
+                builder.Append("  toBeExportedForShoebox:");
+                var boolValue = IsToBeExportedForShoebox.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MetricDimension>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MetricDimension>)this).GetFormatFromOptions(options) : options.Format;
@@ -133,6 +179,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MetricDimension)} does not support '{options.Format}' format.");
             }
@@ -149,6 +197,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMetricDimension(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MetricDimension)} does not support '{options.Format}' format.");
             }
