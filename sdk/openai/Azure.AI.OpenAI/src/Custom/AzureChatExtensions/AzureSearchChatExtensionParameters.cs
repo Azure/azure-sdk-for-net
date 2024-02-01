@@ -8,8 +8,8 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI;
 
-[CodeGenSuppress("AzureCognitiveSearchChatExtensionParameters", typeof(Uri), typeof(string))]
-internal partial class AzureCognitiveSearchChatExtensionParameters
+[CodeGenSuppress("AzureSearchChatExtensionParameters", typeof(Uri), typeof(string))]
+internal partial class AzureSearchChatExtensionParameters
 {
     // CUSTOM CODE NOTE:
     //    These changes facilitate the direct use of the extension "configuration" classes for access to their
@@ -17,7 +17,7 @@ internal partial class AzureCognitiveSearchChatExtensionParameters
     //    REST structure but don't convey additional semantic meaning, so internalizing parameter types and then
     //    plumbing the configuration through substantially simplifies the experience.
 
-    internal AzureCognitiveSearchChatExtensionParameters()
+    internal AzureSearchChatExtensionParameters()
     { }
 
     /// <summary> The absolute endpoint path for the Azure Cognitive Search resource to use. </summary>

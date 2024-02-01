@@ -11,8 +11,8 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Optional settings to control how fields are processed when using a configured Azure Cognitive Search resource. </summary>
-    public partial class AzureCognitiveSearchIndexFieldMappingOptions
+    /// <summary> Optional settings to control how fields are processed when using a configured Azure Search resource. </summary>
+    public partial class AzureSearchIndexFieldMappingOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,15 +46,15 @@ namespace Azure.AI.OpenAI
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AzureCognitiveSearchIndexFieldMappingOptions"/>. </summary>
-        public AzureCognitiveSearchIndexFieldMappingOptions()
+        /// <summary> Initializes a new instance of <see cref="AzureSearchIndexFieldMappingOptions"/>. </summary>
+        public AzureSearchIndexFieldMappingOptions()
         {
             ContentFieldNames = new ChangeTrackingList<string>();
             VectorFieldNames = new ChangeTrackingList<string>();
             ImageVectorFieldNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AzureCognitiveSearchIndexFieldMappingOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSearchIndexFieldMappingOptions"/>. </summary>
         /// <param name="titleFieldName"> The name of the index field to use as a title. </param>
         /// <param name="urlFieldName"> The name of the index field to use as a URL. </param>
         /// <param name="filepathFieldName"> The name of the index field to use as a filepath. </param>
@@ -63,7 +63,7 @@ namespace Azure.AI.OpenAI
         /// <param name="vectorFieldNames"> The names of fields that represent vector data. </param>
         /// <param name="imageVectorFieldNames"> The names of fields that represent image vector data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureCognitiveSearchIndexFieldMappingOptions(string titleFieldName, string urlFieldName, string filepathFieldName, IList<string> contentFieldNames, string contentFieldSeparator, IList<string> vectorFieldNames, IList<string> imageVectorFieldNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureSearchIndexFieldMappingOptions(string titleFieldName, string urlFieldName, string filepathFieldName, IList<string> contentFieldNames, string contentFieldSeparator, IList<string> vectorFieldNames, IList<string> imageVectorFieldNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TitleFieldName = titleFieldName;
             UrlFieldName = urlFieldName;

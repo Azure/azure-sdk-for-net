@@ -52,6 +52,25 @@ namespace Azure.AI.OpenAI
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EmbeddingsOptions"/>. </summary>
+        /// <param name="input">
+        /// Input texts to get embeddings for, encoded as a an array of strings.
+        /// Each input must not exceed 2048 tokens in length.
+        ///
+        /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
+        /// as we have observed inferior results when newlines are present.
+        /// </param>
+        /// <param name="inputType"> type of embedding search to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> or <paramref name="inputType"/> is null. </exception>
+        public EmbeddingsOptions(IEnumerable<string> input, string inputType)
+        {
+            Argument.AssertNotNull(input, nameof(input));
+            Argument.AssertNotNull(inputType, nameof(inputType));
+
+            Input = input.ToList();
+            InputType = inputType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EmbeddingsOptions"/>. </summary>
         /// <param name="user">
         /// An identifier for the caller or end user of the operation. This may be used for tracking
         /// or rate-limiting purposes.
@@ -68,12 +87,14 @@ namespace Azure.AI.OpenAI
         /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
         /// as we have observed inferior results when newlines are present.
         /// </param>
+        /// <param name="inputType"> type of embedding search to use. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EmbeddingsOptions(string user, string deploymentName, IList<string> input, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EmbeddingsOptions(string user, string deploymentName, IList<string> input, string inputType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             User = user;
             DeploymentName = deploymentName;
             Input = input;
+            InputType = inputType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -90,5 +111,7 @@ namespace Azure.AI.OpenAI
         /// as we have observed inferior results when newlines are present.
         /// </summary>
         public IList<string> Input { get; }
+        /// <summary> type of embedding search to use. </summary>
+        public string InputType { get; }
     }
 }

@@ -29,7 +29,7 @@ namespace Azure.AI.OpenAI
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
-            writer.WritePropertyName("keyId"u8);
+            writer.WritePropertyName("key_id"u8);
             writer.WriteStringValue(KeyId);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
@@ -83,7 +83,7 @@ namespace Azure.AI.OpenAI
                     key = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("keyId"u8))
+                if (property.NameEquals("key_id"u8))
                 {
                     keyId = property.Value.GetString();
                     continue;

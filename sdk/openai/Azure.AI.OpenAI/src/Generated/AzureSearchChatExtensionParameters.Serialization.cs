@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    internal partial class AzureCognitiveSearchChatExtensionParameters : IUtf8JsonSerializable, IJsonModel<AzureCognitiveSearchChatExtensionParameters>
+    internal partial class AzureSearchChatExtensionParameters : IUtf8JsonSerializable, IJsonModel<AzureSearchChatExtensionParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureCognitiveSearchChatExtensionParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureSearchChatExtensionParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<AzureCognitiveSearchChatExtensionParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzureSearchChatExtensionParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureCognitiveSearchChatExtensionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSearchChatExtensionParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureCognitiveSearchChatExtensionParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureSearchChatExtensionParameters)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsDefined(DocumentCount))
             {
-                writer.WritePropertyName("topNDocuments"u8);
+                writer.WritePropertyName("top_n_documents"u8);
                 writer.WriteNumberValue(DocumentCount.Value);
             }
             if (Optional.IsDefined(ShouldRestrictResultScope))
             {
-                writer.WritePropertyName("inScope"u8);
+                writer.WritePropertyName("in_scope"u8);
                 writer.WriteBooleanValue(ShouldRestrictResultScope.Value);
             }
             if (Optional.IsDefined(Strictness))
@@ -49,31 +49,26 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsDefined(RoleInformation))
             {
-                writer.WritePropertyName("roleInformation"u8);
+                writer.WritePropertyName("role_information"u8);
                 writer.WriteStringValue(RoleInformation);
             }
             writer.WritePropertyName("endpoint"u8);
             writer.WriteStringValue(SearchEndpoint.AbsoluteUri);
-            writer.WritePropertyName("indexName"u8);
+            writer.WritePropertyName("index_name"u8);
             writer.WriteStringValue(IndexName);
-            if (Optional.IsDefined(Key))
-            {
-                writer.WritePropertyName("key"u8);
-                writer.WriteStringValue(Key);
-            }
             if (Optional.IsDefined(FieldMappingOptions))
             {
-                writer.WritePropertyName("fieldsMapping"u8);
+                writer.WritePropertyName("fields_mapping"u8);
                 writer.WriteObjectValue(FieldMappingOptions);
             }
             if (Optional.IsDefined(QueryType))
             {
-                writer.WritePropertyName("queryType"u8);
+                writer.WritePropertyName("query_type"u8);
                 writer.WriteStringValue(QueryType.Value.ToString());
             }
             if (Optional.IsDefined(SemanticConfiguration))
             {
-                writer.WritePropertyName("semanticConfiguration"u8);
+                writer.WritePropertyName("semantic_configuration"u8);
                 writer.WriteStringValue(SemanticConfiguration);
             }
             if (Optional.IsDefined(Filter))
@@ -81,19 +76,9 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
-            if (Optional.IsDefined(EmbeddingEndpoint))
-            {
-                writer.WritePropertyName("embeddingEndpoint"u8);
-                writer.WriteStringValue(EmbeddingEndpoint.AbsoluteUri);
-            }
-            if (Optional.IsDefined(EmbeddingKey))
-            {
-                writer.WritePropertyName("embeddingKey"u8);
-                writer.WriteStringValue(EmbeddingKey);
-            }
             if (Optional.IsDefined(EmbeddingDependency))
             {
-                writer.WritePropertyName("embeddingDependency"u8);
+                writer.WritePropertyName("embedding_dependency"u8);
                 writer.WriteObjectValue(EmbeddingDependency);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -114,19 +99,19 @@ namespace Azure.AI.OpenAI
             writer.WriteEndObject();
         }
 
-        AzureCognitiveSearchChatExtensionParameters IJsonModel<AzureCognitiveSearchChatExtensionParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AzureSearchChatExtensionParameters IJsonModel<AzureSearchChatExtensionParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureCognitiveSearchChatExtensionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSearchChatExtensionParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureCognitiveSearchChatExtensionParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureSearchChatExtensionParameters)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureCognitiveSearchChatExtensionParameters(document.RootElement, options);
+            return DeserializeAzureSearchChatExtensionParameters(document.RootElement, options);
         }
 
-        internal static AzureCognitiveSearchChatExtensionParameters DeserializeAzureCognitiveSearchChatExtensionParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AzureSearchChatExtensionParameters DeserializeAzureSearchChatExtensionParameters(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -141,13 +126,10 @@ namespace Azure.AI.OpenAI
             Optional<string> roleInformation = default;
             Uri endpoint = default;
             string indexName = default;
-            Optional<string> key = default;
-            Optional<AzureCognitiveSearchIndexFieldMappingOptions> fieldsMapping = default;
-            Optional<AzureCognitiveSearchQueryType> queryType = default;
+            Optional<AzureSearchIndexFieldMappingOptions> fieldsMapping = default;
+            Optional<AzureSearchQueryType> queryType = default;
             Optional<string> semanticConfiguration = default;
             Optional<string> filter = default;
-            Optional<Uri> embeddingEndpoint = default;
-            Optional<string> embeddingKey = default;
             Optional<OnYourDataVectorizationSource> embeddingDependency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -162,7 +144,7 @@ namespace Azure.AI.OpenAI
                     authentication = OnYourDataAuthenticationOptions.DeserializeOnYourDataAuthenticationOptions(property.Value);
                     continue;
                 }
-                if (property.NameEquals("topNDocuments"u8))
+                if (property.NameEquals("top_n_documents"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -171,7 +153,7 @@ namespace Azure.AI.OpenAI
                     topNDocuments = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("inScope"u8))
+                if (property.NameEquals("in_scope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -189,7 +171,7 @@ namespace Azure.AI.OpenAI
                     strictness = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("roleInformation"u8))
+                if (property.NameEquals("role_information"u8))
                 {
                     roleInformation = property.Value.GetString();
                     continue;
@@ -199,35 +181,30 @@ namespace Azure.AI.OpenAI
                     endpoint = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("indexName"u8))
+                if (property.NameEquals("index_name"u8))
                 {
                     indexName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("key"u8))
-                {
-                    key = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("fieldsMapping"u8))
+                if (property.NameEquals("fields_mapping"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fieldsMapping = AzureCognitiveSearchIndexFieldMappingOptions.DeserializeAzureCognitiveSearchIndexFieldMappingOptions(property.Value);
+                    fieldsMapping = AzureSearchIndexFieldMappingOptions.DeserializeAzureSearchIndexFieldMappingOptions(property.Value);
                     continue;
                 }
-                if (property.NameEquals("queryType"u8))
+                if (property.NameEquals("query_type"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    queryType = new AzureCognitiveSearchQueryType(property.Value.GetString());
+                    queryType = new AzureSearchQueryType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("semanticConfiguration"u8))
+                if (property.NameEquals("semantic_configuration"u8))
                 {
                     semanticConfiguration = property.Value.GetString();
                     continue;
@@ -237,21 +214,7 @@ namespace Azure.AI.OpenAI
                     filter = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("embeddingEndpoint"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    embeddingEndpoint = new Uri(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("embeddingKey"u8))
-                {
-                    embeddingKey = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("embeddingDependency"u8))
+                if (property.NameEquals("embedding_dependency"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -266,46 +229,46 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCognitiveSearchChatExtensionParameters(authentication.Value, Optional.ToNullable(topNDocuments), Optional.ToNullable(inScope), Optional.ToNullable(strictness), roleInformation.Value, endpoint, indexName, key.Value, fieldsMapping.Value, Optional.ToNullable(queryType), semanticConfiguration.Value, filter.Value, embeddingEndpoint.Value, embeddingKey.Value, embeddingDependency.Value, serializedAdditionalRawData);
+            return new AzureSearchChatExtensionParameters(authentication.Value, Optional.ToNullable(topNDocuments), Optional.ToNullable(inScope), Optional.ToNullable(strictness), roleInformation.Value, endpoint, indexName, fieldsMapping.Value, Optional.ToNullable(queryType), semanticConfiguration.Value, filter.Value, embeddingDependency.Value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AzureCognitiveSearchChatExtensionParameters>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AzureSearchChatExtensionParameters>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureCognitiveSearchChatExtensionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSearchChatExtensionParameters>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureCognitiveSearchChatExtensionParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureSearchChatExtensionParameters)} does not support '{options.Format}' format.");
             }
         }
 
-        AzureCognitiveSearchChatExtensionParameters IPersistableModel<AzureCognitiveSearchChatExtensionParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AzureSearchChatExtensionParameters IPersistableModel<AzureSearchChatExtensionParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureCognitiveSearchChatExtensionParameters>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSearchChatExtensionParameters>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAzureCognitiveSearchChatExtensionParameters(document.RootElement, options);
+                        return DeserializeAzureSearchChatExtensionParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureCognitiveSearchChatExtensionParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureSearchChatExtensionParameters)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AzureCognitiveSearchChatExtensionParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzureSearchChatExtensionParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AzureCognitiveSearchChatExtensionParameters FromResponse(Response response)
+        internal static AzureSearchChatExtensionParameters FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAzureCognitiveSearchChatExtensionParameters(document.RootElement);
+            return DeserializeAzureSearchChatExtensionParameters(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
