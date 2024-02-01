@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
@@ -14,12 +13,17 @@ using Microsoft.AspNetCore.Builder;
 using OpenTelemetry;
 using OpenTelemetry.Trace;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 {
-    public class HttpClientDependecyTests
+    public class HttpClientDependecyTests : DocumentTestBase
     {
         private const string TestServerUrl = "http://localhost:9996/";
+
+        public HttpClientDependecyTests(ITestOutputHelper output) : base(output)
+        {
+        }
 
         [Fact]
         public void VerifyHttpClientAttributes()
@@ -95,9 +99,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             WaitForActivityExport(exportedActivities);
 
             // Assert
-            Assert.True(exportedActivities.Any(), "test project did not capture telemetry");
             var dependencyActivity = exportedActivities.Last();
-
+            PrintActivity(dependencyActivity);
             var dependencyDocument = DocumentHelper.ConvertToRemoteDependency(dependencyActivity);
 
             Assert.Equal(requestUrl, dependencyDocument.CommandName);
@@ -111,24 +114,5 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             Assert.Equal(successfulRequest, dependencyDocument.Extension_IsSuccess);
         }
 #endif
-
-        /// <summary>
-        /// Wait for End callback to execute because it is executed after response was returned.
-        /// </summary>
-        /// <remarks>
-        /// Copied from <see href="https://github.com/open-telemetry/opentelemetry-dotnet/blob/f471a9f197d797015123fe95d3e12b6abf8e1f5f/test/OpenTelemetry.Instrumentation.AspNetCore.Tests/BasicTests.cs#L558-L570"/>.
-        /// </remarks>
-        internal void WaitForActivityExport(List<Activity> telemetryItems)
-        {
-            var result = SpinWait.SpinUntil(
-                condition: () =>
-                {
-                    Thread.Sleep(10);
-                    return telemetryItems.Any();
-                },
-                timeout: TimeSpan.FromSeconds(10));
-
-            Assert.True(result, $"{nameof(WaitForActivityExport)} failed.");
-        }
     }
 }

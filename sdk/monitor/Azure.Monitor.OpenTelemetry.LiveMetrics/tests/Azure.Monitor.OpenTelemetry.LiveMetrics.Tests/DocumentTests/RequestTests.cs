@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
@@ -14,12 +13,17 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry.Trace;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 {
-    public class RequestTests
+    public class RequestTests : DocumentTestBase
     {
         private const string TestServerUrl = "http://localhost:9997/";
+
+        public RequestTests(ITestOutputHelper output) : base(output)
+        {
+        }
 
         [Fact]
         public void VerifyRequestAttributes()
@@ -87,15 +91,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             var res = await httpClient.GetStringAsync(TestServerUrl).ConfigureAwait(false);
             Assert.True(res.Equals("Response from Test Server"), "If this assert fails, the in-process test server is not running.");
 
-            // Shutdown
-            //response.EnsureSuccessStatusCode();
-            Assert.NotNull(exportedActivities);
             WaitForActivityExport(exportedActivities);
 
             // Assert
-            Assert.True(exportedActivities.Any(), "test project did not capture telemetry");
             var requestActivity = exportedActivities.First(x => x.Kind == ActivityKind.Server)!;
-
+            PrintActivity(requestActivity);
             var requestDocument = DocumentHelper.ConvertToRequest(requestActivity);
 
             Assert.Equal(DocumentIngressDocumentType.Request, requestDocument.DocumentType);
@@ -109,24 +109,5 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             Assert.True(requestDocument.Extension_IsSuccess);
         }
 #endif
-
-        /// <summary>
-        /// Wait for End callback to execute because it is executed after response was returned.
-        /// </summary>
-        /// <remarks>
-        /// Copied from <see href="https://github.com/open-telemetry/opentelemetry-dotnet/blob/f471a9f197d797015123fe95d3e12b6abf8e1f5f/test/OpenTelemetry.Instrumentation.AspNetCore.Tests/BasicTests.cs#L558-L570"/>.
-        /// </remarks>
-        internal void WaitForActivityExport(List<Activity> telemetryItems)
-        {
-            var result = SpinWait.SpinUntil(
-                condition: () =>
-                {
-                    Thread.Sleep(10);
-                    return telemetryItems.Any();
-                },
-                timeout: TimeSpan.FromSeconds(10));
-
-            Assert.True(result, $"{nameof(WaitForActivityExport)} failed.");
-        }
     }
 }

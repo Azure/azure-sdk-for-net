@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 using Microsoft.Data.SqlClient;
 using OpenTelemetry;
 using OpenTelemetry.Trace;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 {
@@ -20,10 +20,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
     /// These tests and helper classes were initially copied from
     /// <see href="https://github.com/open-telemetry/opentelemetry-dotnet/blob/1.6.0-beta.3/test/OpenTelemetry.Instrumentation.SqlClient.Tests/SqlClientTests.cs" />.
     /// </summary>
-    public class SqlClientDependencyTests
+    public class SqlClientDependencyTests : DocumentTestBase
     {
-        private const string TestServerUrl = "http://localhost:9996/";
         private const string TestConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Database=MyDatabase";
+
+        public SqlClientDependencyTests(ITestOutputHelper output) : base(output)
+        {
+        }
 
         [Fact]
         public void VerifySqlClientAttributes()
@@ -112,12 +115,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
                 fakeSqlClientDiagnosticSource.Write(
                     afterCommand,
                     afterExecuteEventData);
+
+                WaitForActivityExport(exportedActivities);
             }
 
-            WaitForActivityExport(exportedActivities);
-            Assert.True(exportedActivities.Any(), "test project did not capture telemetry");
             var dependencyActivity = exportedActivities.First(x => x.Kind == ActivityKind.Client)!;
-
+            PrintActivity(dependencyActivity);
             var dependencyDocument = DocumentHelper.ConvertToRemoteDependency(dependencyActivity);
 
             Assert.Equal(commandText, dependencyDocument.CommandName);
@@ -184,12 +187,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
                 fakeSqlClientDiagnosticSource.Write(
                     errorCommand,
                     commandErrorEventData);
+
+                WaitForActivityExport(exportedActivities);
             }
 
-            WaitForActivityExport(exportedActivities);
-            Assert.True(exportedActivities.Any(), "test project did not capture telemetry");
             var dependencyActivity = exportedActivities.First(x => x.Kind == ActivityKind.Client)!;
-
+            PrintActivity(dependencyActivity);
             var dependencyDocument = DocumentHelper.ConvertToRemoteDependency(dependencyActivity);
 
             Assert.Equal(commandText, dependencyDocument.CommandName);
@@ -200,25 +203,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
             Assert.Equal(dependencyActivity.Duration.TotalMilliseconds, dependencyDocument.Extension_Duration);
             Assert.False(dependencyDocument.Extension_IsSuccess);
-        }
-
-        /// <summary>
-        /// Wait for End callback to execute because it is executed after response was returned.
-        /// </summary>
-        /// <remarks>
-        /// Copied from <see href="https://github.com/open-telemetry/opentelemetry-dotnet/blob/f471a9f197d797015123fe95d3e12b6abf8e1f5f/test/OpenTelemetry.Instrumentation.AspNetCore.Tests/BasicTests.cs#L558-L570"/>.
-        /// </remarks>
-        internal void WaitForActivityExport(List<Activity> telemetryItems)
-        {
-            var result = SpinWait.SpinUntil(
-                condition: () =>
-                {
-                    Thread.Sleep(10);
-                    return telemetryItems.Any();
-                },
-                timeout: TimeSpan.FromSeconds(10));
-
-            Assert.True(result, $"{nameof(WaitForActivityExport)} failed.");
         }
 
         /// <summary>
