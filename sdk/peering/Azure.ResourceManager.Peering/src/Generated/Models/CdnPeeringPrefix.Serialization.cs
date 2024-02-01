@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class CdnPeeringPrefix : IUtf8JsonSerializable, IJsonModel<CdnPeeringPrefix>
+    public partial class CdnPeeringPrefix : IUtf8JsonSerializable, IJsonModel<CdnPeeringPrefix>, IPersistableModel<CdnPeeringPrefix>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnPeeringPrefix>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -204,6 +205,81 @@ namespace Azure.ResourceManager.Peering.Models
             return new CdnPeeringPrefix(id, name, type, systemData.Value, prefix.Value, Optional.ToNullable(azureRegion), azureService.Value, Optional.ToNullable(isPrimaryRegion), bgpCommunity.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Prefix))
+            {
+                builder.Append("  prefix:");
+                builder.AppendLine($" '{Prefix}'");
+            }
+
+            if (Optional.IsDefined(AzureRegion))
+            {
+                builder.Append("  azureRegion:");
+                builder.AppendLine($" '{AzureRegion.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AzureService))
+            {
+                builder.Append("  azureService:");
+                builder.AppendLine($" '{AzureService}'");
+            }
+
+            if (Optional.IsDefined(IsPrimaryRegion))
+            {
+                builder.Append("  isPrimaryRegion:");
+                var boolValue = IsPrimaryRegion.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(BgpCommunity))
+            {
+                builder.Append("  bgpCommunity:");
+                builder.AppendLine($" '{BgpCommunity}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<CdnPeeringPrefix>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CdnPeeringPrefix>)this).GetFormatFromOptions(options) : options.Format;
@@ -212,6 +288,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CdnPeeringPrefix)} does not support '{options.Format}' format.");
             }
@@ -228,6 +306,8 @@ namespace Azure.ResourceManager.Peering.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCdnPeeringPrefix(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CdnPeeringPrefix)} does not support '{options.Format}' format.");
             }

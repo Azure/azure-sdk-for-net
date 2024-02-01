@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerDataEncryption : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerDataEncryption>
+    public partial class PostgreSqlFlexibleServerDataEncryption : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerDataEncryption>, IPersistableModel<PostgreSqlFlexibleServerDataEncryption>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerDataEncryption>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -178,6 +179,68 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerDataEncryption(primaryKeyUri.Value, primaryUserAssignedIdentityId.Value, geoBackupKeyUri.Value, geoBackupUserAssignedIdentityId.Value, Optional.ToNullable(type), Optional.ToNullable(primaryEncryptionKeyStatus), Optional.ToNullable(geoBackupEncryptionKeyStatus), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PrimaryKeyUri))
+            {
+                builder.Append("  primaryKeyURI:");
+                builder.AppendLine($" '{PrimaryKeyUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
+            {
+                builder.Append("  primaryUserAssignedIdentityId:");
+                builder.AppendLine($" '{PrimaryUserAssignedIdentityId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(GeoBackupKeyUri))
+            {
+                builder.Append("  geoBackupKeyURI:");
+                builder.AppendLine($" '{GeoBackupKeyUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(GeoBackupUserAssignedIdentityId))
+            {
+                builder.Append("  geoBackupUserAssignedIdentityId:");
+                builder.AppendLine($" '{GeoBackupUserAssignedIdentityId}'");
+            }
+
+            if (Optional.IsDefined(KeyType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{KeyType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrimaryEncryptionKeyStatus))
+            {
+                builder.Append("  primaryEncryptionKeyStatus:");
+                builder.AppendLine($" '{PrimaryEncryptionKeyStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(GeoBackupEncryptionKeyStatus))
+            {
+                builder.Append("  geoBackupEncryptionKeyStatus:");
+                builder.AppendLine($" '{GeoBackupEncryptionKeyStatus.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PostgreSqlFlexibleServerDataEncryption>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerDataEncryption>)this).GetFormatFromOptions(options) : options.Format;
@@ -186,6 +249,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerDataEncryption)} does not support '{options.Format}' format.");
             }
@@ -202,6 +267,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePostgreSqlFlexibleServerDataEncryption(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerDataEncryption)} does not support '{options.Format}' format.");
             }

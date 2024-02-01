@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class NotificationEndpoint : IUtf8JsonSerializable, IJsonModel<NotificationEndpoint>
+    public partial class NotificationEndpoint : IUtf8JsonSerializable, IJsonModel<NotificationEndpoint>, IPersistableModel<NotificationEndpoint>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationEndpoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -117,6 +118,43 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new NotificationEndpoint(notificationDestination.Value, Optional.ToList(locations), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(NotificationDestination))
+            {
+                builder.Append("  notificationDestination:");
+                builder.AppendLine($" '{NotificationDestination.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Locations))
+            {
+                builder.Append("  locations:");
+                builder.AppendLine(" [");
+                foreach (var item in Locations)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<NotificationEndpoint>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NotificationEndpoint>)this).GetFormatFromOptions(options) : options.Format;
@@ -125,6 +163,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NotificationEndpoint)} does not support '{options.Format}' format.");
             }
@@ -141,6 +181,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNotificationEndpoint(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NotificationEndpoint)} does not support '{options.Format}' format.");
             }

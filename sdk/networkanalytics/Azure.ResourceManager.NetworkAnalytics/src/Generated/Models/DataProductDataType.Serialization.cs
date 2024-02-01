@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
-    public partial class DataProductDataType : IUtf8JsonSerializable, IJsonModel<DataProductDataType>
+    public partial class DataProductDataType : IUtf8JsonSerializable, IJsonModel<DataProductDataType>, IPersistableModel<DataProductDataType>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProductDataType>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -242,6 +243,92 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             return new DataProductDataType(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(state), stateReason.Value, Optional.ToNullable(storageOutputRetention), Optional.ToNullable(databaseCacheRetention), Optional.ToNullable(databaseRetention), visualizationUrl.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StateReason))
+            {
+                builder.Append("  stateReason:");
+                builder.AppendLine($" '{StateReason}'");
+            }
+
+            if (Optional.IsDefined(StorageOutputRetention))
+            {
+                builder.Append("  storageOutputRetention:");
+                builder.AppendLine($" '{StorageOutputRetention.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DatabaseCacheRetention))
+            {
+                builder.Append("  databaseCacheRetention:");
+                builder.AppendLine($" '{DatabaseCacheRetention.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DatabaseRetention))
+            {
+                builder.Append("  databaseRetention:");
+                builder.AppendLine($" '{DatabaseRetention.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VisualizationUri))
+            {
+                builder.Append("  visualizationUrl:");
+                builder.AppendLine($" '{VisualizationUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DataProductDataType>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataProductDataType>)this).GetFormatFromOptions(options) : options.Format;
@@ -250,6 +337,8 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataProductDataType)} does not support '{options.Format}' format.");
             }
@@ -266,6 +355,8 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataProductDataType(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataProductDataType)} does not support '{options.Format}' format.");
             }

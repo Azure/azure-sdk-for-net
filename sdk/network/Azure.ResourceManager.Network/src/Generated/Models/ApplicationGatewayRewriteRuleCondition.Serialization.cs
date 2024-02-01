@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayRewriteRuleCondition : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayRewriteRuleCondition>
+    public partial class ApplicationGatewayRewriteRuleCondition : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayRewriteRuleCondition>, IPersistableModel<ApplicationGatewayRewriteRuleCondition>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayRewriteRuleCondition>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -129,6 +130,52 @@ namespace Azure.ResourceManager.Network.Models
             return new ApplicationGatewayRewriteRuleCondition(variable.Value, pattern.Value, Optional.ToNullable(ignoreCase), Optional.ToNullable(negate), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Variable))
+            {
+                builder.Append("  variable:");
+                builder.AppendLine($" '{Variable}'");
+            }
+
+            if (Optional.IsDefined(Pattern))
+            {
+                builder.Append("  pattern:");
+                builder.AppendLine($" '{Pattern}'");
+            }
+
+            if (Optional.IsDefined(IgnoreCase))
+            {
+                builder.Append("  ignoreCase:");
+                var boolValue = IgnoreCase.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Negate))
+            {
+                builder.Append("  negate:");
+                var boolValue = Negate.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ApplicationGatewayRewriteRuleCondition>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRewriteRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
@@ -137,6 +184,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApplicationGatewayRewriteRuleCondition)} does not support '{options.Format}' format.");
             }
@@ -153,6 +202,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeApplicationGatewayRewriteRuleCondition(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ApplicationGatewayRewriteRuleCondition)} does not support '{options.Format}' format.");
             }

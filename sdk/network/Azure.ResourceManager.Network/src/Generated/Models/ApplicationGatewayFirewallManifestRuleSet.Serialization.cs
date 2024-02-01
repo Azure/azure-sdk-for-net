@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayFirewallManifestRuleSet : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayFirewallManifestRuleSet>
+    public partial class ApplicationGatewayFirewallManifestRuleSet : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayFirewallManifestRuleSet>, IPersistableModel<ApplicationGatewayFirewallManifestRuleSet>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayFirewallManifestRuleSet>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -151,6 +152,66 @@ namespace Azure.ResourceManager.Network.Models
             return new ApplicationGatewayFirewallManifestRuleSet(ruleSetType, ruleSetVersion, Optional.ToNullable(status), Optional.ToList(tiers), ruleGroups, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(RuleSetType))
+            {
+                builder.Append("  ruleSetType:");
+                builder.AppendLine($" '{RuleSetType}'");
+            }
+
+            if (Optional.IsDefined(RuleSetVersion))
+            {
+                builder.Append("  ruleSetVersion:");
+                builder.AppendLine($" '{RuleSetVersion}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tiers))
+            {
+                builder.Append("  tiers:");
+                builder.AppendLine(" [");
+                foreach (var item in Tiers)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(RuleGroups))
+            {
+                builder.Append("  ruleGroups:");
+                builder.AppendLine(" [");
+                foreach (var item in RuleGroups)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ApplicationGatewayFirewallManifestRuleSet>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayFirewallManifestRuleSet>)this).GetFormatFromOptions(options) : options.Format;
@@ -159,6 +220,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApplicationGatewayFirewallManifestRuleSet)} does not support '{options.Format}' format.");
             }
@@ -175,6 +238,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeApplicationGatewayFirewallManifestRuleSet(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ApplicationGatewayFirewallManifestRuleSet)} does not support '{options.Format}' format.");
             }

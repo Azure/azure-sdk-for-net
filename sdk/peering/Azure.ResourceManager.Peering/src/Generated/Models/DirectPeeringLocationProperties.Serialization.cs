@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class DirectPeeringLocationProperties : IUtf8JsonSerializable, IJsonModel<DirectPeeringLocationProperties>
+    public partial class DirectPeeringLocationProperties : IUtf8JsonSerializable, IJsonModel<DirectPeeringLocationProperties>, IPersistableModel<DirectPeeringLocationProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DirectPeeringLocationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -127,6 +128,48 @@ namespace Azure.ResourceManager.Peering.Models
             return new DirectPeeringLocationProperties(Optional.ToList(peeringFacilities), Optional.ToList(bandwidthOffers), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(PeeringFacilities))
+            {
+                builder.Append("  peeringFacilities:");
+                builder.AppendLine(" [");
+                foreach (var item in PeeringFacilities)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(BandwidthOffers))
+            {
+                builder.Append("  bandwidthOffers:");
+                builder.AppendLine(" [");
+                foreach (var item in BandwidthOffers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DirectPeeringLocationProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DirectPeeringLocationProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -135,6 +178,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DirectPeeringLocationProperties)} does not support '{options.Format}' format.");
             }
@@ -151,6 +196,8 @@ namespace Azure.ResourceManager.Peering.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDirectPeeringLocationProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DirectPeeringLocationProperties)} does not support '{options.Format}' format.");
             }

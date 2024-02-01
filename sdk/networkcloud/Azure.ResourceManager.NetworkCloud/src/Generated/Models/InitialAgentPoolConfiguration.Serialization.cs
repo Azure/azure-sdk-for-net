@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class InitialAgentPoolConfiguration : IUtf8JsonSerializable, IJsonModel<InitialAgentPoolConfiguration>
+    public partial class InitialAgentPoolConfiguration : IUtf8JsonSerializable, IJsonModel<InitialAgentPoolConfiguration>, IPersistableModel<InitialAgentPoolConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InitialAgentPoolConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -244,6 +245,112 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new InitialAgentPoolConfiguration(administratorConfiguration.Value, agentOptions.Value, attachedNetworkConfiguration.Value, Optional.ToList(availabilityZones), count, Optional.ToList(labels), mode, name, Optional.ToList(taints), upgradeSettings.Value, vmSkuName, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AdministratorConfiguration))
+            {
+                builder.Append("  administratorConfiguration:");
+                AppendChildObject(builder, AdministratorConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(AgentOptions))
+            {
+                builder.Append("  agentOptions:");
+                AppendChildObject(builder, AgentOptions, options, 2);
+            }
+
+            if (Optional.IsDefined(AttachedNetworkConfiguration))
+            {
+                builder.Append("  attachedNetworkConfiguration:");
+                AppendChildObject(builder, AttachedNetworkConfiguration, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(AvailabilityZones))
+            {
+                builder.Append("  availabilityZones:");
+                builder.AppendLine(" [");
+                foreach (var item in AvailabilityZones)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Count))
+            {
+                builder.Append("  count:");
+                builder.AppendLine($" '{Count.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Labels))
+            {
+                builder.Append("  labels:");
+                builder.AppendLine(" [");
+                foreach (var item in Labels)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Mode))
+            {
+                builder.Append("  mode:");
+                builder.AppendLine($" '{Mode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsCollectionDefined(Taints))
+            {
+                builder.Append("  taints:");
+                builder.AppendLine(" [");
+                foreach (var item in Taints)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(UpgradeSettings))
+            {
+                builder.Append("  upgradeSettings:");
+                AppendChildObject(builder, UpgradeSettings, options, 2);
+            }
+
+            if (Optional.IsDefined(VmSkuName))
+            {
+                builder.Append("  vmSkuName:");
+                builder.AppendLine($" '{VmSkuName}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<InitialAgentPoolConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InitialAgentPoolConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -252,6 +359,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(InitialAgentPoolConfiguration)} does not support '{options.Format}' format.");
             }
@@ -268,6 +377,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeInitialAgentPoolConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(InitialAgentPoolConfiguration)} does not support '{options.Format}' format.");
             }

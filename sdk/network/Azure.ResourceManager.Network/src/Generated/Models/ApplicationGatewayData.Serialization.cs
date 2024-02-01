@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -17,7 +18,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ApplicationGatewayData : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayData>
+    public partial class ApplicationGatewayData : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayData>, IPersistableModel<ApplicationGatewayData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -1003,6 +1004,429 @@ namespace Azure.ResourceManager.Network
             return new ApplicationGatewayData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToList(zones), identity, sku.Value, sslPolicy.Value, Optional.ToNullable(operationalState), Optional.ToList(gatewayIPConfigurations), Optional.ToList(authenticationCertificates), Optional.ToList(trustedRootCertificates), Optional.ToList(trustedClientCertificates), Optional.ToList(sslCertificates), Optional.ToList(frontendIPConfigurations), Optional.ToList(frontendPorts), Optional.ToList(probes), Optional.ToList(backendAddressPools), Optional.ToList(backendHttpSettingsCollection), Optional.ToList(backendSettingsCollection), Optional.ToList(httpListeners), Optional.ToList(listeners), Optional.ToList(sslProfiles), Optional.ToList(urlPathMaps), Optional.ToList(requestRoutingRules), Optional.ToList(routingRules), Optional.ToList(rewriteRuleSets), Optional.ToList(redirectConfigurations), webApplicationFirewallConfiguration.Value, firewallPolicy, Optional.ToNullable(enableHttp2), Optional.ToNullable(enableFips), autoscaleConfiguration.Value, Optional.ToList(privateLinkConfigurations), Optional.ToList(privateEndpointConnections), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), Optional.ToList(customErrorConfigurations), Optional.ToNullable(forceFirewallPolicyAssociation), Optional.ToList(loadDistributionPolicies), globalConfiguration.Value, Optional.ToNullable(defaultPredefinedSslPolicy));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(AvailabilityZones))
+            {
+                builder.Append("  zones:");
+                builder.AppendLine(" [");
+                foreach (var item in AvailabilityZones)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2);
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsDefined(SslPolicy))
+            {
+                builder.Append("  sslPolicy:");
+                AppendChildObject(builder, SslPolicy, options, 2);
+            }
+
+            if (Optional.IsDefined(OperationalState))
+            {
+                builder.Append("  operationalState:");
+                builder.AppendLine($" '{OperationalState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(GatewayIPConfigurations))
+            {
+                builder.Append("  gatewayIPConfigurations:");
+                builder.AppendLine(" [");
+                foreach (var item in GatewayIPConfigurations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(AuthenticationCertificates))
+            {
+                builder.Append("  authenticationCertificates:");
+                builder.AppendLine(" [");
+                foreach (var item in AuthenticationCertificates)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(TrustedRootCertificates))
+            {
+                builder.Append("  trustedRootCertificates:");
+                builder.AppendLine(" [");
+                foreach (var item in TrustedRootCertificates)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(TrustedClientCertificates))
+            {
+                builder.Append("  trustedClientCertificates:");
+                builder.AppendLine(" [");
+                foreach (var item in TrustedClientCertificates)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(SslCertificates))
+            {
+                builder.Append("  sslCertificates:");
+                builder.AppendLine(" [");
+                foreach (var item in SslCertificates)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(FrontendIPConfigurations))
+            {
+                builder.Append("  frontendIPConfigurations:");
+                builder.AppendLine(" [");
+                foreach (var item in FrontendIPConfigurations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(FrontendPorts))
+            {
+                builder.Append("  frontendPorts:");
+                builder.AppendLine(" [");
+                foreach (var item in FrontendPorts)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Probes))
+            {
+                builder.Append("  probes:");
+                builder.AppendLine(" [");
+                foreach (var item in Probes)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(BackendAddressPools))
+            {
+                builder.Append("  backendAddressPools:");
+                builder.AppendLine(" [");
+                foreach (var item in BackendAddressPools)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(BackendHttpSettingsCollection))
+            {
+                builder.Append("  backendHttpSettingsCollection:");
+                builder.AppendLine(" [");
+                foreach (var item in BackendHttpSettingsCollection)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(BackendSettingsCollection))
+            {
+                builder.Append("  backendSettingsCollection:");
+                builder.AppendLine(" [");
+                foreach (var item in BackendSettingsCollection)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(HttpListeners))
+            {
+                builder.Append("  httpListeners:");
+                builder.AppendLine(" [");
+                foreach (var item in HttpListeners)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Listeners))
+            {
+                builder.Append("  listeners:");
+                builder.AppendLine(" [");
+                foreach (var item in Listeners)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(SslProfiles))
+            {
+                builder.Append("  sslProfiles:");
+                builder.AppendLine(" [");
+                foreach (var item in SslProfiles)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(UrlPathMaps))
+            {
+                builder.Append("  urlPathMaps:");
+                builder.AppendLine(" [");
+                foreach (var item in UrlPathMaps)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(RequestRoutingRules))
+            {
+                builder.Append("  requestRoutingRules:");
+                builder.AppendLine(" [");
+                foreach (var item in RequestRoutingRules)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(RoutingRules))
+            {
+                builder.Append("  routingRules:");
+                builder.AppendLine(" [");
+                foreach (var item in RoutingRules)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(RewriteRuleSets))
+            {
+                builder.Append("  rewriteRuleSets:");
+                builder.AppendLine(" [");
+                foreach (var item in RewriteRuleSets)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(RedirectConfigurations))
+            {
+                builder.Append("  redirectConfigurations:");
+                builder.AppendLine(" [");
+                foreach (var item in RedirectConfigurations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(WebApplicationFirewallConfiguration))
+            {
+                builder.Append("  webApplicationFirewallConfiguration:");
+                AppendChildObject(builder, WebApplicationFirewallConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(FirewallPolicy))
+            {
+                builder.Append("  firewallPolicy:");
+                AppendChildObject(builder, FirewallPolicy, options, 2);
+            }
+
+            if (Optional.IsDefined(EnableHttp2))
+            {
+                builder.Append("  enableHttp2:");
+                var boolValue = EnableHttp2.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EnableFips))
+            {
+                builder.Append("  enableFips:");
+                var boolValue = EnableFips.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AutoscaleConfiguration))
+            {
+                builder.Append("  autoscaleConfiguration:");
+                AppendChildObject(builder, AutoscaleConfiguration, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
+            {
+                builder.Append("  privateLinkConfigurations:");
+                builder.AppendLine(" [");
+                foreach (var item in PrivateLinkConfigurations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                builder.Append("  privateEndpointConnections:");
+                builder.AppendLine(" [");
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ResourceGuid))
+            {
+                builder.Append("  resourceGuid:");
+                builder.AppendLine($" '{ResourceGuid.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(CustomErrorConfigurations))
+            {
+                builder.Append("  customErrorConfigurations:");
+                builder.AppendLine(" [");
+                foreach (var item in CustomErrorConfigurations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ForceFirewallPolicyAssociation))
+            {
+                builder.Append("  forceFirewallPolicyAssociation:");
+                var boolValue = ForceFirewallPolicyAssociation.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(LoadDistributionPolicies))
+            {
+                builder.Append("  loadDistributionPolicies:");
+                builder.AppendLine(" [");
+                foreach (var item in LoadDistributionPolicies)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(GlobalConfiguration))
+            {
+                builder.Append("  globalConfiguration:");
+                AppendChildObject(builder, GlobalConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(DefaultPredefinedSslPolicy))
+            {
+                builder.Append("  defaultPredefinedSslPolicy:");
+                builder.AppendLine($" '{DefaultPredefinedSslPolicy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ApplicationGatewayData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayData>)this).GetFormatFromOptions(options) : options.Format;
@@ -1011,6 +1435,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApplicationGatewayData)} does not support '{options.Format}' format.");
             }
@@ -1027,6 +1453,8 @@ namespace Azure.ResourceManager.Network
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeApplicationGatewayData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ApplicationGatewayData)} does not support '{options.Format}' format.");
             }

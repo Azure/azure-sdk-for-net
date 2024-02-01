@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorMetricDefinition : IUtf8JsonSerializable, IJsonModel<MonitorMetricDefinition>
+    public partial class MonitorMetricDefinition : IUtf8JsonSerializable, IJsonModel<MonitorMetricDefinition>, IPersistableModel<MonitorMetricDefinition>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorMetricDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -282,6 +283,120 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorMetricDefinition(Optional.ToNullable(isDimensionRequired), resourceId.Value, @namespace.Value, name.Value, displayDescription.Value, category.Value, Optional.ToNullable(metricClass), Optional.ToNullable(unit), Optional.ToNullable(primaryAggregationType), Optional.ToList(supportedAggregationTypes), Optional.ToList(metricAvailabilities), id.Value, Optional.ToList(dimensions), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(IsDimensionRequired))
+            {
+                builder.Append("  isDimensionRequired:");
+                var boolValue = IsDimensionRequired.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ResourceId))
+            {
+                builder.Append("  resourceId:");
+                builder.AppendLine($" '{ResourceId}'");
+            }
+
+            if (Optional.IsDefined(Namespace))
+            {
+                builder.Append("  namespace:");
+                builder.AppendLine($" '{Namespace}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                AppendChildObject(builder, Name, options, 2);
+            }
+
+            if (Optional.IsDefined(DisplayDescription))
+            {
+                builder.Append("  displayDescription:");
+                builder.AppendLine($" '{DisplayDescription}'");
+            }
+
+            if (Optional.IsDefined(Category))
+            {
+                builder.Append("  category:");
+                builder.AppendLine($" '{Category}'");
+            }
+
+            if (Optional.IsDefined(MetricClass))
+            {
+                builder.Append("  metricClass:");
+                builder.AppendLine($" '{MetricClass.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Unit))
+            {
+                builder.Append("  unit:");
+                builder.AppendLine($" '{Unit.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrimaryAggregationType))
+            {
+                builder.Append("  primaryAggregationType:");
+                builder.AppendLine($" '{PrimaryAggregationType.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(SupportedAggregationTypes))
+            {
+                builder.Append("  supportedAggregationTypes:");
+                builder.AppendLine(" [");
+                foreach (var item in SupportedAggregationTypes)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(MetricAvailabilities))
+            {
+                builder.Append("  metricAvailabilities:");
+                builder.AppendLine(" [");
+                foreach (var item in MetricAvailabilities)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id}'");
+            }
+
+            if (Optional.IsCollectionDefined(Dimensions))
+            {
+                builder.Append("  dimensions:");
+                builder.AppendLine(" [");
+                foreach (var item in Dimensions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MonitorMetricDefinition>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MonitorMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -290,6 +405,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support '{options.Format}' format.");
             }
@@ -306,6 +423,8 @@ namespace Azure.ResourceManager.Monitor.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMonitorMetricDefinition(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support '{options.Format}' format.");
             }

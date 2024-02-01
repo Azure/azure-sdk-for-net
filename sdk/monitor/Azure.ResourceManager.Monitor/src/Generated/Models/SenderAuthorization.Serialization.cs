@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class SenderAuthorization : IUtf8JsonSerializable, IJsonModel<SenderAuthorization>
+    public partial class SenderAuthorization : IUtf8JsonSerializable, IJsonModel<SenderAuthorization>, IPersistableModel<SenderAuthorization>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SenderAuthorization>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -110,6 +111,44 @@ namespace Azure.ResourceManager.Monitor.Models
             return new SenderAuthorization(action.Value, role.Value, scope.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Action))
+            {
+                builder.Append("  action:");
+                builder.AppendLine($" '{Action}'");
+            }
+
+            if (Optional.IsDefined(Role))
+            {
+                builder.Append("  role:");
+                builder.AppendLine($" '{Role}'");
+            }
+
+            if (Optional.IsDefined(Scope))
+            {
+                builder.Append("  scope:");
+                builder.AppendLine($" '{Scope}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SenderAuthorization>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SenderAuthorization>)this).GetFormatFromOptions(options) : options.Format;
@@ -118,6 +157,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SenderAuthorization)} does not support '{options.Format}' format.");
             }
@@ -134,6 +175,8 @@ namespace Azure.ResourceManager.Monitor.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSenderAuthorization(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SenderAuthorization)} does not support '{options.Format}' format.");
             }

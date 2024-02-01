@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudClusterData : IUtf8JsonSerializable, IJsonModel<NetworkCloudClusterData>
+    public partial class NetworkCloudClusterData : IUtf8JsonSerializable, IJsonModel<NetworkCloudClusterData>, IPersistableModel<NetworkCloudClusterData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -535,6 +536,237 @@ namespace Azure.ResourceManager.NetworkCloud
             return new NetworkCloudClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, aggregatorOrSingleRackDefinition, analyticsWorkspaceId.Value, Optional.ToList(availableUpgradeVersions), clusterCapacity.Value, Optional.ToNullable(clusterConnectionStatus), clusterExtendedLocation.Value, clusterLocation.Value, Optional.ToNullable(clusterManagerConnectionStatus), clusterManagerId.Value, clusterServicePrincipal.Value, clusterType, clusterVersion, computeDeploymentThreshold.Value, Optional.ToList(computeRackDefinitions), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, hybridAksExtendedLocation.Value, managedResourceGroupConfiguration.Value, Optional.ToNullable(manualActionCount), networkFabricId, Optional.ToNullable(provisioningState), Optional.ToNullable(supportExpiryDate), Optional.ToList(workloadResourceIds), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                builder.Append("  extendedLocation:");
+                AppendChildObject(builder, ExtendedLocation, options, 2);
+            }
+
+            if (Optional.IsDefined(AggregatorOrSingleRackDefinition))
+            {
+                builder.Append("  aggregatorOrSingleRackDefinition:");
+                AppendChildObject(builder, AggregatorOrSingleRackDefinition, options, 2);
+            }
+
+            if (Optional.IsDefined(AnalyticsWorkspaceId))
+            {
+                builder.Append("  analyticsWorkspaceId:");
+                builder.AppendLine($" '{AnalyticsWorkspaceId.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(AvailableUpgradeVersions))
+            {
+                builder.Append("  availableUpgradeVersions:");
+                builder.AppendLine(" [");
+                foreach (var item in AvailableUpgradeVersions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ClusterCapacity))
+            {
+                builder.Append("  clusterCapacity:");
+                AppendChildObject(builder, ClusterCapacity, options, 2);
+            }
+
+            if (Optional.IsDefined(ClusterConnectionStatus))
+            {
+                builder.Append("  clusterConnectionStatus:");
+                builder.AppendLine($" '{ClusterConnectionStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClusterExtendedLocation))
+            {
+                builder.Append("  clusterExtendedLocation:");
+                AppendChildObject(builder, ClusterExtendedLocation, options, 2);
+            }
+
+            if (Optional.IsDefined(ClusterLocation))
+            {
+                builder.Append("  clusterLocation:");
+                builder.AppendLine($" '{ClusterLocation}'");
+            }
+
+            if (Optional.IsDefined(ClusterManagerConnectionStatus))
+            {
+                builder.Append("  clusterManagerConnectionStatus:");
+                builder.AppendLine($" '{ClusterManagerConnectionStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClusterManagerId))
+            {
+                builder.Append("  clusterManagerId:");
+                builder.AppendLine($" '{ClusterManagerId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClusterServicePrincipal))
+            {
+                builder.Append("  clusterServicePrincipal:");
+                AppendChildObject(builder, ClusterServicePrincipal, options, 2);
+            }
+
+            if (Optional.IsDefined(ClusterType))
+            {
+                builder.Append("  clusterType:");
+                builder.AppendLine($" '{ClusterType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClusterVersion))
+            {
+                builder.Append("  clusterVersion:");
+                builder.AppendLine($" '{ClusterVersion}'");
+            }
+
+            if (Optional.IsDefined(ComputeDeploymentThreshold))
+            {
+                builder.Append("  computeDeploymentThreshold:");
+                AppendChildObject(builder, ComputeDeploymentThreshold, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(ComputeRackDefinitions))
+            {
+                builder.Append("  computeRackDefinitions:");
+                builder.AppendLine(" [");
+                foreach (var item in ComputeRackDefinitions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(DetailedStatus))
+            {
+                builder.Append("  detailedStatus:");
+                builder.AppendLine($" '{DetailedStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DetailedStatusMessage))
+            {
+                builder.Append("  detailedStatusMessage:");
+                builder.AppendLine($" '{DetailedStatusMessage}'");
+            }
+
+            if (Optional.IsDefined(HybridAksExtendedLocation))
+            {
+                builder.Append("  hybridAksExtendedLocation:");
+                AppendChildObject(builder, HybridAksExtendedLocation, options, 2);
+            }
+
+            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
+            {
+                builder.Append("  managedResourceGroupConfiguration:");
+                AppendChildObject(builder, ManagedResourceGroupConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(ManualActionCount))
+            {
+                builder.Append("  manualActionCount:");
+                builder.AppendLine($" '{ManualActionCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NetworkFabricId))
+            {
+                builder.Append("  networkFabricId:");
+                builder.AppendLine($" '{NetworkFabricId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SupportExpireOn))
+            {
+                builder.Append("  supportExpiryDate:");
+                builder.AppendLine($" '{SupportExpireOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(WorkloadResourceIds))
+            {
+                builder.Append("  workloadResourceIds:");
+                builder.AppendLine(" [");
+                foreach (var item in WorkloadResourceIds)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<NetworkCloudClusterData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudClusterData>)this).GetFormatFromOptions(options) : options.Format;
@@ -543,6 +775,8 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkCloudClusterData)} does not support '{options.Format}' format.");
             }
@@ -559,6 +793,8 @@ namespace Azure.ResourceManager.NetworkCloud
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkCloudClusterData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkCloudClusterData)} does not support '{options.Format}' format.");
             }

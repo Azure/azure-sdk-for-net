@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class EdlMatchCategory : IUtf8JsonSerializable, IJsonModel<EdlMatchCategory>
+    public partial class EdlMatchCategory : IUtf8JsonSerializable, IJsonModel<EdlMatchCategory>, IPersistableModel<EdlMatchCategory>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdlMatchCategory>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -113,6 +114,58 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new EdlMatchCategory(urlCustom, feeds, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(UrlCustom))
+            {
+                builder.Append("  urlCustom:");
+                builder.AppendLine(" [");
+                foreach (var item in UrlCustom)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Feeds))
+            {
+                builder.Append("  feeds:");
+                builder.AppendLine(" [");
+                foreach (var item in Feeds)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<EdlMatchCategory>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EdlMatchCategory>)this).GetFormatFromOptions(options) : options.Format;
@@ -121,6 +174,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EdlMatchCategory)} does not support '{options.Format}' format.");
             }
@@ -137,6 +192,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEdlMatchCategory(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EdlMatchCategory)} does not support '{options.Format}' format.");
             }

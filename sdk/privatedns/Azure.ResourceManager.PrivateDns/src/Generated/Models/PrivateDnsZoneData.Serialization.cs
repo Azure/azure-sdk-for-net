@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    public partial class PrivateDnsZoneData : IUtf8JsonSerializable, IJsonModel<PrivateDnsZoneData>
+    public partial class PrivateDnsZoneData : IUtf8JsonSerializable, IJsonModel<PrivateDnsZoneData>, IPersistableModel<PrivateDnsZoneData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateDnsZoneData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -308,6 +309,127 @@ namespace Azure.ResourceManager.PrivateDns
             return new PrivateDnsZoneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(maxNumberOfRecordSets), Optional.ToNullable(numberOfRecordSets), Optional.ToNullable(maxNumberOfVirtualNetworkLinks), Optional.ToNullable(numberOfVirtualNetworkLinks), Optional.ToNullable(maxNumberOfVirtualNetworkLinksWithRegistration), Optional.ToNullable(numberOfVirtualNetworkLinksWithRegistration), Optional.ToNullable(privateDnsProvisioningState), internalId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxNumberOfRecords))
+            {
+                builder.Append("  maxNumberOfRecordSets:");
+                builder.AppendLine($" '{MaxNumberOfRecords.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NumberOfRecords))
+            {
+                builder.Append("  numberOfRecordSets:");
+                builder.AppendLine($" '{NumberOfRecords.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxNumberOfVirtualNetworkLinks))
+            {
+                builder.Append("  maxNumberOfVirtualNetworkLinks:");
+                builder.AppendLine($" '{MaxNumberOfVirtualNetworkLinks.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NumberOfVirtualNetworkLinks))
+            {
+                builder.Append("  numberOfVirtualNetworkLinks:");
+                builder.AppendLine($" '{NumberOfVirtualNetworkLinks.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxNumberOfVirtualNetworkLinksWithRegistration))
+            {
+                builder.Append("  maxNumberOfVirtualNetworkLinksWithRegistration:");
+                builder.AppendLine($" '{MaxNumberOfVirtualNetworkLinksWithRegistration.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NumberOfVirtualNetworkLinksWithRegistration))
+            {
+                builder.Append("  numberOfVirtualNetworkLinksWithRegistration:");
+                builder.AppendLine($" '{NumberOfVirtualNetworkLinksWithRegistration.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrivateDnsProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{PrivateDnsProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InternalId))
+            {
+                builder.Append("  internalId:");
+                builder.AppendLine($" '{InternalId}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PrivateDnsZoneData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsZoneData>)this).GetFormatFromOptions(options) : options.Format;
@@ -316,6 +438,8 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PrivateDnsZoneData)} does not support '{options.Format}' format.");
             }
@@ -332,6 +456,8 @@ namespace Azure.ResourceManager.PrivateDns
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePrivateDnsZoneData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PrivateDnsZoneData)} does not support '{options.Format}' format.");
             }

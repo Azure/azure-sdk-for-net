@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    public partial class MySqlWaitStatisticData : IUtf8JsonSerializable, IJsonModel<MySqlWaitStatisticData>
+    public partial class MySqlWaitStatisticData : IUtf8JsonSerializable, IJsonModel<MySqlWaitStatisticData>, IPersistableModel<MySqlWaitStatisticData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlWaitStatisticData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -264,6 +265,104 @@ namespace Azure.ResourceManager.MySql
             return new MySqlWaitStatisticData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), eventName.Value, eventTypeName.Value, Optional.ToNullable(queryId), databaseName.Value, Optional.ToNullable(userId), Optional.ToNullable(count), Optional.ToNullable(totalTimeInMs), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startTime:");
+                builder.AppendLine($" '{StartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndOn))
+            {
+                builder.Append("  endTime:");
+                builder.AppendLine($" '{EndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EventName))
+            {
+                builder.Append("  eventName:");
+                builder.AppendLine($" '{EventName}'");
+            }
+
+            if (Optional.IsDefined(EventTypeName))
+            {
+                builder.Append("  eventTypeName:");
+                builder.AppendLine($" '{EventTypeName}'");
+            }
+
+            if (Optional.IsDefined(QueryId))
+            {
+                builder.Append("  queryId:");
+                builder.AppendLine($" '{QueryId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DatabaseName))
+            {
+                builder.Append("  databaseName:");
+                builder.AppendLine($" '{DatabaseName}'");
+            }
+
+            if (Optional.IsDefined(UserId))
+            {
+                builder.Append("  userId:");
+                builder.AppendLine($" '{UserId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Count))
+            {
+                builder.Append("  count:");
+                builder.AppendLine($" '{Count.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalTimeInMinutes))
+            {
+                builder.Append("  totalTimeInMs:");
+                builder.AppendLine($" '{TotalTimeInMinutes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MySqlWaitStatisticData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MySqlWaitStatisticData>)this).GetFormatFromOptions(options) : options.Format;
@@ -272,6 +371,8 @@ namespace Azure.ResourceManager.MySql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MySqlWaitStatisticData)} does not support '{options.Format}' format.");
             }
@@ -288,6 +389,8 @@ namespace Azure.ResourceManager.MySql
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMySqlWaitStatisticData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MySqlWaitStatisticData)} does not support '{options.Format}' format.");
             }

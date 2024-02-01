@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudL3NetworkData : IUtf8JsonSerializable, IJsonModel<NetworkCloudL3NetworkData>
+    public partial class NetworkCloudL3NetworkData : IUtf8JsonSerializable, IJsonModel<NetworkCloudL3NetworkData>, IPersistableModel<NetworkCloudL3NetworkData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudL3NetworkData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -445,6 +446,199 @@ namespace Azure.ResourceManager.NetworkCloud
             return new NetworkCloudL3NetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, Optional.ToList(associatedResourceIds), clusterId.Value, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToList(hybridAksClustersAssociatedIds), Optional.ToNullable(hybridAksIpamEnabled), Optional.ToNullable(hybridAksPluginType), interfaceName.Value, Optional.ToNullable(ipAllocationType), ipv4ConnectedPrefix.Value, ipv6ConnectedPrefix.Value, l3IsolationDomainId, Optional.ToNullable(provisioningState), Optional.ToList(virtualMachinesAssociatedIds), vlan, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                builder.Append("  extendedLocation:");
+                AppendChildObject(builder, ExtendedLocation, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(AssociatedResourceIds))
+            {
+                builder.Append("  associatedResourceIds:");
+                builder.AppendLine(" [");
+                foreach (var item in AssociatedResourceIds)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ClusterId))
+            {
+                builder.Append("  clusterId:");
+                builder.AppendLine($" '{ClusterId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DetailedStatus))
+            {
+                builder.Append("  detailedStatus:");
+                builder.AppendLine($" '{DetailedStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DetailedStatusMessage))
+            {
+                builder.Append("  detailedStatusMessage:");
+                builder.AppendLine($" '{DetailedStatusMessage}'");
+            }
+
+            if (Optional.IsCollectionDefined(HybridAksClustersAssociatedIds))
+            {
+                builder.Append("  hybridAksClustersAssociatedIds:");
+                builder.AppendLine(" [");
+                foreach (var item in HybridAksClustersAssociatedIds)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(HybridAksIpamEnabled))
+            {
+                builder.Append("  hybridAksIpamEnabled:");
+                builder.AppendLine($" '{HybridAksIpamEnabled.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HybridAksPluginType))
+            {
+                builder.Append("  hybridAksPluginType:");
+                builder.AppendLine($" '{HybridAksPluginType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InterfaceName))
+            {
+                builder.Append("  interfaceName:");
+                builder.AppendLine($" '{InterfaceName}'");
+            }
+
+            if (Optional.IsDefined(IPAllocationType))
+            {
+                builder.Append("  ipAllocationType:");
+                builder.AppendLine($" '{IPAllocationType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IPv4ConnectedPrefix))
+            {
+                builder.Append("  ipv4ConnectedPrefix:");
+                builder.AppendLine($" '{IPv4ConnectedPrefix}'");
+            }
+
+            if (Optional.IsDefined(IPv6ConnectedPrefix))
+            {
+                builder.Append("  ipv6ConnectedPrefix:");
+                builder.AppendLine($" '{IPv6ConnectedPrefix}'");
+            }
+
+            if (Optional.IsDefined(L3IsolationDomainId))
+            {
+                builder.Append("  l3IsolationDomainId:");
+                builder.AppendLine($" '{L3IsolationDomainId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(VirtualMachinesAssociatedIds))
+            {
+                builder.Append("  virtualMachinesAssociatedIds:");
+                builder.AppendLine(" [");
+                foreach (var item in VirtualMachinesAssociatedIds)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Vlan))
+            {
+                builder.Append("  vlan:");
+                builder.AppendLine($" '{Vlan.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<NetworkCloudL3NetworkData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudL3NetworkData>)this).GetFormatFromOptions(options) : options.Format;
@@ -453,6 +647,8 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support '{options.Format}' format.");
             }
@@ -469,6 +665,8 @@ namespace Azure.ResourceManager.NetworkCloud
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkCloudL3NetworkData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkCloudL3NetworkData)} does not support '{options.Format}' format.");
             }

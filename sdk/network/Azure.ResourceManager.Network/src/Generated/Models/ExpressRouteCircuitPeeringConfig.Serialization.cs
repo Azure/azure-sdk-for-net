@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteCircuitPeeringConfig : IUtf8JsonSerializable, IJsonModel<ExpressRouteCircuitPeeringConfig>
+    public partial class ExpressRouteCircuitPeeringConfig : IUtf8JsonSerializable, IJsonModel<ExpressRouteCircuitPeeringConfig>, IPersistableModel<ExpressRouteCircuitPeeringConfig>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteCircuitPeeringConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -183,6 +184,82 @@ namespace Azure.ResourceManager.Network.Models
             return new ExpressRouteCircuitPeeringConfig(Optional.ToList(advertisedPublicPrefixes), Optional.ToList(advertisedCommunities), Optional.ToNullable(advertisedPublicPrefixesState), Optional.ToNullable(legacyMode), Optional.ToNullable(customerASN), routingRegistryName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(AdvertisedPublicPrefixes))
+            {
+                builder.Append("  advertisedPublicPrefixes:");
+                builder.AppendLine(" [");
+                foreach (var item in AdvertisedPublicPrefixes)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(AdvertisedCommunities))
+            {
+                builder.Append("  advertisedCommunities:");
+                builder.AppendLine(" [");
+                foreach (var item in AdvertisedCommunities)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(AdvertisedPublicPrefixesState))
+            {
+                builder.Append("  advertisedPublicPrefixesState:");
+                builder.AppendLine($" '{AdvertisedPublicPrefixesState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LegacyMode))
+            {
+                builder.Append("  legacyMode:");
+                builder.AppendLine($" '{LegacyMode.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CustomerASN))
+            {
+                builder.Append("  customerASN:");
+                builder.AppendLine($" '{CustomerASN.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RoutingRegistryName))
+            {
+                builder.Append("  routingRegistryName:");
+                builder.AppendLine($" '{RoutingRegistryName}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ExpressRouteCircuitPeeringConfig>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
@@ -191,6 +268,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ExpressRouteCircuitPeeringConfig)} does not support '{options.Format}' format.");
             }
@@ -207,6 +286,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeExpressRouteCircuitPeeringConfig(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ExpressRouteCircuitPeeringConfig)} does not support '{options.Format}' format.");
             }

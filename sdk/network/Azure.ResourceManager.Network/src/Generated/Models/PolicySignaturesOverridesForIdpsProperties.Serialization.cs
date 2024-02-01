@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class PolicySignaturesOverridesForIdpsProperties : IUtf8JsonSerializable, IJsonModel<PolicySignaturesOverridesForIdpsProperties>
+    internal partial class PolicySignaturesOverridesForIdpsProperties : IUtf8JsonSerializable, IJsonModel<PolicySignaturesOverridesForIdpsProperties>, IPersistableModel<PolicySignaturesOverridesForIdpsProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicySignaturesOverridesForIdpsProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -103,6 +104,43 @@ namespace Azure.ResourceManager.Network.Models
             return new PolicySignaturesOverridesForIdpsProperties(Optional.ToDictionary(signatures), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Signatures))
+            {
+                builder.Append("  signatures:");
+                builder.AppendLine(" {");
+                foreach (var item in Signatures)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PolicySignaturesOverridesForIdpsProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PolicySignaturesOverridesForIdpsProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -111,6 +149,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PolicySignaturesOverridesForIdpsProperties)} does not support '{options.Format}' format.");
             }
@@ -127,6 +167,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePolicySignaturesOverridesForIdpsProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PolicySignaturesOverridesForIdpsProperties)} does not support '{options.Format}' format.");
             }

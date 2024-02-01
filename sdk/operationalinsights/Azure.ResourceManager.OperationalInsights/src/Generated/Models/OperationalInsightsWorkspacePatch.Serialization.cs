@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsWorkspacePatch : IUtf8JsonSerializable, IJsonModel<OperationalInsightsWorkspacePatch>
+    public partial class OperationalInsightsWorkspacePatch : IUtf8JsonSerializable, IJsonModel<OperationalInsightsWorkspacePatch>, IPersistableModel<OperationalInsightsWorkspacePatch>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsWorkspacePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -411,6 +412,163 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             return new OperationalInsightsWorkspacePatch(id, name, type, systemData.Value, identity, Optional.ToDictionary(tags), Optional.ToNullable(provisioningState), Optional.ToNullable(customerId), sku.Value, Optional.ToNullable(retentionInDays), workspaceCapping.Value, Optional.ToNullable(createdDate), Optional.ToNullable(modifiedDate), Optional.ToNullable(publicNetworkAccessForIngestion), Optional.ToNullable(publicNetworkAccessForQuery), Optional.ToNullable(forceCmkForQuery), Optional.ToList(privateLinkScopedResources), features.Value, defaultDataCollectionRuleResourceId.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CustomerId))
+            {
+                builder.Append("  customerId:");
+                builder.AppendLine($" '{CustomerId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsDefined(RetentionInDays))
+            {
+                builder.Append("  retentionInDays:");
+                builder.AppendLine($" '{RetentionInDays.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WorkspaceCapping))
+            {
+                builder.Append("  workspaceCapping:");
+                AppendChildObject(builder, WorkspaceCapping, options, 2);
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdDate:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ModifiedOn))
+            {
+                builder.Append("  modifiedDate:");
+                builder.AppendLine($" '{ModifiedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccessForIngestion))
+            {
+                builder.Append("  publicNetworkAccessForIngestion:");
+                builder.AppendLine($" '{PublicNetworkAccessForIngestion.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccessForQuery))
+            {
+                builder.Append("  publicNetworkAccessForQuery:");
+                builder.AppendLine($" '{PublicNetworkAccessForQuery.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ForceCmkForQuery))
+            {
+                builder.Append("  forceCmkForQuery:");
+                var boolValue = ForceCmkForQuery.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(PrivateLinkScopedResources))
+            {
+                builder.Append("  privateLinkScopedResources:");
+                builder.AppendLine(" [");
+                foreach (var item in PrivateLinkScopedResources)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Features))
+            {
+                builder.Append("  features:");
+                AppendChildObject(builder, Features, options, 2);
+            }
+
+            if (Optional.IsDefined(DefaultDataCollectionRuleResourceId))
+            {
+                builder.Append("  defaultDataCollectionRuleResourceId:");
+                builder.AppendLine($" '{DefaultDataCollectionRuleResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<OperationalInsightsWorkspacePatch>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
@@ -419,6 +577,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support '{options.Format}' format.");
             }
@@ -435,6 +595,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeOperationalInsightsWorkspacePatch(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support '{options.Format}' format.");
             }

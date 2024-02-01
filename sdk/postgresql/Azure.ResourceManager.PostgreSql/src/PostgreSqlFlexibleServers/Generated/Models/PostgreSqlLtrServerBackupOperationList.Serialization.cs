@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    internal partial class PostgreSqlLtrServerBackupOperationList : IUtf8JsonSerializable, IJsonModel<PostgreSqlLtrServerBackupOperationList>
+    internal partial class PostgreSqlLtrServerBackupOperationList : IUtf8JsonSerializable, IJsonModel<PostgreSqlLtrServerBackupOperationList>, IPersistableModel<PostgreSqlLtrServerBackupOperationList>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlLtrServerBackupOperationList>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -114,6 +115,43 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlLtrServerBackupOperationList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Value))
+            {
+                builder.Append("  value:");
+                builder.AppendLine(" [");
+                foreach (var item in Value)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(NextLink))
+            {
+                builder.Append("  nextLink:");
+                builder.AppendLine($" '{NextLink}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PostgreSqlLtrServerBackupOperationList>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlLtrServerBackupOperationList>)this).GetFormatFromOptions(options) : options.Format;
@@ -122,6 +160,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PostgreSqlLtrServerBackupOperationList)} does not support '{options.Format}' format.");
             }
@@ -138,6 +178,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePostgreSqlLtrServerBackupOperationList(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PostgreSqlLtrServerBackupOperationList)} does not support '{options.Format}' format.");
             }

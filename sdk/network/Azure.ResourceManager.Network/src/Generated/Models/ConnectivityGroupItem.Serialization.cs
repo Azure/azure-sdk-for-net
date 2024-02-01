@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectivityGroupItem : IUtf8JsonSerializable, IJsonModel<ConnectivityGroupItem>
+    public partial class ConnectivityGroupItem : IUtf8JsonSerializable, IJsonModel<ConnectivityGroupItem>, IPersistableModel<ConnectivityGroupItem>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityGroupItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -123,6 +124,50 @@ namespace Azure.ResourceManager.Network.Models
             return new ConnectivityGroupItem(networkGroupId, Optional.ToNullable(useHubGateway), Optional.ToNullable(isGlobal), groupConnectivity, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(NetworkGroupId))
+            {
+                builder.Append("  networkGroupId:");
+                builder.AppendLine($" '{NetworkGroupId}'");
+            }
+
+            if (Optional.IsDefined(UseHubGateway))
+            {
+                builder.Append("  useHubGateway:");
+                builder.AppendLine($" '{UseHubGateway.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsGlobal))
+            {
+                builder.Append("  isGlobal:");
+                builder.AppendLine($" '{IsGlobal.ToString()}'");
+            }
+
+            if (Optional.IsDefined(GroupConnectivity))
+            {
+                builder.Append("  groupConnectivity:");
+                builder.AppendLine($" '{GroupConnectivity.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ConnectivityGroupItem>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityGroupItem>)this).GetFormatFromOptions(options) : options.Format;
@@ -131,6 +176,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConnectivityGroupItem)} does not support '{options.Format}' format.");
             }
@@ -147,6 +194,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConnectivityGroupItem(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ConnectivityGroupItem)} does not support '{options.Format}' format.");
             }

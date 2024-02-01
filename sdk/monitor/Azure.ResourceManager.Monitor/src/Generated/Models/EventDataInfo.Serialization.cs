@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class EventDataInfo : IUtf8JsonSerializable, IJsonModel<EventDataInfo>
+    public partial class EventDataInfo : IUtf8JsonSerializable, IJsonModel<EventDataInfo>, IPersistableModel<EventDataInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventDataInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -427,6 +428,192 @@ namespace Azure.ResourceManager.Monitor.Models
             return new EventDataInfo(authorization.Value, Optional.ToDictionary(claims), caller.Value, description.Value, id.Value, eventDataId.Value, correlationId.Value, eventName.Value, category.Value, httpRequest.Value, Optional.ToNullable(level), resourceGroupName.Value, resourceProviderName.Value, resourceId.Value, resourceType.Value, operationId.Value, operationName.Value, Optional.ToDictionary(properties), status.Value, subStatus.Value, Optional.ToNullable(eventTimestamp), Optional.ToNullable(submissionTimestamp), subscriptionId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Authorization))
+            {
+                builder.Append("  authorization:");
+                AppendChildObject(builder, Authorization, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Claims))
+            {
+                builder.Append("  claims:");
+                builder.AppendLine(" {");
+                foreach (var item in Claims)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Caller))
+            {
+                builder.Append("  caller:");
+                builder.AppendLine($" '{Caller}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id}'");
+            }
+
+            if (Optional.IsDefined(EventDataId))
+            {
+                builder.Append("  eventDataId:");
+                builder.AppendLine($" '{EventDataId}'");
+            }
+
+            if (Optional.IsDefined(CorrelationId))
+            {
+                builder.Append("  correlationId:");
+                builder.AppendLine($" '{CorrelationId}'");
+            }
+
+            if (Optional.IsDefined(EventName))
+            {
+                builder.Append("  eventName:");
+                AppendChildObject(builder, EventName, options, 2);
+            }
+
+            if (Optional.IsDefined(Category))
+            {
+                builder.Append("  category:");
+                AppendChildObject(builder, Category, options, 2);
+            }
+
+            if (Optional.IsDefined(HttpRequest))
+            {
+                builder.Append("  httpRequest:");
+                AppendChildObject(builder, HttpRequest, options, 2);
+            }
+
+            if (Optional.IsDefined(Level))
+            {
+                builder.Append("  level:");
+                builder.AppendLine($" '{Level.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResourceGroupName))
+            {
+                builder.Append("  resourceGroupName:");
+                builder.AppendLine($" '{ResourceGroupName}'");
+            }
+
+            if (Optional.IsDefined(ResourceProviderName))
+            {
+                builder.Append("  resourceProviderName:");
+                AppendChildObject(builder, ResourceProviderName, options, 2);
+            }
+
+            if (Optional.IsDefined(ResourceId))
+            {
+                builder.Append("  resourceId:");
+                builder.AppendLine($" '{ResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  resourceType:");
+                AppendChildObject(builder, ResourceType, options, 2);
+            }
+
+            if (Optional.IsDefined(OperationId))
+            {
+                builder.Append("  operationId:");
+                builder.AppendLine($" '{OperationId}'");
+            }
+
+            if (Optional.IsDefined(OperationName))
+            {
+                builder.Append("  operationName:");
+                AppendChildObject(builder, OperationName, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                builder.Append("  properties:");
+                builder.AppendLine(" {");
+                foreach (var item in Properties)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                AppendChildObject(builder, Status, options, 2);
+            }
+
+            if (Optional.IsDefined(SubStatus))
+            {
+                builder.Append("  subStatus:");
+                AppendChildObject(builder, SubStatus, options, 2);
+            }
+
+            if (Optional.IsDefined(EventTimestamp))
+            {
+                builder.Append("  eventTimestamp:");
+                builder.AppendLine($" '{EventTimestamp.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SubmissionTimestamp))
+            {
+                builder.Append("  submissionTimestamp:");
+                builder.AppendLine($" '{SubmissionTimestamp.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                builder.Append("  subscriptionId:");
+                builder.AppendLine($" '{SubscriptionId}'");
+            }
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("  tenantId:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<EventDataInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EventDataInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -435,6 +622,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EventDataInfo)} does not support '{options.Format}' format.");
             }
@@ -451,6 +640,8 @@ namespace Azure.ResourceManager.Monitor.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEventDataInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EventDataInfo)} does not support '{options.Format}' format.");
             }

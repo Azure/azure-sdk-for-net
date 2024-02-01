@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerMaintenanceWindow : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerMaintenanceWindow>
+    public partial class MySqlFlexibleServerMaintenanceWindow : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerMaintenanceWindow>, IPersistableModel<MySqlFlexibleServerMaintenanceWindow>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerMaintenanceWindow>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -133,6 +134,50 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new MySqlFlexibleServerMaintenanceWindow(customWindow.Value, Optional.ToNullable(startHour), Optional.ToNullable(startMinute), Optional.ToNullable(dayOfWeek), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CustomWindow))
+            {
+                builder.Append("  customWindow:");
+                builder.AppendLine($" '{CustomWindow}'");
+            }
+
+            if (Optional.IsDefined(StartHour))
+            {
+                builder.Append("  startHour:");
+                builder.AppendLine($" '{StartHour.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartMinute))
+            {
+                builder.Append("  startMinute:");
+                builder.AppendLine($" '{StartMinute.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DayOfWeek))
+            {
+                builder.Append("  dayOfWeek:");
+                builder.AppendLine($" '{DayOfWeek.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MySqlFlexibleServerMaintenanceWindow>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerMaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
@@ -141,6 +186,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MySqlFlexibleServerMaintenanceWindow)} does not support '{options.Format}' format.");
             }
@@ -157,6 +204,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMySqlFlexibleServerMaintenanceWindow(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MySqlFlexibleServerMaintenanceWindow)} does not support '{options.Format}' format.");
             }
