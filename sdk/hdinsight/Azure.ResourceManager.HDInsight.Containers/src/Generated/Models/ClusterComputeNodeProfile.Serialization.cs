@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ClusterComputeNodeProfile : IUtf8JsonSerializable, IJsonModel<ClusterComputeNodeProfile>
+    public partial class ClusterComputeNodeProfile : IUtf8JsonSerializable, IJsonModel<ClusterComputeNodeProfile>, IPersistableModel<ClusterComputeNodeProfile>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterComputeNodeProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -101,6 +102,44 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             return new ClusterComputeNodeProfile(type, vmSize, count, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(NodeProfileType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{NodeProfileType}'");
+            }
+
+            if (Optional.IsDefined(VmSize))
+            {
+                builder.Append("  vmSize:");
+                builder.AppendLine($" '{VmSize}'");
+            }
+
+            if (Optional.IsDefined(Count))
+            {
+                builder.Append("  count:");
+                builder.AppendLine($" '{Count.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ClusterComputeNodeProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ClusterComputeNodeProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -109,6 +148,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ClusterComputeNodeProfile)} does not support '{options.Format}' format.");
             }
@@ -125,6 +166,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeClusterComputeNodeProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ClusterComputeNodeProfile)} does not support '{options.Format}' format.");
             }

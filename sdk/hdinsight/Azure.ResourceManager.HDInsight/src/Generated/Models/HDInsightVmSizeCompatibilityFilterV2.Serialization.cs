@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightVmSizeCompatibilityFilterV2 : IUtf8JsonSerializable, IJsonModel<HDInsightVmSizeCompatibilityFilterV2>
+    public partial class HDInsightVmSizeCompatibilityFilterV2 : IUtf8JsonSerializable, IJsonModel<HDInsightVmSizeCompatibilityFilterV2>, IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightVmSizeCompatibilityFilterV2>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -264,6 +265,135 @@ namespace Azure.ResourceManager.HDInsight.Models
             return new HDInsightVmSizeCompatibilityFilterV2(Optional.ToNullable(filterMode), Optional.ToList(regions), Optional.ToList(clusterFlavors), Optional.ToList(nodeTypes), Optional.ToList(clusterVersions), Optional.ToList(osType), Optional.ToList(vmSizes), espApplied.Value, computeIsolationSupported.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(FilterMode))
+            {
+                builder.Append("  filterMode:");
+                builder.AppendLine($" '{FilterMode.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Regions))
+            {
+                builder.Append("  regions:");
+                builder.AppendLine(" [");
+                foreach (var item in Regions)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ClusterFlavors))
+            {
+                builder.Append("  clusterFlavors:");
+                builder.AppendLine(" [");
+                foreach (var item in ClusterFlavors)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(NodeTypes))
+            {
+                builder.Append("  nodeTypes:");
+                builder.AppendLine(" [");
+                foreach (var item in NodeTypes)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ClusterVersions))
+            {
+                builder.Append("  clusterVersions:");
+                builder.AppendLine(" [");
+                foreach (var item in ClusterVersions)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(OSType))
+            {
+                builder.Append("  osType:");
+                builder.AppendLine(" [");
+                foreach (var item in OSType)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(VmSizes))
+            {
+                builder.Append("  vmSizes:");
+                builder.AppendLine(" [");
+                foreach (var item in VmSizes)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(EspApplied))
+            {
+                builder.Append("  espApplied:");
+                builder.AppendLine($" '{EspApplied}'");
+            }
+
+            if (Optional.IsDefined(IsComputeIsolationSupported))
+            {
+                builder.Append("  computeIsolationSupported:");
+                builder.AppendLine($" '{IsComputeIsolationSupported}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightVmSizeCompatibilityFilterV2>)this).GetFormatFromOptions(options) : options.Format;
@@ -272,6 +402,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HDInsightVmSizeCompatibilityFilterV2)} does not support '{options.Format}' format.");
             }
@@ -288,6 +420,8 @@ namespace Azure.ResourceManager.HDInsight.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHDInsightVmSizeCompatibilityFilterV2(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HDInsightVmSizeCompatibilityFilterV2)} does not support '{options.Format}' format.");
             }

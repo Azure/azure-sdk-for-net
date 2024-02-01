@@ -8,12 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using System.Xml;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class FrontDoorCacheConfiguration : IUtf8JsonSerializable, IJsonModel<FrontDoorCacheConfiguration>
+    public partial class FrontDoorCacheConfiguration : IUtf8JsonSerializable, IJsonModel<FrontDoorCacheConfiguration>, IPersistableModel<FrontDoorCacheConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorCacheConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -133,6 +135,51 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorCacheConfiguration(Optional.ToNullable(queryParameterStripDirective), queryParameters.Value, Optional.ToNullable(dynamicCompression), Optional.ToNullable(cacheDuration), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(QueryParameterStripDirective))
+            {
+                builder.Append("  queryParameterStripDirective:");
+                builder.AppendLine($" '{QueryParameterStripDirective.ToString()}'");
+            }
+
+            if (Optional.IsDefined(QueryParameters))
+            {
+                builder.Append("  queryParameters:");
+                builder.AppendLine($" '{QueryParameters}'");
+            }
+
+            if (Optional.IsDefined(DynamicCompression))
+            {
+                builder.Append("  dynamicCompression:");
+                builder.AppendLine($" '{DynamicCompression.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CacheDuration))
+            {
+                builder.Append("  cacheDuration:");
+                var formattedTimeSpan = XmlConvert.ToString(CacheDuration.Value);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<FrontDoorCacheConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -141,6 +188,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FrontDoorCacheConfiguration)} does not support '{options.Format}' format.");
             }
@@ -157,6 +206,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFrontDoorCacheConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FrontDoorCacheConfiguration)} does not support '{options.Format}' format.");
             }

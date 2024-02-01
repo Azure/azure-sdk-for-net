@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabCustomImagePlan : IUtf8JsonSerializable, IJsonModel<DevTestLabCustomImagePlan>
+    public partial class DevTestLabCustomImagePlan : IUtf8JsonSerializable, IJsonModel<DevTestLabCustomImagePlan>, IPersistableModel<DevTestLabCustomImagePlan>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabCustomImagePlan>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -110,6 +111,44 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new DevTestLabCustomImagePlan(id.Value, publisher.Value, offer.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id}'");
+            }
+
+            if (Optional.IsDefined(Publisher))
+            {
+                builder.Append("  publisher:");
+                builder.AppendLine($" '{Publisher}'");
+            }
+
+            if (Optional.IsDefined(Offer))
+            {
+                builder.Append("  offer:");
+                builder.AppendLine($" '{Offer}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DevTestLabCustomImagePlan>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabCustomImagePlan>)this).GetFormatFromOptions(options) : options.Format;
@@ -118,6 +157,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DevTestLabCustomImagePlan)} does not support '{options.Format}' format.");
             }
@@ -134,6 +175,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDevTestLabCustomImagePlan(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DevTestLabCustomImagePlan)} does not support '{options.Format}' format.");
             }

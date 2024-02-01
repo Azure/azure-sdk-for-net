@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    public partial class VirtualApplicationData : IUtf8JsonSerializable, IJsonModel<VirtualApplicationData>
+    public partial class VirtualApplicationData : IUtf8JsonSerializable, IJsonModel<VirtualApplicationData>, IPersistableModel<VirtualApplicationData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualApplicationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -340,6 +341,135 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return new VirtualApplicationData(id, name, type, systemData.Value, objectId.Value, description.Value, friendlyName.Value, filePath.Value, msixPackageFamilyName.Value, msixPackageApplicationId.Value, Optional.ToNullable(applicationType), commandLineSetting, commandLineArguments.Value, Optional.ToNullable(showInPortal), iconPath.Value, Optional.ToNullable(iconIndex), iconHash.Value, iconContent.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ObjectId))
+            {
+                builder.Append("  objectId:");
+                builder.AppendLine($" '{ObjectId}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsDefined(FilePath))
+            {
+                builder.Append("  filePath:");
+                builder.AppendLine($" '{FilePath}'");
+            }
+
+            if (Optional.IsDefined(MsixPackageFamilyName))
+            {
+                builder.Append("  msixPackageFamilyName:");
+                builder.AppendLine($" '{MsixPackageFamilyName}'");
+            }
+
+            if (Optional.IsDefined(MsixPackageApplicationId))
+            {
+                builder.Append("  msixPackageApplicationId:");
+                builder.AppendLine($" '{MsixPackageApplicationId}'");
+            }
+
+            if (Optional.IsDefined(ApplicationType))
+            {
+                builder.Append("  applicationType:");
+                builder.AppendLine($" '{ApplicationType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CommandLineSetting))
+            {
+                builder.Append("  commandLineSetting:");
+                builder.AppendLine($" '{CommandLineSetting.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CommandLineArguments))
+            {
+                builder.Append("  commandLineArguments:");
+                builder.AppendLine($" '{CommandLineArguments}'");
+            }
+
+            if (Optional.IsDefined(ShowInPortal))
+            {
+                builder.Append("  showInPortal:");
+                var boolValue = ShowInPortal.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IconPath))
+            {
+                builder.Append("  iconPath:");
+                builder.AppendLine($" '{IconPath}'");
+            }
+
+            if (Optional.IsDefined(IconIndex))
+            {
+                builder.Append("  iconIndex:");
+                builder.AppendLine($" '{IconIndex.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IconHash))
+            {
+                builder.Append("  iconHash:");
+                builder.AppendLine($" '{IconHash}'");
+            }
+
+            if (Optional.IsDefined(IconContent))
+            {
+                builder.Append("  iconContent:");
+                builder.AppendLine($" '{IconContent.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VirtualApplicationData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualApplicationData>)this).GetFormatFromOptions(options) : options.Format;
@@ -348,6 +478,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VirtualApplicationData)} does not support '{options.Format}' format.");
             }
@@ -364,6 +496,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVirtualApplicationData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VirtualApplicationData)} does not support '{options.Format}' format.");
             }

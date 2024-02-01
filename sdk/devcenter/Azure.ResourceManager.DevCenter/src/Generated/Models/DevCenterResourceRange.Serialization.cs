@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class DevCenterResourceRange : IUtf8JsonSerializable, IJsonModel<DevCenterResourceRange>
+    public partial class DevCenterResourceRange : IUtf8JsonSerializable, IJsonModel<DevCenterResourceRange>, IPersistableModel<DevCenterResourceRange>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterResourceRange>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -107,6 +108,38 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterResourceRange(Optional.ToNullable(min), Optional.ToNullable(max), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Min))
+            {
+                builder.Append("  min:");
+                builder.AppendLine($" '{Min.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Max))
+            {
+                builder.Append("  max:");
+                builder.AppendLine($" '{Max.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DevCenterResourceRange>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterResourceRange>)this).GetFormatFromOptions(options) : options.Format;
@@ -115,6 +148,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DevCenterResourceRange)} does not support '{options.Format}' format.");
             }
@@ -131,6 +166,8 @@ namespace Azure.ResourceManager.DevCenter.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDevCenterResourceRange(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DevCenterResourceRange)} does not support '{options.Format}' format.");
             }

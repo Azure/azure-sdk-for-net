@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class LinkableEnvironmentResult : IUtf8JsonSerializable, IJsonModel<LinkableEnvironmentResult>
+    public partial class LinkableEnvironmentResult : IUtf8JsonSerializable, IJsonModel<LinkableEnvironmentResult>, IPersistableModel<LinkableEnvironmentResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkableEnvironmentResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -114,6 +115,44 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new LinkableEnvironmentResult(environmentId.Value, environmentName.Value, planData.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(EnvironmentId))
+            {
+                builder.Append("  environmentId:");
+                builder.AppendLine($" '{EnvironmentId}'");
+            }
+
+            if (Optional.IsDefined(EnvironmentName))
+            {
+                builder.Append("  environmentName:");
+                builder.AppendLine($" '{EnvironmentName}'");
+            }
+
+            if (Optional.IsDefined(PlanData))
+            {
+                builder.Append("  planData:");
+                AppendChildObject(builder, PlanData, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<LinkableEnvironmentResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LinkableEnvironmentResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -122,6 +161,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LinkableEnvironmentResult)} does not support '{options.Format}' format.");
             }
@@ -138,6 +179,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeLinkableEnvironmentResult(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(LinkableEnvironmentResult)} does not support '{options.Format}' format.");
             }

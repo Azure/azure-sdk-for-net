@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ElasticSan.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    public partial class ElasticSanData : IUtf8JsonSerializable, IJsonModel<ElasticSanData>
+    public partial class ElasticSanData : IUtf8JsonSerializable, IJsonModel<ElasticSanData>, IPersistableModel<ElasticSanData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -355,6 +356,160 @@ namespace Azure.ResourceManager.ElasticSan
             return new ElasticSanData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToList(availabilityZones), Optional.ToNullable(provisioningState), baseSizeTiB, extendedCapacitySizeTiB, Optional.ToNullable(totalVolumeSizeGiB), Optional.ToNullable(volumeGroupCount), Optional.ToNullable(totalIops), Optional.ToNullable(totalMbps), Optional.ToNullable(totalSizeTiB), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(AvailabilityZones))
+            {
+                builder.Append("  availabilityZones:");
+                builder.AppendLine(" [");
+                foreach (var item in AvailabilityZones)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BaseSizeTiB))
+            {
+                builder.Append("  baseSizeTiB:");
+                builder.AppendLine($" '{BaseSizeTiB.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExtendedCapacitySizeTiB))
+            {
+                builder.Append("  extendedCapacitySizeTiB:");
+                builder.AppendLine($" '{ExtendedCapacitySizeTiB.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalVolumeSizeGiB))
+            {
+                builder.Append("  totalVolumeSizeGiB:");
+                builder.AppendLine($" '{TotalVolumeSizeGiB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VolumeGroupCount))
+            {
+                builder.Append("  volumeGroupCount:");
+                builder.AppendLine($" '{VolumeGroupCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalIops))
+            {
+                builder.Append("  totalIops:");
+                builder.AppendLine($" '{TotalIops.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalMbps))
+            {
+                builder.Append("  totalMBps:");
+                builder.AppendLine($" '{TotalMbps.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalSizeTiB))
+            {
+                builder.Append("  totalSizeTiB:");
+                builder.AppendLine($" '{TotalSizeTiB.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                builder.Append("  privateEndpointConnections:");
+                builder.AppendLine(" [");
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                builder.Append("  publicNetworkAccess:");
+                builder.AppendLine($" '{PublicNetworkAccess.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ElasticSanData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanData>)this).GetFormatFromOptions(options) : options.Format;
@@ -363,6 +518,8 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ElasticSanData)} does not support '{options.Format}' format.");
             }
@@ -379,6 +536,8 @@ namespace Azure.ResourceManager.ElasticSan
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeElasticSanData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ElasticSanData)} does not support '{options.Format}' format.");
             }
