@@ -141,8 +141,7 @@
     <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.56.0" />
 
     <!-- TODO: Make sure this package is arch-board approved -->
-    <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.5.0" />
-
+    <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))">
@@ -169,10 +168,10 @@
     <PackageReference Update="Grpc.Tools" Version="2.51.0" PrivateAssets="all" />
     <PackageReference Update="MessagePack" Version="1.9.11" />
     <PackageReference Update="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="1.1.5" />
-    <PackageReference Update="Microsoft.Azure.SignalR" Version="1.22.0" />
-    <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.22.0" />
-    <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.22.0" />
-    <PackageReference Update="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.9.0" />
+    <PackageReference Update="Microsoft.Azure.SignalR" Version="1.24.0" />
+    <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.24.0" />
+    <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.24.0" />
+    <PackageReference Update="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.10.0" />
     <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.37" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.37" PrivateAssets="All"/>
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Rpc" Version="3.0.37" />
