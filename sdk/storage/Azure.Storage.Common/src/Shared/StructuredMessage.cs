@@ -28,7 +28,11 @@ internal static class StructuredMessage
         public const int SegmentHeaderLength = 10;
 
         #region Stream Header
-        public static int WriteStreamHeader(Span<byte> buffer, long messageLength, Flags flags, int totalSegments)
+        public static int WriteStreamHeader(
+            Span<byte> buffer,
+            long messageLength,
+            Flags flags,
+            int totalSegments)
         {
             const int versionOffset = 0;
             const int messageLengthOffset = 1;

@@ -84,7 +84,7 @@ namespace Azure.Storage
         {
             if (buffer.Length < minSize)
             {
-                throw new ArgumentException($"Expected buffer Length at least {minSize}. Got {buffer.Length}.", paramName);
+                throw new ArgumentException($"Expected buffer Length of at least {minSize} bytes. Got {buffer.Length}.", paramName);
             }
         }
 
@@ -92,7 +92,7 @@ namespace Azure.Storage
         {
             if (buffer.Length != size)
             {
-                throw new ArgumentException($"Expected buffer Length exactly {size}. Got {buffer.Length}.", paramName);
+                throw new ArgumentException($"Expected buffer Length of exactly {size} bytes. Got {buffer.Length}.", paramName);
             }
         }
 
