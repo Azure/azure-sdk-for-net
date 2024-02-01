@@ -92,6 +92,8 @@ namespace Azure
 
         internal RequestFailedDetailsParser? RequestFailedDetailsParser { get; set; }
 
+        internal bool ContentExtracted { get; set; }
+
         /// <summary>
         /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.
         /// </summary>
@@ -142,13 +144,13 @@ namespace Azure
             return $"Status: {Status}, ReasonPhrase: {ReasonPhrase}";
         }
 
-        internal static void DisposeStreamIfNotBuffered(ref Stream? stream)
+        internal void DisposeStreamIfNotBuffered(ref Stream? stream)
         {
             // We want to keep the ContentStream readable
             // even after the response is disposed but only if it's a
             // buffered memory stream otherwise we can leave a network
             // connection hanging open
-            if (stream is not MemoryStream)
+            if (stream is not MemoryStream && !ContentExtracted)
             {
                 stream?.Dispose();
                 stream = null;

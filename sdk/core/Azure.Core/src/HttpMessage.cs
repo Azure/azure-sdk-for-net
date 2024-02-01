@@ -182,6 +182,11 @@ namespace Azure.Core
         /// <returns>The content stream or null if response didn't have any.</returns>
         public Stream? ExtractResponseContent()
         {
+            if (_response?.ContentStream is not null)
+            {
+                _response.ContentExtracted = true;
+            }
+
             switch (_response?.ContentStream)
             {
                 case ResponseShouldNotBeUsedStream responseContent:
