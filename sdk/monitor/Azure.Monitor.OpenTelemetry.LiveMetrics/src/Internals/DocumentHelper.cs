@@ -69,10 +69,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     remoteDependencyDocumentIngress.Extension_IsSuccess = activity.Status != ActivityStatusCode.Error;
                     break;
                 case OperationType.Rpc:
-                    // TODO
+                    // TODO RPC
                     break;
                 case OperationType.Messaging:
-                    // TODO
+                    // TODO MESSAGING
                     break;
                 default:
                     // Unknown or Unexpected Dependency Type

@@ -28,7 +28,39 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
         [Fact]
         public void VerifySqlClientAttributes()
         {
-            throw new NotImplementedException();
+            // SETUP
+            var uniqueTestId = Guid.NewGuid();
+
+            var activitySourceName = $"activitySourceName{uniqueTestId}";
+            using var activitySource = new ActivitySource(activitySourceName);
+            var listener = new ActivityListener
+            {
+                ShouldListenTo = _ => true,
+                Sample = (ref ActivityCreationOptions<ActivityContext> options) => ActivitySamplingResult.AllData,
+            };
+
+            ActivitySource.AddActivityListener(listener);
+
+            // ACT
+            using var dependencyActivity = activitySource.StartActivity(name: "HelloWorld", kind: ActivityKind.Client);
+            Assert.NotNull(dependencyActivity);
+            dependencyActivity.SetTag("db.system", "mssql");
+            dependencyActivity.SetTag("db.name", "MyDatabase");
+            dependencyActivity.SetTag("peer.service", "(localdb)\\MSSQLLocalDB");
+            dependencyActivity.SetTag("db.statement", "select * from sys.databases");
+            dependencyActivity.Stop();
+
+            var dependencyDocument = DocumentHelper.ConvertToRemoteDependency(dependencyActivity);
+
+            // ASSERT
+            Assert.Equal("select * from sys.databases", dependencyDocument.CommandName);
+            Assert.Equal(DocumentIngressDocumentType.RemoteDependency, dependencyDocument.DocumentType);
+            Assert.Equal(dependencyActivity.Duration.ToString("c"), dependencyDocument.Duration);
+            Assert.Equal("(localdb)\\MSSQLLocalDB | MyDatabase", dependencyDocument.Name);
+
+            // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
+            Assert.Equal(dependencyActivity.Duration.TotalMilliseconds, dependencyDocument.Extension_Duration);
+            Assert.True(dependencyDocument.Extension_IsSuccess);
         }
 
         [Theory]
