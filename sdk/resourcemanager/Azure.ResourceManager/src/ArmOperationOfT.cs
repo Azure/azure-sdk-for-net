@@ -22,7 +22,7 @@ namespace Azure.ResourceManager
         private readonly RehydrationToken? _rehydrationToken;
 
         /// <summary> Initializes a new instance of ArmOperation. </summary>
-        public ArmOperation(ArmClient client, RehydrationToken rehydrationToken)
+        public ArmOperation(ArmClient client, RehydrationToken? rehydrationToken)
         {
             Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
 

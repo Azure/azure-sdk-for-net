@@ -29,7 +29,7 @@ namespace Azure.ResourceManager
             _operation = operation;
         }
 
-        internal ArmOperation(Response response, RehydrationToken rehydrationToken)
+        internal ArmOperation(Response response, RehydrationToken? rehydrationToken)
         {
             _operation = OperationInternal.Succeeded(response, rehydrationToken);
         }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager
         /// <summary> Create an instance of the <see cref="ArmOperation"/> class from rehydration. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="rehydrationToken"> The id of the ArmOperation. </param>
-        public ArmOperation(ArmClient client, RehydrationToken rehydrationToken)
+        public ArmOperation(ArmClient client, RehydrationToken? rehydrationToken)
         {
             Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
             Argument.AssertNotNull(client, nameof(client));
