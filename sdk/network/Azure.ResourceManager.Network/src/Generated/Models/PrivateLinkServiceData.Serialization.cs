@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class PrivateLinkServiceData : IUtf8JsonSerializable, IJsonModel<PrivateLinkServiceData>
+    public partial class PrivateLinkServiceData : IUtf8JsonSerializable, IJsonModel<PrivateLinkServiceData>, IPersistableModel<PrivateLinkServiceData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateLinkServiceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -403,6 +404,170 @@ namespace Azure.ResourceManager.Network
             return new PrivateLinkServiceData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, extendedLocation, Optional.ToNullable(etag), Optional.ToList(loadBalancerFrontendIPConfigurations), Optional.ToList(ipConfigurations), Optional.ToList(networkInterfaces), Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections), visibility.Value, autoApproval.Value, Optional.ToList(fqdns), @alias.Value, Optional.ToNullable(enableProxyProtocol));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                builder.Append("  extendedLocation:");
+                AppendChildObject(builder, ExtendedLocation, options, 2);
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(LoadBalancerFrontendIPConfigurations))
+            {
+                builder.Append("  loadBalancerFrontendIpConfigurations:");
+                builder.AppendLine(" [");
+                foreach (var item in LoadBalancerFrontendIPConfigurations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(IPConfigurations))
+            {
+                builder.Append("  ipConfigurations:");
+                builder.AppendLine(" [");
+                foreach (var item in IPConfigurations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(NetworkInterfaces))
+            {
+                builder.Append("  networkInterfaces:");
+                builder.AppendLine(" [");
+                foreach (var item in NetworkInterfaces)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                builder.Append("  privateEndpointConnections:");
+                builder.AppendLine(" [");
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Visibility))
+            {
+                builder.Append("  visibility:");
+                AppendChildObject(builder, Visibility, options, 2);
+            }
+
+            if (Optional.IsDefined(AutoApproval))
+            {
+                builder.Append("  autoApproval:");
+                AppendChildObject(builder, AutoApproval, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Fqdns))
+            {
+                builder.Append("  fqdns:");
+                builder.AppendLine(" [");
+                foreach (var item in Fqdns)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Alias))
+            {
+                builder.Append("  alias:");
+                builder.AppendLine($" '{Alias}'");
+            }
+
+            if (Optional.IsDefined(EnableProxyProtocol))
+            {
+                builder.Append("  enableProxyProtocol:");
+                var boolValue = EnableProxyProtocol.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PrivateLinkServiceData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkServiceData>)this).GetFormatFromOptions(options) : options.Format;
@@ -411,6 +576,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PrivateLinkServiceData)} does not support '{options.Format}' format.");
             }
@@ -427,6 +594,8 @@ namespace Azure.ResourceManager.Network
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePrivateLinkServiceData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PrivateLinkServiceData)} does not support '{options.Format}' format.");
             }

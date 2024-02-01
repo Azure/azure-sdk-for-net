@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -17,7 +18,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Orbital
 {
-    public partial class OrbitalContactData : IUtf8JsonSerializable, IJsonModel<OrbitalContactData>
+    public partial class OrbitalContactData : IUtf8JsonSerializable, IJsonModel<OrbitalContactData>, IPersistableModel<OrbitalContactData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrbitalContactData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -406,6 +407,158 @@ namespace Azure.ResourceManager.Orbital
             return new OrbitalContactData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(reservationStartTime), Optional.ToNullable(reservationEndTime), Optional.ToNullable(rxStartTime), Optional.ToNullable(rxEndTime), Optional.ToNullable(txStartTime), Optional.ToNullable(txEndTime), errorMessage.Value, Optional.ToNullable(maximumElevationDegrees), Optional.ToNullable(startAzimuthDegrees), Optional.ToNullable(endAzimuthDegrees), groundStationName.Value, Optional.ToNullable(startElevationDegrees), Optional.ToNullable(endElevationDegrees), antennaConfiguration.Value, contactProfile, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReservationStartOn))
+            {
+                builder.Append("  reservationStartTime:");
+                builder.AppendLine($" '{ReservationStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReservationEndOn))
+            {
+                builder.Append("  reservationEndTime:");
+                builder.AppendLine($" '{ReservationEndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RxStartOn))
+            {
+                builder.Append("  rxStartTime:");
+                builder.AppendLine($" '{RxStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RxEndOn))
+            {
+                builder.Append("  rxEndTime:");
+                builder.AppendLine($" '{RxEndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TxStartOn))
+            {
+                builder.Append("  txStartTime:");
+                builder.AppendLine($" '{TxStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TxEndOn))
+            {
+                builder.Append("  txEndTime:");
+                builder.AppendLine($" '{TxEndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                builder.Append("  errorMessage:");
+                builder.AppendLine($" '{ErrorMessage}'");
+            }
+
+            if (Optional.IsDefined(MaximumElevationDegrees))
+            {
+                builder.Append("  maximumElevationDegrees:");
+                builder.AppendLine($" '{MaximumElevationDegrees.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartAzimuthDegrees))
+            {
+                builder.Append("  startAzimuthDegrees:");
+                builder.AppendLine($" '{StartAzimuthDegrees.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndAzimuthDegrees))
+            {
+                builder.Append("  endAzimuthDegrees:");
+                builder.AppendLine($" '{EndAzimuthDegrees.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(GroundStationName))
+            {
+                builder.Append("  groundStationName:");
+                builder.AppendLine($" '{GroundStationName}'");
+            }
+
+            if (Optional.IsDefined(StartElevationDegrees))
+            {
+                builder.Append("  startElevationDegrees:");
+                builder.AppendLine($" '{StartElevationDegrees.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndElevationDegrees))
+            {
+                builder.Append("  endElevationDegrees:");
+                builder.AppendLine($" '{EndElevationDegrees.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AntennaConfiguration))
+            {
+                builder.Append("  antennaConfiguration:");
+                AppendChildObject(builder, AntennaConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(ContactProfile))
+            {
+                builder.Append("  contactProfile:");
+                AppendChildObject(builder, ContactProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<OrbitalContactData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OrbitalContactData>)this).GetFormatFromOptions(options) : options.Format;
@@ -414,6 +567,8 @@ namespace Azure.ResourceManager.Orbital
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(OrbitalContactData)} does not support '{options.Format}' format.");
             }
@@ -430,6 +585,8 @@ namespace Azure.ResourceManager.Orbital
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeOrbitalContactData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(OrbitalContactData)} does not support '{options.Format}' format.");
             }

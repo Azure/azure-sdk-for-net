@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class LinkedAccessCheck : IUtf8JsonSerializable, IJsonModel<LinkedAccessCheck>
+    public partial class LinkedAccessCheck : IUtf8JsonSerializable, IJsonModel<LinkedAccessCheck>, IPersistableModel<LinkedAccessCheck>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkedAccessCheck>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -132,6 +133,56 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new LinkedAccessCheck(actionName.Value, linkedProperty.Value, linkedAction.Value, linkedActionVerb.Value, linkedType.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ActionName))
+            {
+                builder.Append("  actionName:");
+                builder.AppendLine($" '{ActionName}'");
+            }
+
+            if (Optional.IsDefined(LinkedProperty))
+            {
+                builder.Append("  linkedProperty:");
+                builder.AppendLine($" '{LinkedProperty}'");
+            }
+
+            if (Optional.IsDefined(LinkedAction))
+            {
+                builder.Append("  linkedAction:");
+                builder.AppendLine($" '{LinkedAction}'");
+            }
+
+            if (Optional.IsDefined(LinkedActionVerb))
+            {
+                builder.Append("  linkedActionVerb:");
+                builder.AppendLine($" '{LinkedActionVerb}'");
+            }
+
+            if (Optional.IsDefined(LinkedType))
+            {
+                builder.Append("  linkedType:");
+                builder.AppendLine($" '{LinkedType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<LinkedAccessCheck>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LinkedAccessCheck>)this).GetFormatFromOptions(options) : options.Format;
@@ -140,6 +191,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LinkedAccessCheck)} does not support '{options.Format}' format.");
             }
@@ -156,6 +209,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeLinkedAccessCheck(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(LinkedAccessCheck)} does not support '{options.Format}' format.");
             }

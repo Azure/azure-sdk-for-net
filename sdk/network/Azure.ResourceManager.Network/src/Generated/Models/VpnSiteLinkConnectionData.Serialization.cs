@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VpnSiteLinkConnectionData : IUtf8JsonSerializable, IJsonModel<VpnSiteLinkConnectionData>
+    public partial class VpnSiteLinkConnectionData : IUtf8JsonSerializable, IJsonModel<VpnSiteLinkConnectionData>, IPersistableModel<VpnSiteLinkConnectionData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnSiteLinkConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -457,6 +458,182 @@ namespace Azure.ResourceManager.Network
             return new VpnSiteLinkConnectionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), vpnSiteLink, Optional.ToNullable(routingWeight), Optional.ToNullable(vpnLinkConnectionMode), Optional.ToNullable(connectionStatus), Optional.ToNullable(vpnConnectionProtocolType), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), Optional.ToNullable(connectionBandwidth), sharedKey.Value, Optional.ToNullable(enableBgp), Optional.ToList(vpnGatewayCustomBgpAddresses), Optional.ToNullable(usePolicyBasedTrafficSelectors), Optional.ToList(ipsecPolicies), Optional.ToNullable(enableRateLimiting), Optional.ToNullable(useLocalAzureIPAddress), Optional.ToNullable(provisioningState), Optional.ToList(ingressNatRules), Optional.ToList(egressNatRules));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VpnSiteLink))
+            {
+                builder.Append("  vpnSiteLink:");
+                AppendChildObject(builder, VpnSiteLink, options, 2);
+            }
+
+            if (Optional.IsDefined(RoutingWeight))
+            {
+                builder.Append("  routingWeight:");
+                builder.AppendLine($" '{RoutingWeight.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VpnLinkConnectionMode))
+            {
+                builder.Append("  vpnLinkConnectionMode:");
+                builder.AppendLine($" '{VpnLinkConnectionMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ConnectionStatus))
+            {
+                builder.Append("  connectionStatus:");
+                builder.AppendLine($" '{ConnectionStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VpnConnectionProtocolType))
+            {
+                builder.Append("  vpnConnectionProtocolType:");
+                builder.AppendLine($" '{VpnConnectionProtocolType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IngressBytesTransferred))
+            {
+                builder.Append("  ingressBytesTransferred:");
+                builder.AppendLine($" '{IngressBytesTransferred.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EgressBytesTransferred))
+            {
+                builder.Append("  egressBytesTransferred:");
+                builder.AppendLine($" '{EgressBytesTransferred.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ConnectionBandwidth))
+            {
+                builder.Append("  connectionBandwidth:");
+                builder.AppendLine($" '{ConnectionBandwidth.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SharedKey))
+            {
+                builder.Append("  sharedKey:");
+                builder.AppendLine($" '{SharedKey}'");
+            }
+
+            if (Optional.IsDefined(EnableBgp))
+            {
+                builder.Append("  enableBgp:");
+                var boolValue = EnableBgp.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(VpnGatewayCustomBgpAddresses))
+            {
+                builder.Append("  vpnGatewayCustomBgpAddresses:");
+                builder.AppendLine(" [");
+                foreach (var item in VpnGatewayCustomBgpAddresses)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(UsePolicyBasedTrafficSelectors))
+            {
+                builder.Append("  usePolicyBasedTrafficSelectors:");
+                var boolValue = UsePolicyBasedTrafficSelectors.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(IPsecPolicies))
+            {
+                builder.Append("  ipsecPolicies:");
+                builder.AppendLine(" [");
+                foreach (var item in IPsecPolicies)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(EnableRateLimiting))
+            {
+                builder.Append("  enableRateLimiting:");
+                var boolValue = EnableRateLimiting.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(UseLocalAzureIPAddress))
+            {
+                builder.Append("  useLocalAzureIpAddress:");
+                var boolValue = UseLocalAzureIPAddress.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(IngressNatRules))
+            {
+                builder.Append("  ingressNatRules:");
+                builder.AppendLine(" [");
+                foreach (var item in IngressNatRules)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(EgressNatRules))
+            {
+                builder.Append("  egressNatRules:");
+                builder.AppendLine(" [");
+                foreach (var item in EgressNatRules)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VpnSiteLinkConnectionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VpnSiteLinkConnectionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -465,6 +642,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VpnSiteLinkConnectionData)} does not support '{options.Format}' format.");
             }
@@ -481,6 +660,8 @@ namespace Azure.ResourceManager.Network
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVpnSiteLinkConnectionData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VpnSiteLinkConnectionData)} does not support '{options.Format}' format.");
             }

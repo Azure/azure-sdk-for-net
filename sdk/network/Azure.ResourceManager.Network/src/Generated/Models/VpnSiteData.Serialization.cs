@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VpnSiteData : IUtf8JsonSerializable, IJsonModel<VpnSiteData>
+    public partial class VpnSiteData : IUtf8JsonSerializable, IJsonModel<VpnSiteData>, IPersistableModel<VpnSiteData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnSiteData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -344,6 +345,139 @@ namespace Azure.ResourceManager.Network
             return new VpnSiteData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), virtualWan, deviceProperties.Value, ipAddress.Value, siteKey.Value, addressSpace.Value, bgpProperties.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(isSecuritySite), Optional.ToList(vpnSiteLinks), o365Policy.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VirtualWan))
+            {
+                builder.Append("  virtualWan:");
+                AppendChildObject(builder, VirtualWan, options, 2);
+            }
+
+            if (Optional.IsDefined(DeviceProperties))
+            {
+                builder.Append("  deviceProperties:");
+                AppendChildObject(builder, DeviceProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(IPAddress))
+            {
+                builder.Append("  ipAddress:");
+                builder.AppendLine($" '{IPAddress}'");
+            }
+
+            if (Optional.IsDefined(SiteKey))
+            {
+                builder.Append("  siteKey:");
+                builder.AppendLine($" '{SiteKey}'");
+            }
+
+            if (Optional.IsDefined(AddressSpace))
+            {
+                builder.Append("  addressSpace:");
+                AppendChildObject(builder, AddressSpace, options, 2);
+            }
+
+            if (Optional.IsDefined(BgpProperties))
+            {
+                builder.Append("  bgpProperties:");
+                AppendChildObject(builder, BgpProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsSecuritySite))
+            {
+                builder.Append("  isSecuritySite:");
+                var boolValue = IsSecuritySite.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(VpnSiteLinks))
+            {
+                builder.Append("  vpnSiteLinks:");
+                builder.AppendLine(" [");
+                foreach (var item in VpnSiteLinks)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(O365Policy))
+            {
+                builder.Append("  o365Policy:");
+                AppendChildObject(builder, O365Policy, options, 2);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VpnSiteData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VpnSiteData>)this).GetFormatFromOptions(options) : options.Format;
@@ -352,6 +486,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VpnSiteData)} does not support '{options.Format}' format.");
             }
@@ -368,6 +504,8 @@ namespace Azure.ResourceManager.Network
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVpnSiteData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VpnSiteData)} does not support '{options.Format}' format.");
             }

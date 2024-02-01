@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PrivateDnsZoneConfig : IUtf8JsonSerializable, IJsonModel<PrivateDnsZoneConfig>
+    public partial class PrivateDnsZoneConfig : IUtf8JsonSerializable, IJsonModel<PrivateDnsZoneConfig>, IPersistableModel<PrivateDnsZoneConfig>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateDnsZoneConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -139,6 +140,49 @@ namespace Azure.ResourceManager.Network.Models
             return new PrivateDnsZoneConfig(name.Value, privateDnsZoneId.Value, Optional.ToList(recordSets), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(PrivateDnsZoneId))
+            {
+                builder.Append("  privateDnsZoneId:");
+                builder.AppendLine($" '{PrivateDnsZoneId}'");
+            }
+
+            if (Optional.IsCollectionDefined(RecordSets))
+            {
+                builder.Append("  recordSets:");
+                builder.AppendLine(" [");
+                foreach (var item in RecordSets)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PrivateDnsZoneConfig>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsZoneConfig>)this).GetFormatFromOptions(options) : options.Format;
@@ -147,6 +191,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PrivateDnsZoneConfig)} does not support '{options.Format}' format.");
             }
@@ -163,6 +209,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePrivateDnsZoneConfig(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PrivateDnsZoneConfig)} does not support '{options.Format}' format.");
             }

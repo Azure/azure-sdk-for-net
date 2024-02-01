@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class ActionGroupData : IUtf8JsonSerializable, IJsonModel<ActionGroupData>
+    public partial class ActionGroupData : IUtf8JsonSerializable, IJsonModel<ActionGroupData>, IPersistableModel<ActionGroupData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActionGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -477,6 +478,207 @@ namespace Azure.ResourceManager.Monitor
             return new ActionGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, groupShortName.Value, Optional.ToNullable(enabled), Optional.ToList(emailReceivers), Optional.ToList(smsReceivers), Optional.ToList(webhookReceivers), Optional.ToList(itsmReceivers), Optional.ToList(azureAppPushReceivers), Optional.ToList(automationRunbookReceivers), Optional.ToList(voiceReceivers), Optional.ToList(logicAppReceivers), Optional.ToList(azureFunctionReceivers), Optional.ToList(armRoleReceivers), Optional.ToList(eventHubReceivers), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(GroupShortName))
+            {
+                builder.Append("  groupShortName:");
+                builder.AppendLine($" '{GroupShortName}'");
+            }
+
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("  enabled:");
+                var boolValue = IsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(EmailReceivers))
+            {
+                builder.Append("  emailReceivers:");
+                builder.AppendLine(" [");
+                foreach (var item in EmailReceivers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(SmsReceivers))
+            {
+                builder.Append("  smsReceivers:");
+                builder.AppendLine(" [");
+                foreach (var item in SmsReceivers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(WebhookReceivers))
+            {
+                builder.Append("  webhookReceivers:");
+                builder.AppendLine(" [");
+                foreach (var item in WebhookReceivers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ItsmReceivers))
+            {
+                builder.Append("  itsmReceivers:");
+                builder.AppendLine(" [");
+                foreach (var item in ItsmReceivers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(AzureAppPushReceivers))
+            {
+                builder.Append("  azureAppPushReceivers:");
+                builder.AppendLine(" [");
+                foreach (var item in AzureAppPushReceivers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(AutomationRunbookReceivers))
+            {
+                builder.Append("  automationRunbookReceivers:");
+                builder.AppendLine(" [");
+                foreach (var item in AutomationRunbookReceivers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(VoiceReceivers))
+            {
+                builder.Append("  voiceReceivers:");
+                builder.AppendLine(" [");
+                foreach (var item in VoiceReceivers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(LogicAppReceivers))
+            {
+                builder.Append("  logicAppReceivers:");
+                builder.AppendLine(" [");
+                foreach (var item in LogicAppReceivers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(AzureFunctionReceivers))
+            {
+                builder.Append("  azureFunctionReceivers:");
+                builder.AppendLine(" [");
+                foreach (var item in AzureFunctionReceivers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ArmRoleReceivers))
+            {
+                builder.Append("  armRoleReceivers:");
+                builder.AppendLine(" [");
+                foreach (var item in ArmRoleReceivers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(EventHubReceivers))
+            {
+                builder.Append("  eventHubReceivers:");
+                builder.AppendLine(" [");
+                foreach (var item in EventHubReceivers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ActionGroupData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ActionGroupData>)this).GetFormatFromOptions(options) : options.Format;
@@ -485,6 +687,8 @@ namespace Azure.ResourceManager.Monitor
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ActionGroupData)} does not support '{options.Format}' format.");
             }
@@ -501,6 +705,8 @@ namespace Azure.ResourceManager.Monitor
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeActionGroupData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ActionGroupData)} does not support '{options.Format}' format.");
             }

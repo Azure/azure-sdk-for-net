@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class PccRuleConfiguration : IUtf8JsonSerializable, IJsonModel<PccRuleConfiguration>
+    public partial class PccRuleConfiguration : IUtf8JsonSerializable, IJsonModel<PccRuleConfiguration>, IPersistableModel<PccRuleConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PccRuleConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -141,6 +142,61 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new PccRuleConfiguration(ruleName, rulePrecedence, ruleQosPolicy.Value, Optional.ToNullable(trafficControl), serviceDataFlowTemplates, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(RuleName))
+            {
+                builder.Append("  ruleName:");
+                builder.AppendLine($" '{RuleName}'");
+            }
+
+            if (Optional.IsDefined(RulePrecedence))
+            {
+                builder.Append("  rulePrecedence:");
+                builder.AppendLine($" '{RulePrecedence.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RuleQosPolicy))
+            {
+                builder.Append("  ruleQosPolicy:");
+                AppendChildObject(builder, RuleQosPolicy, options, 2);
+            }
+
+            if (Optional.IsDefined(TrafficControl))
+            {
+                builder.Append("  trafficControl:");
+                builder.AppendLine($" '{TrafficControl.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ServiceDataFlowTemplates))
+            {
+                builder.Append("  serviceDataFlowTemplates:");
+                builder.AppendLine(" [");
+                foreach (var item in ServiceDataFlowTemplates)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PccRuleConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PccRuleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -149,6 +205,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PccRuleConfiguration)} does not support '{options.Format}' format.");
             }
@@ -165,6 +223,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePccRuleConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PccRuleConfiguration)} does not support '{options.Format}' format.");
             }

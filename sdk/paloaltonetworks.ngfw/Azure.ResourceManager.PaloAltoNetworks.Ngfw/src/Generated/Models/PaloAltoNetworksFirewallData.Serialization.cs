@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
-    public partial class PaloAltoNetworksFirewallData : IUtf8JsonSerializable, IJsonModel<PaloAltoNetworksFirewallData>
+    public partial class PaloAltoNetworksFirewallData : IUtf8JsonSerializable, IJsonModel<PaloAltoNetworksFirewallData>, IPersistableModel<PaloAltoNetworksFirewallData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PaloAltoNetworksFirewallData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -326,6 +327,144 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             return new PaloAltoNetworksFirewallData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(panETag), networkProfile, Optional.ToNullable(isPanoramaManaged), panoramaConfig.Value, associatedRulestack.Value, dnsSettings, Optional.ToList(frontEndSettings), Optional.ToNullable(provisioningState), planData, marketplaceDetails, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2);
+            }
+
+            if (Optional.IsDefined(PanETag))
+            {
+                builder.Append("  panEtag:");
+                builder.AppendLine($" '{PanETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NetworkProfile))
+            {
+                builder.Append("  networkProfile:");
+                AppendChildObject(builder, NetworkProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(IsPanoramaManaged))
+            {
+                builder.Append("  isPanoramaManaged:");
+                builder.AppendLine($" '{IsPanoramaManaged.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PanoramaConfig))
+            {
+                builder.Append("  panoramaConfig:");
+                AppendChildObject(builder, PanoramaConfig, options, 2);
+            }
+
+            if (Optional.IsDefined(AssociatedRulestack))
+            {
+                builder.Append("  associatedRulestack:");
+                AppendChildObject(builder, AssociatedRulestack, options, 2);
+            }
+
+            if (Optional.IsDefined(DnsSettings))
+            {
+                builder.Append("  dnsSettings:");
+                AppendChildObject(builder, DnsSettings, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(FrontEndSettings))
+            {
+                builder.Append("  frontEndSettings:");
+                builder.AppendLine(" [");
+                foreach (var item in FrontEndSettings)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PlanData))
+            {
+                builder.Append("  planData:");
+                AppendChildObject(builder, PlanData, options, 2);
+            }
+
+            if (Optional.IsDefined(MarketplaceDetails))
+            {
+                builder.Append("  marketplaceDetails:");
+                AppendChildObject(builder, MarketplaceDetails, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PaloAltoNetworksFirewallData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PaloAltoNetworksFirewallData>)this).GetFormatFromOptions(options) : options.Format;
@@ -334,6 +473,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallData)} does not support '{options.Format}' format.");
             }
@@ -350,6 +491,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePaloAltoNetworksFirewallData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallData)} does not support '{options.Format}' format.");
             }

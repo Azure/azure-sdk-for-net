@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ScheduledQueryRuleActions : IUtf8JsonSerializable, IJsonModel<ScheduledQueryRuleActions>
+    public partial class ScheduledQueryRuleActions : IUtf8JsonSerializable, IJsonModel<ScheduledQueryRuleActions>, IPersistableModel<ScheduledQueryRuleActions>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScheduledQueryRuleActions>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -128,6 +129,59 @@ namespace Azure.ResourceManager.Monitor.Models
             return new ScheduledQueryRuleActions(Optional.ToList(actionGroups), Optional.ToDictionary(customProperties), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(ActionGroups))
+            {
+                builder.Append("  actionGroups:");
+                builder.AppendLine(" [");
+                foreach (var item in ActionGroups)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(CustomProperties))
+            {
+                builder.Append("  customProperties:");
+                builder.AppendLine(" {");
+                foreach (var item in CustomProperties)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ScheduledQueryRuleActions>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScheduledQueryRuleActions>)this).GetFormatFromOptions(options) : options.Format;
@@ -136,6 +190,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ScheduledQueryRuleActions)} does not support '{options.Format}' format.");
             }
@@ -152,6 +208,8 @@ namespace Azure.ResourceManager.Monitor.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeScheduledQueryRuleActions(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ScheduledQueryRuleActions)} does not support '{options.Format}' format.");
             }

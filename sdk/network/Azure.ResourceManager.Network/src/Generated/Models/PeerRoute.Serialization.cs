@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PeerRoute : IUtf8JsonSerializable, IJsonModel<PeerRoute>
+    public partial class PeerRoute : IUtf8JsonSerializable, IJsonModel<PeerRoute>, IPersistableModel<PeerRoute>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeerRoute>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -158,6 +159,68 @@ namespace Azure.ResourceManager.Network.Models
             return new PeerRoute(localAddress.Value, network.Value, nextHop.Value, sourcePeer.Value, origin.Value, asPath.Value, Optional.ToNullable(weight), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(LocalAddress))
+            {
+                builder.Append("  localAddress:");
+                builder.AppendLine($" '{LocalAddress}'");
+            }
+
+            if (Optional.IsDefined(Network))
+            {
+                builder.Append("  network:");
+                builder.AppendLine($" '{Network}'");
+            }
+
+            if (Optional.IsDefined(NextHop))
+            {
+                builder.Append("  nextHop:");
+                builder.AppendLine($" '{NextHop}'");
+            }
+
+            if (Optional.IsDefined(SourcePeer))
+            {
+                builder.Append("  sourcePeer:");
+                builder.AppendLine($" '{SourcePeer}'");
+            }
+
+            if (Optional.IsDefined(Origin))
+            {
+                builder.Append("  origin:");
+                builder.AppendLine($" '{Origin}'");
+            }
+
+            if (Optional.IsDefined(AsPath))
+            {
+                builder.Append("  asPath:");
+                builder.AppendLine($" '{AsPath}'");
+            }
+
+            if (Optional.IsDefined(Weight))
+            {
+                builder.Append("  weight:");
+                builder.AppendLine($" '{Weight.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PeerRoute>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PeerRoute>)this).GetFormatFromOptions(options) : options.Format;
@@ -166,6 +229,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PeerRoute)} does not support '{options.Format}' format.");
             }
@@ -182,6 +247,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePeerRoute(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PeerRoute)} does not support '{options.Format}' format.");
             }

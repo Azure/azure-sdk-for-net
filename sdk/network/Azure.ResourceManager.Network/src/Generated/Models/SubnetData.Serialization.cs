@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class SubnetData : IUtf8JsonSerializable, IJsonModel<SubnetData>
+    public partial class SubnetData : IUtf8JsonSerializable, IJsonModel<SubnetData>, IPersistableModel<SubnetData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubnetData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -553,6 +554,231 @@ namespace Azure.ResourceManager.Network
             return new SubnetData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), addressPrefix.Value, Optional.ToList(addressPrefixes), networkSecurityGroup.Value, routeTable.Value, natGateway, Optional.ToList(serviceEndpoints), Optional.ToList(serviceEndpointPolicies), Optional.ToList(privateEndpoints), Optional.ToList(ipConfigurations), Optional.ToList(ipConfigurationProfiles), Optional.ToList(ipAllocations), Optional.ToList(resourceNavigationLinks), Optional.ToList(serviceAssociationLinks), Optional.ToList(delegations), purpose.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(privateEndpointNetworkPolicies), Optional.ToNullable(privateLinkServiceNetworkPolicies), Optional.ToList(applicationGatewayIPConfigurations), Optional.ToNullable(defaultOutboundAccess));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AddressPrefix))
+            {
+                builder.Append("  addressPrefix:");
+                builder.AppendLine($" '{AddressPrefix}'");
+            }
+
+            if (Optional.IsCollectionDefined(AddressPrefixes))
+            {
+                builder.Append("  addressPrefixes:");
+                builder.AppendLine(" [");
+                foreach (var item in AddressPrefixes)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(NetworkSecurityGroup))
+            {
+                builder.Append("  networkSecurityGroup:");
+                AppendChildObject(builder, NetworkSecurityGroup, options, 2);
+            }
+
+            if (Optional.IsDefined(RouteTable))
+            {
+                builder.Append("  routeTable:");
+                AppendChildObject(builder, RouteTable, options, 2);
+            }
+
+            if (Optional.IsDefined(NatGateway))
+            {
+                builder.Append("  natGateway:");
+                AppendChildObject(builder, NatGateway, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(ServiceEndpoints))
+            {
+                builder.Append("  serviceEndpoints:");
+                builder.AppendLine(" [");
+                foreach (var item in ServiceEndpoints)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ServiceEndpointPolicies))
+            {
+                builder.Append("  serviceEndpointPolicies:");
+                builder.AppendLine(" [");
+                foreach (var item in ServiceEndpointPolicies)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpoints))
+            {
+                builder.Append("  privateEndpoints:");
+                builder.AppendLine(" [");
+                foreach (var item in PrivateEndpoints)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(IPConfigurations))
+            {
+                builder.Append("  ipConfigurations:");
+                builder.AppendLine(" [");
+                foreach (var item in IPConfigurations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(IPConfigurationProfiles))
+            {
+                builder.Append("  ipConfigurationProfiles:");
+                builder.AppendLine(" [");
+                foreach (var item in IPConfigurationProfiles)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(IPAllocations))
+            {
+                builder.Append("  ipAllocations:");
+                builder.AppendLine(" [");
+                foreach (var item in IPAllocations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ResourceNavigationLinks))
+            {
+                builder.Append("  resourceNavigationLinks:");
+                builder.AppendLine(" [");
+                foreach (var item in ResourceNavigationLinks)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ServiceAssociationLinks))
+            {
+                builder.Append("  serviceAssociationLinks:");
+                builder.AppendLine(" [");
+                foreach (var item in ServiceAssociationLinks)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Delegations))
+            {
+                builder.Append("  delegations:");
+                builder.AppendLine(" [");
+                foreach (var item in Delegations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Purpose))
+            {
+                builder.Append("  purpose:");
+                builder.AppendLine($" '{Purpose}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrivateEndpointNetworkPolicy))
+            {
+                builder.Append("  privateEndpointNetworkPolicies:");
+                builder.AppendLine($" '{PrivateEndpointNetworkPolicy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrivateLinkServiceNetworkPolicy))
+            {
+                builder.Append("  privateLinkServiceNetworkPolicies:");
+                builder.AppendLine($" '{PrivateLinkServiceNetworkPolicy.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ApplicationGatewayIPConfigurations))
+            {
+                builder.Append("  applicationGatewayIPConfigurations:");
+                builder.AppendLine(" [");
+                foreach (var item in ApplicationGatewayIPConfigurations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(DefaultOutboundAccess))
+            {
+                builder.Append("  defaultOutboundAccess:");
+                var boolValue = DefaultOutboundAccess.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SubnetData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SubnetData>)this).GetFormatFromOptions(options) : options.Format;
@@ -561,6 +787,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SubnetData)} does not support '{options.Format}' format.");
             }
@@ -577,6 +805,8 @@ namespace Azure.ResourceManager.Network
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSubnetData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SubnetData)} does not support '{options.Format}' format.");
             }

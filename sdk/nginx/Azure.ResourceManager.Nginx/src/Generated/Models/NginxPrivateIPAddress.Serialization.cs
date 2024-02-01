@@ -9,12 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    public partial class NginxPrivateIPAddress : IUtf8JsonSerializable, IJsonModel<NginxPrivateIPAddress>
+    public partial class NginxPrivateIPAddress : IUtf8JsonSerializable, IJsonModel<NginxPrivateIPAddress>, IPersistableModel<NginxPrivateIPAddress>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxPrivateIPAddress>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -123,6 +124,44 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxPrivateIPAddress(privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnetId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PrivateIPAddress))
+            {
+                builder.Append("  privateIPAddress:");
+                builder.AppendLine($" '{PrivateIPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
+            {
+                builder.Append("  privateIPAllocationMethod:");
+                builder.AppendLine($" '{PrivateIPAllocationMethod.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SubnetId))
+            {
+                builder.Append("  subnetId:");
+                builder.AppendLine($" '{SubnetId.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<NginxPrivateIPAddress>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NginxPrivateIPAddress>)this).GetFormatFromOptions(options) : options.Format;
@@ -131,6 +170,8 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NginxPrivateIPAddress)} does not support '{options.Format}' format.");
             }
@@ -147,6 +188,8 @@ namespace Azure.ResourceManager.Nginx.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNginxPrivateIPAddress(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NginxPrivateIPAddress)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
-    public partial class SystemData : IUtf8JsonSerializable, IJsonModel<SystemData>
+    public partial class SystemData : IUtf8JsonSerializable, IJsonModel<SystemData>, IPersistableModel<SystemData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SystemData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -159,6 +160,62 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             return new SystemData(createdBy.Value, Optional.ToNullable(createdByType), Optional.ToNullable(createdAt), lastModifiedBy.Value, Optional.ToNullable(lastModifiedByType), Optional.ToNullable(lastModifiedAt), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CreatedBy))
+            {
+                builder.Append("  createdBy:");
+                builder.AppendLine($" '{CreatedBy}'");
+            }
+
+            if (Optional.IsDefined(CreatedByType))
+            {
+                builder.Append("  createdByType:");
+                builder.AppendLine($" '{CreatedByType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdAt:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastModifiedBy))
+            {
+                builder.Append("  lastModifiedBy:");
+                builder.AppendLine($" '{LastModifiedBy}'");
+            }
+
+            if (Optional.IsDefined(LastModifiedByType))
+            {
+                builder.Append("  lastModifiedByType:");
+                builder.AppendLine($" '{LastModifiedByType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("  lastModifiedAt:");
+                builder.AppendLine($" '{LastModifiedOn.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SystemData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SystemData>)this).GetFormatFromOptions(options) : options.Format;
@@ -167,6 +224,8 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SystemData)} does not support '{options.Format}' format.");
             }
@@ -183,6 +242,8 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSystemData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SystemData)} does not support '{options.Format}' format.");
             }

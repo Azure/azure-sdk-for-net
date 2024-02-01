@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class PinholeTimeouts : IUtf8JsonSerializable, IJsonModel<PinholeTimeouts>
+    public partial class PinholeTimeouts : IUtf8JsonSerializable, IJsonModel<PinholeTimeouts>, IPersistableModel<PinholeTimeouts>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PinholeTimeouts>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -122,6 +123,44 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new PinholeTimeouts(Optional.ToNullable(tcp), Optional.ToNullable(udp), Optional.ToNullable(icmp), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Tcp))
+            {
+                builder.Append("  tcp:");
+                builder.AppendLine($" '{Tcp.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Udp))
+            {
+                builder.Append("  udp:");
+                builder.AppendLine($" '{Udp.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Icmp))
+            {
+                builder.Append("  icmp:");
+                builder.AppendLine($" '{Icmp.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PinholeTimeouts>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PinholeTimeouts>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,6 +169,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PinholeTimeouts)} does not support '{options.Format}' format.");
             }
@@ -146,6 +187,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePinholeTimeouts(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PinholeTimeouts)} does not support '{options.Format}' format.");
             }

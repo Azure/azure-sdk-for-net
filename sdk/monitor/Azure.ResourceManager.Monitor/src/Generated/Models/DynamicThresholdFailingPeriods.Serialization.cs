@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DynamicThresholdFailingPeriods : IUtf8JsonSerializable, IJsonModel<DynamicThresholdFailingPeriods>
+    public partial class DynamicThresholdFailingPeriods : IUtf8JsonSerializable, IJsonModel<DynamicThresholdFailingPeriods>, IPersistableModel<DynamicThresholdFailingPeriods>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynamicThresholdFailingPeriods>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -93,6 +94,38 @@ namespace Azure.ResourceManager.Monitor.Models
             return new DynamicThresholdFailingPeriods(numberOfEvaluationPeriods, minFailingPeriodsToAlert, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(NumberOfEvaluationPeriods))
+            {
+                builder.Append("  numberOfEvaluationPeriods:");
+                builder.AppendLine($" '{NumberOfEvaluationPeriods.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MinFailingPeriodsToAlert))
+            {
+                builder.Append("  minFailingPeriodsToAlert:");
+                builder.AppendLine($" '{MinFailingPeriodsToAlert.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DynamicThresholdFailingPeriods>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DynamicThresholdFailingPeriods>)this).GetFormatFromOptions(options) : options.Format;
@@ -101,6 +134,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DynamicThresholdFailingPeriods)} does not support '{options.Format}' format.");
             }
@@ -117,6 +152,8 @@ namespace Azure.ResourceManager.Monitor.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDynamicThresholdFailingPeriods(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DynamicThresholdFailingPeriods)} does not support '{options.Format}' format.");
             }

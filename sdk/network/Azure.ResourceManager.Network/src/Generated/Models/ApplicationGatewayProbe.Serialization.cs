@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayProbe : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayProbe>
+    public partial class ApplicationGatewayProbe : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayProbe>, IPersistableModel<ApplicationGatewayProbe>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayProbe>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -321,6 +322,124 @@ namespace Azure.ResourceManager.Network.Models
             return new ApplicationGatewayProbe(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(protocol), host.Value, path.Value, Optional.ToNullable(interval), Optional.ToNullable(timeout), Optional.ToNullable(unhealthyThreshold), Optional.ToNullable(pickHostNameFromBackendHttpSettings), Optional.ToNullable(pickHostNameFromBackendSettings), Optional.ToNullable(minServers), match.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(port));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Protocol))
+            {
+                builder.Append("  protocol:");
+                builder.AppendLine($" '{Protocol.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Host))
+            {
+                builder.Append("  host:");
+                builder.AppendLine($" '{Host}'");
+            }
+
+            if (Optional.IsDefined(Path))
+            {
+                builder.Append("  path:");
+                builder.AppendLine($" '{Path}'");
+            }
+
+            if (Optional.IsDefined(IntervalInSeconds))
+            {
+                builder.Append("  interval:");
+                builder.AppendLine($" '{IntervalInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TimeoutInSeconds))
+            {
+                builder.Append("  timeout:");
+                builder.AppendLine($" '{TimeoutInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UnhealthyThreshold))
+            {
+                builder.Append("  unhealthyThreshold:");
+                builder.AppendLine($" '{UnhealthyThreshold.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PickHostNameFromBackendHttpSettings))
+            {
+                builder.Append("  pickHostNameFromBackendHttpSettings:");
+                var boolValue = PickHostNameFromBackendHttpSettings.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(PickHostNameFromBackendSettings))
+            {
+                builder.Append("  pickHostNameFromBackendSettings:");
+                var boolValue = PickHostNameFromBackendSettings.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(MinServers))
+            {
+                builder.Append("  minServers:");
+                builder.AppendLine($" '{MinServers.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Match))
+            {
+                builder.Append("  match:");
+                AppendChildObject(builder, Match, options, 2);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Port))
+            {
+                builder.Append("  port:");
+                builder.AppendLine($" '{Port.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ApplicationGatewayProbe>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayProbe>)this).GetFormatFromOptions(options) : options.Format;
@@ -329,6 +448,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApplicationGatewayProbe)} does not support '{options.Format}' format.");
             }
@@ -345,6 +466,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeApplicationGatewayProbe(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ApplicationGatewayProbe)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class EffectiveNetworkSecurityRule : IUtf8JsonSerializable, IJsonModel<EffectiveNetworkSecurityRule>
+    public partial class EffectiveNetworkSecurityRule : IUtf8JsonSerializable, IJsonModel<EffectiveNetworkSecurityRule>, IPersistableModel<EffectiveNetworkSecurityRule>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveNetworkSecurityRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -342,6 +343,176 @@ namespace Azure.ResourceManager.Network.Models
             return new EffectiveNetworkSecurityRule(name.Value, Optional.ToNullable(protocol), sourcePortRange.Value, destinationPortRange.Value, Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), sourceAddressPrefix.Value, destinationAddressPrefix.Value, Optional.ToList(sourceAddressPrefixes), Optional.ToList(destinationAddressPrefixes), Optional.ToList(expandedSourceAddressPrefix), Optional.ToList(expandedDestinationAddressPrefix), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Protocol))
+            {
+                builder.Append("  protocol:");
+                builder.AppendLine($" '{Protocol.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourcePortRange))
+            {
+                builder.Append("  sourcePortRange:");
+                builder.AppendLine($" '{SourcePortRange}'");
+            }
+
+            if (Optional.IsDefined(DestinationPortRange))
+            {
+                builder.Append("  destinationPortRange:");
+                builder.AppendLine($" '{DestinationPortRange}'");
+            }
+
+            if (Optional.IsCollectionDefined(SourcePortRanges))
+            {
+                builder.Append("  sourcePortRanges:");
+                builder.AppendLine(" [");
+                foreach (var item in SourcePortRanges)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(DestinationPortRanges))
+            {
+                builder.Append("  destinationPortRanges:");
+                builder.AppendLine(" [");
+                foreach (var item in DestinationPortRanges)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(SourceAddressPrefix))
+            {
+                builder.Append("  sourceAddressPrefix:");
+                builder.AppendLine($" '{SourceAddressPrefix}'");
+            }
+
+            if (Optional.IsDefined(DestinationAddressPrefix))
+            {
+                builder.Append("  destinationAddressPrefix:");
+                builder.AppendLine($" '{DestinationAddressPrefix}'");
+            }
+
+            if (Optional.IsCollectionDefined(SourceAddressPrefixes))
+            {
+                builder.Append("  sourceAddressPrefixes:");
+                builder.AppendLine(" [");
+                foreach (var item in SourceAddressPrefixes)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(DestinationAddressPrefixes))
+            {
+                builder.Append("  destinationAddressPrefixes:");
+                builder.AppendLine(" [");
+                foreach (var item in DestinationAddressPrefixes)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ExpandedSourceAddressPrefix))
+            {
+                builder.Append("  expandedSourceAddressPrefix:");
+                builder.AppendLine(" [");
+                foreach (var item in ExpandedSourceAddressPrefix)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ExpandedDestinationAddressPrefix))
+            {
+                builder.Append("  expandedDestinationAddressPrefix:");
+                builder.AppendLine(" [");
+                foreach (var item in ExpandedDestinationAddressPrefix)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Access))
+            {
+                builder.Append("  access:");
+                builder.AppendLine($" '{Access.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Priority))
+            {
+                builder.Append("  priority:");
+                builder.AppendLine($" '{Priority.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Direction))
+            {
+                builder.Append("  direction:");
+                builder.AppendLine($" '{Direction.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<EffectiveNetworkSecurityRule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveNetworkSecurityRule>)this).GetFormatFromOptions(options) : options.Format;
@@ -350,6 +521,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EffectiveNetworkSecurityRule)} does not support '{options.Format}' format.");
             }
@@ -366,6 +539,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEffectiveNetworkSecurityRule(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EffectiveNetworkSecurityRule)} does not support '{options.Format}' format.");
             }

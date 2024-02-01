@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class PacketCaptureData : IUtf8JsonSerializable, IJsonModel<PacketCaptureData>
+    public partial class PacketCaptureData : IUtf8JsonSerializable, IJsonModel<PacketCaptureData>, IPersistableModel<PacketCaptureData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PacketCaptureData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -299,6 +300,115 @@ namespace Azure.ResourceManager.Network
             return new PacketCaptureData(id, name, type, systemData.Value, Optional.ToNullable(etag), target.Value, scope.Value, Optional.ToNullable(targetType), Optional.ToNullable(bytesToCapturePerPacket), Optional.ToNullable(totalBytesPerSession), Optional.ToNullable(timeLimitInSeconds), storageLocation.Value, Optional.ToList(filters), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Target))
+            {
+                builder.Append("  target:");
+                builder.AppendLine($" '{Target}'");
+            }
+
+            if (Optional.IsDefined(Scope))
+            {
+                builder.Append("  scope:");
+                AppendChildObject(builder, Scope, options, 2);
+            }
+
+            if (Optional.IsDefined(TargetType))
+            {
+                builder.Append("  targetType:");
+                builder.AppendLine($" '{TargetType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BytesToCapturePerPacket))
+            {
+                builder.Append("  bytesToCapturePerPacket:");
+                builder.AppendLine($" '{BytesToCapturePerPacket.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalBytesPerSession))
+            {
+                builder.Append("  totalBytesPerSession:");
+                builder.AppendLine($" '{TotalBytesPerSession.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TimeLimitInSeconds))
+            {
+                builder.Append("  timeLimitInSeconds:");
+                builder.AppendLine($" '{TimeLimitInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StorageLocation))
+            {
+                builder.Append("  storageLocation:");
+                AppendChildObject(builder, StorageLocation, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Filters))
+            {
+                builder.Append("  filters:");
+                builder.AppendLine(" [");
+                foreach (var item in Filters)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PacketCaptureData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PacketCaptureData>)this).GetFormatFromOptions(options) : options.Format;
@@ -307,6 +417,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PacketCaptureData)} does not support '{options.Format}' format.");
             }
@@ -323,6 +435,8 @@ namespace Azure.ResourceManager.Network
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePacketCaptureData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PacketCaptureData)} does not support '{options.Format}' format.");
             }

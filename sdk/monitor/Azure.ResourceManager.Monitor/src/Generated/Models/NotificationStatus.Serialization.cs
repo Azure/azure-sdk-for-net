@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class NotificationStatus : IUtf8JsonSerializable, IJsonModel<NotificationStatus>
+    public partial class NotificationStatus : IUtf8JsonSerializable, IJsonModel<NotificationStatus>, IPersistableModel<NotificationStatus>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -155,6 +156,61 @@ namespace Azure.ResourceManager.Monitor.Models
             return new NotificationStatus(context.Value, state, Optional.ToNullable(completedTime), Optional.ToNullable(createdTime), Optional.ToList(actionDetails), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Context))
+            {
+                builder.Append("  context:");
+                AppendChildObject(builder, Context, options, 2);
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State}'");
+            }
+
+            if (Optional.IsDefined(CompletedOn))
+            {
+                builder.Append("  completedTime:");
+                builder.AppendLine($" '{CompletedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdTime:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ActionDetails))
+            {
+                builder.Append("  actionDetails:");
+                builder.AppendLine(" [");
+                foreach (var item in ActionDetails)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<NotificationStatus>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NotificationStatus>)this).GetFormatFromOptions(options) : options.Format;
@@ -163,6 +219,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NotificationStatus)} does not support '{options.Format}' format.");
             }
@@ -179,6 +237,8 @@ namespace Azure.ResourceManager.Monitor.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNotificationStatus(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NotificationStatus)} does not support '{options.Format}' format.");
             }

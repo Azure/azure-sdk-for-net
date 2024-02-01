@@ -7,13 +7,14 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.PostgreSql.Models;
 
 namespace Azure.ResourceManager.PostgreSql
 {
-    public partial class PostgreSqlServerData : IUtf8JsonSerializable, IJsonModel<PostgreSqlServerData>
+    public partial class PostgreSqlServerData : IUtf8JsonSerializable, IJsonModel<PostgreSqlServerData>, IPersistableModel<PostgreSqlServerData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlServerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -182,6 +183,180 @@ namespace Azure.ResourceManager.PostgreSql
             return DeserializePostgreSqlServerData(document.RootElement, options);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2);
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsDefined(AdministratorLogin))
+            {
+                builder.Append("  administratorLogin:");
+                builder.AppendLine($" '{AdministratorLogin}'");
+            }
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("  version:");
+                builder.AppendLine($" '{Version.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SslEnforcement))
+            {
+                builder.Append("  sslEnforcement:");
+                builder.AppendLine($" '{SslEnforcement.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MinimalTlsVersion))
+            {
+                builder.Append("  minimalTlsVersion:");
+                builder.AppendLine($" '{MinimalTlsVersion.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ByokEnforcement))
+            {
+                builder.Append("  byokEnforcement:");
+                builder.AppendLine($" '{ByokEnforcement}'");
+            }
+
+            if (Optional.IsDefined(InfrastructureEncryption))
+            {
+                builder.Append("  infrastructureEncryption:");
+                builder.AppendLine($" '{InfrastructureEncryption.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UserVisibleState))
+            {
+                builder.Append("  userVisibleState:");
+                builder.AppendLine($" '{UserVisibleState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FullyQualifiedDomainName))
+            {
+                builder.Append("  fullyQualifiedDomainName:");
+                builder.AppendLine($" '{FullyQualifiedDomainName}'");
+            }
+
+            if (Optional.IsDefined(EarliestRestoreOn))
+            {
+                builder.Append("  earliestRestoreDate:");
+                builder.AppendLine($" '{EarliestRestoreOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StorageProfile))
+            {
+                builder.Append("  storageProfile:");
+                AppendChildObject(builder, StorageProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(ReplicationRole))
+            {
+                builder.Append("  replicationRole:");
+                builder.AppendLine($" '{ReplicationRole}'");
+            }
+
+            if (Optional.IsDefined(MasterServerId))
+            {
+                builder.Append("  masterServerId:");
+                builder.AppendLine($" '{MasterServerId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReplicaCapacity))
+            {
+                builder.Append("  replicaCapacity:");
+                builder.AppendLine($" '{ReplicaCapacity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                builder.Append("  publicNetworkAccess:");
+                builder.AppendLine($" '{PublicNetworkAccess.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                builder.Append("  privateEndpointConnections:");
+                builder.AppendLine(" [");
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PostgreSqlServerData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlServerData>)this).GetFormatFromOptions(options) : options.Format;
@@ -190,6 +365,8 @@ namespace Azure.ResourceManager.PostgreSql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PostgreSqlServerData)} does not support '{options.Format}' format.");
             }
@@ -206,6 +383,8 @@ namespace Azure.ResourceManager.PostgreSql
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePostgreSqlServerData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PostgreSqlServerData)} does not support '{options.Format}' format.");
             }

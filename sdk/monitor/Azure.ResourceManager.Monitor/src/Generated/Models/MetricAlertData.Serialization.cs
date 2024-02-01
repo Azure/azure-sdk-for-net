@@ -8,14 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using System.Xml;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class MetricAlertData : IUtf8JsonSerializable, IJsonModel<MetricAlertData>
+    public partial class MetricAlertData : IUtf8JsonSerializable, IJsonModel<MetricAlertData>, IPersistableModel<MetricAlertData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricAlertData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -357,6 +359,171 @@ namespace Azure.ResourceManager.Monitor
             return new MetricAlertData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, severity, enabled, scopes, evaluationFrequency, windowSize, Optional.ToNullable(targetResourceType), Optional.ToNullable(targetResourceRegion), criteria, Optional.ToNullable(autoMitigate), Optional.ToList(actions), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(isMigrated), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(Severity))
+            {
+                builder.Append("  severity:");
+                builder.AppendLine($" '{Severity.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("  enabled:");
+                var boolValue = IsEnabled == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(Scopes))
+            {
+                builder.Append("  scopes:");
+                builder.AppendLine(" [");
+                foreach (var item in Scopes)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(EvaluationFrequency))
+            {
+                builder.Append("  evaluationFrequency:");
+                var formattedTimeSpan = XmlConvert.ToString(EvaluationFrequency);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(WindowSize))
+            {
+                builder.Append("  windowSize:");
+                var formattedTimeSpan = XmlConvert.ToString(WindowSize);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(TargetResourceType))
+            {
+                builder.Append("  targetResourceType:");
+                builder.AppendLine($" '{TargetResourceType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetResourceRegion))
+            {
+                builder.Append("  targetResourceRegion:");
+                builder.AppendLine($" '{TargetResourceRegion.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Criteria))
+            {
+                builder.Append("  criteria:");
+                AppendChildObject(builder, Criteria, options, 2);
+            }
+
+            if (Optional.IsDefined(IsAutoMitigateEnabled))
+            {
+                builder.Append("  autoMitigate:");
+                var boolValue = IsAutoMitigateEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(Actions))
+            {
+                builder.Append("  actions:");
+                builder.AppendLine(" [");
+                foreach (var item in Actions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(LastUpdatedOn))
+            {
+                builder.Append("  lastUpdatedTime:");
+                builder.AppendLine($" '{LastUpdatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsMigrated))
+            {
+                builder.Append("  isMigrated:");
+                var boolValue = IsMigrated.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MetricAlertData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MetricAlertData>)this).GetFormatFromOptions(options) : options.Format;
@@ -365,6 +532,8 @@ namespace Azure.ResourceManager.Monitor
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MetricAlertData)} does not support '{options.Format}' format.");
             }
@@ -381,6 +550,8 @@ namespace Azure.ResourceManager.Monitor
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMetricAlertData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MetricAlertData)} does not support '{options.Format}' format.");
             }

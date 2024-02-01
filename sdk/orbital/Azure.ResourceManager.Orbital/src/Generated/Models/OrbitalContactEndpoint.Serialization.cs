@@ -9,12 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
-    public partial class OrbitalContactEndpoint : IUtf8JsonSerializable, IJsonModel<OrbitalContactEndpoint>
+    public partial class OrbitalContactEndpoint : IUtf8JsonSerializable, IJsonModel<OrbitalContactEndpoint>, IPersistableModel<OrbitalContactEndpoint>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrbitalContactEndpoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -110,6 +111,50 @@ namespace Azure.ResourceManager.Orbital.Models
             return new OrbitalContactEndpoint(ipAddress, endPointName, port, protocol, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(IPAddress))
+            {
+                builder.Append("  ipAddress:");
+                builder.AppendLine($" '{IPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndPointName))
+            {
+                builder.Append("  endPointName:");
+                builder.AppendLine($" '{EndPointName}'");
+            }
+
+            if (Optional.IsDefined(Port))
+            {
+                builder.Append("  port:");
+                builder.AppendLine($" '{Port}'");
+            }
+
+            if (Optional.IsDefined(Protocol))
+            {
+                builder.Append("  protocol:");
+                builder.AppendLine($" '{Protocol.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<OrbitalContactEndpoint>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OrbitalContactEndpoint>)this).GetFormatFromOptions(options) : options.Format;
@@ -118,6 +163,8 @@ namespace Azure.ResourceManager.Orbital.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(OrbitalContactEndpoint)} does not support '{options.Format}' format.");
             }
@@ -134,6 +181,8 @@ namespace Azure.ResourceManager.Orbital.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeOrbitalContactEndpoint(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(OrbitalContactEndpoint)} does not support '{options.Format}' format.");
             }

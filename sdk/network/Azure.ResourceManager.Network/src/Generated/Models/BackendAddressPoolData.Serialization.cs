@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class BackendAddressPoolData : IUtf8JsonSerializable, IJsonModel<BackendAddressPoolData>
+    public partial class BackendAddressPoolData : IUtf8JsonSerializable, IJsonModel<BackendAddressPoolData>, IPersistableModel<BackendAddressPoolData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackendAddressPoolData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -391,6 +392,152 @@ namespace Azure.ResourceManager.Network
             return new BackendAddressPoolData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(location), Optional.ToList(tunnelInterfaces), Optional.ToList(loadBalancerBackendAddresses), Optional.ToList(backendIPConfigurations), Optional.ToList(loadBalancingRules), outboundRule, Optional.ToList(outboundRules), Optional.ToList(inboundNatRules), Optional.ToNullable(provisioningState), Optional.ToNullable(drainPeriodInSeconds), virtualNetwork, Optional.ToNullable(syncMode));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(TunnelInterfaces))
+            {
+                builder.Append("  tunnelInterfaces:");
+                builder.AppendLine(" [");
+                foreach (var item in TunnelInterfaces)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(LoadBalancerBackendAddresses))
+            {
+                builder.Append("  loadBalancerBackendAddresses:");
+                builder.AppendLine(" [");
+                foreach (var item in LoadBalancerBackendAddresses)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(BackendIPConfigurations))
+            {
+                builder.Append("  backendIPConfigurations:");
+                builder.AppendLine(" [");
+                foreach (var item in BackendIPConfigurations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(LoadBalancingRules))
+            {
+                builder.Append("  loadBalancingRules:");
+                builder.AppendLine(" [");
+                foreach (var item in LoadBalancingRules)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(OutboundRule))
+            {
+                builder.Append("  outboundRule:");
+                AppendChildObject(builder, OutboundRule, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(OutboundRules))
+            {
+                builder.Append("  outboundRules:");
+                builder.AppendLine(" [");
+                foreach (var item in OutboundRules)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(InboundNatRules))
+            {
+                builder.Append("  inboundNatRules:");
+                builder.AppendLine(" [");
+                foreach (var item in InboundNatRules)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DrainPeriodInSeconds))
+            {
+                builder.Append("  drainPeriodInSeconds:");
+                builder.AppendLine($" '{DrainPeriodInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VirtualNetwork))
+            {
+                builder.Append("  virtualNetwork:");
+                AppendChildObject(builder, VirtualNetwork, options, 2);
+            }
+
+            if (Optional.IsDefined(SyncMode))
+            {
+                builder.Append("  syncMode:");
+                builder.AppendLine($" '{SyncMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BackendAddressPoolData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackendAddressPoolData>)this).GetFormatFromOptions(options) : options.Format;
@@ -399,6 +546,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BackendAddressPoolData)} does not support '{options.Format}' format.");
             }
@@ -415,6 +564,8 @@ namespace Azure.ResourceManager.Network
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBackendAddressPoolData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BackendAddressPoolData)} does not support '{options.Format}' format.");
             }

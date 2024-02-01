@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorWorkspaceDefaultIngestionSettings : IUtf8JsonSerializable, IJsonModel<MonitorWorkspaceDefaultIngestionSettings>
+    public partial class MonitorWorkspaceDefaultIngestionSettings : IUtf8JsonSerializable, IJsonModel<MonitorWorkspaceDefaultIngestionSettings>, IPersistableModel<MonitorWorkspaceDefaultIngestionSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorWorkspaceDefaultIngestionSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -107,6 +108,38 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorWorkspaceDefaultIngestionSettings(dataCollectionRuleResourceId.Value, dataCollectionEndpointResourceId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DataCollectionRuleResourceId))
+            {
+                builder.Append("  dataCollectionRuleResourceId:");
+                builder.AppendLine($" '{DataCollectionRuleResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DataCollectionEndpointResourceId))
+            {
+                builder.Append("  dataCollectionEndpointResourceId:");
+                builder.AppendLine($" '{DataCollectionEndpointResourceId.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MonitorWorkspaceDefaultIngestionSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MonitorWorkspaceDefaultIngestionSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -115,6 +148,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MonitorWorkspaceDefaultIngestionSettings)} does not support '{options.Format}' format.");
             }
@@ -131,6 +166,8 @@ namespace Azure.ResourceManager.Monitor.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMonitorWorkspaceDefaultIngestionSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MonitorWorkspaceDefaultIngestionSettings)} does not support '{options.Format}' format.");
             }

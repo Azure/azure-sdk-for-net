@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class PeeringDirectConnection : IUtf8JsonSerializable, IJsonModel<PeeringDirectConnection>
+    public partial class PeeringDirectConnection : IUtf8JsonSerializable, IJsonModel<PeeringDirectConnection>, IPersistableModel<PeeringDirectConnection>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringDirectConnection>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -215,6 +216,87 @@ namespace Azure.ResourceManager.Peering.Models
             return new PeeringDirectConnection(Optional.ToNullable(bandwidthInMbps), Optional.ToNullable(provisionedBandwidthInMbps), Optional.ToNullable(sessionAddressProvider), Optional.ToNullable(useForPeeringService), microsoftTrackingId.Value, Optional.ToNullable(peeringDBFacilityId), Optional.ToNullable(connectionState), bgpSession.Value, connectionIdentifier.Value, errorMessage.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BandwidthInMbps))
+            {
+                builder.Append("  bandwidthInMbps:");
+                builder.AppendLine($" '{BandwidthInMbps.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisionedBandwidthInMbps))
+            {
+                builder.Append("  provisionedBandwidthInMbps:");
+                builder.AppendLine($" '{ProvisionedBandwidthInMbps.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SessionAddressProvider))
+            {
+                builder.Append("  sessionAddressProvider:");
+                builder.AppendLine($" '{SessionAddressProvider.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UseForPeeringService))
+            {
+                builder.Append("  useForPeeringService:");
+                var boolValue = UseForPeeringService.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(MicrosoftTrackingId))
+            {
+                builder.Append("  microsoftTrackingId:");
+                builder.AppendLine($" '{MicrosoftTrackingId}'");
+            }
+
+            if (Optional.IsDefined(PeeringDBFacilityId))
+            {
+                builder.Append("  peeringDBFacilityId:");
+                builder.AppendLine($" '{PeeringDBFacilityId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ConnectionState))
+            {
+                builder.Append("  connectionState:");
+                builder.AppendLine($" '{ConnectionState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BgpSession))
+            {
+                builder.Append("  bgpSession:");
+                AppendChildObject(builder, BgpSession, options, 2);
+            }
+
+            if (Optional.IsDefined(ConnectionIdentifier))
+            {
+                builder.Append("  connectionIdentifier:");
+                builder.AppendLine($" '{ConnectionIdentifier}'");
+            }
+
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                builder.Append("  errorMessage:");
+                builder.AppendLine($" '{ErrorMessage}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PeeringDirectConnection>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PeeringDirectConnection>)this).GetFormatFromOptions(options) : options.Format;
@@ -223,6 +305,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PeeringDirectConnection)} does not support '{options.Format}' format.");
             }
@@ -239,6 +323,8 @@ namespace Azure.ResourceManager.Peering.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePeeringDirectConnection(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PeeringDirectConnection)} does not support '{options.Format}' format.");
             }

@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class RoutingConfiguration : IUtf8JsonSerializable, IJsonModel<RoutingConfiguration>
+    public partial class RoutingConfiguration : IUtf8JsonSerializable, IJsonModel<RoutingConfiguration>, IPersistableModel<RoutingConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutingConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -153,6 +154,56 @@ namespace Azure.ResourceManager.Network.Models
             return new RoutingConfiguration(associatedRouteTable, propagatedRouteTables.Value, vnetRoutes.Value, inboundRouteMap, outboundRouteMap, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AssociatedRouteTable))
+            {
+                builder.Append("  associatedRouteTable:");
+                AppendChildObject(builder, AssociatedRouteTable, options, 2);
+            }
+
+            if (Optional.IsDefined(PropagatedRouteTables))
+            {
+                builder.Append("  propagatedRouteTables:");
+                AppendChildObject(builder, PropagatedRouteTables, options, 2);
+            }
+
+            if (Optional.IsDefined(VnetRoutes))
+            {
+                builder.Append("  vnetRoutes:");
+                AppendChildObject(builder, VnetRoutes, options, 2);
+            }
+
+            if (Optional.IsDefined(InboundRouteMap))
+            {
+                builder.Append("  inboundRouteMap:");
+                AppendChildObject(builder, InboundRouteMap, options, 2);
+            }
+
+            if (Optional.IsDefined(OutboundRouteMap))
+            {
+                builder.Append("  outboundRouteMap:");
+                AppendChildObject(builder, OutboundRouteMap, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<RoutingConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RoutingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -161,6 +212,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RoutingConfiguration)} does not support '{options.Format}' format.");
             }
@@ -177,6 +230,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRoutingConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RoutingConfiguration)} does not support '{options.Format}' format.");
             }

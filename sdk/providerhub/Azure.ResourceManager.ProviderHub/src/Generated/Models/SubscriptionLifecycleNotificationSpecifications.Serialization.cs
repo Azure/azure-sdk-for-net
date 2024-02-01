@@ -8,12 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using System.Xml;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class SubscriptionLifecycleNotificationSpecifications : IUtf8JsonSerializable, IJsonModel<SubscriptionLifecycleNotificationSpecifications>
+    public partial class SubscriptionLifecycleNotificationSpecifications : IUtf8JsonSerializable, IJsonModel<SubscriptionLifecycleNotificationSpecifications>, IPersistableModel<SubscriptionLifecycleNotificationSpecifications>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionLifecycleNotificationSpecifications>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -117,6 +119,44 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new SubscriptionLifecycleNotificationSpecifications(Optional.ToList(subscriptionStateOverrideActions), Optional.ToNullable(softDeleteTtl), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(SubscriptionStateOverrideActions))
+            {
+                builder.Append("  subscriptionStateOverrideActions:");
+                builder.AppendLine(" [");
+                foreach (var item in SubscriptionStateOverrideActions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(SoftDeleteTtl))
+            {
+                builder.Append("  softDeleteTTL:");
+                var formattedTimeSpan = XmlConvert.ToString(SoftDeleteTtl.Value);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SubscriptionLifecycleNotificationSpecifications>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionLifecycleNotificationSpecifications>)this).GetFormatFromOptions(options) : options.Format;
@@ -125,6 +165,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SubscriptionLifecycleNotificationSpecifications)} does not support '{options.Format}' format.");
             }
@@ -141,6 +183,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSubscriptionLifecycleNotificationSpecifications(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SubscriptionLifecycleNotificationSpecifications)} does not support '{options.Format}' format.");
             }

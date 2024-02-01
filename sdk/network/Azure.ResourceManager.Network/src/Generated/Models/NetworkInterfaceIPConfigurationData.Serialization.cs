@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class NetworkInterfaceIPConfigurationData : IUtf8JsonSerializable, IJsonModel<NetworkInterfaceIPConfigurationData>
+    public partial class NetworkInterfaceIPConfigurationData : IUtf8JsonSerializable, IJsonModel<NetworkInterfaceIPConfigurationData>, IPersistableModel<NetworkInterfaceIPConfigurationData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkInterfaceIPConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -407,6 +408,160 @@ namespace Azure.ResourceManager.Network
             return new NetworkInterfaceIPConfigurationData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), gatewayLoadBalancer, Optional.ToList(virtualNetworkTaps), Optional.ToList(applicationGatewayBackendAddressPools), Optional.ToList(loadBalancerBackendAddressPools), Optional.ToList(loadBalancerInboundNatRules), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), Optional.ToNullable(privateIPAddressVersion), subnet.Value, Optional.ToNullable(primary), publicIPAddress.Value, Optional.ToList(applicationSecurityGroups), Optional.ToNullable(provisioningState), privateLinkConnectionProperties.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(GatewayLoadBalancer))
+            {
+                builder.Append("  gatewayLoadBalancer:");
+                AppendChildObject(builder, GatewayLoadBalancer, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(VirtualNetworkTaps))
+            {
+                builder.Append("  virtualNetworkTaps:");
+                builder.AppendLine(" [");
+                foreach (var item in VirtualNetworkTaps)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ApplicationGatewayBackendAddressPools))
+            {
+                builder.Append("  applicationGatewayBackendAddressPools:");
+                builder.AppendLine(" [");
+                foreach (var item in ApplicationGatewayBackendAddressPools)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(LoadBalancerBackendAddressPools))
+            {
+                builder.Append("  loadBalancerBackendAddressPools:");
+                builder.AppendLine(" [");
+                foreach (var item in LoadBalancerBackendAddressPools)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(LoadBalancerInboundNatRules))
+            {
+                builder.Append("  loadBalancerInboundNatRules:");
+                builder.AppendLine(" [");
+                foreach (var item in LoadBalancerInboundNatRules)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(PrivateIPAddress))
+            {
+                builder.Append("  privateIPAddress:");
+                builder.AppendLine($" '{PrivateIPAddress}'");
+            }
+
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
+            {
+                builder.Append("  privateIPAllocationMethod:");
+                builder.AppendLine($" '{PrivateIPAllocationMethod.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrivateIPAddressVersion))
+            {
+                builder.Append("  privateIPAddressVersion:");
+                builder.AppendLine($" '{PrivateIPAddressVersion.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Subnet))
+            {
+                builder.Append("  subnet:");
+                AppendChildObject(builder, Subnet, options, 2);
+            }
+
+            if (Optional.IsDefined(Primary))
+            {
+                builder.Append("  primary:");
+                var boolValue = Primary.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(PublicIPAddress))
+            {
+                builder.Append("  publicIPAddress:");
+                AppendChildObject(builder, PublicIPAddress, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(ApplicationSecurityGroups))
+            {
+                builder.Append("  applicationSecurityGroups:");
+                builder.AppendLine(" [");
+                foreach (var item in ApplicationSecurityGroups)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrivateLinkConnectionProperties))
+            {
+                builder.Append("  privateLinkConnectionProperties:");
+                AppendChildObject(builder, PrivateLinkConnectionProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<NetworkInterfaceIPConfigurationData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceIPConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
@@ -415,6 +570,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkInterfaceIPConfigurationData)} does not support '{options.Format}' format.");
             }
@@ -431,6 +588,8 @@ namespace Azure.ResourceManager.Network
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkInterfaceIPConfigurationData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkInterfaceIPConfigurationData)} does not support '{options.Format}' format.");
             }

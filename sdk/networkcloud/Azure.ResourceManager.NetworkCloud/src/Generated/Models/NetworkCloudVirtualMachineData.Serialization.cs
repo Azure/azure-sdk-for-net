@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.NetworkCloud.Models;
 
 namespace Azure.ResourceManager.NetworkCloud
 {
-    public partial class NetworkCloudVirtualMachineData : IUtf8JsonSerializable, IJsonModel<NetworkCloudVirtualMachineData>
+    public partial class NetworkCloudVirtualMachineData : IUtf8JsonSerializable, IJsonModel<NetworkCloudVirtualMachineData>, IPersistableModel<NetworkCloudVirtualMachineData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudVirtualMachineData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -538,6 +539,248 @@ namespace Azure.ResourceManager.NetworkCloud
             return new NetworkCloudVirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, adminUsername, availabilityZone.Value, bareMetalMachineId.Value, Optional.ToNullable(bootMethod), cloudServicesNetworkAttachment, clusterId.Value, cpuCores, Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(isolateEmulatorThread), memorySizeGB, Optional.ToList(networkAttachments), networkData.Value, Optional.ToList(placementHints), Optional.ToNullable(powerState), Optional.ToNullable(provisioningState), Optional.ToList(sshPublicKeys), storageProfile, userData.Value, Optional.ToNullable(virtioInterface), Optional.ToNullable(vmDeviceModel), vmImage, vmImageRepositoryCredentials.Value, Optional.ToList(volumes), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                builder.Append("  extendedLocation:");
+                AppendChildObject(builder, ExtendedLocation, options, 2);
+            }
+
+            if (Optional.IsDefined(AdminUsername))
+            {
+                builder.Append("  adminUsername:");
+                builder.AppendLine($" '{AdminUsername}'");
+            }
+
+            if (Optional.IsDefined(AvailabilityZone))
+            {
+                builder.Append("  availabilityZone:");
+                builder.AppendLine($" '{AvailabilityZone}'");
+            }
+
+            if (Optional.IsDefined(BareMetalMachineId))
+            {
+                builder.Append("  bareMetalMachineId:");
+                builder.AppendLine($" '{BareMetalMachineId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BootMethod))
+            {
+                builder.Append("  bootMethod:");
+                builder.AppendLine($" '{BootMethod.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CloudServicesNetworkAttachment))
+            {
+                builder.Append("  cloudServicesNetworkAttachment:");
+                AppendChildObject(builder, CloudServicesNetworkAttachment, options, 2);
+            }
+
+            if (Optional.IsDefined(ClusterId))
+            {
+                builder.Append("  clusterId:");
+                builder.AppendLine($" '{ClusterId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CpuCores))
+            {
+                builder.Append("  cpuCores:");
+                builder.AppendLine($" '{CpuCores.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DetailedStatus))
+            {
+                builder.Append("  detailedStatus:");
+                builder.AppendLine($" '{DetailedStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DetailedStatusMessage))
+            {
+                builder.Append("  detailedStatusMessage:");
+                builder.AppendLine($" '{DetailedStatusMessage}'");
+            }
+
+            if (Optional.IsDefined(IsolateEmulatorThread))
+            {
+                builder.Append("  isolateEmulatorThread:");
+                builder.AppendLine($" '{IsolateEmulatorThread.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MemorySizeInGB))
+            {
+                builder.Append("  memorySizeGB:");
+                builder.AppendLine($" '{MemorySizeInGB.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(NetworkAttachments))
+            {
+                builder.Append("  networkAttachments:");
+                builder.AppendLine(" [");
+                foreach (var item in NetworkAttachments)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(NetworkData))
+            {
+                builder.Append("  networkData:");
+                builder.AppendLine($" '{NetworkData}'");
+            }
+
+            if (Optional.IsCollectionDefined(PlacementHints))
+            {
+                builder.Append("  placementHints:");
+                builder.AppendLine(" [");
+                foreach (var item in PlacementHints)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(PowerState))
+            {
+                builder.Append("  powerState:");
+                builder.AppendLine($" '{PowerState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(SshPublicKeys))
+            {
+                builder.Append("  sshPublicKeys:");
+                builder.AppendLine(" [");
+                foreach (var item in SshPublicKeys)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(StorageProfile))
+            {
+                builder.Append("  storageProfile:");
+                AppendChildObject(builder, StorageProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(UserData))
+            {
+                builder.Append("  userData:");
+                builder.AppendLine($" '{UserData}'");
+            }
+
+            if (Optional.IsDefined(VirtioInterface))
+            {
+                builder.Append("  virtioInterface:");
+                builder.AppendLine($" '{VirtioInterface.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VmDeviceModel))
+            {
+                builder.Append("  vmDeviceModel:");
+                builder.AppendLine($" '{VmDeviceModel.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VmImage))
+            {
+                builder.Append("  vmImage:");
+                builder.AppendLine($" '{VmImage}'");
+            }
+
+            if (Optional.IsDefined(VmImageRepositoryCredentials))
+            {
+                builder.Append("  vmImageRepositoryCredentials:");
+                AppendChildObject(builder, VmImageRepositoryCredentials, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Volumes))
+            {
+                builder.Append("  volumes:");
+                builder.AppendLine(" [");
+                foreach (var item in Volumes)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<NetworkCloudVirtualMachineData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudVirtualMachineData>)this).GetFormatFromOptions(options) : options.Format;
@@ -546,6 +789,8 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkCloudVirtualMachineData)} does not support '{options.Format}' format.");
             }
@@ -562,6 +807,8 @@ namespace Azure.ResourceManager.NetworkCloud
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkCloudVirtualMachineData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkCloudVirtualMachineData)} does not support '{options.Format}' format.");
             }
