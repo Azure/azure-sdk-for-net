@@ -3,6 +3,7 @@
 
 using System.Buffers;
 using System.ClientModel.Internal;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,28 +36,24 @@ public abstract class PipelineResponse : IDisposable
     /// </summary>
     public abstract Stream? ContentStream { get; set; }
 
+    private byte[]? _contentBytes;
     public virtual BinaryData Content
     {
         get
         {
-            if (ContentStream == null)
+            if (ContentStream is null)
             {
                 return s_emptyBinaryData;
             }
 
-            if (!TryGetBufferedContent(out MemoryStream bufferedContent))
+            if (_contentBytes is not null)
             {
-                throw new InvalidOperationException($"The response is not buffered.");
+                return BinaryData.FromBytes(_contentBytes);
             }
 
-            if (bufferedContent.TryGetBuffer(out ArraySegment<byte> segment))
-            {
-                return new BinaryData(segment.AsMemory());
-            }
-            else
-            {
-                return new BinaryData(bufferedContent.ToArray());
-            }
+            BufferContent();
+            Debug.Assert(_contentBytes is not null);
+            return BinaryData.FromBytes(_contentBytes!);
         }
     }
 
@@ -123,6 +120,9 @@ public abstract class PipelineResponse : IDisposable
         responseContentStream.Dispose();
         bufferStream.Position = 0;
         ContentStream = bufferStream;
+
+        // TODO: Come back and optimize - this is only for POC at this stage.
+        _contentBytes= bufferStream.ToArray();
     }
 
     private static async Task CopyToAsync(Stream source, Stream destination, TimeSpan timeout, CancellationTokenSource cancellationTokenSource)
