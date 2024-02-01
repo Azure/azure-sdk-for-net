@@ -16,11 +16,7 @@ public partial class ImportBusinessMetadataRequest
     internal virtual RequestContent ToRequestContent()
     {
         MultipartFormDataContent content = new MutipartFormDataContent();
-        content.Add(MultipartContent.Create(File), new Dictionary<string, string>()
-        {
-            ["Content-Disposition"] = $"form-data; name=file; filename=file",
-            ["Content-Type"] = "multipart/form-data",
-        });
+        content.Add(MultipartContent.Create(File), "file", "file", null);
         return content;
     }
 

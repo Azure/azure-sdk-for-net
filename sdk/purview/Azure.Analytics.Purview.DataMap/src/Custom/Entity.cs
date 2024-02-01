@@ -30,9 +30,10 @@ public partial class Entity
         uri.AppendPath("/atlas/v2/entity/businessmetadata/import", false);
         uri.AppendQuery("api-version", _apiVersion, true);
         request.Uri = uri;
-        request.Headers.Add("Accept", "multipart/form-data");
+        request.Headers.Add("Accept", "application/json");
         request.Headers.Add("content-type", "multipart/form-data");
         request.Content = content;
+        (content as MultipartFormDataContent).ApplyToRequest(request);
         return message;
     }
 }
