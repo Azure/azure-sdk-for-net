@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiOperationData : IUtf8JsonSerializable, IJsonModel<ApiOperationData>
+    public partial class ApiOperationData : IUtf8JsonSerializable, IJsonModel<ApiOperationData>, IPersistableModel<ApiOperationData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiOperationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -262,6 +263,108 @@ namespace Azure.ResourceManager.ApiManagement
             return new ApiOperationData(id, name, type, systemData.Value, Optional.ToList(templateParameters), description.Value, request.Value, Optional.ToList(responses), policies.Value, displayName.Value, method.Value, uriTemplate.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(TemplateParameters))
+            {
+                builder.Append("  templateParameters:");
+                builder.AppendLine(" [");
+                foreach (var item in TemplateParameters)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(Request))
+            {
+                builder.Append("  request:");
+                AppendChildObject(builder, Request, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Responses))
+            {
+                builder.Append("  responses:");
+                builder.AppendLine(" [");
+                foreach (var item in Responses)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Policies))
+            {
+                builder.Append("  policies:");
+                builder.AppendLine($" '{Policies}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(Method))
+            {
+                builder.Append("  method:");
+                builder.AppendLine($" '{Method}'");
+            }
+
+            if (Optional.IsDefined(UriTemplate))
+            {
+                builder.Append("  urlTemplate:");
+                builder.AppendLine($" '{UriTemplate}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ApiOperationData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiOperationData>)this).GetFormatFromOptions(options) : options.Format;
@@ -270,6 +373,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApiOperationData)} does not support '{options.Format}' format.");
             }
@@ -286,6 +391,8 @@ namespace Azure.ResourceManager.ApiManagement
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeApiOperationData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ApiOperationData)} does not support '{options.Format}' format.");
             }

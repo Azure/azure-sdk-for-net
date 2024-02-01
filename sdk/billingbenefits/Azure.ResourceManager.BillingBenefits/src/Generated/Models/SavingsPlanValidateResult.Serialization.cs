@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    public partial class SavingsPlanValidateResult : IUtf8JsonSerializable, IJsonModel<SavingsPlanValidateResult>
+    public partial class SavingsPlanValidateResult : IUtf8JsonSerializable, IJsonModel<SavingsPlanValidateResult>, IPersistableModel<SavingsPlanValidateResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SavingsPlanValidateResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -114,6 +115,45 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new SavingsPlanValidateResult(Optional.ToNullable(valid), reasonCode.Value, reason.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(IsValid))
+            {
+                builder.Append("  valid:");
+                var boolValue = IsValid.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ReasonCode))
+            {
+                builder.Append("  reasonCode:");
+                builder.AppendLine($" '{ReasonCode}'");
+            }
+
+            if (Optional.IsDefined(Reason))
+            {
+                builder.Append("  reason:");
+                builder.AppendLine($" '{Reason}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SavingsPlanValidateResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanValidateResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -122,6 +162,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SavingsPlanValidateResult)} does not support '{options.Format}' format.");
             }
@@ -138,6 +180,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSavingsPlanValidateResult(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SavingsPlanValidateResult)} does not support '{options.Format}' format.");
             }

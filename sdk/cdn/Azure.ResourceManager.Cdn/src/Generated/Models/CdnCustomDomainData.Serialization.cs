@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class CdnCustomDomainData : IUtf8JsonSerializable, IJsonModel<CdnCustomDomainData>
+    public partial class CdnCustomDomainData : IUtf8JsonSerializable, IJsonModel<CdnCustomDomainData>, IPersistableModel<CdnCustomDomainData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CdnCustomDomainData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -247,6 +248,92 @@ namespace Azure.ResourceManager.Cdn
             return new CdnCustomDomainData(id, name, type, systemData.Value, hostName.Value, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsParameters.Value, validationData.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(HostName))
+            {
+                builder.Append("  hostName:");
+                builder.AppendLine($" '{HostName}'");
+            }
+
+            if (Optional.IsDefined(ResourceState))
+            {
+                builder.Append("  resourceState:");
+                builder.AppendLine($" '{ResourceState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CustomHttpsProvisioningState))
+            {
+                builder.Append("  customHttpsProvisioningState:");
+                builder.AppendLine($" '{CustomHttpsProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CustomHttpsAvailabilityState))
+            {
+                builder.Append("  customHttpsProvisioningSubstate:");
+                builder.AppendLine($" '{CustomHttpsAvailabilityState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CustomDomainHttpsContent))
+            {
+                builder.Append("  customHttpsParameters:");
+                AppendChildObject(builder, CustomDomainHttpsContent, options, 2);
+            }
+
+            if (Optional.IsDefined(ValidationData))
+            {
+                builder.Append("  validationData:");
+                builder.AppendLine($" '{ValidationData}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<CdnCustomDomainData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CdnCustomDomainData>)this).GetFormatFromOptions(options) : options.Format;
@@ -255,6 +342,8 @@ namespace Azure.ResourceManager.Cdn
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CdnCustomDomainData)} does not support '{options.Format}' format.");
             }
@@ -271,6 +360,8 @@ namespace Azure.ResourceManager.Cdn
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCdnCustomDomainData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CdnCustomDomainData)} does not support '{options.Format}' format.");
             }

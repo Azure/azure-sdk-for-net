@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class VmHostPlacementPolicyProperties : IUtf8JsonSerializable, IJsonModel<VmHostPlacementPolicyProperties>
+    public partial class VmHostPlacementPolicyProperties : IUtf8JsonSerializable, IJsonModel<VmHostPlacementPolicyProperties>, IPersistableModel<VmHostPlacementPolicyProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmHostPlacementPolicyProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -212,6 +213,100 @@ namespace Azure.ResourceManager.Avs.Models
             return new VmHostPlacementPolicyProperties(type, Optional.ToNullable(state), displayName.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData, vmMembers, hostMembers, affinityType, Optional.ToNullable(affinityStrength), Optional.ToNullable(azureHybridBenefitType));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(VmMembers))
+            {
+                builder.Append("  vmMembers:");
+                builder.AppendLine(" [");
+                foreach (var item in VmMembers)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(HostMembers))
+            {
+                builder.Append("  hostMembers:");
+                builder.AppendLine(" [");
+                foreach (var item in HostMembers)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(AffinityType))
+            {
+                builder.Append("  affinityType:");
+                builder.AppendLine($" '{AffinityType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AffinityStrength))
+            {
+                builder.Append("  affinityStrength:");
+                builder.AppendLine($" '{AffinityStrength.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AzureHybridBenefitType))
+            {
+                builder.Append("  azureHybridBenefitType:");
+                builder.AppendLine($" '{AzureHybridBenefitType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PolicyType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{PolicyType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VmHostPlacementPolicyProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VmHostPlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -220,6 +315,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VmHostPlacementPolicyProperties)} does not support '{options.Format}' format.");
             }
@@ -236,6 +333,8 @@ namespace Azure.ResourceManager.Avs.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVmHostPlacementPolicyProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VmHostPlacementPolicyProperties)} does not support '{options.Format}' format.");
             }

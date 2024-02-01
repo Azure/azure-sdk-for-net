@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using System.Xml;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Automanage.Models;
@@ -16,7 +18,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automanage
 {
-    public partial class AutomanageConfigurationProfileAssignmentReportData : IUtf8JsonSerializable, IJsonModel<AutomanageConfigurationProfileAssignmentReportData>
+    public partial class AutomanageConfigurationProfileAssignmentReportData : IUtf8JsonSerializable, IJsonModel<AutomanageConfigurationProfileAssignmentReportData>, IPersistableModel<AutomanageConfigurationProfileAssignmentReportData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomanageConfigurationProfileAssignmentReportData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -287,6 +289,116 @@ namespace Azure.ResourceManager.Automanage
             return new AutomanageConfigurationProfileAssignmentReportData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(duration), type0.Value, status.Value, configurationProfile.Value, Optional.ToList(resources), error.Value, reportFormatVersion.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startTime:");
+                builder.AppendLine($" '{StartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndOn))
+            {
+                builder.Append("  endTime:");
+                builder.AppendLine($" '{EndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("  lastModifiedTime:");
+                builder.AppendLine($" '{LastModifiedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Duration))
+            {
+                builder.Append("  duration:");
+                var formattedTimeSpan = XmlConvert.ToString(Duration.Value);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(ConfigurationProfileAssignmentProcessingType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ConfigurationProfileAssignmentProcessingType}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status}'");
+            }
+
+            if (Optional.IsDefined(ConfigurationProfile))
+            {
+                builder.Append("  configurationProfile:");
+                builder.AppendLine($" '{ConfigurationProfile}'");
+            }
+
+            if (Optional.IsCollectionDefined(Resources))
+            {
+                builder.Append("  resources:");
+                builder.AppendLine(" [");
+                foreach (var item in Resources)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Error))
+            {
+                builder.Append("  error:");
+                AppendChildObject(builder, Error, options, 2);
+            }
+
+            if (Optional.IsDefined(ReportFormatVersion))
+            {
+                builder.Append("  reportFormatVersion:");
+                builder.AppendLine($" '{ReportFormatVersion}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AutomanageConfigurationProfileAssignmentReportData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomanageConfigurationProfileAssignmentReportData>)this).GetFormatFromOptions(options) : options.Format;
@@ -295,6 +407,8 @@ namespace Azure.ResourceManager.Automanage
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentReportData)} does not support '{options.Format}' format.");
             }
@@ -311,6 +425,8 @@ namespace Azure.ResourceManager.Automanage
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAutomanageConfigurationProfileAssignmentReportData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentReportData)} does not support '{options.Format}' format.");
             }

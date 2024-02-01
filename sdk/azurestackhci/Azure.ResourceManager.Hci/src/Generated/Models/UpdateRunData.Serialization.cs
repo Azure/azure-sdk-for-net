@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Hci.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    public partial class UpdateRunData : IUtf8JsonSerializable, IJsonModel<UpdateRunData>
+    public partial class UpdateRunData : IUtf8JsonSerializable, IJsonModel<UpdateRunData>, IPersistableModel<UpdateRunData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateRunData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -357,6 +358,139 @@ namespace Azure.ResourceManager.Hci
             return new UpdateRunData(id, name, type, systemData.Value, Optional.ToNullable(location), Optional.ToNullable(provisioningState), Optional.ToNullable(timeStarted), Optional.ToNullable(lastUpdatedTime), duration.Value, Optional.ToNullable(state), name0.Value, description.Value, errorMessage.Value, status.Value, Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToNullable(lastUpdatedTimeUtc), Optional.ToList(steps), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TimeStarted))
+            {
+                builder.Append("  timeStarted:");
+                builder.AppendLine($" '{TimeStarted.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastUpdatedOn))
+            {
+                builder.Append("  lastUpdatedTime:");
+                builder.AppendLine($" '{LastUpdatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Duration))
+            {
+                builder.Append("  duration:");
+                builder.AppendLine($" '{Duration}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NamePropertiesProgressName))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{NamePropertiesProgressName}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                builder.Append("  errorMessage:");
+                builder.AppendLine($" '{ErrorMessage}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status}'");
+            }
+
+            if (Optional.IsDefined(StartTimeUtc))
+            {
+                builder.Append("  startTimeUtc:");
+                builder.AppendLine($" '{StartTimeUtc.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndTimeUtc))
+            {
+                builder.Append("  endTimeUtc:");
+                builder.AppendLine($" '{EndTimeUtc.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastUpdatedTimeUtc))
+            {
+                builder.Append("  lastUpdatedTimeUtc:");
+                builder.AppendLine($" '{LastUpdatedTimeUtc.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Steps))
+            {
+                builder.Append("  steps:");
+                builder.AppendLine(" [");
+                foreach (var item in Steps)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<UpdateRunData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UpdateRunData>)this).GetFormatFromOptions(options) : options.Format;
@@ -365,6 +499,8 @@ namespace Azure.ResourceManager.Hci
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(UpdateRunData)} does not support '{options.Format}' format.");
             }
@@ -381,6 +517,8 @@ namespace Azure.ResourceManager.Hci
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeUpdateRunData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(UpdateRunData)} does not support '{options.Format}' format.");
             }

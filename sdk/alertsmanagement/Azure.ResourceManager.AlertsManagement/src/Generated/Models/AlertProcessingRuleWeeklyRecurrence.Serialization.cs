@@ -8,12 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using System.Xml;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class AlertProcessingRuleWeeklyRecurrence : IUtf8JsonSerializable, IJsonModel<AlertProcessingRuleWeeklyRecurrence>
+    public partial class AlertProcessingRuleWeeklyRecurrence : IUtf8JsonSerializable, IJsonModel<AlertProcessingRuleWeeklyRecurrence>, IPersistableModel<AlertProcessingRuleWeeklyRecurrence>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertProcessingRuleWeeklyRecurrence>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -133,6 +135,57 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             return new AlertProcessingRuleWeeklyRecurrence(recurrenceType, Optional.ToNullable(startTime), Optional.ToNullable(endTime), serializedAdditionalRawData, daysOfWeek);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(DaysOfWeek))
+            {
+                builder.Append("  daysOfWeek:");
+                builder.AppendLine(" [");
+                foreach (var item in DaysOfWeek)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(RecurrenceType))
+            {
+                builder.Append("  recurrenceType:");
+                builder.AppendLine($" '{RecurrenceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startTime:");
+                var formattedTimeSpan = XmlConvert.ToString(StartOn.Value);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(EndOn))
+            {
+                builder.Append("  endTime:");
+                var formattedTimeSpan = XmlConvert.ToString(EndOn.Value);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AlertProcessingRuleWeeklyRecurrence>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleWeeklyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
@@ -141,6 +194,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AlertProcessingRuleWeeklyRecurrence)} does not support '{options.Format}' format.");
             }
@@ -157,6 +212,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAlertProcessingRuleWeeklyRecurrence(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AlertProcessingRuleWeeklyRecurrence)} does not support '{options.Format}' format.");
             }

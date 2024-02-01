@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciClusterNode : IUtf8JsonSerializable, IJsonModel<HciClusterNode>
+    public partial class HciClusterNode : IUtf8JsonSerializable, IJsonModel<HciClusterNode>, IPersistableModel<HciClusterNode>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciClusterNode>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -255,6 +256,110 @@ namespace Azure.ResourceManager.Hci.Models
             return new HciClusterNode(name.Value, Optional.ToNullable(id), Optional.ToNullable(windowsServerSubscription), Optional.ToNullable(nodeType), ehcResourceId.Value, manufacturer.Value, model.Value, osName.Value, osVersion.Value, osDisplayVersion.Value, serialNumber.Value, Optional.ToNullable(coreCount), Optional.ToNullable(memoryInGiB), Optional.ToNullable(lastLicensingTimestamp), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WindowsServerSubscription))
+            {
+                builder.Append("  windowsServerSubscription:");
+                builder.AppendLine($" '{WindowsServerSubscription.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NodeType))
+            {
+                builder.Append("  nodeType:");
+                builder.AppendLine($" '{NodeType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EhcResourceId))
+            {
+                builder.Append("  ehcResourceId:");
+                builder.AppendLine($" '{EhcResourceId}'");
+            }
+
+            if (Optional.IsDefined(Manufacturer))
+            {
+                builder.Append("  manufacturer:");
+                builder.AppendLine($" '{Manufacturer}'");
+            }
+
+            if (Optional.IsDefined(Model))
+            {
+                builder.Append("  model:");
+                builder.AppendLine($" '{Model}'");
+            }
+
+            if (Optional.IsDefined(OSName))
+            {
+                builder.Append("  osName:");
+                builder.AppendLine($" '{OSName}'");
+            }
+
+            if (Optional.IsDefined(OSVersion))
+            {
+                builder.Append("  osVersion:");
+                builder.AppendLine($" '{OSVersion}'");
+            }
+
+            if (Optional.IsDefined(OSDisplayVersion))
+            {
+                builder.Append("  osDisplayVersion:");
+                builder.AppendLine($" '{OSDisplayVersion}'");
+            }
+
+            if (Optional.IsDefined(SerialNumber))
+            {
+                builder.Append("  serialNumber:");
+                builder.AppendLine($" '{SerialNumber}'");
+            }
+
+            if (Optional.IsDefined(CoreCount))
+            {
+                builder.Append("  coreCount:");
+                builder.AppendLine($" '{CoreCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MemoryInGiB))
+            {
+                builder.Append("  memoryInGiB:");
+                builder.AppendLine($" '{MemoryInGiB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastLicensingTimestamp))
+            {
+                builder.Append("  lastLicensingTimestamp:");
+                builder.AppendLine($" '{LastLicensingTimestamp.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<HciClusterNode>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HciClusterNode>)this).GetFormatFromOptions(options) : options.Format;
@@ -263,6 +368,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HciClusterNode)} does not support '{options.Format}' format.");
             }
@@ -279,6 +386,8 @@ namespace Azure.ResourceManager.Hci.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHciClusterNode(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HciClusterNode)} does not support '{options.Format}' format.");
             }

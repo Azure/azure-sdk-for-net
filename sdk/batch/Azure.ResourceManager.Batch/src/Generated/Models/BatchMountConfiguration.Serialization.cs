@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchMountConfiguration : IUtf8JsonSerializable, IJsonModel<BatchMountConfiguration>
+    public partial class BatchMountConfiguration : IUtf8JsonSerializable, IJsonModel<BatchMountConfiguration>, IPersistableModel<BatchMountConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchMountConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -137,6 +138,50 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchMountConfiguration(azureBlobFileSystemConfiguration.Value, nfsMountConfiguration.Value, cifsMountConfiguration.Value, azureFileShareConfiguration.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BlobFileSystemConfiguration))
+            {
+                builder.Append("  azureBlobFileSystemConfiguration:");
+                AppendChildObject(builder, BlobFileSystemConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(NfsMountConfiguration))
+            {
+                builder.Append("  nfsMountConfiguration:");
+                AppendChildObject(builder, NfsMountConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(CifsMountConfiguration))
+            {
+                builder.Append("  cifsMountConfiguration:");
+                AppendChildObject(builder, CifsMountConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(FileShareConfiguration))
+            {
+                builder.Append("  azureFileShareConfiguration:");
+                AppendChildObject(builder, FileShareConfiguration, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BatchMountConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BatchMountConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -145,6 +190,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BatchMountConfiguration)} does not support '{options.Format}' format.");
             }
@@ -161,6 +208,8 @@ namespace Azure.ResourceManager.Batch.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBatchMountConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BatchMountConfiguration)} does not support '{options.Format}' format.");
             }

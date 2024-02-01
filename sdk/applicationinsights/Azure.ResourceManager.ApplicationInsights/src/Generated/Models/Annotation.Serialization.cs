@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class Annotation : IUtf8JsonSerializable, IJsonModel<Annotation>
+    public partial class Annotation : IUtf8JsonSerializable, IJsonModel<Annotation>, IPersistableModel<Annotation>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Annotation>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -147,6 +148,62 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new Annotation(annotationName.Value, category.Value, Optional.ToNullable(eventTime), id.Value, properties.Value, relatedAnnotation.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AnnotationName))
+            {
+                builder.Append("  AnnotationName:");
+                builder.AppendLine($" '{AnnotationName}'");
+            }
+
+            if (Optional.IsDefined(Category))
+            {
+                builder.Append("  Category:");
+                builder.AppendLine($" '{Category}'");
+            }
+
+            if (Optional.IsDefined(EventOn))
+            {
+                builder.Append("  EventTime:");
+                builder.AppendLine($" '{EventOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  Id:");
+                builder.AppendLine($" '{Id}'");
+            }
+
+            if (Optional.IsDefined(Properties))
+            {
+                builder.Append("  Properties:");
+                builder.AppendLine($" '{Properties}'");
+            }
+
+            if (Optional.IsDefined(RelatedAnnotation))
+            {
+                builder.Append("  RelatedAnnotation:");
+                builder.AppendLine($" '{RelatedAnnotation}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<Annotation>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<Annotation>)this).GetFormatFromOptions(options) : options.Format;
@@ -155,6 +212,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(Annotation)} does not support '{options.Format}' format.");
             }
@@ -171,6 +230,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAnnotation(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(Annotation)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class AdminCredentials : IUtf8JsonSerializable, IJsonModel<AdminCredentials>
+    public partial class AdminCredentials : IUtf8JsonSerializable, IJsonModel<AdminCredentials>, IPersistableModel<AdminCredentials>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdminCredentials>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -121,6 +122,50 @@ namespace Azure.ResourceManager.Avs.Models
             return new AdminCredentials(nsxtUsername.Value, nsxtPassword.Value, vcenterUsername.Value, vcenterPassword.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(NsxtUsername))
+            {
+                builder.Append("  nsxtUsername:");
+                builder.AppendLine($" '{NsxtUsername}'");
+            }
+
+            if (Optional.IsDefined(NsxtPassword))
+            {
+                builder.Append("  nsxtPassword:");
+                builder.AppendLine($" '{NsxtPassword}'");
+            }
+
+            if (Optional.IsDefined(VCenterUsername))
+            {
+                builder.Append("  vcenterUsername:");
+                builder.AppendLine($" '{VCenterUsername}'");
+            }
+
+            if (Optional.IsDefined(VCenterPassword))
+            {
+                builder.Append("  vcenterPassword:");
+                builder.AppendLine($" '{VCenterPassword}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AdminCredentials>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AdminCredentials>)this).GetFormatFromOptions(options) : options.Format;
@@ -129,6 +174,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AdminCredentials)} does not support '{options.Format}' format.");
             }
@@ -145,6 +192,8 @@ namespace Azure.ResourceManager.Avs.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAdminCredentials(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AdminCredentials)} does not support '{options.Format}' format.");
             }

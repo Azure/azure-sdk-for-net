@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
-    public partial class SavingsPlanOrderPaymentDetail : IUtf8JsonSerializable, IJsonModel<SavingsPlanOrderPaymentDetail>
+    public partial class SavingsPlanOrderPaymentDetail : IUtf8JsonSerializable, IJsonModel<SavingsPlanOrderPaymentDetail>, IPersistableModel<SavingsPlanOrderPaymentDetail>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SavingsPlanOrderPaymentDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -178,6 +179,68 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new SavingsPlanOrderPaymentDetail(Optional.ToNullable(dueDate), Optional.ToNullable(paymentDate), pricingCurrencyTotal.Value, billingCurrencyTotal.Value, Optional.ToNullable(status), extendedStatusInfo.Value, billingAccount.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DueOn))
+            {
+                builder.Append("  dueDate:");
+                builder.AppendLine($" '{DueOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PayOn))
+            {
+                builder.Append("  paymentDate:");
+                builder.AppendLine($" '{PayOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PricingCurrencyTotal))
+            {
+                builder.Append("  pricingCurrencyTotal:");
+                AppendChildObject(builder, PricingCurrencyTotal, options, 2);
+            }
+
+            if (Optional.IsDefined(BillingCurrencyTotal))
+            {
+                builder.Append("  billingCurrencyTotal:");
+                AppendChildObject(builder, BillingCurrencyTotal, options, 2);
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExtendedStatusInfo))
+            {
+                builder.Append("  extendedStatusInfo:");
+                AppendChildObject(builder, ExtendedStatusInfo, options, 2);
+            }
+
+            if (Optional.IsDefined(BillingAccount))
+            {
+                builder.Append("  billingAccount:");
+                builder.AppendLine($" '{BillingAccount}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SavingsPlanOrderPaymentDetail>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanOrderPaymentDetail>)this).GetFormatFromOptions(options) : options.Format;
@@ -186,6 +249,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SavingsPlanOrderPaymentDetail)} does not support '{options.Format}' format.");
             }
@@ -202,6 +267,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSavingsPlanOrderPaymentDetail(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SavingsPlanOrderPaymentDetail)} does not support '{options.Format}' format.");
             }

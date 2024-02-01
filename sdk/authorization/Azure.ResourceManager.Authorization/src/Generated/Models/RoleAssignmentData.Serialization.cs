@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Authorization.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    public partial class RoleAssignmentData : IUtf8JsonSerializable, IJsonModel<RoleAssignmentData>
+    public partial class RoleAssignmentData : IUtf8JsonSerializable, IJsonModel<RoleAssignmentData>, IPersistableModel<RoleAssignmentData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleAssignmentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -306,6 +307,122 @@ namespace Azure.ResourceManager.Authorization
             return new RoleAssignmentData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), description.Value, condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), Optional.ToNullable(updatedOn), createdBy.Value, updatedBy.Value, delegatedManagedIdentityResourceId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Scope))
+            {
+                builder.Append("  scope:");
+                builder.AppendLine($" '{Scope}'");
+            }
+
+            if (Optional.IsDefined(RoleDefinitionId))
+            {
+                builder.Append("  roleDefinitionId:");
+                builder.AppendLine($" '{RoleDefinitionId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrincipalId))
+            {
+                builder.Append("  principalId:");
+                builder.AppendLine($" '{PrincipalId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrincipalType))
+            {
+                builder.Append("  principalType:");
+                builder.AppendLine($" '{PrincipalType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(Condition))
+            {
+                builder.Append("  condition:");
+                builder.AppendLine($" '{Condition}'");
+            }
+
+            if (Optional.IsDefined(ConditionVersion))
+            {
+                builder.Append("  conditionVersion:");
+                builder.AppendLine($" '{ConditionVersion}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdOn:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UpdatedOn))
+            {
+                builder.Append("  updatedOn:");
+                builder.AppendLine($" '{UpdatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedBy))
+            {
+                builder.Append("  createdBy:");
+                builder.AppendLine($" '{CreatedBy}'");
+            }
+
+            if (Optional.IsDefined(UpdatedBy))
+            {
+                builder.Append("  updatedBy:");
+                builder.AppendLine($" '{UpdatedBy}'");
+            }
+
+            if (Optional.IsDefined(DelegatedManagedIdentityResourceId))
+            {
+                builder.Append("  delegatedManagedIdentityResourceId:");
+                builder.AppendLine($" '{DelegatedManagedIdentityResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<RoleAssignmentData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
@@ -314,6 +431,8 @@ namespace Azure.ResourceManager.Authorization
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RoleAssignmentData)} does not support '{options.Format}' format.");
             }
@@ -330,6 +449,8 @@ namespace Azure.ResourceManager.Authorization
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRoleAssignmentData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RoleAssignmentData)} does not support '{options.Format}' format.");
             }

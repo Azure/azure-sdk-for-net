@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Batch.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch
 {
-    public partial class BatchAccountData : IUtf8JsonSerializable, IJsonModel<BatchAccountData>
+    public partial class BatchAccountData : IUtf8JsonSerializable, IJsonModel<BatchAccountData>, IPersistableModel<BatchAccountData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -531,6 +532,197 @@ namespace Azure.ResourceManager.Batch
             return new BatchAccountData(id, name, type, systemData.Value, identity, accountEndpoint.Value, nodeManagementEndpoint.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(poolAllocationMode), keyVaultReference.Value, Optional.ToNullable(publicNetworkAccess), networkProfile.Value, Optional.ToList(privateEndpointConnections), autoStorage.Value, encryption.Value, Optional.ToNullable(dedicatedCoreQuota), Optional.ToNullable(lowPriorityCoreQuota), Optional.ToList(dedicatedCoreQuotaPerVmFamily), Optional.ToNullable(dedicatedCoreQuotaPerVmFamilyEnforced), Optional.ToNullable(poolQuota), Optional.ToNullable(activeJobAndJobScheduleQuota), Optional.ToList(allowedAuthenticationModes), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2);
+            }
+
+            if (Optional.IsDefined(AccountEndpoint))
+            {
+                builder.Append("  accountEndpoint:");
+                builder.AppendLine($" '{AccountEndpoint}'");
+            }
+
+            if (Optional.IsDefined(NodeManagementEndpoint))
+            {
+                builder.Append("  nodeManagementEndpoint:");
+                builder.AppendLine($" '{NodeManagementEndpoint}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PoolAllocationMode))
+            {
+                builder.Append("  poolAllocationMode:");
+                builder.AppendLine($" '{PoolAllocationMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(KeyVaultReference))
+            {
+                builder.Append("  keyVaultReference:");
+                AppendChildObject(builder, KeyVaultReference, options, 2);
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                builder.Append("  publicNetworkAccess:");
+                builder.AppendLine($" '{PublicNetworkAccess.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NetworkProfile))
+            {
+                builder.Append("  networkProfile:");
+                AppendChildObject(builder, NetworkProfile, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                builder.Append("  privateEndpointConnections:");
+                builder.AppendLine(" [");
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(AutoStorage))
+            {
+                builder.Append("  autoStorage:");
+                AppendChildObject(builder, AutoStorage, options, 2);
+            }
+
+            if (Optional.IsDefined(Encryption))
+            {
+                builder.Append("  encryption:");
+                AppendChildObject(builder, Encryption, options, 2);
+            }
+
+            if (Optional.IsDefined(DedicatedCoreQuota))
+            {
+                builder.Append("  dedicatedCoreQuota:");
+                builder.AppendLine($" '{DedicatedCoreQuota.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LowPriorityCoreQuota))
+            {
+                builder.Append("  lowPriorityCoreQuota:");
+                builder.AppendLine($" '{LowPriorityCoreQuota.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(DedicatedCoreQuotaPerVmFamily))
+            {
+                builder.Append("  dedicatedCoreQuotaPerVMFamily:");
+                builder.AppendLine(" [");
+                foreach (var item in DedicatedCoreQuotaPerVmFamily)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsDedicatedCoreQuotaPerVmFamilyEnforced))
+            {
+                builder.Append("  dedicatedCoreQuotaPerVMFamilyEnforced:");
+                var boolValue = IsDedicatedCoreQuotaPerVmFamilyEnforced.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(PoolQuota))
+            {
+                builder.Append("  poolQuota:");
+                builder.AppendLine($" '{PoolQuota.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ActiveJobAndJobScheduleQuota))
+            {
+                builder.Append("  activeJobAndJobScheduleQuota:");
+                builder.AppendLine($" '{ActiveJobAndJobScheduleQuota.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(AllowedAuthenticationModes))
+            {
+                builder.Append("  allowedAuthenticationModes:");
+                builder.AppendLine(" [");
+                foreach (var item in AllowedAuthenticationModes)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BatchAccountData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountData>)this).GetFormatFromOptions(options) : options.Format;
@@ -539,6 +731,8 @@ namespace Azure.ResourceManager.Batch
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BatchAccountData)} does not support '{options.Format}' format.");
             }
@@ -555,6 +749,8 @@ namespace Azure.ResourceManager.Batch
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBatchAccountData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BatchAccountData)} does not support '{options.Format}' format.");
             }

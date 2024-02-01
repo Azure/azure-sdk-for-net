@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    public partial class PSCredentialExecutionParameterDetails : IUtf8JsonSerializable, IJsonModel<PSCredentialExecutionParameterDetails>
+    public partial class PSCredentialExecutionParameterDetails : IUtf8JsonSerializable, IJsonModel<PSCredentialExecutionParameterDetails>, IPersistableModel<PSCredentialExecutionParameterDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PSCredentialExecutionParameterDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -115,6 +116,50 @@ namespace Azure.ResourceManager.Avs.Models
             return new PSCredentialExecutionParameterDetails(name, type, serializedAdditionalRawData, username.Value, password.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Username))
+            {
+                builder.Append("  username:");
+                builder.AppendLine($" '{Username}'");
+            }
+
+            if (Optional.IsDefined(Password))
+            {
+                builder.Append("  password:");
+                builder.AppendLine($" '{Password}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ParameterType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ParameterType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PSCredentialExecutionParameterDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PSCredentialExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -123,6 +168,8 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PSCredentialExecutionParameterDetails)} does not support '{options.Format}' format.");
             }
@@ -139,6 +186,8 @@ namespace Azure.ResourceManager.Avs.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePSCredentialExecutionParameterDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PSCredentialExecutionParameterDetails)} does not support '{options.Format}' format.");
             }
