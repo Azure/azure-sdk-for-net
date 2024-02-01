@@ -2213,5 +2213,44 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 });
             });
         }
+
+        [Test]
+        [RecordedTest]
+        public async Task Dataset_Avro_Create()
+        {
+            string name = "avro";
+            // Get the resource group
+            string rgName = Recording.GenerateAssetName($"adf-rg-{name}-");
+            var resourceGroup = await CreateResourceGroup(rgName, AzureLocation.WestUS2);
+            // Create a DataFactory
+            string dataFactoryName = Recording.GenerateAssetName($"adf-{name}-");
+            DataFactoryResource dataFactory = await CreateDataFactory(resourceGroup, dataFactoryName);
+            // Create a LinkedService
+            string accessKey = GetStorageAccountAccessKey(resourceGroup);
+            string linkedServiceName = Recording.GenerateAssetName($"adf-linkedservice-{name}-");
+            //await CreateLinkedService(dataFactory, linkedServiceName, accessKey);
+
+            // Create Dataset
+            string datasetName = Recording.GenerateAssetName($"adf-dataset-{name}-");
+            //var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, dataFunc(linkedServiceName));
+            //Assert.NotNull(result.Value.Id);
+
+            await CreateAzureDataLakeGen2LinkedService(dataFactory, linkedServiceName, "fakePassword");
+
+            DataFactoryLinkedServiceReference dataFactoryLinkedServiceReference = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName);
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AvroDataset(dataFactoryLinkedServiceReference)
+            {
+                //Schema = DataFactoryElement<BinaryData>.FromLiteral(BinaryData.FromString("{\"type\": \"record\",\"name\": \"HybridDelivery.ClientLibraryJob\",\"fields\": [{\"name\": \"TIMESTAMP\",\"type\": [\"string\",\"null\"]}]}")),
+                Schema = DataFactoryElement<BinaryData>.FromLiteral(BinaryData.FromString("123")),
+                DataLocation = new AzureBlobFSLocation()
+                {
+                    FileName = "TestQuerySchema.avro",
+                    FileSystem = "0-querytest",
+                    FolderPath = "querytest"
+                }
+            });
+
+            await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
+        }
     }
 }
