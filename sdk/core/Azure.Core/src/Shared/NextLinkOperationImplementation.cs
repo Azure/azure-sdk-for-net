@@ -4,8 +4,10 @@
 #nullable enable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,7 +22,6 @@ namespace Azure.Core
         private static readonly string[] SuccessStates = { "succeeded" };
 
         private readonly HeaderSource _headerSource;
-        private readonly bool _originalResponseHasLocation;
         private readonly Uri _startRequestUri;
         private readonly OperationFinalStateVia _finalStateVia;
         private readonly RequestMethod _requestMethod;
@@ -53,9 +54,8 @@ namespace Azure.Core
             {
                 return new CompletedOperation(failureState ?? GetOperationStateFromFinalResponse(requestMethod, response));
             }
-
-            var originalResponseHasLocation = response.Headers.TryGetValue("Location", out var lastKnownLocation);
-            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, originalResponseHasLocation, lastKnownLocation, finalStateVia, apiVersionStr);
+            response.Headers.TryGetValue("Location", out var lastKnownLocation);
+            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, apiVersionStr);
         }
 
         public static IOperation<T> Create<T>(
@@ -72,18 +72,17 @@ namespace Azure.Core
             return new OperationToOperationOfT<T>(operationSource, operation);
         }
 
-        public static IOperation? Create(
+        public static IOperation Create(
             HttpPipeline pipeline,
-            string id,
+            RehydrationToken rehydrationToken,
             string? apiVersionOverride = null)
         {
-            var lroDetails = BinaryData.FromBytes(Convert.FromBase64String(id)).ToObjectFromJson<Dictionary<string, string>>();
+            var lroDetails = ModelReaderWriter.Write(rehydrationToken).ToObjectFromJson<Dictionary<string, string>>();
             if (!Uri.TryCreate(lroDetails["InitialUri"], UriKind.Absolute, out var startRequestUri))
                 throw new InvalidOperationException("Invalid initial URI");
             if (!lroDetails.TryGetValue("NextRequestUri", out var nextRequestUri))
                 throw new InvalidOperationException("Invalid next request URI");
             RequestMethod requestMethod = new RequestMethod(lroDetails["RequestMethod"]);
-            bool originalResponseHasLocation = bool.Parse(lroDetails["OriginalResponseHasLocation"]);
             string lastKnownLocation = lroDetails["LastKnownLocation"];
             if (!Enum.TryParse(lroDetails["FinalStateVia"], out OperationFinalStateVia finalStateVia))
                 finalStateVia = OperationFinalStateVia.Location;
@@ -91,17 +90,17 @@ namespace Azure.Core
             if (!Enum.TryParse(lroDetails["HeaderSource"], out HeaderSource headerSource))
                 headerSource = HeaderSource.None;
 
-            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, originalResponseHasLocation, lastKnownLocation, finalStateVia, apiVersionStr);
+            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, apiVersionStr);
         }
 
         public static IOperation<T>? Create<T>(
             IOperationSource<T> operationSource,
             HttpPipeline pipeline,
-            string id,
+            RehydrationToken rehydrationToken,
             string? apiVersionOverride = null)
         {
-            var operation = Create(pipeline, id, apiVersionOverride);
-            return new OperationToOperationOfT<T>(operationSource, operation!);
+            var operation = Create(pipeline, rehydrationToken, apiVersionOverride);
+            return new OperationToOperationOfT<T>(operationSource, operation);
         }
 
         private NextLinkOperationImplementation(
@@ -110,7 +109,6 @@ namespace Azure.Core
             Uri startRequestUri,
             string nextRequestUri,
             HeaderSource headerSource,
-            bool originalResponseHasLocation,
             string? lastKnownLocation,
             OperationFinalStateVia finalStateVia,
             string? apiVersion)
@@ -119,50 +117,31 @@ namespace Azure.Core
             _headerSource = headerSource;
             _startRequestUri = startRequestUri;
             _nextRequestUri = nextRequestUri;
-            _originalResponseHasLocation = originalResponseHasLocation;
             _lastKnownLocation = lastKnownLocation;
             _finalStateVia = finalStateVia;
             _pipeline = pipeline;
             _apiVersion = apiVersion;
         }
 
-        internal static string GetOperationId(
+        internal static RehydrationToken? GetRehydrationToken(
             RequestMethod requestMethod,
             Uri startRequestUri,
             string nextRequestUri,
-            HeaderSource headerSource,
+            string headerSource,
             bool originalResponseHasLocation,
             string? lastKnownLocation,
             OperationFinalStateVia finalStateVia)
         {
-            var lroDetails = new Dictionary<string, string?>()
-            {
-                ["HeaderSource"] = headerSource.ToString(),
-                ["NextRequestUri"] = nextRequestUri,
-                ["InitialUri"] = startRequestUri.AbsoluteUri,
-                ["RequestMethod"] = requestMethod.ToString(),
-                ["OriginalResponseHasLocation"] = originalResponseHasLocation.ToString(),
-                ["LastKnownLocation"] = lastKnownLocation,
-                ["FinalStateVia"] = finalStateVia.ToString()
-            };
-            var lroData = BinaryData.FromObjectAsJson(lroDetails);
-            return Convert.ToBase64String(lroData.ToArray());
+            var parameters = new object?[] { null, null, headerSource, nextRequestUri, startRequestUri.AbsoluteUri, requestMethod, originalResponseHasLocation, lastKnownLocation, finalStateVia };
+            var rehydrationToken = Activator.CreateInstance(typeof(RehydrationToken), BindingFlags.NonPublic | BindingFlags.Instance, parameters, null);
+            return rehydrationToken is null ? null : (RehydrationToken)rehydrationToken;
         }
 
-        public string GetOperationId()
+        public RehydrationToken? GetRehydrationToken()
         {
-            var lroDetails = new Dictionary<string, string?>()
-            {
-                ["HeaderSource"] = _headerSource.ToString(),
-                ["NextRequestUri"] = _nextRequestUri,
-                ["InitialUri"] = _startRequestUri.AbsoluteUri,
-                ["RequestMethod"] = _requestMethod.ToString(),
-                ["OriginalResponseHasLocation"] = _originalResponseHasLocation.ToString(),
-                ["LastKnownLocation"] = _lastKnownLocation,
-                ["FinalStateVia"] = _finalStateVia.ToString()
-            };
-            var lroData = BinaryData.FromObjectAsJson(lroDetails);
-            return Convert.ToBase64String(lroData.ToArray());
+            var parameters = new object?[] { null, null, _headerSource.ToString(), _nextRequestUri, _startRequestUri.AbsoluteUri, _requestMethod, _lastKnownLocation, _finalStateVia };
+            var rehydrationToken = Activator.CreateInstance(typeof(RehydrationToken), BindingFlags.NonPublic | BindingFlags.Instance, parameters, null);
+            return rehydrationToken is null ? null : (RehydrationToken)rehydrationToken;
         }
 
         public async ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken)
@@ -309,7 +288,7 @@ namespace Azure.Core
             // Handle final-state-via options: https://github.com/Azure/autorest/blob/main/docs/extensions/readme.md#x-ms-long-running-operation-options
             switch (_finalStateVia)
             {
-                case OperationFinalStateVia.LocationOverride when _originalResponseHasLocation:
+                case OperationFinalStateVia.LocationOverride when !string.IsNullOrEmpty(_lastKnownLocation):
                     return _lastKnownLocation;
                 case OperationFinalStateVia.OperationLocation or OperationFinalStateVia.AzureAsyncOperation when _requestMethod == RequestMethod.Post:
                     return null;
@@ -330,7 +309,7 @@ namespace Azure.Core
             }
 
             // If response for initial request contains header "Location", return last known location
-            if (_originalResponseHasLocation)
+            if (!string.IsNullOrEmpty(_lastKnownLocation))
             {
                 return _lastKnownLocation;
             }
@@ -465,7 +444,7 @@ namespace Azure.Core
             return HeaderSource.None;
         }
 
-        internal enum HeaderSource
+        private enum HeaderSource
         {
             None,
             OperationLocation,
@@ -483,11 +462,6 @@ namespace Azure.Core
             }
 
             public ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken) => new(_operationState);
-
-            public string GetOperationId()
-            {
-                return string.Empty;
-            }
         }
 
         private sealed class OperationToOperationOfT<T> : IOperation<T>
@@ -519,11 +493,6 @@ namespace Azure.Core
                 }
 
                 return OperationState<T>.Pending(state.RawResponse);
-            }
-
-            public string GetOperationId()
-            {
-                return _operation.GetOperationId();
             }
         }
     }

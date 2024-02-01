@@ -19,11 +19,12 @@ namespace Azure.ResourceManager
     public class ArmOperation<T> : Operation<T>
     {
         private readonly OperationInternal<T> _operation;
+        private readonly RehydrationToken? _rehydrationToken;
 
         /// <summary> Initializes a new instance of ArmOperation. </summary>
-        public ArmOperation(ArmClient client, string id)
+        public ArmOperation(ArmClient client, RehydrationToken rehydrationToken)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
 
             var isResource = typeof(T).GetConstructor(
                 BindingFlags.NonPublic | BindingFlags.Instance,
@@ -38,10 +39,11 @@ namespace Azure.ResourceManager
             }
 
             IOperationSource<T> source = new GenericOperationSource<T>(client, isResource);
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, id);
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, client.Pipeline, rehydrationToken);
             // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
             var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
             _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, null, operationTypeName: null);
+            _rehydrationToken = ((NextLinkOperationImplementation)nextLinkOperation).GetRehydrationToken();
         }
 
         /// <summary> Initializes a new instance of ArmOperation for mocking. </summary>
@@ -54,9 +56,9 @@ namespace Azure.ResourceManager
             _operation = operation;
         }
 
-        internal ArmOperation(Response<T> response, string operationId)
+        internal ArmOperation(Response<T> response, RehydrationToken rehydrationToken)
         {
-            _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value, operationId);
+            _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value, rehydrationToken);
         }
 
         internal ArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, string resourceTypeName, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
@@ -66,7 +68,12 @@ namespace Azure.ResourceManager
         }
 
         /// <inheritdoc />
-        public override string Id => _operation.GetOperationId();
+        public override RehydrationToken? GetRehydrationToken() => _rehydrationToken;
+
+#pragma warning disable CA1822
+        /// <inheritdoc />
+        public override string Id => throw new NotSupportedException();
+#pragma warning restore CA1822
 
         /// <inheritdoc />
         public override T Value => _operation.Value;

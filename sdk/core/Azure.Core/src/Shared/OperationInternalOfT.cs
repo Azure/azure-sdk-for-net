@@ -4,7 +4,9 @@
 #nullable enable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -54,23 +56,23 @@ namespace Azure.Core
     {
         private readonly IOperation<T> _operation;
         private readonly AsyncLockWithValue<OperationState<T>> _stateLock;
-        private Response? _rawResponse;
+        private Response _rawResponse;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final successful state.
         /// </summary>
         /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
         /// <param name="value">The final result of the long-running operation.</param>
-        /// <param name="operationId">operation id</param>
-        public static OperationInternal<T> Succeeded(Response rawResponse, T value, string? operationId = null) => new(OperationState<T>.Success(rawResponse, value, operationId));
+        /// <param name="rehydrationToken">rehydration token</param>
+        public static OperationInternal<T> Succeeded(Response rawResponse, T value, RehydrationToken? rehydrationToken = null) => new(OperationState<T>.Success(rawResponse, value), rehydrationToken);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final failed state.
         /// </summary>
         /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
         /// <param name="operationFailedException">The exception that will be thrown by <c>UpdateStatusAsync</c>.</param>
-        /// <param name="operationId"></param>
-        public static OperationInternal<T> Failed(Response rawResponse, RequestFailedException operationFailedException, string? operationId) => new(OperationState<T>.Failure(rawResponse, operationFailedException, operationId));
+        /// <param name="rehydrationToken">rehydration token</param>
+        public static OperationInternal<T> Failed(Response rawResponse, RequestFailedException operationFailedException, RehydrationToken? rehydrationToken = null) => new(OperationState<T>.Failure(rawResponse, operationFailedException), rehydrationToken);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal{T}"/> class.
@@ -109,28 +111,12 @@ namespace Azure.Core
             _stateLock = new AsyncLockWithValue<OperationState<T>>();
         }
 
-        //TEMP for backcompat with AutoRest
-        public OperationInternal(
-            ClientDiagnostics clientDiagnostics,
-            IOperation<T> operation,
-            Response? rawResponse,
-            string? operationTypeName = null,
-            IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
-            DelayStrategy? fallbackStrategy = null)
-            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
-        {
-            _operation = operation;
-            _rawResponse = rawResponse;
-            _stateLock = new AsyncLockWithValue<OperationState<T>>();
-        }
-        //end TEMP for backcompat with AutoRest
-
-        private OperationInternal(OperationState<T> finalState)
-            : base(finalState.RawResponse)
+        private OperationInternal(OperationState<T> finalState, RehydrationToken? rehydrationToken)
+            : base(finalState.RawResponse, rehydrationToken)
         {
             // FinalOperation represents operation that is in final state and can't be updated.
             // It implements IOperation<T> and throws exception when UpdateStateAsync is called.
-            _operation = new FinalOperation(finalState.OperationId);
+            _operation = new FinalOperation();
             _rawResponse = finalState.RawResponse;
             _stateLock = new AsyncLockWithValue<OperationState<T>>(finalState);
         }
@@ -284,7 +270,7 @@ namespace Azure.Core
                 }
 
                 asyncLock.SetValue(state);
-                return GetResponseFromState(state, GetHttpMethodFromOperationId(_operation.GetOperationId()));
+                return GetResponseFromState(state, GetRequestMethod(_rehydrationToken));
             }
             catch (Exception e)
             {
@@ -293,18 +279,13 @@ namespace Azure.Core
             }
         }
 
-        public virtual string GetOperationId()
+        private RequestMethod? GetRequestMethod(RehydrationToken? rehydrationToken)
         {
-            return _operation.GetOperationId();
-        }
-
-        private static RequestMethod? GetHttpMethodFromOperationId(string operationId)
-        {
-            if (string.IsNullOrEmpty(operationId))
+            if (rehydrationToken is null)
             {
                 return null;
             }
-            var lroDetails = BinaryData.FromBytes(Convert.FromBase64String(operationId)).ToObjectFromJson<Dictionary<string, string>>();
+            var lroDetails = ModelReaderWriter.Write(rehydrationToken).ToObjectFromJson<Dictionary<string, string>>();
             return new RequestMethod(lroDetails["RequestMethod"]);
         }
 
@@ -315,7 +296,7 @@ namespace Azure.Core
                 return state.RawResponse;
             }
 
-            // if this is a fake delete lro with 404, just return response
+            // if this is a fake delete lro with 404, just return empty response with 200
             if (RequestMethod.Delete == requestmethod && state.RawResponse.Status == 404)
             {
                 return new EmptyResponse(HttpStatusCode.OK);
@@ -324,19 +305,67 @@ namespace Azure.Core
             throw state.OperationFailedException!;
         }
 
-        private class FinalOperation : IOperation<T>
+        private class EmptyResponse : Response
         {
-            private string? _operationId;
-
-            public FinalOperation(string? operationId)
+            public EmptyResponse(HttpStatusCode status)
             {
-                _operationId = operationId;
+                Status = (int)status;
+                ReasonPhrase = status.ToString();
             }
 
+            public override int Status { get; }
+
+            public override string ReasonPhrase { get; }
+
+            public override Stream? ContentStream { get => null; set => throw new System.NotImplementedException(); }
+            public override string ClientRequestId { get => string.Empty; set => throw new System.NotImplementedException(); }
+
+            public override void Dispose()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            /// <inheritdoc />
+#if HAS_INTERNALS_VISIBLE_CORE
+            internal
+#endif
+            protected override bool ContainsHeader(string name)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            /// <inheritdoc />
+#if HAS_INTERNALS_VISIBLE_CORE
+            internal
+#endif
+            protected override IEnumerable<HttpHeader> EnumerateHeaders()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            /// <inheritdoc />
+#if HAS_INTERNALS_VISIBLE_CORE
+            internal
+#endif
+            protected override bool TryGetHeader(string name, out string value)
+            {
+                throw new System.NotImplementedException();
+            }
+
+            /// <inheritdoc />
+#if HAS_INTERNALS_VISIBLE_CORE
+            internal
+#endif
+            protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
+            {
+                throw new System.NotImplementedException();
+            }
+        }
+
+        private class FinalOperation : IOperation<T>
+        {
             public ValueTask<OperationState<T>> UpdateStateAsync(bool async, CancellationToken cancellationToken)
                 => throw new NotSupportedException("The operation has already completed");
-
-            public string GetOperationId() => _operationId ?? string.Empty;
         }
     }
 
@@ -377,11 +406,6 @@ namespace Azure.Core
         /// </list>
         /// </returns>
         ValueTask<OperationState<T>> UpdateStateAsync(bool async, CancellationToken cancellationToken);
-
-        /// <summary>
-        /// To get the Id of the operation for rehydration purpose.
-        /// </summary>
-        string GetOperationId();
     }
 
     /// <summary>
@@ -396,14 +420,13 @@ namespace Azure.Core
     /// <typeparam name="T">The final result of the long-running operation. Must match the type used in <see cref="Operation{T}"/>.</typeparam>
     internal readonly struct OperationState<T>
     {
-        private OperationState(Response rawResponse, bool hasCompleted, bool hasSucceeded, T? value, RequestFailedException? operationFailedException, string? operationId)
+        private OperationState(Response rawResponse, bool hasCompleted, bool hasSucceeded, T? value, RequestFailedException? operationFailedException)
         {
             RawResponse = rawResponse;
             HasCompleted = hasCompleted;
             HasSucceeded = hasSucceeded;
             Value = value;
             OperationFailedException = operationFailedException;
-            OperationId = operationId;
         }
 
         public Response RawResponse { get; }
@@ -416,17 +439,14 @@ namespace Azure.Core
 
         public RequestFailedException? OperationFailedException { get; }
 
-        public string? OperationId { get; }
-
         /// <summary>
         /// Instantiates an <see cref="OperationState{T}"/> indicating the operation has completed successfully.
         /// </summary>
         /// <param name="rawResponse">The HTTP response obtained during the status update.</param>
         /// <param name="value">The final result of the long-running operation.</param>
-        /// <param name="operationId">operation id</param>
         /// <returns>A new <see cref="OperationState{T}"/> instance.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> or <paramref name="value"/> is <c>null</c>.</exception>
-        public static OperationState<T> Success(Response rawResponse, T value, string? operationId = null)
+        public static OperationState<T> Success(Response rawResponse, T value)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
 
@@ -435,7 +455,7 @@ namespace Azure.Core
                 throw new ArgumentNullException(nameof(value));
             }
 
-            return new OperationState<T>(rawResponse, true, true, value, default, operationId);
+            return new OperationState<T>(rawResponse, true, true, value, default);
         }
 
         /// <summary>
@@ -447,13 +467,12 @@ namespace Azure.Core
         /// <see cref="OperationInternal{T}.Value"/> is called. If left <c>null</c>, a default exception is created based on the
         /// <paramref name="rawResponse"/> parameter.
         /// </param>
-        /// <param name="operationId">operation id</param>
         /// <returns>A new <see cref="OperationState{T}"/> instance.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> is <c>null</c>.</exception>
-        public static OperationState<T> Failure(Response rawResponse, RequestFailedException? operationFailedException = null, string? operationId = null)
+        public static OperationState<T> Failure(Response rawResponse, RequestFailedException? operationFailedException = null)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
-            return new OperationState<T>(rawResponse, true, false, default, operationFailedException, operationId);
+            return new OperationState<T>(rawResponse, true, false, default, operationFailedException);
         }
 
         /// <summary>
@@ -465,7 +484,7 @@ namespace Azure.Core
         public static OperationState<T> Pending(Response rawResponse)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
-            return new OperationState<T>(rawResponse, false, default, default, default, default);
+            return new OperationState<T>(rawResponse, false, default, default, default);
         }
     }
 }

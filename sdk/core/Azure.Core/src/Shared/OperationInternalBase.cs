@@ -22,8 +22,9 @@ namespace Azure.Core
         private readonly string _waitForCompletionResponseScopeName;
         protected readonly string _updateStatusScopeName;
         protected readonly string _waitForCompletionScopeName;
+        protected readonly RehydrationToken? _rehydrationToken;
 
-        protected OperationInternalBase(Response rawResponse)
+        protected OperationInternalBase(Response rawResponse, RehydrationToken? rehydrationToken)
         {
             _diagnostics = new ClientDiagnostics(ClientOptions.Default);
             _updateStatusScopeName = string.Empty;
@@ -32,6 +33,7 @@ namespace Azure.Core
             _scopeAttributes = default;
             _fallbackStrategy = default;
             _responseLock = new AsyncLockWithValue<Response>(rawResponse);
+            _rehydrationToken = rehydrationToken;
         }
 
         protected OperationInternalBase(ClientDiagnostics clientDiagnostics, string operationTypeName, IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null, DelayStrategy? fallbackStrategy = null)

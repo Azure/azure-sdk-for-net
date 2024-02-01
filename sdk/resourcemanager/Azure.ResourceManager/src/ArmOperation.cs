@@ -17,6 +17,7 @@ namespace Azure.ResourceManager
     public class ArmOperation : Operation
     {
         private readonly OperationInternal _operation;
+        private readonly RehydrationToken? _rehydrationToken;
 
         /// <summary> Initializes a new instance of ArmOperation for mocking. </summary>
         protected ArmOperation()
@@ -28,33 +29,39 @@ namespace Azure.ResourceManager
             _operation = operation;
         }
 
-        internal ArmOperation(Response response, string operationId)
+        internal ArmOperation(Response response, RehydrationToken rehydrationToken)
         {
-            _operation = OperationInternal.Succeeded(response, operationId);
+            _operation = OperationInternal.Succeeded(response, rehydrationToken);
         }
 
         internal ArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, string operationTypeName, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
             _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, operationTypeName);
+            _rehydrationToken = ((NextLinkOperationImplementation)nextLinkOperation).GetRehydrationToken();
         }
 
         /// <summary> Create an instance of the <see cref="ArmOperation"/> class from rehydration. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The id of the ArmOperation. </param>
-        public ArmOperation(ArmClient client, string id)
+        /// <param name="rehydrationToken"> The id of the ArmOperation. </param>
+        public ArmOperation(ArmClient client, RehydrationToken rehydrationToken)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
             Argument.AssertNotNull(client, nameof(client));
 
-            var nextLinkOperation = NextLinkOperationImplementation.Create(client.Pipeline, id);
+            var nextLinkOperation = NextLinkOperationImplementation.Create(client.Pipeline, rehydrationToken);
             // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
             var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
             _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, null, operationTypeName: null);
         }
 
         /// <inheritdoc />
-        public override string Id => _operation.GetOperationId();
+        public override RehydrationToken? GetRehydrationToken() => _rehydrationToken;
+
+#pragma warning disable CA1822
+        /// <inheritdoc />
+        public override string Id => throw new NotSupportedException();
+#pragma warning restore CA1822
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
