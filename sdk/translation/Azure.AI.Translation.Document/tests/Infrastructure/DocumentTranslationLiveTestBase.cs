@@ -138,7 +138,7 @@ namespace Azure.AI.Translation.Document.Tests
         {
             var containerName = name + Recording.GenerateId();
             var containerClient = GetBlobContainerClient(containerName);
-            containerClient.Create(PublicAccessType.BlobContainer);
+            containerClient.Create();
 
             if (documents != default)
             {
@@ -152,7 +152,7 @@ namespace Azure.AI.Translation.Document.Tests
         {
             string containerName = name + Recording.GenerateId();
             var containerClient = GetBlobContainerClient(containerName);
-            await containerClient.CreateAsync(PublicAccessType.BlobContainer).ConfigureAwait(false);
+            await containerClient.CreateAsync().ConfigureAwait(false);
 
             if (documents != default)
             {

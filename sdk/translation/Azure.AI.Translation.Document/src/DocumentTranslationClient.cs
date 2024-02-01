@@ -86,7 +86,7 @@ namespace Azure.AI.Translation.Document
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             Argument.AssertNotNull(options, nameof(options));
-
+            _clientDiagnostics = new ClientDiagnostics(options);
             _options = options;
 
             DocumentTranslationRestClientOptions restClientOptions = new DocumentTranslationRestClientOptions()

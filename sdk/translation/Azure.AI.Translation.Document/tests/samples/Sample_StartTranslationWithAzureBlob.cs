@@ -65,8 +65,8 @@ namespace Azure.AI.Translation.Document.Samples
 
             // Create source and target storage containers
             BlobServiceClient blobServiceClient = new BlobServiceClient(storageConnectionString);
-            BlobContainerClient sourceContainerClient = await blobServiceClient.CreateBlobContainerAsync(sourceContainerName ?? "translation-source-container", PublicAccessType.BlobContainer).ConfigureAwait(false);
-            BlobContainerClient targetContainerClient = await blobServiceClient.CreateBlobContainerAsync(targetContainerName ?? "translation-target-container", PublicAccessType.BlobContainer).ConfigureAwait(false);
+            BlobContainerClient sourceContainerClient = await blobServiceClient.CreateBlobContainerAsync(sourceContainerName ?? "translation-source-container").ConfigureAwait(false);
+            BlobContainerClient targetContainerClient = await blobServiceClient.CreateBlobContainerAsync(targetContainerName ?? "translation-target-container").ConfigureAwait(false);
 
             // Upload blob (file) to the source container
             BlobClient srcBlobClient = sourceContainerClient.GetBlobClient(!string.IsNullOrWhiteSpace(documentPath) ? Path.GetFileName(documentPath) : "example_source_document.txt");
