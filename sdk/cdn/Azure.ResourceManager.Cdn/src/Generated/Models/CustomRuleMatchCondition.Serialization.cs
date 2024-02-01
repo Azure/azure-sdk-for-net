@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CustomRuleMatchCondition : IUtf8JsonSerializable, IJsonModel<CustomRuleMatchCondition>
+    public partial class CustomRuleMatchCondition : IUtf8JsonSerializable, IJsonModel<CustomRuleMatchCondition>, IPersistableModel<CustomRuleMatchCondition>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomRuleMatchCondition>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -162,6 +163,78 @@ namespace Azure.ResourceManager.Cdn.Models
             return new CustomRuleMatchCondition(matchVariable, selector.Value, @operator, Optional.ToNullable(negateCondition), matchValue, Optional.ToList(transforms), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MatchVariable))
+            {
+                builder.Append("  matchVariable:");
+                builder.AppendLine($" '{MatchVariable.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Selector))
+            {
+                builder.Append("  selector:");
+                builder.AppendLine($" '{Selector}'");
+            }
+
+            if (Optional.IsDefined(MatchOperator))
+            {
+                builder.Append("  operator:");
+                builder.AppendLine($" '{MatchOperator.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NegateCondition))
+            {
+                builder.Append("  negateCondition:");
+                var boolValue = NegateCondition.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(MatchValue))
+            {
+                builder.Append("  matchValue:");
+                builder.AppendLine(" [");
+                foreach (var item in MatchValue)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Transforms))
+            {
+                builder.Append("  transforms:");
+                builder.AppendLine(" [");
+                foreach (var item in Transforms)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<CustomRuleMatchCondition>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CustomRuleMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
@@ -170,6 +243,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CustomRuleMatchCondition)} does not support '{options.Format}' format.");
             }
@@ -186,6 +261,8 @@ namespace Azure.ResourceManager.Cdn.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCustomRuleMatchCondition(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CustomRuleMatchCondition)} does not support '{options.Format}' format.");
             }

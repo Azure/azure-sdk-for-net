@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    public partial class AutomationCertificateData : IUtf8JsonSerializable, IJsonModel<AutomationCertificateData>
+    public partial class AutomationCertificateData : IUtf8JsonSerializable, IJsonModel<AutomationCertificateData>, IPersistableModel<AutomationCertificateData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationCertificateData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -223,6 +224,87 @@ namespace Azure.ResourceManager.Automation
             return new AutomationCertificateData(id, name, type, systemData.Value, thumbprint.Value, Optional.ToNullable(expiryTime), Optional.ToNullable(isExportable), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), description.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ThumbprintString))
+            {
+                builder.Append("  thumbprint:");
+                builder.AppendLine($" '{ThumbprintString}'");
+            }
+
+            if (Optional.IsDefined(ExpireOn))
+            {
+                builder.Append("  expiryTime:");
+                builder.AppendLine($" '{ExpireOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsExportable))
+            {
+                builder.Append("  isExportable:");
+                var boolValue = IsExportable.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  creationTime:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("  lastModifiedTime:");
+                builder.AppendLine($" '{LastModifiedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AutomationCertificateData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomationCertificateData>)this).GetFormatFromOptions(options) : options.Format;
@@ -231,6 +313,8 @@ namespace Azure.ResourceManager.Automation
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AutomationCertificateData)} does not support '{options.Format}' format.");
             }
@@ -247,6 +331,8 @@ namespace Azure.ResourceManager.Automation
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAutomationCertificateData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AutomationCertificateData)} does not support '{options.Format}' format.");
             }

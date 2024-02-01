@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchVmExtension : IUtf8JsonSerializable, IJsonModel<BatchVmExtension>
+    public partial class BatchVmExtension : IUtf8JsonSerializable, IJsonModel<BatchVmExtension>, IPersistableModel<BatchVmExtension>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchVmExtension>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -211,6 +212,92 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchVmExtension(name, publisher, type, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, Optional.ToList(provisionAfterExtensions), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Publisher))
+            {
+                builder.Append("  publisher:");
+                builder.AppendLine($" '{Publisher}'");
+            }
+
+            if (Optional.IsDefined(ExtensionType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ExtensionType}'");
+            }
+
+            if (Optional.IsDefined(TypeHandlerVersion))
+            {
+                builder.Append("  typeHandlerVersion:");
+                builder.AppendLine($" '{TypeHandlerVersion}'");
+            }
+
+            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            {
+                builder.Append("  autoUpgradeMinorVersion:");
+                var boolValue = AutoUpgradeMinorVersion.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            {
+                builder.Append("  enableAutomaticUpgrade:");
+                var boolValue = EnableAutomaticUpgrade.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Settings))
+            {
+                builder.Append("  settings:");
+                builder.AppendLine($" '{Settings.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProtectedSettings))
+            {
+                builder.Append("  protectedSettings:");
+                builder.AppendLine($" '{ProtectedSettings.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ProvisionAfterExtensions))
+            {
+                builder.Append("  provisionAfterExtensions:");
+                builder.AppendLine(" [");
+                foreach (var item in ProvisionAfterExtensions)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BatchVmExtension>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BatchVmExtension>)this).GetFormatFromOptions(options) : options.Format;
@@ -219,6 +306,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BatchVmExtension)} does not support '{options.Format}' format.");
             }
@@ -235,6 +324,8 @@ namespace Azure.ResourceManager.Batch.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBatchVmExtension(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BatchVmExtension)} does not support '{options.Format}' format.");
             }

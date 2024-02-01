@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Authorization.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    public partial class RoleAssignmentScheduleInstanceData : IUtf8JsonSerializable, IJsonModel<RoleAssignmentScheduleInstanceData>
+    public partial class RoleAssignmentScheduleInstanceData : IUtf8JsonSerializable, IJsonModel<RoleAssignmentScheduleInstanceData>, IPersistableModel<RoleAssignmentScheduleInstanceData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleAssignmentScheduleInstanceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -385,6 +386,152 @@ namespace Azure.ResourceManager.Authorization
             return new RoleAssignmentScheduleInstanceData(id, name, type, systemData.Value, scope.Value, roleDefinitionId.Value, Optional.ToNullable(principalId), Optional.ToNullable(principalType), roleAssignmentScheduleId.Value, originRoleAssignmentId.Value, Optional.ToNullable(status), Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), linkedRoleEligibilityScheduleId.Value, linkedRoleEligibilityScheduleInstanceId.Value, Optional.ToNullable(assignmentType), Optional.ToNullable(memberType), condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), expandedProperties.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Scope))
+            {
+                builder.Append("  scope:");
+                builder.AppendLine($" '{Scope}'");
+            }
+
+            if (Optional.IsDefined(RoleDefinitionId))
+            {
+                builder.Append("  roleDefinitionId:");
+                builder.AppendLine($" '{RoleDefinitionId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrincipalId))
+            {
+                builder.Append("  principalId:");
+                builder.AppendLine($" '{PrincipalId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrincipalType))
+            {
+                builder.Append("  principalType:");
+                builder.AppendLine($" '{PrincipalType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RoleAssignmentScheduleId))
+            {
+                builder.Append("  roleAssignmentScheduleId:");
+                builder.AppendLine($" '{RoleAssignmentScheduleId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OriginRoleAssignmentId))
+            {
+                builder.Append("  originRoleAssignmentId:");
+                builder.AppendLine($" '{OriginRoleAssignmentId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startDateTime:");
+                builder.AppendLine($" '{StartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndOn))
+            {
+                builder.Append("  endDateTime:");
+                builder.AppendLine($" '{EndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LinkedRoleEligibilityScheduleId))
+            {
+                builder.Append("  linkedRoleEligibilityScheduleId:");
+                builder.AppendLine($" '{LinkedRoleEligibilityScheduleId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LinkedRoleEligibilityScheduleInstanceId))
+            {
+                builder.Append("  linkedRoleEligibilityScheduleInstanceId:");
+                builder.AppendLine($" '{LinkedRoleEligibilityScheduleInstanceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AssignmentType))
+            {
+                builder.Append("  assignmentType:");
+                builder.AppendLine($" '{AssignmentType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MemberType))
+            {
+                builder.Append("  memberType:");
+                builder.AppendLine($" '{MemberType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Condition))
+            {
+                builder.Append("  condition:");
+                builder.AppendLine($" '{Condition}'");
+            }
+
+            if (Optional.IsDefined(ConditionVersion))
+            {
+                builder.Append("  conditionVersion:");
+                builder.AppendLine($" '{ConditionVersion}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdOn:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExpandedProperties))
+            {
+                builder.Append("  expandedProperties:");
+                AppendChildObject(builder, ExpandedProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<RoleAssignmentScheduleInstanceData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentScheduleInstanceData>)this).GetFormatFromOptions(options) : options.Format;
@@ -393,6 +540,8 @@ namespace Azure.ResourceManager.Authorization
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RoleAssignmentScheduleInstanceData)} does not support '{options.Format}' format.");
             }
@@ -409,6 +558,8 @@ namespace Azure.ResourceManager.Authorization
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRoleAssignmentScheduleInstanceData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RoleAssignmentScheduleInstanceData)} does not support '{options.Format}' format.");
             }

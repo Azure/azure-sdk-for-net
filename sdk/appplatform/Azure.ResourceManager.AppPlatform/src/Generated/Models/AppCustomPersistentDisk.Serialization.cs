@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppCustomPersistentDisk : IUtf8JsonSerializable, IJsonModel<AppCustomPersistentDisk>
+    public partial class AppCustomPersistentDisk : IUtf8JsonSerializable, IJsonModel<AppCustomPersistentDisk>, IPersistableModel<AppCustomPersistentDisk>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppCustomPersistentDisk>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -100,6 +101,38 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppCustomPersistentDisk(customPersistentDiskProperties.Value, storageId, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CustomPersistentDiskProperties))
+            {
+                builder.Append("  customPersistentDiskProperties:");
+                AppendChildObject(builder, CustomPersistentDiskProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(StorageId))
+            {
+                builder.Append("  storageId:");
+                builder.AppendLine($" '{StorageId}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AppCustomPersistentDisk>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppCustomPersistentDisk>)this).GetFormatFromOptions(options) : options.Format;
@@ -108,6 +141,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AppCustomPersistentDisk)} does not support '{options.Format}' format.");
             }
@@ -124,6 +159,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAppCustomPersistentDisk(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AppCustomPersistentDisk)} does not support '{options.Format}' format.");
             }

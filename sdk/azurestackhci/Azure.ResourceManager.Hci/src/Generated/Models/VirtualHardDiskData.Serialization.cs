@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Hci.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Hci
 {
-    public partial class VirtualHardDiskData : IUtf8JsonSerializable, IJsonModel<VirtualHardDiskData>
+    public partial class VirtualHardDiskData : IUtf8JsonSerializable, IJsonModel<VirtualHardDiskData>, IPersistableModel<VirtualHardDiskData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualHardDiskData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -341,6 +342,140 @@ namespace Azure.ResourceManager.Hci
             return new VirtualHardDiskData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, Optional.ToNullable(blockSizeBytes), Optional.ToNullable(diskSizeGB), Optional.ToNullable(@dynamic), Optional.ToNullable(logicalSectorBytes), Optional.ToNullable(physicalSectorBytes), Optional.ToNullable(hyperVGeneration), Optional.ToNullable(diskFileFormat), Optional.ToNullable(provisioningState), containerId.Value, status.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                builder.Append("  extendedLocation:");
+                AppendChildObject(builder, ExtendedLocation, options, 2);
+            }
+
+            if (Optional.IsDefined(BlockSizeBytes))
+            {
+                builder.Append("  blockSizeBytes:");
+                builder.AppendLine($" '{BlockSizeBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiskSizeGB))
+            {
+                builder.Append("  diskSizeGB:");
+                builder.AppendLine($" '{DiskSizeGB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Dynamic))
+            {
+                builder.Append("  dynamic:");
+                var boolValue = Dynamic.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(LogicalSectorBytes))
+            {
+                builder.Append("  logicalSectorBytes:");
+                builder.AppendLine($" '{LogicalSectorBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PhysicalSectorBytes))
+            {
+                builder.Append("  physicalSectorBytes:");
+                builder.AppendLine($" '{PhysicalSectorBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HyperVGeneration))
+            {
+                builder.Append("  hyperVGeneration:");
+                builder.AppendLine($" '{HyperVGeneration.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiskFileFormat))
+            {
+                builder.Append("  diskFileFormat:");
+                builder.AppendLine($" '{DiskFileFormat.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ContainerId))
+            {
+                builder.Append("  containerId:");
+                builder.AppendLine($" '{ContainerId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                AppendChildObject(builder, Status, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VirtualHardDiskData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualHardDiskData>)this).GetFormatFromOptions(options) : options.Format;
@@ -349,6 +484,8 @@ namespace Azure.ResourceManager.Hci
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VirtualHardDiskData)} does not support '{options.Format}' format.");
             }
@@ -365,6 +502,8 @@ namespace Azure.ResourceManager.Hci
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVirtualHardDiskData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VirtualHardDiskData)} does not support '{options.Format}' format.");
             }

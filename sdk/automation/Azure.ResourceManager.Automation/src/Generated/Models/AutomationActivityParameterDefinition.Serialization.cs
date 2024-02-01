@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationActivityParameterDefinition : IUtf8JsonSerializable, IJsonModel<AutomationActivityParameterDefinition>
+    public partial class AutomationActivityParameterDefinition : IUtf8JsonSerializable, IJsonModel<AutomationActivityParameterDefinition>, IPersistableModel<AutomationActivityParameterDefinition>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationActivityParameterDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -225,6 +226,96 @@ namespace Azure.ResourceManager.Automation.Models
             return new AutomationActivityParameterDefinition(name.Value, type.Value, Optional.ToNullable(isMandatory), Optional.ToNullable(isDynamic), Optional.ToNullable(position), Optional.ToNullable(valueFromPipeline), Optional.ToNullable(valueFromPipelineByPropertyName), Optional.ToNullable(valueFromRemainingArguments), description.Value, Optional.ToList(validationSet), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ActivityParameterType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ActivityParameterType}'");
+            }
+
+            if (Optional.IsDefined(IsMandatory))
+            {
+                builder.Append("  isMandatory:");
+                var boolValue = IsMandatory.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsDynamic))
+            {
+                builder.Append("  isDynamic:");
+                var boolValue = IsDynamic.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Position))
+            {
+                builder.Append("  position:");
+                builder.AppendLine($" '{Position.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CanTakeValueFromPipeline))
+            {
+                builder.Append("  valueFromPipeline:");
+                var boolValue = CanTakeValueFromPipeline.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CanTakeValueFromPipelineByPropertyName))
+            {
+                builder.Append("  valueFromPipelineByPropertyName:");
+                var boolValue = CanTakeValueFromPipelineByPropertyName.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CanTakeValueValueFromRemainingArguments))
+            {
+                builder.Append("  valueFromRemainingArguments:");
+                var boolValue = CanTakeValueValueFromRemainingArguments.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsCollectionDefined(ValidationSet))
+            {
+                builder.Append("  validationSet:");
+                builder.AppendLine(" [");
+                foreach (var item in ValidationSet)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AutomationActivityParameterDefinition>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomationActivityParameterDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -233,6 +324,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AutomationActivityParameterDefinition)} does not support '{options.Format}' format.");
             }
@@ -249,6 +342,8 @@ namespace Azure.ResourceManager.Automation.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAutomationActivityParameterDefinition(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AutomationActivityParameterDefinition)} does not support '{options.Format}' format.");
             }

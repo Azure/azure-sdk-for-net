@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class KeyVaultCertificateSource : IUtf8JsonSerializable, IJsonModel<KeyVaultCertificateSource>
+    public partial class KeyVaultCertificateSource : IUtf8JsonSerializable, IJsonModel<KeyVaultCertificateSource>, IPersistableModel<KeyVaultCertificateSource>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultCertificateSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -144,6 +145,74 @@ namespace Azure.ResourceManager.Cdn.Models
             return new KeyVaultCertificateSource(typeName, subscriptionId, resourceGroupName, vaultName, secretName, secretVersion.Value, updateRule, deleteRule, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SourceType))
+            {
+                builder.Append("  typeName:");
+                builder.AppendLine($" '{SourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                builder.Append("  subscriptionId:");
+                builder.AppendLine($" '{SubscriptionId}'");
+            }
+
+            if (Optional.IsDefined(ResourceGroupName))
+            {
+                builder.Append("  resourceGroupName:");
+                builder.AppendLine($" '{ResourceGroupName}'");
+            }
+
+            if (Optional.IsDefined(VaultName))
+            {
+                builder.Append("  vaultName:");
+                builder.AppendLine($" '{VaultName}'");
+            }
+
+            if (Optional.IsDefined(SecretName))
+            {
+                builder.Append("  secretName:");
+                builder.AppendLine($" '{SecretName}'");
+            }
+
+            if (Optional.IsDefined(SecretVersion))
+            {
+                builder.Append("  secretVersion:");
+                builder.AppendLine($" '{SecretVersion}'");
+            }
+
+            if (Optional.IsDefined(UpdateRule))
+            {
+                builder.Append("  updateRule:");
+                builder.AppendLine($" '{UpdateRule.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DeleteRule))
+            {
+                builder.Append("  deleteRule:");
+                builder.AppendLine($" '{DeleteRule.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<KeyVaultCertificateSource>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultCertificateSource>)this).GetFormatFromOptions(options) : options.Format;
@@ -152,6 +221,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KeyVaultCertificateSource)} does not support '{options.Format}' format.");
             }
@@ -168,6 +239,8 @@ namespace Azure.ResourceManager.Cdn.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeKeyVaultCertificateSource(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(KeyVaultCertificateSource)} does not support '{options.Format}' format.");
             }

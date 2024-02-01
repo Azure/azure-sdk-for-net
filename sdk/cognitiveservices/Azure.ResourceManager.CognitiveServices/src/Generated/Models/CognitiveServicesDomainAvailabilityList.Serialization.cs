@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesDomainAvailabilityList : IUtf8JsonSerializable, IJsonModel<CognitiveServicesDomainAvailabilityList>
+    public partial class CognitiveServicesDomainAvailabilityList : IUtf8JsonSerializable, IJsonModel<CognitiveServicesDomainAvailabilityList>, IPersistableModel<CognitiveServicesDomainAvailabilityList>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesDomainAvailabilityList>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -136,6 +137,57 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesDomainAvailabilityList(Optional.ToNullable(isSubdomainAvailable), reason.Value, subdomainName.Value, type.Value, kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(IsSubdomainAvailable))
+            {
+                builder.Append("  isSubdomainAvailable:");
+                var boolValue = IsSubdomainAvailable.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Reason))
+            {
+                builder.Append("  reason:");
+                builder.AppendLine($" '{Reason}'");
+            }
+
+            if (Optional.IsDefined(SubdomainName))
+            {
+                builder.Append("  subdomainName:");
+                builder.AppendLine($" '{SubdomainName}'");
+            }
+
+            if (Optional.IsDefined(DomainAvailabilityType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{DomainAvailabilityType}'");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<CognitiveServicesDomainAvailabilityList>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesDomainAvailabilityList>)this).GetFormatFromOptions(options) : options.Format;
@@ -144,6 +196,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CognitiveServicesDomainAvailabilityList)} does not support '{options.Format}' format.");
             }
@@ -160,6 +214,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCognitiveServicesDomainAvailabilityList(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CognitiveServicesDomainAvailabilityList)} does not support '{options.Format}' format.");
             }

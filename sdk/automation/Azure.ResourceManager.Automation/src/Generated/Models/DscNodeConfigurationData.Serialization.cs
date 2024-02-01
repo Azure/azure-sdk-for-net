@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Automation.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    public partial class DscNodeConfigurationData : IUtf8JsonSerializable, IJsonModel<DscNodeConfigurationData>
+    public partial class DscNodeConfigurationData : IUtf8JsonSerializable, IJsonModel<DscNodeConfigurationData>, IPersistableModel<DscNodeConfigurationData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DscNodeConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -228,6 +229,87 @@ namespace Azure.ResourceManager.Automation
             return new DscNodeConfigurationData(id, name, type, systemData.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(creationTime), configuration.Value, source.Value, Optional.ToNullable(nodeCount), Optional.ToNullable(incrementNodeConfigurationBuild), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("  lastModifiedTime:");
+                builder.AppendLine($" '{LastModifiedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  creationTime:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Configuration))
+            {
+                builder.Append("  configuration:");
+                AppendChildObject(builder, Configuration, options, 2);
+            }
+
+            if (Optional.IsDefined(Source))
+            {
+                builder.Append("  source:");
+                builder.AppendLine($" '{Source}'");
+            }
+
+            if (Optional.IsDefined(NodeCount))
+            {
+                builder.Append("  nodeCount:");
+                builder.AppendLine($" '{NodeCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsIncrementNodeConfigurationBuildRequired))
+            {
+                builder.Append("  incrementNodeConfigurationBuild:");
+                var boolValue = IsIncrementNodeConfigurationBuildRequired.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DscNodeConfigurationData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DscNodeConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
@@ -236,6 +318,8 @@ namespace Azure.ResourceManager.Automation
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DscNodeConfigurationData)} does not support '{options.Format}' format.");
             }
@@ -252,6 +336,8 @@ namespace Azure.ResourceManager.Automation
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDscNodeConfigurationData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DscNodeConfigurationData)} does not support '{options.Format}' format.");
             }

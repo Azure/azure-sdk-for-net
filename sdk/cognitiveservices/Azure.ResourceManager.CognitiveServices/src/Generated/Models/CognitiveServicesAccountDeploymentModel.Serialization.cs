@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesAccountDeploymentModel : IUtf8JsonSerializable, IJsonModel<CognitiveServicesAccountDeploymentModel>
+    public partial class CognitiveServicesAccountDeploymentModel : IUtf8JsonSerializable, IJsonModel<CognitiveServicesAccountDeploymentModel>, IPersistableModel<CognitiveServicesAccountDeploymentModel>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesAccountDeploymentModel>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -136,6 +137,56 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesAccountDeploymentModel(format.Value, name.Value, version.Value, source.Value, callRateLimit.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Format))
+            {
+                builder.Append("  format:");
+                builder.AppendLine($" '{Format}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("  version:");
+                builder.AppendLine($" '{Version}'");
+            }
+
+            if (Optional.IsDefined(Source))
+            {
+                builder.Append("  source:");
+                builder.AppendLine($" '{Source}'");
+            }
+
+            if (Optional.IsDefined(CallRateLimit))
+            {
+                builder.Append("  callRateLimit:");
+                AppendChildObject(builder, CallRateLimit, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<CognitiveServicesAccountDeploymentModel>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountDeploymentModel>)this).GetFormatFromOptions(options) : options.Format;
@@ -144,6 +195,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentModel)} does not support '{options.Format}' format.");
             }
@@ -160,6 +213,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCognitiveServicesAccountDeploymentModel(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentModel)} does not support '{options.Format}' format.");
             }

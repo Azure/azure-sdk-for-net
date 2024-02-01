@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class WebTestPropertiesValidationRules : IUtf8JsonSerializable, IJsonModel<WebTestPropertiesValidationRules>
+    public partial class WebTestPropertiesValidationRules : IUtf8JsonSerializable, IJsonModel<WebTestPropertiesValidationRules>, IPersistableModel<WebTestPropertiesValidationRules>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebTestPropertiesValidationRules>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -152,6 +153,58 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new WebTestPropertiesValidationRules(contentValidation.Value, Optional.ToNullable(sslCheck), Optional.ToNullable(sslCertRemainingLifetimeCheck), Optional.ToNullable(expectedHttpStatusCode), Optional.ToNullable(ignoreHttpStatusCode), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ContentValidation))
+            {
+                builder.Append("  ContentValidation:");
+                AppendChildObject(builder, ContentValidation, options, 2);
+            }
+
+            if (Optional.IsDefined(CheckSsl))
+            {
+                builder.Append("  SSLCheck:");
+                var boolValue = CheckSsl.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SSLCertRemainingLifetimeCheck))
+            {
+                builder.Append("  SSLCertRemainingLifetimeCheck:");
+                builder.AppendLine($" '{SSLCertRemainingLifetimeCheck.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExpectedHttpStatusCode))
+            {
+                builder.Append("  ExpectedHttpStatusCode:");
+                builder.AppendLine($" '{ExpectedHttpStatusCode.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IgnoreHttpStatusCode))
+            {
+                builder.Append("  IgnoreHttpStatusCode:");
+                var boolValue = IgnoreHttpStatusCode.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<WebTestPropertiesValidationRules>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebTestPropertiesValidationRules>)this).GetFormatFromOptions(options) : options.Format;
@@ -160,6 +213,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(WebTestPropertiesValidationRules)} does not support '{options.Format}' format.");
             }
@@ -176,6 +231,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeWebTestPropertiesValidationRules(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(WebTestPropertiesValidationRules)} does not support '{options.Format}' format.");
             }

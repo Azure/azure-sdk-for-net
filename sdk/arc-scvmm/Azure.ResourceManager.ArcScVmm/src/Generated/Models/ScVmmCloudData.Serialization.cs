@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ArcScVmm.Models;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
-    public partial class ScVmmCloudData : IUtf8JsonSerializable, IJsonModel<ScVmmCloudData>
+    public partial class ScVmmCloudData : IUtf8JsonSerializable, IJsonModel<ScVmmCloudData>, IPersistableModel<ScVmmCloudData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmCloudData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -280,6 +281,126 @@ namespace Azure.ResourceManager.ArcScVmm
             return new ScVmmCloudData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, uuid.Value, vmmServerId.Value, cloudName.Value, cloudCapacity.Value, Optional.ToList(storageQoSPolicies), provisioningState.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                builder.Append("  extendedLocation:");
+                AppendChildObject(builder, ExtendedLocation, options, 2);
+            }
+
+            if (Optional.IsDefined(InventoryItemId))
+            {
+                builder.Append("  inventoryItemId:");
+                builder.AppendLine($" '{InventoryItemId}'");
+            }
+
+            if (Optional.IsDefined(Uuid))
+            {
+                builder.Append("  uuid:");
+                builder.AppendLine($" '{Uuid}'");
+            }
+
+            if (Optional.IsDefined(VmmServerId))
+            {
+                builder.Append("  vmmServerId:");
+                builder.AppendLine($" '{VmmServerId}'");
+            }
+
+            if (Optional.IsDefined(CloudName))
+            {
+                builder.Append("  cloudName:");
+                builder.AppendLine($" '{CloudName}'");
+            }
+
+            if (Optional.IsDefined(CloudCapacity))
+            {
+                builder.Append("  cloudCapacity:");
+                AppendChildObject(builder, CloudCapacity, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(StorageQoSPolicies))
+            {
+                builder.Append("  storageQoSPolicies:");
+                builder.AppendLine(" [");
+                foreach (var item in StorageQoSPolicies)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ScVmmCloudData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScVmmCloudData>)this).GetFormatFromOptions(options) : options.Format;
@@ -288,6 +409,8 @@ namespace Azure.ResourceManager.ArcScVmm
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ScVmmCloudData)} does not support '{options.Format}' format.");
             }
@@ -304,6 +427,8 @@ namespace Azure.ResourceManager.ArcScVmm
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeScVmmCloudData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ScVmmCloudData)} does not support '{options.Format}' format.");
             }

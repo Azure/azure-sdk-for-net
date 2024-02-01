@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Chaos.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos
 {
-    public partial class ChaosCapabilityTypeData : IUtf8JsonSerializable, IJsonModel<ChaosCapabilityTypeData>
+    public partial class ChaosCapabilityTypeData : IUtf8JsonSerializable, IJsonModel<ChaosCapabilityTypeData>, IPersistableModel<ChaosCapabilityTypeData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChaosCapabilityTypeData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -299,6 +300,136 @@ namespace Azure.ResourceManager.Chaos
             return new ChaosCapabilityTypeData(id, name, type, systemData.Value, Optional.ToNullable(location), publisher.Value, targetType.Value, displayName.Value, description.Value, parametersSchema.Value, urn.Value, kind.Value, Optional.ToList(azureRbacActions), Optional.ToList(azureRbacDataActions), runtimeProperties.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Publisher))
+            {
+                builder.Append("  publisher:");
+                builder.AppendLine($" '{Publisher}'");
+            }
+
+            if (Optional.IsDefined(TargetType))
+            {
+                builder.Append("  targetType:");
+                builder.AppendLine($" '{TargetType}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(ParametersSchema))
+            {
+                builder.Append("  parametersSchema:");
+                builder.AppendLine($" '{ParametersSchema}'");
+            }
+
+            if (Optional.IsDefined(Urn))
+            {
+                builder.Append("  urn:");
+                builder.AppendLine($" '{Urn}'");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsCollectionDefined(AzureRbacActions))
+            {
+                builder.Append("  azureRbacActions:");
+                builder.AppendLine(" [");
+                foreach (var item in AzureRbacActions)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(AzureRbacDataActions))
+            {
+                builder.Append("  azureRbacDataActions:");
+                builder.AppendLine(" [");
+                foreach (var item in AzureRbacDataActions)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(RuntimeProperties))
+            {
+                builder.Append("  runtimeProperties:");
+                AppendChildObject(builder, RuntimeProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ChaosCapabilityTypeData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ChaosCapabilityTypeData>)this).GetFormatFromOptions(options) : options.Format;
@@ -307,6 +438,8 @@ namespace Azure.ResourceManager.Chaos
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ChaosCapabilityTypeData)} does not support '{options.Format}' format.");
             }
@@ -323,6 +456,8 @@ namespace Azure.ResourceManager.Chaos
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeChaosCapabilityTypeData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ChaosCapabilityTypeData)} does not support '{options.Format}' format.");
             }

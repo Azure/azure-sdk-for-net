@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class HttpErrorRange : IUtf8JsonSerializable, IJsonModel<HttpErrorRange>
+    public partial class HttpErrorRange : IUtf8JsonSerializable, IJsonModel<HttpErrorRange>, IPersistableModel<HttpErrorRange>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HttpErrorRange>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -107,6 +108,38 @@ namespace Azure.ResourceManager.Cdn.Models
             return new HttpErrorRange(Optional.ToNullable(begin), Optional.ToNullable(end), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Begin))
+            {
+                builder.Append("  begin:");
+                builder.AppendLine($" '{Begin.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(End))
+            {
+                builder.Append("  end:");
+                builder.AppendLine($" '{End.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<HttpErrorRange>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HttpErrorRange>)this).GetFormatFromOptions(options) : options.Format;
@@ -115,6 +148,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HttpErrorRange)} does not support '{options.Format}' format.");
             }
@@ -131,6 +166,8 @@ namespace Azure.ResourceManager.Cdn.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHttpErrorRange(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HttpErrorRange)} does not support '{options.Format}' format.");
             }

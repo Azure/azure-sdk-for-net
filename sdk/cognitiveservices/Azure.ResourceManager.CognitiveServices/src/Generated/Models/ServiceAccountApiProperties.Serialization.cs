@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class ServiceAccountApiProperties : IUtf8JsonSerializable, IJsonModel<ServiceAccountApiProperties>
+    public partial class ServiceAccountApiProperties : IUtf8JsonSerializable, IJsonModel<ServiceAccountApiProperties>, IPersistableModel<ServiceAccountApiProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAccountApiProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -197,6 +198,104 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new ServiceAccountApiProperties(qnaRuntimeEndpoint.Value, qnaAzureSearchEndpointKey.Value, qnaAzureSearchEndpointId.Value, Optional.ToNullable(statisticsEnabled), eventHubConnectionString.Value, storageAccountConnectionString.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), superUser.Value, websiteName.Value, additionalProperties);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(QnaRuntimeEndpoint))
+            {
+                builder.Append("  qnaRuntimeEndpoint:");
+                builder.AppendLine($" '{QnaRuntimeEndpoint}'");
+            }
+
+            if (Optional.IsDefined(QnaAzureSearchEndpointKey))
+            {
+                builder.Append("  qnaAzureSearchEndpointKey:");
+                builder.AppendLine($" '{QnaAzureSearchEndpointKey}'");
+            }
+
+            if (Optional.IsDefined(QnaAzureSearchEndpointId))
+            {
+                builder.Append("  qnaAzureSearchEndpointId:");
+                builder.AppendLine($" '{QnaAzureSearchEndpointId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnableStatistics))
+            {
+                builder.Append("  statisticsEnabled:");
+                var boolValue = EnableStatistics.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EventHubConnectionString))
+            {
+                builder.Append("  eventHubConnectionString:");
+                builder.AppendLine($" '{EventHubConnectionString}'");
+            }
+
+            if (Optional.IsDefined(StorageAccountConnectionString))
+            {
+                builder.Append("  storageAccountConnectionString:");
+                builder.AppendLine($" '{StorageAccountConnectionString}'");
+            }
+
+            if (Optional.IsDefined(AadClientId))
+            {
+                builder.Append("  aadClientId:");
+                builder.AppendLine($" '{AadClientId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AadTenantId))
+            {
+                builder.Append("  aadTenantId:");
+                builder.AppendLine($" '{AadTenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SuperUser))
+            {
+                builder.Append("  superUser:");
+                builder.AppendLine($" '{SuperUser}'");
+            }
+
+            if (Optional.IsDefined(WebsiteName))
+            {
+                builder.Append("  websiteName:");
+                builder.AppendLine($" '{WebsiteName}'");
+            }
+
+            if (Optional.IsCollectionDefined(AdditionalProperties))
+            {
+                builder.Append("  AdditionalProperties:");
+                builder.AppendLine(" {");
+                foreach (var item in AdditionalProperties)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value.ToString()}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ServiceAccountApiProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountApiProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -205,6 +304,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServiceAccountApiProperties)} does not support '{options.Format}' format.");
             }
@@ -221,6 +322,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeServiceAccountApiProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ServiceAccountApiProperties)} does not support '{options.Format}' format.");
             }

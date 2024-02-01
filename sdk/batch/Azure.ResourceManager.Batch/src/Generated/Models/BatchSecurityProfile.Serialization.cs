@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchSecurityProfile : IUtf8JsonSerializable, IJsonModel<BatchSecurityProfile>
+    public partial class BatchSecurityProfile : IUtf8JsonSerializable, IJsonModel<BatchSecurityProfile>, IPersistableModel<BatchSecurityProfile>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchSecurityProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -122,6 +123,45 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchSecurityProfile(Optional.ToNullable(securityType), Optional.ToNullable(encryptionAtHost), uefiSettings.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SecurityType))
+            {
+                builder.Append("  securityType:");
+                builder.AppendLine($" '{SecurityType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EncryptionAtHost))
+            {
+                builder.Append("  encryptionAtHost:");
+                var boolValue = EncryptionAtHost.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(UefiSettings))
+            {
+                builder.Append("  uefiSettings:");
+                AppendChildObject(builder, UefiSettings, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BatchSecurityProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BatchSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,6 +170,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BatchSecurityProfile)} does not support '{options.Format}' format.");
             }
@@ -146,6 +188,8 @@ namespace Azure.ResourceManager.Batch.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBatchSecurityProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BatchSecurityProfile)} does not support '{options.Format}' format.");
             }

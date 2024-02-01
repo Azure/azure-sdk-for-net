@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    public partial class HardwareProfile : IUtf8JsonSerializable, IJsonModel<HardwareProfile>
+    public partial class HardwareProfile : IUtf8JsonSerializable, IJsonModel<HardwareProfile>, IPersistableModel<HardwareProfile>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HardwareProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -178,6 +179,68 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             return new HardwareProfile(Optional.ToNullable(memoryMB), Optional.ToNullable(cpuCount), Optional.ToNullable(limitCpuForMigration), Optional.ToNullable(dynamicMemoryEnabled), Optional.ToNullable(dynamicMemoryMaxMB), Optional.ToNullable(dynamicMemoryMinMB), isHighlyAvailable.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MemoryMB))
+            {
+                builder.Append("  memoryMB:");
+                builder.AppendLine($" '{MemoryMB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CpuCount))
+            {
+                builder.Append("  cpuCount:");
+                builder.AppendLine($" '{CpuCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LimitCpuForMigration))
+            {
+                builder.Append("  limitCpuForMigration:");
+                builder.AppendLine($" '{LimitCpuForMigration.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DynamicMemoryEnabled))
+            {
+                builder.Append("  dynamicMemoryEnabled:");
+                builder.AppendLine($" '{DynamicMemoryEnabled.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DynamicMemoryMaxMB))
+            {
+                builder.Append("  dynamicMemoryMaxMB:");
+                builder.AppendLine($" '{DynamicMemoryMaxMB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DynamicMemoryMinMB))
+            {
+                builder.Append("  dynamicMemoryMinMB:");
+                builder.AppendLine($" '{DynamicMemoryMinMB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsHighlyAvailable))
+            {
+                builder.Append("  isHighlyAvailable:");
+                builder.AppendLine($" '{IsHighlyAvailable}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<HardwareProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -186,6 +249,8 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HardwareProfile)} does not support '{options.Format}' format.");
             }
@@ -202,6 +267,8 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHardwareProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HardwareProfile)} does not support '{options.Format}' format.");
             }

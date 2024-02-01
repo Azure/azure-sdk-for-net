@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleManagementExpandedProperties : IUtf8JsonSerializable, IJsonModel<RoleManagementExpandedProperties>
+    public partial class RoleManagementExpandedProperties : IUtf8JsonSerializable, IJsonModel<RoleManagementExpandedProperties>, IPersistableModel<RoleManagementExpandedProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleManagementExpandedProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -256,6 +257,86 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleManagementExpandedProperties(Optional.ToNullable(id), displayName.Value, email.Value, Optional.ToNullable(type), id0.Value, displayName0.Value, Optional.ToNullable(type0), id1.Value, displayName1.Value, Optional.ToNullable(type1), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PrincipalId))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{PrincipalId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrincipalDisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{PrincipalDisplayName}'");
+            }
+
+            if (Optional.IsDefined(Email))
+            {
+                builder.Append("  email:");
+                builder.AppendLine($" '{Email}'");
+            }
+
+            if (Optional.IsDefined(PrincipalType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{PrincipalType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RoleDefinitionId))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{RoleDefinitionId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RoleDefinitionDisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{RoleDefinitionDisplayName}'");
+            }
+
+            if (Optional.IsDefined(RoleType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{RoleType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ScopeId))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{ScopeId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ScopeDisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{ScopeDisplayName}'");
+            }
+
+            if (Optional.IsDefined(ScopeType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ScopeType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<RoleManagementExpandedProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RoleManagementExpandedProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -264,6 +345,8 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RoleManagementExpandedProperties)} does not support '{options.Format}' format.");
             }
@@ -280,6 +363,8 @@ namespace Azure.ResourceManager.Authorization.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRoleManagementExpandedProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RoleManagementExpandedProperties)} does not support '{options.Format}' format.");
             }

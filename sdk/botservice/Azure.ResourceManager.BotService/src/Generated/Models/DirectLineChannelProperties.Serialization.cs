@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class DirectLineChannelProperties : IUtf8JsonSerializable, IJsonModel<DirectLineChannelProperties>
+    public partial class DirectLineChannelProperties : IUtf8JsonSerializable, IJsonModel<DirectLineChannelProperties>, IPersistableModel<DirectLineChannelProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DirectLineChannelProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -135,6 +136,55 @@ namespace Azure.ResourceManager.BotService.Models
             return new DirectLineChannelProperties(Optional.ToList(sites), extensionKey1.Value, extensionKey2.Value, directLineEmbedCode.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Sites))
+            {
+                builder.Append("  sites:");
+                builder.AppendLine(" [");
+                foreach (var item in Sites)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ExtensionKey1))
+            {
+                builder.Append("  extensionKey1:");
+                builder.AppendLine($" '{ExtensionKey1}'");
+            }
+
+            if (Optional.IsDefined(ExtensionKey2))
+            {
+                builder.Append("  extensionKey2:");
+                builder.AppendLine($" '{ExtensionKey2}'");
+            }
+
+            if (Optional.IsDefined(DirectLineEmbedCode))
+            {
+                builder.Append("  DirectLineEmbedCode:");
+                builder.AppendLine($" '{DirectLineEmbedCode}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DirectLineChannelProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DirectLineChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -143,6 +193,8 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DirectLineChannelProperties)} does not support '{options.Format}' format.");
             }
@@ -159,6 +211,8 @@ namespace Azure.ResourceManager.BotService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDirectLineChannelProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DirectLineChannelProperties)} does not support '{options.Format}' format.");
             }
