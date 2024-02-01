@@ -15,43 +15,75 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
     /// </summary>
     internal static class DocumentHelper
     {
+        // TODO: NEED TO HANDLE UNIQUE MAXLENGTH VALUES FOR DOCUMENT TYPES. SEE SWAGGER FOR MAXLENGTH VALUES.
+
         internal static RemoteDependency ConvertToRemoteDependency(Activity activity)
         {
-            string urlFull = string.Empty, httpResponseStatusCode = string.Empty;
-
-            foreach (ref readonly var tag in activity.EnumerateTagObjects())
-            {
-                if (tag.Value == null)
-                {
-                    continue;
-                }
-                else if (tag.Key == SemanticConventions.AttributeUrlFull)
-                {
-                    urlFull = tag.Value.ToString();
-                    continue;
-                }
-                else if (tag.Key == SemanticConventions.AttributeHttpResponseStatusCode)
-                {
-                    httpResponseStatusCode = tag.Value.ToString();
-                    continue;
-                }
-            }
+            var atp = new ActivityTagsProcessor();
+            atp.CategorizeTags(activity);
 
             RemoteDependency remoteDependencyDocumentIngress = new()
             {
                 DocumentType = DocumentIngressDocumentType.RemoteDependency,
-                Name = activity.DisplayName,
-                CommandName = urlFull, // TODO: WHAT ABOUT DATABASES?
-                ResultCode = httpResponseStatusCode,
-                Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
-                                                ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
-                                                : SchemaConstants.Duration_MaxValue,
+
                 // TODO: Properties = new Dictionary<string, string>(), - UX supports up to 10 custom properties
 
-                // The following properties are used to calculate metrics. These are not serialized.
-                Extension_IsSuccess = IsSuccess(activity, httpResponseStatusCode),
+                // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
                 Extension_Duration = activity.Duration.TotalMilliseconds,
             };
+
+            // HACK: Remove the V2 for now.
+            if (atp.activityType.HasFlag(OperationType.V2))
+            {
+                //bool isNewSchemaVersion = true;
+                atp.activityType &= ~OperationType.V2;
+            }
+
+            switch (atp.activityType)
+            {
+                case OperationType.Http:
+                    remoteDependencyDocumentIngress.Name = activity.DisplayName;
+                    remoteDependencyDocumentIngress.CommandName = AzMonList.GetTagValue(ref atp.MappedTags, SemanticConventions.AttributeUrlFull)?.ToString();
+                    var httpResponseStatusCode = AzMonList.GetTagValue(ref atp.MappedTags, SemanticConventions.AttributeHttpResponseStatusCode)?.ToString();
+                    remoteDependencyDocumentIngress.ResultCode = httpResponseStatusCode;
+                    remoteDependencyDocumentIngress.Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
+                                                                ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
+                                                                : SchemaConstants.Duration_MaxValue;
+
+                    // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
+                    remoteDependencyDocumentIngress.Extension_IsSuccess = IsSuccess(activity, httpResponseStatusCode); // TODO: HOW TO DETERMINE SUCCESS FOR OTHER TYPES?
+                    break;
+                case OperationType.Db:
+                    remoteDependencyDocumentIngress.CommandName = AzMonList.GetTagValue(ref atp.MappedTags, SemanticConventions.AttributeDbStatement)?.ToString();
+
+                    // TODO: If tags contains Exception, set Success = false.
+                    // TODO: If tags contains Exception, set ResultCode = ExceptionNumber.
+
+                    remoteDependencyDocumentIngress.Duration = activity.Duration.ToString("c", CultureInfo.InvariantCulture);
+
+                    //var dbAttributeTagObjects = AzMonList.GetTagValues(ref atp.MappedTags, SemanticConventions.AttributeDbStatement, SemanticConventions.AttributeDbSystem);
+                    //var dbStatement = dbAttributeTagObjects[0]?.ToString();
+                    //var dbSystem = dbAttributeTagObjects[1]?.ToString();
+
+                    //var (dbName, dbTarget) = atp.MappedTags.GetDbDependencyTargetAndName();
+
+                    //var type = dbSystem == "mssql" ? "SQL" : dbSystem;
+
+                    //// special case for db.name
+                    //var sanitizedDbName = dbName?.Truncate(SchemaConstants.KVP_MaxValueLength);
+                    //if (sanitizedDbName != null)
+                    //{
+                    //    //Properties.Add(SemanticConventions.AttributeDbName, sanitizedDbName);
+                    //}
+
+                    break;
+                case OperationType.Rpc:
+                    // TODO
+                    break;
+                case OperationType.Messaging:
+                    // TODO
+                    break;
+            }
 
             return remoteDependencyDocumentIngress;
         }
@@ -145,7 +177,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static bool IsSuccess(Activity activity, string responseCode)
+        internal static bool IsSuccess(Activity activity, string? responseCode)
         {
             if (int.TryParse(responseCode, out int statusCode))
             {
