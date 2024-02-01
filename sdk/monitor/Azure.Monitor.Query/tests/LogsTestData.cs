@@ -99,7 +99,7 @@ namespace Azure.Monitor.Query.Tests
 
         private async Task InitializeData(string workspaceId, string workspaceKey)
         {
-            var succeeded = await QueryCount(workspaceId);
+            var succeeded = await VerfiyTableUpload(workspaceId);
 
             if (!succeeded)
             {
@@ -114,11 +114,11 @@ namespace Azure.Monitor.Query.Tests
             while (!succeeded)
             {
                 await Task.Delay(TimeSpan.FromSeconds(30));
-                succeeded = await QueryCount(workspaceId);
+                succeeded = await VerfiyTableUpload(workspaceId);
             }
         }
 
-        private async Task<bool> QueryCount(string workspaceId)
+        private async Task<bool> VerfiyTableUpload(string workspaceId)
         {
             var logsClient = new LogsQueryClient(_testEnvironment.LogsEndpoint, _testEnvironment.Credential);
             try
