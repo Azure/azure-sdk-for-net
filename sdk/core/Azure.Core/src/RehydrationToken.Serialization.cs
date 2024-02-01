@@ -5,7 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-#nullable disable
+#nullable enable
 
 namespace Azure.Core
 {
@@ -17,14 +17,14 @@ namespace Azure.Core
             {
                 return default;
             }
-            Optional<Guid> id = default;
+            Guid? id = null;
             string version = string.Empty;
-            string headerSource = default;
+            string headerSource = string.Empty;
             string nextRequestUri = string.Empty;
             string initialUri = string.Empty;
             RequestMethod requestMethod = default;
             bool originalResponseHasLocation = default;
-            Optional<string> lastKnownLocation = default;
+            string? lastKnownLocation = null;
             OperationFinalStateVia finalStateVia = default;
 
             foreach (var property in element.EnumerateObject())
@@ -35,31 +35,31 @@ namespace Azure.Core
                     {
                         continue;
                     }
-                    id = Guid.Parse(property.Value.GetString());
+                    id = Guid.Parse(property.Value.GetString()!);
                 }
                 if (property.NameEquals("version"u8))
                 {
-                    version = property.Value.GetString();
+                    version = property.Value.GetString()!;
                     continue;
                 }
                 if (property.NameEquals("headerSource"u8))
                 {
-                    headerSource = property.Value.GetString();
+                    headerSource = property.Value.GetString()!;
                     continue;
                 }
                 if (property.NameEquals("nextRequestUri"u8))
                 {
-                    nextRequestUri = property.Value.GetString();
+                    nextRequestUri = property.Value.GetString()!;
                     continue;
                 }
                 if (property.NameEquals("initialUri"u8))
                 {
-                    initialUri = property.Value.GetString();
+                    initialUri = property.Value.GetString()!;
                     continue;
                 }
                 if (property.NameEquals("requestMethod"u8))
                 {
-                    requestMethod = new RequestMethod(property.Value.GetString());
+                    requestMethod = new RequestMethod(property.Value.GetString()!);
                     continue;
                 }
                 if (property.NameEquals("originalResponseHasLocation"u8))
@@ -85,7 +85,7 @@ namespace Azure.Core
                     continue;
                 }
             }
-            return new RehydrationToken(id.Value, version, headerSource, nextRequestUri, initialUri, requestMethod, originalResponseHasLocation, lastKnownLocation.Value, finalStateVia);
+            return new RehydrationToken(id, version, headerSource, nextRequestUri, initialUri, requestMethod, originalResponseHasLocation, lastKnownLocation, finalStateVia);
         }
 
         void IJsonModel<RehydrationToken>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

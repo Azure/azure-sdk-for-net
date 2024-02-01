@@ -49,8 +49,6 @@
     <Compile Include="Shared\AzureKeyCredentialPolicy.cs" />
     <Compile Include="Shared\AzureSasCredentialSynchronousPolicy.cs" />
     <Compile Include="Shared\Base64Url.cs" />
-    <Compile Include="Shared\ChangeTrackingList.cs" />
-    <Compile Include="Shared\ChangeTrackingDictionary.cs" />
     <Compile Include="Shared\ClientDiagnostics.cs" />
     <Compile Include="Shared\ContentTypeUtilities.cs" />
     <Compile Include="Shared\DiagnosticScope.cs" />
@@ -69,7 +67,6 @@
     <Compile Include="Shared\OperationInternal.cs" />
     <Compile Include="Shared\OperationInternalOfT.cs" />
     <Compile Include="Shared\OperationFinalStateVia.cs" />
-    <Compile Include="Shared\Optional.cs" />
     <Compile Include="Shared\SequentialDelayStrategy.cs" />
     <Compile Include="Shared\SerializationConstructorAttribute.cs" />
     <Compile Include="Shared\TaskExtensions.cs" />
