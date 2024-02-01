@@ -33,4 +33,4 @@ Console.WriteLine($"Number of documents retrieved: {totalDocsCount}");
 Console.WriteLine($"Total page count: {pageCount}");
 ```
 
-By consistently using the same sessionId, the system makes a best-effort attempt to target the same replica, improving the overall consistency of search results for users within the specified session. This approach is useful for scenarios where maintaining result consistency throughout a user's session is essential. For more details, please refer the [documentation](https://learn.microsoft.com/en-us/azure/search/index-similarity-and-scoring#scoring-statistics-and-sticky-sessions).
+By consistently using the same sessionId, the system makes a best-effort attempt to target the same replica, improving the overall consistency of search results for users within the specified session. This approach is useful for scenarios where maintaining result consistency throughout a user's session is essential. For more details, please refer the [documentation](https://learn.microsoft.com/azure/search/index-similarity-and-scoring#scoring-statistics-and-sticky-sessions).
