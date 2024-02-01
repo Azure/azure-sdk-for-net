@@ -129,6 +129,7 @@ namespace Azure.Core.Tests
 
                 await pipeline.SendAsync(message, default).ConfigureAwait(false);
                 response = message.Response;
+                response.ContentStream = message.ExtractResponseContent();
             }
 
             Assert.NotNull(response.ContentStream);
