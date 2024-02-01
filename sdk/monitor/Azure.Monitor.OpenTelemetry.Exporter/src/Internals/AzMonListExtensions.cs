@@ -15,6 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// Recognized database systems.
         /// <see href="https://github.com/open-telemetry/semantic-conventions/blob/v1.24.0/docs/database/database-spans.md#connection-level-attributes"/>.
         /// </summary>
+        // TODO: This single item HashSet is used to map "mssql" to "SQL". This could be replaced with a helper method.
         internal static readonly HashSet<string?> s_dbSystems = new HashSet<string?>() { "mssql" };
 
         ///<summary>
