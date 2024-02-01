@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class StaticSiteUserProvidedFunctionAppData : IUtf8JsonSerializable, IJsonModel<StaticSiteUserProvidedFunctionAppData>
+    public partial class StaticSiteUserProvidedFunctionAppData : IUtf8JsonSerializable, IJsonModel<StaticSiteUserProvidedFunctionAppData>, IPersistableModel<StaticSiteUserProvidedFunctionAppData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticSiteUserProvidedFunctionAppData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -193,6 +194,74 @@ namespace Azure.ResourceManager.AppService
             return new StaticSiteUserProvidedFunctionAppData(id, name, type, systemData.Value, functionAppResourceId.Value, functionAppRegion.Value, Optional.ToNullable(createdOn), kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(FunctionAppResourceId))
+            {
+                builder.Append("  functionAppResourceId:");
+                builder.AppendLine($" '{FunctionAppResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FunctionAppRegion))
+            {
+                builder.Append("  functionAppRegion:");
+                builder.AppendLine($" '{FunctionAppRegion}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdOn:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<StaticSiteUserProvidedFunctionAppData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StaticSiteUserProvidedFunctionAppData>)this).GetFormatFromOptions(options) : options.Format;
@@ -201,6 +270,8 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StaticSiteUserProvidedFunctionAppData)} does not support '{options.Format}' format.");
             }
@@ -217,6 +288,8 @@ namespace Azure.ResourceManager.AppService
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStaticSiteUserProvidedFunctionAppData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StaticSiteUserProvidedFunctionAppData)} does not support '{options.Format}' format.");
             }

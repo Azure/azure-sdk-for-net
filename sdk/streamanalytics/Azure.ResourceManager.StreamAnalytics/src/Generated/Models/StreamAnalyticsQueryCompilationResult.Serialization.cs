@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class StreamAnalyticsQueryCompilationResult : IUtf8JsonSerializable, IJsonModel<StreamAnalyticsQueryCompilationResult>
+    public partial class StreamAnalyticsQueryCompilationResult : IUtf8JsonSerializable, IJsonModel<StreamAnalyticsQueryCompilationResult>, IPersistableModel<StreamAnalyticsQueryCompilationResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamAnalyticsQueryCompilationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -202,6 +203,101 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new StreamAnalyticsQueryCompilationResult(Optional.ToList(errors), Optional.ToList(warnings), Optional.ToList(inputs), Optional.ToList(outputs), Optional.ToList(functions), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                builder.Append("  errors:");
+                builder.AppendLine(" [");
+                foreach (var item in Errors)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Warnings))
+            {
+                builder.Append("  warnings:");
+                builder.AppendLine(" [");
+                foreach (var item in Warnings)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Inputs))
+            {
+                builder.Append("  inputs:");
+                builder.AppendLine(" [");
+                foreach (var item in Inputs)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Outputs))
+            {
+                builder.Append("  outputs:");
+                builder.AppendLine(" [");
+                foreach (var item in Outputs)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Functions))
+            {
+                builder.Append("  functions:");
+                builder.AppendLine(" [");
+                foreach (var item in Functions)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<StreamAnalyticsQueryCompilationResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsQueryCompilationResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -210,6 +306,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationResult)} does not support '{options.Format}' format.");
             }
@@ -226,6 +324,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStreamAnalyticsQueryCompilationResult(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StreamAnalyticsQueryCompilationResult)} does not support '{options.Format}' format.");
             }

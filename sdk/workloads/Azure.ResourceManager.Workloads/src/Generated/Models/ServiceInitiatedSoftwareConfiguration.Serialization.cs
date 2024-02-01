@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class ServiceInitiatedSoftwareConfiguration : IUtf8JsonSerializable, IJsonModel<ServiceInitiatedSoftwareConfiguration>
+    public partial class ServiceInitiatedSoftwareConfiguration : IUtf8JsonSerializable, IJsonModel<ServiceInitiatedSoftwareConfiguration>, IPersistableModel<ServiceInitiatedSoftwareConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceInitiatedSoftwareConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -140,6 +141,68 @@ namespace Azure.ResourceManager.Workloads.Models
             return new ServiceInitiatedSoftwareConfiguration(softwareInstallationType, serializedAdditionalRawData, bomUrl, softwareVersion, sapBitsStorageAccountId, sapFqdn, sshPrivateKey, highAvailabilitySoftwareConfiguration.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BomUri))
+            {
+                builder.Append("  bomUrl:");
+                builder.AppendLine($" '{BomUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(SoftwareVersion))
+            {
+                builder.Append("  softwareVersion:");
+                builder.AppendLine($" '{SoftwareVersion}'");
+            }
+
+            if (Optional.IsDefined(SapBitsStorageAccountId))
+            {
+                builder.Append("  sapBitsStorageAccountId:");
+                builder.AppendLine($" '{SapBitsStorageAccountId}'");
+            }
+
+            if (Optional.IsDefined(SapFqdn))
+            {
+                builder.Append("  sapFqdn:");
+                builder.AppendLine($" '{SapFqdn}'");
+            }
+
+            if (Optional.IsDefined(SshPrivateKey))
+            {
+                builder.Append("  sshPrivateKey:");
+                builder.AppendLine($" '{SshPrivateKey}'");
+            }
+
+            if (Optional.IsDefined(HighAvailabilitySoftwareConfiguration))
+            {
+                builder.Append("  highAvailabilitySoftwareConfiguration:");
+                AppendChildObject(builder, HighAvailabilitySoftwareConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(SoftwareInstallationType))
+            {
+                builder.Append("  softwareInstallationType:");
+                builder.AppendLine($" '{SoftwareInstallationType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ServiceInitiatedSoftwareConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceInitiatedSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -148,6 +211,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServiceInitiatedSoftwareConfiguration)} does not support '{options.Format}' format.");
             }
@@ -164,6 +229,8 @@ namespace Azure.ResourceManager.Workloads.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeServiceInitiatedSoftwareConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ServiceInitiatedSoftwareConfiguration)} does not support '{options.Format}' format.");
             }

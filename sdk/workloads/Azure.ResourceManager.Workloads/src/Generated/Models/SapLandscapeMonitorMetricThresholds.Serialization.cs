@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SapLandscapeMonitorMetricThresholds : IUtf8JsonSerializable, IJsonModel<SapLandscapeMonitorMetricThresholds>
+    public partial class SapLandscapeMonitorMetricThresholds : IUtf8JsonSerializable, IJsonModel<SapLandscapeMonitorMetricThresholds>, IPersistableModel<SapLandscapeMonitorMetricThresholds>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapLandscapeMonitorMetricThresholds>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -133,6 +134,50 @@ namespace Azure.ResourceManager.Workloads.Models
             return new SapLandscapeMonitorMetricThresholds(name.Value, Optional.ToNullable(green), Optional.ToNullable(yellow), Optional.ToNullable(red), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Green))
+            {
+                builder.Append("  green:");
+                builder.AppendLine($" '{Green.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Yellow))
+            {
+                builder.Append("  yellow:");
+                builder.AppendLine($" '{Yellow.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Red))
+            {
+                builder.Append("  red:");
+                builder.AppendLine($" '{Red.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SapLandscapeMonitorMetricThresholds>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SapLandscapeMonitorMetricThresholds>)this).GetFormatFromOptions(options) : options.Format;
@@ -141,6 +186,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SapLandscapeMonitorMetricThresholds)} does not support '{options.Format}' format.");
             }
@@ -157,6 +204,8 @@ namespace Azure.ResourceManager.Workloads.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSapLandscapeMonitorMetricThresholds(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SapLandscapeMonitorMetricThresholds)} does not support '{options.Format}' format.");
             }

@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SitePatchInfo : IUtf8JsonSerializable, IJsonModel<SitePatchInfo>
+    public partial class SitePatchInfo : IUtf8JsonSerializable, IJsonModel<SitePatchInfo>, IPersistableModel<SitePatchInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SitePatchInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -782,6 +783,354 @@ namespace Azure.ResourceManager.AppService.Models
             return new SitePatchInfo(id, name, type, systemData.Value, identity, state.Value, Optional.ToList(hostNames), repositorySiteName.Value, Optional.ToNullable(usageState), Optional.ToNullable(enabled), Optional.ToList(enabledHostNames), Optional.ToNullable(availabilityState), Optional.ToList(hostNameSslStates), serverFarmId.Value, Optional.ToNullable(reserved), Optional.ToNullable(isXenon), Optional.ToNullable(hyperV), Optional.ToNullable(lastModifiedTimeUtc), siteConfig.Value, Optional.ToList(trafficManagerHostNames), Optional.ToNullable(scmSiteAlsoStopped), targetSwapSlot.Value, hostingEnvironmentProfile.Value, Optional.ToNullable(clientAffinityEnabled), Optional.ToNullable(clientCertEnabled), Optional.ToNullable(clientCertMode), clientCertExclusionPaths.Value, Optional.ToNullable(hostNamesDisabled), customDomainVerificationId.Value, outboundIPAddresses.Value, possibleOutboundIPAddresses.Value, Optional.ToNullable(containerSize), Optional.ToNullable(dailyMemoryTimeQuota), Optional.ToNullable(suspendedTill), Optional.ToNullable(maxNumberOfWorkers), cloningInfo.Value, resourceGroup.Value, Optional.ToNullable(isDefaultContainer), defaultHostName.Value, slotSwapStatus.Value, Optional.ToNullable(httpsOnly), Optional.ToNullable(redundancyMode), Optional.ToNullable(inProgressOperationId), Optional.ToNullable(storageAccountRequired), keyVaultReferenceIdentity.Value, virtualNetworkSubnetId.Value, kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2);
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State}'");
+            }
+
+            if (Optional.IsCollectionDefined(HostNames))
+            {
+                builder.Append("  hostNames:");
+                builder.AppendLine(" [");
+                foreach (var item in HostNames)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(RepositorySiteName))
+            {
+                builder.Append("  repositorySiteName:");
+                builder.AppendLine($" '{RepositorySiteName}'");
+            }
+
+            if (Optional.IsDefined(UsageState))
+            {
+                builder.Append("  usageState:");
+                builder.AppendLine($" '{UsageState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("  enabled:");
+                var boolValue = IsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(EnabledHostNames))
+            {
+                builder.Append("  enabledHostNames:");
+                builder.AppendLine(" [");
+                foreach (var item in EnabledHostNames)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(AvailabilityState))
+            {
+                builder.Append("  availabilityState:");
+                builder.AppendLine($" '{AvailabilityState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(HostNameSslStates))
+            {
+                builder.Append("  hostNameSslStates:");
+                builder.AppendLine(" [");
+                foreach (var item in HostNameSslStates)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ServerFarmId))
+            {
+                builder.Append("  serverFarmId:");
+                builder.AppendLine($" '{ServerFarmId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsReserved))
+            {
+                builder.Append("  reserved:");
+                var boolValue = IsReserved.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsXenon))
+            {
+                builder.Append("  isXenon:");
+                var boolValue = IsXenon.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsHyperV))
+            {
+                builder.Append("  hyperV:");
+                var boolValue = IsHyperV.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("  lastModifiedTimeUtc:");
+                builder.AppendLine($" '{LastModifiedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SiteConfig))
+            {
+                builder.Append("  siteConfig:");
+                AppendChildObject(builder, SiteConfig, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(TrafficManagerHostNames))
+            {
+                builder.Append("  trafficManagerHostNames:");
+                builder.AppendLine(" [");
+                foreach (var item in TrafficManagerHostNames)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsScmSiteAlsoStopped))
+            {
+                builder.Append("  scmSiteAlsoStopped:");
+                var boolValue = IsScmSiteAlsoStopped.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(TargetSwapSlot))
+            {
+                builder.Append("  targetSwapSlot:");
+                builder.AppendLine($" '{TargetSwapSlot}'");
+            }
+
+            if (Optional.IsDefined(HostingEnvironmentProfile))
+            {
+                builder.Append("  hostingEnvironmentProfile:");
+                AppendChildObject(builder, HostingEnvironmentProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(IsClientAffinityEnabled))
+            {
+                builder.Append("  clientAffinityEnabled:");
+                var boolValue = IsClientAffinityEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsClientCertEnabled))
+            {
+                builder.Append("  clientCertEnabled:");
+                var boolValue = IsClientCertEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ClientCertMode))
+            {
+                builder.Append("  clientCertMode:");
+                builder.AppendLine($" '{ClientCertMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClientCertExclusionPaths))
+            {
+                builder.Append("  clientCertExclusionPaths:");
+                builder.AppendLine($" '{ClientCertExclusionPaths}'");
+            }
+
+            if (Optional.IsDefined(IsHostNameDisabled))
+            {
+                builder.Append("  hostNamesDisabled:");
+                var boolValue = IsHostNameDisabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CustomDomainVerificationId))
+            {
+                builder.Append("  customDomainVerificationId:");
+                builder.AppendLine($" '{CustomDomainVerificationId}'");
+            }
+
+            if (Optional.IsDefined(OutboundIPAddresses))
+            {
+                builder.Append("  outboundIpAddresses:");
+                builder.AppendLine($" '{OutboundIPAddresses}'");
+            }
+
+            if (Optional.IsDefined(PossibleOutboundIPAddresses))
+            {
+                builder.Append("  possibleOutboundIpAddresses:");
+                builder.AppendLine($" '{PossibleOutboundIPAddresses}'");
+            }
+
+            if (Optional.IsDefined(ContainerSize))
+            {
+                builder.Append("  containerSize:");
+                builder.AppendLine($" '{ContainerSize.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DailyMemoryTimeQuota))
+            {
+                builder.Append("  dailyMemoryTimeQuota:");
+                builder.AppendLine($" '{DailyMemoryTimeQuota.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SuspendOn))
+            {
+                builder.Append("  suspendedTill:");
+                builder.AppendLine($" '{SuspendOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxNumberOfWorkers))
+            {
+                builder.Append("  maxNumberOfWorkers:");
+                builder.AppendLine($" '{MaxNumberOfWorkers.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CloningInfo))
+            {
+                builder.Append("  cloningInfo:");
+                AppendChildObject(builder, CloningInfo, options, 2);
+            }
+
+            if (Optional.IsDefined(ResourceGroup))
+            {
+                builder.Append("  resourceGroup:");
+                builder.AppendLine($" '{ResourceGroup}'");
+            }
+
+            if (Optional.IsDefined(IsDefaultContainer))
+            {
+                builder.Append("  isDefaultContainer:");
+                var boolValue = IsDefaultContainer.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DefaultHostName))
+            {
+                builder.Append("  defaultHostName:");
+                builder.AppendLine($" '{DefaultHostName}'");
+            }
+
+            if (Optional.IsDefined(SlotSwapStatus))
+            {
+                builder.Append("  slotSwapStatus:");
+                AppendChildObject(builder, SlotSwapStatus, options, 2);
+            }
+
+            if (Optional.IsDefined(IsHttpsOnly))
+            {
+                builder.Append("  httpsOnly:");
+                var boolValue = IsHttpsOnly.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RedundancyMode))
+            {
+                builder.Append("  redundancyMode:");
+                builder.AppendLine($" '{RedundancyMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InProgressOperationId))
+            {
+                builder.Append("  inProgressOperationId:");
+                builder.AppendLine($" '{InProgressOperationId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsStorageAccountRequired))
+            {
+                builder.Append("  storageAccountRequired:");
+                var boolValue = IsStorageAccountRequired.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(KeyVaultReferenceIdentity))
+            {
+                builder.Append("  keyVaultReferenceIdentity:");
+                builder.AppendLine($" '{KeyVaultReferenceIdentity}'");
+            }
+
+            if (Optional.IsDefined(VirtualNetworkSubnetId))
+            {
+                builder.Append("  virtualNetworkSubnetId:");
+                builder.AppendLine($" '{VirtualNetworkSubnetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SitePatchInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SitePatchInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -790,6 +1139,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SitePatchInfo)} does not support '{options.Format}' format.");
             }
@@ -806,6 +1157,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSitePatchInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SitePatchInfo)} does not support '{options.Format}' format.");
             }

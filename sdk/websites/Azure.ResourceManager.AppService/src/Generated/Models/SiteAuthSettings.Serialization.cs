@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SiteAuthSettings : IUtf8JsonSerializable, IJsonModel<SiteAuthSettings>
+    public partial class SiteAuthSettings : IUtf8JsonSerializable, IJsonModel<SiteAuthSettings>, IPersistableModel<SiteAuthSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteAuthSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -692,6 +693,357 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteAuthSettings(id, name, type, systemData.Value, Optional.ToNullable(enabled), runtimeVersion.Value, Optional.ToNullable(unauthenticatedClientAction), Optional.ToNullable(tokenStoreEnabled), Optional.ToList(allowedExternalRedirectUrls), Optional.ToNullable(defaultProvider), Optional.ToNullable(tokenRefreshExtensionHours), clientId.Value, clientSecret.Value, clientSecretSettingName.Value, clientSecretCertificateThumbprint.Value, issuer.Value, Optional.ToNullable(validateIssuer), Optional.ToList(allowedAudiences), Optional.ToList(additionalLoginParams), aadClaimsAuthorization.Value, googleClientId.Value, googleClientSecret.Value, googleClientSecretSettingName.Value, Optional.ToList(googleOAuthScopes), facebookAppId.Value, facebookAppSecret.Value, facebookAppSecretSettingName.Value, Optional.ToList(facebookOAuthScopes), gitHubClientId.Value, gitHubClientSecret.Value, gitHubClientSecretSettingName.Value, Optional.ToList(gitHubOAuthScopes), twitterConsumerKey.Value, twitterConsumerSecret.Value, twitterConsumerSecretSettingName.Value, microsoftAccountClientId.Value, microsoftAccountClientSecret.Value, microsoftAccountClientSecretSettingName.Value, Optional.ToList(microsoftAccountOAuthScopes), isAuthFromFile.Value, authFilePath.Value, configVersion.Value, kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("  enabled:");
+                var boolValue = IsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RuntimeVersion))
+            {
+                builder.Append("  runtimeVersion:");
+                builder.AppendLine($" '{RuntimeVersion}'");
+            }
+
+            if (Optional.IsDefined(UnauthenticatedClientAction))
+            {
+                builder.Append("  unauthenticatedClientAction:");
+                builder.AppendLine($" '{UnauthenticatedClientAction.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsTokenStoreEnabled))
+            {
+                builder.Append("  tokenStoreEnabled:");
+                var boolValue = IsTokenStoreEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
+            {
+                builder.Append("  allowedExternalRedirectUrls:");
+                builder.AppendLine(" [");
+                foreach (var item in AllowedExternalRedirectUrls)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(DefaultProvider))
+            {
+                builder.Append("  defaultProvider:");
+                builder.AppendLine($" '{DefaultProvider.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TokenRefreshExtensionHours))
+            {
+                builder.Append("  tokenRefreshExtensionHours:");
+                builder.AppendLine($" '{TokenRefreshExtensionHours.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClientId))
+            {
+                builder.Append("  clientId:");
+                builder.AppendLine($" '{ClientId}'");
+            }
+
+            if (Optional.IsDefined(ClientSecret))
+            {
+                builder.Append("  clientSecret:");
+                builder.AppendLine($" '{ClientSecret}'");
+            }
+
+            if (Optional.IsDefined(ClientSecretSettingName))
+            {
+                builder.Append("  clientSecretSettingName:");
+                builder.AppendLine($" '{ClientSecretSettingName}'");
+            }
+
+            if (Optional.IsDefined(ClientSecretCertificateThumbprintString))
+            {
+                builder.Append("  clientSecretCertificateThumbprint:");
+                builder.AppendLine($" '{ClientSecretCertificateThumbprintString}'");
+            }
+
+            if (Optional.IsDefined(Issuer))
+            {
+                builder.Append("  issuer:");
+                builder.AppendLine($" '{Issuer}'");
+            }
+
+            if (Optional.IsDefined(ValidateIssuer))
+            {
+                builder.Append("  validateIssuer:");
+                var boolValue = ValidateIssuer.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(AllowedAudiences))
+            {
+                builder.Append("  allowedAudiences:");
+                builder.AppendLine(" [");
+                foreach (var item in AllowedAudiences)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(AdditionalLoginParams))
+            {
+                builder.Append("  additionalLoginParams:");
+                builder.AppendLine(" [");
+                foreach (var item in AdditionalLoginParams)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(AadClaimsAuthorization))
+            {
+                builder.Append("  aadClaimsAuthorization:");
+                builder.AppendLine($" '{AadClaimsAuthorization}'");
+            }
+
+            if (Optional.IsDefined(GoogleClientId))
+            {
+                builder.Append("  googleClientId:");
+                builder.AppendLine($" '{GoogleClientId}'");
+            }
+
+            if (Optional.IsDefined(GoogleClientSecret))
+            {
+                builder.Append("  googleClientSecret:");
+                builder.AppendLine($" '{GoogleClientSecret}'");
+            }
+
+            if (Optional.IsDefined(GoogleClientSecretSettingName))
+            {
+                builder.Append("  googleClientSecretSettingName:");
+                builder.AppendLine($" '{GoogleClientSecretSettingName}'");
+            }
+
+            if (Optional.IsCollectionDefined(GoogleOAuthScopes))
+            {
+                builder.Append("  googleOAuthScopes:");
+                builder.AppendLine(" [");
+                foreach (var item in GoogleOAuthScopes)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(FacebookAppId))
+            {
+                builder.Append("  facebookAppId:");
+                builder.AppendLine($" '{FacebookAppId}'");
+            }
+
+            if (Optional.IsDefined(FacebookAppSecret))
+            {
+                builder.Append("  facebookAppSecret:");
+                builder.AppendLine($" '{FacebookAppSecret}'");
+            }
+
+            if (Optional.IsDefined(FacebookAppSecretSettingName))
+            {
+                builder.Append("  facebookAppSecretSettingName:");
+                builder.AppendLine($" '{FacebookAppSecretSettingName}'");
+            }
+
+            if (Optional.IsCollectionDefined(FacebookOAuthScopes))
+            {
+                builder.Append("  facebookOAuthScopes:");
+                builder.AppendLine(" [");
+                foreach (var item in FacebookOAuthScopes)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(GitHubClientId))
+            {
+                builder.Append("  gitHubClientId:");
+                builder.AppendLine($" '{GitHubClientId}'");
+            }
+
+            if (Optional.IsDefined(GitHubClientSecret))
+            {
+                builder.Append("  gitHubClientSecret:");
+                builder.AppendLine($" '{GitHubClientSecret}'");
+            }
+
+            if (Optional.IsDefined(GitHubClientSecretSettingName))
+            {
+                builder.Append("  gitHubClientSecretSettingName:");
+                builder.AppendLine($" '{GitHubClientSecretSettingName}'");
+            }
+
+            if (Optional.IsCollectionDefined(GitHubOAuthScopes))
+            {
+                builder.Append("  gitHubOAuthScopes:");
+                builder.AppendLine(" [");
+                foreach (var item in GitHubOAuthScopes)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(TwitterConsumerKey))
+            {
+                builder.Append("  twitterConsumerKey:");
+                builder.AppendLine($" '{TwitterConsumerKey}'");
+            }
+
+            if (Optional.IsDefined(TwitterConsumerSecret))
+            {
+                builder.Append("  twitterConsumerSecret:");
+                builder.AppendLine($" '{TwitterConsumerSecret}'");
+            }
+
+            if (Optional.IsDefined(TwitterConsumerSecretSettingName))
+            {
+                builder.Append("  twitterConsumerSecretSettingName:");
+                builder.AppendLine($" '{TwitterConsumerSecretSettingName}'");
+            }
+
+            if (Optional.IsDefined(MicrosoftAccountClientId))
+            {
+                builder.Append("  microsoftAccountClientId:");
+                builder.AppendLine($" '{MicrosoftAccountClientId}'");
+            }
+
+            if (Optional.IsDefined(MicrosoftAccountClientSecret))
+            {
+                builder.Append("  microsoftAccountClientSecret:");
+                builder.AppendLine($" '{MicrosoftAccountClientSecret}'");
+            }
+
+            if (Optional.IsDefined(MicrosoftAccountClientSecretSettingName))
+            {
+                builder.Append("  microsoftAccountClientSecretSettingName:");
+                builder.AppendLine($" '{MicrosoftAccountClientSecretSettingName}'");
+            }
+
+            if (Optional.IsCollectionDefined(MicrosoftAccountOAuthScopes))
+            {
+                builder.Append("  microsoftAccountOAuthScopes:");
+                builder.AppendLine(" [");
+                foreach (var item in MicrosoftAccountOAuthScopes)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsAuthFromFile))
+            {
+                builder.Append("  isAuthFromFile:");
+                builder.AppendLine($" '{IsAuthFromFile}'");
+            }
+
+            if (Optional.IsDefined(AuthFilePath))
+            {
+                builder.Append("  authFilePath:");
+                builder.AppendLine($" '{AuthFilePath}'");
+            }
+
+            if (Optional.IsDefined(ConfigVersion))
+            {
+                builder.Append("  configVersion:");
+                builder.AppendLine($" '{ConfigVersion}'");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SiteAuthSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteAuthSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -700,6 +1052,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SiteAuthSettings)} does not support '{options.Format}' format.");
             }
@@ -716,6 +1070,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSiteAuthSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SiteAuthSettings)} does not support '{options.Format}' format.");
             }

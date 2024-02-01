@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlVmKeyVaultCredentialSettings : IUtf8JsonSerializable, IJsonModel<SqlVmKeyVaultCredentialSettings>
+    public partial class SqlVmKeyVaultCredentialSettings : IUtf8JsonSerializable, IJsonModel<SqlVmKeyVaultCredentialSettings>, IPersistableModel<SqlVmKeyVaultCredentialSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlVmKeyVaultCredentialSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -140,6 +141,57 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             return new SqlVmKeyVaultCredentialSettings(Optional.ToNullable(enable), credentialName.Value, azureKeyVaultUrl.Value, servicePrincipalName.Value, servicePrincipalSecret.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("  enable:");
+                var boolValue = IsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CredentialName))
+            {
+                builder.Append("  credentialName:");
+                builder.AppendLine($" '{CredentialName}'");
+            }
+
+            if (Optional.IsDefined(AzureKeyVaultUri))
+            {
+                builder.Append("  azureKeyVaultUrl:");
+                builder.AppendLine($" '{AzureKeyVaultUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(ServicePrincipalName))
+            {
+                builder.Append("  servicePrincipalName:");
+                builder.AppendLine($" '{ServicePrincipalName}'");
+            }
+
+            if (Optional.IsDefined(ServicePrincipalSecret))
+            {
+                builder.Append("  servicePrincipalSecret:");
+                builder.AppendLine($" '{ServicePrincipalSecret}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SqlVmKeyVaultCredentialSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlVmKeyVaultCredentialSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -148,6 +200,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SqlVmKeyVaultCredentialSettings)} does not support '{options.Format}' format.");
             }
@@ -164,6 +218,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSqlVmKeyVaultCredentialSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SqlVmKeyVaultCredentialSettings)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class JwtClaimChecks : IUtf8JsonSerializable, IJsonModel<JwtClaimChecks>
+    public partial class JwtClaimChecks : IUtf8JsonSerializable, IJsonModel<JwtClaimChecks>, IPersistableModel<JwtClaimChecks>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JwtClaimChecks>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -127,6 +128,58 @@ namespace Azure.ResourceManager.AppService.Models
             return new JwtClaimChecks(Optional.ToList(allowedGroups), Optional.ToList(allowedClientApplications), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(AllowedGroups))
+            {
+                builder.Append("  allowedGroups:");
+                builder.AppendLine(" [");
+                foreach (var item in AllowedGroups)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(AllowedClientApplications))
+            {
+                builder.Append("  allowedClientApplications:");
+                builder.AppendLine(" [");
+                foreach (var item in AllowedClientApplications)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<JwtClaimChecks>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<JwtClaimChecks>)this).GetFormatFromOptions(options) : options.Format;
@@ -135,6 +188,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(JwtClaimChecks)} does not support '{options.Format}' format.");
             }
@@ -151,6 +206,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeJwtClaimChecks(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(JwtClaimChecks)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class BlobStreamInputDataSource : IUtf8JsonSerializable, IJsonModel<BlobStreamInputDataSource>
+    public partial class BlobStreamInputDataSource : IUtf8JsonSerializable, IJsonModel<BlobStreamInputDataSource>, IPersistableModel<BlobStreamInputDataSource>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobStreamInputDataSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -199,6 +200,79 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new BlobStreamInputDataSource(type, serializedAdditionalRawData, Optional.ToList(storageAccounts), container.Value, pathPattern.Value, dateFormat.Value, timeFormat.Value, Optional.ToNullable(authenticationMode), Optional.ToNullable(sourcePartitionCount));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(StorageAccounts))
+            {
+                builder.Append("  storageAccounts:");
+                builder.AppendLine(" [");
+                foreach (var item in StorageAccounts)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Container))
+            {
+                builder.Append("  container:");
+                builder.AppendLine($" '{Container}'");
+            }
+
+            if (Optional.IsDefined(PathPattern))
+            {
+                builder.Append("  pathPattern:");
+                builder.AppendLine($" '{PathPattern}'");
+            }
+
+            if (Optional.IsDefined(DateFormat))
+            {
+                builder.Append("  dateFormat:");
+                builder.AppendLine($" '{DateFormat}'");
+            }
+
+            if (Optional.IsDefined(TimeFormat))
+            {
+                builder.Append("  timeFormat:");
+                builder.AppendLine($" '{TimeFormat}'");
+            }
+
+            if (Optional.IsDefined(AuthenticationMode))
+            {
+                builder.Append("  authenticationMode:");
+                builder.AppendLine($" '{AuthenticationMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourcePartitionCount))
+            {
+                builder.Append("  sourcePartitionCount:");
+                builder.AppendLine($" '{SourcePartitionCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StreamInputDataSourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{StreamInputDataSourceType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BlobStreamInputDataSource>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BlobStreamInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
@@ -207,6 +281,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BlobStreamInputDataSource)} does not support '{options.Format}' format.");
             }
@@ -223,6 +299,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBlobStreamInputDataSource(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BlobStreamInputDataSource)} does not support '{options.Format}' format.");
             }

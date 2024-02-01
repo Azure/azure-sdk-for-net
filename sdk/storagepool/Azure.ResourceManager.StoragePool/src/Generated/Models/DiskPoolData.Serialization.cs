@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.StoragePool.Models;
 
 namespace Azure.ResourceManager.StoragePool
 {
-    public partial class DiskPoolData : IUtf8JsonSerializable, IJsonModel<DiskPoolData>
+    public partial class DiskPoolData : IUtf8JsonSerializable, IJsonModel<DiskPoolData>, IPersistableModel<DiskPoolData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskPoolData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -323,6 +324,162 @@ namespace Azure.ResourceManager.StoragePool
             return new DiskPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, managedBy.Value, Optional.ToList(managedByExtended), provisioningState, availabilityZones, status, Optional.ToList(disks), subnetId, Optional.ToList(additionalCapabilities), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsDefined(ManagedBy))
+            {
+                builder.Append("  managedBy:");
+                builder.AppendLine($" '{ManagedBy}'");
+            }
+
+            if (Optional.IsCollectionDefined(ManagedByExtended))
+            {
+                builder.Append("  managedByExtended:");
+                builder.AppendLine(" [");
+                foreach (var item in ManagedByExtended)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(AvailabilityZones))
+            {
+                builder.Append("  availabilityZones:");
+                builder.AppendLine(" [");
+                foreach (var item in AvailabilityZones)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Disks))
+            {
+                builder.Append("  disks:");
+                builder.AppendLine(" [");
+                foreach (var item in Disks)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(SubnetId))
+            {
+                builder.Append("  subnetId:");
+                builder.AppendLine($" '{SubnetId.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(AdditionalCapabilities))
+            {
+                builder.Append("  additionalCapabilities:");
+                builder.AppendLine(" [");
+                foreach (var item in AdditionalCapabilities)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DiskPoolData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DiskPoolData>)this).GetFormatFromOptions(options) : options.Format;
@@ -331,6 +488,8 @@ namespace Azure.ResourceManager.StoragePool
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DiskPoolData)} does not support '{options.Format}' format.");
             }
@@ -347,6 +506,8 @@ namespace Azure.ResourceManager.StoragePool
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDiskPoolData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DiskPoolData)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageSkuRestriction : IUtf8JsonSerializable, IJsonModel<StorageSkuRestriction>
+    public partial class StorageSkuRestriction : IUtf8JsonSerializable, IJsonModel<StorageSkuRestriction>, IPersistableModel<StorageSkuRestriction>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageSkuRestriction>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -128,6 +129,54 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageSkuRestriction(type.Value, Optional.ToList(values), Optional.ToNullable(reasonCode), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(RestrictionType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{RestrictionType}'");
+            }
+
+            if (Optional.IsCollectionDefined(Values))
+            {
+                builder.Append("  values:");
+                builder.AppendLine(" [");
+                foreach (var item in Values)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ReasonCode))
+            {
+                builder.Append("  reasonCode:");
+                builder.AppendLine($" '{ReasonCode.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<StorageSkuRestriction>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageSkuRestriction>)this).GetFormatFromOptions(options) : options.Format;
@@ -136,6 +185,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StorageSkuRestriction)} does not support '{options.Format}' format.");
             }
@@ -152,6 +203,8 @@ namespace Azure.ResourceManager.Storage.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStorageSkuRestriction(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StorageSkuRestriction)} does not support '{options.Format}' format.");
             }

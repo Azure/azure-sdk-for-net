@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class ServerEndpointCloudTieringStatus : IUtf8JsonSerializable, IJsonModel<ServerEndpointCloudTieringStatus>
+    public partial class ServerEndpointCloudTieringStatus : IUtf8JsonSerializable, IJsonModel<ServerEndpointCloudTieringStatus>, IPersistableModel<ServerEndpointCloudTieringStatus>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerEndpointCloudTieringStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -242,6 +243,92 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointCloudTieringStatus(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(health), Optional.ToNullable(healthLastUpdatedTimestamp), Optional.ToNullable(lastCloudTieringResult), Optional.ToNullable(lastSuccessTimestamp), spaceSavings.Value, cachePerformance.Value, filesNotTiering.Value, volumeFreeSpacePolicyStatus.Value, datePolicyStatus.Value, lowDiskMode.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(LastUpdatedOn))
+            {
+                builder.Append("  lastUpdatedTimestamp:");
+                builder.AppendLine($" '{LastUpdatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Health))
+            {
+                builder.Append("  health:");
+                builder.AppendLine($" '{Health.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HealthLastUpdatedOn))
+            {
+                builder.Append("  healthLastUpdatedTimestamp:");
+                builder.AppendLine($" '{HealthLastUpdatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastCloudTieringResult))
+            {
+                builder.Append("  lastCloudTieringResult:");
+                builder.AppendLine($" '{LastCloudTieringResult.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastSuccessTimestamp))
+            {
+                builder.Append("  lastSuccessTimestamp:");
+                builder.AppendLine($" '{LastSuccessTimestamp.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SpaceSavings))
+            {
+                builder.Append("  spaceSavings:");
+                AppendChildObject(builder, SpaceSavings, options, 2);
+            }
+
+            if (Optional.IsDefined(CachePerformance))
+            {
+                builder.Append("  cachePerformance:");
+                AppendChildObject(builder, CachePerformance, options, 2);
+            }
+
+            if (Optional.IsDefined(FilesNotTiering))
+            {
+                builder.Append("  filesNotTiering:");
+                AppendChildObject(builder, FilesNotTiering, options, 2);
+            }
+
+            if (Optional.IsDefined(VolumeFreeSpacePolicyStatus))
+            {
+                builder.Append("  volumeFreeSpacePolicyStatus:");
+                AppendChildObject(builder, VolumeFreeSpacePolicyStatus, options, 2);
+            }
+
+            if (Optional.IsDefined(DatePolicyStatus))
+            {
+                builder.Append("  datePolicyStatus:");
+                AppendChildObject(builder, DatePolicyStatus, options, 2);
+            }
+
+            if (Optional.IsDefined(LowDiskMode))
+            {
+                builder.Append("  lowDiskMode:");
+                AppendChildObject(builder, LowDiskMode, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ServerEndpointCloudTieringStatus>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointCloudTieringStatus>)this).GetFormatFromOptions(options) : options.Format;
@@ -250,6 +337,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support '{options.Format}' format.");
             }
@@ -266,6 +355,8 @@ namespace Azure.ResourceManager.StorageSync.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeServerEndpointCloudTieringStatus(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ServerEndpointCloudTieringStatus)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class SiteLogsConfigData : IUtf8JsonSerializable, IJsonModel<SiteLogsConfigData>
+    public partial class SiteLogsConfigData : IUtf8JsonSerializable, IJsonModel<SiteLogsConfigData>, IPersistableModel<SiteLogsConfigData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteLogsConfigData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -213,6 +214,80 @@ namespace Azure.ResourceManager.AppService
             return new SiteLogsConfigData(id, name, type, systemData.Value, applicationLogs.Value, httpLogs.Value, failedRequestsTracing.Value, detailedErrorMessages.Value, kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ApplicationLogs))
+            {
+                builder.Append("  applicationLogs:");
+                AppendChildObject(builder, ApplicationLogs, options, 2);
+            }
+
+            if (Optional.IsDefined(HttpLogs))
+            {
+                builder.Append("  httpLogs:");
+                AppendChildObject(builder, HttpLogs, options, 2);
+            }
+
+            if (Optional.IsDefined(IsFailedRequestsTracing))
+            {
+                builder.Append("  failedRequestsTracing:");
+                AppendChildObject(builder, IsFailedRequestsTracing, options, 2);
+            }
+
+            if (Optional.IsDefined(IsDetailedErrorMessages))
+            {
+                builder.Append("  detailedErrorMessages:");
+                AppendChildObject(builder, IsDetailedErrorMessages, options, 2);
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SiteLogsConfigData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteLogsConfigData>)this).GetFormatFromOptions(options) : options.Format;
@@ -221,6 +296,8 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SiteLogsConfigData)} does not support '{options.Format}' format.");
             }
@@ -237,6 +314,8 @@ namespace Azure.ResourceManager.AppService
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSiteLogsConfigData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SiteLogsConfigData)} does not support '{options.Format}' format.");
             }

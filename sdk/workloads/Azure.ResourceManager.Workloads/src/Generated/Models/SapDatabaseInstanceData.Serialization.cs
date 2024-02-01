@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    public partial class SapDatabaseInstanceData : IUtf8JsonSerializable, IJsonModel<SapDatabaseInstanceData>
+    public partial class SapDatabaseInstanceData : IUtf8JsonSerializable, IJsonModel<SapDatabaseInstanceData>, IPersistableModel<SapDatabaseInstanceData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapDatabaseInstanceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -310,6 +311,132 @@ namespace Azure.ResourceManager.Workloads
             return new SapDatabaseInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, subnet.Value, databaseSid.Value, databaseType.Value, ipAddress.Value, loadBalancerDetails, Optional.ToList(vmDetails), Optional.ToNullable(status), Optional.ToNullable(provisioningState), errors.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SubnetId))
+            {
+                builder.Append("  subnet:");
+                builder.AppendLine($" '{SubnetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DatabaseSid))
+            {
+                builder.Append("  databaseSid:");
+                builder.AppendLine($" '{DatabaseSid}'");
+            }
+
+            if (Optional.IsDefined(DatabaseType))
+            {
+                builder.Append("  databaseType:");
+                builder.AppendLine($" '{DatabaseType}'");
+            }
+
+            if (Optional.IsDefined(IPAddress))
+            {
+                builder.Append("  ipAddress:");
+                builder.AppendLine($" '{IPAddress}'");
+            }
+
+            if (Optional.IsDefined(LoadBalancerDetails))
+            {
+                builder.Append("  loadBalancerDetails:");
+                AppendChildObject(builder, LoadBalancerDetails, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(VmDetails))
+            {
+                builder.Append("  vmDetails:");
+                builder.AppendLine(" [");
+                foreach (var item in VmDetails)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Errors))
+            {
+                builder.Append("  errors:");
+                AppendChildObject(builder, Errors, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SapDatabaseInstanceData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SapDatabaseInstanceData>)this).GetFormatFromOptions(options) : options.Format;
@@ -318,6 +445,8 @@ namespace Azure.ResourceManager.Workloads
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SapDatabaseInstanceData)} does not support '{options.Format}' format.");
             }
@@ -334,6 +463,8 @@ namespace Azure.ResourceManager.Workloads
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSapDatabaseInstanceData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SapDatabaseInstanceData)} does not support '{options.Format}' format.");
             }

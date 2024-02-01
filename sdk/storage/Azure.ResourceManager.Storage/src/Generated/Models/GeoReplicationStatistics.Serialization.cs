@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class GeoReplicationStatistics : IUtf8JsonSerializable, IJsonModel<GeoReplicationStatistics>
+    public partial class GeoReplicationStatistics : IUtf8JsonSerializable, IJsonModel<GeoReplicationStatistics>, IPersistableModel<GeoReplicationStatistics>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GeoReplicationStatistics>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -122,6 +123,45 @@ namespace Azure.ResourceManager.Storage.Models
             return new GeoReplicationStatistics(Optional.ToNullable(status), Optional.ToNullable(lastSyncTime), Optional.ToNullable(canFailover), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastSyncOn))
+            {
+                builder.Append("  lastSyncTime:");
+                builder.AppendLine($" '{LastSyncOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CanFailover))
+            {
+                builder.Append("  canFailover:");
+                var boolValue = CanFailover.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<GeoReplicationStatistics>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GeoReplicationStatistics>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,6 +170,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GeoReplicationStatistics)} does not support '{options.Format}' format.");
             }
@@ -146,6 +188,8 @@ namespace Azure.ResourceManager.Storage.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeGeoReplicationStatistics(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(GeoReplicationStatistics)} does not support '{options.Format}' format.");
             }

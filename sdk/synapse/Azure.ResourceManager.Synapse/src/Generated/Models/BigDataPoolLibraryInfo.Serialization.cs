@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class BigDataPoolLibraryInfo : IUtf8JsonSerializable, IJsonModel<BigDataPoolLibraryInfo>
+    public partial class BigDataPoolLibraryInfo : IUtf8JsonSerializable, IJsonModel<BigDataPoolLibraryInfo>, IPersistableModel<BigDataPoolLibraryInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BigDataPoolLibraryInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -158,6 +159,68 @@ namespace Azure.ResourceManager.Synapse.Models
             return new BigDataPoolLibraryInfo(name.Value, path.Value, containerName.Value, Optional.ToNullable(uploadedTimestamp), type.Value, provisioningStatus.Value, creatorId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Path))
+            {
+                builder.Append("  path:");
+                builder.AppendLine($" '{Path}'");
+            }
+
+            if (Optional.IsDefined(ContainerName))
+            {
+                builder.Append("  containerName:");
+                builder.AppendLine($" '{ContainerName}'");
+            }
+
+            if (Optional.IsDefined(UploadedOn))
+            {
+                builder.Append("  uploadedTimestamp:");
+                builder.AppendLine($" '{UploadedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LibraryInfoType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{LibraryInfoType}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningStatus))
+            {
+                builder.Append("  provisioningStatus:");
+                builder.AppendLine($" '{ProvisioningStatus}'");
+            }
+
+            if (Optional.IsDefined(CreatorId))
+            {
+                builder.Append("  creatorId:");
+                builder.AppendLine($" '{CreatorId}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BigDataPoolLibraryInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BigDataPoolLibraryInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -166,6 +229,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BigDataPoolLibraryInfo)} does not support '{options.Format}' format.");
             }
@@ -182,6 +247,8 @@ namespace Azure.ResourceManager.Synapse.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBigDataPoolLibraryInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BigDataPoolLibraryInfo)} does not support '{options.Format}' format.");
             }

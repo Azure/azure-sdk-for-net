@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class ThreeTierFullResourceNames : IUtf8JsonSerializable, IJsonModel<ThreeTierFullResourceNames>
+    public partial class ThreeTierFullResourceNames : IUtf8JsonSerializable, IJsonModel<ThreeTierFullResourceNames>, IPersistableModel<ThreeTierFullResourceNames>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreeTierFullResourceNames>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -145,6 +146,56 @@ namespace Azure.ResourceManager.Workloads.Models
             return new ThreeTierFullResourceNames(namingPatternType, serializedAdditionalRawData, centralServer.Value, applicationServer.Value, databaseServer.Value, sharedStorage.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CentralServer))
+            {
+                builder.Append("  centralServer:");
+                AppendChildObject(builder, CentralServer, options, 2);
+            }
+
+            if (Optional.IsDefined(ApplicationServer))
+            {
+                builder.Append("  applicationServer:");
+                AppendChildObject(builder, ApplicationServer, options, 2);
+            }
+
+            if (Optional.IsDefined(DatabaseServer))
+            {
+                builder.Append("  databaseServer:");
+                AppendChildObject(builder, DatabaseServer, options, 2);
+            }
+
+            if (Optional.IsDefined(SharedStorage))
+            {
+                builder.Append("  sharedStorage:");
+                AppendChildObject(builder, SharedStorage, options, 2);
+            }
+
+            if (Optional.IsDefined(NamingPatternType))
+            {
+                builder.Append("  namingPatternType:");
+                builder.AppendLine($" '{NamingPatternType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ThreeTierFullResourceNames>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ThreeTierFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
@@ -153,6 +204,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ThreeTierFullResourceNames)} does not support '{options.Format}' format.");
             }
@@ -169,6 +222,8 @@ namespace Azure.ResourceManager.Workloads.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeThreeTierFullResourceNames(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ThreeTierFullResourceNames)} does not support '{options.Format}' format.");
             }
