@@ -5,14 +5,15 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class PlayFailed
+    public partial class TeamsComplianceRecordingStateChanged
     {
-        internal static PlayFailed DeserializePlayFailed(JsonElement element)
+        internal static TeamsComplianceRecordingStateChanged DeserializeTeamsComplianceRecordingStateChanged(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -21,8 +22,9 @@ namespace Azure.Communication.CallAutomation
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
-            Optional<string> operationContext = default;
-            Optional<ResultInformation> resultInformation = default;
+            Optional<string> recordingId = default;
+            Optional<RecordingState> state = default;
+            Optional<DateTimeOffset> startDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("callConnectionId"u8))
@@ -40,22 +42,31 @@ namespace Azure.Communication.CallAutomation
                     correlationId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("operationContext"u8))
+                if (property.NameEquals("recordingId"u8))
                 {
-                    operationContext = property.Value.GetString();
+                    recordingId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultInformation"u8))
+                if (property.NameEquals("state"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
+                    state = new RecordingState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("startDateTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new PlayFailed(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value);
+            return new TeamsComplianceRecordingStateChanged(callConnectionId.Value, serverCallId.Value, correlationId.Value, recordingId.Value, state, Optional.ToNullable(startDateTime));
         }
     }
 }

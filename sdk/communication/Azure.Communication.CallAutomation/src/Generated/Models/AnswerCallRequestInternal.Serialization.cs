@@ -24,16 +24,6 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            if (Optional.IsDefined(MediaStreamingConfiguration))
-            {
-                writer.WritePropertyName("mediaStreamingConfiguration"u8);
-                writer.WriteObjectValue(MediaStreamingConfiguration);
-            }
-            if (Optional.IsDefined(TranscriptionConfiguration))
-            {
-                writer.WritePropertyName("transcriptionConfiguration"u8);
-                writer.WriteObjectValue(TranscriptionConfiguration);
-            }
             if (Optional.IsDefined(CallIntelligenceOptions))
             {
                 writer.WritePropertyName("callIntelligenceOptions"u8);
@@ -44,10 +34,10 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("answeredBy"u8);
                 writer.WriteObjectValue(AnsweredBy);
             }
-            if (Optional.IsDefined(SourceCallerIdNumber))
+            if (Optional.IsDefined(TranscriptionConfiguration))
             {
-                writer.WritePropertyName("sourceCallerIdNumber"u8);
-                writer.WriteObjectValue(SourceCallerIdNumber);
+                writer.WritePropertyName("transcriptionConfiguration"u8);
+                writer.WriteObjectValue(TranscriptionConfiguration);
             }
             writer.WriteEndObject();
         }

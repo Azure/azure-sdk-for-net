@@ -19,15 +19,29 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> recordingId = default;
-            Optional<RecordingState> state = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<RecordingType> recordingType = default;
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
+            Optional<string> recordingId = default;
+            Optional<RecordingState> state = default;
+            Optional<DateTimeOffset> startDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("callConnectionId"u8))
+                {
+                    callConnectionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serverCallId"u8))
+                {
+                    serverCallId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("correlationId"u8))
+                {
+                    correlationId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("recordingId"u8))
                 {
                     recordingId = property.Value.GetString();
@@ -51,32 +65,8 @@ namespace Azure.Communication.CallAutomation
                     startDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("recordingType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    recordingType = new RecordingType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("callConnectionId"u8))
-                {
-                    callConnectionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serverCallId"u8))
-                {
-                    serverCallId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("correlationId"u8))
-                {
-                    correlationId = property.Value.GetString();
-                    continue;
-                }
             }
-            return new RecordingStateChanged(recordingId.Value, state, Optional.ToNullable(startDateTime), Optional.ToNullable(recordingType), callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new RecordingStateChanged(callConnectionId.Value, serverCallId.Value, correlationId.Value, recordingId.Value, state, Optional.ToNullable(startDateTime));
         }
     }
 }

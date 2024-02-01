@@ -18,33 +18,13 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> invitationId = default;
-            Optional<string> operationContext = default;
-            Optional<ResultInformation> resultInformation = default;
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
+            Optional<string> operationContext = default;
+            Optional<string> invitationId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("invitationId"u8))
-                {
-                    invitationId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("operationContext"u8))
-                {
-                    operationContext = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultInformation"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("callConnectionId"u8))
                 {
                     callConnectionId = property.Value.GetString();
@@ -60,8 +40,18 @@ namespace Azure.Communication.CallAutomation
                     correlationId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("operationContext"u8))
+                {
+                    operationContext = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("invitationId"u8))
+                {
+                    invitationId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new CancelAddParticipantSucceededInternal(invitationId.Value, operationContext.Value, resultInformation.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new CancelAddParticipantSucceededInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, invitationId.Value);
         }
     }
 }
