@@ -121,8 +121,9 @@ namespace Azure.AI.Translator.Document
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
-        /// <item>
-        /// </item>
+        /// <description>
+        /// Please try the simpler DocumentTranslateAsync convenience overload with strongly typed models first.
+        /// </description>
         /// </list>
         /// </summary>
         /// <param name="targetLanguage">
@@ -149,7 +150,7 @@ namespace Azure.AI.Translator.Document
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="requestContent"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> DocumentTranslateAsync(string targetLanguage, RequestContent requestContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, RequestContext context = null)
+        public virtual async Task<Response> DocumentTranslateAsync(string targetLanguage, RequestContent requestContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, RequestContext context = null)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(requestContent, nameof(requestContent));
@@ -177,6 +178,9 @@ namespace Azure.AI.Translator.Document
         /// </description>
         /// </item>
         /// <item>
+        /// <description>
+        /// Please try the simpler DocumentTranslate convenience overload with strongly typed models first.
+        /// </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,7 +208,7 @@ namespace Azure.AI.Translator.Document
         /// <exception cref="ArgumentNullException"> <paramref name="targetLanguage"/> or <paramref name="requestContent"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response DocumentTranslate(string targetLanguage, RequestContent requestContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, RequestContext context = null)
+        public virtual Response DocumentTranslate(string targetLanguage, RequestContent requestContent, string sourceLanguage = null, string category = null, bool? allowFallback = null, RequestContext context = null)
         {
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(requestContent, nameof(requestContent));
