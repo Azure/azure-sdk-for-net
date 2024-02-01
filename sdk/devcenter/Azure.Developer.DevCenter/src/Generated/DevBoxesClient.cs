@@ -930,7 +930,7 @@ namespace Azure.Developer.DevCenter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(projectName, filter, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, projectName, filter, maxCount, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevBoxPool.DeserializeDevBoxPool, ClientDiagnostics, _pipeline, "DevBoxesClient.GetPools", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevBoxPool.DeserializeDevBoxPool(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetPools", "value", "nextLink", context);
         }
 
         /// <summary> Lists available pools. </summary>
@@ -948,7 +948,7 @@ namespace Azure.Developer.DevCenter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(projectName, filter, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, projectName, filter, maxCount, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevBoxPool.DeserializeDevBoxPool, ClientDiagnostics, _pipeline, "DevBoxesClient.GetPools", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevBoxPool.DeserializeDevBoxPool(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetPools", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1034,7 +1034,7 @@ namespace Azure.Developer.DevCenter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(projectName, poolName, filter, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchedulesNextPageRequest(nextLink, projectName, poolName, filter, maxCount, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevBoxSchedule.DeserializeDevBoxSchedule, ClientDiagnostics, _pipeline, "DevBoxesClient.GetSchedules", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevBoxSchedule.DeserializeDevBoxSchedule(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetSchedules", "value", "nextLink", context);
         }
 
         /// <summary> Lists available schedules for a pool. </summary>
@@ -1054,7 +1054,7 @@ namespace Azure.Developer.DevCenter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(projectName, poolName, filter, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchedulesNextPageRequest(nextLink, projectName, poolName, filter, maxCount, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevBoxSchedule.DeserializeDevBoxSchedule, ClientDiagnostics, _pipeline, "DevBoxesClient.GetSchedules", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevBoxSchedule.DeserializeDevBoxSchedule(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetSchedules", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1137,7 +1137,7 @@ namespace Azure.Developer.DevCenter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesRequest(filter, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesNextPageRequest(nextLink, filter, maxCount, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevBox.DeserializeDevBox, ClientDiagnostics, _pipeline, "DevBoxesClient.GetAllDevBoxes", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevBox.DeserializeDevBox(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetAllDevBoxes", "value", "nextLink", context);
         }
 
         /// <summary> Lists Dev Boxes that the caller has access to in the DevCenter. </summary>
@@ -1150,7 +1150,7 @@ namespace Azure.Developer.DevCenter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesRequest(filter, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesNextPageRequest(nextLink, filter, maxCount, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevBox.DeserializeDevBox, ClientDiagnostics, _pipeline, "DevBoxesClient.GetAllDevBoxes", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevBox.DeserializeDevBox(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetAllDevBoxes", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1224,7 +1224,7 @@ namespace Azure.Developer.DevCenter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesByUserRequest(userId, filter, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, filter, maxCount, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevBox.DeserializeDevBox, ClientDiagnostics, _pipeline, "DevBoxesClient.GetAllDevBoxesByUser", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevBox.DeserializeDevBox(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetAllDevBoxesByUser", "value", "nextLink", context);
         }
 
         /// <summary> Lists Dev Boxes in the Dev Center for a particular user. </summary>
@@ -1242,7 +1242,7 @@ namespace Azure.Developer.DevCenter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAllDevBoxesByUserRequest(userId, filter, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAllDevBoxesByUserNextPageRequest(nextLink, userId, filter, maxCount, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevBox.DeserializeDevBox, ClientDiagnostics, _pipeline, "DevBoxesClient.GetAllDevBoxesByUser", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevBox.DeserializeDevBox(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetAllDevBoxesByUser", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1328,7 +1328,7 @@ namespace Azure.Developer.DevCenter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevBoxesRequest(projectName, userId, filter, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDevBoxesNextPageRequest(nextLink, projectName, userId, filter, maxCount, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevBox.DeserializeDevBox, ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxes", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevBox.DeserializeDevBox(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxes", "value", "nextLink", context);
         }
 
         /// <summary> Lists Dev Boxes in the project for a particular user. </summary>
@@ -1348,7 +1348,7 @@ namespace Azure.Developer.DevCenter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevBoxesRequest(projectName, userId, filter, maxCount, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDevBoxesNextPageRequest(nextLink, projectName, userId, filter, maxCount, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevBox.DeserializeDevBox, ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxes", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevBox.DeserializeDevBox(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxes", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1438,7 +1438,7 @@ namespace Azure.Developer.DevCenter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevBoxActionsRequest(projectName, userId, devBoxName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDevBoxActionsNextPageRequest(nextLink, projectName, userId, devBoxName, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevBoxAction.DeserializeDevBoxAction, ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxActions", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevBoxAction.DeserializeDevBoxAction(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxActions", "value", "nextLink", context);
         }
 
         /// <summary> Lists actions on a Dev Box. </summary>
@@ -1458,7 +1458,7 @@ namespace Azure.Developer.DevCenter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDevBoxActionsRequest(projectName, userId, devBoxName, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDevBoxActionsNextPageRequest(nextLink, projectName, userId, devBoxName, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevBoxAction.DeserializeDevBoxAction, ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxActions", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevBoxAction.DeserializeDevBoxAction(e), ClientDiagnostics, _pipeline, "DevBoxesClient.GetDevBoxActions", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -1549,7 +1549,7 @@ namespace Azure.Developer.DevCenter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateDelayAllActionsRequest(projectName, userId, devBoxName, delayUntil, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateDelayAllActionsNextPageRequest(nextLink, projectName, userId, devBoxName, delayUntil, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevBoxActionDelayResult.DeserializeDevBoxActionDelayResult, ClientDiagnostics, _pipeline, "DevBoxesClient.DelayAllActions", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevBoxActionDelayResult.DeserializeDevBoxActionDelayResult(e), ClientDiagnostics, _pipeline, "DevBoxesClient.DelayAllActions", "value", "nextLink", context);
         }
 
         /// <summary> Delays all actions. </summary>
@@ -1570,7 +1570,7 @@ namespace Azure.Developer.DevCenter
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateDelayAllActionsRequest(projectName, userId, devBoxName, delayUntil, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateDelayAllActionsNextPageRequest(nextLink, projectName, userId, devBoxName, delayUntil, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevBoxActionDelayResult.DeserializeDevBoxActionDelayResult, ClientDiagnostics, _pipeline, "DevBoxesClient.DelayAllActions", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevBoxActionDelayResult.DeserializeDevBoxActionDelayResult(e), ClientDiagnostics, _pipeline, "DevBoxesClient.DelayAllActions", "value", "nextLink", context);
         }
 
         /// <summary>

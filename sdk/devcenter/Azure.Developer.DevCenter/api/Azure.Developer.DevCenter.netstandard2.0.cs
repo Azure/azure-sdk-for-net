@@ -150,7 +150,7 @@ namespace Azure.Developer.DevCenter
 }
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class DevBox
+    public partial class DevBox : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBox>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBox>
     {
         public DevBox(string name, string poolName) { }
         public string ActionState { get { throw null; } }
@@ -170,8 +170,13 @@ namespace Azure.Developer.DevCenter.Models
         public Azure.Developer.DevCenter.Models.DevBoxStorageProfile StorageProfile { get { throw null; } }
         public System.Guid? UniqueId { get { throw null; } }
         public System.Guid? UserId { get { throw null; } }
+        Azure.Developer.DevCenter.Models.DevBox System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBox>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBox>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.DevCenter.Models.DevBox System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBox>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBox>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBox>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DevBoxAction
+    public partial class DevBoxAction : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxAction>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxAction>
     {
         internal DevBoxAction() { }
         public Azure.Developer.DevCenter.Models.DevBoxActionType ActionType { get { throw null; } }
@@ -179,14 +184,24 @@ namespace Azure.Developer.DevCenter.Models
         public Azure.Developer.DevCenter.Models.DevBoxNextAction NextAction { get { throw null; } }
         public string SourceId { get { throw null; } }
         public System.DateTimeOffset? SuspendedUntil { get { throw null; } }
+        Azure.Developer.DevCenter.Models.DevBoxAction System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.DevCenter.Models.DevBoxAction System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DevBoxActionDelayResult
+    public partial class DevBoxActionDelayResult : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxActionDelayResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxActionDelayResult>
     {
         internal DevBoxActionDelayResult() { }
         public Azure.Developer.DevCenter.Models.DevBoxAction Action { get { throw null; } }
         public string ActionName { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
         public Azure.Developer.DevCenter.Models.DevBoxActionDelayStatus Result { get { throw null; } }
+        Azure.Developer.DevCenter.Models.DevBoxActionDelayResult System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxActionDelayResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxActionDelayResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.DevCenter.Models.DevBoxActionDelayResult System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxActionDelayResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxActionDelayResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxActionDelayResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DevBoxActionDelayStatus : System.IEquatable<Azure.Developer.DevCenter.Models.DevBoxActionDelayStatus>
@@ -223,14 +238,19 @@ namespace Azure.Developer.DevCenter.Models
         public static bool operator !=(Azure.Developer.DevCenter.Models.DevBoxActionType left, Azure.Developer.DevCenter.Models.DevBoxActionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DevBoxHardwareProfile
+    public partial class DevBoxHardwareProfile : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxHardwareProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxHardwareProfile>
     {
         internal DevBoxHardwareProfile() { }
         public int? MemoryGB { get { throw null; } }
         public Azure.Developer.DevCenter.Models.SkuName? SkuName { get { throw null; } }
         public int? VCPUs { get { throw null; } }
+        Azure.Developer.DevCenter.Models.DevBoxHardwareProfile System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxHardwareProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxHardwareProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.DevCenter.Models.DevBoxHardwareProfile System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxHardwareProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxHardwareProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxHardwareProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DevBoxImageReference
+    public partial class DevBoxImageReference : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxImageReference>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxImageReference>
     {
         internal DevBoxImageReference() { }
         public string Name { get { throw null; } }
@@ -238,11 +258,21 @@ namespace Azure.Developer.DevCenter.Models
         public string OSBuildNumber { get { throw null; } }
         public System.DateTimeOffset? PublishedDate { get { throw null; } }
         public string Version { get { throw null; } }
+        Azure.Developer.DevCenter.Models.DevBoxImageReference System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxImageReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxImageReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.DevCenter.Models.DevBoxImageReference System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxImageReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxImageReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxImageReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DevBoxNextAction
+    public partial class DevBoxNextAction : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxNextAction>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxNextAction>
     {
         internal DevBoxNextAction() { }
         public System.DateTimeOffset ScheduledTime { get { throw null; } }
+        Azure.Developer.DevCenter.Models.DevBoxNextAction System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxNextAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxNextAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.DevCenter.Models.DevBoxNextAction System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxNextAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxNextAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxNextAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DevBoxOSType : System.IEquatable<Azure.Developer.DevCenter.Models.DevBoxOSType>
@@ -261,7 +291,7 @@ namespace Azure.Developer.DevCenter.Models
         public static bool operator !=(Azure.Developer.DevCenter.Models.DevBoxOSType left, Azure.Developer.DevCenter.Models.DevBoxOSType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DevBoxPool
+    public partial class DevBoxPool : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxPool>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxPool>
     {
         internal DevBoxPool() { }
         public Azure.Developer.DevCenter.Models.DevBoxHardwareProfile HardwareProfile { get { throw null; } }
@@ -274,6 +304,11 @@ namespace Azure.Developer.DevCenter.Models
         public Azure.Developer.DevCenter.Models.DevBoxOSType? OSType { get { throw null; } }
         public Azure.Developer.DevCenter.Models.StopOnDisconnectConfiguration StopOnDisconnect { get { throw null; } }
         public Azure.Developer.DevCenter.Models.DevBoxStorageProfile StorageProfile { get { throw null; } }
+        Azure.Developer.DevCenter.Models.DevBoxPool System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxPool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxPool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.DevCenter.Models.DevBoxPool System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxPool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxPool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxPool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DevBoxProvisioningState : System.IEquatable<Azure.Developer.DevCenter.Models.DevBoxProvisioningState>
@@ -303,7 +338,7 @@ namespace Azure.Developer.DevCenter.Models
         public static bool operator !=(Azure.Developer.DevCenter.Models.DevBoxProvisioningState left, Azure.Developer.DevCenter.Models.DevBoxProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DevBoxSchedule
+    public partial class DevBoxSchedule : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxSchedule>
     {
         internal DevBoxSchedule() { }
         public Azure.Developer.DevCenter.Models.ScheduleFrequency Frequency { get { throw null; } }
@@ -311,18 +346,33 @@ namespace Azure.Developer.DevCenter.Models
         public Azure.Developer.DevCenter.Models.ScheduledType ScheduledType { get { throw null; } }
         public System.TimeSpan Time { get { throw null; } }
         public string TimeZone { get { throw null; } }
+        Azure.Developer.DevCenter.Models.DevBoxSchedule System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxSchedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxSchedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.DevCenter.Models.DevBoxSchedule System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxSchedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxSchedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DevBoxStorageProfile
+    public partial class DevBoxStorageProfile : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxStorageProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxStorageProfile>
     {
         internal DevBoxStorageProfile() { }
         public Azure.Developer.DevCenter.Models.OSDisk OSDisk { get { throw null; } }
+        Azure.Developer.DevCenter.Models.DevBoxStorageProfile System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxStorageProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevBoxStorageProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.DevCenter.Models.DevBoxStorageProfile System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxStorageProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxStorageProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevBoxStorageProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DevCenterCatalog
+    public partial class DevCenterCatalog : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevCenterCatalog>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevCenterCatalog>
     {
         internal DevCenterCatalog() { }
         public string Name { get { throw null; } }
+        Azure.Developer.DevCenter.Models.DevCenterCatalog System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevCenterCatalog>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevCenterCatalog>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.DevCenter.Models.DevCenterCatalog System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevCenterCatalog>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevCenterCatalog>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevCenterCatalog>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DevCenterEnvironment
+    public partial class DevCenterEnvironment : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevCenterEnvironment>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevCenterEnvironment>
     {
         public DevCenterEnvironment(string environmentTypeName, string catalogName, string environmentDefinitionName) { }
         public string CatalogName { get { throw null; } set { } }
@@ -334,13 +384,23 @@ namespace Azure.Developer.DevCenter.Models
         public Azure.Developer.DevCenter.Models.EnvironmentProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceGroupId { get { throw null; } }
         public System.Guid? UserId { get { throw null; } }
+        Azure.Developer.DevCenter.Models.DevCenterEnvironment System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevCenterEnvironment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevCenterEnvironment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.DevCenter.Models.DevCenterEnvironment System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevCenterEnvironment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevCenterEnvironment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevCenterEnvironment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DevCenterEnvironmentType
+    public partial class DevCenterEnvironmentType : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevCenterEnvironmentType>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevCenterEnvironmentType>
     {
         internal DevCenterEnvironmentType() { }
         public Azure.Core.ResourceIdentifier DeploymentTargetId { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.Developer.DevCenter.Models.EnvironmentTypeStatus Status { get { throw null; } }
+        Azure.Developer.DevCenter.Models.DevCenterEnvironmentType System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevCenterEnvironmentType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevCenterEnvironmentType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.DevCenter.Models.DevCenterEnvironmentType System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevCenterEnvironmentType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevCenterEnvironmentType>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevCenterEnvironmentType>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class DevCenterModelFactory
     {
@@ -363,14 +423,19 @@ namespace Azure.Developer.DevCenter.Models
         public static Azure.Developer.DevCenter.Models.RemoteConnection RemoteConnection(System.Uri webUri = null, System.Uri rdpConnectionUri = null) { throw null; }
         public static Azure.Developer.DevCenter.Models.StopOnDisconnectConfiguration StopOnDisconnectConfiguration(Azure.Developer.DevCenter.Models.StopOnDisconnectStatus status = default(Azure.Developer.DevCenter.Models.StopOnDisconnectStatus), int? gracePeriodMinutes = default(int?)) { throw null; }
     }
-    public partial class DevCenterProject
+    public partial class DevCenterProject : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevCenterProject>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevCenterProject>
     {
         internal DevCenterProject() { }
         public string Description { get { throw null; } }
         public int? MaxDevBoxesPerUser { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.Developer.DevCenter.Models.DevCenterProject System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevCenterProject>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.DevCenterProject>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.DevCenter.Models.DevCenterProject System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevCenterProject>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevCenterProject>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.DevCenterProject>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EnvironmentDefinition
+    public partial class EnvironmentDefinition : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.EnvironmentDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.EnvironmentDefinition>
     {
         internal EnvironmentDefinition() { }
         public string CatalogName { get { throw null; } }
@@ -380,8 +445,13 @@ namespace Azure.Developer.DevCenter.Models
         public System.Collections.Generic.IReadOnlyList<Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameter> Parameters { get { throw null; } }
         public System.BinaryData ParametersSchema { get { throw null; } }
         public string TemplatePath { get { throw null; } }
+        Azure.Developer.DevCenter.Models.EnvironmentDefinition System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.EnvironmentDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.EnvironmentDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.DevCenter.Models.EnvironmentDefinition System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.EnvironmentDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.EnvironmentDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.EnvironmentDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EnvironmentDefinitionParameter
+    public partial class EnvironmentDefinitionParameter : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameter>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameter>
     {
         internal EnvironmentDefinitionParameter() { }
         public System.Collections.Generic.IReadOnlyList<string> Allowed { get { throw null; } }
@@ -392,6 +462,11 @@ namespace Azure.Developer.DevCenter.Models
         public Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameterType ParameterType { get { throw null; } }
         public bool? ReadOnly { get { throw null; } }
         public bool Required { get { throw null; } }
+        Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameter System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameter System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EnvironmentDefinitionParameterType : System.IEquatable<Azure.Developer.DevCenter.Models.EnvironmentDefinitionParameterType>
@@ -499,10 +574,15 @@ namespace Azure.Developer.DevCenter.Models
         public static bool operator !=(Azure.Developer.DevCenter.Models.LocalAdministratorStatus left, Azure.Developer.DevCenter.Models.LocalAdministratorStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class OSDisk
+    public partial class OSDisk : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.OSDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.OSDisk>
     {
         internal OSDisk() { }
         public int? DiskSizeGB { get { throw null; } }
+        Azure.Developer.DevCenter.Models.OSDisk System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.OSDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.OSDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.DevCenter.Models.OSDisk System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.OSDisk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.OSDisk>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.OSDisk>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PoolHealthStatus : System.IEquatable<Azure.Developer.DevCenter.Models.PoolHealthStatus>
@@ -546,11 +626,16 @@ namespace Azure.Developer.DevCenter.Models
         public static bool operator !=(Azure.Developer.DevCenter.Models.PowerState left, Azure.Developer.DevCenter.Models.PowerState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RemoteConnection
+    public partial class RemoteConnection : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.RemoteConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.RemoteConnection>
     {
         internal RemoteConnection() { }
         public System.Uri RdpConnectionUri { get { throw null; } }
         public System.Uri WebUri { get { throw null; } }
+        Azure.Developer.DevCenter.Models.RemoteConnection System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.RemoteConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.RemoteConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.DevCenter.Models.RemoteConnection System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.RemoteConnection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.RemoteConnection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.RemoteConnection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScheduledType : System.IEquatable<Azure.Developer.DevCenter.Models.ScheduledType>
@@ -624,11 +709,16 @@ namespace Azure.Developer.DevCenter.Models
         public static bool operator !=(Azure.Developer.DevCenter.Models.SkuName left, Azure.Developer.DevCenter.Models.SkuName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class StopOnDisconnectConfiguration
+    public partial class StopOnDisconnectConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.StopOnDisconnectConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.StopOnDisconnectConfiguration>
     {
         internal StopOnDisconnectConfiguration() { }
         public int? GracePeriodMinutes { get { throw null; } }
         public Azure.Developer.DevCenter.Models.StopOnDisconnectStatus Status { get { throw null; } }
+        Azure.Developer.DevCenter.Models.StopOnDisconnectConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.StopOnDisconnectConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Developer.DevCenter.Models.StopOnDisconnectConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Developer.DevCenter.Models.StopOnDisconnectConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.StopOnDisconnectConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.StopOnDisconnectConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Developer.DevCenter.Models.StopOnDisconnectConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StopOnDisconnectStatus : System.IEquatable<Azure.Developer.DevCenter.Models.StopOnDisconnectStatus>

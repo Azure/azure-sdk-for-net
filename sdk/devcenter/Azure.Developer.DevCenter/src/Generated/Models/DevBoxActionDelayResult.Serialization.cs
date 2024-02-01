@@ -5,16 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class DevBoxActionDelayResult
+    public partial class DevBoxActionDelayResult : IUtf8JsonSerializable, IJsonModel<DevBoxActionDelayResult>
     {
-        internal static DevBoxActionDelayResult DeserializeDevBoxActionDelayResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevBoxActionDelayResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DevBoxActionDelayResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DevBoxActionDelayResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevBoxActionDelayResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(ActionName);
+            writer.WritePropertyName("result"u8);
+            writer.WriteStringValue(Result.ToString());
+            if (Optional.IsDefined(Action))
+            {
+                writer.WritePropertyName("action"u8);
+                writer.WriteObjectValue(Action);
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                JsonSerializer.Serialize(writer, Error);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DevBoxActionDelayResult IJsonModel<DevBoxActionDelayResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevBoxActionDelayResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevBoxActionDelayResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevBoxActionDelayResult(document.RootElement, options);
+        }
+
+        internal static DevBoxActionDelayResult DeserializeDevBoxActionDelayResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +83,8 @@ namespace Azure.Developer.DevCenter.Models
             DevBoxActionDelayStatus result = default;
             Optional<DevBoxAction> action = default;
             Optional<ResponseError> error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -53,9 +115,45 @@ namespace Azure.Developer.DevCenter.Models
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DevBoxActionDelayResult(name, result, action.Value, error.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DevBoxActionDelayResult(name, result, action.Value, error.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DevBoxActionDelayResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevBoxActionDelayResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DevBoxActionDelayResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DevBoxActionDelayResult IPersistableModel<DevBoxActionDelayResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevBoxActionDelayResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDevBoxActionDelayResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevBoxActionDelayResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevBoxActionDelayResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -63,6 +161,14 @@ namespace Azure.Developer.DevCenter.Models
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeDevBoxActionDelayResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

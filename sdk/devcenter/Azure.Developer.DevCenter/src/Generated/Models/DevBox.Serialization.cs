@@ -6,29 +6,143 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
-    public partial class DevBox : IUtf8JsonSerializable
+    public partial class DevBox : IUtf8JsonSerializable, IJsonModel<DevBox>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevBox>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DevBox>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DevBox>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevBox)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProjectName))
+            {
+                writer.WritePropertyName("projectName"u8);
+                writer.WriteStringValue(ProjectName);
+            }
             writer.WritePropertyName("poolName"u8);
             writer.WriteStringValue(PoolName);
+            if (options.Format != "W" && Optional.IsDefined(HibernateSupport))
+            {
+                writer.WritePropertyName("hibernateSupport"u8);
+                writer.WriteStringValue(HibernateSupport.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ActionState))
+            {
+                writer.WritePropertyName("actionState"u8);
+                writer.WriteStringValue(ActionState);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("powerState"u8);
+                writer.WriteStringValue(PowerState.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(UniqueId))
+            {
+                writer.WritePropertyName("uniqueId"u8);
+                writer.WriteStringValue(UniqueId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                JsonSerializer.Serialize(writer, Error);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OSType))
+            {
+                writer.WritePropertyName("osType"u8);
+                writer.WriteStringValue(OSType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(UserId))
+            {
+                writer.WritePropertyName("user"u8);
+                writer.WriteStringValue(UserId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(HardwareProfile))
+            {
+                writer.WritePropertyName("hardwareProfile"u8);
+                writer.WriteObjectValue(HardwareProfile);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StorageProfile))
+            {
+                writer.WritePropertyName("storageProfile"u8);
+                writer.WriteObjectValue(StorageProfile);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ImageReference))
+            {
+                writer.WritePropertyName("imageReference"u8);
+                writer.WriteObjectValue(ImageReference);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedTime))
+            {
+                writer.WritePropertyName("createdTime"u8);
+                writer.WriteStringValue(CreatedTime.Value, "O");
+            }
             if (Optional.IsDefined(LocalAdministratorStatus))
             {
                 writer.WritePropertyName("localAdministrator"u8);
                 writer.WriteStringValue(LocalAdministratorStatus.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevBox DeserializeDevBox(JsonElement element)
+        DevBox IJsonModel<DevBox>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DevBox>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevBox)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevBox(document.RootElement, options);
+        }
+
+        internal static DevBox DeserializeDevBox(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -50,6 +164,8 @@ namespace Azure.Developer.DevCenter.Models
             Optional<DevBoxImageReference> imageReference = default;
             Optional<DateTimeOffset> createdTime = default;
             Optional<LocalAdministratorStatus> localAdministrator = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -185,9 +301,45 @@ namespace Azure.Developer.DevCenter.Models
                     localAdministrator = new LocalAdministratorStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DevBox(name, projectName.Value, poolName, Optional.ToNullable(hibernateSupport), Optional.ToNullable(provisioningState), actionState.Value, powerState, Optional.ToNullable(uniqueId), error.Value, location, Optional.ToNullable(osType), Optional.ToNullable(user), hardwareProfile.Value, storageProfile.Value, imageReference.Value, Optional.ToNullable(createdTime), Optional.ToNullable(localAdministrator));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DevBox(name, projectName.Value, poolName, Optional.ToNullable(hibernateSupport), Optional.ToNullable(provisioningState), actionState.Value, powerState, Optional.ToNullable(uniqueId), error.Value, location, Optional.ToNullable(osType), Optional.ToNullable(user), hardwareProfile.Value, storageProfile.Value, imageReference.Value, Optional.ToNullable(createdTime), Optional.ToNullable(localAdministrator), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DevBox>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevBox>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DevBox)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DevBox IPersistableModel<DevBox>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevBox>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDevBox(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevBox)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevBox>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
