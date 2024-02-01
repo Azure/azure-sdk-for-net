@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FluidRelay.Models
 {
-    public partial class FluidRelayServerKeys : IUtf8JsonSerializable, IJsonModel<FluidRelayServerKeys>
+    public partial class FluidRelayServerKeys : IUtf8JsonSerializable, IJsonModel<FluidRelayServerKeys>, IPersistableModel<FluidRelayServerKeys>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FluidRelayServerKeys>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -99,6 +100,38 @@ namespace Azure.ResourceManager.FluidRelay.Models
             return new FluidRelayServerKeys(key1.Value, key2.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PrimaryKey))
+            {
+                builder.Append("  key1:");
+                builder.AppendLine($" '{PrimaryKey}'");
+            }
+
+            if (Optional.IsDefined(SecondaryKey))
+            {
+                builder.Append("  key2:");
+                builder.AppendLine($" '{SecondaryKey}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<FluidRelayServerKeys>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FluidRelayServerKeys>)this).GetFormatFromOptions(options) : options.Format;
@@ -107,6 +140,8 @@ namespace Azure.ResourceManager.FluidRelay.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FluidRelayServerKeys)} does not support '{options.Format}' format.");
             }
@@ -123,6 +158,8 @@ namespace Azure.ResourceManager.FluidRelay.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFluidRelayServerKeys(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FluidRelayServerKeys)} does not support '{options.Format}' format.");
             }

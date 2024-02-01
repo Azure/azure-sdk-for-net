@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ScriptActionProfile : IUtf8JsonSerializable, IJsonModel<ScriptActionProfile>
+    public partial class ScriptActionProfile : IUtf8JsonSerializable, IJsonModel<ScriptActionProfile>, IPersistableModel<ScriptActionProfile>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScriptActionProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -160,6 +161,79 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             return new ScriptActionProfile(type, name, url, parameters.Value, services, Optional.ToNullable(timeoutInMinutes), Optional.ToNullable(shouldPersist), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ScriptActionProfileType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ScriptActionProfileType}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(UriString))
+            {
+                builder.Append("  url:");
+                builder.AppendLine($" '{UriString}'");
+            }
+
+            if (Optional.IsDefined(Parameters))
+            {
+                builder.Append("  parameters:");
+                builder.AppendLine($" '{Parameters}'");
+            }
+
+            if (Optional.IsCollectionDefined(Services))
+            {
+                builder.Append("  services:");
+                builder.AppendLine(" [");
+                foreach (var item in Services)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(TimeoutInMinutes))
+            {
+                builder.Append("  timeoutInMinutes:");
+                builder.AppendLine($" '{TimeoutInMinutes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ShouldPersist))
+            {
+                builder.Append("  shouldPersist:");
+                var boolValue = ShouldPersist.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ScriptActionProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScriptActionProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -168,6 +242,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ScriptActionProfile)} does not support '{options.Format}' format.");
             }
@@ -184,6 +260,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeScriptActionProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ScriptActionProfile)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    public partial class SaasSubscriptionDetails : IUtf8JsonSerializable, IJsonModel<SaasSubscriptionDetails>
+    public partial class SaasSubscriptionDetails : IUtf8JsonSerializable, IJsonModel<SaasSubscriptionDetails>, IPersistableModel<SaasSubscriptionDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SaasSubscriptionDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -125,6 +126,50 @@ namespace Azure.ResourceManager.Grafana.Models
             return new SaasSubscriptionDetails(planId.Value, offerId.Value, publisherId.Value, term.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PlanId))
+            {
+                builder.Append("  planId:");
+                builder.AppendLine($" '{PlanId}'");
+            }
+
+            if (Optional.IsDefined(OfferId))
+            {
+                builder.Append("  offerId:");
+                builder.AppendLine($" '{OfferId}'");
+            }
+
+            if (Optional.IsDefined(PublisherId))
+            {
+                builder.Append("  publisherId:");
+                builder.AppendLine($" '{PublisherId}'");
+            }
+
+            if (Optional.IsDefined(Term))
+            {
+                builder.Append("  term:");
+                AppendChildObject(builder, Term, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SaasSubscriptionDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SaasSubscriptionDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -133,6 +178,8 @@ namespace Azure.ResourceManager.Grafana.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SaasSubscriptionDetails)} does not support '{options.Format}' format.");
             }
@@ -149,6 +196,8 @@ namespace Azure.ResourceManager.Grafana.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSaasSubscriptionDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SaasSubscriptionDetails)} does not support '{options.Format}' format.");
             }

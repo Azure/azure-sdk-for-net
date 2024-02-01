@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    public partial class SessionHostData : IUtf8JsonSerializable, IJsonModel<SessionHostData>
+    public partial class SessionHostData : IUtf8JsonSerializable, IJsonModel<SessionHostData>, IPersistableModel<SessionHostData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SessionHostData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -375,6 +376,158 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return new SessionHostData(id, name, type, systemData.Value, objectId.Value, Optional.ToNullable(lastHeartBeat), Optional.ToNullable(sessions), agentVersion.Value, Optional.ToNullable(allowNewSession), virtualMachineId.Value, resourceId.Value, assignedUser.Value, friendlyName.Value, Optional.ToNullable(status), Optional.ToNullable(statusTimestamp), osVersion.Value, sxsStackVersion.Value, Optional.ToNullable(updateState), Optional.ToNullable(lastUpdateTime), updateErrorMessage.Value, Optional.ToList(sessionHostHealthCheckResults), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ObjectId))
+            {
+                builder.Append("  objectId:");
+                builder.AppendLine($" '{ObjectId}'");
+            }
+
+            if (Optional.IsDefined(LastHeartBeatOn))
+            {
+                builder.Append("  lastHeartBeat:");
+                builder.AppendLine($" '{LastHeartBeatOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Sessions))
+            {
+                builder.Append("  sessions:");
+                builder.AppendLine($" '{Sessions.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AgentVersion))
+            {
+                builder.Append("  agentVersion:");
+                builder.AppendLine($" '{AgentVersion}'");
+            }
+
+            if (Optional.IsDefined(AllowNewSession))
+            {
+                builder.Append("  allowNewSession:");
+                var boolValue = AllowNewSession.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(VmId))
+            {
+                builder.Append("  virtualMachineId:");
+                builder.AppendLine($" '{VmId}'");
+            }
+
+            if (Optional.IsDefined(ResourceId))
+            {
+                builder.Append("  resourceId:");
+                builder.AppendLine($" '{ResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AssignedUser))
+            {
+                builder.Append("  assignedUser:");
+                builder.AppendLine($" '{AssignedUser}'");
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StatusTimestamp))
+            {
+                builder.Append("  statusTimestamp:");
+                builder.AppendLine($" '{StatusTimestamp.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OSVersion))
+            {
+                builder.Append("  osVersion:");
+                builder.AppendLine($" '{OSVersion}'");
+            }
+
+            if (Optional.IsDefined(SxsStackVersion))
+            {
+                builder.Append("  sxSStackVersion:");
+                builder.AppendLine($" '{SxsStackVersion}'");
+            }
+
+            if (Optional.IsDefined(UpdateState))
+            {
+                builder.Append("  updateState:");
+                builder.AppendLine($" '{UpdateState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastUpdatedOn))
+            {
+                builder.Append("  lastUpdateTime:");
+                builder.AppendLine($" '{LastUpdatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UpdateErrorMessage))
+            {
+                builder.Append("  updateErrorMessage:");
+                builder.AppendLine($" '{UpdateErrorMessage}'");
+            }
+
+            if (Optional.IsCollectionDefined(SessionHostHealthCheckResults))
+            {
+                builder.Append("  sessionHostHealthCheckResults:");
+                builder.AppendLine(" [");
+                foreach (var item in SessionHostHealthCheckResults)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SessionHostData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SessionHostData>)this).GetFormatFromOptions(options) : options.Format;
@@ -383,6 +536,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SessionHostData)} does not support '{options.Format}' format.");
             }
@@ -399,6 +554,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSessionHostData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SessionHostData)} does not support '{options.Format}' format.");
             }

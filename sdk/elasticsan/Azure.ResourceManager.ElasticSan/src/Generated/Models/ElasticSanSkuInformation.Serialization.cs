@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class ElasticSanSkuInformation : IUtf8JsonSerializable, IJsonModel<ElasticSanSkuInformation>
+    public partial class ElasticSanSkuInformation : IUtf8JsonSerializable, IJsonModel<ElasticSanSkuInformation>, IPersistableModel<ElasticSanSkuInformation>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanSkuInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -186,6 +187,82 @@ namespace Azure.ResourceManager.ElasticSan.Models
             return new ElasticSanSkuInformation(name, Optional.ToNullable(tier), resourceType.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(capabilities), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Tier))
+            {
+                builder.Append("  tier:");
+                builder.AppendLine($" '{Tier.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  resourceType:");
+                builder.AppendLine($" '{ResourceType}'");
+            }
+
+            if (Optional.IsCollectionDefined(Locations))
+            {
+                builder.Append("  locations:");
+                builder.AppendLine(" [");
+                foreach (var item in Locations)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(LocationInfo))
+            {
+                builder.Append("  locationInfo:");
+                builder.AppendLine(" [");
+                foreach (var item in LocationInfo)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Capabilities))
+            {
+                builder.Append("  capabilities:");
+                builder.AppendLine(" [");
+                foreach (var item in Capabilities)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ElasticSanSkuInformation>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanSkuInformation>)this).GetFormatFromOptions(options) : options.Format;
@@ -194,6 +271,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ElasticSanSkuInformation)} does not support '{options.Format}' format.");
             }
@@ -210,6 +289,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeElasticSanSkuInformation(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ElasticSanSkuInformation)} does not support '{options.Format}' format.");
             }

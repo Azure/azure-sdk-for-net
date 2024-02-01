@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class EdgeOrderShippingAddress : IUtf8JsonSerializable, IJsonModel<EdgeOrderShippingAddress>
+    public partial class EdgeOrderShippingAddress : IUtf8JsonSerializable, IJsonModel<EdgeOrderShippingAddress>, IPersistableModel<EdgeOrderShippingAddress>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderShippingAddress>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -185,6 +186,86 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderShippingAddress(streetAddress1, streetAddress2.Value, streetAddress3.Value, city.Value, stateOrProvince.Value, country, postalCode.Value, zipExtendedCode.Value, companyName.Value, Optional.ToNullable(addressType), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(StreetAddress1))
+            {
+                builder.Append("  streetAddress1:");
+                builder.AppendLine($" '{StreetAddress1}'");
+            }
+
+            if (Optional.IsDefined(StreetAddress2))
+            {
+                builder.Append("  streetAddress2:");
+                builder.AppendLine($" '{StreetAddress2}'");
+            }
+
+            if (Optional.IsDefined(StreetAddress3))
+            {
+                builder.Append("  streetAddress3:");
+                builder.AppendLine($" '{StreetAddress3}'");
+            }
+
+            if (Optional.IsDefined(City))
+            {
+                builder.Append("  city:");
+                builder.AppendLine($" '{City}'");
+            }
+
+            if (Optional.IsDefined(StateOrProvince))
+            {
+                builder.Append("  stateOrProvince:");
+                builder.AppendLine($" '{StateOrProvince}'");
+            }
+
+            if (Optional.IsDefined(Country))
+            {
+                builder.Append("  country:");
+                builder.AppendLine($" '{Country}'");
+            }
+
+            if (Optional.IsDefined(PostalCode))
+            {
+                builder.Append("  postalCode:");
+                builder.AppendLine($" '{PostalCode}'");
+            }
+
+            if (Optional.IsDefined(ZipExtendedCode))
+            {
+                builder.Append("  zipExtendedCode:");
+                builder.AppendLine($" '{ZipExtendedCode}'");
+            }
+
+            if (Optional.IsDefined(CompanyName))
+            {
+                builder.Append("  companyName:");
+                builder.AppendLine($" '{CompanyName}'");
+            }
+
+            if (Optional.IsDefined(AddressType))
+            {
+                builder.Append("  addressType:");
+                builder.AppendLine($" '{AddressType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<EdgeOrderShippingAddress>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderShippingAddress>)this).GetFormatFromOptions(options) : options.Format;
@@ -193,6 +274,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EdgeOrderShippingAddress)} does not support '{options.Format}' format.");
             }
@@ -209,6 +292,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEdgeOrderShippingAddress(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EdgeOrderShippingAddress)} does not support '{options.Format}' format.");
             }

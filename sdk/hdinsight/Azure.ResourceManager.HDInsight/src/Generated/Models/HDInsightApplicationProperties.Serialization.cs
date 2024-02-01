@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightApplicationProperties : IUtf8JsonSerializable, IJsonModel<HDInsightApplicationProperties>
+    public partial class HDInsightApplicationProperties : IUtf8JsonSerializable, IJsonModel<HDInsightApplicationProperties>, IPersistableModel<HDInsightApplicationProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightApplicationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -302,6 +303,128 @@ namespace Azure.ResourceManager.HDInsight.Models
             return new HDInsightApplicationProperties(computeProfile.Value, Optional.ToList(installScriptActions), Optional.ToList(uninstallScriptActions), Optional.ToList(httpsEndpoints), Optional.ToList(sshEndpoints), provisioningState.Value, applicationType.Value, applicationState.Value, Optional.ToList(errors), Optional.ToNullable(createdDate), marketplaceIdentifier.Value, Optional.ToList(privateLinkConfigurations), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ComputeProfile))
+            {
+                builder.Append("  computeProfile:");
+                AppendChildObject(builder, ComputeProfile, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(InstallScriptActions))
+            {
+                builder.Append("  installScriptActions:");
+                builder.AppendLine(" [");
+                foreach (var item in InstallScriptActions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(UninstallScriptActions))
+            {
+                builder.Append("  uninstallScriptActions:");
+                builder.AppendLine(" [");
+                foreach (var item in UninstallScriptActions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(HttpsEndpoints))
+            {
+                builder.Append("  httpsEndpoints:");
+                builder.AppendLine(" [");
+                foreach (var item in HttpsEndpoints)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(SshEndpoints))
+            {
+                builder.Append("  sshEndpoints:");
+                builder.AppendLine(" [");
+                foreach (var item in SshEndpoints)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(ApplicationType))
+            {
+                builder.Append("  applicationType:");
+                builder.AppendLine($" '{ApplicationType}'");
+            }
+
+            if (Optional.IsDefined(ApplicationState))
+            {
+                builder.Append("  applicationState:");
+                builder.AppendLine($" '{ApplicationState}'");
+            }
+
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                builder.Append("  errors:");
+                builder.AppendLine(" [");
+                foreach (var item in Errors)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdDate:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MarketplaceIdentifier))
+            {
+                builder.Append("  marketplaceIdentifier:");
+                builder.AppendLine($" '{MarketplaceIdentifier}'");
+            }
+
+            if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
+            {
+                builder.Append("  privateLinkConfigurations:");
+                builder.AppendLine(" [");
+                foreach (var item in PrivateLinkConfigurations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<HDInsightApplicationProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightApplicationProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -310,6 +433,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HDInsightApplicationProperties)} does not support '{options.Format}' format.");
             }
@@ -326,6 +451,8 @@ namespace Azure.ResourceManager.HDInsight.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHDInsightApplicationProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HDInsightApplicationProperties)} does not support '{options.Format}' format.");
             }

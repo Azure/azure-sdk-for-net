@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DevCenter.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    public partial class DevCenterImageData : IUtf8JsonSerializable, IJsonModel<DevCenterImageData>
+    public partial class DevCenterImageData : IUtf8JsonSerializable, IJsonModel<DevCenterImageData>, IPersistableModel<DevCenterImageData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterImageData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -231,6 +232,92 @@ namespace Azure.ResourceManager.DevCenter
             return new DevCenterImageData(id, name, type, systemData.Value, description.Value, publisher.Value, offer.Value, sku.Value, recommendedMachineConfiguration.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(hibernateSupport), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(Publisher))
+            {
+                builder.Append("  publisher:");
+                builder.AppendLine($" '{Publisher}'");
+            }
+
+            if (Optional.IsDefined(Offer))
+            {
+                builder.Append("  offer:");
+                builder.AppendLine($" '{Offer}'");
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                builder.AppendLine($" '{Sku}'");
+            }
+
+            if (Optional.IsDefined(RecommendedMachineConfiguration))
+            {
+                builder.Append("  recommendedMachineConfiguration:");
+                AppendChildObject(builder, RecommendedMachineConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HibernateSupport))
+            {
+                builder.Append("  hibernateSupport:");
+                builder.AppendLine($" '{HibernateSupport.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DevCenterImageData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterImageData>)this).GetFormatFromOptions(options) : options.Format;
@@ -239,6 +326,8 @@ namespace Azure.ResourceManager.DevCenter
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DevCenterImageData)} does not support '{options.Format}' format.");
             }
@@ -255,6 +344,8 @@ namespace Azure.ResourceManager.DevCenter
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDevCenterImageData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DevCenterImageData)} does not support '{options.Format}' format.");
             }

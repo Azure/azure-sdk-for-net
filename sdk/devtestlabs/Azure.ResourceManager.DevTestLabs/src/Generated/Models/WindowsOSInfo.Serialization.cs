@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    internal partial class WindowsOSInfo : IUtf8JsonSerializable, IJsonModel<WindowsOSInfo>
+    internal partial class WindowsOSInfo : IUtf8JsonSerializable, IJsonModel<WindowsOSInfo>, IPersistableModel<WindowsOSInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WindowsOSInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -92,6 +93,32 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             return new WindowsOSInfo(Optional.ToNullable(windowsOSState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(WindowsOSState))
+            {
+                builder.Append("  windowsOsState:");
+                builder.AppendLine($" '{WindowsOSState.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<WindowsOSInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WindowsOSInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -100,6 +127,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(WindowsOSInfo)} does not support '{options.Format}' format.");
             }
@@ -116,6 +145,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeWindowsOSInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(WindowsOSInfo)} does not support '{options.Format}' format.");
             }

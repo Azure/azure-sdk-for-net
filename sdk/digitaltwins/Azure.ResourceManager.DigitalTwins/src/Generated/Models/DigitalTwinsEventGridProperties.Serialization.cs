@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class DigitalTwinsEventGridProperties : IUtf8JsonSerializable, IJsonModel<DigitalTwinsEventGridProperties>
+    public partial class DigitalTwinsEventGridProperties : IUtf8JsonSerializable, IJsonModel<DigitalTwinsEventGridProperties>, IPersistableModel<DigitalTwinsEventGridProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DigitalTwinsEventGridProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -266,6 +267,86 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             return new DigitalTwinsEventGridProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, identity.Value, serializedAdditionalRawData, topicEndpoint, accessKey1, accessKey2.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TopicEndpoint))
+            {
+                builder.Append("  TopicEndpoint:");
+                builder.AppendLine($" '{TopicEndpoint}'");
+            }
+
+            if (Optional.IsDefined(AccessKey1))
+            {
+                builder.Append("  accessKey1:");
+                builder.AppendLine($" '{AccessKey1}'");
+            }
+
+            if (Optional.IsDefined(AccessKey2))
+            {
+                builder.Append("  accessKey2:");
+                builder.AppendLine($" '{AccessKey2}'");
+            }
+
+            if (Optional.IsDefined(EndpointType))
+            {
+                builder.Append("  endpointType:");
+                builder.AppendLine($" '{EndpointType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdTime:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AuthenticationType))
+            {
+                builder.Append("  authenticationType:");
+                builder.AppendLine($" '{AuthenticationType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DeadLetterSecret))
+            {
+                builder.Append("  deadLetterSecret:");
+                builder.AppendLine($" '{DeadLetterSecret}'");
+            }
+
+            if (Optional.IsDefined(DeadLetterUri))
+            {
+                builder.Append("  deadLetterUri:");
+                builder.AppendLine($" '{DeadLetterUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DigitalTwinsEventGridProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsEventGridProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -274,6 +355,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support '{options.Format}' format.");
             }
@@ -290,6 +373,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDigitalTwinsEventGridProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support '{options.Format}' format.");
             }

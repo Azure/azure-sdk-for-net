@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class EventGridTopicData : IUtf8JsonSerializable, IJsonModel<EventGridTopicData>
+    public partial class EventGridTopicData : IUtf8JsonSerializable, IJsonModel<EventGridTopicData>, IPersistableModel<EventGridTopicData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridTopicData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -433,6 +434,180 @@ namespace Azure.ResourceManager.EventGrid
             return new EventGridTopicData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToNullable(kind), extendedLocation, Optional.ToList(privateEndpointConnections), Optional.ToNullable(provisioningState), endpoint.Value, eventTypeInfo.Value, Optional.ToNullable(minimumTlsVersionAllowed), Optional.ToNullable(inputSchema), inputSchemaMapping.Value, metricResourceId.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToList(inboundIPRules), Optional.ToNullable(disableLocalAuth), Optional.ToNullable(dataResidencyBoundary), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2);
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                builder.Append("  extendedLocation:");
+                AppendChildObject(builder, ExtendedLocation, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                builder.Append("  privateEndpointConnections:");
+                builder.AppendLine(" [");
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Endpoint))
+            {
+                builder.Append("  endpoint:");
+                builder.AppendLine($" '{Endpoint.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(EventTypeInfo))
+            {
+                builder.Append("  eventTypeInfo:");
+                AppendChildObject(builder, EventTypeInfo, options, 2);
+            }
+
+            if (Optional.IsDefined(MinimumTlsVersionAllowed))
+            {
+                builder.Append("  minimumTlsVersionAllowed:");
+                builder.AppendLine($" '{MinimumTlsVersionAllowed.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InputSchema))
+            {
+                builder.Append("  inputSchema:");
+                builder.AppendLine($" '{InputSchema.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InputSchemaMapping))
+            {
+                builder.Append("  inputSchemaMapping:");
+                AppendChildObject(builder, InputSchemaMapping, options, 2);
+            }
+
+            if (Optional.IsDefined(MetricResourceId))
+            {
+                builder.Append("  metricResourceId:");
+                builder.AppendLine($" '{MetricResourceId}'");
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                builder.Append("  publicNetworkAccess:");
+                builder.AppendLine($" '{PublicNetworkAccess.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(InboundIPRules))
+            {
+                builder.Append("  inboundIpRules:");
+                builder.AppendLine(" [");
+                foreach (var item in InboundIPRules)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsLocalAuthDisabled))
+            {
+                builder.Append("  disableLocalAuth:");
+                var boolValue = IsLocalAuthDisabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DataResidencyBoundary))
+            {
+                builder.Append("  dataResidencyBoundary:");
+                builder.AppendLine($" '{DataResidencyBoundary.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<EventGridTopicData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EventGridTopicData>)this).GetFormatFromOptions(options) : options.Format;
@@ -441,6 +616,8 @@ namespace Azure.ResourceManager.EventGrid
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EventGridTopicData)} does not support '{options.Format}' format.");
             }
@@ -457,6 +634,8 @@ namespace Azure.ResourceManager.EventGrid
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEventGridTopicData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EventGridTopicData)} does not support '{options.Format}' format.");
             }

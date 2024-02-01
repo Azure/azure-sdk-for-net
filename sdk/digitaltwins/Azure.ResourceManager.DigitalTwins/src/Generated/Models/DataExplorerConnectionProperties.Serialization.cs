@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class DataExplorerConnectionProperties : IUtf8JsonSerializable, IJsonModel<DataExplorerConnectionProperties>
+    public partial class DataExplorerConnectionProperties : IUtf8JsonSerializable, IJsonModel<DataExplorerConnectionProperties>, IPersistableModel<DataExplorerConnectionProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataExplorerConnectionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -286,6 +287,110 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             return new DataExplorerConnectionProperties(connectionType, Optional.ToNullable(provisioningState), identity.Value, serializedAdditionalRawData, adxResourceId, adxEndpointUri, adxDatabaseName, adxTableName.Value, adxTwinLifecycleEventsTableName.Value, adxRelationshipLifecycleEventsTableName.Value, eventHubEndpointUri, eventHubEntityPath, eventHubNamespaceResourceId, eventHubConsumerGroup.Value, Optional.ToNullable(recordPropertyAndItemRemovals));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AdxResourceId))
+            {
+                builder.Append("  adxResourceId:");
+                builder.AppendLine($" '{AdxResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AdxEndpointUri))
+            {
+                builder.Append("  adxEndpointUri:");
+                builder.AppendLine($" '{AdxEndpointUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(AdxDatabaseName))
+            {
+                builder.Append("  adxDatabaseName:");
+                builder.AppendLine($" '{AdxDatabaseName}'");
+            }
+
+            if (Optional.IsDefined(AdxTableName))
+            {
+                builder.Append("  adxTableName:");
+                builder.AppendLine($" '{AdxTableName}'");
+            }
+
+            if (Optional.IsDefined(AdxTwinLifecycleEventsTableName))
+            {
+                builder.Append("  adxTwinLifecycleEventsTableName:");
+                builder.AppendLine($" '{AdxTwinLifecycleEventsTableName}'");
+            }
+
+            if (Optional.IsDefined(AdxRelationshipLifecycleEventsTableName))
+            {
+                builder.Append("  adxRelationshipLifecycleEventsTableName:");
+                builder.AppendLine($" '{AdxRelationshipLifecycleEventsTableName}'");
+            }
+
+            if (Optional.IsDefined(EventHubEndpointUri))
+            {
+                builder.Append("  eventHubEndpointUri:");
+                builder.AppendLine($" '{EventHubEndpointUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(EventHubEntityPath))
+            {
+                builder.Append("  eventHubEntityPath:");
+                builder.AppendLine($" '{EventHubEntityPath}'");
+            }
+
+            if (Optional.IsDefined(EventHubNamespaceResourceId))
+            {
+                builder.Append("  eventHubNamespaceResourceId:");
+                builder.AppendLine($" '{EventHubNamespaceResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EventHubConsumerGroup))
+            {
+                builder.Append("  eventHubConsumerGroup:");
+                builder.AppendLine($" '{EventHubConsumerGroup}'");
+            }
+
+            if (Optional.IsDefined(RecordPropertyAndItemRemovals))
+            {
+                builder.Append("  recordPropertyAndItemRemovals:");
+                builder.AppendLine($" '{RecordPropertyAndItemRemovals.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ConnectionType))
+            {
+                builder.Append("  connectionType:");
+                builder.AppendLine($" '{ConnectionType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DataExplorerConnectionProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataExplorerConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -294,6 +399,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataExplorerConnectionProperties)} does not support '{options.Format}' format.");
             }
@@ -310,6 +417,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataExplorerConnectionProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataExplorerConnectionProperties)} does not support '{options.Format}' format.");
             }

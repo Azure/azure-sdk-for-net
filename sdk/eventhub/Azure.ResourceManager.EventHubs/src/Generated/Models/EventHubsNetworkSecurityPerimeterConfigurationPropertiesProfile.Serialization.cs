@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile : IUtf8JsonSerializable, IJsonModel<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>
+    public partial class EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile : IUtf8JsonSerializable, IJsonModel<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>, IPersistableModel<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -124,6 +125,49 @@ namespace Azure.ResourceManager.EventHubs.Models
             return new EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(name.Value, accessRulesVersion.Value, Optional.ToList(accessRules), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(AccessRulesVersion))
+            {
+                builder.Append("  accessRulesVersion:");
+                builder.AppendLine($" '{AccessRulesVersion}'");
+            }
+
+            if (Optional.IsCollectionDefined(AccessRules))
+            {
+                builder.Append("  accessRules:");
+                builder.AppendLine(" [");
+                foreach (var item in AccessRules)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -132,6 +176,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile)} does not support '{options.Format}' format.");
             }
@@ -148,6 +194,8 @@ namespace Azure.ResourceManager.EventHubs.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile)} does not support '{options.Format}' format.");
             }
