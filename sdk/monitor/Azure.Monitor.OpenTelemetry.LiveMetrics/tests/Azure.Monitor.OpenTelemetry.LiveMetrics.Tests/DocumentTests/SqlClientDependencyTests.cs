@@ -20,6 +20,10 @@ using System.Data;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 {
+    /// <summary>
+    /// These tests and helper classes were initially copied from
+    /// <see href="https://github.com/open-telemetry/opentelemetry-dotnet/blob/1.6.0-beta.3/test/OpenTelemetry.Instrumentation.SqlClient.Tests/SqlClientTests.cs" />.
+    /// </summary>
     public class SqlClientDependencyTests
     {
         private const string TestServerUrl = "http://localhost:9996/";
@@ -51,7 +55,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
                 {
                     options.SetDbStatementForText = true;
                     options.SetDbStatementForStoredProcedure = true;
-                    //options.RecordException = recordException;
                 })
                 .AddInMemoryExporter(exportedActivities)
                 .Build())
@@ -81,40 +84,91 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
                 fakeSqlClientDiagnosticSource.Write(
                     afterCommand,
                     afterExecuteEventData);
-
-                //var beforeExecuteEventData = new
-                //{
-                //    OperationId = operationId,
-                //    Command = sqlCommand,
-                //    Timestamp = (long?)1000000L,
-                //};
-
-                //fakeSqlClientDiagnosticSource.Write(
-                //    SqlClientConstants.SqlDataBeforeExecuteCommand,
-                //    beforeExecuteEventData);
-
-                //var commandErrorEventData = new
-                //{
-                //    OperationId = operationId,
-                //    Command = sqlCommand,
-                //    Exception = new System.Exception("Boom!"),
-                //    Timestamp = 2000000L,
-                //};
-
-                //fakeSqlClientDiagnosticSource.Write(
-                //    SqlClientConstants.SqlDataAfterExecuteCommand,
-                //    commandErrorEventData);
             }
 
             WaitForActivityExport(exportedActivities);
             Assert.True(exportedActivities.Any(), "test project did not capture telemetry");
-            var remoteDependencyActivity = exportedActivities.First(x => x.Kind == ActivityKind.Client)!;
+            var dependencyActivity = exportedActivities.First(x => x.Kind == ActivityKind.Client)!;
 
-            var remoteDependencyDocument = DocumentHelper.ConvertToRemoteDependency(remoteDependencyActivity);
+            var dependencyDocument = DocumentHelper.ConvertToRemoteDependency(dependencyActivity);
 
-            Assert.Equal(DocumentIngressDocumentType.RemoteDependency, remoteDependencyDocument.DocumentType);
-            Assert.Equal(remoteDependencyActivity.Duration.TotalMilliseconds, remoteDependencyDocument.Extension_Duration); //TODO: SWITCH TO OTHER DURATION
-            Assert.Equal(commandText, remoteDependencyDocument.CommandName);
+            Assert.Equal(DocumentIngressDocumentType.RemoteDependency, dependencyDocument.DocumentType);
+            //TODO: OTHER DURATION
+            Assert.Equal(commandText, dependencyDocument.CommandName);
+
+            Assert.Equal(dependencyActivity.Duration.TotalMilliseconds, dependencyDocument.Extension_Duration);
+            Assert.False(dependencyDocument.Extension_IsSuccess);
+        }
+
+        [Theory]
+        [InlineData(SqlClientConstants.SqlDataBeforeExecuteCommand, SqlClientConstants.SqlDataWriteCommandError, CommandType.StoredProcedure, "SP_GetOrders")]
+        [InlineData(SqlClientConstants.SqlDataBeforeExecuteCommand, SqlClientConstants.SqlDataWriteCommandError, CommandType.Text, "select * from sys.databases")]
+        [InlineData(SqlClientConstants.SqlDataBeforeExecuteCommand, SqlClientConstants.SqlDataWriteCommandError, CommandType.StoredProcedure, "SP_GetOrders", true)]
+        [InlineData(SqlClientConstants.SqlDataBeforeExecuteCommand, SqlClientConstants.SqlDataWriteCommandError, CommandType.Text, "select * from sys.databases", true)]
+        public void VerifySqlClientDependencyWithException(
+            string beforeCommand,
+            string errorCommand,
+            CommandType commandType,
+            string commandText,
+            bool recordException = false)
+        {
+            string testConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Database=master";
+            using var sqlConnection = new SqlConnection(testConnectionString);
+            using var sqlCommand = sqlConnection.CreateCommand();
+
+            var fakeSqlClientDiagnosticSource = new FakeSqlClientDiagnosticSource();
+
+            var exportedActivities = new List<Activity>();
+            using (Sdk.CreateTracerProviderBuilder()
+                .AddSqlClientInstrumentation(options =>
+                {
+                    options.SetDbStatementForText = true;
+                    options.SetDbStatementForStoredProcedure = true;
+                    options.RecordException = recordException;
+                })
+                .AddInMemoryExporter(exportedActivities)
+                .Build())
+            {
+                var operationId = Guid.NewGuid();
+                sqlCommand.CommandText = commandText;
+                sqlCommand.CommandType = commandType;
+
+                var beforeExecuteEventData = new
+                {
+                    OperationId = operationId,
+                    Command = sqlCommand,
+                    Timestamp = (long?)1000000L,
+                };
+
+                fakeSqlClientDiagnosticSource.Write(
+                    beforeCommand,
+                    beforeExecuteEventData);
+
+                var commandErrorEventData = new
+                {
+                    OperationId = operationId,
+                    Command = sqlCommand,
+                    Exception = new System.Exception("Boom!"),
+                    Timestamp = 2000000L,
+                };
+
+                fakeSqlClientDiagnosticSource.Write(
+                    errorCommand,
+                    commandErrorEventData);
+            }
+
+            WaitForActivityExport(exportedActivities);
+            Assert.True(exportedActivities.Any(), "test project did not capture telemetry");
+            var dependencyActivity = exportedActivities.First(x => x.Kind == ActivityKind.Client)!;
+
+            var dependencyDocument = DocumentHelper.ConvertToRemoteDependency(dependencyActivity);
+
+            Assert.Equal(DocumentIngressDocumentType.RemoteDependency, dependencyDocument.DocumentType);
+            //TODO: OTHER DURATION
+            Assert.Equal(commandText, dependencyDocument.CommandName);
+
+            Assert.Equal(dependencyActivity.Duration.TotalMilliseconds, dependencyDocument.Extension_Duration);
+            Assert.False(dependencyDocument.Extension_IsSuccess);
         }
 
         /// <summary>
@@ -141,18 +195,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             internal const string SqlClientDiagnosticListenerName = "SqlClientDiagnosticListener";
 
             public const string SqlDataBeforeExecuteCommand = "System.Data.SqlClient.WriteCommandBefore";
-            public const string SqlMicrosoftBeforeExecuteCommand = "Microsoft.Data.SqlClient.WriteCommandBefore";
 
             public const string SqlDataAfterExecuteCommand = "System.Data.SqlClient.WriteCommandAfter";
-            public const string SqlMicrosoftAfterExecuteCommand = "Microsoft.Data.SqlClient.WriteCommandAfter";
 
             public const string SqlDataWriteCommandError = "System.Data.SqlClient.WriteCommandError";
-            public const string SqlMicrosoftWriteCommandError = "Microsoft.Data.SqlClient.WriteCommandError";
         }
 
-        /// <summary>
-        /// Copied from https://github.com/open-telemetry/opentelemetry-dotnet/blob/1.6.0-beta.3/test/OpenTelemetry.Instrumentation.SqlClient.Tests/SqlClientTests.cs
-        /// </summary>
         private class FakeSqlClientDiagnosticSource : IDisposable
         {
             private readonly DiagnosticListener listener;

@@ -19,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 {
     public class RequestTests
     {
-        private const string TestServerUrl = "http://localhost:9996/";
+        private const string TestServerUrl = "http://localhost:9997/";
 
         [Fact]
         public void VerifyRequestAttributes()
@@ -97,9 +97,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 
             Assert.Equal(DocumentIngressDocumentType.Request, requestDocument.DocumentType);
             Assert.Equal("GET /", requestDocument.Name);
-            Assert.Equal(requestActivity.Duration.TotalMilliseconds, requestDocument.Extension_Duration); //TODO: SWITCH TO OTHER DURATION
+            //TODO: OTHER DURATION
             Assert.Equal(TestServerUrl, requestDocument.Url);
             Assert.Equal("200", requestDocument.ResponseCode);
+
+            Assert.Equal(requestActivity.Duration.TotalMilliseconds, requestDocument.Extension_Duration);
+            Assert.True(requestDocument.Extension_IsSuccess);
         }
 #endif
 

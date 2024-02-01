@@ -59,8 +59,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
         }
 
 #if !NET462
-        [Fact]
-        public async Task VerifyHttpClientDependency()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async Task VerifyHttpClientDependency(bool successfulRequest)
         {
             var exportedActivities = new List<Activity>();
 
@@ -78,7 +80,17 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 
             // ACT
             using var httpClient = new HttpClient();
-            var res = await httpClient.GetStringAsync(TestServerUrl).ConfigureAwait(false);
+
+            var requestUrl = successfulRequest ? TestServerUrl : TestServerUrl + "Fail";
+
+            try
+            {
+                await httpClient.GetStringAsync(requestUrl).ConfigureAwait(false);
+            }
+            catch (System.Exception)
+            {
+                // ignored
+            }
 
             WaitForActivityExport(exportedActivities);
 
@@ -90,10 +102,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 
             Assert.Equal(DocumentIngressDocumentType.RemoteDependency, dependencyDocument.DocumentType);
             Assert.Equal("GET", dependencyDocument.Name);
-            Assert.Equal(dependencyActivity.Duration.TotalMilliseconds, dependencyDocument.Extension_Duration);
-            Assert.Equal(TestServerUrl, dependencyDocument.CommandName);
-            Assert.Equal("200", dependencyDocument.ResultCode);
+            Assert.Equal(requestUrl, dependencyDocument.CommandName);
+            Assert.Equal(successfulRequest ? "200" : "404", dependencyDocument.ResultCode);
             Assert.NotNull(dependencyDocument.Duration);
+
+            Assert.Equal(dependencyActivity.Duration.TotalMilliseconds, dependencyDocument.Extension_Duration);
+            Assert.Equal(successfulRequest, dependencyDocument.Extension_IsSuccess);
         }
 #endif
 

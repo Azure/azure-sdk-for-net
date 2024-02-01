@@ -54,21 +54,17 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     remoteDependencyDocumentIngress.Extension_IsSuccess = IsSuccess(activity, httpResponseStatusCode); // TODO: HOW TO DETERMINE SUCCESS FOR OTHER TYPES?
                     break;
                 case OperationType.Db:
+                    // TODO: remoteDependencyDocumentIngress.Name = "";
                     remoteDependencyDocumentIngress.CommandName = AzMonList.GetTagValue(ref atp.MappedTags, SemanticConventions.AttributeDbStatement)?.ToString();
-
-                    // TODO: If tags contains Exception, set Success = false.
-                    // TODO: If tags contains Exception, set ResultCode = ExceptionNumber.
+                    // TODO: remoteDependencyDocumentIngress.ResultCode = ""; AI SDK uses ExceptionNumber. OpenTelemetry doesn't record this.
 
                     remoteDependencyDocumentIngress.Duration = activity.Duration.ToString("c", CultureInfo.InvariantCulture);
 
                     //var dbAttributeTagObjects = AzMonList.GetTagValues(ref atp.MappedTags, SemanticConventions.AttributeDbStatement, SemanticConventions.AttributeDbSystem);
                     //var dbStatement = dbAttributeTagObjects[0]?.ToString();
                     //var dbSystem = dbAttributeTagObjects[1]?.ToString();
-
                     //var (dbName, dbTarget) = atp.MappedTags.GetDbDependencyTargetAndName();
-
                     //var type = dbSystem == "mssql" ? "SQL" : dbSystem;
-
                     //// special case for db.name
                     //var sanitizedDbName = dbName?.Truncate(SchemaConstants.KVP_MaxValueLength);
                     //if (sanitizedDbName != null)
@@ -76,12 +72,18 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     //    //Properties.Add(SemanticConventions.AttributeDbName, sanitizedDbName);
                     //}
 
+                    // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
+                    remoteDependencyDocumentIngress.Extension_IsSuccess = activity.Status == ActivityStatusCode.Ok;
                     break;
                 case OperationType.Rpc:
                     // TODO
                     break;
                 case OperationType.Messaging:
                     // TODO
+                    break;
+                default:
+                    // Unknown or Unexpected Dependency Type
+                    remoteDependencyDocumentIngress.Name = atp.activityType.ToString();
                     break;
             }
 
