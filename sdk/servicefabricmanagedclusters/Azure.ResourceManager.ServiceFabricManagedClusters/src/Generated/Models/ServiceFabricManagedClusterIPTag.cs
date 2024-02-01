@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> The IP tag associated with the public IP address. </summary>
-    public partial class IPTag
+    public partial class ServiceFabricManagedClusterIPTag
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,11 +46,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IPTag"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterIPTag"/>. </summary>
         /// <param name="ipTagType"> IP tag type. Example: FirstPartyUsage. </param>
         /// <param name="tag"> IP tag associated with the public IP. Example: SQL, Storage etc. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipTagType"/> or <paramref name="tag"/> is null. </exception>
-        public IPTag(string ipTagType, string tag)
+        public ServiceFabricManagedClusterIPTag(string ipTagType, string tag)
         {
             Argument.AssertNotNull(ipTagType, nameof(ipTagType));
             Argument.AssertNotNull(tag, nameof(tag));
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Tag = tag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPTag"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterIPTag"/>. </summary>
         /// <param name="ipTagType"> IP tag type. Example: FirstPartyUsage. </param>
         /// <param name="tag"> IP tag associated with the public IP. Example: SQL, Storage etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IPTag(string ipTagType, string tag, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceFabricManagedClusterIPTag(string ipTagType, string tag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPTagType = ipTagType;
             Tag = tag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPTag"/> for deserialization. </summary>
-        internal IPTag()
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterIPTag"/> for deserialization. </summary>
+        internal ServiceFabricManagedClusterIPTag()
         {
         }
 

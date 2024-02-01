@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Describes the policy used when upgrading the cluster. </summary>
-    public partial class ClusterUpgradePolicy
+    public partial class ManagedClusterUpgradePolicy
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterUpgradePolicy"/>. </summary>
-        public ClusterUpgradePolicy()
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterUpgradePolicy"/>. </summary>
+        public ManagedClusterUpgradePolicy()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterUpgradePolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterUpgradePolicy"/>. </summary>
         /// <param name="forceRestart"> If true, then processes are forcefully restarted during upgrade even when the code version has not changed (the upgrade only changes configuration or data). </param>
         /// <param name="healthPolicy"> The cluster health policy defines a health policy used to evaluate the health of the cluster during a cluster upgrade. </param>
         /// <param name="deltaHealthPolicy"> The cluster delta health policy defines a health policy used to evaluate the health of the cluster during a cluster upgrade. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         ///
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterUpgradePolicy(bool? forceRestart, ClusterHealthPolicy healthPolicy, ClusterUpgradeDeltaHealthPolicy deltaHealthPolicy, ClusterMonitoringPolicy monitoringPolicy, string upgradeReplicaSetCheckTimeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedClusterUpgradePolicy(bool? forceRestart, ManagedClusterHealthPolicy healthPolicy, ManagedClusterUpgradeDeltaHealthPolicy deltaHealthPolicy, ManagedClusterMonitoringPolicy monitoringPolicy, string upgradeReplicaSetCheckTimeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ForceRestart = forceRestart;
             HealthPolicy = healthPolicy;
@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> If true, then processes are forcefully restarted during upgrade even when the code version has not changed (the upgrade only changes configuration or data). </summary>
         public bool? ForceRestart { get; set; }
         /// <summary> The cluster health policy defines a health policy used to evaluate the health of the cluster during a cluster upgrade. </summary>
-        public ClusterHealthPolicy HealthPolicy { get; set; }
+        public ManagedClusterHealthPolicy HealthPolicy { get; set; }
         /// <summary> The cluster delta health policy defines a health policy used to evaluate the health of the cluster during a cluster upgrade. </summary>
-        public ClusterUpgradeDeltaHealthPolicy DeltaHealthPolicy { get; set; }
+        public ManagedClusterUpgradeDeltaHealthPolicy DeltaHealthPolicy { get; set; }
         /// <summary> The cluster monitoring policy describes the parameters for monitoring an upgrade in Monitored mode. </summary>
-        public ClusterMonitoringPolicy MonitoringPolicy { get; set; }
+        public ManagedClusterMonitoringPolicy MonitoringPolicy { get; set; }
         /// <summary>
         /// The maximum amount of time to block processing of an upgrade domain and prevent loss of availability when there are unexpected issues.
         /// When this timeout expires, processing of the upgrade domain will proceed regardless of availability loss issues.

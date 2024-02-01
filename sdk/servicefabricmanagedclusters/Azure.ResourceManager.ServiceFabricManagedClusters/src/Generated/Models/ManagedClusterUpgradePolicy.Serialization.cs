@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ClusterUpgradePolicy : IUtf8JsonSerializable, IJsonModel<ClusterUpgradePolicy>
+    public partial class ManagedClusterUpgradePolicy : IUtf8JsonSerializable, IJsonModel<ManagedClusterUpgradePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterUpgradePolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterUpgradePolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ClusterUpgradePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedClusterUpgradePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterUpgradePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterUpgradePolicy)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,19 +69,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteEndObject();
         }
 
-        ClusterUpgradePolicy IJsonModel<ClusterUpgradePolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ManagedClusterUpgradePolicy IJsonModel<ManagedClusterUpgradePolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterUpgradePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterUpgradePolicy)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClusterUpgradePolicy(document.RootElement, options);
+            return DeserializeManagedClusterUpgradePolicy(document.RootElement, options);
         }
 
-        internal static ClusterUpgradePolicy DeserializeClusterUpgradePolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ManagedClusterUpgradePolicy DeserializeManagedClusterUpgradePolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             Optional<bool> forceRestart = default;
-            Optional<ClusterHealthPolicy> healthPolicy = default;
-            Optional<ClusterUpgradeDeltaHealthPolicy> deltaHealthPolicy = default;
-            Optional<ClusterMonitoringPolicy> monitoringPolicy = default;
+            Optional<ManagedClusterHealthPolicy> healthPolicy = default;
+            Optional<ManagedClusterUpgradeDeltaHealthPolicy> deltaHealthPolicy = default;
+            Optional<ManagedClusterMonitoringPolicy> monitoringPolicy = default;
             Optional<string> upgradeReplicaSetCheckTimeout = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    healthPolicy = ClusterHealthPolicy.DeserializeClusterHealthPolicy(property.Value);
+                    healthPolicy = ManagedClusterHealthPolicy.DeserializeManagedClusterHealthPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("deltaHealthPolicy"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    deltaHealthPolicy = ClusterUpgradeDeltaHealthPolicy.DeserializeClusterUpgradeDeltaHealthPolicy(property.Value);
+                    deltaHealthPolicy = ManagedClusterUpgradeDeltaHealthPolicy.DeserializeManagedClusterUpgradeDeltaHealthPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("monitoringPolicy"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    monitoringPolicy = ClusterMonitoringPolicy.DeserializeClusterMonitoringPolicy(property.Value);
+                    monitoringPolicy = ManagedClusterMonitoringPolicy.DeserializeManagedClusterMonitoringPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("upgradeReplicaSetCheckTimeout"u8))
@@ -145,38 +145,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterUpgradePolicy(Optional.ToNullable(forceRestart), healthPolicy.Value, deltaHealthPolicy.Value, monitoringPolicy.Value, upgradeReplicaSetCheckTimeout.Value, serializedAdditionalRawData);
+            return new ManagedClusterUpgradePolicy(Optional.ToNullable(forceRestart), healthPolicy.Value, deltaHealthPolicy.Value, monitoringPolicy.Value, upgradeReplicaSetCheckTimeout.Value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ClusterUpgradePolicy>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ManagedClusterUpgradePolicy>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterUpgradePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterUpgradePolicy)} does not support '{options.Format}' format.");
             }
         }
 
-        ClusterUpgradePolicy IPersistableModel<ClusterUpgradePolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ManagedClusterUpgradePolicy IPersistableModel<ManagedClusterUpgradePolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeClusterUpgradePolicy(document.RootElement, options);
+                        return DeserializeManagedClusterUpgradePolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterUpgradePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterUpgradePolicy)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ClusterUpgradePolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedClusterUpgradePolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

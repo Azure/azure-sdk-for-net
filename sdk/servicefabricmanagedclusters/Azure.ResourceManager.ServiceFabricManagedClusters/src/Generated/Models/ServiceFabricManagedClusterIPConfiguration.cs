@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Specifies an IP configuration of the network interface. </summary>
-    public partial class IPConfiguration
+    public partial class ServiceFabricManagedClusterIPConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,10 +47,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IPConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterIPConfiguration"/>. </summary>
         /// <param name="name"> Name of the network interface. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public IPConfiguration(string name)
+        public ServiceFabricManagedClusterIPConfiguration(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             LoadBalancerInboundNatPools = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterIPConfiguration"/>. </summary>
         /// <param name="name"> Name of the network interface. </param>
         /// <param name="applicationGatewayBackendAddressPools"> Specifies an array of references to backend address pools of application gateways. A node type can reference backend address pools of multiple application gateways. Multiple node types cannot use the same application gateway. </param>
         /// <param name="loadBalancerBackendAddressPools"> Specifies an array of references to backend address pools of load balancers. A node type can reference backend address pools of one public and one internal load balancer. Multiple node types cannot use the same basic sku load balancer.	. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="privateIPAddressVersion"> Specifies whether the IP configuration's private IP is IPv4 or IPv6. Default is IPv4. </param>
         /// <param name="publicIPAddressConfiguration"> The public IP address configuration of the network interface. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IPConfiguration(string name, IList<WritableSubResource> applicationGatewayBackendAddressPools, IList<WritableSubResource> loadBalancerBackendAddressPools, IList<WritableSubResource> loadBalancerInboundNatPools, WritableSubResource subnet, PrivateIPAddressVersion? privateIPAddressVersion, IPConfigurationPublicIPAddressConfiguration publicIPAddressConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceFabricManagedClusterIPConfiguration(string name, IList<WritableSubResource> applicationGatewayBackendAddressPools, IList<WritableSubResource> loadBalancerBackendAddressPools, IList<WritableSubResource> loadBalancerInboundNatPools, WritableSubResource subnet, ServiceFabricManagedClusterPrivateIPAddressVersion? privateIPAddressVersion, ServiceFabricManagedClusterPublicIPAddressConfiguration publicIPAddressConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ApplicationGatewayBackendAddressPools = applicationGatewayBackendAddressPools;
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPConfiguration"/> for deserialization. </summary>
-        internal IPConfiguration()
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterIPConfiguration"/> for deserialization. </summary>
+        internal ServiceFabricManagedClusterIPConfiguration()
         {
         }
 
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> Specifies whether the IP configuration's private IP is IPv4 or IPv6. Default is IPv4. </summary>
-        public PrivateIPAddressVersion? PrivateIPAddressVersion { get; set; }
+        public ServiceFabricManagedClusterPrivateIPAddressVersion? PrivateIPAddressVersion { get; set; }
         /// <summary> The public IP address configuration of the network interface. </summary>
-        public IPConfigurationPublicIPAddressConfiguration PublicIPAddressConfiguration { get; set; }
+        public ServiceFabricManagedClusterPublicIPAddressConfiguration PublicIPAddressConfiguration { get; set; }
     }
 }

@@ -36,44 +36,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceFabricManagedClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceFabricManagedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceFabricManagedClustersArmClient.GetServiceFabricManagedClusterResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceFabricManagedClusterResource"/> object. </returns>
-        public static ServiceFabricManagedClusterResource GetServiceFabricManagedClusterResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableServiceFabricManagedClustersArmClient(client).GetServiceFabricManagedClusterResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ServiceFabricManagedNodeTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceFabricManagedNodeTypeResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedNodeTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceFabricManagedClustersArmClient.GetServiceFabricManagedNodeTypeResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceFabricManagedNodeTypeResource"/> object. </returns>
-        public static ServiceFabricManagedNodeTypeResource GetServiceFabricManagedNodeTypeResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableServiceFabricManagedClustersArmClient(client).GetServiceFabricManagedNodeTypeResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="ServiceFabricManagedApplicationTypeResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ServiceFabricManagedApplicationTypeResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedApplicationTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -147,6 +109,44 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableServiceFabricManagedClustersArmClient(client).GetServiceFabricManagedServiceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceFabricManagedClusterResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceFabricManagedClustersArmClient.GetServiceFabricManagedClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceFabricManagedClusterResource"/> object. </returns>
+        public static ServiceFabricManagedClusterResource GetServiceFabricManagedClusterResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableServiceFabricManagedClustersArmClient(client).GetServiceFabricManagedClusterResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ServiceFabricManagedNodeTypeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedNodeTypeResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedNodeTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableServiceFabricManagedClustersArmClient.GetServiceFabricManagedNodeTypeResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ServiceFabricManagedNodeTypeResource"/> object. </returns>
+        public static ServiceFabricManagedNodeTypeResource GetServiceFabricManagedNodeTypeResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableServiceFabricManagedClustersArmClient(client).GetServiceFabricManagedNodeTypeResource(id);
         }
 
         /// <summary>

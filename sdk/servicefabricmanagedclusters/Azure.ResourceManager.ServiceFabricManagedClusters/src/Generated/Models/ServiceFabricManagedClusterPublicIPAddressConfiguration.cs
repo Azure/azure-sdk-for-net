@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> The public IP address configuration of the network interface. </summary>
-    public partial class IPConfigurationPublicIPAddressConfiguration
+    public partial class ServiceFabricManagedClusterPublicIPAddressConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,23 +46,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IPConfigurationPublicIPAddressConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterPublicIPAddressConfiguration"/>. </summary>
         /// <param name="name"> Name of the network interface. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public IPConfigurationPublicIPAddressConfiguration(string name)
+        public ServiceFabricManagedClusterPublicIPAddressConfiguration(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            IPTags = new ChangeTrackingList<IPTag>();
+            IPTags = new ChangeTrackingList<ServiceFabricManagedClusterIPTag>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPConfigurationPublicIPAddressConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterPublicIPAddressConfiguration"/>. </summary>
         /// <param name="name"> Name of the network interface. </param>
         /// <param name="ipTags"> Specifies the list of IP tags associated with the public IP address. </param>
         /// <param name="publicIPAddressVersion"> Specifies whether the IP configuration's public IP is IPv4 or IPv6. Default is IPv4. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IPConfigurationPublicIPAddressConfiguration(string name, IList<IPTag> ipTags, PublicIPAddressVersion? publicIPAddressVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceFabricManagedClusterPublicIPAddressConfiguration(string name, IList<ServiceFabricManagedClusterIPTag> ipTags, ServiceFabricManagedClusterPublicIPAddressVersion? publicIPAddressVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             IPTags = ipTags;
@@ -70,16 +70,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPConfigurationPublicIPAddressConfiguration"/> for deserialization. </summary>
-        internal IPConfigurationPublicIPAddressConfiguration()
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterPublicIPAddressConfiguration"/> for deserialization. </summary>
+        internal ServiceFabricManagedClusterPublicIPAddressConfiguration()
         {
         }
 
         /// <summary> Name of the network interface. </summary>
         public string Name { get; set; }
         /// <summary> Specifies the list of IP tags associated with the public IP address. </summary>
-        public IList<IPTag> IPTags { get; }
+        public IList<ServiceFabricManagedClusterIPTag> IPTags { get; }
         /// <summary> Specifies whether the IP configuration's public IP is IPv4 or IPv6. Default is IPv4. </summary>
-        public PublicIPAddressVersion? PublicIPAddressVersion { get; set; }
+        public ServiceFabricManagedClusterPublicIPAddressVersion? PublicIPAddressVersion { get; set; }
     }
 }

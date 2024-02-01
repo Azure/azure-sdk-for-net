@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ClusterUpgradeDeltaHealthPolicy : IUtf8JsonSerializable, IJsonModel<ClusterUpgradeDeltaHealthPolicy>
+    public partial class ManagedClusterUpgradeDeltaHealthPolicy : IUtf8JsonSerializable, IJsonModel<ManagedClusterUpgradeDeltaHealthPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterUpgradeDeltaHealthPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterUpgradeDeltaHealthPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ClusterUpgradeDeltaHealthPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedClusterUpgradeDeltaHealthPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterUpgradeDeltaHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterUpgradeDeltaHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterUpgradeDeltaHealthPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterUpgradeDeltaHealthPolicy)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteEndObject();
         }
 
-        ClusterUpgradeDeltaHealthPolicy IJsonModel<ClusterUpgradeDeltaHealthPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ManagedClusterUpgradeDeltaHealthPolicy IJsonModel<ManagedClusterUpgradeDeltaHealthPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterUpgradeDeltaHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterUpgradeDeltaHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterUpgradeDeltaHealthPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterUpgradeDeltaHealthPolicy)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClusterUpgradeDeltaHealthPolicy(document.RootElement, options);
+            return DeserializeManagedClusterUpgradeDeltaHealthPolicy(document.RootElement, options);
         }
 
-        internal static ClusterUpgradeDeltaHealthPolicy DeserializeClusterUpgradeDeltaHealthPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ManagedClusterUpgradeDeltaHealthPolicy DeserializeManagedClusterUpgradeDeltaHealthPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -112,38 +112,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterUpgradeDeltaHealthPolicy(maxPercentDeltaUnhealthyNodes, Optional.ToNullable(maxPercentUpgradeDomainDeltaUnhealthyNodes), Optional.ToNullable(maxPercentDeltaUnhealthyApplications), serializedAdditionalRawData);
+            return new ManagedClusterUpgradeDeltaHealthPolicy(maxPercentDeltaUnhealthyNodes, Optional.ToNullable(maxPercentUpgradeDomainDeltaUnhealthyNodes), Optional.ToNullable(maxPercentDeltaUnhealthyApplications), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ClusterUpgradeDeltaHealthPolicy>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ManagedClusterUpgradeDeltaHealthPolicy>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterUpgradeDeltaHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterUpgradeDeltaHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterUpgradeDeltaHealthPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterUpgradeDeltaHealthPolicy)} does not support '{options.Format}' format.");
             }
         }
 
-        ClusterUpgradeDeltaHealthPolicy IPersistableModel<ClusterUpgradeDeltaHealthPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ManagedClusterUpgradeDeltaHealthPolicy IPersistableModel<ManagedClusterUpgradeDeltaHealthPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterUpgradeDeltaHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterUpgradeDeltaHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeClusterUpgradeDeltaHealthPolicy(document.RootElement, options);
+                        return DeserializeManagedClusterUpgradeDeltaHealthPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterUpgradeDeltaHealthPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterUpgradeDeltaHealthPolicy)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ClusterUpgradeDeltaHealthPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedClusterUpgradeDeltaHealthPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

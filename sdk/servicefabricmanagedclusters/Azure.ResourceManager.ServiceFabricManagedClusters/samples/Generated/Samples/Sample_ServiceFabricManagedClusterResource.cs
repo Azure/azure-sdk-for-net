@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         // Maintenance Window Status
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetManagedMaintenanceWindowStatu_MaintenanceWindowStatus()
+        public async Task GetManagedMaintenanceWindowStatus_MaintenanceWindowStatus()
         {
             // Generated from example definition: specification/servicefabricmanagedclusters/resource-manager/Microsoft.ServiceFabric/preview/2023-12-01-preview/examples/ManagedMaintenanceWindowStatusGet_example.json
             // this example is just showing the usage of "managedMaintenanceWindowStatus_Get" operation, for the dependent resources, they will have to be created separately.
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
             ServiceFabricManagedClusterResource serviceFabricManagedCluster = client.GetServiceFabricManagedClusterResource(serviceFabricManagedClusterResourceId);
 
             // invoke the operation
-            ManagedMaintenanceWindowStatus result = await serviceFabricManagedCluster.GetManagedMaintenanceWindowStatuAsync();
+            ManagedMaintenanceWindowStatus result = await serviceFabricManagedCluster.GetManagedMaintenanceWindowStatusAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

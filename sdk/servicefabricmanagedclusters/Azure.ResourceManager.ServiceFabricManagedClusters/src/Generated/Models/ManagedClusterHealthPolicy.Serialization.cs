@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ClusterHealthPolicy : IUtf8JsonSerializable, IJsonModel<ClusterHealthPolicy>
+    public partial class ManagedClusterHealthPolicy : IUtf8JsonSerializable, IJsonModel<ManagedClusterHealthPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterHealthPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterHealthPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ClusterHealthPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedClusterHealthPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterHealthPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterHealthPolicy)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteEndObject();
         }
 
-        ClusterHealthPolicy IJsonModel<ClusterHealthPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ManagedClusterHealthPolicy IJsonModel<ManagedClusterHealthPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterHealthPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterHealthPolicy)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClusterHealthPolicy(document.RootElement, options);
+            return DeserializeManagedClusterHealthPolicy(document.RootElement, options);
         }
 
-        internal static ClusterHealthPolicy DeserializeClusterHealthPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ManagedClusterHealthPolicy DeserializeManagedClusterHealthPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -90,38 +90,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterHealthPolicy(maxPercentUnhealthyNodes, maxPercentUnhealthyApplications, serializedAdditionalRawData);
+            return new ManagedClusterHealthPolicy(maxPercentUnhealthyNodes, maxPercentUnhealthyApplications, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ClusterHealthPolicy>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ManagedClusterHealthPolicy>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterHealthPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterHealthPolicy)} does not support '{options.Format}' format.");
             }
         }
 
-        ClusterHealthPolicy IPersistableModel<ClusterHealthPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ManagedClusterHealthPolicy IPersistableModel<ManagedClusterHealthPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeClusterHealthPolicy(document.RootElement, options);
+                        return DeserializeManagedClusterHealthPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterHealthPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterHealthPolicy)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ClusterHealthPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedClusterHealthPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

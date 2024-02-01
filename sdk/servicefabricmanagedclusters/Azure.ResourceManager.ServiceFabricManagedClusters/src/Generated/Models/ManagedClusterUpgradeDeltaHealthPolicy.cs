@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Describes the delta health policies for the cluster upgrade. </summary>
-    public partial class ClusterUpgradeDeltaHealthPolicy
+    public partial class ManagedClusterUpgradeDeltaHealthPolicy
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterUpgradeDeltaHealthPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterUpgradeDeltaHealthPolicy"/>. </summary>
         /// <param name="maxPercentDeltaUnhealthyNodes">
         /// The maximum allowed percentage of nodes health degradation allowed during cluster upgrades.
         /// The delta is measured between the state of the nodes at the beginning of upgrade and the state of the nodes at the time of the health evaluation.
         /// The check is performed after every upgrade domain upgrade completion to make sure the global state of the cluster is within tolerated limits.
         ///
         /// </param>
-        public ClusterUpgradeDeltaHealthPolicy(int maxPercentDeltaUnhealthyNodes)
+        public ManagedClusterUpgradeDeltaHealthPolicy(int maxPercentDeltaUnhealthyNodes)
         {
             MaxPercentDeltaUnhealthyNodes = maxPercentDeltaUnhealthyNodes;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterUpgradeDeltaHealthPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterUpgradeDeltaHealthPolicy"/>. </summary>
         /// <param name="maxPercentDeltaUnhealthyNodes">
         /// The maximum allowed percentage of nodes health degradation allowed during cluster upgrades.
         /// The delta is measured between the state of the nodes at the beginning of upgrade and the state of the nodes at the time of the health evaluation.
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         ///
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterUpgradeDeltaHealthPolicy(int maxPercentDeltaUnhealthyNodes, int? maxPercentUpgradeDomainDeltaUnhealthyNodes, int? maxPercentDeltaUnhealthyApplications, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedClusterUpgradeDeltaHealthPolicy(int maxPercentDeltaUnhealthyNodes, int? maxPercentUpgradeDomainDeltaUnhealthyNodes, int? maxPercentDeltaUnhealthyApplications, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxPercentDeltaUnhealthyNodes = maxPercentDeltaUnhealthyNodes;
             MaxPercentUpgradeDomainDeltaUnhealthyNodes = maxPercentUpgradeDomainDeltaUnhealthyNodes;
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterUpgradeDeltaHealthPolicy"/> for deserialization. </summary>
-        internal ClusterUpgradeDeltaHealthPolicy()
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterUpgradeDeltaHealthPolicy"/> for deserialization. </summary>
+        internal ManagedClusterUpgradeDeltaHealthPolicy()
         {
         }
 

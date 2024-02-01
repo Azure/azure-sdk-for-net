@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class IPTag : IUtf8JsonSerializable, IJsonModel<IPTag>
+    public partial class ServiceFabricManagedClusterIPTag : IUtf8JsonSerializable, IJsonModel<ServiceFabricManagedClusterIPTag>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPTag>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricManagedClusterIPTag>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<IPTag>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceFabricManagedClusterIPTag>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPTag>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterIPTag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPTag)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricManagedClusterIPTag)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteEndObject();
         }
 
-        IPTag IJsonModel<IPTag>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ServiceFabricManagedClusterIPTag IJsonModel<ServiceFabricManagedClusterIPTag>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPTag>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterIPTag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPTag)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricManagedClusterIPTag)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIPTag(document.RootElement, options);
+            return DeserializeServiceFabricManagedClusterIPTag(document.RootElement, options);
         }
 
-        internal static IPTag DeserializeIPTag(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ServiceFabricManagedClusterIPTag DeserializeServiceFabricManagedClusterIPTag(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -90,38 +90,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPTag(ipTagType, tag, serializedAdditionalRawData);
+            return new ServiceFabricManagedClusterIPTag(ipTagType, tag, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<IPTag>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ServiceFabricManagedClusterIPTag>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPTag>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterIPTag>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IPTag)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedClusterIPTag)} does not support '{options.Format}' format.");
             }
         }
 
-        IPTag IPersistableModel<IPTag>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ServiceFabricManagedClusterIPTag IPersistableModel<ServiceFabricManagedClusterIPTag>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPTag>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterIPTag>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeIPTag(document.RootElement, options);
+                        return DeserializeServiceFabricManagedClusterIPTag(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPTag)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedClusterIPTag)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<IPTag>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceFabricManagedClusterIPTag>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

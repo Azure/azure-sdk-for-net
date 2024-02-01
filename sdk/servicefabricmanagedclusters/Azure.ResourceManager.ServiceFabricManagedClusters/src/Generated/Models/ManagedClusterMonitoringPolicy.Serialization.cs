@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ClusterMonitoringPolicy : IUtf8JsonSerializable, IJsonModel<ClusterMonitoringPolicy>
+    public partial class ManagedClusterMonitoringPolicy : IUtf8JsonSerializable, IJsonModel<ManagedClusterMonitoringPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterMonitoringPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterMonitoringPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ClusterMonitoringPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedClusterMonitoringPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterMonitoringPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterMonitoringPolicy)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteEndObject();
         }
 
-        ClusterMonitoringPolicy IJsonModel<ClusterMonitoringPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ManagedClusterMonitoringPolicy IJsonModel<ManagedClusterMonitoringPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterMonitoringPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterMonitoringPolicy)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeClusterMonitoringPolicy(document.RootElement, options);
+            return DeserializeManagedClusterMonitoringPolicy(document.RootElement, options);
         }
 
-        internal static ClusterMonitoringPolicy DeserializeClusterMonitoringPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ManagedClusterMonitoringPolicy DeserializeManagedClusterMonitoringPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -114,38 +114,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterMonitoringPolicy(healthCheckWaitDuration, healthCheckStableDuration, healthCheckRetryTimeout, upgradeTimeout, upgradeDomainTimeout, serializedAdditionalRawData);
+            return new ManagedClusterMonitoringPolicy(healthCheckWaitDuration, healthCheckStableDuration, healthCheckRetryTimeout, upgradeTimeout, upgradeDomainTimeout, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ClusterMonitoringPolicy>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ManagedClusterMonitoringPolicy>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterMonitoringPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterMonitoringPolicy)} does not support '{options.Format}' format.");
             }
         }
 
-        ClusterMonitoringPolicy IPersistableModel<ClusterMonitoringPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ManagedClusterMonitoringPolicy IPersistableModel<ManagedClusterMonitoringPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeClusterMonitoringPolicy(document.RootElement, options);
+                        return DeserializeManagedClusterMonitoringPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterMonitoringPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterMonitoringPolicy)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ClusterMonitoringPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedClusterMonitoringPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

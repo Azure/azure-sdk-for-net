@@ -319,10 +319,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("httpGatewayTokenAuthConnectionPort"u8);
                 writer.WriteNumberValue(HttpGatewayTokenAuthConnectionPort.Value);
             }
-            if (Optional.IsDefined(EnableHttpGatewayExclusiveAuthMode))
+            if (Optional.IsDefined(IsHttpGatewayExclusiveAuthModeEnabled))
             {
                 writer.WritePropertyName("enableHttpGatewayExclusiveAuthMode"u8);
-                writer.WriteBooleanValue(EnableHttpGatewayExclusiveAuthMode.Value);
+                writer.WriteBooleanValue(IsHttpGatewayExclusiveAuthModeEnabled.Value);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Optional<ResourceIdentifier> publicIPPrefixId = default;
             Optional<ResourceIdentifier> publicIPv6PrefixId = default;
             Optional<ResourceIdentifier> ddosProtectionPlanId = default;
-            Optional<ClusterUpgradePolicy> upgradeDescription = default;
+            Optional<ManagedClusterUpgradePolicy> upgradeDescription = default;
             Optional<int> httpGatewayTokenAuthConnectionPort = default;
             Optional<bool> enableHttpGatewayExclusiveAuthMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             {
                                 continue;
                             }
-                            upgradeDescription = ClusterUpgradePolicy.DeserializeClusterUpgradePolicy(property0.Value);
+                            upgradeDescription = ManagedClusterUpgradePolicy.DeserializeManagedClusterUpgradePolicy(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("httpGatewayTokenAuthConnectionPort"u8))
