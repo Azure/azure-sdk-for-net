@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -96,6 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 {
                     try
                     {
+                        _manager.Dispose();
                     }
                     catch (System.Exception)
                     {

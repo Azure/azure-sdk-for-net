@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
     using System.Linq;
 
     /// <summary>
-    /// A reference to an Azure Virtual Machines Marketplace Image or a Shared
-    /// Image Gallery Image. To get the list of all Azure Marketplace Image
+    /// A reference to an Azure Virtual Machines Marketplace Image or a Azure
+    /// Compute Gallery Image. To get the list of all Azure Marketplace Image
     /// references verified by Azure Batch, see the 'List Supported Images'
     /// operation.
     /// </summary>
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="version">The version of the Azure Virtual Machines
         /// Marketplace Image.</param>
         /// <param name="virtualMachineImageId">The ARM resource identifier of
-        /// the Shared Image Gallery Image. Compute Nodes in the Pool will be
+        /// the Azure Compute Gallery Image. Compute Nodes in the Pool will be
         /// created using this Image Id. This is of the form
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{VersionId}
         /// or
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         public string Version { get; set; }
 
         /// <summary>
-        /// Gets or sets the ARM resource identifier of the Shared Image
+        /// Gets or sets the ARM resource identifier of the Azure Compute
         /// Gallery Image. Compute Nodes in the Pool will be created using this
         /// Image Id. This is of the form
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{VersionId}
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// This property is mutually exclusive with other ImageReference
-        /// properties. The Shared Image Gallery Image must have replicas in
+        /// properties. The Azure Compute Gallery Image must have replicas in
         /// the same region and must be in the same subscription as the Azure
         /// Batch account. If the image version is not specified in the
         /// imageId, the latest version will be used. For information about the

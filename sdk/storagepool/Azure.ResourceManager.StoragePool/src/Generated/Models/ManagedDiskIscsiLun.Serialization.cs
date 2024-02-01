@@ -5,25 +5,70 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
-    public partial class ManagedDiskIscsiLun : IUtf8JsonSerializable
+    public partial class ManagedDiskIscsiLun : IUtf8JsonSerializable, IJsonModel<ManagedDiskIscsiLun>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDiskIscsiLun>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagedDiskIscsiLun>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskIscsiLun>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedDiskIscsiLun)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("managedDiskAzureResourceId"u8);
             writer.WriteStringValue(ManagedDiskAzureResourceId);
+            if (options.Format != "W" && Optional.IsDefined(Lun))
+            {
+                writer.WritePropertyName("lun"u8);
+                writer.WriteNumberValue(Lun.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedDiskIscsiLun DeserializeManagedDiskIscsiLun(JsonElement element)
+        ManagedDiskIscsiLun IJsonModel<ManagedDiskIscsiLun>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskIscsiLun>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedDiskIscsiLun)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedDiskIscsiLun(document.RootElement, options);
+        }
+
+        internal static ManagedDiskIscsiLun DeserializeManagedDiskIscsiLun(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +76,8 @@ namespace Azure.ResourceManager.StoragePool.Models
             string name = default;
             ResourceIdentifier managedDiskAzureResourceId = default;
             Optional<int> lun = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -52,8 +99,44 @@ namespace Azure.ResourceManager.StoragePool.Models
                     lun = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedDiskIscsiLun(name, managedDiskAzureResourceId, Optional.ToNullable(lun));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedDiskIscsiLun(name, managedDiskAzureResourceId, Optional.ToNullable(lun), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedDiskIscsiLun>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskIscsiLun>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedDiskIscsiLun)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ManagedDiskIscsiLun IPersistableModel<ManagedDiskIscsiLun>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskIscsiLun>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedDiskIscsiLun(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedDiskIscsiLun)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedDiskIscsiLun>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> ServicePlacementNonPartiallyPlaceServicePolicy. </summary>
@@ -18,7 +21,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Initializes a new instance of <see cref="ServicePlacementNonPartiallyPlaceServicePolicy"/>. </summary>
         /// <param name="servicePlacementPolicyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
-        internal ServicePlacementNonPartiallyPlaceServicePolicy(ServicePlacementPolicyType servicePlacementPolicyType) : base(servicePlacementPolicyType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServicePlacementNonPartiallyPlaceServicePolicy(ServicePlacementPolicyType servicePlacementPolicyType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(servicePlacementPolicyType, serializedAdditionalRawData)
         {
             ServicePlacementPolicyType = servicePlacementPolicyType;
         }

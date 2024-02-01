@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             tags ??= new Dictionary<string, string>();
             collectorPolicies ??= new List<SubResource>();
 
-            return new AzureTrafficCollectorData(id, name, resourceType, systemData, tags, location, etag, collectorPolicies?.ToList(), virtualHubId != null ? ResourceManagerModelFactory.SubResource(virtualHubId) : null, provisioningState);
+            return new AzureTrafficCollectorData(id, name, resourceType, systemData, tags, location, etag, collectorPolicies?.ToList(), virtualHubId != null ? ResourceManagerModelFactory.SubResource(virtualHubId) : null, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFunction.CollectorPolicyData"/>. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             tags ??= new Dictionary<string, string>();
             emissionPolicies ??= new List<EmissionPoliciesPropertiesFormat>();
 
-            return new CollectorPolicyData(id, name, resourceType, systemData, tags, location, etag, ingestionPolicy, emissionPolicies?.ToList(), provisioningState);
+            return new CollectorPolicyData(id, name, resourceType, systemData, tags, location, etag, ingestionPolicy, emissionPolicies?.ToList(), provisioningState, serializedAdditionalRawData: null);
         }
     }
 }

@@ -18,6 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         /// This is a unique identifier that comes from the LiveMetrics service and identifies our connected session.
         /// </summary>
         private string _etag = string.Empty;
+        private CollectionConfigurationInfo? _collectionConfigurationInfo = null;
 
         private DateTimeOffset _lastSuccessfulPing = DateTimeOffset.UtcNow;
         private DateTimeOffset _lastSuccessfulPost = DateTimeOffset.UtcNow;
@@ -45,15 +46,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 {
                     _lastSuccessfulPing = DateTimeOffset.UtcNow;
 
-                    if (response.ConfigurationEtag != null && response.ConfigurationEtag != _etag)
-                    {
-                        Debug.WriteLine($"OnPing: updated etag: {response.ConfigurationEtag}");
-                        _etag = response.ConfigurationEtag;
-                    }
-
                     if (response.Subscribed)
                     {
-                        Debug.WriteLine($"OnPing: Subscribed: {response.Subscribed}");
+                        Debug.WriteLine($"OnPing: Subscribed: {response.Subscribed}.");
+                        RefreshConfigurationOnEtagChange(response);
                         SetPostState();
                     }
                 }
@@ -101,24 +97,38 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 {
                     _lastSuccessfulPost = DateTimeOffset.UtcNow;
 
-                    if (response.ConfigurationEtag != null && response.ConfigurationEtag != _etag)
+                    if (!response.Subscribed)
                     {
-                        Debug.WriteLine($"OnPost: updated etag: {response.ConfigurationEtag}");
-                        _etag = response.ConfigurationEtag;
-                    }
-
-                    if (response.Subscribed)
-                    {
-                        Debug.WriteLine($"OnPost: Subscribed: {response.Subscribed}");
+                        Debug.WriteLine($"OnPost: Subscribed: {response.Subscribed}.");
                         _etag = string.Empty;
                         SetPingState();
                     }
+                    else
+                    {
+                        RefreshConfigurationOnEtagChange(response);
+                    }
+
+                    // TODO: if parsing "x-ms-qps-subscribed" failed, what should do we with the data which was supposed to be sent? (QuickPulseTelemetryModule.OnReturnFailedSamples).
                 }
             }
             catch (System.Exception ex)
             {
                 LiveMetricsExporterEventSource.Log.PostFailedWithUnknownException(ex);
                 Debug.WriteLine(ex);
+            }
+        }
+
+        // This method updates etag and CollectionConfigurationInfo if needed. It should be called whenever Subscribed is true.
+        private void RefreshConfigurationOnEtagChange(QuickPulseResponse response)
+        {
+            if (response.ConfigurationEtag != null && response.ConfigurationEtag != _etag)
+            {
+                Debug.WriteLine($"Updated etag: {response.ConfigurationEtag}.");
+                _etag = response.ConfigurationEtag;
+                if (response.CollectionConfigurationInfo != null)
+                {
+                    _collectionConfigurationInfo = response.CollectionConfigurationInfo;
+                }
             }
         }
     }

@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.Grafana
         public virtual AsyncPageable<GrafanaAvailablePlugin> FetchAvailablePluginsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedGrafanaGrafanaRestClient.CreateFetchAvailablePluginsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, GrafanaAvailablePlugin.DeserializeGrafanaAvailablePlugin, _managedGrafanaGrafanaClientDiagnostics, Pipeline, "ManagedGrafanaResource.FetchAvailablePlugins", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => GrafanaAvailablePlugin.DeserializeGrafanaAvailablePlugin(e), _managedGrafanaGrafanaClientDiagnostics, Pipeline, "ManagedGrafanaResource.FetchAvailablePlugins", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.Grafana
         public virtual Pageable<GrafanaAvailablePlugin> FetchAvailablePlugins(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedGrafanaGrafanaRestClient.CreateFetchAvailablePluginsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, GrafanaAvailablePlugin.DeserializeGrafanaAvailablePlugin, _managedGrafanaGrafanaClientDiagnostics, Pipeline, "ManagedGrafanaResource.FetchAvailablePlugins", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => GrafanaAvailablePlugin.DeserializeGrafanaAvailablePlugin(e), _managedGrafanaGrafanaClientDiagnostics, Pipeline, "ManagedGrafanaResource.FetchAvailablePlugins", "value", null, cancellationToken);
         }
 
         /// <summary>

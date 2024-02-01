@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -22,11 +23,17 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyX509CertificateTokenKey"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="rawBody"> The raw data field of a certificate in PKCS 12 format (X509Certificate2 in .NET). </param>
-        internal ContentKeyPolicyX509CertificateTokenKey(string odataType, byte[] rawBody) : base(odataType)
+        internal ContentKeyPolicyX509CertificateTokenKey(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, byte[] rawBody) : base(odataType, serializedAdditionalRawData)
         {
             RawBody = rawBody;
             OdataType = odataType ?? "#Microsoft.Media.ContentKeyPolicyX509CertificateTokenKey";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyX509CertificateTokenKey"/> for deserialization. </summary>
+        internal ContentKeyPolicyX509CertificateTokenKey()
+        {
         }
 
         /// <summary> The raw data field of a certificate in PKCS 12 format (X509Certificate2 in .NET). </summary>

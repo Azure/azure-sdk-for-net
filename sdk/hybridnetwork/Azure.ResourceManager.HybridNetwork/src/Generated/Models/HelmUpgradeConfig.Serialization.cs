@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class HelmUpgradeConfig : IUtf8JsonSerializable
+    public partial class HelmUpgradeConfig : IUtf8JsonSerializable, IJsonModel<HelmUpgradeConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HelmUpgradeConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HelmUpgradeConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HelmUpgradeConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HelmUpgradeConfig)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Atomic))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HelmUpgradeConfig DeserializeHelmUpgradeConfig(JsonElement element)
+        HelmUpgradeConfig IJsonModel<HelmUpgradeConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HelmUpgradeConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HelmUpgradeConfig)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHelmUpgradeConfig(document.RootElement, options);
+        }
+
+        internal static HelmUpgradeConfig DeserializeHelmUpgradeConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<string> atomic = default;
             Optional<string> wait = default;
             Optional<string> timeout = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("atomic"u8))
@@ -59,8 +101,44 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     timeout = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HelmUpgradeConfig(atomic.Value, wait.Value, timeout.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HelmUpgradeConfig(atomic.Value, wait.Value, timeout.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HelmUpgradeConfig>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HelmUpgradeConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HelmUpgradeConfig)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HelmUpgradeConfig IPersistableModel<HelmUpgradeConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HelmUpgradeConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHelmUpgradeConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HelmUpgradeConfig)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HelmUpgradeConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

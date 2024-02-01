@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Monitor.Models
             OdataType = odataType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="WebtestLocationAvailabilityCriteria"/> for deserialization. </summary>
+        internal WebtestLocationAvailabilityCriteria()
+        {
+        }
+
         /// <summary> The Application Insights web test Id. </summary>
         public ResourceIdentifier WebTestId { get; set; }
         /// <summary> The Application Insights resource Id. </summary>

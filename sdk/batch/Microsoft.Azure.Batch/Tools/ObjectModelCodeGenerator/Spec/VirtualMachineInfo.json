@@ -15,6 +15,17 @@
         "UnboundAccess": "read,write"
       },
       "Value": null
+    },
+    {
+      "Key": {
+        "Type": "string",
+        "Name": "ScaleSetVmResourceId",
+        "SummaryComment": "The resource ID of the Compute Node's current Virtual Machine Scale Set VM. Only defined if the Batch Account was created with its poolAllocationMode property set to 'UserSubscription'.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
     }
   ]
 }

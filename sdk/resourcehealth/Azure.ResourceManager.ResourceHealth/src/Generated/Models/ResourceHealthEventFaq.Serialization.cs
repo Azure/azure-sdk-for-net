@@ -5,15 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    public partial class ResourceHealthEventFaq
+    public partial class ResourceHealthEventFaq : IUtf8JsonSerializable, IJsonModel<ResourceHealthEventFaq>
     {
-        internal static ResourceHealthEventFaq DeserializeResourceHealthEventFaq(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceHealthEventFaq>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ResourceHealthEventFaq>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventFaq>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceHealthEventFaq)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Question))
+            {
+                writer.WritePropertyName("question"u8);
+                writer.WriteStringValue(Question);
+            }
+            if (Optional.IsDefined(Answer))
+            {
+                writer.WritePropertyName("answer"u8);
+                writer.WriteStringValue(Answer);
+            }
+            if (Optional.IsDefined(LocaleCode))
+            {
+                writer.WritePropertyName("localeCode"u8);
+                writer.WriteStringValue(LocaleCode);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ResourceHealthEventFaq IJsonModel<ResourceHealthEventFaq>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventFaq>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceHealthEventFaq)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceHealthEventFaq(document.RootElement, options);
+        }
+
+        internal static ResourceHealthEventFaq DeserializeResourceHealthEventFaq(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +82,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             Optional<string> question = default;
             Optional<string> answer = default;
             Optional<string> localeCode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("question"u8))
@@ -38,8 +101,44 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     localeCode = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceHealthEventFaq(question.Value, answer.Value, localeCode.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ResourceHealthEventFaq(question.Value, answer.Value, localeCode.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResourceHealthEventFaq>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventFaq>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceHealthEventFaq)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ResourceHealthEventFaq IPersistableModel<ResourceHealthEventFaq>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventFaq>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeResourceHealthEventFaq(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceHealthEventFaq)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResourceHealthEventFaq>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

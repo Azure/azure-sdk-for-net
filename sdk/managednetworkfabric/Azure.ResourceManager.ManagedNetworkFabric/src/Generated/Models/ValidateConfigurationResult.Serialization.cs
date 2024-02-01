@@ -6,16 +6,76 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ValidateConfigurationResult
+    public partial class ValidateConfigurationResult : IUtf8JsonSerializable, IJsonModel<ValidateConfigurationResult>
     {
-        internal static ValidateConfigurationResult DeserializeValidateConfigurationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ValidateConfigurationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ValidateConfigurationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ValidateConfigurationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ValidateConfigurationResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
+            {
+                writer.WritePropertyName("configurationState"u8);
+                writer.WriteStringValue(ConfigurationState.Value.ToString());
+            }
+            if (Optional.IsDefined(Uri))
+            {
+                writer.WritePropertyName("url"u8);
+                writer.WriteStringValue(Uri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                JsonSerializer.Serialize(writer, Error);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ValidateConfigurationResult IJsonModel<ValidateConfigurationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ValidateConfigurationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ValidateConfigurationResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeValidateConfigurationResult(document.RootElement, options);
+        }
+
+        internal static ValidateConfigurationResult DeserializeValidateConfigurationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +83,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<NetworkFabricConfigurationState> configurationState = default;
             Optional<Uri> url = default;
             Optional<ResponseError> error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configurationState"u8))
@@ -52,8 +114,44 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ValidateConfigurationResult(error.Value, Optional.ToNullable(configurationState), url.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ValidateConfigurationResult(error.Value, serializedAdditionalRawData, Optional.ToNullable(configurationState), url.Value);
         }
+
+        BinaryData IPersistableModel<ValidateConfigurationResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ValidateConfigurationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ValidateConfigurationResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ValidateConfigurationResult IPersistableModel<ValidateConfigurationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ValidateConfigurationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeValidateConfigurationResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ValidateConfigurationResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ValidateConfigurationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

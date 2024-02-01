@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -22,11 +23,17 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <summary> Initializes a new instance of <see cref="AbsoluteClipTime"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="time"> The time position on the timeline of the input media. It is usually specified as an ISO8601 period. e.g PT30S for 30 seconds. </param>
-        internal AbsoluteClipTime(string odataType, TimeSpan time) : base(odataType)
+        internal AbsoluteClipTime(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSpan time) : base(odataType, serializedAdditionalRawData)
         {
             Time = time;
             OdataType = odataType ?? "#Microsoft.Media.AbsoluteClipTime";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AbsoluteClipTime"/> for deserialization. </summary>
+        internal AbsoluteClipTime()
+        {
         }
 
         /// <summary> The time position on the timeline of the input media. It is usually specified as an ISO8601 period. e.g PT30S for 30 seconds. </summary>

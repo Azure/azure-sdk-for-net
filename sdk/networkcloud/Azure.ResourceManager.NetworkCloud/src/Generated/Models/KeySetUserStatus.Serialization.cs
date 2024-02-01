@@ -5,15 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class KeySetUserStatus
+    public partial class KeySetUserStatus : IUtf8JsonSerializable, IJsonModel<KeySetUserStatus>
     {
-        internal static KeySetUserStatus DeserializeKeySetUserStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeySetUserStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<KeySetUserStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KeySetUserStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KeySetUserStatus)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(AzureUserName))
+            {
+                writer.WritePropertyName("azureUserName"u8);
+                writer.WriteStringValue(AzureUserName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(StatusMessage))
+            {
+                writer.WritePropertyName("statusMessage"u8);
+                writer.WriteStringValue(StatusMessage);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        KeySetUserStatus IJsonModel<KeySetUserStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KeySetUserStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KeySetUserStatus)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKeySetUserStatus(document.RootElement, options);
+        }
+
+        internal static KeySetUserStatus DeserializeKeySetUserStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +82,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<string> azureUserName = default;
             Optional<BareMetalMachineKeySetUserSetupStatus> status = default;
             Optional<string> statusMessage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureUserName"u8))
@@ -42,8 +105,44 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     statusMessage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KeySetUserStatus(azureUserName.Value, Optional.ToNullable(status), statusMessage.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KeySetUserStatus(azureUserName.Value, Optional.ToNullable(status), statusMessage.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KeySetUserStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KeySetUserStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KeySetUserStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        KeySetUserStatus IPersistableModel<KeySetUserStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KeySetUserStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKeySetUserStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KeySetUserStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KeySetUserStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

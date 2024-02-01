@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public VirtualMachinesTests(bool isAsync) : base(isAsync) {}
 
         [Test, MaxTime(1800000)]
+        [RecordedTest]
         public async Task VirtualMachines()
         {
             NetworkCloudVirtualMachineCollection collection = ResourceGroupResource.GetNetworkCloudVirtualMachines();
@@ -73,8 +74,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 (
                     TestEnvironment.VMImageRepoPwd,
                     TestEnvironment.VMImageRepoUri,
-                    TestEnvironment.VMImageRepoUser
-                ),
+                    TestEnvironment.VMImageRepoUser,
+                    null),
                 Tags =
                 {
                     ["key1"] = "myvalue1",
