@@ -27,17 +27,15 @@ namespace Azure.ResourceManager.Fleet.Models
         /// <param name="spotPriorityProfile"> Configuration Options for Spot instances in Azure Fleet. </param>
         /// <param name="regularPriorityProfile"> Configuration Options for On-Demand instances in Azure Fleet. </param>
         /// <param name="vmSizesProfile"> List of VM sizes supported for Fleet. </param>
-        /// <param name="baseVirtualMachineProfile"> Virtual Machine Profile to use for running user's workloads. </param>
-        /// <param name="request"> Request properties of AzureFleet which will be maintained. </param>
-        internal FleetPatch(IList<string> zones, IDictionary<string, string> tags, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IList<VmSizeProfile> vmSizesProfile, BaseVirtualMachineProfileUpdate baseVirtualMachineProfile, Request request)
+        /// <param name="computeProfile"> Compute Profile to use for running user's workloads. </param>
+        internal FleetPatch(IList<string> zones, IDictionary<string, string> tags, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IList<VmSizeProfile> vmSizesProfile, ComputeProfileUpdate computeProfile)
         {
             Zones = zones;
             Tags = tags;
             SpotPriorityProfile = spotPriorityProfile;
             RegularPriorityProfile = regularPriorityProfile;
             VmSizesProfile = vmSizesProfile;
-            BaseVirtualMachineProfile = baseVirtualMachineProfile;
-            Request = request;
+            ComputeProfile = computeProfile;
         }
 
         /// <summary> Zones in which the Azure Fleet is available. </summary>
@@ -50,20 +48,7 @@ namespace Azure.ResourceManager.Fleet.Models
         public RegularPriorityProfile RegularPriorityProfile { get; set; }
         /// <summary> List of VM sizes supported for Fleet. </summary>
         public IList<VmSizeProfile> VmSizesProfile { get; }
-        /// <summary> Virtual Machine Profile to use for running user's workloads. </summary>
-        public BaseVirtualMachineProfileUpdate BaseVirtualMachineProfile { get; set; }
-        /// <summary> Request properties of AzureFleet which will be maintained. </summary>
-        internal Request Request { get; set; }
-        /// <summary> Customers will be provided with an option to specify the request type for creating the Fleet. </summary>
-        public RequestType? RequestType
-        {
-            get => Request is null ? default : Request.RequestType;
-            set
-            {
-                if (Request is null)
-                    Request = new Request();
-                Request.RequestType = value;
-            }
-        }
+        /// <summary> Compute Profile to use for running user's workloads. </summary>
+        public ComputeProfileUpdate ComputeProfile { get; set; }
     }
 }

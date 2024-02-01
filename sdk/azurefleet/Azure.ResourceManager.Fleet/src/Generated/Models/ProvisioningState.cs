@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.Fleet.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string ProvisioningValue = "Provisioning";
+        private const string CreatingValue = "Creating";
         private const string UpdatingValue = "Updating";
+        private const string FailedValue = "Failed";
+        private const string SucceededValue = "Succeeded";
         private const string DeletingValue = "Deleting";
-        private const string AcceptedValue = "Accepted";
+        private const string MigratingValue = "Migrating";
+        private const string CanceledValue = "Canceled";
 
-        /// <summary> Resource has been created. </summary>
-        public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
-        /// <summary> Resource creation failed. </summary>
-        public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
-        /// <summary> Resource creation was canceled. </summary>
-        public static ProvisioningState Canceled { get; } = new ProvisioningState(CanceledValue);
-        /// <summary> Initial provisioning in progress. </summary>
-        public static ProvisioningState Provisioning { get; } = new ProvisioningState(ProvisioningValue);
+        /// <summary> Initial creation in progress. </summary>
+        public static ProvisioningState Creating { get; } = new ProvisioningState(CreatingValue);
         /// <summary> Update in progress. </summary>
         public static ProvisioningState Updating { get; } = new ProvisioningState(UpdatingValue);
+        /// <summary> Resource creation failed. </summary>
+        public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
+        /// <summary> Resource has been created. </summary>
+        public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
         /// <summary> Deletion in progress. </summary>
         public static ProvisioningState Deleting { get; } = new ProvisioningState(DeletingValue);
-        /// <summary> Change accepted for processing. </summary>
-        public static ProvisioningState Accepted { get; } = new ProvisioningState(AcceptedValue);
+        /// <summary> Resource is being migrated from one subscription or resource group to another. </summary>
+        public static ProvisioningState Migrating { get; } = new ProvisioningState(MigratingValue);
+        /// <summary> Resource creation was canceled. </summary>
+        public static ProvisioningState Canceled { get; } = new ProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are not the same. </summary>

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -39,6 +40,8 @@ namespace Azure.ResourceManager.Fleet
 
         private readonly ClientDiagnostics _fleetClientDiagnostics;
         private readonly FleetsRestOperations _fleetRestClient;
+        private readonly ClientDiagnostics _virtualMachineScaleSetsClientDiagnostics;
+        private readonly VirtualMachineScaleSetsRestOperations _virtualMachineScaleSetsRestClient;
         private readonly FleetData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -66,6 +69,8 @@ namespace Azure.ResourceManager.Fleet
             _fleetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Fleet", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string fleetApiVersion);
             _fleetRestClient = new FleetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, fleetApiVersion);
+            _virtualMachineScaleSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Fleet", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _virtualMachineScaleSetsRestClient = new VirtualMachineScaleSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -298,6 +303,50 @@ namespace Azure.ResourceManager.Fleet
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// List VirtualMachineScaleSet resources by Fleet
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}/virtualMachineScaleSets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineScaleSets_ListByFleet</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="VirtualMachineScaleSet"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualMachineScaleSet> GetVirtualMachineScaleSetsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetsRestClient.CreateListByFleetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetsRestClient.CreateListByFleetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, VirtualMachineScaleSet.DeserializeVirtualMachineScaleSet, _virtualMachineScaleSetsClientDiagnostics, Pipeline, "FleetResource.GetVirtualMachineScaleSets", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List VirtualMachineScaleSet resources by Fleet
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureFleet/fleets/{fleetName}/virtualMachineScaleSets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineScaleSets_ListByFleet</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualMachineScaleSet"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualMachineScaleSet> GetVirtualMachineScaleSets(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetsRestClient.CreateListByFleetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualMachineScaleSetsRestClient.CreateListByFleetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, VirtualMachineScaleSet.DeserializeVirtualMachineScaleSet, _virtualMachineScaleSetsClientDiagnostics, Pipeline, "FleetResource.GetVirtualMachineScaleSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

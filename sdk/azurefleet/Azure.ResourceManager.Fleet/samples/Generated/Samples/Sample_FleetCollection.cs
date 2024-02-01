@@ -15,6 +15,7 @@ using Azure.ResourceManager;
 using Azure.ResourceManager.Fleet;
 using Azure.ResourceManager.Fleet.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Fleet.Samples
 {
@@ -337,30 +338,415 @@ namespace Azure.ResourceManager.Fleet.Samples
 },
                 SpotPriorityProfile = new SpotPriorityProfile()
                 {
-                    MaxHourlyPrice = 20.1,
+                    Capacity = 20,
+                    MinCapacity = 10,
                     MaxPricePerVm = 0.00865,
                     EvictionPolicy = EvictionPolicy.Delete,
                     AllocationStrategy = SpotAllocationStrategy.PriceCapacityOptimized,
-                    Capacity = 20,
-                    MinCapacity = 10,
                 },
                 RegularPriorityProfile = new RegularPriorityProfile()
                 {
-                    AllocationStrategy = RegularPriorityAllocationStrategy.LowestPrice,
                     Capacity = 20,
                     MinCapacity = 10,
+                    AllocationStrategy = RegularPriorityAllocationStrategy.LowestPrice,
                 },
                 VmSizesProfile =
 {
 new VmSizeProfile("Standard_d1_v2")
 },
-                BaseVirtualMachineProfile = new BaseVirtualMachineProfile(new Dictionary<string, BinaryData>()
+                ComputeProfile = new ComputeProfile(new VirtualMachineScaleSetVmProfile()
                 {
+                    OSProfile = new VirtualMachineScaleSetOSProfile()
+                    {
+                        ComputerNamePrefix = "svdrokuuojba",
+                        AdminUsername = "offgcmltnjkbiakzjhosetqeslifah",
+                        AdminPassword = "wntdnosdvucijisma",
+                        CustomData = "konjpsuyijb",
+                        WindowsConfiguration = new WindowsConfiguration()
+                        {
+                            ProvisionVmAgent = true,
+                            EnableAutomaticUpdates = true,
+                            TimeZone = "kpfs",
+                            AdditionalUnattendContent =
+{
+new AdditionalUnattendContent()
+{
+PassName = PassName.OobeSystem,
+ComponentName = ComponentName.MicrosoftWindowsShellSetup,
+SettingName = SettingName.AutoLogon,
+Content = "kstwdekvloggaypeiqgzlcfsm",
+}
+},
+                            PatchSettings = new PatchSettings()
+                            {
+                                PatchMode = WindowsVmGuestPatchMode.Manual,
+                                EnableHotpatching = true,
+                                AssessmentMode = WindowsPatchAssessmentMode.ImageDefault,
+                                AutomaticByPlatformSettings = new WindowsVmGuestPatchAutomaticByPlatformSettings()
+                                {
+                                    RebootSetting = WindowsVmGuestPatchAutomaticByPlatformRebootSetting.Unknown,
+                                    BypassPlatformSafetyChecksOnUserSchedule = true,
+                                },
+                            },
+                            WinRMListeners =
+{
+new WinRMListener()
+{
+Protocol = ProtocolType.Http,
+CertificateUri = new Uri("rpbe"),
+}
+},
+                            EnableVmAgentPlatformUpdates = true,
+                        },
+                        LinuxConfiguration = new LinuxConfiguration()
+                        {
+                            DisablePasswordAuthentication = true,
+                            SshPublicKeys =
+{
+new SshPublicKey()
+{
+Path = "pxxnbbcyekgdq",
+KeyData = "lfxabidjysvtlm",
+}
+},
+                            ProvisionVmAgent = true,
+                            PatchSettings = new LinuxPatchSettings()
+                            {
+                                PatchMode = LinuxVmGuestPatchMode.ImageDefault,
+                                AssessmentMode = LinuxPatchAssessmentMode.ImageDefault,
+                                AutomaticByPlatformSettings = new LinuxVmGuestPatchAutomaticByPlatformSettings()
+                                {
+                                    RebootSetting = LinuxVmGuestPatchAutomaticByPlatformRebootSetting.Unknown,
+                                    BypassPlatformSafetyChecksOnUserSchedule = true,
+                                },
+                            },
+                            EnableVmAgentPlatformUpdates = true,
+                        },
+                        Secrets =
+{
+new VaultSecretGroup()
+{
+SourceVaultId = new ResourceIdentifier("ihxrocoahkxxjrbmbhmaahzi"),
+VaultCertificates =
+{
+new VaultCertificate()
+{
+CertificateUri = new Uri("niigcnvodpcyiatng"),
+CertificateStore = "ofo",
+}
+},
+}
+},
+                        AllowExtensionOperations = true,
+                        RequireGuestProvisionSignal = true,
+                    },
+                    StorageProfile = new VirtualMachineScaleSetStorageProfile()
+                    {
+                        ImageReference = new ImageReference()
+                        {
+                            Publisher = "skk",
+                            Offer = "ruhnsiankpaqh",
+                            Sku = "bcwgmoqrsftfxshebubz",
+                            Version = "nhzyxfc",
+                            SharedGalleryImageId = "mkfpnxoxmkyrwpab",
+                            CommunityGalleryImageId = "ujhxcd",
+                            Id = "eouuvblwiuykzebjh",
+                        },
+                        OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
+                        {
+                            Name = "qzchzeaaxupl",
+                            Caching = CachingType.None,
+                            WriteAcceleratorEnabled = true,
+                            DiffDiskSettings = new DiffDiskSettings()
+                            {
+                                Option = DiffDiskOption.Local,
+                                Placement = DiffDiskPlacement.CacheDisk,
+                            },
+                            DiskSizeGB = 18,
+                            OSType = OperatingSystemType.Windows,
+                            ImageUri = new Uri("zfpzrbpchhrehnfmh"),
+                            VhdContainers =
+{
+"ibogdijam"
+},
+                            ManagedDisk = new VirtualMachineScaleSetManagedDiskParameters()
+                            {
+                                StorageAccountType = StorageAccountType.StandardLRS,
+                                DiskEncryptionSetId = new ResourceIdentifier("hinhonboozgfbrfwyy"),
+                                SecurityProfile = new VmDiskSecurityProfile()
+                                {
+                                    SecurityEncryptionType = SecurityEncryptionType.VmGuestStateOnly,
+                                    DiskEncryptionSetId = new ResourceIdentifier("hinhonboozgfbrfwyy"),
+                                },
+                            },
+                            DeleteOption = DiskDeleteOptionType.Delete,
+                        },
+                        DataDisks =
+{
+new VirtualMachineScaleSetDataDisk(17,DiskCreateOptionType.FromImage)
+{
+Name = "lxrutjmjctse",
+Caching = CachingType.None,
+WriteAcceleratorEnabled = true,
+DiskSizeGB = 24,
+ManagedDisk = new VirtualMachineScaleSetManagedDiskParameters()
+{
+StorageAccountType = StorageAccountType.StandardLRS,
+DiskEncryptionSetId = new ResourceIdentifier("hinhonboozgfbrfwyy"),
+SecurityProfile = new VmDiskSecurityProfile()
+{
+SecurityEncryptionType = SecurityEncryptionType.VmGuestStateOnly,
+DiskEncryptionSetId = new ResourceIdentifier("hinhonboozgfbrfwyy"),
+},
+},
+DiskIopsReadWrite = 9,
+DiskMBpsReadWrite = 17,
+DeleteOption = DiskDeleteOptionType.Delete,
+}
+},
+                        DiskControllerType = "yjhloknohphvezhkawonpaeyvkxed",
+                    },
+                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile()
+                    {
+                        HealthProbeId = new ResourceIdentifier("puulsdoecyaooqmhz"),
+                        NetworkInterfaceConfigurations =
+{
+new VirtualMachineScaleSetNetworkConfiguration("akgykxfyokjdwhjztro")
+{
+Primary = true,
+EnableAcceleratedNetworking = true,
+DisableTcpStateTracking = true,
+EnableFpga = true,
+NetworkSecurityGroupId = new ResourceIdentifier("ihxrocoahkxxjrbmbhmaahzi"),
+DnsServers =
+{
+"uptkfxtujkp"
+},
+IPConfigurations =
+{
+new VirtualMachineScaleSetIPConfiguration("et")
+{
+SubnetId = new ResourceIdentifier("puulsdoecyaooqmhz"),
+Primary = true,
+PublicIPAddressConfiguration = new VirtualMachineScaleSetPublicIPAddressConfiguration("vphqhgnqqsbnafztnoq")
+{
+Sku = new PublicIPAddressSku()
+{
+Name = PublicIPAddressSkuName.Basic,
+Tier = PublicIPAddressSkuTier.Regional,
+},
+IdleTimeoutInMinutes = 8,
+DnsSettings = new VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings("fdwomemghickvduupceilj")
+{
+DomainNameLabelScope = DomainNameLabelScopeType.TenantReuse,
+},
+IPTags =
+{
+new VirtualMachineScaleSetIPTag()
+{
+IPTagType = "odacxovypuippcmak",
+Tag = "bbwjxnpervnfkaxvblftzfypky",
+}
+},
+PublicIPPrefixId = new ResourceIdentifier("ihxrocoahkxxjrbmbhmaahzi"),
+PublicIPAddressVersion = IPVersion.IPv4,
+DeleteOption = DeleteOption.Delete,
+},
+PrivateIPAddressVersion = IPVersion.IPv4,
+ApplicationGatewayBackendAddressPools =
+{
+new WritableSubResource()
+{
+Id = new ResourceIdentifier("ihxrocoahkxxjrbmbhmaahzi"),
+}
+},
+ApplicationSecurityGroups =
+{
+new WritableSubResource()
+{
+Id = new ResourceIdentifier("ihxrocoahkxxjrbmbhmaahzi"),
+}
+},
+LoadBalancerBackendAddressPools =
+{
+new WritableSubResource()
+{
+Id = new ResourceIdentifier("ihxrocoahkxxjrbmbhmaahzi"),
+}
+},
+LoadBalancerInboundNatPools =
+{
+new WritableSubResource()
+{
+Id = new ResourceIdentifier("ihxrocoahkxxjrbmbhmaahzi"),
+}
+},
+}
+},
+EnableIPForwarding = true,
+DeleteOption = DeleteOption.Delete,
+AuxiliaryMode = NetworkInterfaceAuxiliaryMode.None,
+AuxiliarySku = NetworkInterfaceAuxiliarySku.None,
+}
+},
+                        NetworkApiVersion = NetworkApiVersion.TwoThousandTwenty1101,
+                    },
+                    SecurityProfile = new SecurityProfile()
+                    {
+                        UefiSettings = new UefiSettings()
+                        {
+                            SecureBootEnabled = true,
+                            VTpmEnabled = true,
+                        },
+                        EncryptionAtHost = true,
+                        SecurityType = SecurityType.TrustedLaunch,
+                        UserAssignedIdentityResourceId = "ymhqsov",
+                        ProxyAgentSettings = new ProxyAgentSettings()
+                        {
+                            Enabled = true,
+                            Mode = Mode.Audit,
+                            KeyIncarnationId = 8,
+                        },
+                    },
+                    BootDiagnostics = new BootDiagnostics()
+                    {
+                        Enabled = true,
+                        StorageUri = new Uri("lqthuokqcyyccvfxut"),
+                    },
+                    ExtensionProfile = new VirtualMachineScaleSetExtensionProfile()
+                    {
+                        Extensions =
+{
+new VirtualMachineScaleSetExtension()
+{
+Name = "gioliweczgjegdfqyaqkdgwrmc",
+ForceUpdateTag = "bfapfyqglqyiy",
+Publisher = "vmgltumwyjrsvlwcbgexcovgwyex",
+TypePropertiesType = "jrewfymdqgrlcudogunfog",
+TypeHandlerVersion = "vqrkrrankheuqbcopc",
+AutoUpgradeMinorVersion = true,
+EnableAutomaticUpgrade = true,
+Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+{
+}),
+ProtectedSettings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+{
+}),
+ProvisionAfterExtensions =
+{
+"babgtjyllusylxsnfvepitrkmkcx"
+},
+SuppressFailures = true,
+ProtectedSettingsFromKeyVault = new KeyVaultSecretReference(new Uri("qmjoynsytvnjzutetnkog"),new WritableSubResource()
+{
+Id = new ResourceIdentifier("ihxrocoahkxxjrbmbhmaahzi"),
+}),
+}
+},
+                        ExtensionsTimeBudget = "srvemetinivyy",
+                    },
+                    LicenseType = "ncc",
+                    Priority = VirtualMachinePriorityType.Regular,
+                    EvictionPolicy = VirtualMachineEvictionPolicyType.Deallocate,
+                    BillingMaxPrice = 8,
+                    ScheduledEventsProfile = new ScheduledEventsProfile()
+                    {
+                        TerminateNotificationProfile = new TerminateNotificationProfile()
+                        {
+                            NotBeforeTimeout = "yczcvhbnxumqmilfufwatqupjrniie",
+                            Enable = true,
+                        },
+                        OSImageNotificationProfile = new OSImageNotificationProfile()
+                        {
+                            NotBeforeTimeout = "wletnpoxpngmbtrup",
+                            Enable = true,
+                        },
+                    },
+                    UserData = "jhlyuc",
+                    CapacityReservationGroupId = new ResourceIdentifier("ihxrocoahkxxjrbmbhmaahzi"),
+                    GalleryApplications =
+{
+new VmGalleryApplication("aabkcborasmyowocjceldewmkci")
+{
+Tags = "bevijlsuchspoihzlfjczuqttaqz",
+Order = 4,
+ConfigurationReference = "auikpeahpgodbqdih",
+TreatFailureAsDeploymentFailure = true,
+EnableAutomaticUpgrade = true,
+}
+},
+                    HardwareVmSizeProperties = new VmSizeProperties()
+                    {
+                        VCPUsAvailable = 14,
+                        VCPUsPerCore = 24,
+                    },
+                    ServiceArtifactReferenceId = new ResourceIdentifier("qqqxnjehbgcepcfldzifjkwlzusn"),
+                    SecurityPostureReference = new SecurityPostureReference()
+                    {
+                        Id = "zwtxjdjwedxmhpcoii",
+                        ExcludeExtensions =
+{
+new VirtualMachineExtension(new AzureLocation("jzecxhirbtegqxpyk"))
+{
+ForceUpdateTag = "eleagpulycjgvscuulb",
+Publisher = "rwaucnzfffywlsaoqltkmsynni",
+TypePropertiesType = "rgnq",
+TypeHandlerVersion = "hyyj",
+AutoUpgradeMinorVersion = true,
+EnableAutomaticUpgrade = true,
+Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+{
+}),
+ProtectedSettings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+{
+}),
+InstanceView = new VirtualMachineExtensionInstanceView()
+{
+Name = "xxnjefzqotctmujsqpmyleaie",
+VirtualMachineExtensionInstanceViewType = "cycepellfcdujniys",
+TypeHandlerVersion = "jefntwzzgxsbzncchhefqiqbs",
+Substatuses =
+{
+new InstanceViewStatus()
+{
+Code = "cbzjpwcbfodkqjnd",
+Level = StatusLevelType.Info,
+DisplayStatus = "oxhrtqv",
+Message = "uldcsnhprfe",
+Time = DateTimeOffset.Parse("2024-01-28T09:08:15.992Z"),
+}
+},
+Statuses =
+{
+new InstanceViewStatus()
+{
+Code = "cbzjpwcbfodkqjnd",
+Level = StatusLevelType.Info,
+DisplayStatus = "oxhrtqv",
+Message = "uldcsnhprfe",
+Time = DateTimeOffset.Parse("2024-01-28T09:08:15.992Z"),
+}
+},
+},
+SuppressFailures = true,
+ProtectedSettingsFromKeyVault = new KeyVaultSecretReference(new Uri("qmjoynsytvnjzutetnkog"),new WritableSubResource()
+{
+Id = new ResourceIdentifier("ihxrocoahkxxjrbmbhmaahzi"),
+}),
+ProvisionAfterExtensions =
+{
+"aysdon"
+},
+Tags =
+{
+["key4849"] = "hqnzzgyumfzflmyjxklwslb",
+},
+}
+},
+                    },
                 }, "2023-07-01"),
-                RequestType = RequestType.Restore,
                 Tags =
 {
-["key8039"] = "aypkcc",
 },
             };
             ArmOperation<FleetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, fleetName, data);

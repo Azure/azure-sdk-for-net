@@ -15,14 +15,19 @@ namespace Azure.ResourceManager.Fleet.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(MaxHourlyPrice))
+            if (Optional.IsDefined(Capacity))
             {
-                writer.WritePropertyName("maxHourlyPrice"u8);
-                writer.WriteNumberValue(MaxHourlyPrice.Value);
+                writer.WritePropertyName("capacity"u8);
+                writer.WriteNumberValue(Capacity.Value);
+            }
+            if (Optional.IsDefined(MinCapacity))
+            {
+                writer.WritePropertyName("minCapacity"u8);
+                writer.WriteNumberValue(MinCapacity.Value);
             }
             if (Optional.IsDefined(MaxPricePerVm))
             {
-                writer.WritePropertyName("maxPricePerVm"u8);
+                writer.WritePropertyName("maxPricePerVM"u8);
                 writer.WriteNumberValue(MaxPricePerVm.Value);
             }
             if (Optional.IsDefined(EvictionPolicy))
@@ -35,16 +40,6 @@ namespace Azure.ResourceManager.Fleet.Models
                 writer.WritePropertyName("allocationStrategy"u8);
                 writer.WriteStringValue(AllocationStrategy.Value.ToString());
             }
-            if (Optional.IsDefined(Capacity))
-            {
-                writer.WritePropertyName("capacity"u8);
-                writer.WriteNumberValue(Capacity.Value);
-            }
-            if (Optional.IsDefined(MinCapacity))
-            {
-                writer.WritePropertyName("minCapacity"u8);
-                writer.WriteNumberValue(MinCapacity.Value);
-            }
             writer.WriteEndObject();
         }
 
@@ -54,24 +49,32 @@ namespace Azure.ResourceManager.Fleet.Models
             {
                 return null;
             }
-            Optional<float> maxHourlyPrice = default;
+            Optional<int> capacity = default;
+            Optional<int> minCapacity = default;
             Optional<float> maxPricePerVm = default;
             Optional<EvictionPolicy> evictionPolicy = default;
             Optional<SpotAllocationStrategy> allocationStrategy = default;
-            Optional<int> capacity = default;
-            Optional<int> minCapacity = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("maxHourlyPrice"u8))
+                if (property.NameEquals("capacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxHourlyPrice = property.Value.GetSingle();
+                    capacity = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("maxPricePerVm"u8))
+                if (property.NameEquals("minCapacity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minCapacity = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("maxPricePerVM"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -98,26 +101,8 @@ namespace Azure.ResourceManager.Fleet.Models
                     allocationStrategy = new SpotAllocationStrategy(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("capacity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    capacity = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("minCapacity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    minCapacity = property.Value.GetInt32();
-                    continue;
-                }
             }
-            return new SpotPriorityProfile(Optional.ToNullable(capacity), Optional.ToNullable(minCapacity), Optional.ToNullable(maxHourlyPrice), Optional.ToNullable(maxPricePerVm), Optional.ToNullable(evictionPolicy), Optional.ToNullable(allocationStrategy));
+            return new SpotPriorityProfile(Optional.ToNullable(capacity), Optional.ToNullable(minCapacity), Optional.ToNullable(maxPricePerVm), Optional.ToNullable(evictionPolicy), Optional.ToNullable(allocationStrategy));
         }
     }
 }

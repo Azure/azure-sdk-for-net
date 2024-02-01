@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Fleet.Models
 {
     /// <summary> Configuration Options for On-Demand instances in Azure Fleet. </summary>
-    public partial class RegularPriorityProfile : BasePriorityProfile
+    public partial class RegularPriorityProfile
     {
         /// <summary> Initializes a new instance of <see cref="RegularPriorityProfile"/>. </summary>
         public RegularPriorityProfile()
@@ -19,11 +19,17 @@ namespace Azure.ResourceManager.Fleet.Models
         /// <param name="capacity"> Total capacity to achieve. It is currently in terms of number of VMs. </param>
         /// <param name="minCapacity"> Minimum capacity to achieve which cannot be updated. If we will not be able to "guarantee" minimum capacity, we will reject the request in the sync path itself. </param>
         /// <param name="allocationStrategy"> Allocation strategy to follow when determining the sku split for On-Demand VMs. </param>
-        internal RegularPriorityProfile(int? capacity, int? minCapacity, RegularPriorityAllocationStrategy? allocationStrategy) : base(capacity, minCapacity)
+        internal RegularPriorityProfile(int? capacity, int? minCapacity, RegularPriorityAllocationStrategy? allocationStrategy)
         {
+            Capacity = capacity;
+            MinCapacity = minCapacity;
             AllocationStrategy = allocationStrategy;
         }
 
+        /// <summary> Total capacity to achieve. It is currently in terms of number of VMs. </summary>
+        public int? Capacity { get; set; }
+        /// <summary> Minimum capacity to achieve which cannot be updated. If we will not be able to "guarantee" minimum capacity, we will reject the request in the sync path itself. </summary>
+        public int? MinCapacity { get; set; }
         /// <summary> Allocation strategy to follow when determining the sku split for On-Demand VMs. </summary>
         public RegularPriorityAllocationStrategy? AllocationStrategy { get; set; }
     }

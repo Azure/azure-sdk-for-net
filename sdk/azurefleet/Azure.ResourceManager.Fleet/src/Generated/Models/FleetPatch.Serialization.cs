@@ -58,15 +58,10 @@ namespace Azure.ResourceManager.Fleet.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BaseVirtualMachineProfile))
+            if (Optional.IsDefined(ComputeProfile))
             {
-                writer.WritePropertyName("baseVirtualMachineProfile"u8);
-                writer.WriteObjectValue(BaseVirtualMachineProfile);
-            }
-            if (Optional.IsDefined(Request))
-            {
-                writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request);
+                writer.WritePropertyName("computeProfile"u8);
+                writer.WriteObjectValue(ComputeProfile);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

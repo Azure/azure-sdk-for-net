@@ -2,12 +2,12 @@
 
 Run `dotnet build /t:GenerateCode` to generate code.
 
-``` yaml
+```yaml
 azure-arm: true
 csharp: true
 library-name: azurefleet
 namespace: Azure.ResourceManager.azurefleet
-require: C:\dev\git\azure-rest-api-specs-pr\specification\azurefleet\resource-manager\readme.md
+require: c:\git\azure-rest-api-specs-pr\specification\azurefleet\resource-manager\readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,14 +20,12 @@ modelerfour:
 #mgmt-debug:
 #  show-serialized-names: true
 
- 
-
 format-by-name-rules:
-  'tenantId': 'uuid'
-  'ETag': 'etag'
-  'location': 'azure-location'
-  '*Uri': 'Uri'
-  '*Uris': 'Uri'
+  "tenantId": "uuid"
+  "ETag": "etag"
+  "location": "azure-location"
+  "*Uri": "Uri"
+  "*Uris": "Uri"
 
 acronym-mapping:
   CPU: Cpu
@@ -51,5 +49,4 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
-
 ```

@@ -63,15 +63,10 @@ namespace Azure.ResourceManager.Fleet
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BaseVirtualMachineProfile))
+            if (Optional.IsDefined(ComputeProfile))
             {
-                writer.WritePropertyName("baseVirtualMachineProfile"u8);
-                writer.WriteObjectValue(BaseVirtualMachineProfile);
-            }
-            if (Optional.IsDefined(Request))
-            {
-                writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request);
+                writer.WritePropertyName("computeProfile"u8);
+                writer.WriteObjectValue(ComputeProfile);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -94,8 +89,7 @@ namespace Azure.ResourceManager.Fleet
             Optional<SpotPriorityProfile> spotPriorityProfile = default;
             Optional<RegularPriorityProfile> regularPriorityProfile = default;
             Optional<IList<VmSizeProfile>> vmSizesProfile = default;
-            Optional<BaseVirtualMachineProfile> baseVirtualMachineProfile = default;
-            Optional<Models.Request> request = default;
+            Optional<ComputeProfile> computeProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zones"u8))
@@ -205,29 +199,20 @@ namespace Azure.ResourceManager.Fleet
                             vmSizesProfile = array;
                             continue;
                         }
-                        if (property0.NameEquals("baseVirtualMachineProfile"u8))
+                        if (property0.NameEquals("computeProfile"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            baseVirtualMachineProfile = BaseVirtualMachineProfile.DeserializeBaseVirtualMachineProfile(property0.Value);
-                            continue;
-                        }
-                        if (property0.NameEquals("request"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            request = Models.Request.DeserializeRequest(property0.Value);
+                            computeProfile = ComputeProfile.DeserializeComputeProfile(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new FleetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToNullable(provisioningState), spotPriorityProfile.Value, regularPriorityProfile.Value, Optional.ToList(vmSizesProfile), baseVirtualMachineProfile.Value, request.Value);
+            return new FleetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), Optional.ToNullable(provisioningState), spotPriorityProfile.Value, regularPriorityProfile.Value, Optional.ToList(vmSizesProfile), computeProfile.Value);
         }
     }
 }

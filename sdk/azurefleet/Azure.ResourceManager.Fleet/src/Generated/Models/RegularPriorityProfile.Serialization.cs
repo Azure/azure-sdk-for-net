@@ -15,11 +15,6 @@ namespace Azure.ResourceManager.Fleet.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(AllocationStrategy))
-            {
-                writer.WritePropertyName("allocationStrategy"u8);
-                writer.WriteStringValue(AllocationStrategy.Value.ToString());
-            }
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
@@ -30,6 +25,11 @@ namespace Azure.ResourceManager.Fleet.Models
                 writer.WritePropertyName("minCapacity"u8);
                 writer.WriteNumberValue(MinCapacity.Value);
             }
+            if (Optional.IsDefined(AllocationStrategy))
+            {
+                writer.WritePropertyName("allocationStrategy"u8);
+                writer.WriteStringValue(AllocationStrategy.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -39,20 +39,11 @@ namespace Azure.ResourceManager.Fleet.Models
             {
                 return null;
             }
-            Optional<RegularPriorityAllocationStrategy> allocationStrategy = default;
             Optional<int> capacity = default;
             Optional<int> minCapacity = default;
+            Optional<RegularPriorityAllocationStrategy> allocationStrategy = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("allocationStrategy"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    allocationStrategy = new RegularPriorityAllocationStrategy(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("capacity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -69,6 +60,15 @@ namespace Azure.ResourceManager.Fleet.Models
                         continue;
                     }
                     minCapacity = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("allocationStrategy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allocationStrategy = new RegularPriorityAllocationStrategy(property.Value.GetString());
                     continue;
                 }
             }
