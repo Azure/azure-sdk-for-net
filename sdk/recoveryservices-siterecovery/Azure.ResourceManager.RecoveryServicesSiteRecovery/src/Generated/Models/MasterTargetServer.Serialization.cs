@@ -9,12 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class MasterTargetServer : IUtf8JsonSerializable, IJsonModel<MasterTargetServer>
+    public partial class MasterTargetServer : IUtf8JsonSerializable, IJsonModel<MasterTargetServer>, IPersistableModel<MasterTargetServer>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MasterTargetServer>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -360,6 +361,154 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new MasterTargetServer(id.Value, ipAddress.Value, name.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToList(retentionVolumes), Optional.ToList(dataStores), Optional.ToList(validationErrors), Optional.ToList(healthErrors), Optional.ToNullable(diskCount), osVersion.Value, Optional.ToNullable(agentExpireOn), marsAgentVersion.Value, Optional.ToNullable(marsAgentExpireOn), agentVersionDetails.Value, marsAgentVersionDetails.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id}'");
+            }
+
+            if (Optional.IsDefined(IPAddress))
+            {
+                builder.Append("  ipAddress:");
+                builder.AppendLine($" '{IPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(OSType))
+            {
+                builder.Append("  osType:");
+                builder.AppendLine($" '{OSType}'");
+            }
+
+            if (Optional.IsDefined(AgentVersion))
+            {
+                builder.Append("  agentVersion:");
+                builder.AppendLine($" '{AgentVersion}'");
+            }
+
+            if (Optional.IsDefined(LastHeartbeatReceivedOn))
+            {
+                builder.Append("  lastHeartbeat:");
+                builder.AppendLine($" '{LastHeartbeatReceivedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VersionStatus))
+            {
+                builder.Append("  versionStatus:");
+                builder.AppendLine($" '{VersionStatus}'");
+            }
+
+            if (Optional.IsCollectionDefined(RetentionVolumes))
+            {
+                builder.Append("  retentionVolumes:");
+                builder.AppendLine(" [");
+                foreach (var item in RetentionVolumes)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(DataStores))
+            {
+                builder.Append("  dataStores:");
+                builder.AppendLine(" [");
+                foreach (var item in DataStores)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ValidationErrors))
+            {
+                builder.Append("  validationErrors:");
+                builder.AppendLine(" [");
+                foreach (var item in ValidationErrors)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(HealthErrors))
+            {
+                builder.Append("  healthErrors:");
+                builder.AppendLine(" [");
+                foreach (var item in HealthErrors)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(DiskCount))
+            {
+                builder.Append("  diskCount:");
+                builder.AppendLine($" '{DiskCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OSVersion))
+            {
+                builder.Append("  osVersion:");
+                builder.AppendLine($" '{OSVersion}'");
+            }
+
+            if (Optional.IsDefined(AgentExpireOn))
+            {
+                builder.Append("  agentExpiryDate:");
+                builder.AppendLine($" '{AgentExpireOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MarsAgentVersion))
+            {
+                builder.Append("  marsAgentVersion:");
+                builder.AppendLine($" '{MarsAgentVersion}'");
+            }
+
+            if (Optional.IsDefined(MarsAgentExpireOn))
+            {
+                builder.Append("  marsAgentExpiryDate:");
+                builder.AppendLine($" '{MarsAgentExpireOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AgentVersionDetails))
+            {
+                builder.Append("  agentVersionDetails:");
+                AppendChildObject(builder, AgentVersionDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(MarsAgentVersionDetails))
+            {
+                builder.Append("  marsAgentVersionDetails:");
+                AppendChildObject(builder, MarsAgentVersionDetails, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MasterTargetServer>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MasterTargetServer>)this).GetFormatFromOptions(options) : options.Format;
@@ -368,6 +517,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MasterTargetServer)} does not support '{options.Format}' format.");
             }
@@ -384,6 +535,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMasterTargetServer(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MasterTargetServer)} does not support '{options.Format}' format.");
             }

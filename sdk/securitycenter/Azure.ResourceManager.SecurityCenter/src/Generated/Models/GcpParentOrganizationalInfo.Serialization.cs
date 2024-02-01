@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GcpParentOrganizationalInfo : IUtf8JsonSerializable, IJsonModel<GcpParentOrganizationalInfo>
+    public partial class GcpParentOrganizationalInfo : IUtf8JsonSerializable, IJsonModel<GcpParentOrganizationalInfo>, IPersistableModel<GcpParentOrganizationalInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GcpParentOrganizationalInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -143,6 +144,66 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GcpParentOrganizationalInfo(organizationMembershipType, serializedAdditionalRawData, Optional.ToList(excludedProjectNumbers), serviceAccountEmailAddress.Value, workloadIdentityProviderId.Value, organizationName.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(ExcludedProjectNumbers))
+            {
+                builder.Append("  excludedProjectNumbers:");
+                builder.AppendLine(" [");
+                foreach (var item in ExcludedProjectNumbers)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ServiceAccountEmailAddress))
+            {
+                builder.Append("  serviceAccountEmailAddress:");
+                builder.AppendLine($" '{ServiceAccountEmailAddress}'");
+            }
+
+            if (Optional.IsDefined(WorkloadIdentityProviderId))
+            {
+                builder.Append("  workloadIdentityProviderId:");
+                builder.AppendLine($" '{WorkloadIdentityProviderId}'");
+            }
+
+            if (Optional.IsDefined(OrganizationName))
+            {
+                builder.Append("  organizationName:");
+                builder.AppendLine($" '{OrganizationName}'");
+            }
+
+            if (Optional.IsDefined(OrganizationMembershipType))
+            {
+                builder.Append("  organizationMembershipType:");
+                builder.AppendLine($" '{OrganizationMembershipType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<GcpParentOrganizationalInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GcpParentOrganizationalInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -151,6 +212,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support '{options.Format}' format.");
             }
@@ -167,6 +230,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeGcpParentOrganizationalInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(GcpParentOrganizationalInfo)} does not support '{options.Format}' format.");
             }

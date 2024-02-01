@@ -7,13 +7,14 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     [PersistableModelProxy(typeof(UnknownProtectedItem))]
-    public partial class BackupGenericProtectedItem : IUtf8JsonSerializable, IJsonModel<BackupGenericProtectedItem>
+    public partial class BackupGenericProtectedItem : IUtf8JsonSerializable, IJsonModel<BackupGenericProtectedItem>, IPersistableModel<BackupGenericProtectedItem>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupGenericProtectedItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -183,6 +184,154 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return UnknownProtectedItem.DeserializeUnknownProtectedItem(element);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProtectedItemType))
+            {
+                builder.Append("  protectedItemType:");
+                builder.AppendLine($" '{ProtectedItemType}'");
+            }
+
+            if (Optional.IsDefined(BackupManagementType))
+            {
+                builder.Append("  backupManagementType:");
+                builder.AppendLine($" '{BackupManagementType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WorkloadType))
+            {
+                builder.Append("  workloadType:");
+                builder.AppendLine($" '{WorkloadType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ContainerName))
+            {
+                builder.Append("  containerName:");
+                builder.AppendLine($" '{ContainerName}'");
+            }
+
+            if (Optional.IsDefined(SourceResourceId))
+            {
+                builder.Append("  sourceResourceId:");
+                builder.AppendLine($" '{SourceResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PolicyId))
+            {
+                builder.Append("  policyId:");
+                builder.AppendLine($" '{PolicyId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastRecoverOn))
+            {
+                builder.Append("  lastRecoveryPoint:");
+                builder.AppendLine($" '{LastRecoverOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BackupSetName))
+            {
+                builder.Append("  backupSetName:");
+                builder.AppendLine($" '{BackupSetName}'");
+            }
+
+            if (Optional.IsDefined(CreateMode))
+            {
+                builder.Append("  createMode:");
+                builder.AppendLine($" '{CreateMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DeferredDeletedOn))
+            {
+                builder.Append("  deferredDeleteTimeInUTC:");
+                builder.AppendLine($" '{DeferredDeletedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsScheduledForDeferredDelete))
+            {
+                builder.Append("  isScheduledForDeferredDelete:");
+                var boolValue = IsScheduledForDeferredDelete.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DeferredDeleteTimeRemaining))
+            {
+                builder.Append("  deferredDeleteTimeRemaining:");
+                builder.AppendLine($" '{DeferredDeleteTimeRemaining}'");
+            }
+
+            if (Optional.IsDefined(IsDeferredDeleteScheduleUpcoming))
+            {
+                builder.Append("  isDeferredDeleteScheduleUpcoming:");
+                var boolValue = IsDeferredDeleteScheduleUpcoming.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsRehydrate))
+            {
+                builder.Append("  isRehydrate:");
+                var boolValue = IsRehydrate.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            {
+                builder.Append("  resourceGuardOperationRequests:");
+                builder.AppendLine(" [");
+                foreach (var item in ResourceGuardOperationRequests)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsArchiveEnabled))
+            {
+                builder.Append("  isArchiveEnabled:");
+                var boolValue = IsArchiveEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(PolicyName))
+            {
+                builder.Append("  policyName:");
+                builder.AppendLine($" '{PolicyName}'");
+            }
+
+            if (Optional.IsDefined(SoftDeleteRetentionPeriodInDays))
+            {
+                builder.Append("  softDeleteRetentionPeriodInDays:");
+                builder.AppendLine($" '{SoftDeleteRetentionPeriodInDays.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VaultId))
+            {
+                builder.Append("  vaultId:");
+                builder.AppendLine($" '{VaultId}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BackupGenericProtectedItem>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
@@ -191,6 +340,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support '{options.Format}' format.");
             }
@@ -207,6 +358,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBackupGenericProtectedItem(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BackupGenericProtectedItem)} does not support '{options.Format}' format.");
             }

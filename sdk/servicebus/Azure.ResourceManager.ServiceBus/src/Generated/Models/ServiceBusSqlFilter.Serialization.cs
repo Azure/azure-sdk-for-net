@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class ServiceBusSqlFilter : IUtf8JsonSerializable, IJsonModel<ServiceBusSqlFilter>
+    public partial class ServiceBusSqlFilter : IUtf8JsonSerializable, IJsonModel<ServiceBusSqlFilter>, IPersistableModel<ServiceBusSqlFilter>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusSqlFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -118,6 +119,45 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusSqlFilter(sqlExpression.Value, Optional.ToNullable(compatibilityLevel), Optional.ToNullable(requiresPreprocessing), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SqlExpression))
+            {
+                builder.Append("  sqlExpression:");
+                builder.AppendLine($" '{SqlExpression}'");
+            }
+
+            if (Optional.IsDefined(CompatibilityLevel))
+            {
+                builder.Append("  compatibilityLevel:");
+                builder.AppendLine($" '{CompatibilityLevel.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RequiresPreprocessing))
+            {
+                builder.Append("  requiresPreprocessing:");
+                var boolValue = RequiresPreprocessing.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ServiceBusSqlFilter>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusSqlFilter>)this).GetFormatFromOptions(options) : options.Format;
@@ -126,6 +166,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServiceBusSqlFilter)} does not support '{options.Format}' format.");
             }
@@ -142,6 +184,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeServiceBusSqlFilter(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ServiceBusSqlFilter)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    public partial class DefaultPurviewAccountPayload : IUtf8JsonSerializable, IJsonModel<DefaultPurviewAccountPayload>
+    public partial class DefaultPurviewAccountPayload : IUtf8JsonSerializable, IJsonModel<DefaultPurviewAccountPayload>, IPersistableModel<DefaultPurviewAccountPayload>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefaultPurviewAccountPayload>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -151,6 +152,62 @@ namespace Azure.ResourceManager.Purview.Models
             return new DefaultPurviewAccountPayload(accountName.Value, resourceGroupName.Value, scope.Value, Optional.ToNullable(scopeTenantId), Optional.ToNullable(scopeType), subscriptionId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AccountName))
+            {
+                builder.Append("  accountName:");
+                builder.AppendLine($" '{AccountName}'");
+            }
+
+            if (Optional.IsDefined(ResourceGroupName))
+            {
+                builder.Append("  resourceGroupName:");
+                builder.AppendLine($" '{ResourceGroupName}'");
+            }
+
+            if (Optional.IsDefined(Scope))
+            {
+                builder.Append("  scope:");
+                builder.AppendLine($" '{Scope}'");
+            }
+
+            if (Optional.IsDefined(ScopeTenantId))
+            {
+                builder.Append("  scopeTenantId:");
+                builder.AppendLine($" '{ScopeTenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ScopeType))
+            {
+                builder.Append("  scopeType:");
+                builder.AppendLine($" '{ScopeType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                builder.Append("  subscriptionId:");
+                builder.AppendLine($" '{SubscriptionId}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DefaultPurviewAccountPayload>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DefaultPurviewAccountPayload>)this).GetFormatFromOptions(options) : options.Format;
@@ -159,6 +216,8 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support '{options.Format}' format.");
             }
@@ -175,6 +234,8 @@ namespace Azure.ResourceManager.Purview.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDefaultPurviewAccountPayload(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmFailbackProtectedDiskDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmFailbackProtectedDiskDetails>
+    public partial class InMageRcmFailbackProtectedDiskDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmFailbackProtectedDiskDetails>, IPersistableModel<InMageRcmFailbackProtectedDiskDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmFailbackProtectedDiskDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -222,6 +223,92 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmFailbackProtectedDiskDetails(diskId.Value, diskName.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), diskUuid.Value, Optional.ToNullable(dataPendingInLogDataStoreInMB), Optional.ToNullable(dataPendingAtSourceAgentInMB), isInitialReplicationComplete.Value, irDetails.Value, resyncDetails.Value, Optional.ToNullable(lastSyncTime), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DiskId))
+            {
+                builder.Append("  diskId:");
+                builder.AppendLine($" '{DiskId}'");
+            }
+
+            if (Optional.IsDefined(DiskName))
+            {
+                builder.Append("  diskName:");
+                builder.AppendLine($" '{DiskName}'");
+            }
+
+            if (Optional.IsDefined(IsOSDisk))
+            {
+                builder.Append("  isOSDisk:");
+                builder.AppendLine($" '{IsOSDisk}'");
+            }
+
+            if (Optional.IsDefined(CapacityInBytes))
+            {
+                builder.Append("  capacityInBytes:");
+                builder.AppendLine($" '{CapacityInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiskUuid))
+            {
+                builder.Append("  diskUuid:");
+                builder.AppendLine($" '{DiskUuid}'");
+            }
+
+            if (Optional.IsDefined(DataPendingInLogDataStoreInMB))
+            {
+                builder.Append("  dataPendingInLogDataStoreInMB:");
+                builder.AppendLine($" '{DataPendingInLogDataStoreInMB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DataPendingAtSourceAgentInMB))
+            {
+                builder.Append("  dataPendingAtSourceAgentInMB:");
+                builder.AppendLine($" '{DataPendingAtSourceAgentInMB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsInitialReplicationComplete))
+            {
+                builder.Append("  isInitialReplicationComplete:");
+                builder.AppendLine($" '{IsInitialReplicationComplete}'");
+            }
+
+            if (Optional.IsDefined(IrDetails))
+            {
+                builder.Append("  irDetails:");
+                AppendChildObject(builder, IrDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(ResyncDetails))
+            {
+                builder.Append("  resyncDetails:");
+                AppendChildObject(builder, ResyncDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(LastSyncedOn))
+            {
+                builder.Append("  lastSyncTime:");
+                builder.AppendLine($" '{LastSyncedOn.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<InMageRcmFailbackProtectedDiskDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -230,6 +317,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmFailbackProtectedDiskDetails)} does not support '{options.Format}' format.");
             }
@@ -246,6 +335,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeInMageRcmFailbackProtectedDiskDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmFailbackProtectedDiskDetails)} does not support '{options.Format}' format.");
             }

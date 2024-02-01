@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ProviderPermission : IUtf8JsonSerializable, IJsonModel<ProviderPermission>
+    public partial class ProviderPermission : IUtf8JsonSerializable, IJsonModel<ProviderPermission>, IPersistableModel<ProviderPermission>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderPermission>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -133,6 +134,50 @@ namespace Azure.ResourceManager.Resources.Models
             return new ProviderPermission(applicationId.Value, roleDefinition.Value, managedByRoleDefinition.Value, Optional.ToNullable(providerAuthorizationConsentState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ApplicationId))
+            {
+                builder.Append("  applicationId:");
+                builder.AppendLine($" '{ApplicationId}'");
+            }
+
+            if (Optional.IsDefined(RoleDefinition))
+            {
+                builder.Append("  roleDefinition:");
+                AppendChildObject(builder, RoleDefinition, options, 2);
+            }
+
+            if (Optional.IsDefined(ManagedByRoleDefinition))
+            {
+                builder.Append("  managedByRoleDefinition:");
+                AppendChildObject(builder, ManagedByRoleDefinition, options, 2);
+            }
+
+            if (Optional.IsDefined(ProviderAuthorizationConsentState))
+            {
+                builder.Append("  providerAuthorizationConsentState:");
+                builder.AppendLine($" '{ProviderAuthorizationConsentState.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ProviderPermission>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProviderPermission>)this).GetFormatFromOptions(options) : options.Format;
@@ -141,6 +186,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ProviderPermission)} does not support '{options.Format}' format.");
             }
@@ -157,6 +204,8 @@ namespace Azure.ResourceManager.Resources.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeProviderPermission(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ProviderPermission)} does not support '{options.Format}' format.");
             }

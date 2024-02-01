@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupResourceEncryptionConfigExtendedProperties : IUtf8JsonSerializable, IJsonModel<BackupResourceEncryptionConfigExtendedProperties>
+    public partial class BackupResourceEncryptionConfigExtendedProperties : IUtf8JsonSerializable, IJsonModel<BackupResourceEncryptionConfigExtendedProperties>, IPersistableModel<BackupResourceEncryptionConfigExtendedProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupResourceEncryptionConfigExtendedProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -178,6 +179,69 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupResourceEncryptionConfigExtendedProperties(Optional.ToNullable(encryptionAtRestType), keyUri.Value, subscriptionId.Value, Optional.ToNullable(lastUpdateStatus), Optional.ToNullable(infrastructureEncryptionState), serializedAdditionalRawData, userAssignedIdentity.Value, Optional.ToNullable(useSystemAssignedIdentity));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(UserAssignedIdentity))
+            {
+                builder.Append("  userAssignedIdentity:");
+                builder.AppendLine($" '{UserAssignedIdentity.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UseSystemAssignedIdentity))
+            {
+                builder.Append("  useSystemAssignedIdentity:");
+                var boolValue = UseSystemAssignedIdentity.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EncryptionAtRestType))
+            {
+                builder.Append("  encryptionAtRestType:");
+                builder.AppendLine($" '{EncryptionAtRestType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(KeyUri))
+            {
+                builder.Append("  keyUri:");
+                builder.AppendLine($" '{KeyUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                builder.Append("  subscriptionId:");
+                builder.AppendLine($" '{SubscriptionId}'");
+            }
+
+            if (Optional.IsDefined(LastUpdateStatus))
+            {
+                builder.Append("  lastUpdateStatus:");
+                builder.AppendLine($" '{LastUpdateStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InfrastructureEncryptionState))
+            {
+                builder.Append("  infrastructureEncryptionState:");
+                builder.AppendLine($" '{InfrastructureEncryptionState.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BackupResourceEncryptionConfigExtendedProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackupResourceEncryptionConfigExtendedProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -186,6 +250,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedProperties)} does not support '{options.Format}' format.");
             }
@@ -202,6 +268,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBackupResourceEncryptionConfigExtendedProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BackupResourceEncryptionConfigExtendedProperties)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class PolicyDefinitionReference : IUtf8JsonSerializable, IJsonModel<PolicyDefinitionReference>
+    public partial class PolicyDefinitionReference : IUtf8JsonSerializable, IJsonModel<PolicyDefinitionReference>, IPersistableModel<PolicyDefinitionReference>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyDefinitionReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -147,6 +148,67 @@ namespace Azure.ResourceManager.Resources.Models
             return new PolicyDefinitionReference(policyDefinitionId, Optional.ToDictionary(parameters), policyDefinitionReferenceId.Value, Optional.ToList(groupNames), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PolicyDefinitionId))
+            {
+                builder.Append("  policyDefinitionId:");
+                builder.AppendLine($" '{PolicyDefinitionId}'");
+            }
+
+            if (Optional.IsCollectionDefined(Parameters))
+            {
+                builder.Append("  parameters:");
+                builder.AppendLine(" {");
+                foreach (var item in Parameters)
+                {
+                    builder.Append($"    {item.Key}: ");
+
+                    AppendChildObject(builder, item.Value, options, 4);
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(PolicyDefinitionReferenceId))
+            {
+                builder.Append("  policyDefinitionReferenceId:");
+                builder.AppendLine($" '{PolicyDefinitionReferenceId}'");
+            }
+
+            if (Optional.IsCollectionDefined(GroupNames))
+            {
+                builder.Append("  groupNames:");
+                builder.AppendLine(" [");
+                foreach (var item in GroupNames)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PolicyDefinitionReference>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PolicyDefinitionReference>)this).GetFormatFromOptions(options) : options.Format;
@@ -155,6 +217,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PolicyDefinitionReference)} does not support '{options.Format}' format.");
             }
@@ -171,6 +235,8 @@ namespace Azure.ResourceManager.Resources.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePolicyDefinitionReference(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PolicyDefinitionReference)} does not support '{options.Format}' format.");
             }

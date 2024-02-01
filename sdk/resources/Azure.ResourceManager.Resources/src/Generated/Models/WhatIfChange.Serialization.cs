@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class WhatIfChange : IUtf8JsonSerializable, IJsonModel<WhatIfChange>
+    public partial class WhatIfChange : IUtf8JsonSerializable, IJsonModel<WhatIfChange>, IPersistableModel<WhatIfChange>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WhatIfChange>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -173,6 +174,67 @@ namespace Azure.ResourceManager.Resources.Models
             return new WhatIfChange(resourceId, changeType, unsupportedReason.Value, before.Value, after.Value, Optional.ToList(delta), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ResourceId))
+            {
+                builder.Append("  resourceId:");
+                builder.AppendLine($" '{ResourceId}'");
+            }
+
+            if (Optional.IsDefined(ChangeType))
+            {
+                builder.Append("  changeType:");
+                builder.AppendLine($" '{ChangeType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UnsupportedReason))
+            {
+                builder.Append("  unsupportedReason:");
+                builder.AppendLine($" '{UnsupportedReason}'");
+            }
+
+            if (Optional.IsDefined(Before))
+            {
+                builder.Append("  before:");
+                builder.AppendLine($" '{Before.ToString()}'");
+            }
+
+            if (Optional.IsDefined(After))
+            {
+                builder.Append("  after:");
+                builder.AppendLine($" '{After.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Delta))
+            {
+                builder.Append("  delta:");
+                builder.AppendLine(" [");
+                foreach (var item in Delta)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<WhatIfChange>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WhatIfChange>)this).GetFormatFromOptions(options) : options.Format;
@@ -181,6 +243,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(WhatIfChange)} does not support '{options.Format}' format.");
             }
@@ -197,6 +261,8 @@ namespace Azure.ResourceManager.Resources.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeWhatIfChange(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(WhatIfChange)} does not support '{options.Format}' format.");
             }

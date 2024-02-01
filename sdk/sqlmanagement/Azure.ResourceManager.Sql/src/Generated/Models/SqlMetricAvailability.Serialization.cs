@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SqlMetricAvailability : IUtf8JsonSerializable, IJsonModel<SqlMetricAvailability>
+    public partial class SqlMetricAvailability : IUtf8JsonSerializable, IJsonModel<SqlMetricAvailability>, IPersistableModel<SqlMetricAvailability>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlMetricAvailability>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -99,6 +100,38 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlMetricAvailability(retention.Value, timeGrain.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Retention))
+            {
+                builder.Append("  retention:");
+                builder.AppendLine($" '{Retention}'");
+            }
+
+            if (Optional.IsDefined(TimeGrain))
+            {
+                builder.Append("  timeGrain:");
+                builder.AppendLine($" '{TimeGrain}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SqlMetricAvailability>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlMetricAvailability>)this).GetFormatFromOptions(options) : options.Format;
@@ -107,6 +140,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SqlMetricAvailability)} does not support '{options.Format}' format.");
             }
@@ -123,6 +158,8 @@ namespace Azure.ResourceManager.Sql.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSqlMetricAvailability(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SqlMetricAvailability)} does not support '{options.Format}' format.");
             }

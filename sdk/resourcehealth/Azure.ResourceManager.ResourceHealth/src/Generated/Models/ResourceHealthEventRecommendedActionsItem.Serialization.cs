@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    public partial class ResourceHealthEventRecommendedActionsItem : IUtf8JsonSerializable, IJsonModel<ResourceHealthEventRecommendedActionsItem>
+    public partial class ResourceHealthEventRecommendedActionsItem : IUtf8JsonSerializable, IJsonModel<ResourceHealthEventRecommendedActionsItem>, IPersistableModel<ResourceHealthEventRecommendedActionsItem>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceHealthEventRecommendedActionsItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -103,6 +104,38 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             return new ResourceHealthEventRecommendedActionsItem(Optional.ToNullable(groupId), actionText.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(GroupId))
+            {
+                builder.Append("  groupId:");
+                builder.AppendLine($" '{GroupId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ActionText))
+            {
+                builder.Append("  actionText:");
+                builder.AppendLine($" '{ActionText}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ResourceHealthEventRecommendedActionsItem>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventRecommendedActionsItem>)this).GetFormatFromOptions(options) : options.Format;
@@ -111,6 +144,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ResourceHealthEventRecommendedActionsItem)} does not support '{options.Format}' format.");
             }
@@ -127,6 +162,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeResourceHealthEventRecommendedActionsItem(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ResourceHealthEventRecommendedActionsItem)} does not support '{options.Format}' format.");
             }

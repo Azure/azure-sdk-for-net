@@ -8,14 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using System.Xml;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AnomalySecurityMLAnalyticsSettings : IUtf8JsonSerializable, IJsonModel<AnomalySecurityMLAnalyticsSettings>
+    public partial class AnomalySecurityMLAnalyticsSettings : IUtf8JsonSerializable, IJsonModel<AnomalySecurityMLAnalyticsSettings>, IPersistableModel<AnomalySecurityMLAnalyticsSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnomalySecurityMLAnalyticsSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -400,6 +402,169 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new AnomalySecurityMLAnalyticsSettings(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, description.Value, displayName.Value, Optional.ToNullable(enabled), Optional.ToNullable(lastModifiedUtc), Optional.ToList(requiredDataConnectors), Optional.ToList(tactics), Optional.ToList(techniques), anomalyVersion.Value, customizableObservations.Value, Optional.ToNullable(frequency), Optional.ToNullable(settingsStatus), Optional.ToNullable(isDefaultSettings), Optional.ToNullable(anomalySettingsVersion), Optional.ToNullable(settingsDefinitionId));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("  enabled:");
+                var boolValue = IsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("  lastModifiedUtc:");
+                builder.AppendLine($" '{LastModifiedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(RequiredDataConnectors))
+            {
+                builder.Append("  requiredDataConnectors:");
+                builder.AppendLine(" [");
+                foreach (var item in RequiredDataConnectors)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Tactics))
+            {
+                builder.Append("  tactics:");
+                builder.AppendLine(" [");
+                foreach (var item in Tactics)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Techniques))
+            {
+                builder.Append("  techniques:");
+                builder.AppendLine(" [");
+                foreach (var item in Techniques)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(AnomalyVersion))
+            {
+                builder.Append("  anomalyVersion:");
+                builder.AppendLine($" '{AnomalyVersion}'");
+            }
+
+            if (Optional.IsDefined(CustomizableObservations))
+            {
+                builder.Append("  customizableObservations:");
+                builder.AppendLine($" '{CustomizableObservations.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Frequency))
+            {
+                builder.Append("  frequency:");
+                var formattedTimeSpan = XmlConvert.ToString(Frequency.Value);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(SettingsStatus))
+            {
+                builder.Append("  settingsStatus:");
+                builder.AppendLine($" '{SettingsStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsDefaultSettings))
+            {
+                builder.Append("  isDefaultSettings:");
+                var boolValue = IsDefaultSettings.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AnomalySettingsVersion))
+            {
+                builder.Append("  anomalySettingsVersion:");
+                builder.AppendLine($" '{AnomalySettingsVersion.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SettingsDefinitionId))
+            {
+                builder.Append("  settingsDefinitionId:");
+                builder.AppendLine($" '{SettingsDefinitionId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AnomalySecurityMLAnalyticsSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AnomalySecurityMLAnalyticsSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -408,6 +573,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AnomalySecurityMLAnalyticsSettings)} does not support '{options.Format}' format.");
             }
@@ -424,6 +591,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAnomalySecurityMLAnalyticsSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AnomalySecurityMLAnalyticsSettings)} does not support '{options.Format}' format.");
             }

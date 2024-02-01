@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AProtectionIntentDiskDetails : IUtf8JsonSerializable, IJsonModel<A2AProtectionIntentDiskDetails>
+    public partial class A2AProtectionIntentDiskDetails : IUtf8JsonSerializable, IJsonModel<A2AProtectionIntentDiskDetails>, IPersistableModel<A2AProtectionIntentDiskDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2AProtectionIntentDiskDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -115,6 +116,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2AProtectionIntentDiskDetails(diskUri, recoveryAzureStorageAccountCustomContent.Value, primaryStagingStorageAccountCustomContent.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DiskUri))
+            {
+                builder.Append("  diskUri:");
+                builder.AppendLine($" '{DiskUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(RecoveryAzureStorageAccountCustomContent))
+            {
+                builder.Append("  recoveryAzureStorageAccountCustomInput:");
+                AppendChildObject(builder, RecoveryAzureStorageAccountCustomContent, options, 2);
+            }
+
+            if (Optional.IsDefined(PrimaryStagingStorageAccountCustomContent))
+            {
+                builder.Append("  primaryStagingStorageAccountCustomInput:");
+                AppendChildObject(builder, PrimaryStagingStorageAccountCustomContent, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<A2AProtectionIntentDiskDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<A2AProtectionIntentDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -123,6 +162,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(A2AProtectionIntentDiskDetails)} does not support '{options.Format}' format.");
             }
@@ -139,6 +180,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeA2AProtectionIntentDiskDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(A2AProtectionIntentDiskDetails)} does not support '{options.Format}' format.");
             }

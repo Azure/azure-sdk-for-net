@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class GovernanceRuleData : IUtf8JsonSerializable, IJsonModel<GovernanceRuleData>
+    public partial class GovernanceRuleData : IUtf8JsonSerializable, IJsonModel<GovernanceRuleData>, IPersistableModel<GovernanceRuleData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GovernanceRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -394,6 +395,163 @@ namespace Azure.ResourceManager.SecurityCenter
             return new GovernanceRuleData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), displayName.Value, description.Value, remediationTimeframe.Value, Optional.ToNullable(isGracePeriod), Optional.ToNullable(rulePriority), Optional.ToNullable(isDisabled), Optional.ToNullable(ruleType), Optional.ToNullable(sourceResourceType), Optional.ToList(excludedScopes), Optional.ToList(conditionSets), Optional.ToNullable(includeMemberScopes), ownerSource.Value, governanceEmailNotification.Value, metadata.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("  tenantId:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(RemediationTimeframe))
+            {
+                builder.Append("  remediationTimeframe:");
+                builder.AppendLine($" '{RemediationTimeframe}'");
+            }
+
+            if (Optional.IsDefined(IsGracePeriod))
+            {
+                builder.Append("  isGracePeriod:");
+                var boolValue = IsGracePeriod.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RulePriority))
+            {
+                builder.Append("  rulePriority:");
+                builder.AppendLine($" '{RulePriority.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsDisabled))
+            {
+                builder.Append("  isDisabled:");
+                var boolValue = IsDisabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RuleType))
+            {
+                builder.Append("  ruleType:");
+                builder.AppendLine($" '{RuleType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceResourceType))
+            {
+                builder.Append("  sourceResourceType:");
+                builder.AppendLine($" '{SourceResourceType.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ExcludedScopes))
+            {
+                builder.Append("  excludedScopes:");
+                builder.AppendLine(" [");
+                foreach (var item in ExcludedScopes)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ConditionSets))
+            {
+                builder.Append("  conditionSets:");
+                builder.AppendLine(" [");
+                foreach (var item in ConditionSets)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IncludeMemberScopes))
+            {
+                builder.Append("  includeMemberScopes:");
+                var boolValue = IncludeMemberScopes.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(OwnerSource))
+            {
+                builder.Append("  ownerSource:");
+                AppendChildObject(builder, OwnerSource, options, 2);
+            }
+
+            if (Optional.IsDefined(GovernanceEmailNotification))
+            {
+                builder.Append("  governanceEmailNotification:");
+                AppendChildObject(builder, GovernanceEmailNotification, options, 2);
+            }
+
+            if (Optional.IsDefined(Metadata))
+            {
+                builder.Append("  metadata:");
+                AppendChildObject(builder, Metadata, options, 2);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<GovernanceRuleData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GovernanceRuleData>)this).GetFormatFromOptions(options) : options.Format;
@@ -402,6 +560,8 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GovernanceRuleData)} does not support '{options.Format}' format.");
             }
@@ -418,6 +578,8 @@ namespace Azure.ResourceManager.SecurityCenter
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeGovernanceRuleData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(GovernanceRuleData)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupResourceVaultConfigProperties : IUtf8JsonSerializable, IJsonModel<BackupResourceVaultConfigProperties>
+    public partial class BackupResourceVaultConfigProperties : IUtf8JsonSerializable, IJsonModel<BackupResourceVaultConfigProperties>, IPersistableModel<BackupResourceVaultConfigProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupResourceVaultConfigProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -207,6 +208,85 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupResourceVaultConfigProperties(Optional.ToNullable(storageModelType), Optional.ToNullable(storageType), Optional.ToNullable(storageTypeState), Optional.ToNullable(enhancedSecurityState), Optional.ToNullable(softDeleteFeatureState), Optional.ToNullable(softDeleteRetentionPeriodInDays), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isSoftDeleteFeatureStateEditable), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(StorageModelType))
+            {
+                builder.Append("  storageModelType:");
+                builder.AppendLine($" '{StorageModelType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StorageType))
+            {
+                builder.Append("  storageType:");
+                builder.AppendLine($" '{StorageType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StorageTypeState))
+            {
+                builder.Append("  storageTypeState:");
+                builder.AppendLine($" '{StorageTypeState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnhancedSecurityState))
+            {
+                builder.Append("  enhancedSecurityState:");
+                builder.AppendLine($" '{EnhancedSecurityState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SoftDeleteFeatureState))
+            {
+                builder.Append("  softDeleteFeatureState:");
+                builder.AppendLine($" '{SoftDeleteFeatureState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SoftDeleteRetentionPeriodInDays))
+            {
+                builder.Append("  softDeleteRetentionPeriodInDays:");
+                builder.AppendLine($" '{SoftDeleteRetentionPeriodInDays.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
+            {
+                builder.Append("  resourceGuardOperationRequests:");
+                builder.AppendLine(" [");
+                foreach (var item in ResourceGuardOperationRequests)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsSoftDeleteFeatureStateEditable))
+            {
+                builder.Append("  isSoftDeleteFeatureStateEditable:");
+                var boolValue = IsSoftDeleteFeatureStateEditable.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BackupResourceVaultConfigProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackupResourceVaultConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -215,6 +295,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BackupResourceVaultConfigProperties)} does not support '{options.Format}' format.");
             }
@@ -231,6 +313,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBackupResourceVaultConfigProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BackupResourceVaultConfigProperties)} does not support '{options.Format}' format.");
             }

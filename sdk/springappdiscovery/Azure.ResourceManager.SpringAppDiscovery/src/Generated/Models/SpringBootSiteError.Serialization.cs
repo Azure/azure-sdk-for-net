@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
-    public partial class SpringBootSiteError : IUtf8JsonSerializable, IJsonModel<SpringBootSiteError>
+    public partial class SpringBootSiteError : IUtf8JsonSerializable, IJsonModel<SpringBootSiteError>, IPersistableModel<SpringBootSiteError>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpringBootSiteError>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -184,6 +185,80 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             return new SpringBootSiteError(Optional.ToNullable(id), code.Value, summaryMessage.Value, runAsAccountId.Value, message.Value, possibleCauses.Value, recommendedAction.Value, severity.Value, Optional.ToNullable(updatedTimeStamp), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Code))
+            {
+                builder.Append("  code:");
+                builder.AppendLine($" '{Code}'");
+            }
+
+            if (Optional.IsDefined(SummaryMessage))
+            {
+                builder.Append("  summaryMessage:");
+                builder.AppendLine($" '{SummaryMessage}'");
+            }
+
+            if (Optional.IsDefined(RunAsAccountId))
+            {
+                builder.Append("  runAsAccountId:");
+                builder.AppendLine($" '{RunAsAccountId}'");
+            }
+
+            if (Optional.IsDefined(Message))
+            {
+                builder.Append("  message:");
+                builder.AppendLine($" '{Message}'");
+            }
+
+            if (Optional.IsDefined(PossibleCauses))
+            {
+                builder.Append("  possibleCauses:");
+                builder.AppendLine($" '{PossibleCauses}'");
+            }
+
+            if (Optional.IsDefined(RecommendedAction))
+            {
+                builder.Append("  recommendedAction:");
+                builder.AppendLine($" '{RecommendedAction}'");
+            }
+
+            if (Optional.IsDefined(Severity))
+            {
+                builder.Append("  severity:");
+                builder.AppendLine($" '{Severity}'");
+            }
+
+            if (Optional.IsDefined(UpdatedTimeStamp))
+            {
+                builder.Append("  updatedTimeStamp:");
+                builder.AppendLine($" '{UpdatedTimeStamp.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SpringBootSiteError>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootSiteError>)this).GetFormatFromOptions(options) : options.Format;
@@ -192,6 +267,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SpringBootSiteError)} does not support '{options.Format}' format.");
             }
@@ -208,6 +285,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSpringBootSiteError(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SpringBootSiteError)} does not support '{options.Format}' format.");
             }

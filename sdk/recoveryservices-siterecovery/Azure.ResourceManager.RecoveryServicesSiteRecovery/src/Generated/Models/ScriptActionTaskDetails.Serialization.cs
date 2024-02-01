@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ScriptActionTaskDetails : IUtf8JsonSerializable, IJsonModel<ScriptActionTaskDetails>
+    public partial class ScriptActionTaskDetails : IUtf8JsonSerializable, IJsonModel<ScriptActionTaskDetails>, IPersistableModel<ScriptActionTaskDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScriptActionTaskDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -133,6 +134,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ScriptActionTaskDetails(instanceType, serializedAdditionalRawData, name.Value, path.Value, output.Value, Optional.ToNullable(isPrimarySideScript));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Path))
+            {
+                builder.Append("  path:");
+                builder.AppendLine($" '{Path}'");
+            }
+
+            if (Optional.IsDefined(Output))
+            {
+                builder.Append("  output:");
+                builder.AppendLine($" '{Output}'");
+            }
+
+            if (Optional.IsDefined(IsPrimarySideScript))
+            {
+                builder.Append("  isPrimarySideScript:");
+                var boolValue = IsPrimarySideScript.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(InstanceType))
+            {
+                builder.Append("  instanceType:");
+                builder.AppendLine($" '{InstanceType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ScriptActionTaskDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScriptActionTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -141,6 +193,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ScriptActionTaskDetails)} does not support '{options.Format}' format.");
             }
@@ -157,6 +211,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeScriptActionTaskDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ScriptActionTaskDetails)} does not support '{options.Format}' format.");
             }

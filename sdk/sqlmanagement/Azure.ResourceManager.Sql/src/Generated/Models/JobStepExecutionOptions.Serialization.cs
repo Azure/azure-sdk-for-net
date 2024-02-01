@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class JobStepExecutionOptions : IUtf8JsonSerializable, IJsonModel<JobStepExecutionOptions>
+    public partial class JobStepExecutionOptions : IUtf8JsonSerializable, IJsonModel<JobStepExecutionOptions>, IPersistableModel<JobStepExecutionOptions>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobStepExecutionOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -152,6 +153,56 @@ namespace Azure.ResourceManager.Sql.Models
             return new JobStepExecutionOptions(Optional.ToNullable(timeoutSeconds), Optional.ToNullable(retryAttempts), Optional.ToNullable(initialRetryIntervalSeconds), Optional.ToNullable(maximumRetryIntervalSeconds), Optional.ToNullable(retryIntervalBackoffMultiplier), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TimeoutSeconds))
+            {
+                builder.Append("  timeoutSeconds:");
+                builder.AppendLine($" '{TimeoutSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RetryAttempts))
+            {
+                builder.Append("  retryAttempts:");
+                builder.AppendLine($" '{RetryAttempts.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InitialRetryIntervalSeconds))
+            {
+                builder.Append("  initialRetryIntervalSeconds:");
+                builder.AppendLine($" '{InitialRetryIntervalSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaximumRetryIntervalSeconds))
+            {
+                builder.Append("  maximumRetryIntervalSeconds:");
+                builder.AppendLine($" '{MaximumRetryIntervalSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RetryIntervalBackoffMultiplier))
+            {
+                builder.Append("  retryIntervalBackoffMultiplier:");
+                builder.AppendLine($" '{RetryIntervalBackoffMultiplier.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<JobStepExecutionOptions>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<JobStepExecutionOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -160,6 +211,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support '{options.Format}' format.");
             }
@@ -176,6 +229,8 @@ namespace Azure.ResourceManager.Sql.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeJobStepExecutionOptions(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support '{options.Format}' format.");
             }

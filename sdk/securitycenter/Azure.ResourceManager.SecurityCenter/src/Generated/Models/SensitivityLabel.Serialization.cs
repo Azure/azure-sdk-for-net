@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SensitivityLabel : IUtf8JsonSerializable, IJsonModel<SensitivityLabel>
+    public partial class SensitivityLabel : IUtf8JsonSerializable, IJsonModel<SensitivityLabel>, IPersistableModel<SensitivityLabel>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SensitivityLabel>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -144,6 +145,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SensitivityLabel(displayName.Value, description.Value, Optional.ToNullable(rank), Optional.ToNullable(order), Optional.ToNullable(enabled), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(Rank))
+            {
+                builder.Append("  rank:");
+                builder.AppendLine($" '{Rank.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Order))
+            {
+                builder.Append("  order:");
+                builder.AppendLine($" '{Order.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("  enabled:");
+                var boolValue = IsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SensitivityLabel>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SensitivityLabel>)this).GetFormatFromOptions(options) : options.Format;
@@ -152,6 +204,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SensitivityLabel)} does not support '{options.Format}' format.");
             }
@@ -168,6 +222,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSensitivityLabel(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SensitivityLabel)} does not support '{options.Format}' format.");
             }

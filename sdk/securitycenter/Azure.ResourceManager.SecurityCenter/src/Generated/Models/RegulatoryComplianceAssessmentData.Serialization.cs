@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class RegulatoryComplianceAssessmentData : IUtf8JsonSerializable, IJsonModel<RegulatoryComplianceAssessmentData>
+    public partial class RegulatoryComplianceAssessmentData : IUtf8JsonSerializable, IJsonModel<RegulatoryComplianceAssessmentData>, IPersistableModel<RegulatoryComplianceAssessmentData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegulatoryComplianceAssessmentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -250,6 +251,98 @@ namespace Azure.ResourceManager.SecurityCenter
             return new RegulatoryComplianceAssessmentData(id, name, type, systemData.Value, description.Value, assessmentType.Value, assessmentDetailsLink.Value, Optional.ToNullable(state), Optional.ToNullable(passedResources), Optional.ToNullable(failedResources), Optional.ToNullable(skippedResources), Optional.ToNullable(unsupportedResources), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(AssessmentType))
+            {
+                builder.Append("  assessmentType:");
+                builder.AppendLine($" '{AssessmentType}'");
+            }
+
+            if (Optional.IsDefined(AssessmentDetailsLink))
+            {
+                builder.Append("  assessmentDetailsLink:");
+                builder.AppendLine($" '{AssessmentDetailsLink}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PassedResources))
+            {
+                builder.Append("  passedResources:");
+                builder.AppendLine($" '{PassedResources.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FailedResources))
+            {
+                builder.Append("  failedResources:");
+                builder.AppendLine($" '{FailedResources.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SkippedResources))
+            {
+                builder.Append("  skippedResources:");
+                builder.AppendLine($" '{SkippedResources.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UnsupportedResources))
+            {
+                builder.Append("  unsupportedResources:");
+                builder.AppendLine($" '{UnsupportedResources.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<RegulatoryComplianceAssessmentData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RegulatoryComplianceAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
@@ -258,6 +351,8 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RegulatoryComplianceAssessmentData)} does not support '{options.Format}' format.");
             }
@@ -274,6 +369,8 @@ namespace Azure.ResourceManager.SecurityCenter
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRegulatoryComplianceAssessmentData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RegulatoryComplianceAssessmentData)} does not support '{options.Format}' format.");
             }

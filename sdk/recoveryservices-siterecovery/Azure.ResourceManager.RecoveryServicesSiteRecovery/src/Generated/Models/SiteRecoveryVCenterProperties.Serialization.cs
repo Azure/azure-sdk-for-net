@@ -9,12 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryVCenterProperties : IUtf8JsonSerializable, IJsonModel<SiteRecoveryVCenterProperties>
+    public partial class SiteRecoveryVCenterProperties : IUtf8JsonSerializable, IJsonModel<SiteRecoveryVCenterProperties>, IPersistableModel<SiteRecoveryVCenterProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryVCenterProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -225,6 +226,97 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryVCenterProperties(friendlyName.Value, internalId.Value, Optional.ToNullable(lastHeartbeat), discoveryStatus.Value, Optional.ToNullable(processServerId), ipAddress.Value, infrastructureId.Value, port.Value, runAsAccountId.Value, fabricArmResourceName.Value, Optional.ToList(healthErrors), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsDefined(InternalId))
+            {
+                builder.Append("  internalId:");
+                builder.AppendLine($" '{InternalId}'");
+            }
+
+            if (Optional.IsDefined(LastHeartbeatReceivedOn))
+            {
+                builder.Append("  lastHeartbeat:");
+                builder.AppendLine($" '{LastHeartbeatReceivedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiscoveryStatus))
+            {
+                builder.Append("  discoveryStatus:");
+                builder.AppendLine($" '{DiscoveryStatus}'");
+            }
+
+            if (Optional.IsDefined(ProcessServerId))
+            {
+                builder.Append("  processServerId:");
+                builder.AppendLine($" '{ProcessServerId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IPAddress))
+            {
+                builder.Append("  ipAddress:");
+                builder.AppendLine($" '{IPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InfrastructureId))
+            {
+                builder.Append("  infrastructureId:");
+                builder.AppendLine($" '{InfrastructureId}'");
+            }
+
+            if (Optional.IsDefined(Port))
+            {
+                builder.Append("  port:");
+                builder.AppendLine($" '{Port}'");
+            }
+
+            if (Optional.IsDefined(RunAsAccountId))
+            {
+                builder.Append("  runAsAccountId:");
+                builder.AppendLine($" '{RunAsAccountId}'");
+            }
+
+            if (Optional.IsDefined(FabricArmResourceName))
+            {
+                builder.Append("  fabricArmResourceName:");
+                builder.AppendLine($" '{FabricArmResourceName}'");
+            }
+
+            if (Optional.IsCollectionDefined(HealthErrors))
+            {
+                builder.Append("  healthErrors:");
+                builder.AppendLine(" [");
+                foreach (var item in HealthErrors)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SiteRecoveryVCenterProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryVCenterProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -233,6 +325,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryVCenterProperties)} does not support '{options.Format}' format.");
             }
@@ -249,6 +343,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSiteRecoveryVCenterProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryVCenterProperties)} does not support '{options.Format}' format.");
             }

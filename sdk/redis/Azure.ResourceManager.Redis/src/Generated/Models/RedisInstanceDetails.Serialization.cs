@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
-    public partial class RedisInstanceDetails : IUtf8JsonSerializable, IJsonModel<RedisInstanceDetails>
+    public partial class RedisInstanceDetails : IUtf8JsonSerializable, IJsonModel<RedisInstanceDetails>, IPersistableModel<RedisInstanceDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisInstanceDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -163,6 +164,64 @@ namespace Azure.ResourceManager.Redis.Models
             return new RedisInstanceDetails(Optional.ToNullable(sslPort), Optional.ToNullable(nonSslPort), zone.Value, Optional.ToNullable(shardId), Optional.ToNullable(isMaster), Optional.ToNullable(isPrimary), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SslPort))
+            {
+                builder.Append("  sslPort:");
+                builder.AppendLine($" '{SslPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NonSslPort))
+            {
+                builder.Append("  nonSslPort:");
+                builder.AppendLine($" '{NonSslPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Zone))
+            {
+                builder.Append("  zone:");
+                builder.AppendLine($" '{Zone}'");
+            }
+
+            if (Optional.IsDefined(ShardId))
+            {
+                builder.Append("  shardId:");
+                builder.AppendLine($" '{ShardId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsMaster))
+            {
+                builder.Append("  isMaster:");
+                var boolValue = IsMaster.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsPrimary))
+            {
+                builder.Append("  isPrimary:");
+                var boolValue = IsPrimary.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<RedisInstanceDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RedisInstanceDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -171,6 +230,8 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RedisInstanceDetails)} does not support '{options.Format}' format.");
             }
@@ -187,6 +248,8 @@ namespace Azure.ResourceManager.Redis.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRedisInstanceDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RedisInstanceDetails)} does not support '{options.Format}' format.");
             }

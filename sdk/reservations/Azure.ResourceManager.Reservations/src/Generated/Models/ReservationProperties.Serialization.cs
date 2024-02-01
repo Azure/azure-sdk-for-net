@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationProperties : IUtf8JsonSerializable, IJsonModel<ReservationProperties>
+    public partial class ReservationProperties : IUtf8JsonSerializable, IJsonModel<ReservationProperties>, IPersistableModel<ReservationProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -576,6 +577,248 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationProperties(Optional.ToNullable(reservedResourceType), Optional.ToNullable(instanceFlexibility), displayName.Value, Optional.ToList(appliedScopes), Optional.ToNullable(appliedScopeType), Optional.ToNullable(archived), capabilities.Value, Optional.ToNullable(quantity), Optional.ToNullable(provisioningState), Optional.ToNullable(effectiveDateTime), Optional.ToNullable(benefitStartTime), Optional.ToNullable(lastUpdatedDateTime), Optional.ToNullable(expiryDate), Optional.ToNullable(expiryDateTime), Optional.ToNullable(reviewDateTime), skuDescription.Value, extendedStatusInfo.Value, Optional.ToNullable(billingPlan), displayProvisioningState.Value, provisioningSubState.Value, Optional.ToNullable(purchaseDate), Optional.ToNullable(purchaseDateTime), splitProperties.Value, mergeProperties.Value, swapProperties.Value, appliedScopeProperties.Value, billingScopeId.Value, Optional.ToNullable(renew), renewSource.Value, renewDestination.Value, renewProperties.Value, Optional.ToNullable(term), userFriendlyAppliedScopeType.Value, userFriendlyRenewState.Value, utilization.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ReservedResourceType))
+            {
+                builder.Append("  reservedResourceType:");
+                builder.AppendLine($" '{ReservedResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InstanceFlexibility))
+            {
+                builder.Append("  instanceFlexibility:");
+                builder.AppendLine($" '{InstanceFlexibility.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsCollectionDefined(AppliedScopes))
+            {
+                builder.Append("  appliedScopes:");
+                builder.AppendLine(" [");
+                foreach (var item in AppliedScopes)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(AppliedScopeType))
+            {
+                builder.Append("  appliedScopeType:");
+                builder.AppendLine($" '{AppliedScopeType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsArchived))
+            {
+                builder.Append("  archived:");
+                var boolValue = IsArchived.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Capabilities))
+            {
+                builder.Append("  capabilities:");
+                builder.AppendLine($" '{Capabilities}'");
+            }
+
+            if (Optional.IsDefined(Quantity))
+            {
+                builder.Append("  quantity:");
+                builder.AppendLine($" '{Quantity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EffectOn))
+            {
+                builder.Append("  effectiveDateTime:");
+                builder.AppendLine($" '{EffectOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BenefitStartOn))
+            {
+                builder.Append("  benefitStartTime:");
+                builder.AppendLine($" '{BenefitStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastUpdatedOn))
+            {
+                builder.Append("  lastUpdatedDateTime:");
+                builder.AppendLine($" '{LastUpdatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExpireOn))
+            {
+                builder.Append("  expiryDate:");
+                builder.AppendLine($" '{ExpireOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReservationExpireOn))
+            {
+                builder.Append("  expiryDateTime:");
+                builder.AppendLine($" '{ReservationExpireOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReviewOn))
+            {
+                builder.Append("  reviewDateTime:");
+                builder.AppendLine($" '{ReviewOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SkuDescription))
+            {
+                builder.Append("  skuDescription:");
+                builder.AppendLine($" '{SkuDescription}'");
+            }
+
+            if (Optional.IsDefined(ExtendedStatusInfo))
+            {
+                builder.Append("  extendedStatusInfo:");
+                AppendChildObject(builder, ExtendedStatusInfo, options, 2);
+            }
+
+            if (Optional.IsDefined(BillingPlan))
+            {
+                builder.Append("  billingPlan:");
+                builder.AppendLine($" '{BillingPlan.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DisplayProvisioningState))
+            {
+                builder.Append("  displayProvisioningState:");
+                builder.AppendLine($" '{DisplayProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningSubState))
+            {
+                builder.Append("  provisioningSubState:");
+                builder.AppendLine($" '{ProvisioningSubState}'");
+            }
+
+            if (Optional.IsDefined(PurchaseOn))
+            {
+                builder.Append("  purchaseDate:");
+                builder.AppendLine($" '{PurchaseOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReservationPurchaseOn))
+            {
+                builder.Append("  purchaseDateTime:");
+                builder.AppendLine($" '{ReservationPurchaseOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SplitProperties))
+            {
+                builder.Append("  splitProperties:");
+                AppendChildObject(builder, SplitProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(MergeProperties))
+            {
+                builder.Append("  mergeProperties:");
+                AppendChildObject(builder, MergeProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(SwapProperties))
+            {
+                builder.Append("  swapProperties:");
+                AppendChildObject(builder, SwapProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(AppliedScopeProperties))
+            {
+                builder.Append("  appliedScopeProperties:");
+                AppendChildObject(builder, AppliedScopeProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(BillingScopeId))
+            {
+                builder.Append("  billingScopeId:");
+                builder.AppendLine($" '{BillingScopeId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsRenewEnabled))
+            {
+                builder.Append("  renew:");
+                var boolValue = IsRenewEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RenewSource))
+            {
+                builder.Append("  renewSource:");
+                builder.AppendLine($" '{RenewSource}'");
+            }
+
+            if (Optional.IsDefined(RenewDestination))
+            {
+                builder.Append("  renewDestination:");
+                builder.AppendLine($" '{RenewDestination}'");
+            }
+
+            if (Optional.IsDefined(RenewProperties))
+            {
+                builder.Append("  renewProperties:");
+                AppendChildObject(builder, RenewProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(Term))
+            {
+                builder.Append("  term:");
+                builder.AppendLine($" '{Term.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UserFriendlyAppliedScopeType))
+            {
+                builder.Append("  userFriendlyAppliedScopeType:");
+                builder.AppendLine($" '{UserFriendlyAppliedScopeType}'");
+            }
+
+            if (Optional.IsDefined(UserFriendlyRenewState))
+            {
+                builder.Append("  userFriendlyRenewState:");
+                builder.AppendLine($" '{UserFriendlyRenewState}'");
+            }
+
+            if (Optional.IsDefined(Utilization))
+            {
+                builder.Append("  utilization:");
+                AppendChildObject(builder, Utilization, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ReservationProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ReservationProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -584,6 +827,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ReservationProperties)} does not support '{options.Format}' format.");
             }
@@ -600,6 +845,8 @@ namespace Azure.ResourceManager.Reservations.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeReservationProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ReservationProperties)} does not support '{options.Format}' format.");
             }

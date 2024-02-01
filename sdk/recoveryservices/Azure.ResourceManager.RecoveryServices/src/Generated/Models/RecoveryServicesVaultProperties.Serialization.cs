@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class RecoveryServicesVaultProperties : IUtf8JsonSerializable, IJsonModel<RecoveryServicesVaultProperties>
+    public partial class RecoveryServicesVaultProperties : IUtf8JsonSerializable, IJsonModel<RecoveryServicesVaultProperties>, IPersistableModel<RecoveryServicesVaultProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryServicesVaultProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -308,6 +309,121 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new RecoveryServicesVaultProperties(provisioningState.Value, upgradeDetails.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(privateEndpointStateForBackup), Optional.ToNullable(privateEndpointStateForSiteRecovery), encryption.Value, moveDetails.Value, Optional.ToNullable(moveState), Optional.ToNullable(backupStorageVersion), Optional.ToNullable(publicNetworkAccess), monitoringSettings.Value, restoreSettings.Value, redundancySettings.Value, securitySettings.Value, Optional.ToNullable(secureScore), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(UpgradeDetails))
+            {
+                builder.Append("  upgradeDetails:");
+                AppendChildObject(builder, UpgradeDetails, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                builder.Append("  privateEndpointConnections:");
+                builder.AppendLine(" [");
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(PrivateEndpointStateForBackup))
+            {
+                builder.Append("  privateEndpointStateForBackup:");
+                builder.AppendLine($" '{PrivateEndpointStateForBackup.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrivateEndpointStateForSiteRecovery))
+            {
+                builder.Append("  privateEndpointStateForSiteRecovery:");
+                builder.AppendLine($" '{PrivateEndpointStateForSiteRecovery.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Encryption))
+            {
+                builder.Append("  encryption:");
+                AppendChildObject(builder, Encryption, options, 2);
+            }
+
+            if (Optional.IsDefined(MoveDetails))
+            {
+                builder.Append("  moveDetails:");
+                AppendChildObject(builder, MoveDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(MoveState))
+            {
+                builder.Append("  moveState:");
+                builder.AppendLine($" '{MoveState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BackupStorageVersion))
+            {
+                builder.Append("  backupStorageVersion:");
+                builder.AppendLine($" '{BackupStorageVersion.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                builder.Append("  publicNetworkAccess:");
+                builder.AppendLine($" '{PublicNetworkAccess.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MonitoringSettings))
+            {
+                builder.Append("  monitoringSettings:");
+                AppendChildObject(builder, MonitoringSettings, options, 2);
+            }
+
+            if (Optional.IsDefined(RestoreSettings))
+            {
+                builder.Append("  restoreSettings:");
+                AppendChildObject(builder, RestoreSettings, options, 2);
+            }
+
+            if (Optional.IsDefined(RedundancySettings))
+            {
+                builder.Append("  redundancySettings:");
+                AppendChildObject(builder, RedundancySettings, options, 2);
+            }
+
+            if (Optional.IsDefined(SecuritySettings))
+            {
+                builder.Append("  securitySettings:");
+                AppendChildObject(builder, SecuritySettings, options, 2);
+            }
+
+            if (Optional.IsDefined(SecureScore))
+            {
+                builder.Append("  secureScore:");
+                builder.AppendLine($" '{SecureScore.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<RecoveryServicesVaultProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -316,6 +432,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RecoveryServicesVaultProperties)} does not support '{options.Format}' format.");
             }
@@ -332,6 +450,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRecoveryServicesVaultProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RecoveryServicesVaultProperties)} does not support '{options.Format}' format.");
             }

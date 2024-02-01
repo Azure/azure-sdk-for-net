@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryMigrationItemProperties : IUtf8JsonSerializable, IJsonModel<SiteRecoveryMigrationItemProperties>
+    public partial class SiteRecoveryMigrationItemProperties : IUtf8JsonSerializable, IJsonModel<SiteRecoveryMigrationItemProperties>, IPersistableModel<SiteRecoveryMigrationItemProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryMigrationItemProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -371,6 +372,161 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryMigrationItemProperties(machineName.Value, policyId.Value, policyFriendlyName.Value, recoveryServicesProviderId.Value, replicationStatus.Value, Optional.ToNullable(migrationState), migrationStateDescription.Value, Optional.ToNullable(lastTestMigrationTime), lastTestMigrationStatus.Value, Optional.ToNullable(lastMigrationTime), lastMigrationStatus.Value, Optional.ToNullable(testMigrateState), testMigrateStateDescription.Value, Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToList(allowedOperations), currentJob.Value, Optional.ToList(criticalJobHistory), eventCorrelationId.Value, providerSpecificDetails.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MachineName))
+            {
+                builder.Append("  machineName:");
+                builder.AppendLine($" '{MachineName}'");
+            }
+
+            if (Optional.IsDefined(PolicyId))
+            {
+                builder.Append("  policyId:");
+                builder.AppendLine($" '{PolicyId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PolicyFriendlyName))
+            {
+                builder.Append("  policyFriendlyName:");
+                builder.AppendLine($" '{PolicyFriendlyName}'");
+            }
+
+            if (Optional.IsDefined(RecoveryServicesProviderId))
+            {
+                builder.Append("  recoveryServicesProviderId:");
+                builder.AppendLine($" '{RecoveryServicesProviderId}'");
+            }
+
+            if (Optional.IsDefined(ReplicationStatus))
+            {
+                builder.Append("  replicationStatus:");
+                builder.AppendLine($" '{ReplicationStatus}'");
+            }
+
+            if (Optional.IsDefined(MigrationState))
+            {
+                builder.Append("  migrationState:");
+                builder.AppendLine($" '{MigrationState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MigrationStateDescription))
+            {
+                builder.Append("  migrationStateDescription:");
+                builder.AppendLine($" '{MigrationStateDescription}'");
+            }
+
+            if (Optional.IsDefined(LastTestMigrationOn))
+            {
+                builder.Append("  lastTestMigrationTime:");
+                builder.AppendLine($" '{LastTestMigrationOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastTestMigrationStatus))
+            {
+                builder.Append("  lastTestMigrationStatus:");
+                builder.AppendLine($" '{LastTestMigrationStatus}'");
+            }
+
+            if (Optional.IsDefined(LastMigrationOn))
+            {
+                builder.Append("  lastMigrationTime:");
+                builder.AppendLine($" '{LastMigrationOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastMigrationStatus))
+            {
+                builder.Append("  lastMigrationStatus:");
+                builder.AppendLine($" '{LastMigrationStatus}'");
+            }
+
+            if (Optional.IsDefined(TestMigrateState))
+            {
+                builder.Append("  testMigrateState:");
+                builder.AppendLine($" '{TestMigrateState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TestMigrateStateDescription))
+            {
+                builder.Append("  testMigrateStateDescription:");
+                builder.AppendLine($" '{TestMigrateStateDescription}'");
+            }
+
+            if (Optional.IsDefined(Health))
+            {
+                builder.Append("  health:");
+                builder.AppendLine($" '{Health.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(HealthErrors))
+            {
+                builder.Append("  healthErrors:");
+                builder.AppendLine(" [");
+                foreach (var item in HealthErrors)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(AllowedOperations))
+            {
+                builder.Append("  allowedOperations:");
+                builder.AppendLine(" [");
+                foreach (var item in AllowedOperations)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(CurrentJob))
+            {
+                builder.Append("  currentJob:");
+                AppendChildObject(builder, CurrentJob, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(CriticalJobHistory))
+            {
+                builder.Append("  criticalJobHistory:");
+                builder.AppendLine(" [");
+                foreach (var item in CriticalJobHistory)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(EventCorrelationId))
+            {
+                builder.Append("  eventCorrelationId:");
+                builder.AppendLine($" '{EventCorrelationId}'");
+            }
+
+            if (Optional.IsDefined(ProviderSpecificDetails))
+            {
+                builder.Append("  providerSpecificDetails:");
+                AppendChildObject(builder, ProviderSpecificDetails, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SiteRecoveryMigrationItemProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryMigrationItemProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -379,6 +535,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support '{options.Format}' format.");
             }
@@ -395,6 +553,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSiteRecoveryMigrationItemProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryMigrationItemProperties)} does not support '{options.Format}' format.");
             }

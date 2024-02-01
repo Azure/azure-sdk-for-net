@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageAzureV2EventDetails : IUtf8JsonSerializable, IJsonModel<InMageAzureV2EventDetails>
+    public partial class InMageAzureV2EventDetails : IUtf8JsonSerializable, IJsonModel<InMageAzureV2EventDetails>, IPersistableModel<InMageAzureV2EventDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageAzureV2EventDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -162,6 +163,74 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageAzureV2EventDetails(instanceType, serializedAdditionalRawData, eventType.Value, category.Value, component.Value, correctiveAction.Value, details.Value, summary.Value, siteName.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(EventType))
+            {
+                builder.Append("  eventType:");
+                builder.AppendLine($" '{EventType}'");
+            }
+
+            if (Optional.IsDefined(Category))
+            {
+                builder.Append("  category:");
+                builder.AppendLine($" '{Category}'");
+            }
+
+            if (Optional.IsDefined(Component))
+            {
+                builder.Append("  component:");
+                builder.AppendLine($" '{Component}'");
+            }
+
+            if (Optional.IsDefined(CorrectiveAction))
+            {
+                builder.Append("  correctiveAction:");
+                builder.AppendLine($" '{CorrectiveAction}'");
+            }
+
+            if (Optional.IsDefined(Details))
+            {
+                builder.Append("  details:");
+                builder.AppendLine($" '{Details}'");
+            }
+
+            if (Optional.IsDefined(Summary))
+            {
+                builder.Append("  summary:");
+                builder.AppendLine($" '{Summary}'");
+            }
+
+            if (Optional.IsDefined(SiteName))
+            {
+                builder.Append("  siteName:");
+                builder.AppendLine($" '{SiteName}'");
+            }
+
+            if (Optional.IsDefined(InstanceType))
+            {
+                builder.Append("  instanceType:");
+                builder.AppendLine($" '{InstanceType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<InMageAzureV2EventDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2EventDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -170,6 +239,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(InMageAzureV2EventDetails)} does not support '{options.Format}' format.");
             }
@@ -186,6 +257,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeInMageAzureV2EventDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(InMageAzureV2EventDetails)} does not support '{options.Format}' format.");
             }

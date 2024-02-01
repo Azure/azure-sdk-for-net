@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmBackupExtendedProperties : IUtf8JsonSerializable, IJsonModel<IaasVmBackupExtendedProperties>
+    public partial class IaasVmBackupExtendedProperties : IUtf8JsonSerializable, IJsonModel<IaasVmBackupExtendedProperties>, IPersistableModel<IaasVmBackupExtendedProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IaasVmBackupExtendedProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -103,6 +104,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new IaasVmBackupExtendedProperties(diskExclusionProperties.Value, linuxVmApplicationName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DiskExclusionProperties))
+            {
+                builder.Append("  diskExclusionProperties:");
+                AppendChildObject(builder, DiskExclusionProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(LinuxVmApplicationName))
+            {
+                builder.Append("  linuxVmApplicationName:");
+                builder.AppendLine($" '{LinuxVmApplicationName}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<IaasVmBackupExtendedProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IaasVmBackupExtendedProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -111,6 +144,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IaasVmBackupExtendedProperties)} does not support '{options.Format}' format.");
             }
@@ -127,6 +162,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeIaasVmBackupExtendedProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(IaasVmBackupExtendedProperties)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ManagedServiceScalingPolicy : IUtf8JsonSerializable, IJsonModel<ManagedServiceScalingPolicy>
+    public partial class ManagedServiceScalingPolicy : IUtf8JsonSerializable, IJsonModel<ManagedServiceScalingPolicy>, IPersistableModel<ManagedServiceScalingPolicy>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServiceScalingPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -93,6 +94,38 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ManagedServiceScalingPolicy(scalingMechanism, scalingTrigger, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ScalingMechanism))
+            {
+                builder.Append("  scalingMechanism:");
+                AppendChildObject(builder, ScalingMechanism, options, 2);
+            }
+
+            if (Optional.IsDefined(ScalingTrigger))
+            {
+                builder.Append("  scalingTrigger:");
+                AppendChildObject(builder, ScalingTrigger, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ManagedServiceScalingPolicy>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceScalingPolicy>)this).GetFormatFromOptions(options) : options.Format;
@@ -101,6 +134,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedServiceScalingPolicy)} does not support '{options.Format}' format.");
             }
@@ -117,6 +152,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeManagedServiceScalingPolicy(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ManagedServiceScalingPolicy)} does not support '{options.Format}' format.");
             }

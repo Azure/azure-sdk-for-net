@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class ResourceCertificateAndAadDetails : IUtf8JsonSerializable, IJsonModel<ResourceCertificateAndAadDetails>
+    public partial class ResourceCertificateAndAadDetails : IUtf8JsonSerializable, IJsonModel<ResourceCertificateAndAadDetails>, IPersistableModel<ResourceCertificateAndAadDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceCertificateAndAadDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -266,6 +267,122 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new ResourceCertificateAndAadDetails(authType, certificate.Value, friendlyName.Value, issuer.Value, Optional.ToNullable(resourceId), subject.Value, thumbprint.Value, Optional.ToNullable(validFrom), Optional.ToNullable(validTo), serializedAdditionalRawData, aadAuthority, aadTenantId, servicePrincipalClientId, servicePrincipalObjectId, azureManagementEndpointAudience, serviceResourceId.Value, aadAudience.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AadAuthority))
+            {
+                builder.Append("  aadAuthority:");
+                builder.AppendLine($" '{AadAuthority}'");
+            }
+
+            if (Optional.IsDefined(AadTenantId))
+            {
+                builder.Append("  aadTenantId:");
+                builder.AppendLine($" '{AadTenantId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ServicePrincipalClientId))
+            {
+                builder.Append("  servicePrincipalClientId:");
+                builder.AppendLine($" '{ServicePrincipalClientId}'");
+            }
+
+            if (Optional.IsDefined(ServicePrincipalObjectId))
+            {
+                builder.Append("  servicePrincipalObjectId:");
+                builder.AppendLine($" '{ServicePrincipalObjectId}'");
+            }
+
+            if (Optional.IsDefined(AzureManagementEndpointAudience))
+            {
+                builder.Append("  azureManagementEndpointAudience:");
+                builder.AppendLine($" '{AzureManagementEndpointAudience}'");
+            }
+
+            if (Optional.IsDefined(ServiceResourceId))
+            {
+                builder.Append("  serviceResourceId:");
+                builder.AppendLine($" '{ServiceResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AadAudience))
+            {
+                builder.Append("  aadAudience:");
+                builder.AppendLine($" '{AadAudience}'");
+            }
+
+            if (Optional.IsDefined(AuthType))
+            {
+                builder.Append("  authType:");
+                builder.AppendLine($" '{AuthType}'");
+            }
+
+            if (Optional.IsDefined(Certificate))
+            {
+                builder.Append("  certificate:");
+                builder.AppendLine($" '{Certificate.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsDefined(Issuer))
+            {
+                builder.Append("  issuer:");
+                builder.AppendLine($" '{Issuer}'");
+            }
+
+            if (Optional.IsDefined(ResourceId))
+            {
+                builder.Append("  resourceId:");
+                builder.AppendLine($" '{ResourceId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Subject))
+            {
+                builder.Append("  subject:");
+                builder.AppendLine($" '{Subject}'");
+            }
+
+            if (Optional.IsDefined(Thumbprint))
+            {
+                builder.Append("  thumbprint:");
+                builder.AppendLine($" '{Thumbprint.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ValidStartOn))
+            {
+                builder.Append("  validFrom:");
+                builder.AppendLine($" '{ValidStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ValidEndOn))
+            {
+                builder.Append("  validTo:");
+                builder.AppendLine($" '{ValidEndOn.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ResourceCertificateAndAadDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAadDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -274,6 +391,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ResourceCertificateAndAadDetails)} does not support '{options.Format}' format.");
             }
@@ -290,6 +409,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeResourceCertificateAndAadDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ResourceCertificateAndAadDetails)} does not support '{options.Format}' format.");
             }

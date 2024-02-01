@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class AutoPauseDelayTimeRange : IUtf8JsonSerializable, IJsonModel<AutoPauseDelayTimeRange>
+    public partial class AutoPauseDelayTimeRange : IUtf8JsonSerializable, IJsonModel<AutoPauseDelayTimeRange>, IPersistableModel<AutoPauseDelayTimeRange>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoPauseDelayTimeRange>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -167,6 +168,62 @@ namespace Azure.ResourceManager.Sql.Models
             return new AutoPauseDelayTimeRange(Optional.ToNullable(minValue), Optional.ToNullable(maxValue), Optional.ToNullable(stepSize), Optional.ToNullable(@default), Optional.ToNullable(unit), Optional.ToNullable(doNotPauseValue), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MinValue))
+            {
+                builder.Append("  minValue:");
+                builder.AppendLine($" '{MinValue.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxValue))
+            {
+                builder.Append("  maxValue:");
+                builder.AppendLine($" '{MaxValue.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StepSize))
+            {
+                builder.Append("  stepSize:");
+                builder.AppendLine($" '{StepSize.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Default))
+            {
+                builder.Append("  default:");
+                builder.AppendLine($" '{Default.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Unit))
+            {
+                builder.Append("  unit:");
+                builder.AppendLine($" '{Unit.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DoNotPauseValue))
+            {
+                builder.Append("  doNotPauseValue:");
+                builder.AppendLine($" '{DoNotPauseValue.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AutoPauseDelayTimeRange>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutoPauseDelayTimeRange>)this).GetFormatFromOptions(options) : options.Format;
@@ -175,6 +232,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support '{options.Format}' format.");
             }
@@ -191,6 +250,8 @@ namespace Azure.ResourceManager.Sql.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAutoPauseDelayTimeRange(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support '{options.Format}' format.");
             }

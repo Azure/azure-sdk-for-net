@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ManagedMaintenanceWindowStatus : IUtf8JsonSerializable, IJsonModel<ManagedMaintenanceWindowStatus>
+    public partial class ManagedMaintenanceWindowStatus : IUtf8JsonSerializable, IJsonModel<ManagedMaintenanceWindowStatus>, IPersistableModel<ManagedMaintenanceWindowStatus>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedMaintenanceWindowStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -182,6 +183,72 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ManagedMaintenanceWindowStatus(Optional.ToNullable(isWindowEnabled), Optional.ToNullable(isRegionReady), Optional.ToNullable(isWindowActive), Optional.ToNullable(canApplyUpdates), Optional.ToNullable(lastWindowStatusUpdateAtUTC), Optional.ToNullable(lastWindowStartTimeUTC), Optional.ToNullable(lastWindowEndTimeUTC), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(IsWindowEnabled))
+            {
+                builder.Append("  isWindowEnabled:");
+                var boolValue = IsWindowEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsRegionReady))
+            {
+                builder.Append("  isRegionReady:");
+                var boolValue = IsRegionReady.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsWindowActive))
+            {
+                builder.Append("  isWindowActive:");
+                var boolValue = IsWindowActive.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CanApplyUpdates))
+            {
+                builder.Append("  canApplyUpdates:");
+                var boolValue = CanApplyUpdates.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(LastWindowStatusUpdatedOn))
+            {
+                builder.Append("  lastWindowStatusUpdateAtUTC:");
+                builder.AppendLine($" '{LastWindowStatusUpdatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastWindowStartOn))
+            {
+                builder.Append("  lastWindowStartTimeUTC:");
+                builder.AppendLine($" '{LastWindowStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastWindowEndOn))
+            {
+                builder.Append("  lastWindowEndTimeUTC:");
+                builder.AppendLine($" '{LastWindowEndOn.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ManagedMaintenanceWindowStatus>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedMaintenanceWindowStatus>)this).GetFormatFromOptions(options) : options.Format;
@@ -190,6 +257,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedMaintenanceWindowStatus)} does not support '{options.Format}' format.");
             }
@@ -206,6 +275,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeManagedMaintenanceWindowStatus(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ManagedMaintenanceWindowStatus)} does not support '{options.Format}' format.");
             }

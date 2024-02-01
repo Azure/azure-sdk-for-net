@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using System.Xml;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -16,7 +18,7 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class SecurityInsightsWatchlistData : IUtf8JsonSerializable, IJsonModel<SecurityInsightsWatchlistData>
+    public partial class SecurityInsightsWatchlistData : IUtf8JsonSerializable, IJsonModel<SecurityInsightsWatchlistData>, IPersistableModel<SecurityInsightsWatchlistData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsWatchlistData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -432,6 +434,188 @@ namespace Azure.ResourceManager.SecurityInsights
             return new SecurityInsightsWatchlistData(id, name, type, systemData.Value, Optional.ToNullable(watchlistId), displayName.Value, provider.Value, Optional.ToNullable(source), Optional.ToNullable(created), Optional.ToNullable(updated), createdBy.Value, updatedBy.Value, description.Value, watchlistType.Value, watchlistAlias.Value, Optional.ToNullable(isDeleted), Optional.ToList(labels), Optional.ToNullable(defaultDuration), Optional.ToNullable(tenantId), Optional.ToNullable(numberOfLinesToSkip), rawContent.Value, itemsSearchKey.Value, contentType.Value, uploadStatus.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(WatchlistId))
+            {
+                builder.Append("  watchlistId:");
+                builder.AppendLine($" '{WatchlistId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(Provider))
+            {
+                builder.Append("  provider:");
+                builder.AppendLine($" '{Provider}'");
+            }
+
+            if (Optional.IsDefined(Source))
+            {
+                builder.Append("  source:");
+                builder.AppendLine($" '{Source.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  created:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UpdatedOn))
+            {
+                builder.Append("  updated:");
+                builder.AppendLine($" '{UpdatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedBy))
+            {
+                builder.Append("  createdBy:");
+                AppendChildObject(builder, CreatedBy, options, 2);
+            }
+
+            if (Optional.IsDefined(UpdatedBy))
+            {
+                builder.Append("  updatedBy:");
+                AppendChildObject(builder, UpdatedBy, options, 2);
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(WatchlistType))
+            {
+                builder.Append("  watchlistType:");
+                builder.AppendLine($" '{WatchlistType}'");
+            }
+
+            if (Optional.IsDefined(WatchlistAlias))
+            {
+                builder.Append("  watchlistAlias:");
+                builder.AppendLine($" '{WatchlistAlias}'");
+            }
+
+            if (Optional.IsDefined(IsDeleted))
+            {
+                builder.Append("  isDeleted:");
+                var boolValue = IsDeleted.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(Labels))
+            {
+                builder.Append("  labels:");
+                builder.AppendLine(" [");
+                foreach (var item in Labels)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(DefaultDuration))
+            {
+                builder.Append("  defaultDuration:");
+                var formattedTimeSpan = XmlConvert.ToString(DefaultDuration.Value);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("  tenantId:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NumberOfLinesToSkip))
+            {
+                builder.Append("  numberOfLinesToSkip:");
+                builder.AppendLine($" '{NumberOfLinesToSkip.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RawContent))
+            {
+                builder.Append("  rawContent:");
+                builder.AppendLine($" '{RawContent}'");
+            }
+
+            if (Optional.IsDefined(ItemsSearchKey))
+            {
+                builder.Append("  itemsSearchKey:");
+                builder.AppendLine($" '{ItemsSearchKey}'");
+            }
+
+            if (Optional.IsDefined(ContentType))
+            {
+                builder.Append("  contentType:");
+                builder.AppendLine($" '{ContentType}'");
+            }
+
+            if (Optional.IsDefined(UploadStatus))
+            {
+                builder.Append("  uploadStatus:");
+                builder.AppendLine($" '{UploadStatus}'");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SecurityInsightsWatchlistData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsWatchlistData>)this).GetFormatFromOptions(options) : options.Format;
@@ -440,6 +624,8 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsWatchlistData)} does not support '{options.Format}' format.");
             }
@@ -456,6 +642,8 @@ namespace Azure.ResourceManager.SecurityInsights
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityInsightsWatchlistData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsWatchlistData)} does not support '{options.Format}' format.");
             }

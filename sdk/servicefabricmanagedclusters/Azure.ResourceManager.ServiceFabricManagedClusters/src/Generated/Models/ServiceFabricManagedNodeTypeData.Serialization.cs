@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    public partial class ServiceFabricManagedNodeTypeData : IUtf8JsonSerializable, IJsonModel<ServiceFabricManagedNodeTypeData>
+    public partial class ServiceFabricManagedNodeTypeData : IUtf8JsonSerializable, IJsonModel<ServiceFabricManagedNodeTypeData>, IPersistableModel<ServiceFabricManagedNodeTypeData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricManagedNodeTypeData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -958,6 +959,435 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             return new ServiceFabricManagedNodeTypeData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(isPrimary), Optional.ToNullable(vmInstanceCount), Optional.ToNullable(dataDiskSizeGB), Optional.ToNullable(dataDiskType), dataDiskLetter.Value, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), applicationPorts.Value, ephemeralPorts.Value, vmSize.Value, vmImagePublisher.Value, vmImageOffer.Value, vmImageSku.Value, vmImageVersion.Value, Optional.ToList(vmSecrets), Optional.ToList(vmExtensions), vmManagedIdentity.Value, Optional.ToNullable(isStateless), Optional.ToNullable(multiplePlacementGroups), Optional.ToList(frontendConfigurations), Optional.ToList(networkSecurityRules), Optional.ToList(additionalDataDisks), Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(provisioningState), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(useDefaultPublicLoadBalancer), Optional.ToNullable(useTempDataDisk), Optional.ToNullable(enableOverProvisioning), Optional.ToList(zones), Optional.ToNullable(isSpotVm), hostGroupId.Value, Optional.ToNullable(useEphemeralOSDisk), spotRestoreTimeout.Value, Optional.ToNullable(evictionPolicy), vmImageResourceId.Value, subnetId.Value, Optional.ToList(vmSetupActions), Optional.ToNullable(securityType), Optional.ToNullable(secureBootEnabled), Optional.ToNullable(enableNodePublicIP), Optional.ToNullable(enableNodePublicIPv6), vmSharedGalleryImageId.Value, natGatewayId.Value, vmImagePlan.Value, serviceArtifactReferenceId.Value, dscpConfigurationId.Value, Optional.ToList(additionalNetworkInterfaceConfigurations), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsDefined(IsPrimary))
+            {
+                builder.Append("  isPrimary:");
+                var boolValue = IsPrimary.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(VmInstanceCount))
+            {
+                builder.Append("  vmInstanceCount:");
+                builder.AppendLine($" '{VmInstanceCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DataDiskSizeInGB))
+            {
+                builder.Append("  dataDiskSizeGB:");
+                builder.AppendLine($" '{DataDiskSizeInGB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DataDiskType))
+            {
+                builder.Append("  dataDiskType:");
+                builder.AppendLine($" '{DataDiskType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DataDiskLetter))
+            {
+                builder.Append("  dataDiskLetter:");
+                builder.AppendLine($" '{DataDiskLetter}'");
+            }
+
+            if (Optional.IsCollectionDefined(PlacementProperties))
+            {
+                builder.Append("  placementProperties:");
+                builder.AppendLine(" {");
+                foreach (var item in PlacementProperties)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsCollectionDefined(Capacities))
+            {
+                builder.Append("  capacities:");
+                builder.AppendLine(" {");
+                foreach (var item in Capacities)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(ApplicationPorts))
+            {
+                builder.Append("  applicationPorts:");
+                AppendChildObject(builder, ApplicationPorts, options, 2);
+            }
+
+            if (Optional.IsDefined(EphemeralPorts))
+            {
+                builder.Append("  ephemeralPorts:");
+                AppendChildObject(builder, EphemeralPorts, options, 2);
+            }
+
+            if (Optional.IsDefined(VmSize))
+            {
+                builder.Append("  vmSize:");
+                builder.AppendLine($" '{VmSize}'");
+            }
+
+            if (Optional.IsDefined(VmImagePublisher))
+            {
+                builder.Append("  vmImagePublisher:");
+                builder.AppendLine($" '{VmImagePublisher}'");
+            }
+
+            if (Optional.IsDefined(VmImageOffer))
+            {
+                builder.Append("  vmImageOffer:");
+                builder.AppendLine($" '{VmImageOffer}'");
+            }
+
+            if (Optional.IsDefined(VmImageSku))
+            {
+                builder.Append("  vmImageSku:");
+                builder.AppendLine($" '{VmImageSku}'");
+            }
+
+            if (Optional.IsDefined(VmImageVersion))
+            {
+                builder.Append("  vmImageVersion:");
+                builder.AppendLine($" '{VmImageVersion}'");
+            }
+
+            if (Optional.IsCollectionDefined(VmSecrets))
+            {
+                builder.Append("  vmSecrets:");
+                builder.AppendLine(" [");
+                foreach (var item in VmSecrets)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(VmExtensions))
+            {
+                builder.Append("  vmExtensions:");
+                builder.AppendLine(" [");
+                foreach (var item in VmExtensions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(VmManagedIdentity))
+            {
+                builder.Append("  vmManagedIdentity:");
+                AppendChildObject(builder, VmManagedIdentity, options, 2);
+            }
+
+            if (Optional.IsDefined(IsStateless))
+            {
+                builder.Append("  isStateless:");
+                var boolValue = IsStateless.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(HasMultiplePlacementGroups))
+            {
+                builder.Append("  multiplePlacementGroups:");
+                var boolValue = HasMultiplePlacementGroups.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(FrontendConfigurations))
+            {
+                builder.Append("  frontendConfigurations:");
+                builder.AppendLine(" [");
+                foreach (var item in FrontendConfigurations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(NetworkSecurityRules))
+            {
+                builder.Append("  networkSecurityRules:");
+                builder.AppendLine(" [");
+                foreach (var item in NetworkSecurityRules)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(AdditionalDataDisks))
+            {
+                builder.Append("  additionalDataDisks:");
+                builder.AppendLine(" [");
+                foreach (var item in AdditionalDataDisks)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsEncryptionAtHostEnabled))
+            {
+                builder.Append("  enableEncryptionAtHost:");
+                var boolValue = IsEncryptionAtHostEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsAcceleratedNetworkingEnabled))
+            {
+                builder.Append("  enableAcceleratedNetworking:");
+                var boolValue = IsAcceleratedNetworkingEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(UseDefaultPublicLoadBalancer))
+            {
+                builder.Append("  useDefaultPublicLoadBalancer:");
+                var boolValue = UseDefaultPublicLoadBalancer.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(UseTempDataDisk))
+            {
+                builder.Append("  useTempDataDisk:");
+                var boolValue = UseTempDataDisk.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsOverProvisioningEnabled))
+            {
+                builder.Append("  enableOverProvisioning:");
+                var boolValue = IsOverProvisioningEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                builder.Append("  zones:");
+                builder.AppendLine(" [");
+                foreach (var item in Zones)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsSpotVm))
+            {
+                builder.Append("  isSpotVM:");
+                var boolValue = IsSpotVm.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(HostGroupId))
+            {
+                builder.Append("  hostGroupId:");
+                builder.AppendLine($" '{HostGroupId}'");
+            }
+
+            if (Optional.IsDefined(UseEphemeralOSDisk))
+            {
+                builder.Append("  useEphemeralOSDisk:");
+                var boolValue = UseEphemeralOSDisk.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SpotRestoreTimeout))
+            {
+                builder.Append("  spotRestoreTimeout:");
+                builder.AppendLine($" '{SpotRestoreTimeout}'");
+            }
+
+            if (Optional.IsDefined(EvictionPolicy))
+            {
+                builder.Append("  evictionPolicy:");
+                builder.AppendLine($" '{EvictionPolicy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VmImageResourceId))
+            {
+                builder.Append("  vmImageResourceId:");
+                builder.AppendLine($" '{VmImageResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SubnetId))
+            {
+                builder.Append("  subnetId:");
+                builder.AppendLine($" '{SubnetId.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(VmSetupActions))
+            {
+                builder.Append("  vmSetupActions:");
+                builder.AppendLine(" [");
+                foreach (var item in VmSetupActions)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(SecurityType))
+            {
+                builder.Append("  securityType:");
+                builder.AppendLine($" '{SecurityType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsSecureBootEnabled))
+            {
+                builder.Append("  secureBootEnabled:");
+                var boolValue = IsSecureBootEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsNodePublicIPEnabled))
+            {
+                builder.Append("  enableNodePublicIP:");
+                var boolValue = IsNodePublicIPEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsNodePublicIPv6Enabled))
+            {
+                builder.Append("  enableNodePublicIPv6:");
+                var boolValue = IsNodePublicIPv6Enabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(VmSharedGalleryImageId))
+            {
+                builder.Append("  vmSharedGalleryImageId:");
+                builder.AppendLine($" '{VmSharedGalleryImageId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NatGatewayId))
+            {
+                builder.Append("  natGatewayId:");
+                builder.AppendLine($" '{NatGatewayId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VmImagePlan))
+            {
+                builder.Append("  vmImagePlan:");
+                AppendChildObject(builder, VmImagePlan, options, 2);
+            }
+
+            if (Optional.IsDefined(ServiceArtifactReferenceId))
+            {
+                builder.Append("  serviceArtifactReferenceId:");
+                builder.AppendLine($" '{ServiceArtifactReferenceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DscpConfigurationId))
+            {
+                builder.Append("  dscpConfigurationId:");
+                builder.AppendLine($" '{DscpConfigurationId.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(AdditionalNetworkInterfaceConfigurations))
+            {
+                builder.Append("  additionalNetworkInterfaceConfigurations:");
+                builder.AppendLine(" [");
+                foreach (var item in AdditionalNetworkInterfaceConfigurations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ServiceFabricManagedNodeTypeData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedNodeTypeData>)this).GetFormatFromOptions(options) : options.Format;
@@ -966,6 +1396,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeData)} does not support '{options.Format}' format.");
             }
@@ -982,6 +1414,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeServiceFabricManagedNodeTypeData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ServiceFabricManagedNodeTypeData)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class GenericRecoveryPoint : IUtf8JsonSerializable, IJsonModel<GenericRecoveryPoint>
+    public partial class GenericRecoveryPoint : IUtf8JsonSerializable, IJsonModel<GenericRecoveryPoint>, IPersistableModel<GenericRecoveryPoint>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GenericRecoveryPoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -148,6 +149,62 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new GenericRecoveryPoint(objectType, serializedAdditionalRawData, friendlyName.Value, recoveryPointType.Value, Optional.ToNullable(recoveryPointTime), recoveryPointAdditionalInfo.Value, recoveryPointProperties.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsDefined(RecoveryPointType))
+            {
+                builder.Append("  recoveryPointType:");
+                builder.AppendLine($" '{RecoveryPointType}'");
+            }
+
+            if (Optional.IsDefined(RecoveryPointOn))
+            {
+                builder.Append("  recoveryPointTime:");
+                builder.AppendLine($" '{RecoveryPointOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecoveryPointAdditionalInfo))
+            {
+                builder.Append("  recoveryPointAdditionalInfo:");
+                builder.AppendLine($" '{RecoveryPointAdditionalInfo}'");
+            }
+
+            if (Optional.IsDefined(RecoveryPointProperties))
+            {
+                builder.Append("  recoveryPointProperties:");
+                AppendChildObject(builder, RecoveryPointProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(ObjectType))
+            {
+                builder.Append("  objectType:");
+                builder.AppendLine($" '{ObjectType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<GenericRecoveryPoint>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GenericRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
@@ -156,6 +213,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GenericRecoveryPoint)} does not support '{options.Format}' format.");
             }
@@ -172,6 +231,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeGenericRecoveryPoint(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(GenericRecoveryPoint)} does not support '{options.Format}' format.");
             }

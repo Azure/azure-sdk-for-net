@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ArmServiceTypeHealthPolicy : IUtf8JsonSerializable, IJsonModel<ArmServiceTypeHealthPolicy>
+    public partial class ArmServiceTypeHealthPolicy : IUtf8JsonSerializable, IJsonModel<ArmServiceTypeHealthPolicy>, IPersistableModel<ArmServiceTypeHealthPolicy>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmServiceTypeHealthPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -122,6 +123,44 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             return new ArmServiceTypeHealthPolicy(Optional.ToNullable(maxPercentUnhealthyServices), Optional.ToNullable(maxPercentUnhealthyPartitionsPerService), Optional.ToNullable(maxPercentUnhealthyReplicasPerPartition), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MaxPercentUnhealthyServices))
+            {
+                builder.Append("  maxPercentUnhealthyServices:");
+                builder.AppendLine($" '{MaxPercentUnhealthyServices.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxPercentUnhealthyPartitionsPerService))
+            {
+                builder.Append("  maxPercentUnhealthyPartitionsPerService:");
+                builder.AppendLine($" '{MaxPercentUnhealthyPartitionsPerService.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxPercentUnhealthyReplicasPerPartition))
+            {
+                builder.Append("  maxPercentUnhealthyReplicasPerPartition:");
+                builder.AppendLine($" '{MaxPercentUnhealthyReplicasPerPartition.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ArmServiceTypeHealthPolicy>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArmServiceTypeHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,6 +169,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ArmServiceTypeHealthPolicy)} does not support '{options.Format}' format.");
             }
@@ -146,6 +187,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeArmServiceTypeHealthPolicy(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ArmServiceTypeHealthPolicy)} does not support '{options.Format}' format.");
             }

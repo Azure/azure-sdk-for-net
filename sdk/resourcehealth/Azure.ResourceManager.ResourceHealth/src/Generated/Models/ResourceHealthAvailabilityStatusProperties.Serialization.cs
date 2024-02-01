@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    public partial class ResourceHealthAvailabilityStatusProperties : IUtf8JsonSerializable, IJsonModel<ResourceHealthAvailabilityStatusProperties>
+    public partial class ResourceHealthAvailabilityStatusProperties : IUtf8JsonSerializable, IJsonModel<ResourceHealthAvailabilityStatusProperties>, IPersistableModel<ResourceHealthAvailabilityStatusProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceHealthAvailabilityStatusProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -353,6 +354,156 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             return new ResourceHealthAvailabilityStatusProperties(Optional.ToNullable(availabilityState), title.Value, summary.Value, detailedStatus.Value, reasonType.Value, context.Value, category.Value, articleId.Value, Optional.ToNullable(rootCauseAttributionTime), healthEventType.Value, healthEventCause.Value, healthEventCategory.Value, healthEventId.Value, Optional.ToNullable(resolutionETA), Optional.ToNullable(occuredTime), Optional.ToNullable(reasonChronicity), Optional.ToNullable(reportedTime), recentlyResolved.Value, Optional.ToList(recommendedActions), Optional.ToList(serviceImpactingEvents), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AvailabilityState))
+            {
+                builder.Append("  availabilityState:");
+                builder.AppendLine($" '{AvailabilityState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Title))
+            {
+                builder.Append("  title:");
+                builder.AppendLine($" '{Title}'");
+            }
+
+            if (Optional.IsDefined(Summary))
+            {
+                builder.Append("  summary:");
+                builder.AppendLine($" '{Summary}'");
+            }
+
+            if (Optional.IsDefined(DetailedStatus))
+            {
+                builder.Append("  detailedStatus:");
+                builder.AppendLine($" '{DetailedStatus}'");
+            }
+
+            if (Optional.IsDefined(ReasonType))
+            {
+                builder.Append("  reasonType:");
+                builder.AppendLine($" '{ReasonType}'");
+            }
+
+            if (Optional.IsDefined(Context))
+            {
+                builder.Append("  context:");
+                builder.AppendLine($" '{Context}'");
+            }
+
+            if (Optional.IsDefined(Category))
+            {
+                builder.Append("  category:");
+                builder.AppendLine($" '{Category}'");
+            }
+
+            if (Optional.IsDefined(ArticleId))
+            {
+                builder.Append("  articleId:");
+                builder.AppendLine($" '{ArticleId}'");
+            }
+
+            if (Optional.IsDefined(RootCauseAttributionOn))
+            {
+                builder.Append("  rootCauseAttributionTime:");
+                builder.AppendLine($" '{RootCauseAttributionOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HealthEventType))
+            {
+                builder.Append("  healthEventType:");
+                builder.AppendLine($" '{HealthEventType}'");
+            }
+
+            if (Optional.IsDefined(HealthEventCause))
+            {
+                builder.Append("  healthEventCause:");
+                builder.AppendLine($" '{HealthEventCause}'");
+            }
+
+            if (Optional.IsDefined(HealthEventCategory))
+            {
+                builder.Append("  healthEventCategory:");
+                builder.AppendLine($" '{HealthEventCategory}'");
+            }
+
+            if (Optional.IsDefined(HealthEventId))
+            {
+                builder.Append("  healthEventId:");
+                builder.AppendLine($" '{HealthEventId}'");
+            }
+
+            if (Optional.IsDefined(ResolutionEta))
+            {
+                builder.Append("  resolutionETA:");
+                builder.AppendLine($" '{ResolutionEta.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OccuredOn))
+            {
+                builder.Append("  occuredTime:");
+                builder.AppendLine($" '{OccuredOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReasonChronicity))
+            {
+                builder.Append("  reasonChronicity:");
+                builder.AppendLine($" '{ReasonChronicity.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReportedOn))
+            {
+                builder.Append("  reportedTime:");
+                builder.AppendLine($" '{ReportedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecentlyResolved))
+            {
+                builder.Append("  recentlyResolved:");
+                AppendChildObject(builder, RecentlyResolved, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(RecommendedActions))
+            {
+                builder.Append("  recommendedActions:");
+                builder.AppendLine(" [");
+                foreach (var item in RecommendedActions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ServiceImpactingEvents))
+            {
+                builder.Append("  serviceImpactingEvents:");
+                builder.AppendLine(" [");
+                foreach (var item in ServiceImpactingEvents)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ResourceHealthAvailabilityStatusProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -361,6 +512,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatusProperties)} does not support '{options.Format}' format.");
             }
@@ -377,6 +530,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeResourceHealthAvailabilityStatusProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStatusProperties)} does not support '{options.Format}' format.");
             }
