@@ -38,24 +38,27 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             ActivitySource.AddActivityListener(listener);
 
             // ACT
-            using var activity = activitySource.StartActivity(name: "HelloWorld", kind: ActivityKind.Server);
-            Assert.NotNull(activity);
-            activity.SetTag("http.response.status_code", 200);
-            activity.SetTag("url.scheme", "http");
-            activity.SetTag("server.address", "example.com");
-            activity.SetTag("server.port", "8080");
-            activity.SetTag("url.path", "/search");
-            activity.SetTag("url.query", "?q=OpenTelemetry");
-            activity.Stop();
+            using var requestActivity = activitySource.StartActivity(name: "HelloWorld", kind: ActivityKind.Server);
+            Assert.NotNull(requestActivity);
+            requestActivity.SetTag("http.response.status_code", 200);
+            requestActivity.SetTag("url.scheme", "http");
+            requestActivity.SetTag("server.address", "example.com");
+            requestActivity.SetTag("server.port", "8080");
+            requestActivity.SetTag("url.path", "/search");
+            requestActivity.SetTag("url.query", "?q=OpenTelemetry");
+            requestActivity.Stop();
 
-            var requestDocument = DocumentHelper.ConvertToRequest(activity);
+            var requestDocument = DocumentHelper.ConvertToRequest(requestActivity);
 
             // ASSERT
             Assert.Equal(DocumentIngressDocumentType.Request, requestDocument.DocumentType);
             Assert.Equal("HelloWorld", requestDocument.Name);
-            Assert.Equal(activity.Duration.TotalMilliseconds, requestDocument.Extension_Duration);
-            Assert.Equal("http://example.com:8080/search?q=OpenTelemetry", requestDocument.Url);
             Assert.Equal("200", requestDocument.ResponseCode);
+            Assert.Equal("http://example.com:8080/search?q=OpenTelemetry", requestDocument.Url);
+
+            // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
+            Assert.Equal(requestActivity.Duration.TotalMilliseconds, requestDocument.Extension_Duration);
+            Assert.True(requestDocument.Extension_IsSuccess);
         }
 
 #if !NET462
@@ -96,11 +99,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             var requestDocument = DocumentHelper.ConvertToRequest(requestActivity);
 
             Assert.Equal(DocumentIngressDocumentType.Request, requestDocument.DocumentType);
+            Assert.Equal(requestActivity.Duration.ToString("c"), requestDocument.Duration);
             Assert.Equal("GET /", requestDocument.Name);
-            //TODO: OTHER DURATION
-            Assert.Equal(TestServerUrl, requestDocument.Url);
             Assert.Equal("200", requestDocument.ResponseCode);
+            Assert.Equal(TestServerUrl, requestDocument.Url);
 
+            // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
             Assert.Equal(requestActivity.Duration.TotalMilliseconds, requestDocument.Extension_Duration);
             Assert.True(requestDocument.Extension_IsSuccess);
         }

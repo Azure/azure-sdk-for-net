@@ -4,19 +4,16 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
-using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
-using OpenTelemetry;
-using Xunit;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using OpenTelemetry.Trace;
-using System.Net.Http;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Data.SqlClient;
-using System.Data;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
+using Microsoft.AspNetCore.Builder;
+using OpenTelemetry;
+using OpenTelemetry.Trace;
+using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 {
@@ -41,21 +38,24 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             ActivitySource.AddActivityListener(listener);
 
             // ACT
-            using var activity = activitySource.StartActivity(name: "HelloWorld", kind: ActivityKind.Client);
-            Assert.NotNull(activity);
-            activity.SetTag("http.method", "GET");
-            activity.SetTag("url.full", "http://bing.com");
-            activity.SetTag("http.response.status_code", 200);
-            activity.Stop();
+            using var dependencyActivity = activitySource.StartActivity(name: "HelloWorld", kind: ActivityKind.Client);
+            Assert.NotNull(dependencyActivity);
+            dependencyActivity.SetTag("http.method", "GET");
+            dependencyActivity.SetTag("url.full", "http://bing.com");
+            dependencyActivity.SetTag("http.response.status_code", 200);
+            dependencyActivity.Stop();
 
-            var remoteDependencyDocument = DocumentHelper.ConvertToRemoteDependency(activity);
+            var dependencyDocument = DocumentHelper.ConvertToRemoteDependency(dependencyActivity);
 
             // ASSERT
-            Assert.Equal(DocumentIngressDocumentType.RemoteDependency, remoteDependencyDocument.DocumentType);
-            Assert.Equal("HelloWorld", remoteDependencyDocument.Name);
-            Assert.Equal(activity.Duration.TotalMilliseconds, remoteDependencyDocument.Extension_Duration);
-            Assert.Equal("http://bing.com", remoteDependencyDocument.CommandName);
-            Assert.Equal("200", remoteDependencyDocument.ResultCode);
+            Assert.Equal("http://bing.com", dependencyDocument.CommandName);
+            Assert.Equal(DocumentIngressDocumentType.RemoteDependency, dependencyDocument.DocumentType);
+            Assert.Equal("HelloWorld", dependencyDocument.Name);
+            Assert.Equal("200", dependencyDocument.ResultCode);
+
+            // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
+            Assert.Equal(dependencyActivity.Duration.TotalMilliseconds, dependencyDocument.Extension_Duration);
+            Assert.True(dependencyDocument.Extension_IsSuccess);
         }
 
 #if !NET462
@@ -87,9 +87,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             {
                 await httpClient.GetStringAsync(requestUrl).ConfigureAwait(false);
             }
-            catch (System.Exception)
+            catch (HttpRequestException)
             {
-                // ignored
+                // ignored. This can be thrown for a failed request.
             }
 
             WaitForActivityExport(exportedActivities);
@@ -100,12 +100,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 
             var dependencyDocument = DocumentHelper.ConvertToRemoteDependency(dependencyActivity);
 
-            Assert.Equal(DocumentIngressDocumentType.RemoteDependency, dependencyDocument.DocumentType);
-            Assert.Equal("GET", dependencyDocument.Name);
             Assert.Equal(requestUrl, dependencyDocument.CommandName);
+            Assert.Equal(DocumentIngressDocumentType.RemoteDependency, dependencyDocument.DocumentType);
+            Assert.Equal(dependencyActivity.Duration.ToString("c"), dependencyDocument.Duration);
+            Assert.Equal("GET", dependencyDocument.Name);
             Assert.Equal(successfulRequest ? "200" : "404", dependencyDocument.ResultCode);
-            Assert.NotNull(dependencyDocument.Duration);
 
+            // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
             Assert.Equal(dependencyActivity.Duration.TotalMilliseconds, dependencyDocument.Extension_Duration);
             Assert.Equal(successfulRequest, dependencyDocument.Extension_IsSuccess);
         }

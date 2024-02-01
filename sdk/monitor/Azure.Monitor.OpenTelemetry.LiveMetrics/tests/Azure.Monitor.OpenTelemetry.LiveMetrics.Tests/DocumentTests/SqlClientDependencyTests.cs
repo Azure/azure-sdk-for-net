@@ -3,20 +3,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
-using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
-using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
-using OpenTelemetry;
-using Xunit;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using OpenTelemetry.Trace;
-using System.Net.Http;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 using Microsoft.Data.SqlClient;
-using System.Data;
+using OpenTelemetry;
+using OpenTelemetry.Trace;
+using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 {
@@ -27,6 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
     public class SqlClientDependencyTests
     {
         private const string TestServerUrl = "http://localhost:9996/";
+        private const string TestConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Database=MyDatabase";
 
         [Fact]
         public void VerifySqlClientAttributes()
@@ -43,8 +40,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             CommandType commandType,
             string commandText)
         {
-            string testConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Database=master";
-            using var sqlConnection = new SqlConnection(testConnectionString);
+            using var sqlConnection = new SqlConnection(TestConnectionString);
             using var sqlCommand = sqlConnection.CreateCommand();
 
             var fakeSqlClientDiagnosticSource = new FakeSqlClientDiagnosticSource();
@@ -92,12 +88,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 
             var dependencyDocument = DocumentHelper.ConvertToRemoteDependency(dependencyActivity);
 
-            Assert.Equal(DocumentIngressDocumentType.RemoteDependency, dependencyDocument.DocumentType);
-            //TODO: OTHER DURATION
             Assert.Equal(commandText, dependencyDocument.CommandName);
+            Assert.Equal(DocumentIngressDocumentType.RemoteDependency, dependencyDocument.DocumentType);
+            Assert.Equal(dependencyActivity.Duration.ToString("c"), dependencyDocument.Duration);
+            Assert.Equal("(localdb)\\MSSQLLocalDB | MyDatabase", dependencyDocument.Name);
 
+            // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
             Assert.Equal(dependencyActivity.Duration.TotalMilliseconds, dependencyDocument.Extension_Duration);
-            Assert.False(dependencyDocument.Extension_IsSuccess);
+            Assert.True(dependencyDocument.Extension_IsSuccess);
         }
 
         [Theory]
@@ -112,8 +110,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             string commandText,
             bool recordException = false)
         {
-            string testConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Database=master";
-            using var sqlConnection = new SqlConnection(testConnectionString);
+            using var sqlConnection = new SqlConnection(TestConnectionString);
             using var sqlCommand = sqlConnection.CreateCommand();
 
             var fakeSqlClientDiagnosticSource = new FakeSqlClientDiagnosticSource();
@@ -163,10 +160,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
 
             var dependencyDocument = DocumentHelper.ConvertToRemoteDependency(dependencyActivity);
 
-            Assert.Equal(DocumentIngressDocumentType.RemoteDependency, dependencyDocument.DocumentType);
-            //TODO: OTHER DURATION
             Assert.Equal(commandText, dependencyDocument.CommandName);
+            Assert.Equal(DocumentIngressDocumentType.RemoteDependency, dependencyDocument.DocumentType);
+            Assert.Equal(dependencyActivity.Duration.ToString("c"), dependencyDocument.Duration);
+            Assert.Equal("(localdb)\\MSSQLLocalDB | MyDatabase", dependencyDocument.Name);
 
+            // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
             Assert.Equal(dependencyActivity.Duration.TotalMilliseconds, dependencyDocument.Extension_Duration);
             Assert.False(dependencyDocument.Extension_IsSuccess);
         }
@@ -190,6 +189,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             Assert.True(result, $"{nameof(WaitForActivityExport)} failed.");
         }
 
+        /// <summary>
+        /// These tests and helper classes were initially copied from
+        /// <see href="https://github.com/open-telemetry/opentelemetry-dotnet/blob/1.6.0-beta.3/test/OpenTelemetry.Instrumentation.SqlClient.Tests/SqlClientTests.cs" />.
+        /// </summary>
         private static class SqlClientConstants
         {
             internal const string SqlClientDiagnosticListenerName = "SqlClientDiagnosticListener";
@@ -201,6 +204,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             public const string SqlDataWriteCommandError = "System.Data.SqlClient.WriteCommandError";
         }
 
+        /// <summary>
+        /// These tests and helper classes were initially copied from
+        /// <see href="https://github.com/open-telemetry/opentelemetry-dotnet/blob/1.6.0-beta.3/test/OpenTelemetry.Instrumentation.SqlClient.Tests/SqlClientTests.cs" />.
+        /// </summary>
         private class FakeSqlClientDiagnosticSource : IDisposable
         {
             private readonly DiagnosticListener listener;

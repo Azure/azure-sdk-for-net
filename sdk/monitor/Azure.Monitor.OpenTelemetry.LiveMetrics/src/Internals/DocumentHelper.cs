@@ -32,10 +32,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 Extension_Duration = activity.Duration.TotalMilliseconds,
             };
 
-            // HACK: Remove the V2 for now.
+            // HACK: Remove the V2 for now. This Enum should be removed in the future.
             if (atp.activityType.HasFlag(OperationType.V2))
             {
-                //bool isNewSchemaVersion = true;
                 atp.activityType &= ~OperationType.V2;
             }
 
@@ -51,29 +50,23 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                                                                 : SchemaConstants.Duration_MaxValue;
 
                     // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
-                    remoteDependencyDocumentIngress.Extension_IsSuccess = IsSuccess(activity, httpResponseStatusCode); // TODO: HOW TO DETERMINE SUCCESS FOR OTHER TYPES?
+                    remoteDependencyDocumentIngress.Extension_IsSuccess = IsHttpSuccess(activity, httpResponseStatusCode);
                     break;
                 case OperationType.Db:
-                    // TODO: remoteDependencyDocumentIngress.Name = "";
-                    remoteDependencyDocumentIngress.CommandName = AzMonList.GetTagValue(ref atp.MappedTags, SemanticConventions.AttributeDbStatement)?.ToString();
-                    // TODO: remoteDependencyDocumentIngress.ResultCode = ""; AI SDK uses ExceptionNumber. OpenTelemetry doesn't record this.
+                    // Note: The Exception details are recorded in Activity.Events only if the configuration has opt-ed into this (SqlClientInstrumentationOptions.RecordException).
 
+                    var (_, dbTarget) = atp.MappedTags.GetDbDependencyTargetAndName();
+
+                    remoteDependencyDocumentIngress.Name = dbTarget;
+                    remoteDependencyDocumentIngress.CommandName = AzMonList.GetTagValue(ref atp.MappedTags, SemanticConventions.AttributeDbStatement)?.ToString();
                     remoteDependencyDocumentIngress.Duration = activity.Duration.ToString("c", CultureInfo.InvariantCulture);
 
-                    //var dbAttributeTagObjects = AzMonList.GetTagValues(ref atp.MappedTags, SemanticConventions.AttributeDbStatement, SemanticConventions.AttributeDbSystem);
-                    //var dbStatement = dbAttributeTagObjects[0]?.ToString();
-                    //var dbSystem = dbAttributeTagObjects[1]?.ToString();
-                    //var (dbName, dbTarget) = atp.MappedTags.GetDbDependencyTargetAndName();
-                    //var type = dbSystem == "mssql" ? "SQL" : dbSystem;
-                    //// special case for db.name
-                    //var sanitizedDbName = dbName?.Truncate(SchemaConstants.KVP_MaxValueLength);
-                    //if (sanitizedDbName != null)
-                    //{
-                    //    //Properties.Add(SemanticConventions.AttributeDbName, sanitizedDbName);
-                    //}
+                    // TODO: remoteDependencyDocumentIngress.ResultCode = "";
+                    // AI SDK reads a Number property from Connection or Command objects.
+                    // As of Feb 2024, OpenTelemetry doesn't record this. This may change in the future when the semantic convention stabalizes.
 
                     // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
-                    remoteDependencyDocumentIngress.Extension_IsSuccess = activity.Status == ActivityStatusCode.Ok;
+                    remoteDependencyDocumentIngress.Extension_IsSuccess = activity.Status != ActivityStatusCode.Error;
                     break;
                 case OperationType.Rpc:
                     // TODO
@@ -158,7 +151,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 // TODO: Properties = new Dictionary<string, string>(), - UX supports up to 10 custom properties
 
                 // The following properties are used to calculate metrics. These are not serialized.
-                Extension_IsSuccess = IsSuccess(activity, httpResponseStatusCode),
+                Extension_IsSuccess = IsHttpSuccess(activity, httpResponseStatusCode),
                 Extension_Duration = activity.Duration.TotalMilliseconds,
             };
 
@@ -179,7 +172,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static bool IsSuccess(Activity activity, string? responseCode)
+        internal static bool IsHttpSuccess(Activity activity, string? responseCode)
         {
             if (int.TryParse(responseCode, out int statusCode))
             {
