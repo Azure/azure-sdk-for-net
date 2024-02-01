@@ -37,6 +37,8 @@ public abstract class PipelineResponse : IDisposable
     public abstract Stream? ContentStream { get; set; }
 
     private byte[]? _contentBytes;
+    internal bool IsBuffered => _contentBytes != null;
+
     public virtual BinaryData Content
     {
         get
@@ -78,18 +80,6 @@ public abstract class PipelineResponse : IDisposable
 
     // Same value as Stream.CopyTo uses by default
     private const int DefaultCopyBufferSize = 81920;
-
-    internal bool TryGetBufferedContent(out MemoryStream bufferedContent)
-    {
-        if (ContentStream is MemoryStream content)
-        {
-            bufferedContent = content;
-            return true;
-        }
-
-        bufferedContent = default!;
-        return false;
-    }
 
     internal void BufferContent(TimeSpan? timeout = default, CancellationTokenSource? cts = default)
         => BufferContentSyncOrAsync(timeout, cts, async: false).EnsureCompleted();

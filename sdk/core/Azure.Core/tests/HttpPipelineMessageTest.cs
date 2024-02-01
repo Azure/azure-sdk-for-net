@@ -3,6 +3,8 @@
 
 using System;
 using System.IO;
+using System.Threading.Tasks;
+using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Moq;
@@ -103,6 +105,34 @@ namespace Azure.Core.Tests
 
             //Assert.AreSame(memoryStream, stream);
             //Assert.Throws<InvalidOperationException>(() => { var x = response.Content; });
+        }
+
+        [Test]
+        [Ignore("Working on resolution; TODO: solve it so this works")]
+        public async Task UnbufferedStreamAccessibleAfterMessageDisposed()
+        {
+            var streamBytes = new byte[0x1000];
+            new Random().NextBytes(streamBytes);
+
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(new TestClientOptions() { Retry = { NetworkTimeout = Timeout.InfiniteTimeSpan } });
+
+            using TestServer testServer = new(async context =>
+            {
+                await context.Response.Body.WriteAsync(streamBytes, 0, streamBytes.Length).ConfigureAwait(false);
+            });
+
+            Response response;
+            using (HttpMessage message = pipeline.CreateMessage())
+            {
+                message.Request.Uri.Reset(testServer.Address);
+                message.BufferResponse = false;
+
+                await pipeline.SendAsync(message, default).ConfigureAwait(false);
+                response = message.Response;
+            }
+
+            Assert.NotNull(response.ContentStream);
+            Assert.AreEqual(streamBytes.Length, response.ContentStream.Length);
         }
     }
 }
