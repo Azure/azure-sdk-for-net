@@ -1,17 +1,11 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2024-02-06)
 
 ### Features Added
 
 - `InteractiveBrowserCredentialBrokerOptions` and `SharedTokenCacheCredentialBrokerOptions` now support a `UseOperatingSystemAccount` property to enable the use of the currently logged in operating system account for authentication rather than prompting for a credential.
 - Preview support for Proof of Possession (PoP) tokens for `InteractiveBrowserCredential`. This feature is enabled via the `IsProofOfPossessionRequired` property on `InteractiveBrowserCredentialBrokerOptions`.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0 (2023-11-07)
 
