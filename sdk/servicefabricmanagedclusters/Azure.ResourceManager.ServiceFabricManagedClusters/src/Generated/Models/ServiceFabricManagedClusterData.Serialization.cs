@@ -299,6 +299,31 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("publicIPPrefixId"u8);
                 writer.WriteStringValue(PublicIPPrefixId);
             }
+            if (Optional.IsDefined(PublicIPv6PrefixId))
+            {
+                writer.WritePropertyName("publicIPv6PrefixId"u8);
+                writer.WriteStringValue(PublicIPv6PrefixId);
+            }
+            if (Optional.IsDefined(DdosProtectionPlanId))
+            {
+                writer.WritePropertyName("ddosProtectionPlanId"u8);
+                writer.WriteStringValue(DdosProtectionPlanId);
+            }
+            if (Optional.IsDefined(UpgradeDescription))
+            {
+                writer.WritePropertyName("upgradeDescription"u8);
+                writer.WriteObjectValue(UpgradeDescription);
+            }
+            if (Optional.IsDefined(HttpGatewayTokenAuthConnectionPort))
+            {
+                writer.WritePropertyName("httpGatewayTokenAuthConnectionPort"u8);
+                writer.WriteNumberValue(HttpGatewayTokenAuthConnectionPort.Value);
+            }
+            if (Optional.IsDefined(IsHttpGatewayExclusiveAuthModeEnabled))
+            {
+                writer.WritePropertyName("enableHttpGatewayExclusiveAuthMode"u8);
+                writer.WriteBooleanValue(IsHttpGatewayExclusiveAuthModeEnabled.Value);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -380,6 +405,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Optional<ZonalUpdateMode> zonalUpdateMode = default;
             Optional<bool> useCustomVnet = default;
             Optional<ResourceIdentifier> publicIPPrefixId = default;
+            Optional<ResourceIdentifier> publicIPv6PrefixId = default;
+            Optional<ResourceIdentifier> ddosProtectionPlanId = default;
+            Optional<ManagedClusterUpgradePolicy> upgradeDescription = default;
+            Optional<int> httpGatewayTokenAuthConnectionPort = default;
+            Optional<bool> enableHttpGatewayExclusiveAuthMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -784,6 +814,51 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             publicIPPrefixId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("publicIPv6PrefixId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
+                            {
+                                continue;
+                            }
+                            publicIPv6PrefixId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("ddosProtectionPlanId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
+                            {
+                                continue;
+                            }
+                            ddosProtectionPlanId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("upgradeDescription"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            upgradeDescription = ManagedClusterUpgradePolicy.DeserializeManagedClusterUpgradePolicy(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("httpGatewayTokenAuthConnectionPort"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            httpGatewayTokenAuthConnectionPort = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("enableHttpGatewayExclusiveAuthMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableHttpGatewayExclusiveAuthMode = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -793,7 +868,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceFabricManagedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, dnsName.Value, fqdn.Value, ipv4Address.Value, Optional.ToNullable(clusterId), Optional.ToNullable(clusterState), Optional.ToList(clusterCertificateThumbprints), Optional.ToNullable(clientConnectionPort), Optional.ToNullable(httpGatewayConnectionPort), adminUserName.Value, adminPassword.Value, Optional.ToList(loadBalancingRules), Optional.ToNullable(allowRdpAccess), Optional.ToList(networkSecurityRules), Optional.ToList(clients), azureActiveDirectory.Value, Optional.ToList(fabricSettings), Optional.ToNullable(provisioningState), clusterCodeVersion.Value, Optional.ToNullable(clusterUpgradeMode), Optional.ToNullable(clusterUpgradeCadence), Optional.ToList(addonFeatures), Optional.ToNullable(enableAutoOSUpgrade), Optional.ToNullable(zonalResiliency), applicationTypeVersionsCleanupPolicy.Value, Optional.ToNullable(enableIPv6), subnetId.Value, Optional.ToList(ipTags), ipv6Address.Value, Optional.ToNullable(enableServicePublicIP), Optional.ToList(auxiliarySubnets), Optional.ToList(serviceEndpoints), Optional.ToNullable(zonalUpdateMode), Optional.ToNullable(useCustomVnet), publicIPPrefixId.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
+            return new ServiceFabricManagedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, dnsName.Value, fqdn.Value, ipv4Address.Value, Optional.ToNullable(clusterId), Optional.ToNullable(clusterState), Optional.ToList(clusterCertificateThumbprints), Optional.ToNullable(clientConnectionPort), Optional.ToNullable(httpGatewayConnectionPort), adminUserName.Value, adminPassword.Value, Optional.ToList(loadBalancingRules), Optional.ToNullable(allowRdpAccess), Optional.ToList(networkSecurityRules), Optional.ToList(clients), azureActiveDirectory.Value, Optional.ToList(fabricSettings), Optional.ToNullable(provisioningState), clusterCodeVersion.Value, Optional.ToNullable(clusterUpgradeMode), Optional.ToNullable(clusterUpgradeCadence), Optional.ToList(addonFeatures), Optional.ToNullable(enableAutoOSUpgrade), Optional.ToNullable(zonalResiliency), applicationTypeVersionsCleanupPolicy.Value, Optional.ToNullable(enableIPv6), subnetId.Value, Optional.ToList(ipTags), ipv6Address.Value, Optional.ToNullable(enableServicePublicIP), Optional.ToList(auxiliarySubnets), Optional.ToList(serviceEndpoints), Optional.ToNullable(zonalUpdateMode), Optional.ToNullable(useCustomVnet), publicIPPrefixId.Value, publicIPv6PrefixId.Value, ddosProtectionPlanId.Value, upgradeDescription.Value, Optional.ToNullable(httpGatewayTokenAuthConnectionPort), Optional.ToNullable(enableHttpGatewayExclusiveAuthMode), Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceFabricManagedClusterData>.Write(ModelReaderWriterOptions options)
