@@ -19,7 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
         /// </summary>
         /// <remarks>
         /// Experimental until formalization of OTEP profiles data format.
-        /// See https://github.com/open-telemetry/oteps/pull/239.
+        /// See <see href="https://github.com/open-telemetry/oteps/pull/239" />.
         /// </remarks>
         internal const string TagName = "profile_id_experimental";
 
