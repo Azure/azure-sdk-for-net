@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class SharedGalleryImageVersionData : IUtf8JsonSerializable, IJsonModel<SharedGalleryImageVersionData>
+    public partial class SharedGalleryImageVersionData : IUtf8JsonSerializable, IJsonModel<SharedGalleryImageVersionData>, IPersistableModel<SharedGalleryImageVersionData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SharedGalleryImageVersionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -231,6 +232,86 @@ namespace Azure.ResourceManager.Compute
             return new SharedGalleryImageVersionData(name.Value, Optional.ToNullable(location), serializedAdditionalRawData, uniqueId.Value, Optional.ToNullable(publishedDate), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(excludeFromLatest), storageProfile.Value, Optional.ToDictionary(artifactTags));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PublishedOn))
+            {
+                builder.Append("  publishedDate:");
+                builder.AppendLine($" '{PublishedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndOfLifeOn))
+            {
+                builder.Append("  endOfLifeDate:");
+                builder.AppendLine($" '{EndOfLifeOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsExcludedFromLatest))
+            {
+                builder.Append("  excludeFromLatest:");
+                var boolValue = IsExcludedFromLatest.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(StorageProfile))
+            {
+                builder.Append("  storageProfile:");
+                AppendChildObject(builder, StorageProfile, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(ArtifactTags))
+            {
+                builder.Append("  artifactTags:");
+                builder.AppendLine(" {");
+                foreach (var item in ArtifactTags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(UniqueId))
+            {
+                builder.Append("  uniqueId:");
+                builder.AppendLine($" '{UniqueId}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SharedGalleryImageVersionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SharedGalleryImageVersionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -239,6 +320,8 @@ namespace Azure.ResourceManager.Compute
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SharedGalleryImageVersionData)} does not support '{options.Format}' format.");
             }
@@ -255,6 +338,8 @@ namespace Azure.ResourceManager.Compute
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSharedGalleryImageVersionData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SharedGalleryImageVersionData)} does not support '{options.Format}' format.");
             }

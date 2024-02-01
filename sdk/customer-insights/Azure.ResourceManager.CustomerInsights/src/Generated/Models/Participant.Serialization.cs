@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class Participant : IUtf8JsonSerializable, IJsonModel<Participant>
+    public partial class Participant : IUtf8JsonSerializable, IJsonModel<Participant>, IPersistableModel<Participant>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Participant>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -174,6 +175,89 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             return new Participant(profileTypeName, participantPropertyReferences, participantName, Optional.ToDictionary(displayName), Optional.ToDictionary(description), role.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProfileTypeName))
+            {
+                builder.Append("  profileTypeName:");
+                builder.AppendLine($" '{ProfileTypeName}'");
+            }
+
+            if (Optional.IsCollectionDefined(ParticipantPropertyReferences))
+            {
+                builder.Append("  participantPropertyReferences:");
+                builder.AppendLine(" [");
+                foreach (var item in ParticipantPropertyReferences)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ParticipantName))
+            {
+                builder.Append("  participantName:");
+                builder.AppendLine($" '{ParticipantName}'");
+            }
+
+            if (Optional.IsCollectionDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine(" {");
+                foreach (var item in DisplayName)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsCollectionDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine(" {");
+                foreach (var item in Description)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Role))
+            {
+                builder.Append("  role:");
+                builder.AppendLine($" '{Role}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<Participant>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<Participant>)this).GetFormatFromOptions(options) : options.Format;
@@ -182,6 +266,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(Participant)} does not support '{options.Format}' format.");
             }
@@ -198,6 +284,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeParticipant(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(Participant)} does not support '{options.Format}' format.");
             }

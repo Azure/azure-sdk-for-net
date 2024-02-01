@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeClusterGpuCapacity : IUtf8JsonSerializable, IJsonModel<EdgeClusterGpuCapacity>
+    public partial class EdgeClusterGpuCapacity : IUtf8JsonSerializable, IJsonModel<EdgeClusterGpuCapacity>, IPersistableModel<EdgeClusterGpuCapacity>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeClusterGpuCapacity>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -148,6 +149,56 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new EdgeClusterGpuCapacity(gpuType.Value, Optional.ToNullable(gpuUsedUnitsCount), Optional.ToNullable(gpuFreeUnitsCount), Optional.ToNullable(gpuReservedForFailoverUnitsCount), Optional.ToNullable(gpuTotalUnitsCount), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(GpuType))
+            {
+                builder.Append("  gpuType:");
+                builder.AppendLine($" '{GpuType}'");
+            }
+
+            if (Optional.IsDefined(GpuUsedUnitsCount))
+            {
+                builder.Append("  gpuUsedUnitsCount:");
+                builder.AppendLine($" '{GpuUsedUnitsCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(GpuFreeUnitsCount))
+            {
+                builder.Append("  gpuFreeUnitsCount:");
+                builder.AppendLine($" '{GpuFreeUnitsCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(GpuReservedForFailoverUnitsCount))
+            {
+                builder.Append("  gpuReservedForFailoverUnitsCount:");
+                builder.AppendLine($" '{GpuReservedForFailoverUnitsCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(GpuTotalUnitsCount))
+            {
+                builder.Append("  gpuTotalUnitsCount:");
+                builder.AppendLine($" '{GpuTotalUnitsCount.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<EdgeClusterGpuCapacity>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EdgeClusterGpuCapacity>)this).GetFormatFromOptions(options) : options.Format;
@@ -156,6 +207,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EdgeClusterGpuCapacity)} does not support '{options.Format}' format.");
             }
@@ -172,6 +225,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEdgeClusterGpuCapacity(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EdgeClusterGpuCapacity)} does not support '{options.Format}' format.");
             }

@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineNetworkInterfaceConfiguration : IUtf8JsonSerializable, IJsonModel<VirtualMachineNetworkInterfaceConfiguration>
+    public partial class VirtualMachineNetworkInterfaceConfiguration : IUtf8JsonSerializable, IJsonModel<VirtualMachineNetworkInterfaceConfiguration>, IPersistableModel<VirtualMachineNetworkInterfaceConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineNetworkInterfaceConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -291,6 +292,114 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineNetworkInterfaceConfiguration(name, Optional.ToNullable(primary), Optional.ToNullable(deleteOption), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(disableTcpStateTracking), Optional.ToNullable(enableFpga), Optional.ToNullable(enableIPForwarding), networkSecurityGroup, dnsSettings.Value, Optional.ToList(ipConfigurations), dscpConfiguration, Optional.ToNullable(auxiliaryMode), Optional.ToNullable(auxiliarySku), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Primary))
+            {
+                builder.Append("  primary:");
+                var boolValue = Primary.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DeleteOption))
+            {
+                builder.Append("  deleteOption:");
+                builder.AppendLine($" '{DeleteOption.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnableAcceleratedNetworking))
+            {
+                builder.Append("  enableAcceleratedNetworking:");
+                var boolValue = EnableAcceleratedNetworking.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsTcpStateTrackingDisabled))
+            {
+                builder.Append("  disableTcpStateTracking:");
+                var boolValue = IsTcpStateTrackingDisabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EnableFpga))
+            {
+                builder.Append("  enableFpga:");
+                var boolValue = EnableFpga.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EnableIPForwarding))
+            {
+                builder.Append("  enableIPForwarding:");
+                var boolValue = EnableIPForwarding.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(NetworkSecurityGroup))
+            {
+                builder.Append("  networkSecurityGroup:");
+                AppendChildObject(builder, NetworkSecurityGroup, options, 2);
+            }
+
+            if (Optional.IsDefined(DnsSettings))
+            {
+                builder.Append("  dnsSettings:");
+                AppendChildObject(builder, DnsSettings, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(IPConfigurations))
+            {
+                builder.Append("  ipConfigurations:");
+                builder.AppendLine(" [");
+                foreach (var item in IPConfigurations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(DscpConfiguration))
+            {
+                builder.Append("  dscpConfiguration:");
+                AppendChildObject(builder, DscpConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(AuxiliaryMode))
+            {
+                builder.Append("  auxiliaryMode:");
+                builder.AppendLine($" '{AuxiliaryMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AuxiliarySku))
+            {
+                builder.Append("  auxiliarySku:");
+                builder.AppendLine($" '{AuxiliarySku.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VirtualMachineNetworkInterfaceConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineNetworkInterfaceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -299,6 +408,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineNetworkInterfaceConfiguration)} does not support '{options.Format}' format.");
             }
@@ -315,6 +426,8 @@ namespace Azure.ResourceManager.Compute.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVirtualMachineNetworkInterfaceConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineNetworkInterfaceConfiguration)} does not support '{options.Format}' format.");
             }

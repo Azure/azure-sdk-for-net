@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    public partial class VMwareVCenterData : IUtf8JsonSerializable, IJsonModel<VMwareVCenterData>
+    public partial class VMwareVCenterData : IUtf8JsonSerializable, IJsonModel<VMwareVCenterData>, IPersistableModel<VMwareVCenterData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareVCenterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -336,6 +337,150 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return new VMwareVCenterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, fqdn, Optional.ToNullable(port), version.Value, instanceUuid.Value, connectionStatus.Value, customResourceName.Value, credentials.Value, Optional.ToList(statuses), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                builder.Append("  extendedLocation:");
+                AppendChildObject(builder, ExtendedLocation, options, 2);
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(Uuid))
+            {
+                builder.Append("  uuid:");
+                builder.AppendLine($" '{Uuid}'");
+            }
+
+            if (Optional.IsDefined(Fqdn))
+            {
+                builder.Append("  fqdn:");
+                builder.AppendLine($" '{Fqdn}'");
+            }
+
+            if (Optional.IsDefined(Port))
+            {
+                builder.Append("  port:");
+                builder.AppendLine($" '{Port.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("  version:");
+                builder.AppendLine($" '{Version}'");
+            }
+
+            if (Optional.IsDefined(InstanceUuid))
+            {
+                builder.Append("  instanceUuid:");
+                builder.AppendLine($" '{InstanceUuid}'");
+            }
+
+            if (Optional.IsDefined(ConnectionStatus))
+            {
+                builder.Append("  connectionStatus:");
+                builder.AppendLine($" '{ConnectionStatus}'");
+            }
+
+            if (Optional.IsDefined(CustomResourceName))
+            {
+                builder.Append("  customResourceName:");
+                builder.AppendLine($" '{CustomResourceName}'");
+            }
+
+            if (Optional.IsDefined(Credentials))
+            {
+                builder.Append("  credentials:");
+                AppendChildObject(builder, Credentials, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Statuses))
+            {
+                builder.Append("  statuses:");
+                builder.AppendLine(" [");
+                foreach (var item in Statuses)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VMwareVCenterData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VMwareVCenterData>)this).GetFormatFromOptions(options) : options.Format;
@@ -344,6 +489,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VMwareVCenterData)} does not support '{options.Format}' format.");
             }
@@ -360,6 +507,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVMwareVCenterData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VMwareVCenterData)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    public partial class VMwareClusterData : IUtf8JsonSerializable, IJsonModel<VMwareClusterData>
+    public partial class VMwareClusterData : IUtf8JsonSerializable, IJsonModel<VMwareClusterData>, IPersistableModel<VMwareClusterData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -419,6 +420,194 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return new VMwareClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, kind.Value, uuid.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, Optional.ToList(statuses), customResourceName.Value, Optional.ToNullable(usedMemoryGB), Optional.ToNullable(totalMemoryGB), Optional.ToNullable(usedCpuMHz), Optional.ToNullable(totalCpuMHz), Optional.ToList(datastoreIds), Optional.ToList(networkIds), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                builder.Append("  extendedLocation:");
+                AppendChildObject(builder, ExtendedLocation, options, 2);
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(Uuid))
+            {
+                builder.Append("  uuid:");
+                builder.AppendLine($" '{Uuid}'");
+            }
+
+            if (Optional.IsDefined(VCenterId))
+            {
+                builder.Append("  vCenterId:");
+                builder.AppendLine($" '{VCenterId}'");
+            }
+
+            if (Optional.IsDefined(MoRefId))
+            {
+                builder.Append("  moRefId:");
+                builder.AppendLine($" '{MoRefId}'");
+            }
+
+            if (Optional.IsDefined(InventoryItemId))
+            {
+                builder.Append("  inventoryItemId:");
+                builder.AppendLine($" '{InventoryItemId}'");
+            }
+
+            if (Optional.IsDefined(MoName))
+            {
+                builder.Append("  moName:");
+                builder.AppendLine($" '{MoName}'");
+            }
+
+            if (Optional.IsCollectionDefined(Statuses))
+            {
+                builder.Append("  statuses:");
+                builder.AppendLine(" [");
+                foreach (var item in Statuses)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(CustomResourceName))
+            {
+                builder.Append("  customResourceName:");
+                builder.AppendLine($" '{CustomResourceName}'");
+            }
+
+            if (Optional.IsDefined(UsedMemoryGB))
+            {
+                builder.Append("  usedMemoryGB:");
+                builder.AppendLine($" '{UsedMemoryGB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalMemoryGB))
+            {
+                builder.Append("  totalMemoryGB:");
+                builder.AppendLine($" '{TotalMemoryGB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UsedCpuMHz))
+            {
+                builder.Append("  usedCpuMHz:");
+                builder.AppendLine($" '{UsedCpuMHz.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalCpuMHz))
+            {
+                builder.Append("  totalCpuMHz:");
+                builder.AppendLine($" '{TotalCpuMHz.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(DatastoreIds))
+            {
+                builder.Append("  datastoreIds:");
+                builder.AppendLine(" [");
+                foreach (var item in DatastoreIds)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(NetworkIds))
+            {
+                builder.Append("  networkIds:");
+                builder.AppendLine(" [");
+                foreach (var item in NetworkIds)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VMwareClusterData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VMwareClusterData>)this).GetFormatFromOptions(options) : options.Format;
@@ -427,6 +616,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VMwareClusterData)} does not support '{options.Format}' format.");
             }
@@ -443,6 +634,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVMwareClusterData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VMwareClusterData)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionAggregatedCostResult : IUtf8JsonSerializable, IJsonModel<ConsumptionAggregatedCostResult>
+    public partial class ConsumptionAggregatedCostResult : IUtf8JsonSerializable, IJsonModel<ConsumptionAggregatedCostResult>, IPersistableModel<ConsumptionAggregatedCostResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionAggregatedCostResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -355,6 +356,158 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionAggregatedCostResult(id, name, type, systemData.Value, billingPeriodId.Value, Optional.ToNullable(usageStart), Optional.ToNullable(usageEnd), Optional.ToNullable(azureCharges), Optional.ToNullable(marketplaceCharges), Optional.ToNullable(chargesBilledSeparately), currency.Value, Optional.ToList(children), Optional.ToList(includedSubscriptions), Optional.ToList(excludedSubscriptions), Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BillingPeriodId))
+            {
+                builder.Append("  billingPeriodId:");
+                builder.AppendLine($" '{BillingPeriodId}'");
+            }
+
+            if (Optional.IsDefined(UsageStartOn))
+            {
+                builder.Append("  usageStart:");
+                builder.AppendLine($" '{UsageStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UsageEndOn))
+            {
+                builder.Append("  usageEnd:");
+                builder.AppendLine($" '{UsageEndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AzureCharges))
+            {
+                builder.Append("  azureCharges:");
+                builder.AppendLine($" '{AzureCharges.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MarketplaceCharges))
+            {
+                builder.Append("  marketplaceCharges:");
+                builder.AppendLine($" '{MarketplaceCharges.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ChargesBilledSeparately))
+            {
+                builder.Append("  chargesBilledSeparately:");
+                builder.AppendLine($" '{ChargesBilledSeparately.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Currency))
+            {
+                builder.Append("  currency:");
+                builder.AppendLine($" '{Currency}'");
+            }
+
+            if (Optional.IsCollectionDefined(Children))
+            {
+                builder.Append("  children:");
+                builder.AppendLine(" [");
+                foreach (var item in Children)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(IncludedSubscriptions))
+            {
+                builder.Append("  includedSubscriptions:");
+                builder.AppendLine(" [");
+                foreach (var item in IncludedSubscriptions)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ExcludedSubscriptions))
+            {
+                builder.Append("  excludedSubscriptions:");
+                builder.AppendLine(" [");
+                foreach (var item in ExcludedSubscriptions)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ConsumptionAggregatedCostResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionAggregatedCostResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -363,6 +516,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionAggregatedCostResult)} does not support '{options.Format}' format.");
             }
@@ -379,6 +534,8 @@ namespace Azure.ResourceManager.Consumption.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConsumptionAggregatedCostResult(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionAggregatedCostResult)} does not support '{options.Format}' format.");
             }

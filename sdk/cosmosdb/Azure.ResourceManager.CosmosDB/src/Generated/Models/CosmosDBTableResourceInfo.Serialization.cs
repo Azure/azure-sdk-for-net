@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBTableResourceInfo : IUtf8JsonSerializable, IJsonModel<CosmosDBTableResourceInfo>
+    public partial class CosmosDBTableResourceInfo : IUtf8JsonSerializable, IJsonModel<CosmosDBTableResourceInfo>, IPersistableModel<CosmosDBTableResourceInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBTableResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -115,6 +116,44 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new CosmosDBTableResourceInfo(id, restoreParameters.Value, Optional.ToNullable(createMode), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TableName))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{TableName}'");
+            }
+
+            if (Optional.IsDefined(RestoreParameters))
+            {
+                builder.Append("  restoreParameters:");
+                AppendChildObject(builder, RestoreParameters, options, 2);
+            }
+
+            if (Optional.IsDefined(CreateMode))
+            {
+                builder.Append("  createMode:");
+                builder.AppendLine($" '{CreateMode.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<CosmosDBTableResourceInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBTableResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -123,6 +162,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CosmosDBTableResourceInfo)} does not support '{options.Format}' format.");
             }
@@ -139,6 +180,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCosmosDBTableResourceInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CosmosDBTableResourceInfo)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class DiskEncryptionSetData : IUtf8JsonSerializable, IJsonModel<DiskEncryptionSetData>
+    public partial class DiskEncryptionSetData : IUtf8JsonSerializable, IJsonModel<DiskEncryptionSetData>, IPersistableModel<DiskEncryptionSetData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskEncryptionSetData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -313,6 +314,133 @@ namespace Azure.ResourceManager.Compute
             return new DiskEncryptionSetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(encryptionType), activeKey.Value, Optional.ToList(previousKeys), provisioningState.Value, Optional.ToNullable(rotationToLatestKeyVersionEnabled), Optional.ToNullable(lastKeyRotationTimestamp), autoKeyRotationError.Value, federatedClientId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2);
+            }
+
+            if (Optional.IsDefined(EncryptionType))
+            {
+                builder.Append("  encryptionType:");
+                builder.AppendLine($" '{EncryptionType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ActiveKey))
+            {
+                builder.Append("  activeKey:");
+                AppendChildObject(builder, ActiveKey, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(PreviousKeys))
+            {
+                builder.Append("  previousKeys:");
+                builder.AppendLine(" [");
+                foreach (var item in PreviousKeys)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(RotationToLatestKeyVersionEnabled))
+            {
+                builder.Append("  rotationToLatestKeyVersionEnabled:");
+                var boolValue = RotationToLatestKeyVersionEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(LastKeyRotationTimestamp))
+            {
+                builder.Append("  lastKeyRotationTimestamp:");
+                builder.AppendLine($" '{LastKeyRotationTimestamp.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AutoKeyRotationError))
+            {
+                builder.Append("  autoKeyRotationError:");
+                AppendChildObject(builder, AutoKeyRotationError, options, 2);
+            }
+
+            if (Optional.IsDefined(FederatedClientId))
+            {
+                builder.Append("  federatedClientId:");
+                builder.AppendLine($" '{FederatedClientId}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DiskEncryptionSetData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DiskEncryptionSetData>)this).GetFormatFromOptions(options) : options.Format;
@@ -321,6 +449,8 @@ namespace Azure.ResourceManager.Compute
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DiskEncryptionSetData)} does not support '{options.Format}' format.");
             }
@@ -337,6 +467,8 @@ namespace Azure.ResourceManager.Compute
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDiskEncryptionSetData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DiskEncryptionSetData)} does not support '{options.Format}' format.");
             }

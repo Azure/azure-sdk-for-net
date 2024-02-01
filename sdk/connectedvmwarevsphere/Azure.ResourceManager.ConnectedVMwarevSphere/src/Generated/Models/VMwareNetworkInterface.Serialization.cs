@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class VMwareNetworkInterface : IUtf8JsonSerializable, IJsonModel<VMwareNetworkInterface>
+    public partial class VMwareNetworkInterface : IUtf8JsonSerializable, IJsonModel<VMwareNetworkInterface>, IPersistableModel<VMwareNetworkInterface>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareNetworkInterface>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -228,6 +229,102 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VMwareNetworkInterface(name.Value, label.Value, Optional.ToList(ipAddresses), macAddress.Value, networkId.Value, Optional.ToNullable(nicType), Optional.ToNullable(powerOnBoot), networkMoRefId.Value, networkMoName.Value, Optional.ToNullable(deviceKey), ipSettings.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Label))
+            {
+                builder.Append("  label:");
+                builder.AppendLine($" '{Label}'");
+            }
+
+            if (Optional.IsCollectionDefined(IPAddresses))
+            {
+                builder.Append("  ipAddresses:");
+                builder.AppendLine(" [");
+                foreach (var item in IPAddresses)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(MacAddress))
+            {
+                builder.Append("  macAddress:");
+                builder.AppendLine($" '{MacAddress}'");
+            }
+
+            if (Optional.IsDefined(NetworkId))
+            {
+                builder.Append("  networkId:");
+                builder.AppendLine($" '{NetworkId}'");
+            }
+
+            if (Optional.IsDefined(NicType))
+            {
+                builder.Append("  nicType:");
+                builder.AppendLine($" '{NicType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PowerOnBoot))
+            {
+                builder.Append("  powerOnBoot:");
+                builder.AppendLine($" '{PowerOnBoot.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NetworkMoRefId))
+            {
+                builder.Append("  networkMoRefId:");
+                builder.AppendLine($" '{NetworkMoRefId}'");
+            }
+
+            if (Optional.IsDefined(NetworkMoName))
+            {
+                builder.Append("  networkMoName:");
+                builder.AppendLine($" '{NetworkMoName}'");
+            }
+
+            if (Optional.IsDefined(DeviceKey))
+            {
+                builder.Append("  deviceKey:");
+                builder.AppendLine($" '{DeviceKey.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IPSettings))
+            {
+                builder.Append("  ipSettings:");
+                AppendChildObject(builder, IPSettings, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VMwareNetworkInterface>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VMwareNetworkInterface>)this).GetFormatFromOptions(options) : options.Format;
@@ -236,6 +333,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VMwareNetworkInterface)} does not support '{options.Format}' format.");
             }
@@ -252,6 +351,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVMwareNetworkInterface(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VMwareNetworkInterface)} does not support '{options.Format}' format.");
             }

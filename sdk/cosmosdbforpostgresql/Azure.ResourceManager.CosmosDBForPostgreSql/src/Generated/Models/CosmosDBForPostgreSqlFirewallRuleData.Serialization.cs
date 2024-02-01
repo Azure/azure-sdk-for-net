@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.CosmosDBForPostgreSql.Models;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
-    public partial class CosmosDBForPostgreSqlFirewallRuleData : IUtf8JsonSerializable, IJsonModel<CosmosDBForPostgreSqlFirewallRuleData>
+    public partial class CosmosDBForPostgreSqlFirewallRuleData : IUtf8JsonSerializable, IJsonModel<CosmosDBForPostgreSqlFirewallRuleData>, IPersistableModel<CosmosDBForPostgreSqlFirewallRuleData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlFirewallRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -174,6 +175,68 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             return new CosmosDBForPostgreSqlFirewallRuleData(id, name, type, systemData.Value, startIPAddress, endIPAddress, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(StartIPAddress))
+            {
+                builder.Append("  startIpAddress:");
+                builder.AppendLine($" '{StartIPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndIPAddress))
+            {
+                builder.Append("  endIpAddress:");
+                builder.AppendLine($" '{EndIPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<CosmosDBForPostgreSqlFirewallRuleData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlFirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
@@ -182,6 +245,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlFirewallRuleData)} does not support '{options.Format}' format.");
             }
@@ -198,6 +263,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCosmosDBForPostgreSqlFirewallRuleData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlFirewallRuleData)} does not support '{options.Format}' format.");
             }

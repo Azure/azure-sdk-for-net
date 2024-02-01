@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionCreditSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionCreditSummary>
+    public partial class ConsumptionCreditSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionCreditSummary>, IPersistableModel<ConsumptionCreditSummary>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionCreditSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -254,6 +255,98 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionCreditSummary(id, name, type, systemData.Value, balanceSummary.Value, pendingCreditAdjustments.Value, expiredCredit.Value, pendingEligibleCharges.Value, creditCurrency.Value, billingCurrency.Value, reseller.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BalanceSummary))
+            {
+                builder.Append("  balanceSummary:");
+                AppendChildObject(builder, BalanceSummary, options, 2);
+            }
+
+            if (Optional.IsDefined(PendingCreditAdjustments))
+            {
+                builder.Append("  pendingCreditAdjustments:");
+                AppendChildObject(builder, PendingCreditAdjustments, options, 2);
+            }
+
+            if (Optional.IsDefined(ExpiredCredit))
+            {
+                builder.Append("  expiredCredit:");
+                AppendChildObject(builder, ExpiredCredit, options, 2);
+            }
+
+            if (Optional.IsDefined(PendingEligibleCharges))
+            {
+                builder.Append("  pendingEligibleCharges:");
+                AppendChildObject(builder, PendingEligibleCharges, options, 2);
+            }
+
+            if (Optional.IsDefined(CreditCurrency))
+            {
+                builder.Append("  creditCurrency:");
+                builder.AppendLine($" '{CreditCurrency}'");
+            }
+
+            if (Optional.IsDefined(BillingCurrency))
+            {
+                builder.Append("  billingCurrency:");
+                builder.AppendLine($" '{BillingCurrency}'");
+            }
+
+            if (Optional.IsDefined(Reseller))
+            {
+                builder.Append("  reseller:");
+                AppendChildObject(builder, Reseller, options, 2);
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  eTag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ConsumptionCreditSummary>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionCreditSummary>)this).GetFormatFromOptions(options) : options.Format;
@@ -262,6 +355,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionCreditSummary)} does not support '{options.Format}' format.");
             }
@@ -278,6 +373,8 @@ namespace Azure.ResourceManager.Consumption.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConsumptionCreditSummary(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionCreditSummary)} does not support '{options.Format}' format.");
             }

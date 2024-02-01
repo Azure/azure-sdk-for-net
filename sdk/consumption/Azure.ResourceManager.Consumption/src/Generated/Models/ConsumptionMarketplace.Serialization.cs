@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionMarketplace : IUtf8JsonSerializable, IJsonModel<ConsumptionMarketplace>
+    public partial class ConsumptionMarketplace : IUtf8JsonSerializable, IJsonModel<ConsumptionMarketplace>, IPersistableModel<ConsumptionMarketplace>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionMarketplace>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -505,6 +506,231 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionMarketplace(id, name, type, systemData.Value, billingPeriodId.Value, Optional.ToNullable(usageStart), Optional.ToNullable(usageEnd), Optional.ToNullable(resourceRate), offerName.Value, resourceGroup.Value, additionalInfo.Value, orderNumber.Value, instanceName.Value, instanceId.Value, currency.Value, Optional.ToNullable(consumedQuantity), unitOfMeasure.Value, Optional.ToNullable(pretaxCost), Optional.ToNullable(isEstimated), Optional.ToNullable(meterId), Optional.ToNullable(subscriptionGuid), subscriptionName.Value, accountName.Value, departmentName.Value, consumedService.Value, costCenter.Value, additionalProperties.Value, publisherName.Value, planName.Value, Optional.ToNullable(isRecurringCharge), Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BillingPeriodId))
+            {
+                builder.Append("  billingPeriodId:");
+                builder.AppendLine($" '{BillingPeriodId}'");
+            }
+
+            if (Optional.IsDefined(UsageStartOn))
+            {
+                builder.Append("  usageStart:");
+                builder.AppendLine($" '{UsageStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UsageEndOn))
+            {
+                builder.Append("  usageEnd:");
+                builder.AppendLine($" '{UsageEndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResourceRate))
+            {
+                builder.Append("  resourceRate:");
+                builder.AppendLine($" '{ResourceRate.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OfferName))
+            {
+                builder.Append("  offerName:");
+                builder.AppendLine($" '{OfferName}'");
+            }
+
+            if (Optional.IsDefined(ResourceGroup))
+            {
+                builder.Append("  resourceGroup:");
+                builder.AppendLine($" '{ResourceGroup}'");
+            }
+
+            if (Optional.IsDefined(AdditionalInfo))
+            {
+                builder.Append("  additionalInfo:");
+                builder.AppendLine($" '{AdditionalInfo}'");
+            }
+
+            if (Optional.IsDefined(OrderNumber))
+            {
+                builder.Append("  orderNumber:");
+                builder.AppendLine($" '{OrderNumber}'");
+            }
+
+            if (Optional.IsDefined(InstanceName))
+            {
+                builder.Append("  instanceName:");
+                builder.AppendLine($" '{InstanceName}'");
+            }
+
+            if (Optional.IsDefined(InstanceId))
+            {
+                builder.Append("  instanceId:");
+                builder.AppendLine($" '{InstanceId}'");
+            }
+
+            if (Optional.IsDefined(Currency))
+            {
+                builder.Append("  currency:");
+                builder.AppendLine($" '{Currency}'");
+            }
+
+            if (Optional.IsDefined(ConsumedQuantity))
+            {
+                builder.Append("  consumedQuantity:");
+                builder.AppendLine($" '{ConsumedQuantity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UnitOfMeasure))
+            {
+                builder.Append("  unitOfMeasure:");
+                builder.AppendLine($" '{UnitOfMeasure}'");
+            }
+
+            if (Optional.IsDefined(PretaxCost))
+            {
+                builder.Append("  pretaxCost:");
+                builder.AppendLine($" '{PretaxCost.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsEstimated))
+            {
+                builder.Append("  isEstimated:");
+                var boolValue = IsEstimated.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(MeterId))
+            {
+                builder.Append("  meterId:");
+                builder.AppendLine($" '{MeterId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SubscriptionGuid))
+            {
+                builder.Append("  subscriptionGuid:");
+                builder.AppendLine($" '{SubscriptionGuid.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SubscriptionName))
+            {
+                builder.Append("  subscriptionName:");
+                builder.AppendLine($" '{SubscriptionName}'");
+            }
+
+            if (Optional.IsDefined(AccountName))
+            {
+                builder.Append("  accountName:");
+                builder.AppendLine($" '{AccountName}'");
+            }
+
+            if (Optional.IsDefined(DepartmentName))
+            {
+                builder.Append("  departmentName:");
+                builder.AppendLine($" '{DepartmentName}'");
+            }
+
+            if (Optional.IsDefined(ConsumedService))
+            {
+                builder.Append("  consumedService:");
+                builder.AppendLine($" '{ConsumedService}'");
+            }
+
+            if (Optional.IsDefined(CostCenter))
+            {
+                builder.Append("  costCenter:");
+                builder.AppendLine($" '{CostCenter}'");
+            }
+
+            if (Optional.IsDefined(AdditionalProperties))
+            {
+                builder.Append("  additionalProperties:");
+                builder.AppendLine($" '{AdditionalProperties}'");
+            }
+
+            if (Optional.IsDefined(PublisherName))
+            {
+                builder.Append("  publisherName:");
+                builder.AppendLine($" '{PublisherName}'");
+            }
+
+            if (Optional.IsDefined(PlanName))
+            {
+                builder.Append("  planName:");
+                builder.AppendLine($" '{PlanName}'");
+            }
+
+            if (Optional.IsDefined(IsRecurringCharge))
+            {
+                builder.Append("  isRecurringCharge:");
+                var boolValue = IsRecurringCharge.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ConsumptionMarketplace>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionMarketplace>)this).GetFormatFromOptions(options) : options.Format;
@@ -513,6 +739,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionMarketplace)} does not support '{options.Format}' format.");
             }
@@ -529,6 +757,8 @@ namespace Azure.ResourceManager.Consumption.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConsumptionMarketplace(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionMarketplace)} does not support '{options.Format}' format.");
             }

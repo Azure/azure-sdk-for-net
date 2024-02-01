@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>
+    public partial class MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>, IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -317,6 +318,129 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(id.Value, resultType, serializedAdditionalRawData, databaseName.Value, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(migrationState), Optional.ToNullable(incomingChanges), Optional.ToNullable(appliedChanges), Optional.ToNullable(cdcInsertCounter), Optional.ToNullable(cdcDeleteCounter), Optional.ToNullable(cdcUpdateCounter), Optional.ToNullable(fullLoadCompletedTables), Optional.ToNullable(fullLoadLoadingTables), Optional.ToNullable(fullLoadQueuedTables), Optional.ToNullable(fullLoadErroredTables), Optional.ToNullable(initializationCompleted), Optional.ToNullable(latency));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DatabaseName))
+            {
+                builder.Append("  databaseName:");
+                builder.AppendLine($" '{DatabaseName}'");
+            }
+
+            if (Optional.IsDefined(StartedOn))
+            {
+                builder.Append("  startedOn:");
+                builder.AppendLine($" '{StartedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndedOn))
+            {
+                builder.Append("  endedOn:");
+                builder.AppendLine($" '{EndedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MigrationState))
+            {
+                builder.Append("  migrationState:");
+                builder.AppendLine($" '{MigrationState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IncomingChanges))
+            {
+                builder.Append("  incomingChanges:");
+                builder.AppendLine($" '{IncomingChanges.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AppliedChanges))
+            {
+                builder.Append("  appliedChanges:");
+                builder.AppendLine($" '{AppliedChanges.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CdcInsertCounter))
+            {
+                builder.Append("  cdcInsertCounter:");
+                builder.AppendLine($" '{CdcInsertCounter.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CdcDeleteCounter))
+            {
+                builder.Append("  cdcDeleteCounter:");
+                builder.AppendLine($" '{CdcDeleteCounter.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CdcUpdateCounter))
+            {
+                builder.Append("  cdcUpdateCounter:");
+                builder.AppendLine($" '{CdcUpdateCounter.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FullLoadCompletedTables))
+            {
+                builder.Append("  fullLoadCompletedTables:");
+                builder.AppendLine($" '{FullLoadCompletedTables.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FullLoadLoadingTables))
+            {
+                builder.Append("  fullLoadLoadingTables:");
+                builder.AppendLine($" '{FullLoadLoadingTables.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FullLoadQueuedTables))
+            {
+                builder.Append("  fullLoadQueuedTables:");
+                builder.AppendLine($" '{FullLoadQueuedTables.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FullLoadErroredTables))
+            {
+                builder.Append("  fullLoadErroredTables:");
+                builder.AppendLine($" '{FullLoadErroredTables.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InitializationCompleted))
+            {
+                builder.Append("  initializationCompleted:");
+                var boolValue = InitializationCompleted.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Latency))
+            {
+                builder.Append("  latency:");
+                builder.AppendLine($" '{Latency.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id}'");
+            }
+
+            if (Optional.IsDefined(ResultType))
+            {
+                builder.Append("  resultType:");
+                builder.AppendLine($" '{ResultType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
@@ -325,6 +449,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel)} does not support '{options.Format}' format.");
             }
@@ -341,6 +467,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel)} does not support '{options.Format}' format.");
             }

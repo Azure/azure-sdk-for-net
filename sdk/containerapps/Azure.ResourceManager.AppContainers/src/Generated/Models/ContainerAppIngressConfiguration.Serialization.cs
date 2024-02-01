@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppIngressConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppIngressConfiguration>
+    public partial class ContainerAppIngressConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppIngressConfiguration>, IPersistableModel<ContainerAppIngressConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppIngressConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -283,6 +284,115 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppIngressConfiguration(fqdn.Value, Optional.ToNullable(external), Optional.ToNullable(targetPort), Optional.ToNullable(exposedPort), Optional.ToNullable(transport), Optional.ToList(traffic), Optional.ToList(customDomains), Optional.ToNullable(allowInsecure), Optional.ToList(ipSecurityRestrictions), stickySessions.Value, Optional.ToNullable(clientCertificateMode), corsPolicy.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Fqdn))
+            {
+                builder.Append("  fqdn:");
+                builder.AppendLine($" '{Fqdn}'");
+            }
+
+            if (Optional.IsDefined(External))
+            {
+                builder.Append("  external:");
+                var boolValue = External.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(TargetPort))
+            {
+                builder.Append("  targetPort:");
+                builder.AppendLine($" '{TargetPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExposedPort))
+            {
+                builder.Append("  exposedPort:");
+                builder.AppendLine($" '{ExposedPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Transport))
+            {
+                builder.Append("  transport:");
+                builder.AppendLine($" '{Transport.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Traffic))
+            {
+                builder.Append("  traffic:");
+                builder.AppendLine(" [");
+                foreach (var item in Traffic)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(CustomDomains))
+            {
+                builder.Append("  customDomains:");
+                builder.AppendLine(" [");
+                foreach (var item in CustomDomains)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(AllowInsecure))
+            {
+                builder.Append("  allowInsecure:");
+                var boolValue = AllowInsecure.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(IPSecurityRestrictions))
+            {
+                builder.Append("  ipSecurityRestrictions:");
+                builder.AppendLine(" [");
+                foreach (var item in IPSecurityRestrictions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(StickySessions))
+            {
+                builder.Append("  stickySessions:");
+                AppendChildObject(builder, StickySessions, options, 2);
+            }
+
+            if (Optional.IsDefined(ClientCertificateMode))
+            {
+                builder.Append("  clientCertificateMode:");
+                builder.AppendLine($" '{ClientCertificateMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CorsPolicy))
+            {
+                builder.Append("  corsPolicy:");
+                AppendChildObject(builder, CorsPolicy, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ContainerAppIngressConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIngressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -291,6 +401,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support '{options.Format}' format.");
             }
@@ -307,6 +419,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerAppIngressConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support '{options.Format}' format.");
             }

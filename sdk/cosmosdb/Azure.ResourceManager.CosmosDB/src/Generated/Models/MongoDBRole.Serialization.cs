@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class MongoDBRole : IUtf8JsonSerializable, IJsonModel<MongoDBRole>
+    public partial class MongoDBRole : IUtf8JsonSerializable, IJsonModel<MongoDBRole>, IPersistableModel<MongoDBRole>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBRole>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -99,6 +100,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new MongoDBRole(db.Value, role.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DBName))
+            {
+                builder.Append("  db:");
+                builder.AppendLine($" '{DBName}'");
+            }
+
+            if (Optional.IsDefined(Role))
+            {
+                builder.Append("  role:");
+                builder.AppendLine($" '{Role}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MongoDBRole>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBRole>)this).GetFormatFromOptions(options) : options.Format;
@@ -107,6 +140,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MongoDBRole)} does not support '{options.Format}' format.");
             }
@@ -123,6 +158,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMongoDBRole(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MongoDBRole)} does not support '{options.Format}' format.");
             }

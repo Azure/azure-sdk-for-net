@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineSoftwarePatchProperties : IUtf8JsonSerializable, IJsonModel<VirtualMachineSoftwarePatchProperties>
+    public partial class VirtualMachineSoftwarePatchProperties : IUtf8JsonSerializable, IJsonModel<VirtualMachineSoftwarePatchProperties>, IPersistableModel<VirtualMachineSoftwarePatchProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineSoftwarePatchProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -217,6 +218,96 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineSoftwarePatchProperties(patchId.Value, name.Value, version.Value, kbId.Value, Optional.ToList(classifications), Optional.ToNullable(rebootBehavior), activityId.Value, Optional.ToNullable(publishedDate), Optional.ToNullable(lastModifiedDateTime), Optional.ToNullable(assessmentState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PatchId))
+            {
+                builder.Append("  patchId:");
+                builder.AppendLine($" '{PatchId}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("  version:");
+                builder.AppendLine($" '{Version}'");
+            }
+
+            if (Optional.IsDefined(KbId))
+            {
+                builder.Append("  kbId:");
+                builder.AppendLine($" '{KbId}'");
+            }
+
+            if (Optional.IsCollectionDefined(Classifications))
+            {
+                builder.Append("  classifications:");
+                builder.AppendLine(" [");
+                foreach (var item in Classifications)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(RebootBehavior))
+            {
+                builder.Append("  rebootBehavior:");
+                builder.AppendLine($" '{RebootBehavior.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ActivityId))
+            {
+                builder.Append("  activityId:");
+                builder.AppendLine($" '{ActivityId}'");
+            }
+
+            if (Optional.IsDefined(PublishedOn))
+            {
+                builder.Append("  publishedDate:");
+                builder.AppendLine($" '{PublishedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("  lastModifiedDateTime:");
+                builder.AppendLine($" '{LastModifiedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AssessmentState))
+            {
+                builder.Append("  assessmentState:");
+                builder.AppendLine($" '{AssessmentState.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VirtualMachineSoftwarePatchProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineSoftwarePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -225,6 +316,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineSoftwarePatchProperties)} does not support '{options.Format}' format.");
             }
@@ -241,6 +334,8 @@ namespace Azure.ResourceManager.Compute.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVirtualMachineSoftwarePatchProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineSoftwarePatchProperties)} does not support '{options.Format}' format.");
             }

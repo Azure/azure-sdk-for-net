@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class SqlBackupSetInfo : IUtf8JsonSerializable, IJsonModel<SqlBackupSetInfo>
+    public partial class SqlBackupSetInfo : IUtf8JsonSerializable, IJsonModel<SqlBackupSetInfo>, IPersistableModel<SqlBackupSetInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlBackupSetInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -250,6 +251,109 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new SqlBackupSetInfo(Optional.ToNullable(backupSetId), firstLSN.Value, lastLSN.Value, backupType.Value, Optional.ToList(listOfBackupFiles), Optional.ToNullable(backupStartDate), Optional.ToNullable(backupFinishDate), Optional.ToNullable(isBackupRestored), Optional.ToNullable(hasBackupChecksums), Optional.ToNullable(familyCount), Optional.ToList(ignoreReasons), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BackupSetId))
+            {
+                builder.Append("  backupSetId:");
+                builder.AppendLine($" '{BackupSetId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FirstLSN))
+            {
+                builder.Append("  firstLSN:");
+                builder.AppendLine($" '{FirstLSN}'");
+            }
+
+            if (Optional.IsDefined(LastLSN))
+            {
+                builder.Append("  lastLSN:");
+                builder.AppendLine($" '{LastLSN}'");
+            }
+
+            if (Optional.IsDefined(BackupType))
+            {
+                builder.Append("  backupType:");
+                builder.AppendLine($" '{BackupType}'");
+            }
+
+            if (Optional.IsCollectionDefined(ListOfBackupFiles))
+            {
+                builder.Append("  listOfBackupFiles:");
+                builder.AppendLine(" [");
+                foreach (var item in ListOfBackupFiles)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(BackupStartOn))
+            {
+                builder.Append("  backupStartDate:");
+                builder.AppendLine($" '{BackupStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BackupFinishOn))
+            {
+                builder.Append("  backupFinishDate:");
+                builder.AppendLine($" '{BackupFinishOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsBackupRestored))
+            {
+                builder.Append("  isBackupRestored:");
+                var boolValue = IsBackupRestored.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(HasBackupChecksums))
+            {
+                builder.Append("  hasBackupChecksums:");
+                var boolValue = HasBackupChecksums.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(FamilyCount))
+            {
+                builder.Append("  familyCount:");
+                builder.AppendLine($" '{FamilyCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(IgnoreReasons))
+            {
+                builder.Append("  ignoreReasons:");
+                builder.AppendLine(" [");
+                foreach (var item in IgnoreReasons)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SqlBackupSetInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlBackupSetInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -258,6 +362,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SqlBackupSetInfo)} does not support '{options.Format}' format.");
             }
@@ -274,6 +380,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSqlBackupSetInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SqlBackupSetInfo)} does not support '{options.Format}' format.");
             }

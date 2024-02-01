@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionReservationDetail : IUtf8JsonSerializable, IJsonModel<ConsumptionReservationDetail>
+    public partial class ConsumptionReservationDetail : IUtf8JsonSerializable, IJsonModel<ConsumptionReservationDetail>, IPersistableModel<ConsumptionReservationDetail>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionReservationDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -324,6 +325,139 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionReservationDetail(id, name, type, systemData.Value, reservationOrderId.Value, instanceFlexibilityRatio.Value, instanceFlexibilityGroup.Value, reservationId.Value, skuName.Value, Optional.ToNullable(reservedHours), Optional.ToNullable(usageDate), Optional.ToNullable(usedHours), instanceId.Value, Optional.ToNullable(totalReservedQuantity), kind.Value, Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ReservationOrderId))
+            {
+                builder.Append("  reservationOrderId:");
+                builder.AppendLine($" '{ReservationOrderId}'");
+            }
+
+            if (Optional.IsDefined(InstanceFlexibilityRatio))
+            {
+                builder.Append("  instanceFlexibilityRatio:");
+                builder.AppendLine($" '{InstanceFlexibilityRatio}'");
+            }
+
+            if (Optional.IsDefined(InstanceFlexibilityGroup))
+            {
+                builder.Append("  instanceFlexibilityGroup:");
+                builder.AppendLine($" '{InstanceFlexibilityGroup}'");
+            }
+
+            if (Optional.IsDefined(ReservationId))
+            {
+                builder.Append("  reservationId:");
+                builder.AppendLine($" '{ReservationId}'");
+            }
+
+            if (Optional.IsDefined(SkuName))
+            {
+                builder.Append("  skuName:");
+                builder.AppendLine($" '{SkuName}'");
+            }
+
+            if (Optional.IsDefined(ReservedHours))
+            {
+                builder.Append("  reservedHours:");
+                builder.AppendLine($" '{ReservedHours.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ConsumptionOccurredOn))
+            {
+                builder.Append("  usageDate:");
+                builder.AppendLine($" '{ConsumptionOccurredOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UsedHours))
+            {
+                builder.Append("  usedHours:");
+                builder.AppendLine($" '{UsedHours.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InstanceId))
+            {
+                builder.Append("  instanceId:");
+                builder.AppendLine($" '{InstanceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalReservedQuantity))
+            {
+                builder.Append("  totalReservedQuantity:");
+                builder.AppendLine($" '{TotalReservedQuantity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ConsumptionReservationDetail>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionReservationDetail>)this).GetFormatFromOptions(options) : options.Format;
@@ -332,6 +466,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionReservationDetail)} does not support '{options.Format}' format.");
             }
@@ -348,6 +484,8 @@ namespace Azure.ResourceManager.Consumption.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConsumptionReservationDetail(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionReservationDetail)} does not support '{options.Format}' format.");
             }

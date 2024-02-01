@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxAccountCopyLogDetails : IUtf8JsonSerializable, IJsonModel<DataBoxAccountCopyLogDetails>
+    public partial class DataBoxAccountCopyLogDetails : IUtf8JsonSerializable, IJsonModel<DataBoxAccountCopyLogDetails>, IPersistableModel<DataBoxAccountCopyLogDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxAccountCopyLogDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -118,6 +119,50 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxAccountCopyLogDetails(copyLogDetailsType, serializedAdditionalRawData, accountName.Value, copyLogLink.Value, copyVerboseLogLink.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AccountName))
+            {
+                builder.Append("  accountName:");
+                builder.AppendLine($" '{AccountName}'");
+            }
+
+            if (Optional.IsDefined(CopyLogLink))
+            {
+                builder.Append("  copyLogLink:");
+                builder.AppendLine($" '{CopyLogLink}'");
+            }
+
+            if (Optional.IsDefined(CopyVerboseLogLink))
+            {
+                builder.Append("  copyVerboseLogLink:");
+                builder.AppendLine($" '{CopyVerboseLogLink}'");
+            }
+
+            if (Optional.IsDefined(CopyLogDetailsType))
+            {
+                builder.Append("  copyLogDetailsType:");
+                builder.AppendLine($" '{CopyLogDetailsType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DataBoxAccountCopyLogDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxAccountCopyLogDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -126,6 +171,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxAccountCopyLogDetails)} does not support '{options.Format}' format.");
             }
@@ -142,6 +189,8 @@ namespace Azure.ResourceManager.DataBox.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataBoxAccountCopyLogDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataBoxAccountCopyLogDetails)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBCollectionProgress : IUtf8JsonSerializable, IJsonModel<MongoDBCollectionProgress>
+    public partial class MongoDBCollectionProgress : IUtf8JsonSerializable, IJsonModel<MongoDBCollectionProgress>, IPersistableModel<MongoDBCollectionProgress>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBCollectionProgress>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -220,6 +221,117 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MongoDBCollectionProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, Optional.ToNullable(lastEventTime), Optional.ToNullable(lastReplayTime), name.Value, qualifiedName.Value, resultType, state, totalBytes, totalDocuments, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BytesCopied))
+            {
+                builder.Append("  bytesCopied:");
+                builder.AppendLine($" '{BytesCopied.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DocumentsCopied))
+            {
+                builder.Append("  documentsCopied:");
+                builder.AppendLine($" '{DocumentsCopied.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ElapsedTime))
+            {
+                builder.Append("  elapsedTime:");
+                builder.AppendLine($" '{ElapsedTime}'");
+            }
+
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                builder.Append("  errors:");
+                builder.AppendLine(" {");
+                foreach (var item in Errors)
+                {
+                    builder.Append($"    {item.Key}: ");
+
+                    AppendChildObject(builder, item.Value, options, 4);
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(EventsPending))
+            {
+                builder.Append("  eventsPending:");
+                builder.AppendLine($" '{EventsPending.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EventsReplayed))
+            {
+                builder.Append("  eventsReplayed:");
+                builder.AppendLine($" '{EventsReplayed.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastEventOn))
+            {
+                builder.Append("  lastEventTime:");
+                builder.AppendLine($" '{LastEventOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastReplayOn))
+            {
+                builder.Append("  lastReplayTime:");
+                builder.AppendLine($" '{LastReplayOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(QualifiedName))
+            {
+                builder.Append("  qualifiedName:");
+                builder.AppendLine($" '{QualifiedName}'");
+            }
+
+            if (Optional.IsDefined(ResultType))
+            {
+                builder.Append("  resultType:");
+                builder.AppendLine($" '{ResultType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalBytes))
+            {
+                builder.Append("  totalBytes:");
+                builder.AppendLine($" '{TotalBytes.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalDocuments))
+            {
+                builder.Append("  totalDocuments:");
+                builder.AppendLine($" '{TotalDocuments.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MongoDBCollectionProgress>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBCollectionProgress>)this).GetFormatFromOptions(options) : options.Format;
@@ -228,6 +340,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MongoDBCollectionProgress)} does not support '{options.Format}' format.");
             }
@@ -244,6 +358,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMongoDBCollectionProgress(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MongoDBCollectionProgress)} does not support '{options.Format}' format.");
             }

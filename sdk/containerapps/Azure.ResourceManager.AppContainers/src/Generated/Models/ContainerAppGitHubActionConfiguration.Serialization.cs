@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppGitHubActionConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppGitHubActionConfiguration>
+    public partial class ContainerAppGitHubActionConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppGitHubActionConfiguration>, IPersistableModel<ContainerAppGitHubActionConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppGitHubActionConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -184,6 +185,80 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppGitHubActionConfiguration(registryInfo.Value, azureCredentials.Value, contextPath.Value, gitHubPersonalAccessToken.Value, image.Value, publishType.Value, os.Value, runtimeStack.Value, runtimeVersion.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(RegistryInfo))
+            {
+                builder.Append("  registryInfo:");
+                AppendChildObject(builder, RegistryInfo, options, 2);
+            }
+
+            if (Optional.IsDefined(AzureCredentials))
+            {
+                builder.Append("  azureCredentials:");
+                AppendChildObject(builder, AzureCredentials, options, 2);
+            }
+
+            if (Optional.IsDefined(ContextPath))
+            {
+                builder.Append("  contextPath:");
+                builder.AppendLine($" '{ContextPath}'");
+            }
+
+            if (Optional.IsDefined(GitHubPersonalAccessToken))
+            {
+                builder.Append("  githubPersonalAccessToken:");
+                builder.AppendLine($" '{GitHubPersonalAccessToken}'");
+            }
+
+            if (Optional.IsDefined(Image))
+            {
+                builder.Append("  image:");
+                builder.AppendLine($" '{Image}'");
+            }
+
+            if (Optional.IsDefined(PublishType))
+            {
+                builder.Append("  publishType:");
+                builder.AppendLine($" '{PublishType}'");
+            }
+
+            if (Optional.IsDefined(OS))
+            {
+                builder.Append("  os:");
+                builder.AppendLine($" '{OS}'");
+            }
+
+            if (Optional.IsDefined(RuntimeStack))
+            {
+                builder.Append("  runtimeStack:");
+                builder.AppendLine($" '{RuntimeStack}'");
+            }
+
+            if (Optional.IsDefined(RuntimeVersion))
+            {
+                builder.Append("  runtimeVersion:");
+                builder.AppendLine($" '{RuntimeVersion}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ContainerAppGitHubActionConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppGitHubActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -192,6 +267,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support '{options.Format}' format.");
             }
@@ -208,6 +285,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerAppGitHubActionConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppGitHubActionConfiguration)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class DataTransferJobProperties : IUtf8JsonSerializable, IJsonModel<DataTransferJobProperties>
+    public partial class DataTransferJobProperties : IUtf8JsonSerializable, IJsonModel<DataTransferJobProperties>, IPersistableModel<DataTransferJobProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataTransferJobProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -190,6 +191,80 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new DataTransferJobProperties(jobName.Value, source, destination, status.Value, Optional.ToNullable(processedCount), Optional.ToNullable(totalCount), Optional.ToNullable(lastUpdatedUtcTime), Optional.ToNullable(workerCount), error.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(JobName))
+            {
+                builder.Append("  jobName:");
+                builder.AppendLine($" '{JobName}'");
+            }
+
+            if (Optional.IsDefined(Source))
+            {
+                builder.Append("  source:");
+                AppendChildObject(builder, Source, options, 2);
+            }
+
+            if (Optional.IsDefined(Destination))
+            {
+                builder.Append("  destination:");
+                AppendChildObject(builder, Destination, options, 2);
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status}'");
+            }
+
+            if (Optional.IsDefined(ProcessedCount))
+            {
+                builder.Append("  processedCount:");
+                builder.AppendLine($" '{ProcessedCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalCount))
+            {
+                builder.Append("  totalCount:");
+                builder.AppendLine($" '{TotalCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastUpdatedUtcOn))
+            {
+                builder.Append("  lastUpdatedUtcTime:");
+                builder.AppendLine($" '{LastUpdatedUtcOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WorkerCount))
+            {
+                builder.Append("  workerCount:");
+                builder.AppendLine($" '{WorkerCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Error))
+            {
+                builder.Append("  error:");
+                AppendChildObject(builder, Error, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DataTransferJobProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataTransferJobProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -198,6 +273,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataTransferJobProperties)} does not support '{options.Format}' format.");
             }
@@ -214,6 +291,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataTransferJobProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataTransferJobProperties)} does not support '{options.Format}' format.");
             }

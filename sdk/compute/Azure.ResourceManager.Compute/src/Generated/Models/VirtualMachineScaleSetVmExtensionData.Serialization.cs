@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class VirtualMachineScaleSetVmExtensionData : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetVmExtensionData>
+    public partial class VirtualMachineScaleSetVmExtensionData : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetVmExtensionData>, IPersistableModel<VirtualMachineScaleSetVmExtensionData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetVmExtensionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -356,6 +357,147 @@ namespace Azure.ResourceManager.Compute
             return new VirtualMachineScaleSetVmExtensionData(id, name, type, systemData.Value, Optional.ToNullable(location), forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisioningState.Value, instanceView.Value, Optional.ToNullable(suppressFailures), protectedSettingsFromKeyVault.Value, Optional.ToList(provisionAfterExtensions), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ForceUpdateTag))
+            {
+                builder.Append("  forceUpdateTag:");
+                builder.AppendLine($" '{ForceUpdateTag}'");
+            }
+
+            if (Optional.IsDefined(Publisher))
+            {
+                builder.Append("  publisher:");
+                builder.AppendLine($" '{Publisher}'");
+            }
+
+            if (Optional.IsDefined(ExtensionType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ExtensionType}'");
+            }
+
+            if (Optional.IsDefined(TypeHandlerVersion))
+            {
+                builder.Append("  typeHandlerVersion:");
+                builder.AppendLine($" '{TypeHandlerVersion}'");
+            }
+
+            if (Optional.IsDefined(AutoUpgradeMinorVersion))
+            {
+                builder.Append("  autoUpgradeMinorVersion:");
+                var boolValue = AutoUpgradeMinorVersion.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            {
+                builder.Append("  enableAutomaticUpgrade:");
+                var boolValue = EnableAutomaticUpgrade.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Settings))
+            {
+                builder.Append("  settings:");
+                builder.AppendLine($" '{Settings.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProtectedSettings))
+            {
+                builder.Append("  protectedSettings:");
+                builder.AppendLine($" '{ProtectedSettings.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(InstanceView))
+            {
+                builder.Append("  instanceView:");
+                AppendChildObject(builder, InstanceView, options, 2);
+            }
+
+            if (Optional.IsDefined(SuppressFailures))
+            {
+                builder.Append("  suppressFailures:");
+                var boolValue = SuppressFailures.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(KeyVaultProtectedSettings))
+            {
+                builder.Append("  protectedSettingsFromKeyVault:");
+                AppendChildObject(builder, KeyVaultProtectedSettings, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(ProvisionAfterExtensions))
+            {
+                builder.Append("  provisionAfterExtensions:");
+                builder.AppendLine(" [");
+                foreach (var item in ProvisionAfterExtensions)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VirtualMachineScaleSetVmExtensionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmExtensionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -364,6 +506,8 @@ namespace Azure.ResourceManager.Compute
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmExtensionData)} does not support '{options.Format}' format.");
             }
@@ -380,6 +524,8 @@ namespace Azure.ResourceManager.Compute
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVirtualMachineScaleSetVmExtensionData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmExtensionData)} does not support '{options.Format}' format.");
             }

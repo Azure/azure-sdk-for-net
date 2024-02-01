@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class ManagedCcfProperties : IUtf8JsonSerializable, IJsonModel<ManagedCcfProperties>
+    public partial class ManagedCcfProperties : IUtf8JsonSerializable, IJsonModel<ManagedCcfProperties>, IPersistableModel<ManagedCcfProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedCcfProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -188,6 +189,73 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             return new ManagedCcfProperties(appName.Value, appUri.Value, identityServiceUri.Value, Optional.ToList(memberIdentityCertificates), deploymentType.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(nodeCount), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AppName))
+            {
+                builder.Append("  appName:");
+                builder.AppendLine($" '{AppName}'");
+            }
+
+            if (Optional.IsDefined(AppUri))
+            {
+                builder.Append("  appUri:");
+                builder.AppendLine($" '{AppUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(IdentityServiceUri))
+            {
+                builder.Append("  identityServiceUri:");
+                builder.AppendLine($" '{IdentityServiceUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsCollectionDefined(MemberIdentityCertificates))
+            {
+                builder.Append("  memberIdentityCertificates:");
+                builder.AppendLine(" [");
+                foreach (var item in MemberIdentityCertificates)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(DeploymentType))
+            {
+                builder.Append("  deploymentType:");
+                AppendChildObject(builder, DeploymentType, options, 2);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NodeCount))
+            {
+                builder.Append("  nodeCount:");
+                builder.AppendLine($" '{NodeCount.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ManagedCcfProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedCcfProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -196,6 +264,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedCcfProperties)} does not support '{options.Format}' format.");
             }
@@ -212,6 +282,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeManagedCcfProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ManagedCcfProperties)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeUpdateDetails : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeUpdateDetails>
+    public partial class DataBoxEdgeUpdateDetails : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeUpdateDetails>, IPersistableModel<DataBoxEdgeUpdateDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeUpdateDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -200,6 +201,80 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeUpdateDetails(updateTitle.Value, Optional.ToNullable(updateSize), Optional.ToNullable(updateType), targetVersion.Value, friendlyVersionNumber.Value, Optional.ToNullable(estimatedInstallTimeInMins), Optional.ToNullable(rebootBehavior), Optional.ToNullable(installationImpact), Optional.ToNullable(status), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(UpdateTitle))
+            {
+                builder.Append("  updateTitle:");
+                builder.AppendLine($" '{UpdateTitle}'");
+            }
+
+            if (Optional.IsDefined(UpdateSizeInBytes))
+            {
+                builder.Append("  updateSize:");
+                builder.AppendLine($" '{UpdateSizeInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UpdateType))
+            {
+                builder.Append("  updateType:");
+                builder.AppendLine($" '{UpdateType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetVersion))
+            {
+                builder.Append("  targetVersion:");
+                builder.AppendLine($" '{TargetVersion}'");
+            }
+
+            if (Optional.IsDefined(FriendlyVersionNumber))
+            {
+                builder.Append("  friendlyVersionNumber:");
+                builder.AppendLine($" '{FriendlyVersionNumber}'");
+            }
+
+            if (Optional.IsDefined(EstimatedInstallTimeInMins))
+            {
+                builder.Append("  estimatedInstallTimeInMins:");
+                builder.AppendLine($" '{EstimatedInstallTimeInMins.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RebootBehavior))
+            {
+                builder.Append("  rebootBehavior:");
+                builder.AppendLine($" '{RebootBehavior.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InstallationImpact))
+            {
+                builder.Append("  installationImpact:");
+                builder.AppendLine($" '{InstallationImpact.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DataBoxEdgeUpdateDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeUpdateDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -208,6 +283,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support '{options.Format}' format.");
             }
@@ -224,6 +301,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataBoxEdgeUpdateDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeUpdateDetails)} does not support '{options.Format}' format.");
             }

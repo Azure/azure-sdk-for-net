@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ContainerInstance.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
-    public partial class ContainerGroupData : IUtf8JsonSerializable, IJsonModel<ContainerGroupData>
+    public partial class ContainerGroupData : IUtf8JsonSerializable, IJsonModel<ContainerGroupData>, IPersistableModel<ContainerGroupData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -513,6 +514,227 @@ namespace Azure.ResourceManager.ContainerInstance
             return new ContainerGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), identity, provisioningState.Value, containers, Optional.ToList(imageRegistryCredentials), Optional.ToNullable(restartPolicy), ipAddress.Value, osType, Optional.ToList(volumes), instanceView.Value, diagnostics.Value, Optional.ToList(subnetIds), dnsConfig.Value, Optional.ToNullable(sku), encryptionProperties.Value, Optional.ToList(initContainers), Optional.ToList(extensions), confidentialComputeProperties.Value, Optional.ToNullable(priority), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                builder.Append("  zones:");
+                builder.AppendLine(" [");
+                foreach (var item in Zones)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsCollectionDefined(Containers))
+            {
+                builder.Append("  containers:");
+                builder.AppendLine(" [");
+                foreach (var item in Containers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ImageRegistryCredentials))
+            {
+                builder.Append("  imageRegistryCredentials:");
+                builder.AppendLine(" [");
+                foreach (var item in ImageRegistryCredentials)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(RestartPolicy))
+            {
+                builder.Append("  restartPolicy:");
+                builder.AppendLine($" '{RestartPolicy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IPAddress))
+            {
+                builder.Append("  ipAddress:");
+                AppendChildObject(builder, IPAddress, options, 2);
+            }
+
+            if (Optional.IsDefined(OSType))
+            {
+                builder.Append("  osType:");
+                builder.AppendLine($" '{OSType.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Volumes))
+            {
+                builder.Append("  volumes:");
+                builder.AppendLine(" [");
+                foreach (var item in Volumes)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(InstanceView))
+            {
+                builder.Append("  instanceView:");
+                AppendChildObject(builder, InstanceView, options, 2);
+            }
+
+            if (Optional.IsDefined(Diagnostics))
+            {
+                builder.Append("  diagnostics:");
+                AppendChildObject(builder, Diagnostics, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(SubnetIds))
+            {
+                builder.Append("  subnetIds:");
+                builder.AppendLine(" [");
+                foreach (var item in SubnetIds)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(DnsConfig))
+            {
+                builder.Append("  dnsConfig:");
+                AppendChildObject(builder, DnsConfig, options, 2);
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                builder.AppendLine($" '{Sku.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EncryptionProperties))
+            {
+                builder.Append("  encryptionProperties:");
+                AppendChildObject(builder, EncryptionProperties, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(InitContainers))
+            {
+                builder.Append("  initContainers:");
+                builder.AppendLine(" [");
+                foreach (var item in InitContainers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Extensions))
+            {
+                builder.Append("  extensions:");
+                builder.AppendLine(" [");
+                foreach (var item in Extensions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ConfidentialComputeProperties))
+            {
+                builder.Append("  confidentialComputeProperties:");
+                AppendChildObject(builder, ConfidentialComputeProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(Priority))
+            {
+                builder.Append("  priority:");
+                builder.AppendLine($" '{Priority.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ContainerGroupData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupData>)this).GetFormatFromOptions(options) : options.Format;
@@ -521,6 +743,8 @@ namespace Azure.ResourceManager.ContainerInstance
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerGroupData)} does not support '{options.Format}' format.");
             }
@@ -537,6 +761,8 @@ namespace Azure.ResourceManager.ContainerInstance
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerGroupData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerGroupData)} does not support '{options.Format}' format.");
             }

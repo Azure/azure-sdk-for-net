@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrationStatusDetails : IUtf8JsonSerializable, IJsonModel<MigrationStatusDetails>
+    public partial class MigrationStatusDetails : IUtf8JsonSerializable, IJsonModel<MigrationStatusDetails>, IPersistableModel<MigrationStatusDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrationStatusDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -278,6 +279,130 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrationStatusDetails(migrationState.Value, fullBackupSetInfo.Value, lastRestoredBackupSetInfo.Value, Optional.ToList(activeBackupSets), Optional.ToList(invalidFiles), blobContainerName.Value, Optional.ToNullable(isFullBackupRestored), restoreBlockingReason.Value, completeRestoreErrorMessage.Value, Optional.ToList(fileUploadBlockingErrors), currentRestoringFilename.Value, lastRestoredFilename.Value, Optional.ToNullable(pendingLogBackupsCount), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MigrationState))
+            {
+                builder.Append("  migrationState:");
+                builder.AppendLine($" '{MigrationState}'");
+            }
+
+            if (Optional.IsDefined(FullBackupSetInfo))
+            {
+                builder.Append("  fullBackupSetInfo:");
+                AppendChildObject(builder, FullBackupSetInfo, options, 2);
+            }
+
+            if (Optional.IsDefined(LastRestoredBackupSetInfo))
+            {
+                builder.Append("  lastRestoredBackupSetInfo:");
+                AppendChildObject(builder, LastRestoredBackupSetInfo, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(ActiveBackupSets))
+            {
+                builder.Append("  activeBackupSets:");
+                builder.AppendLine(" [");
+                foreach (var item in ActiveBackupSets)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(InvalidFiles))
+            {
+                builder.Append("  invalidFiles:");
+                builder.AppendLine(" [");
+                foreach (var item in InvalidFiles)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(BlobContainerName))
+            {
+                builder.Append("  blobContainerName:");
+                builder.AppendLine($" '{BlobContainerName}'");
+            }
+
+            if (Optional.IsDefined(IsFullBackupRestored))
+            {
+                builder.Append("  isFullBackupRestored:");
+                var boolValue = IsFullBackupRestored.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RestoreBlockingReason))
+            {
+                builder.Append("  restoreBlockingReason:");
+                builder.AppendLine($" '{RestoreBlockingReason}'");
+            }
+
+            if (Optional.IsDefined(CompleteRestoreErrorMessage))
+            {
+                builder.Append("  completeRestoreErrorMessage:");
+                builder.AppendLine($" '{CompleteRestoreErrorMessage}'");
+            }
+
+            if (Optional.IsCollectionDefined(FileUploadBlockingErrors))
+            {
+                builder.Append("  fileUploadBlockingErrors:");
+                builder.AppendLine(" [");
+                foreach (var item in FileUploadBlockingErrors)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(CurrentRestoringFilename))
+            {
+                builder.Append("  currentRestoringFilename:");
+                builder.AppendLine($" '{CurrentRestoringFilename}'");
+            }
+
+            if (Optional.IsDefined(LastRestoredFilename))
+            {
+                builder.Append("  lastRestoredFilename:");
+                builder.AppendLine($" '{LastRestoredFilename}'");
+            }
+
+            if (Optional.IsDefined(PendingLogBackupsCount))
+            {
+                builder.Append("  pendingLogBackupsCount:");
+                builder.AppendLine($" '{PendingLogBackupsCount.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MigrationStatusDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrationStatusDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -286,6 +411,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MigrationStatusDetails)} does not support '{options.Format}' format.");
             }
@@ -302,6 +429,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMigrationStatusDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MigrationStatusDetails)} does not support '{options.Format}' format.");
             }

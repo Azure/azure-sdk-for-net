@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterLoadBalancerProfileManagedOutboundIPs : IUtf8JsonSerializable, IJsonModel<ManagedClusterLoadBalancerProfileManagedOutboundIPs>
+    public partial class ManagedClusterLoadBalancerProfileManagedOutboundIPs : IUtf8JsonSerializable, IJsonModel<ManagedClusterLoadBalancerProfileManagedOutboundIPs>, IPersistableModel<ManagedClusterLoadBalancerProfileManagedOutboundIPs>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterLoadBalancerProfileManagedOutboundIPs>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -107,6 +108,38 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterLoadBalancerProfileManagedOutboundIPs(Optional.ToNullable(count), Optional.ToNullable(countIPv6), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Count))
+            {
+                builder.Append("  count:");
+                builder.AppendLine($" '{Count.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CountIPv6))
+            {
+                builder.Append("  countIPv6:");
+                builder.AppendLine($" '{CountIPv6.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ManagedClusterLoadBalancerProfileManagedOutboundIPs>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterLoadBalancerProfileManagedOutboundIPs>)this).GetFormatFromOptions(options) : options.Format;
@@ -115,6 +148,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedClusterLoadBalancerProfileManagedOutboundIPs)} does not support '{options.Format}' format.");
             }
@@ -131,6 +166,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeManagedClusterLoadBalancerProfileManagedOutboundIPs(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ManagedClusterLoadBalancerProfileManagedOutboundIPs)} does not support '{options.Format}' format.");
             }
