@@ -14,11 +14,11 @@ using NUnit.Framework;
 
 namespace Azure.Monitor.Query.Tests
 {
-    public class LogsQueryClientClientLiveTests : RecordedTestBase<MonitorQueryTestEnvironment>
+    public class LogsQueryClientLiveTests : RecordedTestBase<MonitorQueryTestEnvironment>
     {
         private LogsTestData _logsTestData;
 
-        public LogsQueryClientClientLiveTests(bool isAsync) : base(isAsync)
+        public LogsQueryClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 

@@ -76,7 +76,7 @@ namespace Azure.Monitor.Query.Tests
                     { BoolColumnNameSent, false},
                     { FloatColumnNameSent, 1.1f },
                     { TimeGeneratedColumnNameSent, RetentionWindowStart.AddDays(5) }
-                },
+                }
             };
         }
 
@@ -99,9 +99,9 @@ namespace Azure.Monitor.Query.Tests
 
         private async Task InitializeData(string workspaceId, string workspaceKey)
         {
-            var count = await QueryCount(workspaceId);
+            var succeeded = await QueryCount(workspaceId);
 
-            if (count == 0)
+            if (!succeeded)
             {
                 var senderClient = new LogSenderClient(workspaceId, _testEnvironment.MonitorIngestionEndpoint, workspaceKey);
                 await senderClient.SendAsync(TableANameSent, TableA);
@@ -111,26 +111,36 @@ namespace Azure.Monitor.Query.Tests
                 return;
             }
 
-            while (count == 0)
+            while (!succeeded)
             {
                 await Task.Delay(TimeSpan.FromSeconds(30));
-                count = await QueryCount(workspaceId);
+                succeeded = await QueryCount(workspaceId);
             }
         }
 
-        private async Task<int> QueryCount(string workspaceId)
+        private async Task<bool> QueryCount(string workspaceId)
         {
             var logsClient = new LogsQueryClient(_testEnvironment.LogsEndpoint, _testEnvironment.Credential);
             try
             {
                 var countResponse = await logsClient.QueryWorkspaceAsync<int>(workspaceId, $"{TableAName} | count", DataTimeRange);
                 var count = countResponse.Value.Single();
-                return count;
+                var customColumnsQuery = await logsClient.QueryWorkspaceAsync<int>(workspaceId, $"{TableAName}" +
+                    $" | distinct * |" +
+                    $"project {StringColumnName}, {IntColumnName}, {BoolColumnName}, {FloatColumnName} |" +
+                    $"count",
+                    DataTimeRange);
+                var customColumns = customColumnsQuery.Value.Single();
+                if (count > 0 && customColumns > 0)
+                {
+                    return true;
+                }
             }
             catch
             {
-                return 0;
+                return false;
             }
+            return false;
         }
     }
 }
