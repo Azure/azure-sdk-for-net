@@ -12,12 +12,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The failed to remove participant event. </summary>
     internal partial class RemoveParticipantFailedInternal
     {
-        /// <summary> Initializes a new instance of RemoveParticipantFailedInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoveParticipantFailedInternal"/>. </summary>
         internal RemoveParticipantFailedInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of RemoveParticipantFailedInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoveParticipantFailedInternal"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>

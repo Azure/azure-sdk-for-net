@@ -15,7 +15,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The request payload start for call recording operation with call locator. </summary>
     internal partial class StartCallRecordingRequestInternal
     {
-        /// <summary> Initializes a new instance of StartCallRecordingRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartCallRecordingRequestInternal"/>. </summary>
         /// <param name="callLocator"> The call locator. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callLocator"/> is null. </exception>
         public StartCallRecordingRequestInternal(CallLocatorInternal callLocator)
@@ -25,6 +25,35 @@ namespace Azure.Communication.CallAutomation
             CallLocator = callLocator;
             AudioChannelParticipantOrdering = new ChangeTrackingList<CommunicationIdentifierModel>();
             ChannelAffinity = new ChangeTrackingList<ChannelAffinityInternal>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StartCallRecordingRequestInternal"/>. </summary>
+        /// <param name="callLocator"> The call locator. </param>
+        /// <param name="recordingStateCallbackUri"> The uri to send notifications to. </param>
+        /// <param name="recordingContentType"> The content type of call recording. </param>
+        /// <param name="recordingChannelType"> The channel type of call recording. </param>
+        /// <param name="recordingFormatType"> The format type of call recording. </param>
+        /// <param name="audioChannelParticipantOrdering">
+        /// The sequential order in which audio channels are assigned to participants in the unmixed recording.
+        /// When 'recordingChannelType' is set to 'unmixed' and `audioChannelParticipantOrdering is not specified,
+        /// the audio channel to participant mapping will be automatically assigned based on the order in which participant
+        /// first audio was detected.  Channel to participant mapping details can be found in the metadata of the recording.
+        /// </param>
+        /// <param name="channelAffinity">
+        /// The channel affinity of call recording
+        /// When 'recordingChannelType' is set to 'unmixed', if channelAffinity is not specified, 'channel' will be automatically assigned.
+        /// Channel-Participant mapping details can be found in the metadata of the recording.
+        /// ///
+        /// </param>
+        internal StartCallRecordingRequestInternal(CallLocatorInternal callLocator, string recordingStateCallbackUri, RecordingContent? recordingContentType, RecordingChannel? recordingChannelType, RecordingFormat? recordingFormatType, IList<CommunicationIdentifierModel> audioChannelParticipantOrdering, IList<ChannelAffinityInternal> channelAffinity)
+        {
+            CallLocator = callLocator;
+            RecordingStateCallbackUri = recordingStateCallbackUri;
+            RecordingContentType = recordingContentType;
+            RecordingChannelType = recordingChannelType;
+            RecordingFormatType = recordingFormatType;
+            AudioChannelParticipantOrdering = audioChannelParticipantOrdering;
+            ChannelAffinity = channelAffinity;
         }
 
         /// <summary> The call locator. </summary>

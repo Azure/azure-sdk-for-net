@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The request payload for answering the call. </summary>
     internal partial class AnswerCallRequestInternal
     {
-        /// <summary> Initializes a new instance of AnswerCallRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnswerCallRequestInternal"/>. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
         /// <param name="callbackUri"> The callback uri. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="callbackUri"/> is null. </exception>
@@ -27,6 +27,23 @@ namespace Azure.Communication.CallAutomation
             CallbackUri = callbackUri;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AnswerCallRequestInternal"/>. </summary>
+        /// <param name="incomingCallContext"> The context associated with the call. </param>
+        /// <param name="callbackUri"> The callback uri. </param>
+        /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
+        /// <param name="callIntelligenceOptions"> AI options for the call. </param>
+        /// <param name="answeredBy"> The identifier of the call automation entity which answers the call. </param>
+        /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
+        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, TranscriptionConfiguration transcriptionConfiguration)
+        {
+            IncomingCallContext = incomingCallContext;
+            CallbackUri = callbackUri;
+            OperationContext = operationContext;
+            CallIntelligenceOptions = callIntelligenceOptions;
+            AnsweredBy = answeredBy;
+            TranscriptionConfiguration = transcriptionConfiguration;
+        }
+
         /// <summary> The context associated with the call. </summary>
         public string IncomingCallContext { get; }
         /// <summary> The callback uri. </summary>
@@ -37,5 +54,7 @@ namespace Azure.Communication.CallAutomation
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
         /// <summary> The identifier of the call automation entity which answers the call. </summary>
         public CommunicationUserIdentifierModel AnsweredBy { get; set; }
+        /// <summary> Live Transcription Configuration. </summary>
+        public TranscriptionConfiguration TranscriptionConfiguration { get; set; }
     }
 }

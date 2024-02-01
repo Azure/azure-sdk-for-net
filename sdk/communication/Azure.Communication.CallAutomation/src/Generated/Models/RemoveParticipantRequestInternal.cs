@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The remove participant by identifier request. </summary>
     internal partial class RemoveParticipantRequestInternal
     {
-        /// <summary> Initializes a new instance of RemoveParticipantRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoveParticipantRequestInternal"/>. </summary>
         /// <param name="participantToRemove"> The participants to be removed from the call. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="participantToRemove"/> is null. </exception>
         public RemoveParticipantRequestInternal(CommunicationIdentifierModel participantToRemove)
@@ -22,6 +22,20 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(participantToRemove, nameof(participantToRemove));
 
             ParticipantToRemove = participantToRemove;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RemoveParticipantRequestInternal"/>. </summary>
+        /// <param name="participantToRemove"> The participants to be removed from the call. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="operationCallbackUri">
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </param>
+        internal RemoveParticipantRequestInternal(CommunicationIdentifierModel participantToRemove, string operationContext, string operationCallbackUri)
+        {
+            ParticipantToRemove = participantToRemove;
+            OperationContext = operationContext;
+            OperationCallbackUri = operationCallbackUri;
         }
 
         /// <summary> The participants to be removed from the call. </summary>

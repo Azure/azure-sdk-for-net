@@ -10,12 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The DialogLanguageChange. </summary>
     internal partial class DialogLanguageChangeInternal
     {
-        /// <summary> Initializes a new instance of DialogLanguageChangeInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogLanguageChangeInternal"/>. </summary>
         internal DialogLanguageChangeInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of DialogLanguageChangeInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogLanguageChangeInternal"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>

@@ -15,7 +15,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The Choice. </summary>
     public partial class RecognitionChoice
     {
-        /// <summary> Initializes a new instance of RecognitionChoice. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecognitionChoice"/>. </summary>
         /// <param name="label"> Identifier for a given choice. </param>
         /// <param name="phrases"> List of phrases to recognize. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="label"/> or <paramref name="phrases"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.Communication.CallAutomation
             Phrases = phrases.ToList();
         }
 
-        /// <summary> Initializes a new instance of RecognitionChoice. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecognitionChoice"/>. </summary>
         /// <param name="label"> Identifier for a given choice. </param>
         /// <param name="phrases"> List of phrases to recognize. </param>
         /// <param name="tone"></param>

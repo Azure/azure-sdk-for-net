@@ -10,12 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The ContinuousDtmfRecognitionToneReceived. </summary>
     public partial class ContinuousDtmfRecognitionToneReceived
     {
-        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneReceived. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinuousDtmfRecognitionToneReceived"/>. </summary>
         internal ContinuousDtmfRecognitionToneReceived()
         {
         }
 
-        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneReceived. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinuousDtmfRecognitionToneReceived"/>. </summary>
         /// <param name="sequenceId"> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </param>
         /// <param name="tone"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>

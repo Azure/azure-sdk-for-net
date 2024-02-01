@@ -10,12 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The RecognizeCompleted. </summary>
     internal partial class RecognizeCompletedInternal
     {
-        /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecognizeCompletedInternal"/>. </summary>
         internal RecognizeCompletedInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecognizeCompletedInternal"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>

@@ -10,12 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The DialogHangup. </summary>
     internal partial class DialogHangupInternal
     {
-        /// <summary> Initializes a new instance of DialogHangupInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogHangupInternal"/>. </summary>
         internal DialogHangupInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of DialogHangupInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogHangupInternal"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>

@@ -10,12 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The SendDtmfTonesCompleted. </summary>
     internal partial class SendDtmfTonesCompletedInternal
     {
-        /// <summary> Initializes a new instance of SendDtmfTonesCompletedInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="SendDtmfTonesCompletedInternal"/>. </summary>
         internal SendDtmfTonesCompletedInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of SendDtmfTonesCompletedInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="SendDtmfTonesCompletedInternal"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>

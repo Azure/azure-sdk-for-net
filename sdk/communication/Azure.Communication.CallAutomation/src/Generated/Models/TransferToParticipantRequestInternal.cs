@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The request payload for transferring call to a participant. </summary>
     internal partial class TransferToParticipantRequestInternal
     {
-        /// <summary> Initializes a new instance of TransferToParticipantRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="TransferToParticipantRequestInternal"/>. </summary>
         /// <param name="targetParticipant"> The identity of the target where call should be transferred to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
         public TransferToParticipantRequestInternal(CommunicationIdentifierModel targetParticipant)
@@ -22,6 +22,24 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
 
             TargetParticipant = targetParticipant;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TransferToParticipantRequestInternal"/>. </summary>
+        /// <param name="targetParticipant"> The identity of the target where call should be transferred to. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="transferee"> Transferee is the participant who is transferred away. </param>
+        /// <param name="operationCallbackUri">
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </param>
+        /// <param name="customCallingContext"> Used by customer to send custom calling context to targets. </param>
+        internal TransferToParticipantRequestInternal(CommunicationIdentifierModel targetParticipant, string operationContext, CommunicationIdentifierModel transferee, string operationCallbackUri, CustomCallingContextInternal customCallingContext)
+        {
+            TargetParticipant = targetParticipant;
+            OperationContext = operationContext;
+            Transferee = transferee;
+            OperationCallbackUri = operationCallbackUri;
+            CustomCallingContext = customCallingContext;
         }
 
         /// <summary> The identity of the target where call should be transferred to. </summary>

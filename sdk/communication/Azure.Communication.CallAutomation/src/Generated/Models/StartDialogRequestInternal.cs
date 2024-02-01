@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The StartDialogRequest. </summary>
     internal partial class StartDialogRequestInternal
     {
-        /// <summary> Initializes a new instance of StartDialogRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartDialogRequestInternal"/>. </summary>
         /// <param name="dialog">
         /// Defines the dialog.
         /// Please note <see cref="BaseDialog"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -25,6 +25,24 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(dialog, nameof(dialog));
 
             Dialog = dialog;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StartDialogRequestInternal"/>. </summary>
+        /// <param name="dialog">
+        /// Defines the dialog.
+        /// Please note <see cref="BaseDialog"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="PowerVirtualAgentsDialog"/>.
+        /// </param>
+        /// <param name="operationCallbackUri">
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        internal StartDialogRequestInternal(BaseDialog dialog, string operationCallbackUri, string operationContext)
+        {
+            Dialog = dialog;
+            OperationCallbackUri = operationCallbackUri;
+            OperationContext = operationContext;
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The custom calling context which will be sent to the target. </summary>
     internal partial class CustomCallingContextInternal
     {
-        /// <summary> Initializes a new instance of CustomCallingContextInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomCallingContextInternal"/>. </summary>
         public CustomCallingContextInternal()
         {
             VoipHeaders = new ChangeTrackingDictionary<string, string>();

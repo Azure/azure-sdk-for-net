@@ -10,12 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The ContinuousDtmfRecognitionStopped. </summary>
     public partial class ContinuousDtmfRecognitionStopped
     {
-        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionStopped. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinuousDtmfRecognitionStopped"/>. </summary>
         internal ContinuousDtmfRecognitionStopped()
         {
         }
 
-        /// <summary> Initializes a new instance of ContinuousDtmfRecognitionStopped. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContinuousDtmfRecognitionStopped"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>

@@ -10,12 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The RecognizeCanceled. </summary>
     public partial class RecognizeCanceled
     {
-        /// <summary> Initializes a new instance of RecognizeCanceled. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecognizeCanceled"/>. </summary>
         internal RecognizeCanceled()
         {
         }
 
-        /// <summary> Initializes a new instance of RecognizeCanceled. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecognizeCanceled"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>

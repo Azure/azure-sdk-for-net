@@ -10,12 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The call transfer failed event. </summary>
     public partial class CallTransferFailed
     {
-        /// <summary> Initializes a new instance of CallTransferFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallTransferFailed"/>. </summary>
         internal CallTransferFailed()
         {
         }
 
-        /// <summary> Initializes a new instance of CallTransferFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallTransferFailed"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>

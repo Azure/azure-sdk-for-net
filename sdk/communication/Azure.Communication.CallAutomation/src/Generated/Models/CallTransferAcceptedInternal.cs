@@ -12,12 +12,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The call transfer accepted event. </summary>
     internal partial class CallTransferAcceptedInternal
     {
-        /// <summary> Initializes a new instance of CallTransferAcceptedInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallTransferAcceptedInternal"/>. </summary>
         internal CallTransferAcceptedInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of CallTransferAcceptedInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallTransferAcceptedInternal"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>

@@ -10,9 +10,16 @@ namespace Azure.Communication.CallAutomation
     /// <summary> AI options for the call. </summary>
     internal partial class CallIntelligenceOptionsInternal
     {
-        /// <summary> Initializes a new instance of CallIntelligenceOptionsInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallIntelligenceOptionsInternal"/>. </summary>
         public CallIntelligenceOptionsInternal()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallIntelligenceOptionsInternal"/>. </summary>
+        /// <param name="cognitiveServicesEndpoint"> The identifier of the Cognitive Service resource assigned to this call. </param>
+        internal CallIntelligenceOptionsInternal(string cognitiveServicesEndpoint)
+        {
+            CognitiveServicesEndpoint = cognitiveServicesEndpoint;
         }
 
         /// <summary> The identifier of the Cognitive Service resource assigned to this call. </summary>

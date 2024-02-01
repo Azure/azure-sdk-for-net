@@ -12,12 +12,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The participants successfully added event. </summary>
     internal partial class AddParticipantSucceededInternal
     {
-        /// <summary> Initializes a new instance of AddParticipantSucceededInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantSucceededInternal"/>. </summary>
         internal AddParticipantSucceededInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of AddParticipantSucceededInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantSucceededInternal"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>

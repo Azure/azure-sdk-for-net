@@ -49,6 +49,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("callIntelligenceOptions"u8);
                 writer.WriteObjectValue(CallIntelligenceOptions);
             }
+            if (Optional.IsDefined(TranscriptionConfiguration))
+            {
+                writer.WritePropertyName("transcriptionConfiguration"u8);
+                writer.WriteObjectValue(TranscriptionConfiguration);
+            }
             writer.WriteEndObject();
         }
     }

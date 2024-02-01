@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> Request payload for cancelling add participant request. </summary>
     internal partial class CancelAddParticipantRequestInternal
     {
-        /// <summary> Initializes a new instance of CancelAddParticipantRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CancelAddParticipantRequestInternal"/>. </summary>
         /// <param name="invitationId"> Invitation ID used to add a participant. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="invitationId"/> is null. </exception>
         public CancelAddParticipantRequestInternal(string invitationId)
@@ -21,6 +21,20 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(invitationId, nameof(invitationId));
 
             InvitationId = invitationId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CancelAddParticipantRequestInternal"/>. </summary>
+        /// <param name="invitationId"> Invitation ID used to add a participant. </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="operationCallbackUri">
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </param>
+        internal CancelAddParticipantRequestInternal(string invitationId, string operationContext, string operationCallbackUri)
+        {
+            InvitationId = invitationId;
+            OperationContext = operationContext;
+            OperationCallbackUri = operationCallbackUri;
         }
 
         /// <summary> Invitation ID used to add a participant. </summary>
