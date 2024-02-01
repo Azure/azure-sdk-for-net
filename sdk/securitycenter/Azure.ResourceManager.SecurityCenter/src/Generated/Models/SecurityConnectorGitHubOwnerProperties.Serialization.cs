@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityConnectorGitHubOwnerProperties : IUtf8JsonSerializable, IJsonModel<SecurityConnectorGitHubOwnerProperties>
+    public partial class SecurityConnectorGitHubOwnerProperties : IUtf8JsonSerializable, IJsonModel<SecurityConnectorGitHubOwnerProperties>, IPersistableModel<SecurityConnectorGitHubOwnerProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityConnectorGitHubOwnerProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -159,6 +160,62 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityConnectorGitHubOwnerProperties(provisioningStatusMessage.Value, Optional.ToNullable(provisioningStatusUpdateTimeUtc), Optional.ToNullable(provisioningState), ownerUrl.Value, gitHubInternalId.Value, Optional.ToNullable(onboardingState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProvisioningStatusMessage))
+            {
+                builder.Append("  provisioningStatusMessage:");
+                builder.AppendLine($" '{ProvisioningStatusMessage}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningStatusUpdateTimeUtc))
+            {
+                builder.Append("  provisioningStatusUpdateTimeUtc:");
+                builder.AppendLine($" '{ProvisioningStatusUpdateTimeUtc.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OwnerUri))
+            {
+                builder.Append("  ownerUrl:");
+                builder.AppendLine($" '{OwnerUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(GitHubInternalId))
+            {
+                builder.Append("  gitHubInternalId:");
+                builder.AppendLine($" '{GitHubInternalId}'");
+            }
+
+            if (Optional.IsDefined(OnboardingState))
+            {
+                builder.Append("  onboardingState:");
+                builder.AppendLine($" '{OnboardingState.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SecurityConnectorGitHubOwnerProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityConnectorGitHubOwnerProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -167,6 +224,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityConnectorGitHubOwnerProperties)} does not support '{options.Format}' format.");
             }
@@ -183,6 +242,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityConnectorGitHubOwnerProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityConnectorGitHubOwnerProperties)} does not support '{options.Format}' format.");
             }

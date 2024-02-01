@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SyncGroupData : IUtf8JsonSerializable, IJsonModel<SyncGroupData>
+    public partial class SyncGroupData : IUtf8JsonSerializable, IJsonModel<SyncGroupData>, IPersistableModel<SyncGroupData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SyncGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -325,6 +326,130 @@ namespace Azure.ResourceManager.Sql
             return new SyncGroupData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(interval), Optional.ToNullable(lastSyncTime), Optional.ToNullable(conflictResolutionPolicy), syncDatabaseId.Value, hubDatabaseUserName.Value, hubDatabasePassword.Value, Optional.ToNullable(syncState), schema.Value, Optional.ToNullable(enableConflictLogging), Optional.ToNullable(conflictLoggingRetentionInDays), Optional.ToNullable(usePrivateLinkConnection), privateEndpointName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsDefined(Interval))
+            {
+                builder.Append("  interval:");
+                builder.AppendLine($" '{Interval.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastSyncOn))
+            {
+                builder.Append("  lastSyncTime:");
+                builder.AppendLine($" '{LastSyncOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ConflictResolutionPolicy))
+            {
+                builder.Append("  conflictResolutionPolicy:");
+                builder.AppendLine($" '{ConflictResolutionPolicy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SyncDatabaseId))
+            {
+                builder.Append("  syncDatabaseId:");
+                builder.AppendLine($" '{SyncDatabaseId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HubDatabaseUserName))
+            {
+                builder.Append("  hubDatabaseUserName:");
+                builder.AppendLine($" '{HubDatabaseUserName}'");
+            }
+
+            if (Optional.IsDefined(HubDatabasePassword))
+            {
+                builder.Append("  hubDatabasePassword:");
+                builder.AppendLine($" '{HubDatabasePassword}'");
+            }
+
+            if (Optional.IsDefined(SyncState))
+            {
+                builder.Append("  syncState:");
+                builder.AppendLine($" '{SyncState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Schema))
+            {
+                builder.Append("  schema:");
+                AppendChildObject(builder, Schema, options, 2);
+            }
+
+            if (Optional.IsDefined(IsConflictLoggingEnabled))
+            {
+                builder.Append("  enableConflictLogging:");
+                var boolValue = IsConflictLoggingEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ConflictLoggingRetentionInDays))
+            {
+                builder.Append("  conflictLoggingRetentionInDays:");
+                builder.AppendLine($" '{ConflictLoggingRetentionInDays.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UsePrivateLinkConnection))
+            {
+                builder.Append("  usePrivateLinkConnection:");
+                var boolValue = UsePrivateLinkConnection.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(PrivateEndpointName))
+            {
+                builder.Append("  privateEndpointName:");
+                builder.AppendLine($" '{PrivateEndpointName}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SyncGroupData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SyncGroupData>)this).GetFormatFromOptions(options) : options.Format;
@@ -333,6 +458,8 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SyncGroupData)} does not support '{options.Format}' format.");
             }
@@ -349,6 +476,8 @@ namespace Azure.ResourceManager.Sql
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSyncGroupData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SyncGroupData)} does not support '{options.Format}' format.");
             }

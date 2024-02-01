@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    internal partial class MoverResourceList : IUtf8JsonSerializable, IJsonModel<MoverResourceList>
+    internal partial class MoverResourceList : IUtf8JsonSerializable, IJsonModel<MoverResourceList>, IPersistableModel<MoverResourceList>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverResourceList>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -152,6 +153,55 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return new MoverResourceList(Optional.ToList(value), nextLink.Value, summaryCollection.Value, Optional.ToNullable(totalCount), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Value))
+            {
+                builder.Append("  value:");
+                builder.AppendLine(" [");
+                foreach (var item in Value)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(NextLink))
+            {
+                builder.Append("  nextLink:");
+                builder.AppendLine($" '{NextLink}'");
+            }
+
+            if (Optional.IsDefined(SummaryCollection))
+            {
+                builder.Append("  summaryCollection:");
+                AppendChildObject(builder, SummaryCollection, options, 2);
+            }
+
+            if (Optional.IsDefined(TotalCount))
+            {
+                builder.Append("  totalCount:");
+                builder.AppendLine($" '{TotalCount.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MoverResourceList>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MoverResourceList>)this).GetFormatFromOptions(options) : options.Format;
@@ -160,6 +210,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MoverResourceList)} does not support '{options.Format}' format.");
             }
@@ -176,6 +228,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMoverResourceList(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MoverResourceList)} does not support '{options.Format}' format.");
             }

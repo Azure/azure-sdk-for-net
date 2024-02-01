@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class PartnerServerInfo : IUtf8JsonSerializable, IJsonModel<PartnerServerInfo>
+    public partial class PartnerServerInfo : IUtf8JsonSerializable, IJsonModel<PartnerServerInfo>, IPersistableModel<PartnerServerInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerServerInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -115,6 +116,44 @@ namespace Azure.ResourceManager.Sql.Models
             return new PartnerServerInfo(id, Optional.ToNullable(location), Optional.ToNullable(replicationRole), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReplicationRole))
+            {
+                builder.Append("  replicationRole:");
+                builder.AppendLine($" '{ReplicationRole.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PartnerServerInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PartnerServerInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -123,6 +162,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PartnerServerInfo)} does not support '{options.Format}' format.");
             }
@@ -139,6 +180,8 @@ namespace Azure.ResourceManager.Sql.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePartnerServerInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PartnerServerInfo)} does not support '{options.Format}' format.");
             }

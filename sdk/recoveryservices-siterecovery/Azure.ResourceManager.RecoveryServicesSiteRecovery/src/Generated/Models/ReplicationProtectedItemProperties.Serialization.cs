@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ReplicationProtectedItemProperties : IUtf8JsonSerializable, IJsonModel<ReplicationProtectedItemProperties>
+    public partial class ReplicationProtectedItemProperties : IUtf8JsonSerializable, IJsonModel<ReplicationProtectedItemProperties>, IPersistableModel<ReplicationProtectedItemProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationProtectedItemProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -475,6 +476,221 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ReplicationProtectedItemProperties(friendlyName.Value, protectedItemType.Value, protectableItemId.Value, recoveryServicesProviderId.Value, primaryFabricFriendlyName.Value, primaryFabricProvider.Value, recoveryFabricFriendlyName.Value, recoveryFabricId.Value, primaryProtectionContainerFriendlyName.Value, recoveryProtectionContainerFriendlyName.Value, protectionState.Value, protectionStateDescription.Value, activeLocation.Value, testFailoverState.Value, testFailoverStateDescription.Value, switchProviderState.Value, switchProviderStateDescription.Value, Optional.ToList(allowedOperations), replicationHealth.Value, failoverHealth.Value, Optional.ToList(healthErrors), policyId.Value, policyFriendlyName.Value, Optional.ToNullable(lastSuccessfulFailoverTime), Optional.ToNullable(lastSuccessfulTestFailoverTime), currentScenario.Value, failoverRecoveryPointId.Value, providerSpecificDetails.Value, recoveryContainerId.Value, Optional.ToNullable(eventCorrelationId), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsDefined(ProtectedItemType))
+            {
+                builder.Append("  protectedItemType:");
+                builder.AppendLine($" '{ProtectedItemType}'");
+            }
+
+            if (Optional.IsDefined(ProtectableItemId))
+            {
+                builder.Append("  protectableItemId:");
+                builder.AppendLine($" '{ProtectableItemId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecoveryServicesProviderId))
+            {
+                builder.Append("  recoveryServicesProviderId:");
+                builder.AppendLine($" '{RecoveryServicesProviderId}'");
+            }
+
+            if (Optional.IsDefined(PrimaryFabricFriendlyName))
+            {
+                builder.Append("  primaryFabricFriendlyName:");
+                builder.AppendLine($" '{PrimaryFabricFriendlyName}'");
+            }
+
+            if (Optional.IsDefined(PrimaryFabricProvider))
+            {
+                builder.Append("  primaryFabricProvider:");
+                builder.AppendLine($" '{PrimaryFabricProvider}'");
+            }
+
+            if (Optional.IsDefined(RecoveryFabricFriendlyName))
+            {
+                builder.Append("  recoveryFabricFriendlyName:");
+                builder.AppendLine($" '{RecoveryFabricFriendlyName}'");
+            }
+
+            if (Optional.IsDefined(RecoveryFabricId))
+            {
+                builder.Append("  recoveryFabricId:");
+                builder.AppendLine($" '{RecoveryFabricId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrimaryProtectionContainerFriendlyName))
+            {
+                builder.Append("  primaryProtectionContainerFriendlyName:");
+                builder.AppendLine($" '{PrimaryProtectionContainerFriendlyName}'");
+            }
+
+            if (Optional.IsDefined(RecoveryProtectionContainerFriendlyName))
+            {
+                builder.Append("  recoveryProtectionContainerFriendlyName:");
+                builder.AppendLine($" '{RecoveryProtectionContainerFriendlyName}'");
+            }
+
+            if (Optional.IsDefined(ProtectionState))
+            {
+                builder.Append("  protectionState:");
+                builder.AppendLine($" '{ProtectionState}'");
+            }
+
+            if (Optional.IsDefined(ProtectionStateDescription))
+            {
+                builder.Append("  protectionStateDescription:");
+                builder.AppendLine($" '{ProtectionStateDescription}'");
+            }
+
+            if (Optional.IsDefined(ActiveLocation))
+            {
+                builder.Append("  activeLocation:");
+                builder.AppendLine($" '{ActiveLocation}'");
+            }
+
+            if (Optional.IsDefined(TestFailoverState))
+            {
+                builder.Append("  testFailoverState:");
+                builder.AppendLine($" '{TestFailoverState}'");
+            }
+
+            if (Optional.IsDefined(TestFailoverStateDescription))
+            {
+                builder.Append("  testFailoverStateDescription:");
+                builder.AppendLine($" '{TestFailoverStateDescription}'");
+            }
+
+            if (Optional.IsDefined(SwitchProviderState))
+            {
+                builder.Append("  switchProviderState:");
+                builder.AppendLine($" '{SwitchProviderState}'");
+            }
+
+            if (Optional.IsDefined(SwitchProviderStateDescription))
+            {
+                builder.Append("  switchProviderStateDescription:");
+                builder.AppendLine($" '{SwitchProviderStateDescription}'");
+            }
+
+            if (Optional.IsCollectionDefined(AllowedOperations))
+            {
+                builder.Append("  allowedOperations:");
+                builder.AppendLine(" [");
+                foreach (var item in AllowedOperations)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ReplicationHealth))
+            {
+                builder.Append("  replicationHealth:");
+                builder.AppendLine($" '{ReplicationHealth}'");
+            }
+
+            if (Optional.IsDefined(FailoverHealth))
+            {
+                builder.Append("  failoverHealth:");
+                builder.AppendLine($" '{FailoverHealth}'");
+            }
+
+            if (Optional.IsCollectionDefined(HealthErrors))
+            {
+                builder.Append("  healthErrors:");
+                builder.AppendLine(" [");
+                foreach (var item in HealthErrors)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(PolicyId))
+            {
+                builder.Append("  policyId:");
+                builder.AppendLine($" '{PolicyId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PolicyFriendlyName))
+            {
+                builder.Append("  policyFriendlyName:");
+                builder.AppendLine($" '{PolicyFriendlyName}'");
+            }
+
+            if (Optional.IsDefined(LastSuccessfulFailoverOn))
+            {
+                builder.Append("  lastSuccessfulFailoverTime:");
+                builder.AppendLine($" '{LastSuccessfulFailoverOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastSuccessfulTestFailoverOn))
+            {
+                builder.Append("  lastSuccessfulTestFailoverTime:");
+                builder.AppendLine($" '{LastSuccessfulTestFailoverOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CurrentScenario))
+            {
+                builder.Append("  currentScenario:");
+                AppendChildObject(builder, CurrentScenario, options, 2);
+            }
+
+            if (Optional.IsDefined(FailoverRecoveryPointId))
+            {
+                builder.Append("  failoverRecoveryPointId:");
+                builder.AppendLine($" '{FailoverRecoveryPointId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProviderSpecificDetails))
+            {
+                builder.Append("  providerSpecificDetails:");
+                AppendChildObject(builder, ProviderSpecificDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(RecoveryContainerId))
+            {
+                builder.Append("  recoveryContainerId:");
+                builder.AppendLine($" '{RecoveryContainerId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EventCorrelationId))
+            {
+                builder.Append("  eventCorrelationId:");
+                builder.AppendLine($" '{EventCorrelationId.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ReplicationProtectedItemProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ReplicationProtectedItemProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -483,6 +699,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ReplicationProtectedItemProperties)} does not support '{options.Format}' format.");
             }
@@ -499,6 +717,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeReplicationProtectedItemProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ReplicationProtectedItemProperties)} does not support '{options.Format}' format.");
             }

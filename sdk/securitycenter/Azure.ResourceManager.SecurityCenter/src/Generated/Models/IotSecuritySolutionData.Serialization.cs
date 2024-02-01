@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class IotSecuritySolutionData : IUtf8JsonSerializable, IJsonModel<IotSecuritySolutionData>
+    public partial class IotSecuritySolutionData : IUtf8JsonSerializable, IJsonModel<IotSecuritySolutionData>, IPersistableModel<IotSecuritySolutionData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotSecuritySolutionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -393,6 +394,179 @@ namespace Azure.ResourceManager.SecurityCenter
             return new IotSecuritySolutionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, workspace.Value, displayName.Value, Optional.ToNullable(status), Optional.ToList(export), Optional.ToList(disabledDataSources), Optional.ToList(iotHubs), userDefinedResources.Value, Optional.ToList(autoDiscoveredResources), Optional.ToList(recommendationsConfiguration), Optional.ToNullable(unmaskedIPLoggingStatus), Optional.ToList(additionalWorkspaces), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Workspace))
+            {
+                builder.Append("  workspace:");
+                builder.AppendLine($" '{Workspace}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Export))
+            {
+                builder.Append("  export:");
+                builder.AppendLine(" [");
+                foreach (var item in Export)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(DisabledDataSources))
+            {
+                builder.Append("  disabledDataSources:");
+                builder.AppendLine(" [");
+                foreach (var item in DisabledDataSources)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(IotHubs))
+            {
+                builder.Append("  iotHubs:");
+                builder.AppendLine(" [");
+                foreach (var item in IotHubs)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(UserDefinedResources))
+            {
+                builder.Append("  userDefinedResources:");
+                AppendChildObject(builder, UserDefinedResources, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(AutoDiscoveredResources))
+            {
+                builder.Append("  autoDiscoveredResources:");
+                builder.AppendLine(" [");
+                foreach (var item in AutoDiscoveredResources)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(RecommendationsConfiguration))
+            {
+                builder.Append("  recommendationsConfiguration:");
+                builder.AppendLine(" [");
+                foreach (var item in RecommendationsConfiguration)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(UnmaskedIPLoggingStatus))
+            {
+                builder.Append("  unmaskedIpLoggingStatus:");
+                builder.AppendLine($" '{UnmaskedIPLoggingStatus.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(AdditionalWorkspaces))
+            {
+                builder.Append("  additionalWorkspaces:");
+                builder.AppendLine(" [");
+                foreach (var item in AdditionalWorkspaces)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<IotSecuritySolutionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IotSecuritySolutionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -401,6 +575,8 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IotSecuritySolutionData)} does not support '{options.Format}' format.");
             }
@@ -417,6 +593,8 @@ namespace Azure.ResourceManager.SecurityCenter
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeIotSecuritySolutionData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(IotSecuritySolutionData)} does not support '{options.Format}' format.");
             }

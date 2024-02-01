@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class ResourceCertificateAndAcsDetails : IUtf8JsonSerializable, IJsonModel<ResourceCertificateAndAcsDetails>
+    public partial class ResourceCertificateAndAcsDetails : IUtf8JsonSerializable, IJsonModel<ResourceCertificateAndAcsDetails>, IPersistableModel<ResourceCertificateAndAcsDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceCertificateAndAcsDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -224,6 +225,98 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new ResourceCertificateAndAcsDetails(authType, certificate.Value, friendlyName.Value, issuer.Value, Optional.ToNullable(resourceId), subject.Value, thumbprint.Value, Optional.ToNullable(validFrom), Optional.ToNullable(validTo), serializedAdditionalRawData, globalAcsNamespace, globalAcsHostName, globalAcsRPRealm);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(GlobalAcsNamespace))
+            {
+                builder.Append("  globalAcsNamespace:");
+                builder.AppendLine($" '{GlobalAcsNamespace}'");
+            }
+
+            if (Optional.IsDefined(GlobalAcsHostName))
+            {
+                builder.Append("  globalAcsHostName:");
+                builder.AppendLine($" '{GlobalAcsHostName}'");
+            }
+
+            if (Optional.IsDefined(GlobalAcsRPRealm))
+            {
+                builder.Append("  globalAcsRPRealm:");
+                builder.AppendLine($" '{GlobalAcsRPRealm}'");
+            }
+
+            if (Optional.IsDefined(AuthType))
+            {
+                builder.Append("  authType:");
+                builder.AppendLine($" '{AuthType}'");
+            }
+
+            if (Optional.IsDefined(Certificate))
+            {
+                builder.Append("  certificate:");
+                builder.AppendLine($" '{Certificate.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsDefined(Issuer))
+            {
+                builder.Append("  issuer:");
+                builder.AppendLine($" '{Issuer}'");
+            }
+
+            if (Optional.IsDefined(ResourceId))
+            {
+                builder.Append("  resourceId:");
+                builder.AppendLine($" '{ResourceId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Subject))
+            {
+                builder.Append("  subject:");
+                builder.AppendLine($" '{Subject}'");
+            }
+
+            if (Optional.IsDefined(Thumbprint))
+            {
+                builder.Append("  thumbprint:");
+                builder.AppendLine($" '{Thumbprint.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ValidStartOn))
+            {
+                builder.Append("  validFrom:");
+                builder.AppendLine($" '{ValidStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ValidEndOn))
+            {
+                builder.Append("  validTo:");
+                builder.AppendLine($" '{ValidEndOn.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ResourceCertificateAndAcsDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceCertificateAndAcsDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -232,6 +325,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ResourceCertificateAndAcsDetails)} does not support '{options.Format}' format.");
             }
@@ -248,6 +343,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeResourceCertificateAndAcsDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ResourceCertificateAndAcsDetails)} does not support '{options.Format}' format.");
             }

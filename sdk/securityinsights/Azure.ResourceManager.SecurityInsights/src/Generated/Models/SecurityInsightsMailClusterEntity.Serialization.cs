@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsMailClusterEntity : IUtf8JsonSerializable, IJsonModel<SecurityInsightsMailClusterEntity>
+    public partial class SecurityInsightsMailClusterEntity : IUtf8JsonSerializable, IJsonModel<SecurityInsightsMailClusterEntity>, IPersistableModel<SecurityInsightsMailClusterEntity>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsMailClusterEntity>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -451,6 +452,190 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new SecurityInsightsMailClusterEntity(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToDictionary(additionalData), friendlyName.Value, Optional.ToList(networkMessageIds), countByDeliveryStatus.Value, countByThreatType.Value, countByProtectionStatus.Value, Optional.ToList(threats), query.Value, Optional.ToNullable(queryTime), Optional.ToNullable(mailCount), Optional.ToNullable(isVolumeAnomaly), source.Value, clusterSourceIdentifier.Value, clusterSourceType.Value, Optional.ToNullable(clusterQueryStartTime), Optional.ToNullable(clusterQueryEndTime), clusterGroup.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(AdditionalData))
+            {
+                builder.Append("  additionalData:");
+                builder.AppendLine(" {");
+                foreach (var item in AdditionalData)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value.ToString()}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsCollectionDefined(NetworkMessageIds))
+            {
+                builder.Append("  networkMessageIds:");
+                builder.AppendLine(" [");
+                foreach (var item in NetworkMessageIds)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(CountByDeliveryStatus))
+            {
+                builder.Append("  countByDeliveryStatus:");
+                builder.AppendLine($" '{CountByDeliveryStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CountByThreatType))
+            {
+                builder.Append("  countByThreatType:");
+                builder.AppendLine($" '{CountByThreatType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CountByProtectionStatus))
+            {
+                builder.Append("  countByProtectionStatus:");
+                builder.AppendLine($" '{CountByProtectionStatus.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Threats))
+            {
+                builder.Append("  threats:");
+                builder.AppendLine(" [");
+                foreach (var item in Threats)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Query))
+            {
+                builder.Append("  query:");
+                builder.AppendLine($" '{Query}'");
+            }
+
+            if (Optional.IsDefined(QueryOn))
+            {
+                builder.Append("  queryTime:");
+                builder.AppendLine($" '{QueryOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MailCount))
+            {
+                builder.Append("  mailCount:");
+                builder.AppendLine($" '{MailCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsVolumeAnomaly))
+            {
+                builder.Append("  isVolumeAnomaly:");
+                var boolValue = IsVolumeAnomaly.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Source))
+            {
+                builder.Append("  source:");
+                builder.AppendLine($" '{Source}'");
+            }
+
+            if (Optional.IsDefined(ClusterSourceIdentifier))
+            {
+                builder.Append("  clusterSourceIdentifier:");
+                builder.AppendLine($" '{ClusterSourceIdentifier}'");
+            }
+
+            if (Optional.IsDefined(ClusterSourceType))
+            {
+                builder.Append("  clusterSourceType:");
+                builder.AppendLine($" '{ClusterSourceType}'");
+            }
+
+            if (Optional.IsDefined(ClusterQueryStartOn))
+            {
+                builder.Append("  clusterQueryStartTime:");
+                builder.AppendLine($" '{ClusterQueryStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClusterQueryEndOn))
+            {
+                builder.Append("  clusterQueryEndTime:");
+                builder.AppendLine($" '{ClusterQueryEndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClusterGroup))
+            {
+                builder.Append("  clusterGroup:");
+                builder.AppendLine($" '{ClusterGroup}'");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SecurityInsightsMailClusterEntity>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailClusterEntity>)this).GetFormatFromOptions(options) : options.Format;
@@ -459,6 +644,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsMailClusterEntity)} does not support '{options.Format}' format.");
             }
@@ -475,6 +662,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityInsightsMailClusterEntity(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsMailClusterEntity)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoverResourcePropertiesMoveStatus : IUtf8JsonSerializable, IJsonModel<MoverResourcePropertiesMoveStatus>
+    public partial class MoverResourcePropertiesMoveStatus : IUtf8JsonSerializable, IJsonModel<MoverResourcePropertiesMoveStatus>, IPersistableModel<MoverResourcePropertiesMoveStatus>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverResourcePropertiesMoveStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -138,6 +139,44 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return new MoverResourcePropertiesMoveStatus(Optional.ToNullable(moveState), jobStatus.Value, errors.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MoveState))
+            {
+                builder.Append("  moveState:");
+                builder.AppendLine($" '{MoveState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(JobStatus))
+            {
+                builder.Append("  jobStatus:");
+                AppendChildObject(builder, JobStatus, options, 2);
+            }
+
+            if (Optional.IsDefined(Errors))
+            {
+                builder.Append("  errors:");
+                AppendChildObject(builder, Errors, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MoverResourcePropertiesMoveStatus>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MoverResourcePropertiesMoveStatus>)this).GetFormatFromOptions(options) : options.Format;
@@ -146,6 +185,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MoverResourcePropertiesMoveStatus)} does not support '{options.Format}' format.");
             }
@@ -162,6 +203,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMoverResourcePropertiesMoveStatus(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MoverResourcePropertiesMoveStatus)} does not support '{options.Format}' format.");
             }

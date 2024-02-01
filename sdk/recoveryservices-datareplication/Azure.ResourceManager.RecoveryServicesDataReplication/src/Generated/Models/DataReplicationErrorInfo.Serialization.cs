@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class DataReplicationErrorInfo : IUtf8JsonSerializable, IJsonModel<DataReplicationErrorInfo>
+    public partial class DataReplicationErrorInfo : IUtf8JsonSerializable, IJsonModel<DataReplicationErrorInfo>, IPersistableModel<DataReplicationErrorInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationErrorInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -158,6 +159,68 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationErrorInfo(code.Value, type.Value, severity.Value, Optional.ToNullable(creationTime), message.Value, causes.Value, recommendation.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Code))
+            {
+                builder.Append("  code:");
+                builder.AppendLine($" '{Code}'");
+            }
+
+            if (Optional.IsDefined(ErrorModelType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ErrorModelType}'");
+            }
+
+            if (Optional.IsDefined(Severity))
+            {
+                builder.Append("  severity:");
+                builder.AppendLine($" '{Severity}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  creationTime:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Message))
+            {
+                builder.Append("  message:");
+                builder.AppendLine($" '{Message}'");
+            }
+
+            if (Optional.IsDefined(Causes))
+            {
+                builder.Append("  causes:");
+                builder.AppendLine($" '{Causes}'");
+            }
+
+            if (Optional.IsDefined(Recommendation))
+            {
+                builder.Append("  recommendation:");
+                builder.AppendLine($" '{Recommendation}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DataReplicationErrorInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -166,6 +229,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationErrorInfo)} does not support '{options.Format}' format.");
             }
@@ -182,6 +247,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataReplicationErrorInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationErrorInfo)} does not support '{options.Format}' format.");
             }

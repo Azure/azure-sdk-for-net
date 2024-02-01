@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ScriptStatus : IUtf8JsonSerializable, IJsonModel<ScriptStatus>
+    public partial class ScriptStatus : IUtf8JsonSerializable, IJsonModel<ScriptStatus>, IPersistableModel<ScriptStatus>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScriptStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -160,6 +161,62 @@ namespace Azure.ResourceManager.Resources.Models
             return new ScriptStatus(containerInstanceId.Value, storageAccountId.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(expirationTime), error.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ContainerInstanceId))
+            {
+                builder.Append("  containerInstanceId:");
+                builder.AppendLine($" '{ContainerInstanceId}'");
+            }
+
+            if (Optional.IsDefined(StorageAccountId))
+            {
+                builder.Append("  storageAccountId:");
+                builder.AppendLine($" '{StorageAccountId}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startTime:");
+                builder.AppendLine($" '{StartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndOn))
+            {
+                builder.Append("  endTime:");
+                builder.AppendLine($" '{EndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExpireOn))
+            {
+                builder.Append("  expirationTime:");
+                builder.AppendLine($" '{ExpireOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Error))
+            {
+                builder.Append("  error:");
+                AppendChildObject(builder, Error, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ScriptStatus>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScriptStatus>)this).GetFormatFromOptions(options) : options.Format;
@@ -168,6 +225,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ScriptStatus)} does not support '{options.Format}' format.");
             }
@@ -184,6 +243,8 @@ namespace Azure.ResourceManager.Resources.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeScriptStatus(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ScriptStatus)} does not support '{options.Format}' format.");
             }

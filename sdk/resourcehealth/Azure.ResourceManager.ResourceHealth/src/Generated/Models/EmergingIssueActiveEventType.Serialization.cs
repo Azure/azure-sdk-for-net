@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    public partial class EmergingIssueActiveEventType : IUtf8JsonSerializable, IJsonModel<EmergingIssueActiveEventType>
+    public partial class EmergingIssueActiveEventType : IUtf8JsonSerializable, IJsonModel<EmergingIssueActiveEventType>, IPersistableModel<EmergingIssueActiveEventType>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EmergingIssueActiveEventType>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -221,6 +222,92 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             return new EmergingIssueActiveEventType(title.Value, description.Value, trackingId.Value, Optional.ToNullable(startTime), cloud.Value, Optional.ToNullable(severity), Optional.ToNullable(stage), Optional.ToNullable(published), Optional.ToNullable(lastModifiedTime), Optional.ToList(impacts), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Title))
+            {
+                builder.Append("  title:");
+                builder.AppendLine($" '{Title}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(TrackingId))
+            {
+                builder.Append("  trackingId:");
+                builder.AppendLine($" '{TrackingId}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startTime:");
+                builder.AppendLine($" '{StartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Cloud))
+            {
+                builder.Append("  cloud:");
+                builder.AppendLine($" '{Cloud}'");
+            }
+
+            if (Optional.IsDefined(Severity))
+            {
+                builder.Append("  severity:");
+                builder.AppendLine($" '{Severity.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Stage))
+            {
+                builder.Append("  stage:");
+                builder.AppendLine($" '{Stage.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsPublished))
+            {
+                builder.Append("  published:");
+                var boolValue = IsPublished.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("  lastModifiedTime:");
+                builder.AppendLine($" '{LastModifiedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Impacts))
+            {
+                builder.Append("  impacts:");
+                builder.AppendLine(" [");
+                foreach (var item in Impacts)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<EmergingIssueActiveEventType>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EmergingIssueActiveEventType>)this).GetFormatFromOptions(options) : options.Format;
@@ -229,6 +316,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EmergingIssueActiveEventType)} does not support '{options.Format}' format.");
             }
@@ -245,6 +334,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEmergingIssueActiveEventType(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EmergingIssueActiveEventType)} does not support '{options.Format}' format.");
             }

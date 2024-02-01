@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmRecoveryPoint : IUtf8JsonSerializable, IJsonModel<IaasVmRecoveryPoint>
+    public partial class IaasVmRecoveryPoint : IUtf8JsonSerializable, IJsonModel<IaasVmRecoveryPoint>, IPersistableModel<IaasVmRecoveryPoint>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IaasVmRecoveryPoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -378,6 +379,173 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new IaasVmRecoveryPoint(objectType, serializedAdditionalRawData, recoveryPointType.Value, Optional.ToNullable(recoveryPointTime), recoveryPointAdditionalInfo.Value, sourceVmStorageType.Value, Optional.ToNullable(isSourceVmEncrypted), keyAndSecret.Value, Optional.ToNullable(isInstantIlrSessionActive), Optional.ToList(recoveryPointTierDetails), Optional.ToNullable(isManagedVirtualMachine), virtualMachineSize.Value, Optional.ToNullable(originalStorageAccountOption), osType.Value, recoveryPointDiskConfiguration.Value, Optional.ToList(zones), Optional.ToDictionary(recoveryPointMoveReadinessInfo), securityType.Value, recoveryPointProperties.Value, Optional.ToNullable(isPrivateAccessEnabledOnAnyDisk), extendedLocation);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(RecoveryPointType))
+            {
+                builder.Append("  recoveryPointType:");
+                builder.AppendLine($" '{RecoveryPointType}'");
+            }
+
+            if (Optional.IsDefined(RecoveryPointOn))
+            {
+                builder.Append("  recoveryPointTime:");
+                builder.AppendLine($" '{RecoveryPointOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecoveryPointAdditionalInfo))
+            {
+                builder.Append("  recoveryPointAdditionalInfo:");
+                builder.AppendLine($" '{RecoveryPointAdditionalInfo}'");
+            }
+
+            if (Optional.IsDefined(SourceVmStorageType))
+            {
+                builder.Append("  sourceVMStorageType:");
+                builder.AppendLine($" '{SourceVmStorageType}'");
+            }
+
+            if (Optional.IsDefined(IsSourceVmEncrypted))
+            {
+                builder.Append("  isSourceVMEncrypted:");
+                var boolValue = IsSourceVmEncrypted.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(KeyAndSecret))
+            {
+                builder.Append("  keyAndSecret:");
+                AppendChildObject(builder, KeyAndSecret, options, 2);
+            }
+
+            if (Optional.IsDefined(IsInstantIlrSessionActive))
+            {
+                builder.Append("  isInstantIlrSessionActive:");
+                var boolValue = IsInstantIlrSessionActive.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(RecoveryPointTierDetails))
+            {
+                builder.Append("  recoveryPointTierDetails:");
+                builder.AppendLine(" [");
+                foreach (var item in RecoveryPointTierDetails)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsManagedVirtualMachine))
+            {
+                builder.Append("  isManagedVirtualMachine:");
+                var boolValue = IsManagedVirtualMachine.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(VirtualMachineSize))
+            {
+                builder.Append("  virtualMachineSize:");
+                builder.AppendLine($" '{VirtualMachineSize}'");
+            }
+
+            if (Optional.IsDefined(OriginalStorageAccountOption))
+            {
+                builder.Append("  originalStorageAccountOption:");
+                var boolValue = OriginalStorageAccountOption.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(OSType))
+            {
+                builder.Append("  osType:");
+                builder.AppendLine($" '{OSType}'");
+            }
+
+            if (Optional.IsDefined(RecoveryPointDiskConfiguration))
+            {
+                builder.Append("  recoveryPointDiskConfiguration:");
+                AppendChildObject(builder, RecoveryPointDiskConfiguration, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                builder.Append("  zones:");
+                builder.AppendLine(" [");
+                foreach (var item in Zones)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(RecoveryPointMoveReadinessInfo))
+            {
+                builder.Append("  recoveryPointMoveReadinessInfo:");
+                builder.AppendLine(" {");
+                foreach (var item in RecoveryPointMoveReadinessInfo)
+                {
+                    builder.Append($"    {item.Key}: ");
+
+                    AppendChildObject(builder, item.Value, options, 4);
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(SecurityType))
+            {
+                builder.Append("  securityType:");
+                builder.AppendLine($" '{SecurityType}'");
+            }
+
+            if (Optional.IsDefined(RecoveryPointProperties))
+            {
+                builder.Append("  recoveryPointProperties:");
+                AppendChildObject(builder, RecoveryPointProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(IsPrivateAccessEnabledOnAnyDisk))
+            {
+                builder.Append("  isPrivateAccessEnabledOnAnyDisk:");
+                var boolValue = IsPrivateAccessEnabledOnAnyDisk.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                builder.Append("  extendedLocation:");
+                AppendChildObject(builder, ExtendedLocation, options, 2);
+            }
+
+            if (Optional.IsDefined(ObjectType))
+            {
+                builder.Append("  objectType:");
+                builder.AppendLine($" '{ObjectType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<IaasVmRecoveryPoint>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IaasVmRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
@@ -386,6 +554,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IaasVmRecoveryPoint)} does not support '{options.Format}' format.");
             }
@@ -402,6 +572,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeIaasVmRecoveryPoint(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(IaasVmRecoveryPoint)} does not support '{options.Format}' format.");
             }

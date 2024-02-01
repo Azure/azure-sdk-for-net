@@ -8,14 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using System.Xml;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class RecommendedActionData : IUtf8JsonSerializable, IJsonModel<RecommendedActionData>
+    public partial class RecommendedActionData : IUtf8JsonSerializable, IJsonModel<RecommendedActionData>, IPersistableModel<RecommendedActionData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecommendedActionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -579,6 +581,241 @@ namespace Azure.ResourceManager.Sql
             return new RecommendedActionData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(location), recommendationReason.Value, Optional.ToNullable(validSince), Optional.ToNullable(lastRefresh), state.Value, Optional.ToNullable(isExecutableAction), Optional.ToNullable(isRevertableAction), Optional.ToNullable(isArchivedAction), Optional.ToNullable(executeActionStartTime), Optional.ToNullable(executeActionDuration), Optional.ToNullable(revertActionStartTime), Optional.ToNullable(revertActionDuration), Optional.ToNullable(executeActionInitiatedBy), Optional.ToNullable(executeActionInitiatedTime), Optional.ToNullable(revertActionInitiatedBy), Optional.ToNullable(revertActionInitiatedTime), Optional.ToNullable(score), implementationDetails.Value, errorDetails.Value, Optional.ToList(estimatedImpact), Optional.ToList(observedImpact), Optional.ToList(timeSeries), Optional.ToList(linkedObjects), Optional.ToDictionary(details), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecommendationReason))
+            {
+                builder.Append("  recommendationReason:");
+                builder.AppendLine($" '{RecommendationReason}'");
+            }
+
+            if (Optional.IsDefined(ValidSince))
+            {
+                builder.Append("  validSince:");
+                builder.AppendLine($" '{ValidSince.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastRefresh))
+            {
+                builder.Append("  lastRefresh:");
+                builder.AppendLine($" '{LastRefresh.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                AppendChildObject(builder, State, options, 2);
+            }
+
+            if (Optional.IsDefined(IsExecutableAction))
+            {
+                builder.Append("  isExecutableAction:");
+                var boolValue = IsExecutableAction.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsRevertableAction))
+            {
+                builder.Append("  isRevertableAction:");
+                var boolValue = IsRevertableAction.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsArchivedAction))
+            {
+                builder.Append("  isArchivedAction:");
+                var boolValue = IsArchivedAction.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ExecuteActionStartOn))
+            {
+                builder.Append("  executeActionStartTime:");
+                builder.AppendLine($" '{ExecuteActionStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExecuteActionDuration))
+            {
+                builder.Append("  executeActionDuration:");
+                var formattedTimeSpan = XmlConvert.ToString(ExecuteActionDuration.Value);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(RevertActionStartOn))
+            {
+                builder.Append("  revertActionStartTime:");
+                builder.AppendLine($" '{RevertActionStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RevertActionDuration))
+            {
+                builder.Append("  revertActionDuration:");
+                var formattedTimeSpan = XmlConvert.ToString(RevertActionDuration.Value);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(ExecuteActionInitiatedBy))
+            {
+                builder.Append("  executeActionInitiatedBy:");
+                builder.AppendLine($" '{ExecuteActionInitiatedBy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExecuteActionInitiatedOn))
+            {
+                builder.Append("  executeActionInitiatedTime:");
+                builder.AppendLine($" '{ExecuteActionInitiatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RevertActionInitiatedBy))
+            {
+                builder.Append("  revertActionInitiatedBy:");
+                builder.AppendLine($" '{RevertActionInitiatedBy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RevertActionInitiatedOn))
+            {
+                builder.Append("  revertActionInitiatedTime:");
+                builder.AppendLine($" '{RevertActionInitiatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Score))
+            {
+                builder.Append("  score:");
+                builder.AppendLine($" '{Score.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ImplementationDetails))
+            {
+                builder.Append("  implementationDetails:");
+                AppendChildObject(builder, ImplementationDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(ErrorDetails))
+            {
+                builder.Append("  errorDetails:");
+                AppendChildObject(builder, ErrorDetails, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(EstimatedImpact))
+            {
+                builder.Append("  estimatedImpact:");
+                builder.AppendLine(" [");
+                foreach (var item in EstimatedImpact)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ObservedImpact))
+            {
+                builder.Append("  observedImpact:");
+                builder.AppendLine(" [");
+                foreach (var item in ObservedImpact)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(TimeSeries))
+            {
+                builder.Append("  timeSeries:");
+                builder.AppendLine(" [");
+                foreach (var item in TimeSeries)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(LinkedObjects))
+            {
+                builder.Append("  linkedObjects:");
+                builder.AppendLine(" [");
+                foreach (var item in LinkedObjects)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Details))
+            {
+                builder.Append("  details:");
+                builder.AppendLine(" {");
+                foreach (var item in Details)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value.ToString()}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<RecommendedActionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -587,6 +824,8 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RecommendedActionData)} does not support '{options.Format}' format.");
             }
@@ -603,6 +842,8 @@ namespace Azure.ResourceManager.Sql
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRecommendedActionData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RecommendedActionData)} does not support '{options.Format}' format.");
             }

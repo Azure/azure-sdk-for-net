@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VmmVmDetails : IUtf8JsonSerializable, IJsonModel<VmmVmDetails>
+    public partial class VmmVmDetails : IUtf8JsonSerializable, IJsonModel<VmmVmDetails>, IPersistableModel<VmmVmDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmmVmDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -203,6 +204,85 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VmmVmDetails(instanceType, serializedAdditionalRawData, sourceItemId.Value, generation.Value, osDetails.Value, Optional.ToList(diskDetails), Optional.ToNullable(hasPhysicalDisk), Optional.ToNullable(hasFibreChannelAdapter), Optional.ToNullable(hasSharedVhd), hyperVHostId.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SourceItemId))
+            {
+                builder.Append("  sourceItemId:");
+                builder.AppendLine($" '{SourceItemId}'");
+            }
+
+            if (Optional.IsDefined(Generation))
+            {
+                builder.Append("  generation:");
+                builder.AppendLine($" '{Generation}'");
+            }
+
+            if (Optional.IsDefined(OSDetails))
+            {
+                builder.Append("  osDetails:");
+                AppendChildObject(builder, OSDetails, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(DiskDetails))
+            {
+                builder.Append("  diskDetails:");
+                builder.AppendLine(" [");
+                foreach (var item in DiskDetails)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(HasPhysicalDisk))
+            {
+                builder.Append("  hasPhysicalDisk:");
+                builder.AppendLine($" '{HasPhysicalDisk.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HasFibreChannelAdapter))
+            {
+                builder.Append("  hasFibreChannelAdapter:");
+                builder.AppendLine($" '{HasFibreChannelAdapter.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HasSharedVhd))
+            {
+                builder.Append("  hasSharedVhd:");
+                builder.AppendLine($" '{HasSharedVhd.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HyperVHostId))
+            {
+                builder.Append("  hyperVHostId:");
+                builder.AppendLine($" '{HyperVHostId}'");
+            }
+
+            if (Optional.IsDefined(InstanceType))
+            {
+                builder.Append("  instanceType:");
+                builder.AppendLine($" '{InstanceType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VmmVmDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VmmVmDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -211,6 +291,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VmmVmDetails)} does not support '{options.Format}' format.");
             }
@@ -227,6 +309,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVmmVmDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VmmVmDetails)} does not support '{options.Format}' format.");
             }

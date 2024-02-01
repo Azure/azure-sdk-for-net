@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoverOperationStatus : IUtf8JsonSerializable, IJsonModel<MoverOperationStatus>
+    public partial class MoverOperationStatus : IUtf8JsonSerializable, IJsonModel<MoverOperationStatus>, IPersistableModel<MoverOperationStatus>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverOperationStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -189,6 +190,68 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return new MoverOperationStatus(id.Value, name.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), error.Value, properties.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startTime:");
+                builder.AppendLine($" '{StartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndOn))
+            {
+                builder.Append("  endTime:");
+                builder.AppendLine($" '{EndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Error))
+            {
+                builder.Append("  error:");
+                AppendChildObject(builder, Error, options, 2);
+            }
+
+            if (Optional.IsDefined(Properties))
+            {
+                builder.Append("  properties:");
+                builder.AppendLine($" '{Properties.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MoverOperationStatus>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MoverOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
@@ -197,6 +260,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MoverOperationStatus)} does not support '{options.Format}' format.");
             }
@@ -213,6 +278,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMoverOperationStatus(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MoverOperationStatus)} does not support '{options.Format}' format.");
             }

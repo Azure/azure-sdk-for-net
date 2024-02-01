@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterHealthPolicy : IUtf8JsonSerializable, IJsonModel<ClusterHealthPolicy>
+    public partial class ClusterHealthPolicy : IUtf8JsonSerializable, IJsonModel<ClusterHealthPolicy>, IPersistableModel<ClusterHealthPolicy>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterHealthPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -133,6 +134,51 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             return new ClusterHealthPolicy(Optional.ToNullable(maxPercentUnhealthyNodes), Optional.ToNullable(maxPercentUnhealthyApplications), Optional.ToDictionary(applicationHealthPolicies), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MaxPercentUnhealthyNodes))
+            {
+                builder.Append("  maxPercentUnhealthyNodes:");
+                builder.AppendLine($" '{MaxPercentUnhealthyNodes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxPercentUnhealthyApplications))
+            {
+                builder.Append("  maxPercentUnhealthyApplications:");
+                builder.AppendLine($" '{MaxPercentUnhealthyApplications.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ApplicationHealthPolicies))
+            {
+                builder.Append("  applicationHealthPolicies:");
+                builder.AppendLine(" {");
+                foreach (var item in ApplicationHealthPolicies)
+                {
+                    builder.Append($"    {item.Key}: ");
+
+                    AppendChildObject(builder, item.Value, options, 4);
+                }
+                builder.AppendLine("  }");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ClusterHealthPolicy>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ClusterHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
@@ -141,6 +187,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ClusterHealthPolicy)} does not support '{options.Format}' format.");
             }
@@ -157,6 +205,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeClusterHealthPolicy(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ClusterHealthPolicy)} does not support '{options.Format}' format.");
             }

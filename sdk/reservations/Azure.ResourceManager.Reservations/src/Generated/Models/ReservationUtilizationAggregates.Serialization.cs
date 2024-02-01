@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationUtilizationAggregates : IUtf8JsonSerializable, IJsonModel<ReservationUtilizationAggregates>
+    public partial class ReservationUtilizationAggregates : IUtf8JsonSerializable, IJsonModel<ReservationUtilizationAggregates>, IPersistableModel<ReservationUtilizationAggregates>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationUtilizationAggregates>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -129,6 +130,50 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationUtilizationAggregates(Optional.ToNullable(grain), grainUnit.Value, Optional.ToNullable(value), valueUnit.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Grain))
+            {
+                builder.Append("  grain:");
+                builder.AppendLine($" '{Grain.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(GrainUnit))
+            {
+                builder.Append("  grainUnit:");
+                builder.AppendLine($" '{GrainUnit}'");
+            }
+
+            if (Optional.IsDefined(Value))
+            {
+                builder.Append("  value:");
+                builder.AppendLine($" '{Value.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ValueUnit))
+            {
+                builder.Append("  valueUnit:");
+                builder.AppendLine($" '{ValueUnit}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ReservationUtilizationAggregates>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ReservationUtilizationAggregates>)this).GetFormatFromOptions(options) : options.Format;
@@ -137,6 +182,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ReservationUtilizationAggregates)} does not support '{options.Format}' format.");
             }
@@ -153,6 +200,8 @@ namespace Azure.ResourceManager.Reservations.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeReservationUtilizationAggregates(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ReservationUtilizationAggregates)} does not support '{options.Format}' format.");
             }

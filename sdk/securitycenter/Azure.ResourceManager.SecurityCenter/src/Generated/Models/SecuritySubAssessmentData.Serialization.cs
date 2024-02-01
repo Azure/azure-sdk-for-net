@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecuritySubAssessmentData : IUtf8JsonSerializable, IJsonModel<SecuritySubAssessmentData>
+    public partial class SecuritySubAssessmentData : IUtf8JsonSerializable, IJsonModel<SecuritySubAssessmentData>, IPersistableModel<SecuritySubAssessmentData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecuritySubAssessmentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -268,6 +269,110 @@ namespace Azure.ResourceManager.SecurityCenter
             return new SecuritySubAssessmentData(id, name, type, systemData.Value, id0.Value, displayName.Value, status.Value, remediation.Value, impact.Value, category.Value, description.Value, Optional.ToNullable(timeGenerated), resourceDetails.Value, additionalData.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(VulnerabilityId))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{VulnerabilityId}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                AppendChildObject(builder, Status, options, 2);
+            }
+
+            if (Optional.IsDefined(Remediation))
+            {
+                builder.Append("  remediation:");
+                builder.AppendLine($" '{Remediation}'");
+            }
+
+            if (Optional.IsDefined(Impact))
+            {
+                builder.Append("  impact:");
+                builder.AppendLine($" '{Impact}'");
+            }
+
+            if (Optional.IsDefined(Category))
+            {
+                builder.Append("  category:");
+                builder.AppendLine($" '{Category}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(GeneratedOn))
+            {
+                builder.Append("  timeGenerated:");
+                builder.AppendLine($" '{GeneratedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResourceDetails))
+            {
+                builder.Append("  resourceDetails:");
+                AppendChildObject(builder, ResourceDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(AdditionalData))
+            {
+                builder.Append("  additionalData:");
+                AppendChildObject(builder, AdditionalData, options, 2);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SecuritySubAssessmentData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecuritySubAssessmentData>)this).GetFormatFromOptions(options) : options.Format;
@@ -276,6 +381,8 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecuritySubAssessmentData)} does not support '{options.Format}' format.");
             }
@@ -292,6 +399,8 @@ namespace Azure.ResourceManager.SecurityCenter
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecuritySubAssessmentData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecuritySubAssessmentData)} does not support '{options.Format}' format.");
             }

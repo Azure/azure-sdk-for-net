@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class IotSecuritySolutionAnalyticsModelData : IUtf8JsonSerializable, IJsonModel<IotSecuritySolutionAnalyticsModelData>
+    public partial class IotSecuritySolutionAnalyticsModelData : IUtf8JsonSerializable, IJsonModel<IotSecuritySolutionAnalyticsModelData>, IPersistableModel<IotSecuritySolutionAnalyticsModelData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotSecuritySolutionAnalyticsModelData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -272,6 +273,106 @@ namespace Azure.ResourceManager.SecurityCenter
             return new IotSecuritySolutionAnalyticsModelData(id, name, type, systemData.Value, metrics.Value, Optional.ToNullable(unhealthyDeviceCount), Optional.ToList(devicesMetrics), Optional.ToList(topAlertedDevices), Optional.ToList(mostPrevalentDeviceAlerts), Optional.ToList(mostPrevalentDeviceRecommendations), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Metrics))
+            {
+                builder.Append("  metrics:");
+                AppendChildObject(builder, Metrics, options, 2);
+            }
+
+            if (Optional.IsDefined(UnhealthyDeviceCount))
+            {
+                builder.Append("  unhealthyDeviceCount:");
+                builder.AppendLine($" '{UnhealthyDeviceCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(DevicesMetrics))
+            {
+                builder.Append("  devicesMetrics:");
+                builder.AppendLine(" [");
+                foreach (var item in DevicesMetrics)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(TopAlertedDevices))
+            {
+                builder.Append("  topAlertedDevices:");
+                builder.AppendLine(" [");
+                foreach (var item in TopAlertedDevices)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(MostPrevalentDeviceAlerts))
+            {
+                builder.Append("  mostPrevalentDeviceAlerts:");
+                builder.AppendLine(" [");
+                foreach (var item in MostPrevalentDeviceAlerts)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(MostPrevalentDeviceRecommendations))
+            {
+                builder.Append("  mostPrevalentDeviceRecommendations:");
+                builder.AppendLine(" [");
+                foreach (var item in MostPrevalentDeviceRecommendations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<IotSecuritySolutionAnalyticsModelData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IotSecuritySolutionAnalyticsModelData>)this).GetFormatFromOptions(options) : options.Format;
@@ -280,6 +381,8 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IotSecuritySolutionAnalyticsModelData)} does not support '{options.Format}' format.");
             }
@@ -296,6 +399,8 @@ namespace Azure.ResourceManager.SecurityCenter
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeIotSecuritySolutionAnalyticsModelData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(IotSecuritySolutionAnalyticsModelData)} does not support '{options.Format}' format.");
             }

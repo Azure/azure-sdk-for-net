@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -17,7 +18,7 @@ using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    public partial class ServiceFabricManagedClusterData : IUtf8JsonSerializable, IJsonModel<ServiceFabricManagedClusterData>
+    public partial class ServiceFabricManagedClusterData : IUtf8JsonSerializable, IJsonModel<ServiceFabricManagedClusterData>, IPersistableModel<ServiceFabricManagedClusterData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceFabricManagedClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -871,6 +872,376 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             return new ServiceFabricManagedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, dnsName.Value, fqdn.Value, ipv4Address.Value, Optional.ToNullable(clusterId), Optional.ToNullable(clusterState), Optional.ToList(clusterCertificateThumbprints), Optional.ToNullable(clientConnectionPort), Optional.ToNullable(httpGatewayConnectionPort), adminUserName.Value, adminPassword.Value, Optional.ToList(loadBalancingRules), Optional.ToNullable(allowRdpAccess), Optional.ToList(networkSecurityRules), Optional.ToList(clients), azureActiveDirectory.Value, Optional.ToList(fabricSettings), Optional.ToNullable(provisioningState), clusterCodeVersion.Value, Optional.ToNullable(clusterUpgradeMode), Optional.ToNullable(clusterUpgradeCadence), Optional.ToList(addonFeatures), Optional.ToNullable(enableAutoOSUpgrade), Optional.ToNullable(zonalResiliency), applicationTypeVersionsCleanupPolicy.Value, Optional.ToNullable(enableIPv6), subnetId.Value, Optional.ToList(ipTags), ipv6Address.Value, Optional.ToNullable(enableServicePublicIP), Optional.ToList(auxiliarySubnets), Optional.ToList(serviceEndpoints), Optional.ToNullable(zonalUpdateMode), Optional.ToNullable(useCustomVnet), publicIPPrefixId.Value, publicIPv6PrefixId.Value, ddosProtectionPlanId.Value, upgradeDescription.Value, Optional.ToNullable(httpGatewayTokenAuthConnectionPort), Optional.ToNullable(enableHttpGatewayExclusiveAuthMode), Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsDefined(DnsName))
+            {
+                builder.Append("  dnsName:");
+                builder.AppendLine($" '{DnsName}'");
+            }
+
+            if (Optional.IsDefined(Fqdn))
+            {
+                builder.Append("  fqdn:");
+                builder.AppendLine($" '{Fqdn}'");
+            }
+
+            if (Optional.IsDefined(IPv4Address))
+            {
+                builder.Append("  ipv4Address:");
+                builder.AppendLine($" '{IPv4Address.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClusterId))
+            {
+                builder.Append("  clusterId:");
+                builder.AppendLine($" '{ClusterId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClusterState))
+            {
+                builder.Append("  clusterState:");
+                builder.AppendLine($" '{ClusterState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ClusterCertificateThumbprints))
+            {
+                builder.Append("  clusterCertificateThumbprints:");
+                builder.AppendLine(" [");
+                foreach (var item in ClusterCertificateThumbprints)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ClientConnectionPort))
+            {
+                builder.Append("  clientConnectionPort:");
+                builder.AppendLine($" '{ClientConnectionPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HttpGatewayConnectionPort))
+            {
+                builder.Append("  httpGatewayConnectionPort:");
+                builder.AppendLine($" '{HttpGatewayConnectionPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AdminUserName))
+            {
+                builder.Append("  adminUserName:");
+                builder.AppendLine($" '{AdminUserName}'");
+            }
+
+            if (Optional.IsDefined(AdminPassword))
+            {
+                builder.Append("  adminPassword:");
+                builder.AppendLine($" '{AdminPassword}'");
+            }
+
+            if (Optional.IsCollectionDefined(LoadBalancingRules))
+            {
+                builder.Append("  loadBalancingRules:");
+                builder.AppendLine(" [");
+                foreach (var item in LoadBalancingRules)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsRdpAccessAllowed))
+            {
+                builder.Append("  allowRdpAccess:");
+                var boolValue = IsRdpAccessAllowed.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(NetworkSecurityRules))
+            {
+                builder.Append("  networkSecurityRules:");
+                builder.AppendLine(" [");
+                foreach (var item in NetworkSecurityRules)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Clients))
+            {
+                builder.Append("  clients:");
+                builder.AppendLine(" [");
+                foreach (var item in Clients)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(AzureActiveDirectory))
+            {
+                builder.Append("  azureActiveDirectory:");
+                AppendChildObject(builder, AzureActiveDirectory, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(FabricSettings))
+            {
+                builder.Append("  fabricSettings:");
+                builder.AppendLine(" [");
+                foreach (var item in FabricSettings)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClusterCodeVersion))
+            {
+                builder.Append("  clusterCodeVersion:");
+                builder.AppendLine($" '{ClusterCodeVersion}'");
+            }
+
+            if (Optional.IsDefined(ClusterUpgradeMode))
+            {
+                builder.Append("  clusterUpgradeMode:");
+                builder.AppendLine($" '{ClusterUpgradeMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClusterUpgradeCadence))
+            {
+                builder.Append("  clusterUpgradeCadence:");
+                builder.AppendLine($" '{ClusterUpgradeCadence.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(AddOnFeatures))
+            {
+                builder.Append("  addonFeatures:");
+                builder.AppendLine(" [");
+                foreach (var item in AddOnFeatures)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsAutoOSUpgradeEnabled))
+            {
+                builder.Append("  enableAutoOSUpgrade:");
+                var boolValue = IsAutoOSUpgradeEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(HasZoneResiliency))
+            {
+                builder.Append("  zonalResiliency:");
+                var boolValue = HasZoneResiliency.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ApplicationTypeVersionsCleanupPolicy))
+            {
+                builder.Append("  applicationTypeVersionsCleanupPolicy:");
+                AppendChildObject(builder, ApplicationTypeVersionsCleanupPolicy, options, 2);
+            }
+
+            if (Optional.IsDefined(IsIPv6Enabled))
+            {
+                builder.Append("  enableIpv6:");
+                var boolValue = IsIPv6Enabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SubnetId))
+            {
+                builder.Append("  subnetId:");
+                builder.AppendLine($" '{SubnetId}'");
+            }
+
+            if (Optional.IsCollectionDefined(IPTags))
+            {
+                builder.Append("  ipTags:");
+                builder.AppendLine(" [");
+                foreach (var item in IPTags)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IPv6Address))
+            {
+                builder.Append("  ipv6Address:");
+                builder.AppendLine($" '{IPv6Address.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsServicePublicIPEnabled))
+            {
+                builder.Append("  enableServicePublicIP:");
+                var boolValue = IsServicePublicIPEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(AuxiliarySubnets))
+            {
+                builder.Append("  auxiliarySubnets:");
+                builder.AppendLine(" [");
+                foreach (var item in AuxiliarySubnets)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ServiceEndpoints))
+            {
+                builder.Append("  serviceEndpoints:");
+                builder.AppendLine(" [");
+                foreach (var item in ServiceEndpoints)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ZonalUpdateMode))
+            {
+                builder.Append("  zonalUpdateMode:");
+                builder.AppendLine($" '{ZonalUpdateMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UseCustomVnet))
+            {
+                builder.Append("  useCustomVnet:");
+                var boolValue = UseCustomVnet.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(PublicIPPrefixId))
+            {
+                builder.Append("  publicIPPrefixId:");
+                builder.AppendLine($" '{PublicIPPrefixId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PublicIPv6PrefixId))
+            {
+                builder.Append("  publicIPv6PrefixId:");
+                builder.AppendLine($" '{PublicIPv6PrefixId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DdosProtectionPlanId))
+            {
+                builder.Append("  ddosProtectionPlanId:");
+                builder.AppendLine($" '{DdosProtectionPlanId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UpgradeDescription))
+            {
+                builder.Append("  upgradeDescription:");
+                AppendChildObject(builder, UpgradeDescription, options, 2);
+            }
+
+            if (Optional.IsDefined(HttpGatewayTokenAuthConnectionPort))
+            {
+                builder.Append("  httpGatewayTokenAuthConnectionPort:");
+                builder.AppendLine($" '{HttpGatewayTokenAuthConnectionPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsHttpGatewayExclusiveAuthModeEnabled))
+            {
+                builder.Append("  enableHttpGatewayExclusiveAuthMode:");
+                var boolValue = IsHttpGatewayExclusiveAuthModeEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ServiceFabricManagedClusterData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
@@ -879,6 +1250,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServiceFabricManagedClusterData)} does not support '{options.Format}' format.");
             }
@@ -895,6 +1268,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeServiceFabricManagedClusterData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ServiceFabricManagedClusterData)} does not support '{options.Format}' format.");
             }

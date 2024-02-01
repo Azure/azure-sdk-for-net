@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmApplicationPatch : IUtf8JsonSerializable, IJsonModel<ArmApplicationPatch>
+    public partial class ArmApplicationPatch : IUtf8JsonSerializable, IJsonModel<ArmApplicationPatch>, IPersistableModel<ArmApplicationPatch>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -501,6 +502,203 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmApplicationPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, sku.Value, serializedAdditionalRawData, plan, kind.Value, identity.Value, managedResourceGroupId.Value, applicationDefinitionId.Value, parameters.Value, outputs.Value, Optional.ToNullable(provisioningState), billingDetails.Value, jitAccessPolicy.Value, Optional.ToNullable(publisherTenantId), Optional.ToList(authorizations), Optional.ToNullable(managementMode), customerSupport.Value, supportUris.Value, Optional.ToList(artifacts), createdBy.Value, updatedBy.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Plan))
+            {
+                builder.Append("  plan:");
+                AppendChildObject(builder, Plan, options, 2);
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2);
+            }
+
+            if (Optional.IsDefined(ManagedResourceGroupId))
+            {
+                builder.Append("  managedResourceGroupId:");
+                builder.AppendLine($" '{ManagedResourceGroupId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ApplicationDefinitionId))
+            {
+                builder.Append("  applicationDefinitionId:");
+                builder.AppendLine($" '{ApplicationDefinitionId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Parameters))
+            {
+                builder.Append("  parameters:");
+                builder.AppendLine($" '{Parameters.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Outputs))
+            {
+                builder.Append("  outputs:");
+                builder.AppendLine($" '{Outputs.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BillingDetails))
+            {
+                builder.Append("  billingDetails:");
+                AppendChildObject(builder, BillingDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(JitAccessPolicy))
+            {
+                builder.Append("  jitAccessPolicy:");
+                AppendChildObject(builder, JitAccessPolicy, options, 2);
+            }
+
+            if (Optional.IsDefined(PublisherTenantId))
+            {
+                builder.Append("  publisherTenantId:");
+                builder.AppendLine($" '{PublisherTenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Authorizations))
+            {
+                builder.Append("  authorizations:");
+                builder.AppendLine(" [");
+                foreach (var item in Authorizations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ManagementMode))
+            {
+                builder.Append("  managementMode:");
+                builder.AppendLine($" '{ManagementMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CustomerSupport))
+            {
+                builder.Append("  customerSupport:");
+                AppendChildObject(builder, CustomerSupport, options, 2);
+            }
+
+            if (Optional.IsDefined(SupportUris))
+            {
+                builder.Append("  supportUrls:");
+                AppendChildObject(builder, SupportUris, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Artifacts))
+            {
+                builder.Append("  artifacts:");
+                builder.AppendLine(" [");
+                foreach (var item in Artifacts)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(CreatedBy))
+            {
+                builder.Append("  createdBy:");
+                AppendChildObject(builder, CreatedBy, options, 2);
+            }
+
+            if (Optional.IsDefined(UpdatedBy))
+            {
+                builder.Append("  updatedBy:");
+                AppendChildObject(builder, UpdatedBy, options, 2);
+            }
+
+            if (Optional.IsDefined(ManagedBy))
+            {
+                builder.Append("  managedBy:");
+                builder.AppendLine($" '{ManagedBy}'");
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ArmApplicationPatch>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationPatch>)this).GetFormatFromOptions(options) : options.Format;
@@ -509,6 +707,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ArmApplicationPatch)} does not support '{options.Format}' format.");
             }
@@ -525,6 +725,8 @@ namespace Azure.ResourceManager.Resources.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeArmApplicationPatch(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ArmApplicationPatch)} does not support '{options.Format}' format.");
             }

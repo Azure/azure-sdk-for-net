@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
-    public partial class SpringBootAppProperties : IUtf8JsonSerializable, IJsonModel<SpringBootAppProperties>
+    public partial class SpringBootAppProperties : IUtf8JsonSerializable, IJsonModel<SpringBootAppProperties>, IPersistableModel<SpringBootAppProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpringBootAppProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -603,6 +604,299 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             return new SpringBootAppProperties(appName.Value, artifactName.Value, Optional.ToNullable(appPort), appType.Value, Optional.ToList(applicationConfigurations), Optional.ToList(bindingPorts), buildJdkVersion.Value, Optional.ToList(certificates), checksum.Value, Optional.ToList(dependencies), Optional.ToList(environments), Optional.ToNullable(instanceCount), jarFileLocation.Value, Optional.ToNullable(jvmMemoryInMB), Optional.ToList(jvmOptions), Optional.ToList(miscs), Optional.ToList(instances), runtimeJdkVersion.Value, Optional.ToList(servers), Optional.ToList(machineArmIds), siteName.Value, springBootVersion.Value, Optional.ToList(staticContentLocations), Optional.ToList(connectionStrings), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), Optional.ToList(errors), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AppName))
+            {
+                builder.Append("  appName:");
+                builder.AppendLine($" '{AppName}'");
+            }
+
+            if (Optional.IsDefined(ArtifactName))
+            {
+                builder.Append("  artifactName:");
+                builder.AppendLine($" '{ArtifactName}'");
+            }
+
+            if (Optional.IsDefined(AppPort))
+            {
+                builder.Append("  appPort:");
+                builder.AppendLine($" '{AppPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AppType))
+            {
+                builder.Append("  appType:");
+                builder.AppendLine($" '{AppType}'");
+            }
+
+            if (Optional.IsCollectionDefined(ApplicationConfigurations))
+            {
+                builder.Append("  applicationConfigurations:");
+                builder.AppendLine(" [");
+                foreach (var item in ApplicationConfigurations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(BindingPorts))
+            {
+                builder.Append("  bindingPorts:");
+                builder.AppendLine(" [");
+                foreach (var item in BindingPorts)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(BuildJdkVersion))
+            {
+                builder.Append("  buildJdkVersion:");
+                builder.AppendLine($" '{BuildJdkVersion}'");
+            }
+
+            if (Optional.IsCollectionDefined(Certificates))
+            {
+                builder.Append("  certificates:");
+                builder.AppendLine(" [");
+                foreach (var item in Certificates)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Checksum))
+            {
+                builder.Append("  checksum:");
+                builder.AppendLine($" '{Checksum}'");
+            }
+
+            if (Optional.IsCollectionDefined(Dependencies))
+            {
+                builder.Append("  dependencies:");
+                builder.AppendLine(" [");
+                foreach (var item in Dependencies)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Environments))
+            {
+                builder.Append("  environments:");
+                builder.AppendLine(" [");
+                foreach (var item in Environments)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(InstanceCount))
+            {
+                builder.Append("  instanceCount:");
+                builder.AppendLine($" '{InstanceCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(JarFileLocation))
+            {
+                builder.Append("  jarFileLocation:");
+                builder.AppendLine($" '{JarFileLocation}'");
+            }
+
+            if (Optional.IsDefined(JvmMemoryInMB))
+            {
+                builder.Append("  jvmMemoryInMB:");
+                builder.AppendLine($" '{JvmMemoryInMB.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(JvmOptions))
+            {
+                builder.Append("  jvmOptions:");
+                builder.AppendLine(" [");
+                foreach (var item in JvmOptions)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Miscs))
+            {
+                builder.Append("  miscs:");
+                builder.AppendLine(" [");
+                foreach (var item in Miscs)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Instances))
+            {
+                builder.Append("  instances:");
+                builder.AppendLine(" [");
+                foreach (var item in Instances)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(RuntimeJdkVersion))
+            {
+                builder.Append("  runtimeJdkVersion:");
+                builder.AppendLine($" '{RuntimeJdkVersion}'");
+            }
+
+            if (Optional.IsCollectionDefined(Servers))
+            {
+                builder.Append("  servers:");
+                builder.AppendLine(" [");
+                foreach (var item in Servers)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(MachineArmIds))
+            {
+                builder.Append("  machineArmIds:");
+                builder.AppendLine(" [");
+                foreach (var item in MachineArmIds)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(SiteName))
+            {
+                builder.Append("  siteName:");
+                builder.AppendLine($" '{SiteName}'");
+            }
+
+            if (Optional.IsDefined(SpringBootVersion))
+            {
+                builder.Append("  springBootVersion:");
+                builder.AppendLine($" '{SpringBootVersion}'");
+            }
+
+            if (Optional.IsCollectionDefined(StaticContentLocations))
+            {
+                builder.Append("  staticContentLocations:");
+                builder.AppendLine(" [");
+                foreach (var item in StaticContentLocations)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ConnectionStrings))
+            {
+                builder.Append("  connectionStrings:");
+                builder.AppendLine(" [");
+                foreach (var item in ConnectionStrings)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("  lastModifiedTime:");
+                builder.AppendLine($" '{LastModifiedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastUpdatedOn))
+            {
+                builder.Append("  lastUpdatedTime:");
+                builder.AppendLine($" '{LastUpdatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                builder.Append("  errors:");
+                builder.AppendLine(" [");
+                foreach (var item in Errors)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SpringBootAppProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -611,6 +905,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support '{options.Format}' format.");
             }
@@ -627,6 +923,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSpringBootAppProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support '{options.Format}' format.");
             }

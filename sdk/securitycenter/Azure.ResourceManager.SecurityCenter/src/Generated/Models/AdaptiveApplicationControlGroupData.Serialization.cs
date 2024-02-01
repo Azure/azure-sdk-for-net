@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class AdaptiveApplicationControlGroupData : IUtf8JsonSerializable, IJsonModel<AdaptiveApplicationControlGroupData>
+    public partial class AdaptiveApplicationControlGroupData : IUtf8JsonSerializable, IJsonModel<AdaptiveApplicationControlGroupData>, IPersistableModel<AdaptiveApplicationControlGroupData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdaptiveApplicationControlGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -307,6 +308,119 @@ namespace Azure.ResourceManager.SecurityCenter
             return new AdaptiveApplicationControlGroupData(id, name, type, systemData.Value, Optional.ToNullable(enforcementMode), protectionMode.Value, Optional.ToNullable(configurationStatus), Optional.ToNullable(recommendationStatus), Optional.ToList(issues), Optional.ToNullable(sourceSystem), Optional.ToList(vmRecommendations), Optional.ToList(pathRecommendations), Optional.ToNullable(location), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(EnforcementMode))
+            {
+                builder.Append("  enforcementMode:");
+                builder.AppendLine($" '{EnforcementMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProtectionMode))
+            {
+                builder.Append("  protectionMode:");
+                AppendChildObject(builder, ProtectionMode, options, 2);
+            }
+
+            if (Optional.IsDefined(ConfigurationStatus))
+            {
+                builder.Append("  configurationStatus:");
+                builder.AppendLine($" '{ConfigurationStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecommendationStatus))
+            {
+                builder.Append("  recommendationStatus:");
+                builder.AppendLine($" '{RecommendationStatus.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Issues))
+            {
+                builder.Append("  issues:");
+                builder.AppendLine(" [");
+                foreach (var item in Issues)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(SourceSystem))
+            {
+                builder.Append("  sourceSystem:");
+                builder.AppendLine($" '{SourceSystem.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(VmRecommendations))
+            {
+                builder.Append("  vmRecommendations:");
+                builder.AppendLine(" [");
+                foreach (var item in VmRecommendations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(PathRecommendations))
+            {
+                builder.Append("  pathRecommendations:");
+                builder.AppendLine(" [");
+                foreach (var item in PathRecommendations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AdaptiveApplicationControlGroupData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AdaptiveApplicationControlGroupData>)this).GetFormatFromOptions(options) : options.Format;
@@ -315,6 +429,8 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AdaptiveApplicationControlGroupData)} does not support '{options.Format}' format.");
             }
@@ -331,6 +447,8 @@ namespace Azure.ResourceManager.SecurityCenter
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAdaptiveApplicationControlGroupData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AdaptiveApplicationControlGroupData)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    public partial class SecurityInsightsBookmarkData : IUtf8JsonSerializable, IJsonModel<SecurityInsightsBookmarkData>
+    public partial class SecurityInsightsBookmarkData : IUtf8JsonSerializable, IJsonModel<SecurityInsightsBookmarkData>, IPersistableModel<SecurityInsightsBookmarkData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsBookmarkData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -347,6 +348,144 @@ namespace Azure.ResourceManager.SecurityInsights
             return new SecurityInsightsBookmarkData(id, name, type, systemData.Value, Optional.ToNullable(created), createdBy.Value, displayName.Value, Optional.ToList(labels), notes.Value, query.Value, queryResult.Value, Optional.ToNullable(updated), updatedBy.Value, Optional.ToNullable(eventTime), Optional.ToNullable(queryStartTime), Optional.ToNullable(queryEndTime), incidentInfo.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  created:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedBy))
+            {
+                builder.Append("  createdBy:");
+                AppendChildObject(builder, CreatedBy, options, 2);
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsCollectionDefined(Labels))
+            {
+                builder.Append("  labels:");
+                builder.AppendLine(" [");
+                foreach (var item in Labels)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Notes))
+            {
+                builder.Append("  notes:");
+                builder.AppendLine($" '{Notes}'");
+            }
+
+            if (Optional.IsDefined(Query))
+            {
+                builder.Append("  query:");
+                builder.AppendLine($" '{Query}'");
+            }
+
+            if (Optional.IsDefined(QueryResult))
+            {
+                builder.Append("  queryResult:");
+                builder.AppendLine($" '{QueryResult}'");
+            }
+
+            if (Optional.IsDefined(UpdatedOn))
+            {
+                builder.Append("  updated:");
+                builder.AppendLine($" '{UpdatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UpdatedBy))
+            {
+                builder.Append("  updatedBy:");
+                AppendChildObject(builder, UpdatedBy, options, 2);
+            }
+
+            if (Optional.IsDefined(EventOn))
+            {
+                builder.Append("  eventTime:");
+                builder.AppendLine($" '{EventOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(QueryStartOn))
+            {
+                builder.Append("  queryStartTime:");
+                builder.AppendLine($" '{QueryStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(QueryEndOn))
+            {
+                builder.Append("  queryEndTime:");
+                builder.AppendLine($" '{QueryEndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IncidentInfo))
+            {
+                builder.Append("  incidentInfo:");
+                AppendChildObject(builder, IncidentInfo, options, 2);
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SecurityInsightsBookmarkData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsBookmarkData>)this).GetFormatFromOptions(options) : options.Format;
@@ -355,6 +494,8 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsBookmarkData)} does not support '{options.Format}' format.");
             }
@@ -371,6 +512,8 @@ namespace Azure.ResourceManager.SecurityInsights
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityInsightsBookmarkData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsBookmarkData)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AReplicationIntentDetails : IUtf8JsonSerializable, IJsonModel<A2AReplicationIntentDetails>
+    public partial class A2AReplicationIntentDetails : IUtf8JsonSerializable, IJsonModel<A2AReplicationIntentDetails>, IPersistableModel<A2AReplicationIntentDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2AReplicationIntentDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -412,6 +413,174 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2AReplicationIntentDetails(instanceType, serializedAdditionalRawData, fabricObjectId.Value, Optional.ToNullable(primaryLocation), Optional.ToNullable(recoveryLocation), recoverySubscriptionId.Value, Optional.ToList(vmDisks), Optional.ToList(vmManagedDisks), recoveryResourceGroupId.Value, protectionProfile.Value, primaryStagingStorageAccount.Value, recoveryAvailabilitySet.Value, recoveryVirtualNetwork.Value, recoveryProximityPlacementGroup.Value, Optional.ToNullable(autoProtectionOfDataDisk), multiVmGroupName.Value, multiVmGroupId.Value, recoveryBootDiagStorageAccount.Value, diskEncryptionInfo.Value, recoveryAvailabilityZone.Value, recoveryAvailabilityType, Optional.ToNullable(agentAutoUpdateStatus), automationAccountArmId.Value, Optional.ToNullable(automationAccountAuthenticationType));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(FabricObjectId))
+            {
+                builder.Append("  fabricObjectId:");
+                builder.AppendLine($" '{FabricObjectId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrimaryLocation))
+            {
+                builder.Append("  primaryLocation:");
+                builder.AppendLine($" '{PrimaryLocation.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecoveryLocation))
+            {
+                builder.Append("  recoveryLocation:");
+                builder.AppendLine($" '{RecoveryLocation.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecoverySubscriptionId))
+            {
+                builder.Append("  recoverySubscriptionId:");
+                builder.AppendLine($" '{RecoverySubscriptionId}'");
+            }
+
+            if (Optional.IsCollectionDefined(VmDisks))
+            {
+                builder.Append("  vmDisks:");
+                builder.AppendLine(" [");
+                foreach (var item in VmDisks)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(VmManagedDisks))
+            {
+                builder.Append("  vmManagedDisks:");
+                builder.AppendLine(" [");
+                foreach (var item in VmManagedDisks)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(RecoveryResourceGroupId))
+            {
+                builder.Append("  recoveryResourceGroupId:");
+                builder.AppendLine($" '{RecoveryResourceGroupId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProtectionProfile))
+            {
+                builder.Append("  protectionProfile:");
+                AppendChildObject(builder, ProtectionProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(PrimaryStagingStorageAccount))
+            {
+                builder.Append("  primaryStagingStorageAccount:");
+                AppendChildObject(builder, PrimaryStagingStorageAccount, options, 2);
+            }
+
+            if (Optional.IsDefined(RecoveryAvailabilitySet))
+            {
+                builder.Append("  recoveryAvailabilitySet:");
+                AppendChildObject(builder, RecoveryAvailabilitySet, options, 2);
+            }
+
+            if (Optional.IsDefined(RecoveryVirtualNetwork))
+            {
+                builder.Append("  recoveryVirtualNetwork:");
+                AppendChildObject(builder, RecoveryVirtualNetwork, options, 2);
+            }
+
+            if (Optional.IsDefined(RecoveryProximityPlacementGroup))
+            {
+                builder.Append("  recoveryProximityPlacementGroup:");
+                AppendChildObject(builder, RecoveryProximityPlacementGroup, options, 2);
+            }
+
+            if (Optional.IsDefined(AutoProtectionOfDataDisk))
+            {
+                builder.Append("  autoProtectionOfDataDisk:");
+                builder.AppendLine($" '{AutoProtectionOfDataDisk.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MultiVmGroupName))
+            {
+                builder.Append("  multiVmGroupName:");
+                builder.AppendLine($" '{MultiVmGroupName}'");
+            }
+
+            if (Optional.IsDefined(MultiVmGroupId))
+            {
+                builder.Append("  multiVmGroupId:");
+                builder.AppendLine($" '{MultiVmGroupId}'");
+            }
+
+            if (Optional.IsDefined(RecoveryBootDiagStorageAccount))
+            {
+                builder.Append("  recoveryBootDiagStorageAccount:");
+                AppendChildObject(builder, RecoveryBootDiagStorageAccount, options, 2);
+            }
+
+            if (Optional.IsDefined(DiskEncryptionInfo))
+            {
+                builder.Append("  diskEncryptionInfo:");
+                AppendChildObject(builder, DiskEncryptionInfo, options, 2);
+            }
+
+            if (Optional.IsDefined(RecoveryAvailabilityZone))
+            {
+                builder.Append("  recoveryAvailabilityZone:");
+                builder.AppendLine($" '{RecoveryAvailabilityZone}'");
+            }
+
+            if (Optional.IsDefined(RecoveryAvailabilityType))
+            {
+                builder.Append("  recoveryAvailabilityType:");
+                builder.AppendLine($" '{RecoveryAvailabilityType}'");
+            }
+
+            if (Optional.IsDefined(AgentAutoUpdateStatus))
+            {
+                builder.Append("  agentAutoUpdateStatus:");
+                builder.AppendLine($" '{AgentAutoUpdateStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AutomationAccountArmId))
+            {
+                builder.Append("  automationAccountArmId:");
+                builder.AppendLine($" '{AutomationAccountArmId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AutomationAccountAuthenticationType))
+            {
+                builder.Append("  automationAccountAuthenticationType:");
+                builder.AppendLine($" '{AutomationAccountAuthenticationType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InstanceType))
+            {
+                builder.Append("  instanceType:");
+                builder.AppendLine($" '{InstanceType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<A2AReplicationIntentDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<A2AReplicationIntentDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -420,6 +589,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(A2AReplicationIntentDetails)} does not support '{options.Format}' format.");
             }
@@ -436,6 +607,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeA2AReplicationIntentDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(A2AReplicationIntentDetails)} does not support '{options.Format}' format.");
             }

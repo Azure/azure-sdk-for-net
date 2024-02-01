@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsIncidentActionConfiguration : IUtf8JsonSerializable, IJsonModel<SecurityInsightsIncidentActionConfiguration>
+    public partial class SecurityInsightsIncidentActionConfiguration : IUtf8JsonSerializable, IJsonModel<SecurityInsightsIncidentActionConfiguration>, IPersistableModel<SecurityInsightsIncidentActionConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsIncidentActionConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -188,6 +189,73 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new SecurityInsightsIncidentActionConfiguration(Optional.ToNullable(severity), Optional.ToNullable(status), Optional.ToNullable(classification), Optional.ToNullable(classificationReason), classificationComment.Value, owner.Value, Optional.ToList(labels), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Severity))
+            {
+                builder.Append("  severity:");
+                builder.AppendLine($" '{Severity.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Classification))
+            {
+                builder.Append("  classification:");
+                builder.AppendLine($" '{Classification.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClassificationReason))
+            {
+                builder.Append("  classificationReason:");
+                builder.AppendLine($" '{ClassificationReason.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClassificationComment))
+            {
+                builder.Append("  classificationComment:");
+                builder.AppendLine($" '{ClassificationComment}'");
+            }
+
+            if (Optional.IsDefined(Owner))
+            {
+                builder.Append("  owner:");
+                AppendChildObject(builder, Owner, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Labels))
+            {
+                builder.Append("  labels:");
+                builder.AppendLine(" [");
+                foreach (var item in Labels)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SecurityInsightsIncidentActionConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -196,6 +264,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsIncidentActionConfiguration)} does not support '{options.Format}' format.");
             }
@@ -212,6 +282,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityInsightsIncidentActionConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsIncidentActionConfiguration)} does not support '{options.Format}' format.");
             }

@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class TenantData : IUtf8JsonSerializable, IJsonModel<TenantData>
+    public partial class TenantData : IUtf8JsonSerializable, IJsonModel<TenantData>, IPersistableModel<TenantData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TenantData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -214,6 +215,96 @@ namespace Azure.ResourceManager.Resources
             return new TenantData(id.Value, Optional.ToNullable(tenantId), Optional.ToNullable(tenantCategory), country.Value, countryCode.Value, displayName.Value, Optional.ToList(domains), defaultDomain.Value, tenantType.Value, tenantBrandingLogoUrl.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id}'");
+            }
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("  tenantId:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TenantCategory))
+            {
+                builder.Append("  tenantCategory:");
+                builder.AppendLine($" '{TenantCategory.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Country))
+            {
+                builder.Append("  country:");
+                builder.AppendLine($" '{Country}'");
+            }
+
+            if (Optional.IsDefined(CountryCode))
+            {
+                builder.Append("  countryCode:");
+                builder.AppendLine($" '{CountryCode}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsCollectionDefined(Domains))
+            {
+                builder.Append("  domains:");
+                builder.AppendLine(" [");
+                foreach (var item in Domains)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(DefaultDomain))
+            {
+                builder.Append("  defaultDomain:");
+                builder.AppendLine($" '{DefaultDomain}'");
+            }
+
+            if (Optional.IsDefined(TenantType))
+            {
+                builder.Append("  tenantType:");
+                builder.AppendLine($" '{TenantType}'");
+            }
+
+            if (Optional.IsDefined(TenantBrandingLogoUri))
+            {
+                builder.Append("  tenantBrandingLogoUrl:");
+                builder.AppendLine($" '{TenantBrandingLogoUri.AbsoluteUri}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<TenantData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TenantData>)this).GetFormatFromOptions(options) : options.Format;
@@ -222,6 +313,8 @@ namespace Azure.ResourceManager.Resources
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TenantData)} does not support '{options.Format}' format.");
             }
@@ -238,6 +331,8 @@ namespace Azure.ResourceManager.Resources
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeTenantData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(TenantData)} does not support '{options.Format}' format.");
             }
