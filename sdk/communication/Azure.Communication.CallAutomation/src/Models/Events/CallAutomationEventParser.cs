@@ -108,6 +108,10 @@ namespace Azure.Communication.CallAutomation
                     return ParticipantsUpdated.Deserialize(eventData);
                 case nameof(RecordingStateChanged):
                     return RecordingStateChanged.Deserialize(eventData);
+                case nameof(TeamsRecordingStateChanged):
+                    return TeamsRecordingStateChanged.Deserialize(eventData);
+                case nameof(TeamsComplianceRecordingStateChanged):
+                    return TeamsComplianceRecordingStateChanged.Deserialize(eventData);
                 case nameof(PlayCompleted):
                     return PlayCompleted.Deserialize(eventData);
                 case nameof(PlayFailed):
