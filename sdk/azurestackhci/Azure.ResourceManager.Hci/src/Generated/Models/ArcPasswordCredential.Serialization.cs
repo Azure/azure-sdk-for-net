@@ -6,15 +6,80 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class ArcPasswordCredential
+    public partial class ArcPasswordCredential : IUtf8JsonSerializable, IJsonModel<ArcPasswordCredential>
     {
-        internal static ArcPasswordCredential DeserializeArcPasswordCredential(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArcPasswordCredential>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ArcPasswordCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ArcPasswordCredential>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ArcPasswordCredential)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SecretText))
+            {
+                writer.WritePropertyName("secretText"u8);
+                writer.WriteStringValue(SecretText);
+            }
+            if (Optional.IsDefined(KeyId))
+            {
+                writer.WritePropertyName("keyId"u8);
+                writer.WriteStringValue(KeyId);
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startDateTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (Optional.IsDefined(EndOn))
+            {
+                writer.WritePropertyName("endDateTime"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ArcPasswordCredential IJsonModel<ArcPasswordCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArcPasswordCredential>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ArcPasswordCredential)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeArcPasswordCredential(document.RootElement, options);
+        }
+
+        internal static ArcPasswordCredential DeserializeArcPasswordCredential(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +88,8 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<string> keyId = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> endDateTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secretText"u8))
@@ -53,8 +120,44 @@ namespace Azure.ResourceManager.Hci.Models
                     endDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ArcPasswordCredential(secretText.Value, keyId.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ArcPasswordCredential(secretText.Value, keyId.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(endDateTime), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ArcPasswordCredential>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArcPasswordCredential>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ArcPasswordCredential)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ArcPasswordCredential IPersistableModel<ArcPasswordCredential>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArcPasswordCredential>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeArcPasswordCredential(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ArcPasswordCredential)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ArcPasswordCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

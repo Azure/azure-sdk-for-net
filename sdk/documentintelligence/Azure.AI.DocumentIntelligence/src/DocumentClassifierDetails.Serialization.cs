@@ -9,7 +9,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static DocumentClassifierDetails FromResponse(Response response)
         {
-            return DeserializationHelpers.FromOperationResponse(response, DeserializeDocumentClassifierDetails, "result");
+            return DeserializationHelpers.FromOperationResponse(response, e => DeserializeDocumentClassifierDetails(e), "result");
         }
     }
 }

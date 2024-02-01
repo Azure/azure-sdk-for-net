@@ -17,6 +17,38 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
     /// </summary>
     public partial class SpringBootAppProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SpringBootAppProperties"/>. </summary>
         public SpringBootAppProperties()
         {
@@ -148,7 +180,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
         /// The list of errors.
         /// Serialized Name: SpringbootappsProperties.errors
         /// </param>
-        internal SpringBootAppProperties(string appName, string artifactName, int? appPort, string appType, IList<SpringBootAppApplicationConfigurationsItem> applicationConfigurations, IList<int> bindingPorts, string buildJdkVersion, IList<string> certificates, string checksum, IList<string> dependencies, IList<string> environments, int? instanceCount, string jarFileLocation, int? jvmMemoryInMB, IList<string> jvmOptions, IList<SpringBootAppMiscsItem> miscs, IList<SpringBootAppInstancesItem> instances, string runtimeJdkVersion, IList<string> servers, IList<ResourceIdentifier> machineArmIds, string siteName, string springBootVersion, IList<string> staticContentLocations, IList<string> connectionStrings, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastUpdatedOn, SpringAppDiscoveryProvisioningState? provisioningState, IList<SpringBootSiteError> errors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SpringBootAppProperties(string appName, string artifactName, int? appPort, string appType, IList<SpringBootAppApplicationConfigurationsItem> applicationConfigurations, IList<int> bindingPorts, string buildJdkVersion, IList<string> certificates, string checksum, IList<string> dependencies, IList<string> environments, int? instanceCount, string jarFileLocation, int? jvmMemoryInMB, IList<string> jvmOptions, IList<SpringBootAppMiscsItem> miscs, IList<SpringBootAppInstancesItem> instances, string runtimeJdkVersion, IList<string> servers, IList<ResourceIdentifier> machineArmIds, string siteName, string springBootVersion, IList<string> staticContentLocations, IList<string> connectionStrings, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastUpdatedOn, SpringAppDiscoveryProvisioningState? provisioningState, IList<SpringBootSiteError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AppName = appName;
             ArtifactName = artifactName;
@@ -178,6 +211,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             LastUpdatedOn = lastUpdatedOn;
             ProvisioningState = provisioningState;
             Errors = errors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

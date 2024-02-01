@@ -135,13 +135,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 {
                     // Presence of "WEBSITE_SITE_NAME" indicate web apps.
                     // "WEBSITE_ISOLATION"!="hyperv" indicate premium containers. In this case, perf counters
-                    // can be read using regular mechanism and hence this method retuns false for
+                    // can be read using regular mechanism and hence this method returns false for
                     // premium containers.
                     // TODO: switch to platform. Not necessary for POC.
                     s_isAzureWebApp = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(WebSiteEnvironmentVariable)) &&
                                     Environment.GetEnvironmentVariable(WebSiteIsolationEnvironmentVariable) != WebSiteIsolationHyperV;
                 }
-                catch (Exception ex)
+                catch (System.Exception ex)
                 {
                     LiveMetricsExporterEventSource.Log.AccessingEnvironmentVariableFailedWarning(WebSiteEnvironmentVariable, ex);
                     return false;

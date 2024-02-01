@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -26,11 +27,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="SparkJobPythonEntry"/>. </summary>
         /// <param name="sparkJobEntryType"> [Required] Type of the job's entry point. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="file"> [Required] Relative python file path for job entry point. </param>
-        internal SparkJobPythonEntry(SparkJobEntryType sparkJobEntryType, string file) : base(sparkJobEntryType)
+        internal SparkJobPythonEntry(SparkJobEntryType sparkJobEntryType, IDictionary<string, BinaryData> serializedAdditionalRawData, string file) : base(sparkJobEntryType, serializedAdditionalRawData)
         {
             File = file;
             SparkJobEntryType = sparkJobEntryType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SparkJobPythonEntry"/> for deserialization. </summary>
+        internal SparkJobPythonEntry()
+        {
         }
 
         /// <summary> [Required] Relative python file path for job entry point. </summary>

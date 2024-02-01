@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: HybridContainerService
 namespace: Azure.ResourceManager.HybridContainerService
-require: https://github.com/Azure/azure-rest-api-specs/blob/844b06b77ca841a151a6aa2a459f126e277f3c77/specification/hybridaks/resource-manager/readme.md
-# tag: package-preview-2022-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/8e674dd2a88ae73868c6fa7593a0ba4371e45991/specification/hybridaks/resource-manager/readme.md
+tag: package-2024-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -21,6 +21,10 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -30,7 +34,39 @@ format-by-name-rules:
   '*Uris': 'Uri'
 
 rename-mapping:
-  ProvisionedClustersResponse: ProvisionedCluster
+  AddonPhase: ProvisionedClusterAddonPhase
+  AddonStatusProfile: ProvisionedClusterAddonStatusProfile
+  AgentPool.properties.osSKU: OSSku
+  AgentPoolProfile.osSKU: OSSku
+  AgentPoolProvisioningStatusOperationStatus: AgentPoolOperationStatus
+  AgentPoolProvisioningStatusOperationStatusError: AgentPoolOperationError
+  AzureHybridBenefit: ProvisionedClusterAzureHybridBenefit
+  CloudProviderProfile: ProvisionedClusterCloudProviderProfile
+  CloudProviderProfileInfraNetworkProfile: ProvisionedClusterInfraNetworkProfile
+  ControlPlaneEndpointProfileControlPlaneEndpoint: ProvisionedClusterControlPlaneEndpoint
+  ControlPlaneProfile: ProvisionedClusterControlPlaneProfile
+  CredentialResult: HybridContainerServiceCredential
+  LinuxProfilePropertiesSsh: LinuxSshConfiguration
+  LinuxProfilePropertiesSshPublicKeysItem: LinuxSshPublicKey
+  ListCredentialResponse: HybridContainerServiceCredentialListResult
+  ListCredentialResponseError: HybridContainerServiceCredentialListError
+  NetworkPolicy: ProvisionedClusterNetworkPolicy
+  NetworkProfile: ProvisionedClusterNetworkProfile
+  NetworkProfileLoadBalancerProfile: ProvisionedClusterLoadBalancerProfile
+  Ossku: HybridContainerServiceOSSku
+  ProvisionedClusterPropertiesStatus: ProvisionedClusterStatus
+  ProvisionedClusterPropertiesStatusOperationStatus: ProvisionedClusterOperationStatus
+  ProvisionedClusterPropertiesStatusOperationStatusError: ProvisionedClusterOperationError
+  VirtualNetworkPropertiesInfraVnetProfile: InfraVnetProfile
+  VirtualNetworkPropertiesInfraVnetProfileHci: HciInfraVnetProfile
+  VirtualNetworkPropertiesInfraVnetProfileVmware: VMwareInfraVnetProfile
+  VirtualNetworkPropertiesStatus: HybridContainerServiceNetworkStatus
+  VirtualNetworkPropertiesStatusOperationStatusError: HybridContainerServiceNetworkOperationError
+  VirtualNetworkPropertiesVipPoolItem: KubernetesVirtualIPItem
+  VirtualNetworkPropertiesVmipPoolItem: VirtualMachineIPItem
+  VmSkuProfile: HybridContainerServiceVmSku
+  StorageProfileSmbCSIDriver.enabled: IsSmbCsiDriverEnabled
+  StorageProfileNfsCSIDriver.enabled: IsNfsCsiDriverEnabled
 
 acronym-mapping:
   CPU: Cpu
@@ -56,6 +92,30 @@ acronym-mapping:
   Etag: ETag|etag
 
 prepend-rp-prefix:
+  - AgentPoolProfile
   - AgentPool
-  - VirtualNetworks
+  - Expander
+  - ExtendedLocation
+  - ExtendedLocationTypes
+  - NamedAgentPoolProfile
+  - VirtualNetwork
+  - VirtualNetworkProperties
+  - OsType
+  - ProvisioningState
+  - ResourceProvisioningState
+  - VmSkuProperties
+  - VmSkuCapabilities
+
+directive:
+  - from: provisionedClusterInstances.json
+    where: $.definitions
+    transform: >
+      $.VmSkuProfile.properties.properties['x-ms-client-flatten'] = true;
+      $.agentPoolProvisioningStatus['x-ms-client-name'] = 'HybridaksAgentPoolProvisioningStatus';
+  - from: virtualNetworks.json
+    where: $.definitions
+    transform: >
+      $.virtualNetwork.properties.extendedLocation = {
+        "$ref": "./provisionedClusterInstances.json#/definitions/ExtendedLocation"
+      };
 ```

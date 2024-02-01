@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Input to check. </param>
@@ -93,6 +97,10 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,6 +136,10 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <term>Operation Id</term>
         /// <description>EdgeNodes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -136,7 +148,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeNodesRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeNodesRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EdgeNode.DeserializeEdgeNode, EdgeNodesClientDiagnostics, Pipeline, "MockableCdnTenantResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => EdgeNode.DeserializeEdgeNode(e), EdgeNodesClientDiagnostics, Pipeline, "MockableCdnTenantResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -150,6 +162,10 @@ namespace Azure.ResourceManager.Cdn.Mocking
         /// <term>Operation Id</term>
         /// <description>EdgeNodes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -158,7 +174,7 @@ namespace Azure.ResourceManager.Cdn.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeNodesRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeNodesRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EdgeNode.DeserializeEdgeNode, EdgeNodesClientDiagnostics, Pipeline, "MockableCdnTenantResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => EdgeNode.DeserializeEdgeNode(e), EdgeNodesClientDiagnostics, Pipeline, "MockableCdnTenantResource.GetEdgeNodes", "value", "nextLink", cancellationToken);
         }
     }
 }

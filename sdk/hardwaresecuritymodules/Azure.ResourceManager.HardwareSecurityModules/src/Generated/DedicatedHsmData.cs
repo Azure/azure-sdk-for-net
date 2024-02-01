@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HardwareSecurityModules.Models;
@@ -18,6 +19,38 @@ namespace Azure.ResourceManager.HardwareSecurityModules
     /// </summary>
     public partial class DedicatedHsmData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DedicatedHsmData(AzureLocation location) : base(location)
@@ -39,7 +72,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="sku"> SKU details. </param>
         /// <param name="zones"> The Dedicated Hsm zones. </param>
-        internal DedicatedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkProfile networkProfile, NetworkProfile managementNetworkProfile, string stampId, string statusMessage, JsonWebKeyType? provisioningState, HardwareSecurityModulesSku sku, IList<string> zones) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DedicatedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkProfile networkProfile, NetworkProfile managementNetworkProfile, string stampId, string statusMessage, JsonWebKeyType? provisioningState, HardwareSecurityModulesSku sku, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             NetworkProfile = networkProfile;
             ManagementNetworkProfile = managementNetworkProfile;
@@ -48,6 +82,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             ProvisioningState = provisioningState;
             Sku = sku;
             Zones = zones;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DedicatedHsmData"/> for deserialization. </summary>
+        internal DedicatedHsmData()
+        {
         }
 
         /// <summary> Specifies the network interfaces of the dedicated hsm. </summary>

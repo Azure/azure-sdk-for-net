@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistrySourceTriggerDescriptor : IUtf8JsonSerializable
+    public partial class ContainerRegistrySourceTriggerDescriptor : IUtf8JsonSerializable, IJsonModel<ContainerRegistrySourceTriggerDescriptor>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistrySourceTriggerDescriptor>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerRegistrySourceTriggerDescriptor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistrySourceTriggerDescriptor>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistrySourceTriggerDescriptor)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -51,11 +61,40 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("providerType"u8);
                 writer.WriteStringValue(ProviderType);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerRegistrySourceTriggerDescriptor DeserializeContainerRegistrySourceTriggerDescriptor(JsonElement element)
+        ContainerRegistrySourceTriggerDescriptor IJsonModel<ContainerRegistrySourceTriggerDescriptor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistrySourceTriggerDescriptor>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistrySourceTriggerDescriptor)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistrySourceTriggerDescriptor(document.RootElement, options);
+        }
+
+        internal static ContainerRegistrySourceTriggerDescriptor DeserializeContainerRegistrySourceTriggerDescriptor(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,6 +106,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Optional<Uri> repositoryUrl = default;
             Optional<string> branchName = default;
             Optional<string> providerType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -112,8 +153,44 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     providerType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerRegistrySourceTriggerDescriptor(Optional.ToNullable(id), eventType.Value, commitId.Value, pullRequestId.Value, repositoryUrl.Value, branchName.Value, providerType.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerRegistrySourceTriggerDescriptor(Optional.ToNullable(id), eventType.Value, commitId.Value, pullRequestId.Value, repositoryUrl.Value, branchName.Value, providerType.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerRegistrySourceTriggerDescriptor>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistrySourceTriggerDescriptor>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerRegistrySourceTriggerDescriptor)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContainerRegistrySourceTriggerDescriptor IPersistableModel<ContainerRegistrySourceTriggerDescriptor>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistrySourceTriggerDescriptor>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerRegistrySourceTriggerDescriptor(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerRegistrySourceTriggerDescriptor)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerRegistrySourceTriggerDescriptor>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

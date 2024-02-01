@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesGitRepositoryRef : IUtf8JsonSerializable
+    public partial class KubernetesGitRepositoryRef : IUtf8JsonSerializable, IJsonModel<KubernetesGitRepositoryRef>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesGitRepositoryRef>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<KubernetesGitRepositoryRef>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesGitRepositoryRef>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubernetesGitRepositoryRef)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Branch))
             {
@@ -63,11 +74,40 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("commit");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KubernetesGitRepositoryRef DeserializeKubernetesGitRepositoryRef(JsonElement element)
+        KubernetesGitRepositoryRef IJsonModel<KubernetesGitRepositoryRef>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesGitRepositoryRef>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubernetesGitRepositoryRef)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesGitRepositoryRef(document.RootElement, options);
+        }
+
+        internal static KubernetesGitRepositoryRef DeserializeKubernetesGitRepositoryRef(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,6 +116,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             Optional<string> tag = default;
             Optional<string> semver = default;
             Optional<string> commit = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("branch"u8))
@@ -118,8 +160,44 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     commit = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KubernetesGitRepositoryRef(branch.Value, tag.Value, semver.Value, commit.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KubernetesGitRepositoryRef(branch.Value, tag.Value, semver.Value, commit.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KubernetesGitRepositoryRef>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesGitRepositoryRef>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesGitRepositoryRef)} does not support '{options.Format}' format.");
+            }
+        }
+
+        KubernetesGitRepositoryRef IPersistableModel<KubernetesGitRepositoryRef>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesGitRepositoryRef>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKubernetesGitRepositoryRef(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesGitRepositoryRef)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KubernetesGitRepositoryRef>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

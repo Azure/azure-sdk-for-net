@@ -5,15 +5,86 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class TunnelConnectionHealth
+    public partial class TunnelConnectionHealth : IUtf8JsonSerializable, IJsonModel<TunnelConnectionHealth>
     {
-        internal static TunnelConnectionHealth DeserializeTunnelConnectionHealth(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TunnelConnectionHealth>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TunnelConnectionHealth>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TunnelConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TunnelConnectionHealth)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Tunnel))
+            {
+                writer.WritePropertyName("tunnel"u8);
+                writer.WriteStringValue(Tunnel);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ConnectionStatus))
+            {
+                writer.WritePropertyName("connectionStatus"u8);
+                writer.WriteStringValue(ConnectionStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(IngressBytesTransferred))
+            {
+                writer.WritePropertyName("ingressBytesTransferred"u8);
+                writer.WriteNumberValue(IngressBytesTransferred.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EgressBytesTransferred))
+            {
+                writer.WritePropertyName("egressBytesTransferred"u8);
+                writer.WriteNumberValue(EgressBytesTransferred.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastConnectionEstablishedOn))
+            {
+                writer.WritePropertyName("lastConnectionEstablishedUtcTime"u8);
+                writer.WriteStringValue(LastConnectionEstablishedOn);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TunnelConnectionHealth IJsonModel<TunnelConnectionHealth>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TunnelConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TunnelConnectionHealth)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTunnelConnectionHealth(document.RootElement, options);
+        }
+
+        internal static TunnelConnectionHealth DeserializeTunnelConnectionHealth(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +94,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<long> ingressBytesTransferred = default;
             Optional<long> egressBytesTransferred = default;
             Optional<string> lastConnectionEstablishedUtcTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tunnel"u8))
@@ -62,8 +135,44 @@ namespace Azure.ResourceManager.Network.Models
                     lastConnectionEstablishedUtcTime = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TunnelConnectionHealth(tunnel.Value, Optional.ToNullable(connectionStatus), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), lastConnectionEstablishedUtcTime.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TunnelConnectionHealth(tunnel.Value, Optional.ToNullable(connectionStatus), Optional.ToNullable(ingressBytesTransferred), Optional.ToNullable(egressBytesTransferred), lastConnectionEstablishedUtcTime.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TunnelConnectionHealth>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TunnelConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TunnelConnectionHealth)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TunnelConnectionHealth IPersistableModel<TunnelConnectionHealth>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TunnelConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTunnelConnectionHealth(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TunnelConnectionHealth)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TunnelConnectionHealth>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmBackupExtendedProperties : IUtf8JsonSerializable
+    public partial class IaasVmBackupExtendedProperties : IUtf8JsonSerializable, IJsonModel<IaasVmBackupExtendedProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IaasVmBackupExtendedProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IaasVmBackupExtendedProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmBackupExtendedProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IaasVmBackupExtendedProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DiskExclusionProperties))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("linuxVmApplicationName"u8);
                 writer.WriteStringValue(LinuxVmApplicationName);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IaasVmBackupExtendedProperties DeserializeIaasVmBackupExtendedProperties(JsonElement element)
+        IaasVmBackupExtendedProperties IJsonModel<IaasVmBackupExtendedProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmBackupExtendedProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IaasVmBackupExtendedProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIaasVmBackupExtendedProperties(document.RootElement, options);
+        }
+
+        internal static IaasVmBackupExtendedProperties DeserializeIaasVmBackupExtendedProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DiskExclusionProperties> diskExclusionProperties = default;
             Optional<string> linuxVmApplicationName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskExclusionProperties"u8))
@@ -52,8 +94,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     linuxVmApplicationName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IaasVmBackupExtendedProperties(diskExclusionProperties.Value, linuxVmApplicationName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IaasVmBackupExtendedProperties(diskExclusionProperties.Value, linuxVmApplicationName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IaasVmBackupExtendedProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmBackupExtendedProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IaasVmBackupExtendedProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        IaasVmBackupExtendedProperties IPersistableModel<IaasVmBackupExtendedProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmBackupExtendedProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIaasVmBackupExtendedProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IaasVmBackupExtendedProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IaasVmBackupExtendedProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

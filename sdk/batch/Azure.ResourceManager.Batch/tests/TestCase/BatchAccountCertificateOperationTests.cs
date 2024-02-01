@@ -36,8 +36,6 @@ namespace Azure.ResourceManager.Batch.Tests.TestCase
             BatchAccountCertificateResource certificate2 = await certificate1.GetAsync();
 
             ResourceDataHelper.AssertCertificate(certificate1.Data, certificate2.Data);
-            //2.Delete
-            await certificate1.DeleteAsync(WaitUntil.Completed);
         }
     }
 }

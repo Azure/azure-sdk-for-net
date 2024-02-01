@@ -951,8 +951,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 Assert.That(capturedEventArgs[index].CancellationToken, Is.EqualTo(cancellationSource.Token), $"The cancellation token should have been propagated at index { index }.");
                 Assert.That(async () => await capturedEventArgs[index].UpdateCheckpointAsync(), Throws.Nothing, $"A checkpoint should be allowed for the event at index { index }.");
 
-                var expectedStart = EventPosition.FromOffset(capturedEventArgs[index].Data.Offset);
-
                 mockCheckpointStore
                     .Verify(storage => storage.UpdateCheckpointAsync(
                         processorClient.FullyQualifiedNamespace,

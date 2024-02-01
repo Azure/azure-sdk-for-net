@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary>
@@ -22,8 +25,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryJobTaskDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="jobTask"> The job entity. </param>
-        internal SiteRecoveryJobTaskDetails(string instanceType, SiteRecoveryJobEntity jobTask) : base(instanceType)
+        internal SiteRecoveryJobTaskDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, SiteRecoveryJobEntity jobTask) : base(instanceType, serializedAdditionalRawData)
         {
             JobTask = jobTask;
             InstanceType = instanceType ?? "JobTaskDetails";

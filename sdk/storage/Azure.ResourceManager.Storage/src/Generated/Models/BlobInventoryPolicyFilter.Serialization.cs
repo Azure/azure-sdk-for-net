@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class BlobInventoryPolicyFilter : IUtf8JsonSerializable
+    public partial class BlobInventoryPolicyFilter : IUtf8JsonSerializable, IJsonModel<BlobInventoryPolicyFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobInventoryPolicyFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BlobInventoryPolicyFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobInventoryPolicyFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BlobInventoryPolicyFilter)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(IncludePrefix))
             {
@@ -61,11 +71,40 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("includeDeleted"u8);
                 writer.WriteBooleanValue(IncludeDeleted.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BlobInventoryPolicyFilter DeserializeBlobInventoryPolicyFilter(JsonElement element)
+        BlobInventoryPolicyFilter IJsonModel<BlobInventoryPolicyFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobInventoryPolicyFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BlobInventoryPolicyFilter)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBlobInventoryPolicyFilter(document.RootElement, options);
+        }
+
+        internal static BlobInventoryPolicyFilter DeserializeBlobInventoryPolicyFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,6 +115,8 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<bool> includeBlobVersions = default;
             Optional<bool> includeSnapshots = default;
             Optional<bool> includeDeleted = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prefixMatch"u8))
@@ -147,8 +188,44 @@ namespace Azure.ResourceManager.Storage.Models
                     includeDeleted = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BlobInventoryPolicyFilter(Optional.ToList(prefixMatch), Optional.ToList(excludePrefix), Optional.ToList(blobTypes), Optional.ToNullable(includeBlobVersions), Optional.ToNullable(includeSnapshots), Optional.ToNullable(includeDeleted));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BlobInventoryPolicyFilter(Optional.ToList(prefixMatch), Optional.ToList(excludePrefix), Optional.ToList(blobTypes), Optional.ToNullable(includeBlobVersions), Optional.ToNullable(includeSnapshots), Optional.ToNullable(includeDeleted), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BlobInventoryPolicyFilter>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobInventoryPolicyFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BlobInventoryPolicyFilter)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BlobInventoryPolicyFilter IPersistableModel<BlobInventoryPolicyFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BlobInventoryPolicyFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBlobInventoryPolicyFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BlobInventoryPolicyFilter)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BlobInventoryPolicyFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

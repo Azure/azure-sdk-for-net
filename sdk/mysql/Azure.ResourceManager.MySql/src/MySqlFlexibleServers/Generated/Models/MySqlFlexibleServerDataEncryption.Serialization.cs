@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerDataEncryption : IUtf8JsonSerializable
+    public partial class MySqlFlexibleServerDataEncryption : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerDataEncryption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerDataEncryption>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MySqlFlexibleServerDataEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerDataEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerDataEncryption)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
             {
@@ -41,11 +51,40 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(EncryptionType.Value.ToSerialString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MySqlFlexibleServerDataEncryption DeserializeMySqlFlexibleServerDataEncryption(JsonElement element)
+        MySqlFlexibleServerDataEncryption IJsonModel<MySqlFlexibleServerDataEncryption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerDataEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerDataEncryption)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlFlexibleServerDataEncryption(document.RootElement, options);
+        }
+
+        internal static MySqlFlexibleServerDataEncryption DeserializeMySqlFlexibleServerDataEncryption(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +94,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             Optional<ResourceIdentifier> geoBackupUserAssignedIdentityId = default;
             Optional<Uri> geoBackupKeyUri = default;
             Optional<MySqlFlexibleServerDataEncryptionType> type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryUserAssignedIdentityId"u8))
@@ -102,8 +143,44 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     type = property.Value.GetString().ToMySqlFlexibleServerDataEncryptionType();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MySqlFlexibleServerDataEncryption(primaryUserAssignedIdentityId.Value, primaryKeyUri.Value, geoBackupUserAssignedIdentityId.Value, geoBackupKeyUri.Value, Optional.ToNullable(type));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MySqlFlexibleServerDataEncryption(primaryUserAssignedIdentityId.Value, primaryKeyUri.Value, geoBackupUserAssignedIdentityId.Value, geoBackupKeyUri.Value, Optional.ToNullable(type), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MySqlFlexibleServerDataEncryption>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerDataEncryption>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerDataEncryption)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MySqlFlexibleServerDataEncryption IPersistableModel<MySqlFlexibleServerDataEncryption>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerDataEncryption>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMySqlFlexibleServerDataEncryption(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerDataEncryption)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MySqlFlexibleServerDataEncryption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Use to provide parameters when requesting an export of all devices in the IoT hub. </summary>
     public partial class ExportDevicesContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ExportDevicesContent"/>. </summary>
         /// <param name="exportBlobContainerUri"> The export blob container URI. </param>
         /// <param name="excludeKeys"> The value indicating whether keys should be excluded during export. </param>
@@ -33,7 +66,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="identity"> Managed identity properties of storage endpoint for export devices. </param>
         /// <param name="includeConfigurations"> The value indicating whether configurations should be exported. </param>
         /// <param name="configurationsBlobName"> The name of the blob that will be created in the provided output blob container. This blob will contain the exported configurations for the Iot Hub. </param>
-        internal ExportDevicesContent(Uri exportBlobContainerUri, bool excludeKeys, string exportBlobName, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, bool? includeConfigurations, string configurationsBlobName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExportDevicesContent(Uri exportBlobContainerUri, bool excludeKeys, string exportBlobName, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, bool? includeConfigurations, string configurationsBlobName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExportBlobContainerUri = exportBlobContainerUri;
             ExcludeKeys = excludeKeys;
@@ -42,6 +76,12 @@ namespace Azure.ResourceManager.IotHub.Models
             Identity = identity;
             IncludeConfigurations = includeConfigurations;
             ConfigurationsBlobName = configurationsBlobName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExportDevicesContent"/> for deserialization. </summary>
+        internal ExportDevicesContent()
+        {
         }
 
         /// <summary> The export blob container URI. </summary>

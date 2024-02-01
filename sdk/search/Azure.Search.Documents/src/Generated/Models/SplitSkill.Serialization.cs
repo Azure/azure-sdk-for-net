@@ -45,6 +45,30 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maximumPageLength");
                 }
             }
+            if (Optional.IsDefined(PageOverlapLength))
+            {
+                if (PageOverlapLength != null)
+                {
+                    writer.WritePropertyName("pageOverlapLength"u8);
+                    writer.WriteNumberValue(PageOverlapLength.Value);
+                }
+                else
+                {
+                    writer.WriteNull("pageOverlapLength");
+                }
+            }
+            if (Optional.IsDefined(MaximumPagesToTake))
+            {
+                if (MaximumPagesToTake != null)
+                {
+                    writer.WritePropertyName("maximumPagesToTake"u8);
+                    writer.WriteNumberValue(MaximumPagesToTake.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maximumPagesToTake");
+                }
+            }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(ODataType);
             if (Optional.IsDefined(Name))
@@ -88,6 +112,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<SplitSkillLanguage?> defaultLanguageCode = default;
             Optional<TextSplitMode> textSplitMode = default;
             Optional<int?> maximumPageLength = default;
+            Optional<int?> pageOverlapLength = default;
+            Optional<int?> maximumPagesToTake = default;
             string odataType = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -123,6 +149,26 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     maximumPageLength = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("pageOverlapLength"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        pageOverlapLength = null;
+                        continue;
+                    }
+                    pageOverlapLength = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("maximumPagesToTake"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        maximumPagesToTake = null;
+                        continue;
+                    }
+                    maximumPagesToTake = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))
@@ -166,7 +212,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SplitSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), Optional.ToNullable(textSplitMode), Optional.ToNullable(maximumPageLength));
+            return new SplitSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, Optional.ToNullable(defaultLanguageCode), Optional.ToNullable(textSplitMode), Optional.ToNullable(maximumPageLength), Optional.ToNullable(pageOverlapLength), Optional.ToNullable(maximumPagesToTake));
         }
     }
 }

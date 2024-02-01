@@ -3,12 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes
 {
@@ -22,9 +24,25 @@ namespace Azure.Search.Documents.Indexes
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly SearchClientOptions.ServiceVersion _version;
-
         private IndexersRestClient _indexersClient;
         private string _serviceName;
+
+        /// <summary>
+        /// The HTTP pipeline for sending and receiving REST requests and responses.
+        /// </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary>
+        /// Gets the URI endpoint of the Search service.  This is likely
+        /// to be similar to "https://{search_service}.search.windows.net".
+        /// </summary>
+        public virtual Uri Endpoint { get; }
+
+        /// <summary>
+        /// Gets the name of the Search service.
+        /// </summary>
+        public virtual string ServiceName =>
+            _serviceName ??= Endpoint.GetSearchServiceName();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SearchIndexerClient"/> class for mocking.
@@ -119,18 +137,6 @@ namespace Azure.Search.Documents.Indexes
         }
 
         /// <summary>
-        /// Gets the URI endpoint of the Search service.  This is likely
-        /// to be similar to "https://{search_service}.search.windows.net".
-        /// </summary>
-        public virtual Uri Endpoint { get; }
-
-        /// <summary>
-        /// Gets the name of the Search service.
-        /// </summary>
-        public virtual string ServiceName =>
-            _serviceName ??= Endpoint.GetSearchServiceName();
-
-        /// <summary>
         /// Gets the generated <see cref="IndexersRestClient"/> to make requests.
         /// </summary>
         private IndexersRestClient IndexersClient => LazyInitializer.EnsureInitialized(ref _indexersClient, () => new IndexersRestClient(
@@ -217,9 +223,73 @@ namespace Azure.Search.Documents.Indexes
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<SearchIndexer> CreateOrUpdateIndexer(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            SearchIndexer indexer,
+            bool onlyIfUnchanged,
+            CancellationToken cancellationToken) => CreateOrUpdateIndexer(
+                indexer,
+                onlyIfUnchanged,
+                ignoreCacheResetRequirements: null,
+                disableCacheReprocessingChangeDetection: null,
+                cancellationToken);
+
+        /// <summary>
+        /// Creates a new indexer or updates an existing indexer.
+        /// </summary>
+        /// <param name="indexer">Required. The <see cref="SearchIndexer"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
+        /// This may differ slightly from what was passed into the service.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual Response<SearchIndexer> CreateOrUpdateIndexer(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            SearchIndexer indexer,
+            bool onlyIfUnchanged,
+            bool disableCacheReprocessingChangeDetection,
+            bool ignoreCacheResetRequirements,
+            CancellationToken cancellationToken) => CreateOrUpdateIndexer(
+                indexer,
+                onlyIfUnchanged,
+                ignoreCacheResetRequirements,
+                disableCacheReprocessingChangeDetection,
+                cancellationToken);
+
+        /// <summary>
+        /// Creates a new indexer or updates an existing indexer.
+        /// </summary>
+        /// <param name="indexer">Required. The <see cref="SearchIndexer"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
+        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
+        /// This may differ slightly from what was passed into the service.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual Response<SearchIndexer> CreateOrUpdateIndexer(
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
+            bool? ignoreCacheResetRequirements = null,
+            bool? disableCacheReprocessingChangeDetection = null,
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
@@ -234,6 +304,8 @@ namespace Azure.Search.Documents.Indexes
                     indexer,
                     onlyIfUnchanged ? indexer?.ETag?.ToString() : null,
                     null,
+                    ignoreCacheResetRequirements,
+                    disableCacheReprocessingChangeDetection,
                     cancellationToken);
             }
             catch (Exception ex)
@@ -258,9 +330,74 @@ namespace Azure.Search.Documents.Indexes
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
         /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<SearchIndexer>> CreateOrUpdateIndexerAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            SearchIndexer indexer,
+            bool onlyIfUnchanged,
+            CancellationToken cancellationToken) => await CreateOrUpdateIndexerAsync(
+                indexer,
+                onlyIfUnchanged,
+                ignoreCacheResetRequirements: null,
+                disableCacheReprocessingChangeDetection: null,
+                cancellationToken).
+                ConfigureAwait(false);
+
+        /// <summary>
+        /// Creates a new indexer or updates an existing indexer.
+        /// </summary>
+        /// <param name="indexer">Required. The <see cref="SearchIndexer"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
+        /// This may differ slightly from what was passed into the service.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+        public virtual async Task<Response<SearchIndexer>> CreateOrUpdateIndexerAsync(
+#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
+            SearchIndexer indexer,
+            bool onlyIfUnchanged,
+            bool disableCacheReprocessingChangeDetection,
+            bool ignoreCacheResetRequirements,
+            CancellationToken cancellationToken) => await CreateOrUpdateIndexerAsync(
+                indexer,
+                onlyIfUnchanged,
+                ignoreCacheResetRequirements,
+                disableCacheReprocessingChangeDetection,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Creates a new indexer or updates an existing indexer.
+        /// </summary>
+        /// <param name="indexer">Required. The <see cref="SearchIndexer"/> to create or update.</param>
+        /// <param name="onlyIfUnchanged">
+        /// True to throw a <see cref="RequestFailedException"/> if the <see cref="SearchIndexer.ETag"/> does not match the current service version;
+        /// otherwise, the current service version will be overwritten.
+        /// </param>
+        /// <param name="ignoreCacheResetRequirements">Ignores cache reset requirements.</param>
+        /// <param name="disableCacheReprocessingChangeDetection">Disables cache reprocessing change detection.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>
+        /// The <see cref="Response{T}"/> from the server containing the <see cref="SearchIndexer"/> created.
+        /// This may differ slightly from what was passed into the service.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="indexer"/> is null.</exception>
+        /// <exception cref="RequestFailedException">Thrown when a failure is returned by the Search service.</exception>
         public virtual async Task<Response<SearchIndexer>> CreateOrUpdateIndexerAsync(
             SearchIndexer indexer,
             bool onlyIfUnchanged = false,
+            bool? ignoreCacheResetRequirements = null,
+            bool? disableCacheReprocessingChangeDetection = null,
             CancellationToken cancellationToken = default)
         {
             // The REST client uses a different parameter name that would be confusing to reference.
@@ -275,6 +412,8 @@ namespace Azure.Search.Documents.Indexes
                     indexer,
                     onlyIfUnchanged ? indexer?.ETag?.ToString() : null,
                     null,
+                    ignoreCacheResetRequirements,
+                    disableCacheReprocessingChangeDetection,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -750,6 +889,69 @@ namespace Azure.Search.Documents.Indexes
             {
                 return await IndexersClient.RunAsync(
                     indexerName,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Resets specific documents in the datasource to be selectively re-ingested by the indexer.
+        /// </summary>
+        /// <param name="indexerName"> The name of the indexer to reset documents for. </param>
+        /// <param name="overwrite">If <c>false</c>, keys or ids will be appended to existing ones. If <c>true</c>, only the keys or ids in this payload will be queued to be re-ingested.</param>
+        /// <param name="resetDocumentOptions">The reset options to use.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        public virtual Response ResetDocuments(
+            string indexerName,
+            bool? overwrite = null,
+            ResetDocumentOptions resetDocumentOptions = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(ResetDocuments)}");
+            scope.Start();
+            try
+            {
+                return IndexersClient.ResetDocs(
+                    indexerName,
+                    overwrite,
+                    resetDocumentOptions,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Resets specific documents in the datasource to be selectively re-ingested by the indexer.
+        /// </summary>
+        /// <param name="indexerName">The name of the indexer to reset documents for.</param>
+        /// <param name="overwrite">If <c>false</c>, keys or ids will be appended to existing ones. If <c>true</c>, only the keys or ids in this payload will be queued to be re-ingested.</param>
+        /// <param name="resetDocumentOptions">The reset options to use.</param>
+        /// <param name="cancellationToken">Optional <see cref="CancellationToken"/> to propagate notifications that the operation should be canceled.</param>
+        /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
+        public virtual async Task<Response> ResetDocumentsAsync(
+            string indexerName,
+            bool? overwrite = null,
+            ResetDocumentOptions resetDocumentOptions = null,
+            CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(SearchIndexerClient)}.{nameof(ResetDocuments)}");
+            scope.Start();
+            try
+            {
+                return await IndexersClient.ResetDocsAsync(
+                    indexerName,
+                    overwrite,
+                    resetDocumentOptions,
                     cancellationToken)
                     .ConfigureAwait(false);
             }

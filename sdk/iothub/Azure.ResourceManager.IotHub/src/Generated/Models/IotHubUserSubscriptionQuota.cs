@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> User subscription quota response. </summary>
     public partial class IotHubUserSubscriptionQuota
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="IotHubUserSubscriptionQuota"/>. </summary>
         internal IotHubUserSubscriptionQuota()
         {
@@ -22,7 +57,8 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="currentValue"> Current number of IotHub type. </param>
         /// <param name="limit"> Numerical limit on IotHub type. </param>
         /// <param name="name"> IotHub type. </param>
-        internal IotHubUserSubscriptionQuota(string iotHubTypeId, string userSubscriptionQuotaType, string unit, int? currentValue, int? limit, IotHubTypeName name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubUserSubscriptionQuota(string iotHubTypeId, string userSubscriptionQuotaType, string unit, int? currentValue, int? limit, IotHubTypeName name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IotHubTypeId = iotHubTypeId;
             UserSubscriptionQuotaType = userSubscriptionQuotaType;
@@ -30,6 +66,7 @@ namespace Azure.ResourceManager.IotHub.Models
             CurrentValue = currentValue;
             Limit = limit;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> IotHub type id. </summary>
