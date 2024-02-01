@@ -2,11 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Text;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
+using ExceptionDocument = Azure.Monitor.OpenTelemetry.LiveMetrics.Models.Exception;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 {
@@ -34,8 +37,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
             // HACK: Remove the V2 for now. This Enum should be removed in the future.
             if (atp.activityType.HasFlag(OperationType.V2))
-            {
+                {
                 atp.activityType &= ~OperationType.V2;
+                }
             }
 
             switch (atp.activityType)
@@ -46,7 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     var httpResponseStatusCode = AzMonList.GetTagValue(ref atp.MappedTags, SemanticConventions.AttributeHttpResponseStatusCode)?.ToString();
                     remoteDependencyDocumentIngress.ResultCode = httpResponseStatusCode;
                     remoteDependencyDocumentIngress.Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
-                                                                ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
+                                                ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
                                                                 : SchemaConstants.Duration_MaxValue;
 
                     // The following "EXTENSION" properties are used to calculate metrics. These are not serialized.
