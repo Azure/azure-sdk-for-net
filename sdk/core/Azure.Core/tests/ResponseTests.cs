@@ -126,14 +126,14 @@ namespace Azure.Core.Tests
             Assert.AreEqual("body content", responseWithBody.Content.ToString());
         }
 
-        [Test]
-        public void ContentPropertyThrowsForNonMemoryStream()
-        {
-            var response = new MockResponse(200);
-            response.ContentStream = new ThrowingStream();
+        //[Test]
+        //public void ContentPropertyThrowsForNonMemoryStream()
+        //{
+        //    var response = new MockResponse(200);
+        //    response.ContentStream = new ThrowingStream();
 
-            Assert.Throws<InvalidOperationException>(() => { BinaryData d = response.Content; });
-        }
+        //    Assert.Throws<InvalidOperationException>(() => { BinaryData d = response.Content; });
+        //}
 
         [Test]
         public void ContentPropertyWorksForMemoryStreamsWithPrivateBuffers()

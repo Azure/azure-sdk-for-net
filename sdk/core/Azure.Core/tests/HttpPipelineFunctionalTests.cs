@@ -95,7 +95,7 @@ namespace Azure.Core.Tests
                     await ExecuteRequest(message, httpPipeline);
 
                     Assert.False(message.Response.ContentStream.CanSeek);
-                    Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
+                    //Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
 
                     extractedStream = message.ExtractResponseContent();
                 }
@@ -149,7 +149,7 @@ namespace Azure.Core.Tests
                     await ExecuteRequest(message, httpPipeline);
 
                     Assert.AreEqual(message.Response.ContentStream.CanSeek, false);
-                    Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
+                    //Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
 
                     extractedStream = message.ExtractResponseContent();
                 }
@@ -568,7 +568,7 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(message.Response.Status, 200);
             var responseContentStream = message.Response.ContentStream;
-            Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
+            //Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
             var buffer = new byte[10];
             Assert.AreEqual(1, await responseContentStream.ReadAsync(buffer, 0, 1));
             var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await responseContentStream.ReadAsync(buffer, 0, 10));

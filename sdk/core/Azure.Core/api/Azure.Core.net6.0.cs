@@ -239,7 +239,6 @@ namespace Azure
     {
         protected Response() { }
         public abstract string ClientRequestId { get; set; }
-        public virtual new System.BinaryData Content { get { throw null; } }
         public virtual new Azure.Core.ResponseHeaders Headers { get { throw null; } }
         protected internal abstract bool ContainsHeader(string name);
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
