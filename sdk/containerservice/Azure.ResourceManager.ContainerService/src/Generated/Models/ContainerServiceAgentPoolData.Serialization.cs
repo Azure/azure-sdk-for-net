@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    public partial class ContainerServiceAgentPoolData : IUtf8JsonSerializable, IJsonModel<ContainerServiceAgentPoolData>
+    public partial class ContainerServiceAgentPoolData : IUtf8JsonSerializable, IJsonModel<ContainerServiceAgentPoolData>, IPersistableModel<ContainerServiceAgentPoolData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceAgentPoolData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -809,6 +810,355 @@ namespace Azure.ResourceManager.ContainerService
             return new ContainerServiceAgentPoolData(id, name, type, systemData.Value, Optional.ToNullable(count), vmSize.Value, Optional.ToNullable(osDiskSizeGB), Optional.ToNullable(osDiskType), Optional.ToNullable(kubeletDiskType), Optional.ToNullable(workloadRuntime), vnetSubnetId.Value, podSubnetId.Value, Optional.ToNullable(maxPods), Optional.ToNullable(osType), Optional.ToNullable(osSku), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(scaleDownMode), Optional.ToNullable(type0), Optional.ToNullable(mode), orchestratorVersion.Value, currentOrchestratorVersion.Value, nodeImageVersion.Value, upgradeSettings.Value, provisioningState.Value, powerState.Value, Optional.ToList(availabilityZones), Optional.ToNullable(enableNodePublicIP), nodePublicIPPrefixId.Value, Optional.ToNullable(scaleSetPriority), Optional.ToNullable(scaleSetEvictionPolicy), Optional.ToNullable(spotMaxPrice), Optional.ToDictionary(tags), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), proximityPlacementGroupId.Value, kubeletConfig.Value, linuxOSConfig.Value, Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(enableUltraSsd), Optional.ToNullable(enableFIPS), Optional.ToNullable(gpuInstanceProfile), creationData.Value, capacityReservationGroupId.Value, hostGroupId.Value, networkProfile.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Count))
+            {
+                builder.Append("  count:");
+                builder.AppendLine($" '{Count.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VmSize))
+            {
+                builder.Append("  vmSize:");
+                builder.AppendLine($" '{VmSize}'");
+            }
+
+            if (Optional.IsDefined(OSDiskSizeInGB))
+            {
+                builder.Append("  osDiskSizeGB:");
+                builder.AppendLine($" '{OSDiskSizeInGB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OSDiskType))
+            {
+                builder.Append("  osDiskType:");
+                builder.AppendLine($" '{OSDiskType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(KubeletDiskType))
+            {
+                builder.Append("  kubeletDiskType:");
+                builder.AppendLine($" '{KubeletDiskType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WorkloadRuntime))
+            {
+                builder.Append("  workloadRuntime:");
+                builder.AppendLine($" '{WorkloadRuntime.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VnetSubnetId))
+            {
+                builder.Append("  vnetSubnetID:");
+                builder.AppendLine($" '{VnetSubnetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PodSubnetId))
+            {
+                builder.Append("  podSubnetID:");
+                builder.AppendLine($" '{PodSubnetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxPods))
+            {
+                builder.Append("  maxPods:");
+                builder.AppendLine($" '{MaxPods.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OSType))
+            {
+                builder.Append("  osType:");
+                builder.AppendLine($" '{OSType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OSSku))
+            {
+                builder.Append("  osSKU:");
+                builder.AppendLine($" '{OSSku.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxCount))
+            {
+                builder.Append("  maxCount:");
+                builder.AppendLine($" '{MaxCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MinCount))
+            {
+                builder.Append("  minCount:");
+                builder.AppendLine($" '{MinCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnableAutoScaling))
+            {
+                builder.Append("  enableAutoScaling:");
+                var boolValue = EnableAutoScaling.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ScaleDownMode))
+            {
+                builder.Append("  scaleDownMode:");
+                builder.AppendLine($" '{ScaleDownMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TypePropertiesType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{TypePropertiesType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Mode))
+            {
+                builder.Append("  mode:");
+                builder.AppendLine($" '{Mode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OrchestratorVersion))
+            {
+                builder.Append("  orchestratorVersion:");
+                builder.AppendLine($" '{OrchestratorVersion}'");
+            }
+
+            if (Optional.IsDefined(CurrentOrchestratorVersion))
+            {
+                builder.Append("  currentOrchestratorVersion:");
+                builder.AppendLine($" '{CurrentOrchestratorVersion}'");
+            }
+
+            if (Optional.IsDefined(NodeImageVersion))
+            {
+                builder.Append("  nodeImageVersion:");
+                builder.AppendLine($" '{NodeImageVersion}'");
+            }
+
+            if (Optional.IsDefined(UpgradeSettings))
+            {
+                builder.Append("  upgradeSettings:");
+                AppendChildObject(builder, UpgradeSettings, options, 2);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(PowerState))
+            {
+                builder.Append("  powerState:");
+                AppendChildObject(builder, PowerState, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(AvailabilityZones))
+            {
+                builder.Append("  availabilityZones:");
+                builder.AppendLine(" [");
+                foreach (var item in AvailabilityZones)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(EnableNodePublicIP))
+            {
+                builder.Append("  enableNodePublicIP:");
+                var boolValue = EnableNodePublicIP.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(NodePublicIPPrefixId))
+            {
+                builder.Append("  nodePublicIPPrefixID:");
+                builder.AppendLine($" '{NodePublicIPPrefixId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ScaleSetPriority))
+            {
+                builder.Append("  scaleSetPriority:");
+                builder.AppendLine($" '{ScaleSetPriority.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ScaleSetEvictionPolicy))
+            {
+                builder.Append("  scaleSetEvictionPolicy:");
+                builder.AppendLine($" '{ScaleSetEvictionPolicy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SpotMaxPrice))
+            {
+                builder.Append("  spotMaxPrice:");
+                builder.AppendLine($" '{SpotMaxPrice.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsCollectionDefined(NodeLabels))
+            {
+                builder.Append("  nodeLabels:");
+                builder.AppendLine(" {");
+                foreach (var item in NodeLabels)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsCollectionDefined(NodeTaints))
+            {
+                builder.Append("  nodeTaints:");
+                builder.AppendLine(" [");
+                foreach (var item in NodeTaints)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ProximityPlacementGroupId))
+            {
+                builder.Append("  proximityPlacementGroupID:");
+                builder.AppendLine($" '{ProximityPlacementGroupId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(KubeletConfig))
+            {
+                builder.Append("  kubeletConfig:");
+                AppendChildObject(builder, KubeletConfig, options, 2);
+            }
+
+            if (Optional.IsDefined(LinuxOSConfig))
+            {
+                builder.Append("  linuxOSConfig:");
+                AppendChildObject(builder, LinuxOSConfig, options, 2);
+            }
+
+            if (Optional.IsDefined(EnableEncryptionAtHost))
+            {
+                builder.Append("  enableEncryptionAtHost:");
+                var boolValue = EnableEncryptionAtHost.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EnableUltraSsd))
+            {
+                builder.Append("  enableUltraSSD:");
+                var boolValue = EnableUltraSsd.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EnableFips))
+            {
+                builder.Append("  enableFIPS:");
+                var boolValue = EnableFips.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(GpuInstanceProfile))
+            {
+                builder.Append("  gpuInstanceProfile:");
+                builder.AppendLine($" '{GpuInstanceProfile.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreationData))
+            {
+                builder.Append("  creationData:");
+                AppendChildObject(builder, CreationData, options, 2);
+            }
+
+            if (Optional.IsDefined(CapacityReservationGroupId))
+            {
+                builder.Append("  capacityReservationGroupID:");
+                builder.AppendLine($" '{CapacityReservationGroupId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HostGroupId))
+            {
+                builder.Append("  hostGroupID:");
+                builder.AppendLine($" '{HostGroupId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NetworkProfile))
+            {
+                builder.Append("  networkProfile:");
+                AppendChildObject(builder, NetworkProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ContainerServiceAgentPoolData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceAgentPoolData>)this).GetFormatFromOptions(options) : options.Format;
@@ -817,6 +1167,8 @@ namespace Azure.ResourceManager.ContainerService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerServiceAgentPoolData)} does not support '{options.Format}' format.");
             }
@@ -833,6 +1185,8 @@ namespace Azure.ResourceManager.ContainerService
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerServiceAgentPoolData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerServiceAgentPoolData)} does not support '{options.Format}' format.");
             }

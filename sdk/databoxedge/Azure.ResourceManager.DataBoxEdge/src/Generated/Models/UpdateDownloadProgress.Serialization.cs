@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class UpdateDownloadProgress : IUtf8JsonSerializable, IJsonModel<UpdateDownloadProgress>
+    public partial class UpdateDownloadProgress : IUtf8JsonSerializable, IJsonModel<UpdateDownloadProgress>, IPersistableModel<UpdateDownloadProgress>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateDownloadProgress>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -167,6 +168,62 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new UpdateDownloadProgress(Optional.ToNullable(downloadPhase), Optional.ToNullable(percentComplete), Optional.ToNullable(totalBytesToDownload), Optional.ToNullable(totalBytesDownloaded), Optional.ToNullable(numberOfUpdatesToDownload), Optional.ToNullable(numberOfUpdatesDownloaded), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DownloadPhase))
+            {
+                builder.Append("  downloadPhase:");
+                builder.AppendLine($" '{DownloadPhase.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PercentComplete))
+            {
+                builder.Append("  percentComplete:");
+                builder.AppendLine($" '{PercentComplete.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalBytesToDownload))
+            {
+                builder.Append("  totalBytesToDownload:");
+                builder.AppendLine($" '{TotalBytesToDownload.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalBytesDownloaded))
+            {
+                builder.Append("  totalBytesDownloaded:");
+                builder.AppendLine($" '{TotalBytesDownloaded.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NumberOfUpdatesToDownload))
+            {
+                builder.Append("  numberOfUpdatesToDownload:");
+                builder.AppendLine($" '{NumberOfUpdatesToDownload.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NumberOfUpdatesDownloaded))
+            {
+                builder.Append("  numberOfUpdatesDownloaded:");
+                builder.AppendLine($" '{NumberOfUpdatesDownloaded.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<UpdateDownloadProgress>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UpdateDownloadProgress>)this).GetFormatFromOptions(options) : options.Format;
@@ -175,6 +232,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(UpdateDownloadProgress)} does not support '{options.Format}' format.");
             }
@@ -191,6 +250,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeUpdateDownloadProgress(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(UpdateDownloadProgress)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class ManagedDiskData : IUtf8JsonSerializable, IJsonModel<ManagedDiskData>
+    public partial class ManagedDiskData : IUtf8JsonSerializable, IJsonModel<ManagedDiskData>, IPersistableModel<ManagedDiskData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDiskData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -762,6 +763,323 @@ namespace Azure.ResourceManager.Compute
             return new ManagedDiskData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, Optional.ToList(managedByExtended), sku.Value, Optional.ToList(zones), extendedLocation, Optional.ToNullable(timeCreated), Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, creationData.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(diskSizeBytes), uniqueId.Value, encryptionSettingsGroup.Value, provisioningState.Value, Optional.ToNullable(diskIOPSReadWrite), Optional.ToNullable(diskMBpsReadWrite), Optional.ToNullable(diskIOPSReadOnly), Optional.ToNullable(diskMBpsReadOnly), Optional.ToNullable(diskState), encryption.Value, Optional.ToNullable(maxShares), Optional.ToList(shareInfo), Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, Optional.ToNullable(burstingEnabledTime), tier.Value, Optional.ToNullable(burstingEnabled), propertyUpdatesInProgress.Value, Optional.ToNullable(supportsHibernation), securityProfile.Value, Optional.ToNullable(completionPercent), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(dataAccessAuthMode), Optional.ToNullable(optimizedForFrequentAttach), Optional.ToNullable(lastOwnershipUpdateTime), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ManagedBy))
+            {
+                builder.Append("  managedBy:");
+                builder.AppendLine($" '{ManagedBy.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ManagedByExtended))
+            {
+                builder.Append("  managedByExtended:");
+                builder.AppendLine(" [");
+                foreach (var item in ManagedByExtended)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                builder.Append("  zones:");
+                builder.AppendLine(" [");
+                foreach (var item in Zones)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                builder.Append("  extendedLocation:");
+                AppendChildObject(builder, ExtendedLocation, options, 2);
+            }
+
+            if (Optional.IsDefined(TimeCreated))
+            {
+                builder.Append("  timeCreated:");
+                builder.AppendLine($" '{TimeCreated.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OSType))
+            {
+                builder.Append("  osType:");
+                builder.AppendLine($" '{OSType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HyperVGeneration))
+            {
+                builder.Append("  hyperVGeneration:");
+                builder.AppendLine($" '{HyperVGeneration.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PurchasePlan))
+            {
+                builder.Append("  purchasePlan:");
+                AppendChildObject(builder, PurchasePlan, options, 2);
+            }
+
+            if (Optional.IsDefined(SupportedCapabilities))
+            {
+                builder.Append("  supportedCapabilities:");
+                AppendChildObject(builder, SupportedCapabilities, options, 2);
+            }
+
+            if (Optional.IsDefined(CreationData))
+            {
+                builder.Append("  creationData:");
+                AppendChildObject(builder, CreationData, options, 2);
+            }
+
+            if (Optional.IsDefined(DiskSizeGB))
+            {
+                builder.Append("  diskSizeGB:");
+                builder.AppendLine($" '{DiskSizeGB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiskSizeBytes))
+            {
+                builder.Append("  diskSizeBytes:");
+                builder.AppendLine($" '{DiskSizeBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UniqueId))
+            {
+                builder.Append("  uniqueId:");
+                builder.AppendLine($" '{UniqueId}'");
+            }
+
+            if (Optional.IsDefined(EncryptionSettingsGroup))
+            {
+                builder.Append("  encryptionSettingsCollection:");
+                AppendChildObject(builder, EncryptionSettingsGroup, options, 2);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(DiskIopsReadWrite))
+            {
+                builder.Append("  diskIOPSReadWrite:");
+                builder.AppendLine($" '{DiskIopsReadWrite.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiskMBpsReadWrite))
+            {
+                builder.Append("  diskMBpsReadWrite:");
+                builder.AppendLine($" '{DiskMBpsReadWrite.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiskIopsReadOnly))
+            {
+                builder.Append("  diskIOPSReadOnly:");
+                builder.AppendLine($" '{DiskIopsReadOnly.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiskMBpsReadOnly))
+            {
+                builder.Append("  diskMBpsReadOnly:");
+                builder.AppendLine($" '{DiskMBpsReadOnly.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiskState))
+            {
+                builder.Append("  diskState:");
+                builder.AppendLine($" '{DiskState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Encryption))
+            {
+                builder.Append("  encryption:");
+                AppendChildObject(builder, Encryption, options, 2);
+            }
+
+            if (Optional.IsDefined(MaxShares))
+            {
+                builder.Append("  maxShares:");
+                builder.AppendLine($" '{MaxShares.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ShareInfo))
+            {
+                builder.Append("  shareInfo:");
+                builder.AppendLine(" [");
+                foreach (var item in ShareInfo)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(NetworkAccessPolicy))
+            {
+                builder.Append("  networkAccessPolicy:");
+                builder.AppendLine($" '{NetworkAccessPolicy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiskAccessId))
+            {
+                builder.Append("  diskAccessId:");
+                builder.AppendLine($" '{DiskAccessId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BurstingEnabledOn))
+            {
+                builder.Append("  burstingEnabledTime:");
+                builder.AppendLine($" '{BurstingEnabledOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Tier))
+            {
+                builder.Append("  tier:");
+                builder.AppendLine($" '{Tier}'");
+            }
+
+            if (Optional.IsDefined(BurstingEnabled))
+            {
+                builder.Append("  burstingEnabled:");
+                var boolValue = BurstingEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(PropertyUpdatesInProgress))
+            {
+                builder.Append("  propertyUpdatesInProgress:");
+                AppendChildObject(builder, PropertyUpdatesInProgress, options, 2);
+            }
+
+            if (Optional.IsDefined(SupportsHibernation))
+            {
+                builder.Append("  supportsHibernation:");
+                var boolValue = SupportsHibernation.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                builder.Append("  securityProfile:");
+                AppendChildObject(builder, SecurityProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(CompletionPercent))
+            {
+                builder.Append("  completionPercent:");
+                builder.AppendLine($" '{CompletionPercent.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                builder.Append("  publicNetworkAccess:");
+                builder.AppendLine($" '{PublicNetworkAccess.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DataAccessAuthMode))
+            {
+                builder.Append("  dataAccessAuthMode:");
+                builder.AppendLine($" '{DataAccessAuthMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsOptimizedForFrequentAttach))
+            {
+                builder.Append("  optimizedForFrequentAttach:");
+                var boolValue = IsOptimizedForFrequentAttach.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(LastOwnershipUpdateOn))
+            {
+                builder.Append("  LastOwnershipUpdateTime:");
+                builder.AppendLine($" '{LastOwnershipUpdateOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ManagedDiskData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskData>)this).GetFormatFromOptions(options) : options.Format;
@@ -770,6 +1088,8 @@ namespace Azure.ResourceManager.Compute
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedDiskData)} does not support '{options.Format}' format.");
             }
@@ -786,6 +1106,8 @@ namespace Azure.ResourceManager.Compute
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeManagedDiskData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ManagedDiskData)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.CustomerInsights.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class RelationshipResourceFormatData : IUtf8JsonSerializable, IJsonModel<RelationshipResourceFormatData>
+    public partial class RelationshipResourceFormatData : IUtf8JsonSerializable, IJsonModel<RelationshipResourceFormatData>, IPersistableModel<RelationshipResourceFormatData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RelationshipResourceFormatData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -348,6 +349,154 @@ namespace Azure.ResourceManager.CustomerInsights
             return new RelationshipResourceFormatData(id, name, type, systemData.Value, Optional.ToNullable(cardinality), Optional.ToDictionary(displayName), Optional.ToDictionary(description), Optional.ToNullable(expiryDateTimeUtc), Optional.ToList(fields), Optional.ToList(lookupMappings), profileType.Value, Optional.ToNullable(provisioningState), relationshipName.Value, relatedProfileType.Value, relationshipGuidId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Cardinality))
+            {
+                builder.Append("  cardinality:");
+                builder.AppendLine($" '{Cardinality.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine(" {");
+                foreach (var item in DisplayName)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsCollectionDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine(" {");
+                foreach (var item in Description)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(ExpiryDateTimeUtc))
+            {
+                builder.Append("  expiryDateTimeUtc:");
+                builder.AppendLine($" '{ExpiryDateTimeUtc.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Fields))
+            {
+                builder.Append("  fields:");
+                builder.AppendLine(" [");
+                foreach (var item in Fields)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(LookupMappings))
+            {
+                builder.Append("  lookupMappings:");
+                builder.AppendLine(" [");
+                foreach (var item in LookupMappings)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ProfileType))
+            {
+                builder.Append("  profileType:");
+                builder.AppendLine($" '{ProfileType}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RelationshipName))
+            {
+                builder.Append("  relationshipName:");
+                builder.AppendLine($" '{RelationshipName}'");
+            }
+
+            if (Optional.IsDefined(RelatedProfileType))
+            {
+                builder.Append("  relatedProfileType:");
+                builder.AppendLine($" '{RelatedProfileType}'");
+            }
+
+            if (Optional.IsDefined(RelationshipGuidId))
+            {
+                builder.Append("  relationshipGuidId:");
+                builder.AppendLine($" '{RelationshipGuidId}'");
+            }
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("  tenantId:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<RelationshipResourceFormatData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RelationshipResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
@@ -356,6 +505,8 @@ namespace Azure.ResourceManager.CustomerInsights
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RelationshipResourceFormatData)} does not support '{options.Format}' format.");
             }
@@ -372,6 +523,8 @@ namespace Azure.ResourceManager.CustomerInsights
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRelationshipResourceFormatData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RelationshipResourceFormatData)} does not support '{options.Format}' format.");
             }

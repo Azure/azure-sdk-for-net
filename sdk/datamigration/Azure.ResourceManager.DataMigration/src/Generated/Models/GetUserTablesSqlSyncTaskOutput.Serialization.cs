@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class GetUserTablesSqlSyncTaskOutput : IUtf8JsonSerializable, IJsonModel<GetUserTablesSqlSyncTaskOutput>
+    public partial class GetUserTablesSqlSyncTaskOutput : IUtf8JsonSerializable, IJsonModel<GetUserTablesSqlSyncTaskOutput>, IPersistableModel<GetUserTablesSqlSyncTaskOutput>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetUserTablesSqlSyncTaskOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -135,6 +136,55 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new GetUserTablesSqlSyncTaskOutput(databasesToSourceTables.Value, databasesToTargetTables.Value, tableValidationErrors.Value, Optional.ToList(validationErrors), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DatabasesToSourceTables))
+            {
+                builder.Append("  databasesToSourceTables:");
+                builder.AppendLine($" '{DatabasesToSourceTables}'");
+            }
+
+            if (Optional.IsDefined(DatabasesToTargetTables))
+            {
+                builder.Append("  databasesToTargetTables:");
+                builder.AppendLine($" '{DatabasesToTargetTables}'");
+            }
+
+            if (Optional.IsDefined(TableValidationErrors))
+            {
+                builder.Append("  tableValidationErrors:");
+                builder.AppendLine($" '{TableValidationErrors}'");
+            }
+
+            if (Optional.IsCollectionDefined(ValidationErrors))
+            {
+                builder.Append("  validationErrors:");
+                builder.AppendLine(" [");
+                foreach (var item in ValidationErrors)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<GetUserTablesSqlSyncTaskOutput>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesSqlSyncTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
@@ -143,6 +193,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GetUserTablesSqlSyncTaskOutput)} does not support '{options.Format}' format.");
             }
@@ -159,6 +211,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeGetUserTablesSqlSyncTaskOutput(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(GetUserTablesSqlSyncTaskOutput)} does not support '{options.Format}' format.");
             }

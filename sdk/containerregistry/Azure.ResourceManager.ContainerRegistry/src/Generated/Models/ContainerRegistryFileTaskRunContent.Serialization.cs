@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class ContainerRegistryFileTaskRunContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryFileTaskRunContent>
+    public partial class ContainerRegistryFileTaskRunContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryFileTaskRunContent>, IPersistableModel<ContainerRegistryFileTaskRunContent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryFileTaskRunContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -230,6 +231,104 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryFileTaskRunContent(type, Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value, serializedAdditionalRawData, taskFilePath, valuesFilePath.Value, Optional.ToList(values), Optional.ToNullable(timeout), platform, agentConfiguration.Value, sourceLocation.Value, credentials.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TaskFilePath))
+            {
+                builder.Append("  taskFilePath:");
+                builder.AppendLine($" '{TaskFilePath}'");
+            }
+
+            if (Optional.IsDefined(ValuesFilePath))
+            {
+                builder.Append("  valuesFilePath:");
+                builder.AppendLine($" '{ValuesFilePath}'");
+            }
+
+            if (Optional.IsCollectionDefined(Values))
+            {
+                builder.Append("  values:");
+                builder.AppendLine(" [");
+                foreach (var item in Values)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(TimeoutInSeconds))
+            {
+                builder.Append("  timeout:");
+                builder.AppendLine($" '{TimeoutInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Platform))
+            {
+                builder.Append("  platform:");
+                AppendChildObject(builder, Platform, options, 2);
+            }
+
+            if (Optional.IsDefined(AgentConfiguration))
+            {
+                builder.Append("  agentConfiguration:");
+                AppendChildObject(builder, AgentConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(SourceLocation))
+            {
+                builder.Append("  sourceLocation:");
+                builder.AppendLine($" '{SourceLocation}'");
+            }
+
+            if (Optional.IsDefined(Credentials))
+            {
+                builder.Append("  credentials:");
+                AppendChildObject(builder, Credentials, options, 2);
+            }
+
+            if (Optional.IsDefined(RunRequestType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{RunRequestType}'");
+            }
+
+            if (Optional.IsDefined(IsArchiveEnabled))
+            {
+                builder.Append("  isArchiveEnabled:");
+                var boolValue = IsArchiveEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AgentPoolName))
+            {
+                builder.Append("  agentPoolName:");
+                builder.AppendLine($" '{AgentPoolName}'");
+            }
+
+            if (Optional.IsDefined(LogTemplate))
+            {
+                builder.Append("  logTemplate:");
+                builder.AppendLine($" '{LogTemplate}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ContainerRegistryFileTaskRunContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryFileTaskRunContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -238,6 +337,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryFileTaskRunContent)} does not support '{options.Format}' format.");
             }
@@ -254,6 +355,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerRegistryFileTaskRunContent(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryFileTaskRunContent)} does not support '{options.Format}' format.");
             }

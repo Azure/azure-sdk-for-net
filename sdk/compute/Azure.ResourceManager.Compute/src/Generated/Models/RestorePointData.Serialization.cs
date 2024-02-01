@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class RestorePointData : IUtf8JsonSerializable, IJsonModel<RestorePointData>
+    public partial class RestorePointData : IUtf8JsonSerializable, IJsonModel<RestorePointData>, IPersistableModel<RestorePointData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestorePointData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -254,6 +255,97 @@ namespace Azure.ResourceManager.Compute
             return new RestorePointData(id, name, type, systemData.Value, Optional.ToList(excludeDisks), sourceMetadata.Value, provisioningState.Value, Optional.ToNullable(consistencyMode), Optional.ToNullable(timeCreated), sourceRestorePoint, instanceView.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(ExcludeDisks))
+            {
+                builder.Append("  excludeDisks:");
+                builder.AppendLine(" [");
+                foreach (var item in ExcludeDisks)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(SourceMetadata))
+            {
+                builder.Append("  sourceMetadata:");
+                AppendChildObject(builder, SourceMetadata, options, 2);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(ConsistencyMode))
+            {
+                builder.Append("  consistencyMode:");
+                builder.AppendLine($" '{ConsistencyMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TimeCreated))
+            {
+                builder.Append("  timeCreated:");
+                builder.AppendLine($" '{TimeCreated.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceRestorePoint))
+            {
+                builder.Append("  sourceRestorePoint:");
+                AppendChildObject(builder, SourceRestorePoint, options, 2);
+            }
+
+            if (Optional.IsDefined(InstanceView))
+            {
+                builder.Append("  instanceView:");
+                AppendChildObject(builder, InstanceView, options, 2);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<RestorePointData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RestorePointData>)this).GetFormatFromOptions(options) : options.Format;
@@ -262,6 +354,8 @@ namespace Azure.ResourceManager.Compute
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RestorePointData)} does not support '{options.Format}' format.");
             }
@@ -278,6 +372,8 @@ namespace Azure.ResourceManager.Compute
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRestorePointData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RestorePointData)} does not support '{options.Format}' format.");
             }

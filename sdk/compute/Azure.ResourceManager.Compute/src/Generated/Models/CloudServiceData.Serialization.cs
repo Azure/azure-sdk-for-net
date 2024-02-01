@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class CloudServiceData : IUtf8JsonSerializable, IJsonModel<CloudServiceData>
+    public partial class CloudServiceData : IUtf8JsonSerializable, IJsonModel<CloudServiceData>, IPersistableModel<CloudServiceData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudServiceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -369,6 +370,163 @@ namespace Azure.ResourceManager.Compute
             return new CloudServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(zones), packageUrl.Value, configuration.Value, configurationUrl.Value, Optional.ToNullable(startCloudService), Optional.ToNullable(allowModelOverride), Optional.ToNullable(upgradeMode), roleProfile.Value, osProfile.Value, networkProfile.Value, extensionProfile.Value, provisioningState.Value, uniqueId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                builder.Append("  zones:");
+                builder.AppendLine(" [");
+                foreach (var item in Zones)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(PackageUri))
+            {
+                builder.Append("  packageUrl:");
+                builder.AppendLine($" '{PackageUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(Configuration))
+            {
+                builder.Append("  configuration:");
+                builder.AppendLine($" '{Configuration}'");
+            }
+
+            if (Optional.IsDefined(ConfigurationUri))
+            {
+                builder.Append("  configurationUrl:");
+                builder.AppendLine($" '{ConfigurationUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(StartCloudService))
+            {
+                builder.Append("  startCloudService:");
+                var boolValue = StartCloudService.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AllowModelOverride))
+            {
+                builder.Append("  allowModelOverride:");
+                var boolValue = AllowModelOverride.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(UpgradeMode))
+            {
+                builder.Append("  upgradeMode:");
+                builder.AppendLine($" '{UpgradeMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RoleProfile))
+            {
+                builder.Append("  roleProfile:");
+                AppendChildObject(builder, RoleProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(OSProfile))
+            {
+                builder.Append("  osProfile:");
+                AppendChildObject(builder, OSProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(NetworkProfile))
+            {
+                builder.Append("  networkProfile:");
+                AppendChildObject(builder, NetworkProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(ExtensionProfile))
+            {
+                builder.Append("  extensionProfile:");
+                AppendChildObject(builder, ExtensionProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(UniqueId))
+            {
+                builder.Append("  uniqueId:");
+                builder.AppendLine($" '{UniqueId}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<CloudServiceData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CloudServiceData>)this).GetFormatFromOptions(options) : options.Format;
@@ -377,6 +535,8 @@ namespace Azure.ResourceManager.Compute
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CloudServiceData)} does not support '{options.Format}' format.");
             }
@@ -393,6 +553,8 @@ namespace Azure.ResourceManager.Compute
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCloudServiceData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CloudServiceData)} does not support '{options.Format}' format.");
             }

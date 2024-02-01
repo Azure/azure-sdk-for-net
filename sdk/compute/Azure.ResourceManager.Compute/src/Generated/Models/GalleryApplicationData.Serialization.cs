@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Compute.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class GalleryApplicationData : IUtf8JsonSerializable, IJsonModel<GalleryApplicationData>
+    public partial class GalleryApplicationData : IUtf8JsonSerializable, IJsonModel<GalleryApplicationData>, IPersistableModel<GalleryApplicationData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryApplicationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -283,6 +284,120 @@ namespace Azure.ResourceManager.Compute
             return new GalleryApplicationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(endOfLifeDate), Optional.ToNullable(supportedOSType), Optional.ToList(customActions), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(Eula))
+            {
+                builder.Append("  eula:");
+                builder.AppendLine($" '{Eula}'");
+            }
+
+            if (Optional.IsDefined(PrivacyStatementUri))
+            {
+                builder.Append("  privacyStatementUri:");
+                builder.AppendLine($" '{PrivacyStatementUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(ReleaseNoteUri))
+            {
+                builder.Append("  releaseNoteUri:");
+                builder.AppendLine($" '{ReleaseNoteUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(EndOfLifeOn))
+            {
+                builder.Append("  endOfLifeDate:");
+                builder.AppendLine($" '{EndOfLifeOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SupportedOSType))
+            {
+                builder.Append("  supportedOSType:");
+                builder.AppendLine($" '{SupportedOSType.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(CustomActions))
+            {
+                builder.Append("  customActions:");
+                builder.AppendLine(" [");
+                foreach (var item in CustomActions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<GalleryApplicationData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationData>)this).GetFormatFromOptions(options) : options.Format;
@@ -291,6 +406,8 @@ namespace Azure.ResourceManager.Compute
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GalleryApplicationData)} does not support '{options.Format}' format.");
             }
@@ -307,6 +424,8 @@ namespace Azure.ResourceManager.Compute
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeGalleryApplicationData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(GalleryApplicationData)} does not support '{options.Format}' format.");
             }

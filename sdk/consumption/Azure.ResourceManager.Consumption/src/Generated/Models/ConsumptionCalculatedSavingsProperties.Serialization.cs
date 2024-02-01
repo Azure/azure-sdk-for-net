@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionCalculatedSavingsProperties : IUtf8JsonSerializable, IJsonModel<ConsumptionCalculatedSavingsProperties>
+    public partial class ConsumptionCalculatedSavingsProperties : IUtf8JsonSerializable, IJsonModel<ConsumptionCalculatedSavingsProperties>, IPersistableModel<ConsumptionCalculatedSavingsProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionCalculatedSavingsProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -182,6 +183,68 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionCalculatedSavingsProperties(Optional.ToNullable(onDemandCost), Optional.ToNullable(overageCost), Optional.ToNullable(quantity), Optional.ToNullable(reservationCost), Optional.ToNullable(totalReservationCost), Optional.ToNullable(reservedUnitCount), Optional.ToNullable(savings), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(OnDemandCost))
+            {
+                builder.Append("  onDemandCost:");
+                builder.AppendLine($" '{OnDemandCost.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OverageCost))
+            {
+                builder.Append("  overageCost:");
+                builder.AppendLine($" '{OverageCost.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Quantity))
+            {
+                builder.Append("  quantity:");
+                builder.AppendLine($" '{Quantity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReservationCost))
+            {
+                builder.Append("  reservationCost:");
+                builder.AppendLine($" '{ReservationCost.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalReservationCost))
+            {
+                builder.Append("  totalReservationCost:");
+                builder.AppendLine($" '{TotalReservationCost.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReservedUnitCount))
+            {
+                builder.Append("  reservedUnitCount:");
+                builder.AppendLine($" '{ReservedUnitCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Savings))
+            {
+                builder.Append("  savings:");
+                builder.AppendLine($" '{Savings.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ConsumptionCalculatedSavingsProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionCalculatedSavingsProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -190,6 +253,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionCalculatedSavingsProperties)} does not support '{options.Format}' format.");
             }
@@ -206,6 +271,8 @@ namespace Azure.ResourceManager.Consumption.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConsumptionCalculatedSavingsProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionCalculatedSavingsProperties)} does not support '{options.Format}' format.");
             }

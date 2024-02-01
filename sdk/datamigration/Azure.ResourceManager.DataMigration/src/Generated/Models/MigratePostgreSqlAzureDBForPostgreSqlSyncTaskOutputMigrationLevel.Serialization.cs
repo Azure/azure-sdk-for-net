@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel : IUtf8JsonSerializable, IJsonModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel>
+    public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel : IUtf8JsonSerializable, IJsonModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel>, IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -230,6 +231,98 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(id.Value, resultType, serializedAdditionalRawData, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceServerVersion.Value, sourceServer.Value, targetServerVersion.Value, targetServer.Value, Optional.ToNullable(sourceServerType), Optional.ToNullable(targetServerType), Optional.ToNullable(state), Optional.ToNullable(databaseCount));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(StartedOn))
+            {
+                builder.Append("  startedOn:");
+                builder.AppendLine($" '{StartedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndedOn))
+            {
+                builder.Append("  endedOn:");
+                builder.AppendLine($" '{EndedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceServerVersion))
+            {
+                builder.Append("  sourceServerVersion:");
+                builder.AppendLine($" '{SourceServerVersion}'");
+            }
+
+            if (Optional.IsDefined(SourceServer))
+            {
+                builder.Append("  sourceServer:");
+                builder.AppendLine($" '{SourceServer}'");
+            }
+
+            if (Optional.IsDefined(TargetServerVersion))
+            {
+                builder.Append("  targetServerVersion:");
+                builder.AppendLine($" '{TargetServerVersion}'");
+            }
+
+            if (Optional.IsDefined(TargetServer))
+            {
+                builder.Append("  targetServer:");
+                builder.AppendLine($" '{TargetServer}'");
+            }
+
+            if (Optional.IsDefined(SourceServerType))
+            {
+                builder.Append("  sourceServerType:");
+                builder.AppendLine($" '{SourceServerType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetServerType))
+            {
+                builder.Append("  targetServerType:");
+                builder.AppendLine($" '{TargetServerType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DatabaseCount))
+            {
+                builder.Append("  databaseCount:");
+                builder.AppendLine($" '{DatabaseCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id}'");
+            }
+
+            if (Optional.IsDefined(ResultType))
+            {
+                builder.Append("  resultType:");
+                builder.AppendLine($" '{ResultType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel>)this).GetFormatFromOptions(options) : options.Format;
@@ -238,6 +331,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel)} does not support '{options.Format}' format.");
             }
@@ -254,6 +349,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel)} does not support '{options.Format}' format.");
             }

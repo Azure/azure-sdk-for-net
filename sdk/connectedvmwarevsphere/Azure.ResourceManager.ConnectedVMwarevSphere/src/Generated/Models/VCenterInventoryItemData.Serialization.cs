@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    public partial class VCenterInventoryItemData : IUtf8JsonSerializable, IJsonModel<VCenterInventoryItemData>
+    public partial class VCenterInventoryItemData : IUtf8JsonSerializable, IJsonModel<VCenterInventoryItemData>, IPersistableModel<VCenterInventoryItemData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VCenterInventoryItemData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -209,6 +210,86 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return new VCenterInventoryItemData(id, name, type, systemData.Value, kind.Value, inventoryType, managedResourceId.Value, moRefId.Value, moName.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(InventoryType))
+            {
+                builder.Append("  inventoryType:");
+                builder.AppendLine($" '{InventoryType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ManagedResourceId))
+            {
+                builder.Append("  managedResourceId:");
+                builder.AppendLine($" '{ManagedResourceId}'");
+            }
+
+            if (Optional.IsDefined(MoRefId))
+            {
+                builder.Append("  moRefId:");
+                builder.AppendLine($" '{MoRefId}'");
+            }
+
+            if (Optional.IsDefined(MoName))
+            {
+                builder.Append("  moName:");
+                builder.AppendLine($" '{MoName}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VCenterInventoryItemData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VCenterInventoryItemData>)this).GetFormatFromOptions(options) : options.Format;
@@ -217,6 +298,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VCenterInventoryItemData)} does not support '{options.Format}' format.");
             }
@@ -233,6 +316,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVCenterInventoryItemData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VCenterInventoryItemData)} does not support '{options.Format}' format.");
             }

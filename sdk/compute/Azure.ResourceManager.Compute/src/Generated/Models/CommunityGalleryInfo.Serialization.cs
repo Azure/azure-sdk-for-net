@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class CommunityGalleryInfo : IUtf8JsonSerializable, IJsonModel<CommunityGalleryInfo>
+    public partial class CommunityGalleryInfo : IUtf8JsonSerializable, IJsonModel<CommunityGalleryInfo>, IPersistableModel<CommunityGalleryInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommunityGalleryInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -161,6 +162,73 @@ namespace Azure.ResourceManager.Compute.Models
             return new CommunityGalleryInfo(publisherUri.Value, publisherContact.Value, eula.Value, publicNamePrefix.Value, Optional.ToNullable(communityGalleryEnabled), Optional.ToList(publicNames), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PublisherUriString))
+            {
+                builder.Append("  publisherUri:");
+                builder.AppendLine($" '{PublisherUriString}'");
+            }
+
+            if (Optional.IsDefined(PublisherContact))
+            {
+                builder.Append("  publisherContact:");
+                builder.AppendLine($" '{PublisherContact}'");
+            }
+
+            if (Optional.IsDefined(Eula))
+            {
+                builder.Append("  eula:");
+                builder.AppendLine($" '{Eula}'");
+            }
+
+            if (Optional.IsDefined(PublicNamePrefix))
+            {
+                builder.Append("  publicNamePrefix:");
+                builder.AppendLine($" '{PublicNamePrefix}'");
+            }
+
+            if (Optional.IsDefined(CommunityGalleryEnabled))
+            {
+                builder.Append("  communityGalleryEnabled:");
+                var boolValue = CommunityGalleryEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(PublicNames))
+            {
+                builder.Append("  publicNames:");
+                builder.AppendLine(" [");
+                foreach (var item in PublicNames)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<CommunityGalleryInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -169,6 +237,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CommunityGalleryInfo)} does not support '{options.Format}' format.");
             }
@@ -185,6 +255,8 @@ namespace Azure.ResourceManager.Compute.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCommunityGalleryInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CommunityGalleryInfo)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataShare.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare
 {
-    public partial class ProviderShareSubscriptionData : IUtf8JsonSerializable, IJsonModel<ProviderShareSubscriptionData>
+    public partial class ProviderShareSubscriptionData : IUtf8JsonSerializable, IJsonModel<ProviderShareSubscriptionData>, IPersistableModel<ProviderShareSubscriptionData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProviderShareSubscriptionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -268,6 +269,110 @@ namespace Azure.ResourceManager.DataShare
             return new ProviderShareSubscriptionData(id, name, type, systemData.Value, consumerEmail.Value, consumerName.Value, consumerTenantName.Value, Optional.ToNullable(createdAt), Optional.ToNullable(expirationDate), providerEmail.Value, providerName.Value, Optional.ToNullable(sharedAt), shareSubscriptionObjectId.Value, Optional.ToNullable(shareSubscriptionStatus), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ConsumerEmail))
+            {
+                builder.Append("  consumerEmail:");
+                builder.AppendLine($" '{ConsumerEmail}'");
+            }
+
+            if (Optional.IsDefined(ConsumerName))
+            {
+                builder.Append("  consumerName:");
+                builder.AppendLine($" '{ConsumerName}'");
+            }
+
+            if (Optional.IsDefined(ConsumerTenantName))
+            {
+                builder.Append("  consumerTenantName:");
+                builder.AppendLine($" '{ConsumerTenantName}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdAt:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExpireOn))
+            {
+                builder.Append("  expirationDate:");
+                builder.AppendLine($" '{ExpireOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProviderEmail))
+            {
+                builder.Append("  providerEmail:");
+                builder.AppendLine($" '{ProviderEmail}'");
+            }
+
+            if (Optional.IsDefined(ProviderName))
+            {
+                builder.Append("  providerName:");
+                builder.AppendLine($" '{ProviderName}'");
+            }
+
+            if (Optional.IsDefined(SharedOn))
+            {
+                builder.Append("  sharedAt:");
+                builder.AppendLine($" '{SharedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ShareSubscriptionObjectId))
+            {
+                builder.Append("  shareSubscriptionObjectId:");
+                builder.AppendLine($" '{ShareSubscriptionObjectId}'");
+            }
+
+            if (Optional.IsDefined(ShareSubscriptionStatus))
+            {
+                builder.Append("  shareSubscriptionStatus:");
+                builder.AppendLine($" '{ShareSubscriptionStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ProviderShareSubscriptionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProviderShareSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -276,6 +381,8 @@ namespace Azure.ResourceManager.DataShare
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ProviderShareSubscriptionData)} does not support '{options.Format}' format.");
             }
@@ -292,6 +399,8 @@ namespace Azure.ResourceManager.DataShare
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeProviderShareSubscriptionData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ProviderShareSubscriptionData)} does not support '{options.Format}' format.");
             }

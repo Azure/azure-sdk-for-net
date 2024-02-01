@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeMountPointMap : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeMountPointMap>
+    public partial class DataBoxEdgeMountPointMap : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeMountPointMap>, IPersistableModel<DataBoxEdgeMountPointMap>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeMountPointMap>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -141,6 +142,56 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new DataBoxEdgeMountPointMap(shareId, roleId.Value, mountPoint.Value, Optional.ToNullable(mountType), Optional.ToNullable(roleType), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ShareId))
+            {
+                builder.Append("  shareId:");
+                builder.AppendLine($" '{ShareId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RoleId))
+            {
+                builder.Append("  roleId:");
+                builder.AppendLine($" '{RoleId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MountPoint))
+            {
+                builder.Append("  mountPoint:");
+                builder.AppendLine($" '{MountPoint}'");
+            }
+
+            if (Optional.IsDefined(MountType))
+            {
+                builder.Append("  mountType:");
+                builder.AppendLine($" '{MountType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RoleType))
+            {
+                builder.Append("  roleType:");
+                builder.AppendLine($" '{RoleType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DataBoxEdgeMountPointMap>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeMountPointMap>)this).GetFormatFromOptions(options) : options.Format;
@@ -149,6 +200,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeMountPointMap)} does not support '{options.Format}' format.");
             }
@@ -165,6 +218,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataBoxEdgeMountPointMap(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeMountPointMap)} does not support '{options.Format}' format.");
             }

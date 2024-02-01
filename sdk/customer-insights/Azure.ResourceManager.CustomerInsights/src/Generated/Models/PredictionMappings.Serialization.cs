@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class PredictionMappings : IUtf8JsonSerializable, IJsonModel<PredictionMappings>
+    public partial class PredictionMappings : IUtf8JsonSerializable, IJsonModel<PredictionMappings>, IPersistableModel<PredictionMappings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredictionMappings>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -101,6 +102,44 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             return new PredictionMappings(score, grade, reason, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Score))
+            {
+                builder.Append("  score:");
+                builder.AppendLine($" '{Score}'");
+            }
+
+            if (Optional.IsDefined(Grade))
+            {
+                builder.Append("  grade:");
+                builder.AppendLine($" '{Grade}'");
+            }
+
+            if (Optional.IsDefined(Reason))
+            {
+                builder.Append("  reason:");
+                builder.AppendLine($" '{Reason}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PredictionMappings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PredictionMappings>)this).GetFormatFromOptions(options) : options.Format;
@@ -109,6 +148,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PredictionMappings)} does not support '{options.Format}' format.");
             }
@@ -125,6 +166,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePredictionMappings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PredictionMappings)} does not support '{options.Format}' format.");
             }

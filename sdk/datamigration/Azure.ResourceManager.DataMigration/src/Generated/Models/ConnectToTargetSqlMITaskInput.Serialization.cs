@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToTargetSqlMITaskInput : IUtf8JsonSerializable, IJsonModel<ConnectToTargetSqlMITaskInput>
+    public partial class ConnectToTargetSqlMITaskInput : IUtf8JsonSerializable, IJsonModel<ConnectToTargetSqlMITaskInput>, IPersistableModel<ConnectToTargetSqlMITaskInput>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToTargetSqlMITaskInput>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -130,6 +131,53 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToTargetSqlMITaskInput(targetConnectionInfo, Optional.ToNullable(collectLogins), Optional.ToNullable(collectAgentJobs), Optional.ToNullable(validateSsisCatalogOnly), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TargetConnectionInfo))
+            {
+                builder.Append("  targetConnectionInfo:");
+                AppendChildObject(builder, TargetConnectionInfo, options, 2);
+            }
+
+            if (Optional.IsDefined(CollectLogins))
+            {
+                builder.Append("  collectLogins:");
+                var boolValue = CollectLogins.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CollectAgentJobs))
+            {
+                builder.Append("  collectAgentJobs:");
+                var boolValue = CollectAgentJobs.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ValidateSsisCatalogOnly))
+            {
+                builder.Append("  validateSsisCatalogOnly:");
+                var boolValue = ValidateSsisCatalogOnly.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ConnectToTargetSqlMITaskInput>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetSqlMITaskInput>)this).GetFormatFromOptions(options) : options.Format;
@@ -138,6 +186,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConnectToTargetSqlMITaskInput)} does not support '{options.Format}' format.");
             }
@@ -154,6 +204,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConnectToTargetSqlMITaskInput(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ConnectToTargetSqlMITaskInput)} does not support '{options.Format}' format.");
             }

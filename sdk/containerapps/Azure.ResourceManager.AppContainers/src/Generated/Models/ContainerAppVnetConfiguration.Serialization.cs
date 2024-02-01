@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppVnetConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppVnetConfiguration>
+    public partial class ContainerAppVnetConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppVnetConfiguration>, IPersistableModel<ContainerAppVnetConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppVnetConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -140,6 +141,57 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppVnetConfiguration(Optional.ToNullable(@internal), infrastructureSubnetId.Value, dockerBridgeCidr.Value, platformReservedCidr.Value, platformReservedDnsIP.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(IsInternal))
+            {
+                builder.Append("  internal:");
+                var boolValue = IsInternal.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(InfrastructureSubnetId))
+            {
+                builder.Append("  infrastructureSubnetId:");
+                builder.AppendLine($" '{InfrastructureSubnetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DockerBridgeCidr))
+            {
+                builder.Append("  dockerBridgeCidr:");
+                builder.AppendLine($" '{DockerBridgeCidr}'");
+            }
+
+            if (Optional.IsDefined(PlatformReservedCidr))
+            {
+                builder.Append("  platformReservedCidr:");
+                builder.AppendLine($" '{PlatformReservedCidr}'");
+            }
+
+            if (Optional.IsDefined(PlatformReservedDnsIP))
+            {
+                builder.Append("  platformReservedDnsIP:");
+                builder.AppendLine($" '{PlatformReservedDnsIP}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ContainerAppVnetConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppVnetConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -148,6 +200,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppVnetConfiguration)} does not support '{options.Format}' format.");
             }
@@ -164,6 +218,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerAppVnetConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppVnetConfiguration)} does not support '{options.Format}' format.");
             }

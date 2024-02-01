@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class AssignmentPrincipal : IUtf8JsonSerializable, IJsonModel<AssignmentPrincipal>
+    public partial class AssignmentPrincipal : IUtf8JsonSerializable, IJsonModel<AssignmentPrincipal>, IPersistableModel<AssignmentPrincipal>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssignmentPrincipal>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -119,6 +120,55 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             return new AssignmentPrincipal(principalId, principalType, Optional.ToDictionary(principalMetadata), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PrincipalId))
+            {
+                builder.Append("  principalId:");
+                builder.AppendLine($" '{PrincipalId}'");
+            }
+
+            if (Optional.IsDefined(PrincipalType))
+            {
+                builder.Append("  principalType:");
+                builder.AppendLine($" '{PrincipalType}'");
+            }
+
+            if (Optional.IsCollectionDefined(PrincipalMetadata))
+            {
+                builder.Append("  principalMetadata:");
+                builder.AppendLine(" {");
+                foreach (var item in PrincipalMetadata)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AssignmentPrincipal>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentPrincipal>)this).GetFormatFromOptions(options) : options.Format;
@@ -127,6 +177,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AssignmentPrincipal)} does not support '{options.Format}' format.");
             }
@@ -143,6 +195,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAssignmentPrincipal(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AssignmentPrincipal)} does not support '{options.Format}' format.");
             }

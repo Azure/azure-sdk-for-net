@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    public partial class DataBoxEdgeAlertData : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeAlertData>
+    public partial class DataBoxEdgeAlertData : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeAlertData>, IPersistableModel<DataBoxEdgeAlertData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeAlertData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -246,6 +247,103 @@ namespace Azure.ResourceManager.DataBoxEdge
             return new DataBoxEdgeAlertData(id, name, type, systemData.Value, title.Value, alertType.Value, Optional.ToNullable(appearedAtDateTime), recommendation.Value, Optional.ToNullable(severity), errorDetails.Value, Optional.ToDictionary(detailedInformation), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Title))
+            {
+                builder.Append("  title:");
+                builder.AppendLine($" '{Title}'");
+            }
+
+            if (Optional.IsDefined(AlertType))
+            {
+                builder.Append("  alertType:");
+                builder.AppendLine($" '{AlertType}'");
+            }
+
+            if (Optional.IsDefined(AppearedOn))
+            {
+                builder.Append("  appearedAtDateTime:");
+                builder.AppendLine($" '{AppearedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Recommendation))
+            {
+                builder.Append("  recommendation:");
+                builder.AppendLine($" '{Recommendation}'");
+            }
+
+            if (Optional.IsDefined(Severity))
+            {
+                builder.Append("  severity:");
+                builder.AppendLine($" '{Severity.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ErrorDetails))
+            {
+                builder.Append("  errorDetails:");
+                AppendChildObject(builder, ErrorDetails, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(DetailedInformation))
+            {
+                builder.Append("  detailedInformation:");
+                builder.AppendLine(" {");
+                foreach (var item in DetailedInformation)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DataBoxEdgeAlertData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeAlertData>)this).GetFormatFromOptions(options) : options.Format;
@@ -254,6 +352,8 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeAlertData)} does not support '{options.Format}' format.");
             }
@@ -270,6 +370,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataBoxEdgeAlertData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeAlertData)} does not support '{options.Format}' format.");
             }
