@@ -842,6 +842,36 @@ public partial class OpenAIClient
         return Response.FromValue(AudioTranslation.FromResponse(rawResponse), rawResponse);
     }
 
+    /// <summary> Generates audio from the input text.. </summary>
+    /// <param name="audioSpeechOptions">
+    /// Speech synthesis request.
+    /// </param>
+    /// <param name="cancellationToken"> The cancellation token to use. </param>
+    /// <exception cref="ArgumentNullException">
+    ///     <paramref name="audioSpeechOptions"/> or <paramref name="audioSpeechOptions.Input"/> is null or <paramref name="audioSpeechOptions.Voice"/> is null.
+    /// </exception>
+    public virtual Task<Response<AudioSpeechResponse>> GetAudioSpeechAsync(
+        AudioSpeechOptions audioSpeechOptions,
+        CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary> Generates audio from the input text.. </summary>
+    /// <param name="audioSpeechOptions">
+    /// Speech synthesis request.
+    /// </param>
+    /// <param name="cancellationToken"> The cancellation token to use. </param>
+    /// <exception cref="ArgumentNullException">
+    ///     <paramref name="audioSpeechOptions"/> or <paramref name="audioSpeechOptions.Input"/> is null or <paramref name="audioSpeechOptions.Voice"/> is null.
+    /// </exception>
+    public virtual Response<AudioSpeechResponse> GetAudioSpeech(
+        AudioSpeechOptions audioSpeechOptions,
+        CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
     internal RequestUriBuilder GetUri(string deploymentOrModelName, string operationPath)
     {
         var uri = new RawRequestUriBuilder();

@@ -7,15 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary>
-    /// The authentication options for Azure OpenAI On Your Data.
-    /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
-    /// </summary>
-    public abstract partial class OnYourDataAuthenticationOptions
+    /// <summary> A tool selection of a specific, named function tool that will limit chat completions to using the named function. </summary>
+    internal partial class ChatCompletionsFunctionToolSelection
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,23 +44,33 @@ namespace Azure.AI.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OnYourDataAuthenticationOptions"/>. </summary>
-        protected OnYourDataAuthenticationOptions()
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolSelection"/>. </summary>
+        /// <param name="name"> The name of the function that should be called. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public ChatCompletionsFunctionToolSelection(string name)
         {
+            Argument.AssertNotNull(name, nameof(name));
+
+            Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OnYourDataAuthenticationOptions"/>. </summary>
-        /// <param name="type"> The authentication type. </param>
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolSelection"/>. </summary>
+        /// <param name="name"> The name of the function that should be called. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OnYourDataAuthenticationOptions(OnYourDataAuthenticationType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatCompletionsFunctionToolSelection(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The authentication type. </summary>
-        internal OnYourDataAuthenticationType Type { get; set; }
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolSelection"/> for deserialization. </summary>
+        internal ChatCompletionsFunctionToolSelection()
+        {
+        }
+
+        /// <summary> The name of the function that should be called. </summary>
+        public string Name { get; }
     }
 }

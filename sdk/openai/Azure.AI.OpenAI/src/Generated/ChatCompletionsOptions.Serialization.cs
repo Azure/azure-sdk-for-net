@@ -109,7 +109,7 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsCollectionDefined(InternalAzureExtensionsDataSources))
             {
-                writer.WritePropertyName("dataSources"u8);
+                writer.WritePropertyName("data_sources"u8);
                 writer.WriteStartArray();
                 foreach (var item in InternalAzureExtensionsDataSources)
                 {
@@ -341,7 +341,7 @@ namespace Azure.AI.OpenAI
                     model = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSources"u8))
+                if (property.NameEquals("data_sources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

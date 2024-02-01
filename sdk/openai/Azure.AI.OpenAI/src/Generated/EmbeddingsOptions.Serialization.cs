@@ -44,6 +44,8 @@ namespace Azure.AI.OpenAI
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            writer.WritePropertyName("input_type"u8);
+            writer.WriteStringValue(InputType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -85,6 +87,7 @@ namespace Azure.AI.OpenAI
             Optional<string> user = default;
             Optional<string> model = default;
             IList<string> input = default;
+            string inputType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,13 +112,18 @@ namespace Azure.AI.OpenAI
                     input = array;
                     continue;
                 }
+                if (property.NameEquals("input_type"u8))
+                {
+                    inputType = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EmbeddingsOptions(user.Value, model.Value, input, serializedAdditionalRawData);
+            return new EmbeddingsOptions(user.Value, model.Value, input, inputType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EmbeddingsOptions>.Write(ModelReaderWriterOptions options)

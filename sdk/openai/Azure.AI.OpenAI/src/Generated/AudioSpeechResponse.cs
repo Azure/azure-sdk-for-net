@@ -7,15 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary>
-    /// The authentication options for Azure OpenAI On Your Data.
-    /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
-    /// </summary>
-    public abstract partial class OnYourDataAuthenticationOptions
+    /// <summary> Represents the response for speech synthesis. </summary>
+    public partial class AudioSpeechResponse
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,23 +44,48 @@ namespace Azure.AI.OpenAI
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="OnYourDataAuthenticationOptions"/>. </summary>
-        protected OnYourDataAuthenticationOptions()
+        /// <summary> Initializes a new instance of <see cref="AudioSpeechResponse"/>. </summary>
+        /// <param name="audio"> The synthesized audio. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="audio"/> is null. </exception>
+        internal AudioSpeechResponse(BinaryData audio)
         {
+            Argument.AssertNotNull(audio, nameof(audio));
+
+            Audio = audio;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OnYourDataAuthenticationOptions"/>. </summary>
-        /// <param name="type"> The authentication type. </param>
+        /// <summary> Initializes a new instance of <see cref="AudioSpeechResponse"/>. </summary>
+        /// <param name="audio"> The synthesized audio. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OnYourDataAuthenticationOptions(OnYourDataAuthenticationType type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AudioSpeechResponse(BinaryData audio, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            Audio = audio;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The authentication type. </summary>
-        internal OnYourDataAuthenticationType Type { get; set; }
+        /// <summary> Initializes a new instance of <see cref="AudioSpeechResponse"/> for deserialization. </summary>
+        internal AudioSpeechResponse()
+        {
+        }
+
+        /// <summary>
+        /// The synthesized audio.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
+        /// <description>Creates a payload of "AQID".</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Audio { get; }
     }
 }

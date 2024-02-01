@@ -18,7 +18,7 @@ public partial class AzureOnYourData
         var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
 
         #region Snippet:ChatUsingYourOwnData
-        AzureCognitiveSearchChatExtensionConfiguration contosoExtensionConfig = new()
+        AzureSearchChatExtensionConfiguration contosoExtensionConfig = new()
         {
             SearchEndpoint = new Uri("https://your-contoso-search-resource.search.windows.net"),
             Authentication = new OnYourDataApiKeyAuthenticationOptions("<your Cognitive Search resource API key>"),

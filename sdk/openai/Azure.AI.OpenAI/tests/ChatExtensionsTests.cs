@@ -31,7 +31,7 @@ public class ChatExtensionsTests : OpenAITestBase
         OpenAIClient client = GetTestClient(serviceTarget);
         string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
 
-        AzureCognitiveSearchChatExtensionConfiguration searchExtension = new()
+        AzureSearchChatExtensionConfiguration searchExtension = new()
         {
             SearchEndpoint = new Uri("https://openaisdktestsearch.search.windows.net"),
             IndexName = "openai-test-index-carbon-wiki",
@@ -78,7 +78,7 @@ public class ChatExtensionsTests : OpenAITestBase
         OpenAIClient client = GetTestClient(serviceTarget);
         string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
 
-        AzureCognitiveSearchChatExtensionConfiguration searchConfig = new()
+        AzureSearchChatExtensionConfiguration searchConfig = new()
         {
             SearchEndpoint = new Uri("https://openaisdktestsearch.search.windows.net"),
             IndexName = "openai-test-index-carbon-wiki",

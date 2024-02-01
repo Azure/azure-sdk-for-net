@@ -27,7 +27,34 @@ namespace Azure.AI.OpenAI
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("vectorFields"u8);
+            if (Optional.IsDefined(TitleFieldName))
+            {
+                writer.WritePropertyName("title_field"u8);
+                writer.WriteStringValue(TitleFieldName);
+            }
+            if (Optional.IsDefined(UrlFieldName))
+            {
+                writer.WritePropertyName("url_field"u8);
+                writer.WriteStringValue(UrlFieldName);
+            }
+            if (Optional.IsDefined(FilepathFieldName))
+            {
+                writer.WritePropertyName("filepath_field"u8);
+                writer.WriteStringValue(FilepathFieldName);
+            }
+            writer.WritePropertyName("content_fields"u8);
+            writer.WriteStartArray();
+            foreach (var item in ContentFieldNames)
+            {
+                writer.WriteStringValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(ContentFieldSeparator))
+            {
+                writer.WritePropertyName("content_fields_separator"u8);
+                writer.WriteStringValue(ContentFieldSeparator);
+            }
+            writer.WritePropertyName("vector_fields"u8);
             writer.WriteStartArray();
             foreach (var item in VectorFieldNames)
             {
@@ -72,12 +99,47 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
+            Optional<string> titleField = default;
+            Optional<string> urlField = default;
+            Optional<string> filepathField = default;
+            IList<string> contentFields = default;
+            Optional<string> contentFieldsSeparator = default;
             IList<string> vectorFields = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vectorFields"u8))
+                if (property.NameEquals("title_field"u8))
+                {
+                    titleField = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("url_field"u8))
+                {
+                    urlField = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("filepath_field"u8))
+                {
+                    filepathField = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("content_fields"u8))
+                {
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    contentFields = array;
+                    continue;
+                }
+                if (property.NameEquals("content_fields_separator"u8))
+                {
+                    contentFieldsSeparator = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("vector_fields"u8))
                 {
                     List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
@@ -93,7 +155,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCosmosDBFieldMappingOptions(vectorFields, serializedAdditionalRawData);
+            return new AzureCosmosDBFieldMappingOptions(titleField.Value, urlField.Value, filepathField.Value, contentFields, contentFieldsSeparator.Value, vectorFields, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureCosmosDBFieldMappingOptions>.Write(ModelReaderWriterOptions options)

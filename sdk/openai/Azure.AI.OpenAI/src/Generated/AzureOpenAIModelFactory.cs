@@ -388,6 +388,32 @@ namespace Azure.AI.OpenAI
             return new ImageGenerationData(url, base64Data, revisedPrompt, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="OpenAI.EmbeddingsOptions"/>. </summary>
+        /// <param name="user">
+        /// An identifier for the caller or end user of the operation. This may be used for tracking
+        /// or rate-limiting purposes.
+        /// </param>
+        /// <param name="deploymentName">
+        /// The model name to provide as part of this embeddings request.
+        /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
+        /// resource URI that's connected to.
+        /// </param>
+        /// <param name="input">
+        /// Input texts to get embeddings for, encoded as a an array of strings.
+        /// Each input must not exceed 2048 tokens in length.
+        ///
+        /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
+        /// as we have observed inferior results when newlines are present.
+        /// </param>
+        /// <param name="inputType"> type of embedding search to use. </param>
+        /// <returns> A new <see cref="OpenAI.EmbeddingsOptions"/> instance for mocking. </returns>
+        public static EmbeddingsOptions EmbeddingsOptions(string user = null, string deploymentName = null, IEnumerable<string> input = null, string inputType = null)
+        {
+            input ??= new List<string>();
+
+            return new EmbeddingsOptions(user, deploymentName, input?.ToList(), inputType, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="OpenAI.Embeddings"/>. </summary>
         /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
         /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
@@ -418,6 +444,25 @@ namespace Azure.AI.OpenAI
         public static EmbeddingsUsage EmbeddingsUsage(int promptTokens = default, int totalTokens = default)
         {
             return new EmbeddingsUsage(promptTokens, totalTokens, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AudioSpeechOptions"/>. </summary>
+        /// <param name="input"> The text to synthesize audio for. The maximum length is 4096 characters. </param>
+        /// <param name="voice"> The voice to use for speech synthesis. </param>
+        /// <param name="responseFormat"> The format to synthesize the audio in. </param>
+        /// <param name="speed"> The speed of the synthesize audio. Select a value from `0.25` to `4.0`. `1.0` is the default. </param>
+        /// <returns> A new <see cref="OpenAI.AudioSpeechOptions"/> instance for mocking. </returns>
+        public static AudioSpeechOptions AudioSpeechOptions(string input = null, string voice = null, string responseFormat = null, float? speed = null)
+        {
+            return new AudioSpeechOptions(input, voice, responseFormat, speed, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AudioSpeechResponse"/>. </summary>
+        /// <param name="audio"> The synthesized audio. </param>
+        /// <returns> A new <see cref="OpenAI.AudioSpeechResponse"/> instance for mocking. </returns>
+        public static AudioSpeechResponse AudioSpeechResponse(BinaryData audio = null)
+        {
+            return new AudioSpeechResponse(audio, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.StopFinishDetails"/>. </summary>
@@ -533,6 +578,22 @@ namespace Azure.AI.OpenAI
         public static OnYourDataKeyAndKeyIdAuthenticationOptions OnYourDataKeyAndKeyIdAuthenticationOptions(string key = null, string keyId = null)
         {
             return new OnYourDataKeyAndKeyIdAuthenticationOptions(OnYourDataAuthenticationType.KeyAndKeyId, serializedAdditionalRawData: null, key, keyId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions"/>. </summary>
+        /// <param name="encodedApiKey"> The encoded API key to use for authentication. </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions"/> instance for mocking. </returns>
+        public static OnYourDataEncodedApiKeyAuthenticationOptions OnYourDataEncodedApiKeyAuthenticationOptions(string encodedApiKey = null)
+        {
+            return new OnYourDataEncodedApiKeyAuthenticationOptions(OnYourDataAuthenticationType.EncodedApiKey, serializedAdditionalRawData: null, encodedApiKey);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataAccessTokenAuthenticationOptions"/>. </summary>
+        /// <param name="accessToken"> The access token to use for authentication. </param>
+        /// <returns> A new <see cref="OpenAI.OnYourDataAccessTokenAuthenticationOptions"/> instance for mocking. </returns>
+        public static OnYourDataAccessTokenAuthenticationOptions OnYourDataAccessTokenAuthenticationOptions(string accessToken = null)
+        {
+            return new OnYourDataAccessTokenAuthenticationOptions(OnYourDataAuthenticationType.AccessToken, serializedAdditionalRawData: null, accessToken);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>. </summary>

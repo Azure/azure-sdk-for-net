@@ -14,37 +14,37 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class AzureCognitiveSearchIndexFieldMappingOptions : IUtf8JsonSerializable, IJsonModel<AzureCognitiveSearchIndexFieldMappingOptions>
+    public partial class AzureSearchIndexFieldMappingOptions : IUtf8JsonSerializable, IJsonModel<AzureSearchIndexFieldMappingOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureCognitiveSearchIndexFieldMappingOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureSearchIndexFieldMappingOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<AzureCognitiveSearchIndexFieldMappingOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AzureSearchIndexFieldMappingOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureCognitiveSearchIndexFieldMappingOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSearchIndexFieldMappingOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureCognitiveSearchIndexFieldMappingOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureSearchIndexFieldMappingOptions)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(TitleFieldName))
             {
-                writer.WritePropertyName("titleField"u8);
+                writer.WritePropertyName("title_field"u8);
                 writer.WriteStringValue(TitleFieldName);
             }
             if (Optional.IsDefined(UrlFieldName))
             {
-                writer.WritePropertyName("urlField"u8);
+                writer.WritePropertyName("url_field"u8);
                 writer.WriteStringValue(UrlFieldName);
             }
             if (Optional.IsDefined(FilepathFieldName))
             {
-                writer.WritePropertyName("filepathField"u8);
+                writer.WritePropertyName("filepath_field"u8);
                 writer.WriteStringValue(FilepathFieldName);
             }
             if (Optional.IsCollectionDefined(ContentFieldNames))
             {
-                writer.WritePropertyName("contentFields"u8);
+                writer.WritePropertyName("content_fields"u8);
                 writer.WriteStartArray();
                 foreach (var item in ContentFieldNames)
                 {
@@ -54,12 +54,12 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsDefined(ContentFieldSeparator))
             {
-                writer.WritePropertyName("contentFieldsSeparator"u8);
+                writer.WritePropertyName("content_fields_separator"u8);
                 writer.WriteStringValue(ContentFieldSeparator);
             }
             if (Optional.IsCollectionDefined(VectorFieldNames))
             {
-                writer.WritePropertyName("vectorFields"u8);
+                writer.WritePropertyName("vector_fields"u8);
                 writer.WriteStartArray();
                 foreach (var item in VectorFieldNames)
                 {
@@ -69,7 +69,7 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsCollectionDefined(ImageVectorFieldNames))
             {
-                writer.WritePropertyName("imageVectorFields"u8);
+                writer.WritePropertyName("image_vector_fields"u8);
                 writer.WriteStartArray();
                 foreach (var item in ImageVectorFieldNames)
                 {
@@ -95,19 +95,19 @@ namespace Azure.AI.OpenAI
             writer.WriteEndObject();
         }
 
-        AzureCognitiveSearchIndexFieldMappingOptions IJsonModel<AzureCognitiveSearchIndexFieldMappingOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AzureSearchIndexFieldMappingOptions IJsonModel<AzureSearchIndexFieldMappingOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureCognitiveSearchIndexFieldMappingOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSearchIndexFieldMappingOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureCognitiveSearchIndexFieldMappingOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureSearchIndexFieldMappingOptions)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureCognitiveSearchIndexFieldMappingOptions(document.RootElement, options);
+            return DeserializeAzureSearchIndexFieldMappingOptions(document.RootElement, options);
         }
 
-        internal static AzureCognitiveSearchIndexFieldMappingOptions DeserializeAzureCognitiveSearchIndexFieldMappingOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AzureSearchIndexFieldMappingOptions DeserializeAzureSearchIndexFieldMappingOptions(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -126,22 +126,22 @@ namespace Azure.AI.OpenAI
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("titleField"u8))
+                if (property.NameEquals("title_field"u8))
                 {
                     titleField = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("urlField"u8))
+                if (property.NameEquals("url_field"u8))
                 {
                     urlField = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filepathField"u8))
+                if (property.NameEquals("filepath_field"u8))
                 {
                     filepathField = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("contentFields"u8))
+                if (property.NameEquals("content_fields"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -155,12 +155,12 @@ namespace Azure.AI.OpenAI
                     contentFields = array;
                     continue;
                 }
-                if (property.NameEquals("contentFieldsSeparator"u8))
+                if (property.NameEquals("content_fields_separator"u8))
                 {
                     contentFieldsSeparator = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vectorFields"u8))
+                if (property.NameEquals("vector_fields"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -174,7 +174,7 @@ namespace Azure.AI.OpenAI
                     vectorFields = array;
                     continue;
                 }
-                if (property.NameEquals("imageVectorFields"u8))
+                if (property.NameEquals("image_vector_fields"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -194,46 +194,46 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCognitiveSearchIndexFieldMappingOptions(titleField.Value, urlField.Value, filepathField.Value, Optional.ToList(contentFields), contentFieldsSeparator.Value, Optional.ToList(vectorFields), Optional.ToList(imageVectorFields), serializedAdditionalRawData);
+            return new AzureSearchIndexFieldMappingOptions(titleField.Value, urlField.Value, filepathField.Value, Optional.ToList(contentFields), contentFieldsSeparator.Value, Optional.ToList(vectorFields), Optional.ToList(imageVectorFields), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AzureCognitiveSearchIndexFieldMappingOptions>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AzureSearchIndexFieldMappingOptions>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureCognitiveSearchIndexFieldMappingOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSearchIndexFieldMappingOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureCognitiveSearchIndexFieldMappingOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureSearchIndexFieldMappingOptions)} does not support '{options.Format}' format.");
             }
         }
 
-        AzureCognitiveSearchIndexFieldMappingOptions IPersistableModel<AzureCognitiveSearchIndexFieldMappingOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AzureSearchIndexFieldMappingOptions IPersistableModel<AzureSearchIndexFieldMappingOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureCognitiveSearchIndexFieldMappingOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSearchIndexFieldMappingOptions>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAzureCognitiveSearchIndexFieldMappingOptions(document.RootElement, options);
+                        return DeserializeAzureSearchIndexFieldMappingOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureCognitiveSearchIndexFieldMappingOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureSearchIndexFieldMappingOptions)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AzureCognitiveSearchIndexFieldMappingOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AzureSearchIndexFieldMappingOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AzureCognitiveSearchIndexFieldMappingOptions FromResponse(Response response)
+        internal static AzureSearchIndexFieldMappingOptions FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAzureCognitiveSearchIndexFieldMappingOptions(document.RootElement);
+            return DeserializeAzureSearchIndexFieldMappingOptions(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

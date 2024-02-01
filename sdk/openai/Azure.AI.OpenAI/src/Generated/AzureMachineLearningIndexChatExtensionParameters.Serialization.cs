@@ -34,12 +34,12 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsDefined(DocumentCount))
             {
-                writer.WritePropertyName("topNDocuments"u8);
+                writer.WritePropertyName("top_n_documents"u8);
                 writer.WriteNumberValue(DocumentCount.Value);
             }
             if (Optional.IsDefined(ShouldRestrictResultScope))
             {
-                writer.WritePropertyName("inScope"u8);
+                writer.WritePropertyName("in_scope"u8);
                 writer.WriteBooleanValue(ShouldRestrictResultScope.Value);
             }
             if (Optional.IsDefined(Strictness))
@@ -49,10 +49,10 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsDefined(RoleInformation))
             {
-                writer.WritePropertyName("roleInformation"u8);
+                writer.WritePropertyName("role_information"u8);
                 writer.WriteStringValue(RoleInformation);
             }
-            writer.WritePropertyName("projectResourceId"u8);
+            writer.WritePropertyName("project_resource_id"u8);
             writer.WriteStringValue(ProjectResourceId);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -123,7 +123,7 @@ namespace Azure.AI.OpenAI
                     authentication = OnYourDataAuthenticationOptions.DeserializeOnYourDataAuthenticationOptions(property.Value);
                     continue;
                 }
-                if (property.NameEquals("topNDocuments"u8))
+                if (property.NameEquals("top_n_documents"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -132,7 +132,7 @@ namespace Azure.AI.OpenAI
                     topNDocuments = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("inScope"u8))
+                if (property.NameEquals("in_scope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -150,12 +150,12 @@ namespace Azure.AI.OpenAI
                     strictness = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("roleInformation"u8))
+                if (property.NameEquals("role_information"u8))
                 {
                     roleInformation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("projectResourceId"u8))
+                if (property.NameEquals("project_resource_id"u8))
                 {
                     projectResourceId = property.Value.GetString();
                     continue;

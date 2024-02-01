@@ -11,8 +11,8 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Parameters for Azure Cognitive Search when used as an Azure OpenAI chat extension. </summary>
-    internal partial class AzureCognitiveSearchChatExtensionParameters
+    /// <summary> Parameters for Azure Cognitive Search when used as an Azure OpenAI chat extension. The supported authentication types are APIKey, SystemAssignedManagedIdentity and UserAssignedManagedIdentity. </summary>
+    internal partial class AzureSearchChatExtensionParameters
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,7 +46,7 @@ namespace Azure.AI.OpenAI
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AzureCognitiveSearchChatExtensionParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSearchChatExtensionParameters"/>. </summary>
         /// <param name="authentication">
         /// The authentication method to use when accessing the defined data source.
         /// Each data source type supports a specific set of available authentication methods; please see the documentation of
@@ -60,16 +60,13 @@ namespace Azure.AI.OpenAI
         /// <param name="roleInformation"> Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality and tell it how to format responses. There's a 100 token limit for it, and it counts against the overall token limit. </param>
         /// <param name="searchEndpoint"> The absolute endpoint path for the Azure Cognitive Search resource to use. </param>
         /// <param name="indexName"> The name of the index to use as available in the referenced Azure Cognitive Search resource. </param>
-        /// <param name="key"> The API key to use when interacting with the Azure Cognitive Search resource. </param>
         /// <param name="fieldMappingOptions"> Customized field mapping behavior to use when interacting with the search index. </param>
         /// <param name="queryType"> The query type to use with Azure Cognitive Search. </param>
         /// <param name="semanticConfiguration"> The additional semantic configuration for the query. </param>
         /// <param name="filter"> Search filter. </param>
-        /// <param name="embeddingEndpoint"> When using embeddings for search, specifies the resource endpoint URL from which embeddings should be retrieved. It should be in the format of format https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings?api-version={api-version}. </param>
-        /// <param name="embeddingKey"> When using embeddings, specifies the API key to use with the provided embeddings endpoint. </param>
         /// <param name="embeddingDependency"> The embedding dependency for vector search. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AzureCognitiveSearchChatExtensionParameters(OnYourDataAuthenticationOptions authentication, int? documentCount, bool? shouldRestrictResultScope, int? strictness, string roleInformation, Uri searchEndpoint, string indexName, string key, AzureCognitiveSearchIndexFieldMappingOptions fieldMappingOptions, AzureCognitiveSearchQueryType? queryType, string semanticConfiguration, string filter, Uri embeddingEndpoint, string embeddingKey, OnYourDataVectorizationSource embeddingDependency, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AzureSearchChatExtensionParameters(OnYourDataAuthenticationOptions authentication, int? documentCount, bool? shouldRestrictResultScope, int? strictness, string roleInformation, Uri searchEndpoint, string indexName, AzureSearchIndexFieldMappingOptions fieldMappingOptions, AzureSearchQueryType? queryType, string semanticConfiguration, string filter, OnYourDataVectorizationSource embeddingDependency, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Authentication = authentication;
             DocumentCount = documentCount;
@@ -78,13 +75,10 @@ namespace Azure.AI.OpenAI
             RoleInformation = roleInformation;
             SearchEndpoint = searchEndpoint;
             IndexName = indexName;
-            Key = key;
             FieldMappingOptions = fieldMappingOptions;
             QueryType = queryType;
             SemanticConfiguration = semanticConfiguration;
             Filter = filter;
-            EmbeddingEndpoint = embeddingEndpoint;
-            EmbeddingKey = embeddingKey;
             EmbeddingDependency = embeddingDependency;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -96,7 +90,7 @@ namespace Azure.AI.OpenAI
         /// If not otherwise provided, On Your Data will attempt to use System Managed Identity (default credential)
         /// authentication.
         /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
+        /// The available derived classes include <see cref="OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
         /// </summary>
         public OnYourDataAuthenticationOptions Authentication { get; set; }
         /// <summary> The configured top number of documents to feature for the configured query. </summary>
@@ -107,20 +101,14 @@ namespace Azure.AI.OpenAI
         public int? Strictness { get; set; }
         /// <summary> Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality and tell it how to format responses. There's a 100 token limit for it, and it counts against the overall token limit. </summary>
         public string RoleInformation { get; set; }
-        /// <summary> The API key to use when interacting with the Azure Cognitive Search resource. </summary>
-        public string Key { get; set; }
         /// <summary> Customized field mapping behavior to use when interacting with the search index. </summary>
-        public AzureCognitiveSearchIndexFieldMappingOptions FieldMappingOptions { get; set; }
+        public AzureSearchIndexFieldMappingOptions FieldMappingOptions { get; set; }
         /// <summary> The query type to use with Azure Cognitive Search. </summary>
-        public AzureCognitiveSearchQueryType? QueryType { get; set; }
+        public AzureSearchQueryType? QueryType { get; set; }
         /// <summary> The additional semantic configuration for the query. </summary>
         public string SemanticConfiguration { get; set; }
         /// <summary> Search filter. </summary>
         public string Filter { get; set; }
-        /// <summary> When using embeddings for search, specifies the resource endpoint URL from which embeddings should be retrieved. It should be in the format of format https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings?api-version={api-version}. </summary>
-        public Uri EmbeddingEndpoint { get; set; }
-        /// <summary> When using embeddings, specifies the API key to use with the provided embeddings endpoint. </summary>
-        public string EmbeddingKey { get; set; }
         /// <summary>
         /// The embedding dependency for vector search.
         /// Please note <see cref="OnYourDataVectorizationSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

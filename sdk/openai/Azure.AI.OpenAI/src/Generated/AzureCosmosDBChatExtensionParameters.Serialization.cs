@@ -34,12 +34,12 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsDefined(DocumentCount))
             {
-                writer.WritePropertyName("topNDocuments"u8);
+                writer.WritePropertyName("top_n_documents"u8);
                 writer.WriteNumberValue(DocumentCount.Value);
             }
             if (Optional.IsDefined(ShouldRestrictResultScope))
             {
-                writer.WritePropertyName("inScope"u8);
+                writer.WritePropertyName("in_scope"u8);
                 writer.WriteBooleanValue(ShouldRestrictResultScope.Value);
             }
             if (Optional.IsDefined(Strictness))
@@ -49,22 +49,19 @@ namespace Azure.AI.OpenAI
             }
             if (Optional.IsDefined(RoleInformation))
             {
-                writer.WritePropertyName("roleInformation"u8);
+                writer.WritePropertyName("role_information"u8);
                 writer.WriteStringValue(RoleInformation);
             }
-            writer.WritePropertyName("databaseName"u8);
+            writer.WritePropertyName("database_name"u8);
             writer.WriteStringValue(DatabaseName);
-            writer.WritePropertyName("containerName"u8);
+            writer.WritePropertyName("container_name"u8);
             writer.WriteStringValue(ContainerName);
-            writer.WritePropertyName("indexName"u8);
+            writer.WritePropertyName("index_name"u8);
             writer.WriteStringValue(IndexName);
-            writer.WritePropertyName("fieldsMapping"u8);
+            writer.WritePropertyName("fields_mapping"u8);
             writer.WriteObjectValue(FieldMappingOptions);
-            if (Optional.IsDefined(EmbeddingDependency))
-            {
-                writer.WritePropertyName("embeddingDependency"u8);
-                writer.WriteObjectValue(EmbeddingDependency);
-            }
+            writer.WritePropertyName("embedding_dependency"u8);
+            writer.WriteObjectValue(EmbeddingDependency);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -112,7 +109,7 @@ namespace Azure.AI.OpenAI
             string containerName = default;
             string indexName = default;
             AzureCosmosDBFieldMappingOptions fieldsMapping = default;
-            Optional<OnYourDataVectorizationSource> embeddingDependency = default;
+            OnYourDataVectorizationSource embeddingDependency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +123,7 @@ namespace Azure.AI.OpenAI
                     authentication = OnYourDataAuthenticationOptions.DeserializeOnYourDataAuthenticationOptions(property.Value);
                     continue;
                 }
-                if (property.NameEquals("topNDocuments"u8))
+                if (property.NameEquals("top_n_documents"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -135,7 +132,7 @@ namespace Azure.AI.OpenAI
                     topNDocuments = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("inScope"u8))
+                if (property.NameEquals("in_scope"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -153,37 +150,33 @@ namespace Azure.AI.OpenAI
                     strictness = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("roleInformation"u8))
+                if (property.NameEquals("role_information"u8))
                 {
                     roleInformation = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("databaseName"u8))
+                if (property.NameEquals("database_name"u8))
                 {
                     databaseName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerName"u8))
+                if (property.NameEquals("container_name"u8))
                 {
                     containerName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("indexName"u8))
+                if (property.NameEquals("index_name"u8))
                 {
                     indexName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fieldsMapping"u8))
+                if (property.NameEquals("fields_mapping"u8))
                 {
                     fieldsMapping = AzureCosmosDBFieldMappingOptions.DeserializeAzureCosmosDBFieldMappingOptions(property.Value);
                     continue;
                 }
-                if (property.NameEquals("embeddingDependency"u8))
+                if (property.NameEquals("embedding_dependency"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     embeddingDependency = OnYourDataVectorizationSource.DeserializeOnYourDataVectorizationSource(property.Value);
                     continue;
                 }
@@ -193,7 +186,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureCosmosDBChatExtensionParameters(authentication.Value, Optional.ToNullable(topNDocuments), Optional.ToNullable(inScope), Optional.ToNullable(strictness), roleInformation.Value, databaseName, containerName, indexName, fieldsMapping, embeddingDependency.Value, serializedAdditionalRawData);
+            return new AzureCosmosDBChatExtensionParameters(authentication.Value, Optional.ToNullable(topNDocuments), Optional.ToNullable(inScope), Optional.ToNullable(strictness), roleInformation.Value, databaseName, containerName, indexName, fieldsMapping, embeddingDependency, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureCosmosDBChatExtensionParameters>.Write(ModelReaderWriterOptions options)
