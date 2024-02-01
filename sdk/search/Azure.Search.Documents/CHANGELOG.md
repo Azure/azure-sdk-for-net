@@ -8,8 +8,6 @@
 ### Bugs Fixed
 - Removed the unintentional addition of the abstract keyword to the `KnowledgeStoreProjectionSelector` and `KnowledgeStoreStorageProjectionSelector` types.
 
-### Other Changes
-
 ## 11.6.0-beta.1 (2024-01-17)
 
 ### Features Added
