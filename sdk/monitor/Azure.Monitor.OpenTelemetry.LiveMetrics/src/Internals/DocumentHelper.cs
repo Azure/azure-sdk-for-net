@@ -142,7 +142,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 .Append(urlScheme)
                 .Append(Uri.SchemeDelimiter)
                 .Append(serverAddress)
-                .Append(serverPort != null ? $":{serverPort}" : string.Empty)
+                .Append($":{serverPort}")
                 .Append(urlPath)
                 .Append(urlQuery);
 
