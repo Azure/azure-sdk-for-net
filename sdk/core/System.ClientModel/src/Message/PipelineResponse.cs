@@ -100,7 +100,7 @@ public abstract class PipelineResponse : IDisposable
     private async Task BufferContentSyncOrAsync(TimeSpan? timeout, CancellationTokenSource? cts, bool async)
     {
         Stream? responseContentStream = ContentStream;
-        if (responseContentStream == null || TryGetBufferedContent(out _))
+        if (responseContentStream == null || _contentBytes is not null)
         {
             // No need to buffer content.
             return;
