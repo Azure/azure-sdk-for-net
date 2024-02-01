@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class L3OptionBProperties : IUtf8JsonSerializable, IJsonModel<L3OptionBProperties>
+    public partial class L3OptionBProperties : IUtf8JsonSerializable, IJsonModel<L3OptionBProperties>, IPersistableModel<L3OptionBProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<L3OptionBProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -142,6 +143,64 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new L3OptionBProperties(Optional.ToList(importRouteTargets), Optional.ToList(exportRouteTargets), routeTargets.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(ImportRouteTargets))
+            {
+                builder.Append("  importRouteTargets:");
+                builder.AppendLine(" [");
+                foreach (var item in ImportRouteTargets)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ExportRouteTargets))
+            {
+                builder.Append("  exportRouteTargets:");
+                builder.AppendLine(" [");
+                foreach (var item in ExportRouteTargets)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(RouteTargets))
+            {
+                builder.Append("  routeTargets:");
+                AppendChildObject(builder, RouteTargets, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<L3OptionBProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<L3OptionBProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -150,6 +209,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(L3OptionBProperties)} does not support '{options.Format}' format.");
             }
@@ -166,6 +227,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeL3OptionBProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(L3OptionBProperties)} does not support '{options.Format}' format.");
             }

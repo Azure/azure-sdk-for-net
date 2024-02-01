@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class EdifactDelimiterOverride : IUtf8JsonSerializable, IJsonModel<EdifactDelimiterOverride>
+    public partial class EdifactDelimiterOverride : IUtf8JsonSerializable, IJsonModel<EdifactDelimiterOverride>, IPersistableModel<EdifactDelimiterOverride>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdifactDelimiterOverride>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -188,6 +189,98 @@ namespace Azure.ResourceManager.Logic.Models
             return new EdifactDelimiterOverride(messageId.Value, messageVersion.Value, messageRelease.Value, dataElementSeparator, componentSeparator, segmentTerminator, repetitionSeparator, segmentTerminatorSuffix, decimalPointIndicator, releaseIndicator, messageAssociationAssignedCode.Value, targetNamespace.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MessageId))
+            {
+                builder.Append("  messageId:");
+                builder.AppendLine($" '{MessageId}'");
+            }
+
+            if (Optional.IsDefined(MessageVersion))
+            {
+                builder.Append("  messageVersion:");
+                builder.AppendLine($" '{MessageVersion}'");
+            }
+
+            if (Optional.IsDefined(MessageRelease))
+            {
+                builder.Append("  messageRelease:");
+                builder.AppendLine($" '{MessageRelease}'");
+            }
+
+            if (Optional.IsDefined(DataElementSeparator))
+            {
+                builder.Append("  dataElementSeparator:");
+                builder.AppendLine($" '{DataElementSeparator.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ComponentSeparator))
+            {
+                builder.Append("  componentSeparator:");
+                builder.AppendLine($" '{ComponentSeparator.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SegmentTerminator))
+            {
+                builder.Append("  segmentTerminator:");
+                builder.AppendLine($" '{SegmentTerminator.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RepetitionSeparator))
+            {
+                builder.Append("  repetitionSeparator:");
+                builder.AppendLine($" '{RepetitionSeparator.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SegmentTerminatorSuffix))
+            {
+                builder.Append("  segmentTerminatorSuffix:");
+                builder.AppendLine($" '{SegmentTerminatorSuffix.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DecimalPointIndicator))
+            {
+                builder.Append("  decimalPointIndicator:");
+                builder.AppendLine($" '{DecimalPointIndicator.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReleaseIndicator))
+            {
+                builder.Append("  releaseIndicator:");
+                builder.AppendLine($" '{ReleaseIndicator.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MessageAssociationAssignedCode))
+            {
+                builder.Append("  messageAssociationAssignedCode:");
+                builder.AppendLine($" '{MessageAssociationAssignedCode}'");
+            }
+
+            if (Optional.IsDefined(TargetNamespace))
+            {
+                builder.Append("  targetNamespace:");
+                builder.AppendLine($" '{TargetNamespace}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<EdifactDelimiterOverride>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EdifactDelimiterOverride>)this).GetFormatFromOptions(options) : options.Format;
@@ -196,6 +289,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EdifactDelimiterOverride)} does not support '{options.Format}' format.");
             }
@@ -212,6 +307,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEdifactDelimiterOverride(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EdifactDelimiterOverride)} does not support '{options.Format}' format.");
             }

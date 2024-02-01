@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class KubernetesPod : IUtf8JsonSerializable, IJsonModel<KubernetesPod>
+    public partial class KubernetesPod : IUtf8JsonSerializable, IJsonModel<KubernetesPod>, IPersistableModel<KubernetesPod>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesPod>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -184,6 +185,73 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new KubernetesPod(name.Value, @namespace.Value, Optional.ToNullable(desired), Optional.ToNullable(ready), Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToList(events), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Namespace))
+            {
+                builder.Append("  namespace:");
+                builder.AppendLine($" '{Namespace}'");
+            }
+
+            if (Optional.IsDefined(DesiredNumberOfContainers))
+            {
+                builder.Append("  desired:");
+                builder.AppendLine($" '{DesiredNumberOfContainers.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReadyNumberOfContainers))
+            {
+                builder.Append("  ready:");
+                builder.AppendLine($" '{ReadyNumberOfContainers.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  creationTime:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Events))
+            {
+                builder.Append("  events:");
+                builder.AppendLine(" [");
+                foreach (var item in Events)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<KubernetesPod>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesPod>)this).GetFormatFromOptions(options) : options.Format;
@@ -192,6 +260,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KubernetesPod)} does not support '{options.Format}' format.");
             }
@@ -208,6 +278,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeKubernetesPod(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(KubernetesPod)} does not support '{options.Format}' format.");
             }

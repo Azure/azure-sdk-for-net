@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkToNetworkInterconnectOptionBLayer3Configuration : IUtf8JsonSerializable, IJsonModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>
+    public partial class NetworkToNetworkInterconnectOptionBLayer3Configuration : IUtf8JsonSerializable, IJsonModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>, IPersistableModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -166,6 +167,68 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkToNetworkInterconnectOptionBLayer3Configuration(primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value, serializedAdditionalRawData, Optional.ToNullable(peerAsn), Optional.ToNullable(vlanId), Optional.ToNullable(fabricAsn));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PeerAsn))
+            {
+                builder.Append("  peerASN:");
+                builder.AppendLine($" '{PeerAsn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VlanId))
+            {
+                builder.Append("  vlanId:");
+                builder.AppendLine($" '{VlanId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FabricAsn))
+            {
+                builder.Append("  fabricASN:");
+                builder.AppendLine($" '{FabricAsn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrimaryIPv4Prefix))
+            {
+                builder.Append("  primaryIpv4Prefix:");
+                builder.AppendLine($" '{PrimaryIPv4Prefix}'");
+            }
+
+            if (Optional.IsDefined(PrimaryIPv6Prefix))
+            {
+                builder.Append("  primaryIpv6Prefix:");
+                builder.AppendLine($" '{PrimaryIPv6Prefix}'");
+            }
+
+            if (Optional.IsDefined(SecondaryIPv4Prefix))
+            {
+                builder.Append("  secondaryIpv4Prefix:");
+                builder.AppendLine($" '{SecondaryIPv4Prefix}'");
+            }
+
+            if (Optional.IsDefined(SecondaryIPv6Prefix))
+            {
+                builder.Append("  secondaryIpv6Prefix:");
+                builder.AppendLine($" '{SecondaryIPv6Prefix}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>)this).GetFormatFromOptions(options) : options.Format;
@@ -174,6 +237,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectOptionBLayer3Configuration)} does not support '{options.Format}' format.");
             }
@@ -190,6 +255,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkToNetworkInterconnectOptionBLayer3Configuration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectOptionBLayer3Configuration)} does not support '{options.Format}' format.");
             }

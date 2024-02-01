@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class RandomSamplingAlgorithm : IUtf8JsonSerializable, IJsonModel<RandomSamplingAlgorithm>
+    public partial class RandomSamplingAlgorithm : IUtf8JsonSerializable, IJsonModel<RandomSamplingAlgorithm>, IPersistableModel<RandomSamplingAlgorithm>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RandomSamplingAlgorithm>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -146,6 +147,50 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new RandomSamplingAlgorithm(samplingAlgorithmType, serializedAdditionalRawData, logbase.Value, Optional.ToNullable(rule), Optional.ToNullable(seed));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Logbase))
+            {
+                builder.Append("  logbase:");
+                builder.AppendLine($" '{Logbase}'");
+            }
+
+            if (Optional.IsDefined(Rule))
+            {
+                builder.Append("  rule:");
+                builder.AppendLine($" '{Rule.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Seed))
+            {
+                builder.Append("  seed:");
+                builder.AppendLine($" '{Seed.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SamplingAlgorithmType))
+            {
+                builder.Append("  samplingAlgorithmType:");
+                builder.AppendLine($" '{SamplingAlgorithmType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<RandomSamplingAlgorithm>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RandomSamplingAlgorithm>)this).GetFormatFromOptions(options) : options.Format;
@@ -154,6 +199,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support '{options.Format}' format.");
             }
@@ -170,6 +217,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRandomSamplingAlgorithm(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support '{options.Format}' format.");
             }

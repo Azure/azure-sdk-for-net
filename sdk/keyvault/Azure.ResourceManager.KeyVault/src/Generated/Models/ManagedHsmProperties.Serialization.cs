@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class ManagedHsmProperties : IUtf8JsonSerializable, IJsonModel<ManagedHsmProperties>
+    public partial class ManagedHsmProperties : IUtf8JsonSerializable, IJsonModel<ManagedHsmProperties>, IPersistableModel<ManagedHsmProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedHsmProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -328,6 +329,138 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new ManagedHsmProperties(Optional.ToNullable(tenantId), Optional.ToList(initialAdminObjectIds), hsmUri.Value, Optional.ToNullable(enableSoftDelete), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enablePurgeProtection), Optional.ToNullable(createMode), statusMessage.Value, Optional.ToNullable(provisioningState), networkAcls.Value, Optional.ToList(regions), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(scheduledPurgeDate), securityDomainProperties.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("  tenantId:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(InitialAdminObjectIds))
+            {
+                builder.Append("  initialAdminObjectIds:");
+                builder.AppendLine(" [");
+                foreach (var item in InitialAdminObjectIds)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(HsmUri))
+            {
+                builder.Append("  hsmUri:");
+                builder.AppendLine($" '{HsmUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(EnableSoftDelete))
+            {
+                builder.Append("  enableSoftDelete:");
+                var boolValue = EnableSoftDelete.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SoftDeleteRetentionInDays))
+            {
+                builder.Append("  softDeleteRetentionInDays:");
+                builder.AppendLine($" '{SoftDeleteRetentionInDays.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnablePurgeProtection))
+            {
+                builder.Append("  enablePurgeProtection:");
+                var boolValue = EnablePurgeProtection.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CreateMode))
+            {
+                builder.Append("  createMode:");
+                builder.AppendLine($" '{CreateMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StatusMessage))
+            {
+                builder.Append("  statusMessage:");
+                builder.AppendLine($" '{StatusMessage}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NetworkRuleSet))
+            {
+                builder.Append("  networkAcls:");
+                AppendChildObject(builder, NetworkRuleSet, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Regions))
+            {
+                builder.Append("  regions:");
+                builder.AppendLine(" [");
+                foreach (var item in Regions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                builder.Append("  privateEndpointConnections:");
+                builder.AppendLine(" [");
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                builder.Append("  publicNetworkAccess:");
+                builder.AppendLine($" '{PublicNetworkAccess.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ScheduledPurgeOn))
+            {
+                builder.Append("  scheduledPurgeDate:");
+                builder.AppendLine($" '{ScheduledPurgeOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SecurityDomainProperties))
+            {
+                builder.Append("  securityDomainProperties:");
+                AppendChildObject(builder, SecurityDomainProperties, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ManagedHsmProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedHsmProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -336,6 +469,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedHsmProperties)} does not support '{options.Format}' format.");
             }
@@ -352,6 +487,8 @@ namespace Azure.ResourceManager.KeyVault.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeManagedHsmProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ManagedHsmProperties)} does not support '{options.Format}' format.");
             }

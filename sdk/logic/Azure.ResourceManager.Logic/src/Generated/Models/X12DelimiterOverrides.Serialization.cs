@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12DelimiterOverrides : IUtf8JsonSerializable, IJsonModel<X12DelimiterOverrides>
+    public partial class X12DelimiterOverrides : IUtf8JsonSerializable, IJsonModel<X12DelimiterOverrides>, IPersistableModel<X12DelimiterOverrides>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<X12DelimiterOverrides>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -158,6 +159,81 @@ namespace Azure.ResourceManager.Logic.Models
             return new X12DelimiterOverrides(protocolVersion.Value, messageId.Value, dataElementSeparator, componentSeparator, segmentTerminator, segmentTerminatorSuffix, replaceCharacter, replaceSeparatorsInPayload, targetNamespace.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProtocolVersion))
+            {
+                builder.Append("  protocolVersion:");
+                builder.AppendLine($" '{ProtocolVersion}'");
+            }
+
+            if (Optional.IsDefined(MessageId))
+            {
+                builder.Append("  messageId:");
+                builder.AppendLine($" '{MessageId}'");
+            }
+
+            if (Optional.IsDefined(DataElementSeparator))
+            {
+                builder.Append("  dataElementSeparator:");
+                builder.AppendLine($" '{DataElementSeparator.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ComponentSeparator))
+            {
+                builder.Append("  componentSeparator:");
+                builder.AppendLine($" '{ComponentSeparator.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SegmentTerminator))
+            {
+                builder.Append("  segmentTerminator:");
+                builder.AppendLine($" '{SegmentTerminator.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SegmentTerminatorSuffix))
+            {
+                builder.Append("  segmentTerminatorSuffix:");
+                builder.AppendLine($" '{SegmentTerminatorSuffix.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReplaceCharacter))
+            {
+                builder.Append("  replaceCharacter:");
+                builder.AppendLine($" '{ReplaceCharacter.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReplaceSeparatorsInPayload))
+            {
+                builder.Append("  replaceSeparatorsInPayload:");
+                var boolValue = ReplaceSeparatorsInPayload == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(TargetNamespace))
+            {
+                builder.Append("  targetNamespace:");
+                builder.AppendLine($" '{TargetNamespace}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<X12DelimiterOverrides>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<X12DelimiterOverrides>)this).GetFormatFromOptions(options) : options.Format;
@@ -166,6 +242,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(X12DelimiterOverrides)} does not support '{options.Format}' format.");
             }
@@ -182,6 +260,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeX12DelimiterOverrides(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(X12DelimiterOverrides)} does not support '{options.Format}' format.");
             }

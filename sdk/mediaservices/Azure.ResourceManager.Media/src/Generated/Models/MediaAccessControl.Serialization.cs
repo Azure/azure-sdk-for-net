@@ -9,12 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaAccessControl : IUtf8JsonSerializable, IJsonModel<MediaAccessControl>
+    public partial class MediaAccessControl : IUtf8JsonSerializable, IJsonModel<MediaAccessControl>, IPersistableModel<MediaAccessControl>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaAccessControl>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -130,6 +131,48 @@ namespace Azure.ResourceManager.Media.Models
             return new MediaAccessControl(Optional.ToNullable(defaultAction), Optional.ToList(ipAllowList), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DefaultAction))
+            {
+                builder.Append("  defaultAction:");
+                builder.AppendLine($" '{DefaultAction.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(IPAllowList))
+            {
+                builder.Append("  ipAllowList:");
+                builder.AppendLine(" [");
+                foreach (var item in IPAllowList)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MediaAccessControl>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MediaAccessControl>)this).GetFormatFromOptions(options) : options.Format;
@@ -138,6 +181,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MediaAccessControl)} does not support '{options.Format}' format.");
             }
@@ -154,6 +199,8 @@ namespace Azure.ResourceManager.Media.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMediaAccessControl(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MediaAccessControl)} does not support '{options.Format}' format.");
             }

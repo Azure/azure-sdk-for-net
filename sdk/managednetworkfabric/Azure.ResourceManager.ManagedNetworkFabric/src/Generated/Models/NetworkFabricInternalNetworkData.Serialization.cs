@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    public partial class NetworkFabricInternalNetworkData : IUtf8JsonSerializable, IJsonModel<NetworkFabricInternalNetworkData>
+    public partial class NetworkFabricInternalNetworkData : IUtf8JsonSerializable, IJsonModel<NetworkFabricInternalNetworkData>, IPersistableModel<NetworkFabricInternalNetworkData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricInternalNetworkData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -421,6 +422,168 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return new NetworkFabricInternalNetworkData(id, name, type, systemData.Value, annotation.Value, Optional.ToNullable(mtu), Optional.ToList(connectedIPv4Subnets), Optional.ToList(connectedIPv6Subnets), importRoutePolicyId.Value, exportRoutePolicyId.Value, importRoutePolicy.Value, exportRoutePolicy.Value, ingressAclId.Value, egressAclId.Value, Optional.ToNullable(isMonitoringEnabled), Optional.ToNullable(extension), vlanId, bgpConfiguration.Value, staticRouteConfiguration.Value, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Annotation))
+            {
+                builder.Append("  annotation:");
+                builder.AppendLine($" '{Annotation}'");
+            }
+
+            if (Optional.IsDefined(Mtu))
+            {
+                builder.Append("  mtu:");
+                builder.AppendLine($" '{Mtu.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ConnectedIPv4Subnets))
+            {
+                builder.Append("  connectedIPv4Subnets:");
+                builder.AppendLine(" [");
+                foreach (var item in ConnectedIPv4Subnets)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ConnectedIPv6Subnets))
+            {
+                builder.Append("  connectedIPv6Subnets:");
+                builder.AppendLine(" [");
+                foreach (var item in ConnectedIPv6Subnets)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ImportRoutePolicyId))
+            {
+                builder.Append("  importRoutePolicyId:");
+                builder.AppendLine($" '{ImportRoutePolicyId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExportRoutePolicyId))
+            {
+                builder.Append("  exportRoutePolicyId:");
+                builder.AppendLine($" '{ExportRoutePolicyId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ImportRoutePolicy))
+            {
+                builder.Append("  importRoutePolicy:");
+                AppendChildObject(builder, ImportRoutePolicy, options, 2);
+            }
+
+            if (Optional.IsDefined(ExportRoutePolicy))
+            {
+                builder.Append("  exportRoutePolicy:");
+                AppendChildObject(builder, ExportRoutePolicy, options, 2);
+            }
+
+            if (Optional.IsDefined(IngressAclId))
+            {
+                builder.Append("  ingressAclId:");
+                builder.AppendLine($" '{IngressAclId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EgressAclId))
+            {
+                builder.Append("  egressAclId:");
+                builder.AppendLine($" '{EgressAclId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsMonitoringEnabled))
+            {
+                builder.Append("  isMonitoringEnabled:");
+                builder.AppendLine($" '{IsMonitoringEnabled.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Extension))
+            {
+                builder.Append("  extension:");
+                builder.AppendLine($" '{Extension.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VlanId))
+            {
+                builder.Append("  vlanId:");
+                builder.AppendLine($" '{VlanId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BgpConfiguration))
+            {
+                builder.Append("  bgpConfiguration:");
+                AppendChildObject(builder, BgpConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(StaticRouteConfiguration))
+            {
+                builder.Append("  staticRouteConfiguration:");
+                AppendChildObject(builder, StaticRouteConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(ConfigurationState))
+            {
+                builder.Append("  configurationState:");
+                builder.AppendLine($" '{ConfigurationState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AdministrativeState))
+            {
+                builder.Append("  administrativeState:");
+                builder.AppendLine($" '{AdministrativeState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<NetworkFabricInternalNetworkData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricInternalNetworkData>)this).GetFormatFromOptions(options) : options.Format;
@@ -429,6 +592,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkFabricInternalNetworkData)} does not support '{options.Format}' format.");
             }
@@ -445,6 +610,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkFabricInternalNetworkData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkFabricInternalNetworkData)} does not support '{options.Format}' format.");
             }

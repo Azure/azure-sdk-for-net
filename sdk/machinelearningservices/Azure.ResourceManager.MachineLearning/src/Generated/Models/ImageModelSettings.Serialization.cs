@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ImageModelSettings : IUtf8JsonSerializable, IJsonModel<ImageModelSettings>
+    public partial class ImageModelSettings : IUtf8JsonSerializable, IJsonModel<ImageModelSettings>, IPersistableModel<ImageModelSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageModelSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -797,6 +798,223 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new ImageModelSettings(advancedSettings.Value, Optional.ToNullable(amsGradient), augmentations.Value, Optional.ToNullable(beta1), Optional.ToNullable(beta2), Optional.ToNullable(checkpointFrequency), checkpointModel.Value, checkpointRunId.Value, Optional.ToNullable(distributed), Optional.ToNullable(earlyStopping), Optional.ToNullable(earlyStoppingDelay), Optional.ToNullable(earlyStoppingPatience), Optional.ToNullable(enableOnnxNormalization), Optional.ToNullable(evaluationFrequency), Optional.ToNullable(gradientAccumulationStep), Optional.ToNullable(layersToFreeze), Optional.ToNullable(learningRate), Optional.ToNullable(learningRateScheduler), modelName.Value, Optional.ToNullable(momentum), Optional.ToNullable(nesterov), Optional.ToNullable(numberOfEpochs), Optional.ToNullable(numberOfWorkers), Optional.ToNullable(optimizer), Optional.ToNullable(randomSeed), Optional.ToNullable(stepLRGamma), Optional.ToNullable(stepLRStepSize), Optional.ToNullable(trainingBatchSize), Optional.ToNullable(validationBatchSize), Optional.ToNullable(warmupCosineLRCycles), Optional.ToNullable(warmupCosineLRWarmupEpochs), Optional.ToNullable(weightDecay), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AdvancedSettings))
+            {
+                builder.Append("  advancedSettings:");
+                builder.AppendLine($" '{AdvancedSettings}'");
+            }
+
+            if (Optional.IsDefined(AmsGradient))
+            {
+                builder.Append("  amsGradient:");
+                var boolValue = AmsGradient.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Augmentations))
+            {
+                builder.Append("  augmentations:");
+                builder.AppendLine($" '{Augmentations}'");
+            }
+
+            if (Optional.IsDefined(Beta1))
+            {
+                builder.Append("  beta1:");
+                builder.AppendLine($" '{Beta1.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Beta2))
+            {
+                builder.Append("  beta2:");
+                builder.AppendLine($" '{Beta2.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CheckpointFrequency))
+            {
+                builder.Append("  checkpointFrequency:");
+                builder.AppendLine($" '{CheckpointFrequency.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CheckpointModel))
+            {
+                builder.Append("  checkpointModel:");
+                AppendChildObject(builder, CheckpointModel, options, 2);
+            }
+
+            if (Optional.IsDefined(CheckpointRunId))
+            {
+                builder.Append("  checkpointRunId:");
+                builder.AppendLine($" '{CheckpointRunId}'");
+            }
+
+            if (Optional.IsDefined(Distributed))
+            {
+                builder.Append("  distributed:");
+                var boolValue = Distributed.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EarlyStopping))
+            {
+                builder.Append("  earlyStopping:");
+                var boolValue = EarlyStopping.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EarlyStoppingDelay))
+            {
+                builder.Append("  earlyStoppingDelay:");
+                builder.AppendLine($" '{EarlyStoppingDelay.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EarlyStoppingPatience))
+            {
+                builder.Append("  earlyStoppingPatience:");
+                builder.AppendLine($" '{EarlyStoppingPatience.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnableOnnxNormalization))
+            {
+                builder.Append("  enableOnnxNormalization:");
+                var boolValue = EnableOnnxNormalization.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EvaluationFrequency))
+            {
+                builder.Append("  evaluationFrequency:");
+                builder.AppendLine($" '{EvaluationFrequency.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(GradientAccumulationStep))
+            {
+                builder.Append("  gradientAccumulationStep:");
+                builder.AppendLine($" '{GradientAccumulationStep.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LayersToFreeze))
+            {
+                builder.Append("  layersToFreeze:");
+                builder.AppendLine($" '{LayersToFreeze.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LearningRate))
+            {
+                builder.Append("  learningRate:");
+                builder.AppendLine($" '{LearningRate.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LearningRateScheduler))
+            {
+                builder.Append("  learningRateScheduler:");
+                builder.AppendLine($" '{LearningRateScheduler.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ModelName))
+            {
+                builder.Append("  modelName:");
+                builder.AppendLine($" '{ModelName}'");
+            }
+
+            if (Optional.IsDefined(Momentum))
+            {
+                builder.Append("  momentum:");
+                builder.AppendLine($" '{Momentum.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Nesterov))
+            {
+                builder.Append("  nesterov:");
+                var boolValue = Nesterov.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(NumberOfEpochs))
+            {
+                builder.Append("  numberOfEpochs:");
+                builder.AppendLine($" '{NumberOfEpochs.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NumberOfWorkers))
+            {
+                builder.Append("  numberOfWorkers:");
+                builder.AppendLine($" '{NumberOfWorkers.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Optimizer))
+            {
+                builder.Append("  optimizer:");
+                builder.AppendLine($" '{Optimizer.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RandomSeed))
+            {
+                builder.Append("  randomSeed:");
+                builder.AppendLine($" '{RandomSeed.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StepLRGamma))
+            {
+                builder.Append("  stepLRGamma:");
+                builder.AppendLine($" '{StepLRGamma.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StepLRStepSize))
+            {
+                builder.Append("  stepLRStepSize:");
+                builder.AppendLine($" '{StepLRStepSize.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TrainingBatchSize))
+            {
+                builder.Append("  trainingBatchSize:");
+                builder.AppendLine($" '{TrainingBatchSize.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ValidationBatchSize))
+            {
+                builder.Append("  validationBatchSize:");
+                builder.AppendLine($" '{ValidationBatchSize.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WarmupCosineLRCycles))
+            {
+                builder.Append("  warmupCosineLRCycles:");
+                builder.AppendLine($" '{WarmupCosineLRCycles.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WarmupCosineLRWarmupEpochs))
+            {
+                builder.Append("  warmupCosineLRWarmupEpochs:");
+                builder.AppendLine($" '{WarmupCosineLRWarmupEpochs.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WeightDecay))
+            {
+                builder.Append("  weightDecay:");
+                builder.AppendLine($" '{WeightDecay.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ImageModelSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ImageModelSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -805,6 +1023,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ImageModelSettings)} does not support '{options.Format}' format.");
             }
@@ -821,6 +1041,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeImageModelSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ImageModelSettings)} does not support '{options.Format}' format.");
             }

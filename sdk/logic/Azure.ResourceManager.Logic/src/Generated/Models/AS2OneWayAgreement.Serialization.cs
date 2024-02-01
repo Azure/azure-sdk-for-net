@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class AS2OneWayAgreement : IUtf8JsonSerializable, IJsonModel<AS2OneWayAgreement>
+    public partial class AS2OneWayAgreement : IUtf8JsonSerializable, IJsonModel<AS2OneWayAgreement>, IPersistableModel<AS2OneWayAgreement>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AS2OneWayAgreement>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -101,6 +102,44 @@ namespace Azure.ResourceManager.Logic.Models
             return new AS2OneWayAgreement(senderBusinessIdentity, receiverBusinessIdentity, protocolSettings, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SenderBusinessIdentity))
+            {
+                builder.Append("  senderBusinessIdentity:");
+                AppendChildObject(builder, SenderBusinessIdentity, options, 2);
+            }
+
+            if (Optional.IsDefined(ReceiverBusinessIdentity))
+            {
+                builder.Append("  receiverBusinessIdentity:");
+                AppendChildObject(builder, ReceiverBusinessIdentity, options, 2);
+            }
+
+            if (Optional.IsDefined(ProtocolSettings))
+            {
+                builder.Append("  protocolSettings:");
+                AppendChildObject(builder, ProtocolSettings, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AS2OneWayAgreement>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AS2OneWayAgreement>)this).GetFormatFromOptions(options) : options.Format;
@@ -109,6 +148,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AS2OneWayAgreement)} does not support '{options.Format}' format.");
             }
@@ -125,6 +166,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAS2OneWayAgreement(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AS2OneWayAgreement)} does not support '{options.Format}' format.");
             }

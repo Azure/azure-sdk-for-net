@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class PrivateStorePlan : IUtf8JsonSerializable, IJsonModel<PrivateStorePlan>
+    public partial class PrivateStorePlan : IUtf8JsonSerializable, IJsonModel<PrivateStorePlan>, IPersistableModel<PrivateStorePlan>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateStorePlan>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -147,6 +148,62 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new PrivateStorePlan(skuId.Value, planId.Value, planDisplayName.Value, Optional.ToNullable(accessibility), altStackReference.Value, stackType.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SkuId))
+            {
+                builder.Append("  skuId:");
+                builder.AppendLine($" '{SkuId}'");
+            }
+
+            if (Optional.IsDefined(PlanId))
+            {
+                builder.Append("  planId:");
+                builder.AppendLine($" '{PlanId}'");
+            }
+
+            if (Optional.IsDefined(PlanDisplayName))
+            {
+                builder.Append("  planDisplayName:");
+                builder.AppendLine($" '{PlanDisplayName}'");
+            }
+
+            if (Optional.IsDefined(Accessibility))
+            {
+                builder.Append("  accessibility:");
+                builder.AppendLine($" '{Accessibility.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AltStackReference))
+            {
+                builder.Append("  altStackReference:");
+                builder.AppendLine($" '{AltStackReference}'");
+            }
+
+            if (Optional.IsDefined(StackType))
+            {
+                builder.Append("  stackType:");
+                builder.AppendLine($" '{StackType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PrivateStorePlan>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PrivateStorePlan>)this).GetFormatFromOptions(options) : options.Format;
@@ -155,6 +212,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PrivateStorePlan)} does not support '{options.Format}' format.");
             }
@@ -171,6 +230,8 @@ namespace Azure.ResourceManager.Marketplace.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePrivateStorePlan(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PrivateStorePlan)} does not support '{options.Format}' format.");
             }

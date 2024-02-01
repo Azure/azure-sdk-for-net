@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class StatementActionProperties : IUtf8JsonSerializable, IJsonModel<StatementActionProperties>
+    public partial class StatementActionProperties : IUtf8JsonSerializable, IJsonModel<StatementActionProperties>, IPersistableModel<StatementActionProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StatementActionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -130,6 +131,50 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new StatementActionProperties(Optional.ToNullable(localPreference), actionType, ipCommunityProperties.Value, ipExtendedCommunityProperties.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(LocalPreference))
+            {
+                builder.Append("  localPreference:");
+                builder.AppendLine($" '{LocalPreference.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ActionType))
+            {
+                builder.Append("  actionType:");
+                builder.AppendLine($" '{ActionType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IPCommunityProperties))
+            {
+                builder.Append("  ipCommunityProperties:");
+                AppendChildObject(builder, IPCommunityProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(IPExtendedCommunityProperties))
+            {
+                builder.Append("  ipExtendedCommunityProperties:");
+                AppendChildObject(builder, IPExtendedCommunityProperties, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<StatementActionProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StatementActionProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -138,6 +183,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StatementActionProperties)} does not support '{options.Format}' format.");
             }
@@ -154,6 +201,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStatementActionProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StatementActionProperties)} does not support '{options.Format}' format.");
             }

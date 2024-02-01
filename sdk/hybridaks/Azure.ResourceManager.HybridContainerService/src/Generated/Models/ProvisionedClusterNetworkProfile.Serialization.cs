@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class ProvisionedClusterNetworkProfile : IUtf8JsonSerializable, IJsonModel<ProvisionedClusterNetworkProfile>
+    public partial class ProvisionedClusterNetworkProfile : IUtf8JsonSerializable, IJsonModel<ProvisionedClusterNetworkProfile>, IPersistableModel<ProvisionedClusterNetworkProfile>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClusterNetworkProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -118,6 +119,44 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new ProvisionedClusterNetworkProfile(loadBalancerProfile.Value, Optional.ToNullable(networkPolicy), podCidr.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(LoadBalancerProfile))
+            {
+                builder.Append("  loadBalancerProfile:");
+                AppendChildObject(builder, LoadBalancerProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(NetworkPolicy))
+            {
+                builder.Append("  networkPolicy:");
+                builder.AppendLine($" '{NetworkPolicy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PodCidr))
+            {
+                builder.Append("  podCidr:");
+                builder.AppendLine($" '{PodCidr}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ProvisionedClusterNetworkProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -126,6 +165,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ProvisionedClusterNetworkProfile)} does not support '{options.Format}' format.");
             }
@@ -142,6 +183,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeProvisionedClusterNetworkProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ProvisionedClusterNetworkProfile)} does not support '{options.Format}' format.");
             }

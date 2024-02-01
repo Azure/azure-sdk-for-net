@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class FilteringOperations : IUtf8JsonSerializable, IJsonModel<FilteringOperations>
+    public partial class FilteringOperations : IUtf8JsonSerializable, IJsonModel<FilteringOperations>, IPersistableModel<FilteringOperations>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FilteringOperations>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -177,6 +178,67 @@ namespace Azure.ResourceManager.Media.Models
             return new FilteringOperations(deinterlace.Value, Optional.ToNullable(rotation), crop.Value, fadeIn.Value, fadeOut.Value, Optional.ToList(overlays), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Deinterlace))
+            {
+                builder.Append("  deinterlace:");
+                AppendChildObject(builder, Deinterlace, options, 2);
+            }
+
+            if (Optional.IsDefined(Rotation))
+            {
+                builder.Append("  rotation:");
+                builder.AppendLine($" '{Rotation.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Crop))
+            {
+                builder.Append("  crop:");
+                AppendChildObject(builder, Crop, options, 2);
+            }
+
+            if (Optional.IsDefined(FadeIn))
+            {
+                builder.Append("  fadeIn:");
+                AppendChildObject(builder, FadeIn, options, 2);
+            }
+
+            if (Optional.IsDefined(FadeOut))
+            {
+                builder.Append("  fadeOut:");
+                AppendChildObject(builder, FadeOut, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Overlays))
+            {
+                builder.Append("  overlays:");
+                builder.AppendLine(" [");
+                foreach (var item in Overlays)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<FilteringOperations>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FilteringOperations>)this).GetFormatFromOptions(options) : options.Format;
@@ -185,6 +247,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FilteringOperations)} does not support '{options.Format}' format.");
             }
@@ -201,6 +265,8 @@ namespace Azure.ResourceManager.Media.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFilteringOperations(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FilteringOperations)} does not support '{options.Format}' format.");
             }

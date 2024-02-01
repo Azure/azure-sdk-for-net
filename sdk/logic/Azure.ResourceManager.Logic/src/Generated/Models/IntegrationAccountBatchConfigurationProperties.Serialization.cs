@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationAccountBatchConfigurationProperties : IUtf8JsonSerializable, IJsonModel<IntegrationAccountBatchConfigurationProperties>
+    public partial class IntegrationAccountBatchConfigurationProperties : IUtf8JsonSerializable, IJsonModel<IntegrationAccountBatchConfigurationProperties>, IPersistableModel<IntegrationAccountBatchConfigurationProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationAccountBatchConfigurationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -145,6 +146,56 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationAccountBatchConfigurationProperties(Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, serializedAdditionalRawData, batchGroupName, releaseCriteria);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BatchGroupName))
+            {
+                builder.Append("  batchGroupName:");
+                builder.AppendLine($" '{BatchGroupName}'");
+            }
+
+            if (Optional.IsDefined(ReleaseCriteria))
+            {
+                builder.Append("  releaseCriteria:");
+                AppendChildObject(builder, ReleaseCriteria, options, 2);
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdTime:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ChangedOn))
+            {
+                builder.Append("  changedTime:");
+                builder.AppendLine($" '{ChangedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Metadata))
+            {
+                builder.Append("  metadata:");
+                builder.AppendLine($" '{Metadata.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<IntegrationAccountBatchConfigurationProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountBatchConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -153,6 +204,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IntegrationAccountBatchConfigurationProperties)} does not support '{options.Format}' format.");
             }
@@ -169,6 +222,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeIntegrationAccountBatchConfigurationProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(IntegrationAccountBatchConfigurationProperties)} does not support '{options.Format}' format.");
             }

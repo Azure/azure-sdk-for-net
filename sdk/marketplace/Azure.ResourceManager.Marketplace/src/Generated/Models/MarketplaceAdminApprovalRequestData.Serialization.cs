@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Marketplace.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    public partial class MarketplaceAdminApprovalRequestData : IUtf8JsonSerializable, IJsonModel<MarketplaceAdminApprovalRequestData>
+    public partial class MarketplaceAdminApprovalRequestData : IUtf8JsonSerializable, IJsonModel<MarketplaceAdminApprovalRequestData>, IPersistableModel<MarketplaceAdminApprovalRequestData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarketplaceAdminApprovalRequestData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -302,6 +303,130 @@ namespace Azure.ResourceManager.Marketplace
             return new MarketplaceAdminApprovalRequestData(id, name, type, systemData.Value, offerId.Value, displayName.Value, publisherId.Value, Optional.ToNullable(adminAction), Optional.ToList(approvedPlans), comment.Value, administrator.Value, Optional.ToList(plans), Optional.ToList(collectionIds), icon.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(OfferId))
+            {
+                builder.Append("  offerId:");
+                builder.AppendLine($" '{OfferId}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(PublisherId))
+            {
+                builder.Append("  publisherId:");
+                builder.AppendLine($" '{PublisherId}'");
+            }
+
+            if (Optional.IsDefined(AdminAction))
+            {
+                builder.Append("  adminAction:");
+                builder.AppendLine($" '{AdminAction.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ApprovedPlans))
+            {
+                builder.Append("  approvedPlans:");
+                builder.AppendLine(" [");
+                foreach (var item in ApprovedPlans)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Comment))
+            {
+                builder.Append("  comment:");
+                builder.AppendLine($" '{Comment}'");
+            }
+
+            if (Optional.IsDefined(Administrator))
+            {
+                builder.Append("  administrator:");
+                builder.AppendLine($" '{Administrator}'");
+            }
+
+            if (Optional.IsCollectionDefined(Plans))
+            {
+                builder.Append("  plans:");
+                builder.AppendLine(" [");
+                foreach (var item in Plans)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(CollectionIds))
+            {
+                builder.Append("  collectionIds:");
+                builder.AppendLine(" [");
+                foreach (var item in CollectionIds)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IconUri))
+            {
+                builder.Append("  icon:");
+                builder.AppendLine($" '{IconUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MarketplaceAdminApprovalRequestData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceAdminApprovalRequestData>)this).GetFormatFromOptions(options) : options.Format;
@@ -310,6 +435,8 @@ namespace Azure.ResourceManager.Marketplace
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MarketplaceAdminApprovalRequestData)} does not support '{options.Format}' format.");
             }
@@ -326,6 +453,8 @@ namespace Azure.ResourceManager.Marketplace
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMarketplaceAdminApprovalRequestData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MarketplaceAdminApprovalRequestData)} does not support '{options.Format}' format.");
             }

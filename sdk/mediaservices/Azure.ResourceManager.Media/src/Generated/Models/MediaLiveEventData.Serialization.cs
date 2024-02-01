@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Media.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class MediaLiveEventData : IUtf8JsonSerializable, IJsonModel<MediaLiveEventData>
+    public partial class MediaLiveEventData : IUtf8JsonSerializable, IJsonModel<MediaLiveEventData>, IPersistableModel<MediaLiveEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaLiveEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -379,6 +380,162 @@ namespace Azure.ResourceManager.Media
             return new MediaLiveEventData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, description.Value, input.Value, preview.Value, encoding.Value, Optional.ToList(transcriptions), provisioningState.Value, Optional.ToNullable(resourceState), crossSiteAccessPolicies.Value, Optional.ToNullable(useStaticHostname), hostnamePrefix.Value, Optional.ToList(streamOptions), Optional.ToNullable(created), Optional.ToNullable(lastModified), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(Input))
+            {
+                builder.Append("  input:");
+                AppendChildObject(builder, Input, options, 2);
+            }
+
+            if (Optional.IsDefined(Preview))
+            {
+                builder.Append("  preview:");
+                AppendChildObject(builder, Preview, options, 2);
+            }
+
+            if (Optional.IsDefined(Encoding))
+            {
+                builder.Append("  encoding:");
+                AppendChildObject(builder, Encoding, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Transcriptions))
+            {
+                builder.Append("  transcriptions:");
+                builder.AppendLine(" [");
+                foreach (var item in Transcriptions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(ResourceState))
+            {
+                builder.Append("  resourceState:");
+                builder.AppendLine($" '{ResourceState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CrossSiteAccessPolicies))
+            {
+                builder.Append("  crossSiteAccessPolicies:");
+                AppendChildObject(builder, CrossSiteAccessPolicies, options, 2);
+            }
+
+            if (Optional.IsDefined(UseStaticHostname))
+            {
+                builder.Append("  useStaticHostname:");
+                var boolValue = UseStaticHostname.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(HostnamePrefix))
+            {
+                builder.Append("  hostnamePrefix:");
+                builder.AppendLine($" '{HostnamePrefix}'");
+            }
+
+            if (Optional.IsCollectionDefined(StreamOptions))
+            {
+                builder.Append("  streamOptions:");
+                builder.AppendLine(" [");
+                foreach (var item in StreamOptions)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  created:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("  lastModified:");
+                builder.AppendLine($" '{LastModifiedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MediaLiveEventData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MediaLiveEventData>)this).GetFormatFromOptions(options) : options.Format;
@@ -387,6 +544,8 @@ namespace Azure.ResourceManager.Media
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MediaLiveEventData)} does not support '{options.Format}' format.");
             }
@@ -403,6 +562,8 @@ namespace Azure.ResourceManager.Media
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMediaLiveEventData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MediaLiveEventData)} does not support '{options.Format}' format.");
             }

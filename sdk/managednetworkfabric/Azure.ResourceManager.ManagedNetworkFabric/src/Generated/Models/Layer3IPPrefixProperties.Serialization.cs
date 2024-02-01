@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class Layer3IPPrefixProperties : IUtf8JsonSerializable, IJsonModel<Layer3IPPrefixProperties>
+    public partial class Layer3IPPrefixProperties : IUtf8JsonSerializable, IJsonModel<Layer3IPPrefixProperties>, IPersistableModel<Layer3IPPrefixProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Layer3IPPrefixProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -121,6 +122,50 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new Layer3IPPrefixProperties(primaryIPv4Prefix.Value, primaryIPv6Prefix.Value, secondaryIPv4Prefix.Value, secondaryIPv6Prefix.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PrimaryIPv4Prefix))
+            {
+                builder.Append("  primaryIpv4Prefix:");
+                builder.AppendLine($" '{PrimaryIPv4Prefix}'");
+            }
+
+            if (Optional.IsDefined(PrimaryIPv6Prefix))
+            {
+                builder.Append("  primaryIpv6Prefix:");
+                builder.AppendLine($" '{PrimaryIPv6Prefix}'");
+            }
+
+            if (Optional.IsDefined(SecondaryIPv4Prefix))
+            {
+                builder.Append("  secondaryIpv4Prefix:");
+                builder.AppendLine($" '{SecondaryIPv4Prefix}'");
+            }
+
+            if (Optional.IsDefined(SecondaryIPv6Prefix))
+            {
+                builder.Append("  secondaryIpv6Prefix:");
+                builder.AppendLine($" '{SecondaryIPv6Prefix}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<Layer3IPPrefixProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<Layer3IPPrefixProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -129,6 +174,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(Layer3IPPrefixProperties)} does not support '{options.Format}' format.");
             }
@@ -145,6 +192,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeLayer3IPPrefixProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(Layer3IPPrefixProperties)} does not support '{options.Format}' format.");
             }

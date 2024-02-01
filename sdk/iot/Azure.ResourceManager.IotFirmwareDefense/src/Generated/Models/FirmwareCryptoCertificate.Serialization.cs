@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class FirmwareCryptoCertificate : IUtf8JsonSerializable, IJsonModel<FirmwareCryptoCertificate>
+    public partial class FirmwareCryptoCertificate : IUtf8JsonSerializable, IJsonModel<FirmwareCryptoCertificate>, IPersistableModel<FirmwareCryptoCertificate>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirmwareCryptoCertificate>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -555,6 +556,166 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new FirmwareCryptoCertificate(cryptoCertId.Value, name.Value, subject.Value, issuer.Value, Optional.ToNullable(issuedDate), Optional.ToNullable(expirationDate), role.Value, signatureAlgorithm.Value, Optional.ToNullable(keySize), keyAlgorithm.Value, encoding.Value, serialNumber.Value, fingerprint.Value, Optional.ToList(usage), Optional.ToList(filePaths), pairedKey.Value, Optional.ToNullable(isExpired), Optional.ToNullable(isSelfSigned), Optional.ToNullable(isWeakSignature), Optional.ToNullable(isShortKeySize), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CryptoCertId))
+            {
+                builder.Append("  cryptoCertId:");
+                builder.AppendLine($" '{CryptoCertId}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Subject))
+            {
+                builder.Append("  subject:");
+                AppendChildObject(builder, Subject, options, 2);
+            }
+
+            if (Optional.IsDefined(Issuer))
+            {
+                builder.Append("  issuer:");
+                AppendChildObject(builder, Issuer, options, 2);
+            }
+
+            if (Optional.IsDefined(IssuedOn))
+            {
+                builder.Append("  issuedDate:");
+                builder.AppendLine($" '{IssuedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExpireOn))
+            {
+                builder.Append("  expirationDate:");
+                builder.AppendLine($" '{ExpireOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Role))
+            {
+                builder.Append("  role:");
+                builder.AppendLine($" '{Role}'");
+            }
+
+            if (Optional.IsDefined(SignatureAlgorithm))
+            {
+                builder.Append("  signatureAlgorithm:");
+                builder.AppendLine($" '{SignatureAlgorithm}'");
+            }
+
+            if (Optional.IsDefined(KeySize))
+            {
+                builder.Append("  keySize:");
+                builder.AppendLine($" '{KeySize.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(KeyAlgorithm))
+            {
+                builder.Append("  keyAlgorithm:");
+                builder.AppendLine($" '{KeyAlgorithm}'");
+            }
+
+            if (Optional.IsDefined(Encoding))
+            {
+                builder.Append("  encoding:");
+                builder.AppendLine($" '{Encoding}'");
+            }
+
+            if (Optional.IsDefined(SerialNumber))
+            {
+                builder.Append("  serialNumber:");
+                builder.AppendLine($" '{SerialNumber}'");
+            }
+
+            if (Optional.IsDefined(Fingerprint))
+            {
+                builder.Append("  fingerprint:");
+                builder.AppendLine($" '{Fingerprint}'");
+            }
+
+            if (Optional.IsCollectionDefined(Usage))
+            {
+                builder.Append("  usage:");
+                builder.AppendLine(" [");
+                foreach (var item in Usage)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(FilePaths))
+            {
+                builder.Append("  filePaths:");
+                builder.AppendLine(" [");
+                foreach (var item in FilePaths)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(PairedKey))
+            {
+                builder.Append("  pairedKey:");
+                AppendChildObject(builder, PairedKey, options, 2);
+            }
+
+            if (Optional.IsDefined(IsExpired))
+            {
+                builder.Append("  isExpired:");
+                builder.AppendLine($" '{IsExpired.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsSelfSigned))
+            {
+                builder.Append("  isSelfSigned:");
+                builder.AppendLine($" '{IsSelfSigned.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsWeakSignature))
+            {
+                builder.Append("  isWeakSignature:");
+                builder.AppendLine($" '{IsWeakSignature.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsShortKeySize))
+            {
+                builder.Append("  isShortKeySize:");
+                builder.AppendLine($" '{IsShortKeySize.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<FirmwareCryptoCertificate>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FirmwareCryptoCertificate>)this).GetFormatFromOptions(options) : options.Format;
@@ -563,6 +724,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FirmwareCryptoCertificate)} does not support '{options.Format}' format.");
             }
@@ -579,6 +742,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFirmwareCryptoCertificate(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FirmwareCryptoCertificate)} does not support '{options.Format}' format.");
             }

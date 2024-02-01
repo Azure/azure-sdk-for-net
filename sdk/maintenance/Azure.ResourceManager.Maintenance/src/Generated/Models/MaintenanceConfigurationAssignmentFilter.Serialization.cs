@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    public partial class MaintenanceConfigurationAssignmentFilter : IUtf8JsonSerializable, IJsonModel<MaintenanceConfigurationAssignmentFilter>
+    public partial class MaintenanceConfigurationAssignmentFilter : IUtf8JsonSerializable, IJsonModel<MaintenanceConfigurationAssignmentFilter>, IPersistableModel<MaintenanceConfigurationAssignmentFilter>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaintenanceConfigurationAssignmentFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -192,6 +193,86 @@ namespace Azure.ResourceManager.Maintenance.Models
             return new MaintenanceConfigurationAssignmentFilter(Optional.ToList(resourceTypes), Optional.ToList(resourceGroups), Optional.ToList(osTypes), Optional.ToList(locations), tagSettings.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(ResourceTypes))
+            {
+                builder.Append("  resourceTypes:");
+                builder.AppendLine(" [");
+                foreach (var item in ResourceTypes)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ResourceGroups))
+            {
+                builder.Append("  resourceGroups:");
+                builder.AppendLine(" [");
+                foreach (var item in ResourceGroups)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(OSTypes))
+            {
+                builder.Append("  osTypes:");
+                builder.AppendLine(" [");
+                foreach (var item in OSTypes)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Locations))
+            {
+                builder.Append("  locations:");
+                builder.AppendLine(" [");
+                foreach (var item in Locations)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(TagSettings))
+            {
+                builder.Append("  tagSettings:");
+                AppendChildObject(builder, TagSettings, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MaintenanceConfigurationAssignmentFilter>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceConfigurationAssignmentFilter>)this).GetFormatFromOptions(options) : options.Format;
@@ -200,6 +281,8 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentFilter)} does not support '{options.Format}' format.");
             }
@@ -216,6 +299,8 @@ namespace Azure.ResourceManager.Maintenance.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMaintenanceConfigurationAssignmentFilter(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MaintenanceConfigurationAssignmentFilter)} does not support '{options.Format}' format.");
             }

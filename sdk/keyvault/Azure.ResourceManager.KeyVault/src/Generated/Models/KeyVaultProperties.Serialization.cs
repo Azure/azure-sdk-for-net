@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class KeyVaultProperties : IUtf8JsonSerializable, IJsonModel<KeyVaultProperties>
+    public partial class KeyVaultProperties : IUtf8JsonSerializable, IJsonModel<KeyVaultProperties>, IPersistableModel<KeyVaultProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -330,6 +331,144 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new KeyVaultProperties(tenantId, sku, Optional.ToList(accessPolicies), vaultUri.Value, hsmPoolResourceId.Value, Optional.ToNullable(enabledForDeployment), Optional.ToNullable(enabledForDiskEncryption), Optional.ToNullable(enabledForTemplateDeployment), Optional.ToNullable(enableSoftDelete), Optional.ToNullable(softDeleteRetentionInDays), Optional.ToNullable(enableRbacAuthorization), Optional.ToNullable(createMode), Optional.ToNullable(enablePurgeProtection), networkAcls.Value, Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections), publicNetworkAccess.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("  tenantId:");
+                builder.AppendLine($" '{TenantId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(AccessPolicies))
+            {
+                builder.Append("  accessPolicies:");
+                builder.AppendLine(" [");
+                foreach (var item in AccessPolicies)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(VaultUri))
+            {
+                builder.Append("  vaultUri:");
+                builder.AppendLine($" '{VaultUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(HsmPoolResourceId))
+            {
+                builder.Append("  hsmPoolResourceId:");
+                builder.AppendLine($" '{HsmPoolResourceId}'");
+            }
+
+            if (Optional.IsDefined(EnabledForDeployment))
+            {
+                builder.Append("  enabledForDeployment:");
+                var boolValue = EnabledForDeployment.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EnabledForDiskEncryption))
+            {
+                builder.Append("  enabledForDiskEncryption:");
+                var boolValue = EnabledForDiskEncryption.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EnabledForTemplateDeployment))
+            {
+                builder.Append("  enabledForTemplateDeployment:");
+                var boolValue = EnabledForTemplateDeployment.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EnableSoftDelete))
+            {
+                builder.Append("  enableSoftDelete:");
+                var boolValue = EnableSoftDelete.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SoftDeleteRetentionInDays))
+            {
+                builder.Append("  softDeleteRetentionInDays:");
+                builder.AppendLine($" '{SoftDeleteRetentionInDays.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnableRbacAuthorization))
+            {
+                builder.Append("  enableRbacAuthorization:");
+                var boolValue = EnableRbacAuthorization.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CreateMode))
+            {
+                builder.Append("  createMode:");
+                builder.AppendLine($" '{CreateMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnablePurgeProtection))
+            {
+                builder.Append("  enablePurgeProtection:");
+                var boolValue = EnablePurgeProtection.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(NetworkRuleSet))
+            {
+                builder.Append("  networkAcls:");
+                AppendChildObject(builder, NetworkRuleSet, options, 2);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                builder.Append("  privateEndpointConnections:");
+                builder.AppendLine(" [");
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                builder.Append("  publicNetworkAccess:");
+                builder.AppendLine($" '{PublicNetworkAccess}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<KeyVaultProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -338,6 +477,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KeyVaultProperties)} does not support '{options.Format}' format.");
             }
@@ -354,6 +495,8 @@ namespace Azure.ResourceManager.KeyVault.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeKeyVaultProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(KeyVaultProperties)} does not support '{options.Format}' format.");
             }

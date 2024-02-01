@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    public partial class MachineLearningWorkspaceData : IUtf8JsonSerializable, IJsonModel<MachineLearningWorkspaceData>
+    public partial class MachineLearningWorkspaceData : IUtf8JsonSerializable, IJsonModel<MachineLearningWorkspaceData>, IPersistableModel<MachineLearningWorkspaceData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningWorkspaceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -800,6 +801,378 @@ namespace Azure.ResourceManager.MachineLearning
             return new MachineLearningWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, sku.Value, Optional.ToNullable(allowPublicAccessWhenBehindVnet), applicationInsights.Value, Optional.ToList(associatedWorkspaces), Optional.ToList(containerRegistries), containerRegistry.Value, description.Value, discoveryUrl.Value, Optional.ToNullable(enableDataIsolation), encryption.Value, Optional.ToList(existingWorkspaces), featureStoreSettings.Value, friendlyName.Value, Optional.ToNullable(hbiWorkspace), hubResourceId.Value, imageBuildCompute.Value, keyVault.Value, Optional.ToList(keyVaults), managedNetwork.Value, mlFlowTrackingUri.Value, notebookInfo.Value, primaryUserAssignedIdentity.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(privateLinkCount), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), serviceManagedResourcesSettings.Value, serviceProvisionedResourceGroup.Value, Optional.ToList(sharedPrivateLinkResources), Optional.ToNullable(softDeleteRetentionInDays), storageAccount.Value, Optional.ToList(storageAccounts), Optional.ToNullable(storageHnsEnabled), systemDatastoresAuthMode.Value, Optional.ToNullable(tenantId), Optional.ToNullable(v1LegacyMode), workspaceHubConfig.Value, workspaceId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2);
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsDefined(AllowPublicAccessWhenBehindVnet))
+            {
+                builder.Append("  allowPublicAccessWhenBehindVnet:");
+                var boolValue = AllowPublicAccessWhenBehindVnet.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ApplicationInsights))
+            {
+                builder.Append("  applicationInsights:");
+                builder.AppendLine($" '{ApplicationInsights}'");
+            }
+
+            if (Optional.IsCollectionDefined(AssociatedWorkspaces))
+            {
+                builder.Append("  associatedWorkspaces:");
+                builder.AppendLine(" [");
+                foreach (var item in AssociatedWorkspaces)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ContainerRegistries))
+            {
+                builder.Append("  containerRegistries:");
+                builder.AppendLine(" [");
+                foreach (var item in ContainerRegistries)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ContainerRegistry))
+            {
+                builder.Append("  containerRegistry:");
+                builder.AppendLine($" '{ContainerRegistry}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(DiscoveryUri))
+            {
+                builder.Append("  discoveryUrl:");
+                builder.AppendLine($" '{DiscoveryUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(EnableDataIsolation))
+            {
+                builder.Append("  enableDataIsolation:");
+                var boolValue = EnableDataIsolation.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Encryption))
+            {
+                builder.Append("  encryption:");
+                AppendChildObject(builder, Encryption, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(ExistingWorkspaces))
+            {
+                builder.Append("  existingWorkspaces:");
+                builder.AppendLine(" [");
+                foreach (var item in ExistingWorkspaces)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(FeatureStoreSettings))
+            {
+                builder.Append("  featureStoreSettings:");
+                AppendChildObject(builder, FeatureStoreSettings, options, 2);
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsDefined(IsHbiWorkspace))
+            {
+                builder.Append("  hbiWorkspace:");
+                var boolValue = IsHbiWorkspace.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(HubResourceId))
+            {
+                builder.Append("  hubResourceId:");
+                builder.AppendLine($" '{HubResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ImageBuildCompute))
+            {
+                builder.Append("  imageBuildCompute:");
+                builder.AppendLine($" '{ImageBuildCompute}'");
+            }
+
+            if (Optional.IsDefined(KeyVault))
+            {
+                builder.Append("  keyVault:");
+                builder.AppendLine($" '{KeyVault}'");
+            }
+
+            if (Optional.IsCollectionDefined(KeyVaults))
+            {
+                builder.Append("  keyVaults:");
+                builder.AppendLine(" [");
+                foreach (var item in KeyVaults)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ManagedNetwork))
+            {
+                builder.Append("  managedNetwork:");
+                AppendChildObject(builder, ManagedNetwork, options, 2);
+            }
+
+            if (Optional.IsDefined(MlFlowTrackingUri))
+            {
+                builder.Append("  mlFlowTrackingUri:");
+                builder.AppendLine($" '{MlFlowTrackingUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(NotebookInfo))
+            {
+                builder.Append("  notebookInfo:");
+                AppendChildObject(builder, NotebookInfo, options, 2);
+            }
+
+            if (Optional.IsDefined(PrimaryUserAssignedIdentity))
+            {
+                builder.Append("  primaryUserAssignedIdentity:");
+                builder.AppendLine($" '{PrimaryUserAssignedIdentity}'");
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                builder.Append("  privateEndpointConnections:");
+                builder.AppendLine(" [");
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(PrivateLinkCount))
+            {
+                builder.Append("  privateLinkCount:");
+                builder.AppendLine($" '{PrivateLinkCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccessType))
+            {
+                builder.Append("  publicNetworkAccess:");
+                builder.AppendLine($" '{PublicNetworkAccessType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ServiceManagedResourcesSettings))
+            {
+                builder.Append("  serviceManagedResourcesSettings:");
+                AppendChildObject(builder, ServiceManagedResourcesSettings, options, 2);
+            }
+
+            if (Optional.IsDefined(ServiceProvisionedResourceGroup))
+            {
+                builder.Append("  serviceProvisionedResourceGroup:");
+                builder.AppendLine($" '{ServiceProvisionedResourceGroup}'");
+            }
+
+            if (Optional.IsCollectionDefined(SharedPrivateLinkResources))
+            {
+                builder.Append("  sharedPrivateLinkResources:");
+                builder.AppendLine(" [");
+                foreach (var item in SharedPrivateLinkResources)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(SoftDeleteRetentionInDays))
+            {
+                builder.Append("  softDeleteRetentionInDays:");
+                builder.AppendLine($" '{SoftDeleteRetentionInDays.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StorageAccount))
+            {
+                builder.Append("  storageAccount:");
+                builder.AppendLine($" '{StorageAccount}'");
+            }
+
+            if (Optional.IsCollectionDefined(StorageAccounts))
+            {
+                builder.Append("  storageAccounts:");
+                builder.AppendLine(" [");
+                foreach (var item in StorageAccounts)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsStorageHnsEnabled))
+            {
+                builder.Append("  storageHnsEnabled:");
+                var boolValue = IsStorageHnsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SystemDatastoresAuthMode))
+            {
+                builder.Append("  systemDatastoresAuthMode:");
+                builder.AppendLine($" '{SystemDatastoresAuthMode}'");
+            }
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("  tenantId:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsV1LegacyMode))
+            {
+                builder.Append("  v1LegacyMode:");
+                var boolValue = IsV1LegacyMode.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(WorkspaceHubConfig))
+            {
+                builder.Append("  workspaceHubConfig:");
+                AppendChildObject(builder, WorkspaceHubConfig, options, 2);
+            }
+
+            if (Optional.IsDefined(WorkspaceId))
+            {
+                builder.Append("  workspaceId:");
+                builder.AppendLine($" '{WorkspaceId}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MachineLearningWorkspaceData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceData>)this).GetFormatFromOptions(options) : options.Format;
@@ -808,6 +1181,8 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningWorkspaceData)} does not support '{options.Format}' format.");
             }
@@ -824,6 +1199,8 @@ namespace Azure.ResourceManager.MachineLearning
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMachineLearningWorkspaceData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningWorkspaceData)} does not support '{options.Format}' format.");
             }

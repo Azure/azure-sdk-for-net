@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class EdifactValidationOverride : IUtf8JsonSerializable, IJsonModel<EdifactValidationOverride>
+    public partial class EdifactValidationOverride : IUtf8JsonSerializable, IJsonModel<EdifactValidationOverride>, IPersistableModel<EdifactValidationOverride>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdifactValidationOverride>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -133,6 +134,73 @@ namespace Azure.ResourceManager.Logic.Models
             return new EdifactValidationOverride(messageId, enforceCharacterSet, validateEdiTypes, validateXsdTypes, allowLeadingAndTrailingSpacesAndZeroes, trailingSeparatorPolicy, trimLeadingAndTrailingSpacesAndZeroes, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MessageId))
+            {
+                builder.Append("  messageId:");
+                builder.AppendLine($" '{MessageId}'");
+            }
+
+            if (Optional.IsDefined(EnforceCharacterSet))
+            {
+                builder.Append("  enforceCharacterSet:");
+                var boolValue = EnforceCharacterSet == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ValidateEdiTypes))
+            {
+                builder.Append("  validateEDITypes:");
+                var boolValue = ValidateEdiTypes == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ValidateXsdTypes))
+            {
+                builder.Append("  validateXSDTypes:");
+                var boolValue = ValidateXsdTypes == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AllowLeadingAndTrailingSpacesAndZeroes))
+            {
+                builder.Append("  allowLeadingAndTrailingSpacesAndZeroes:");
+                var boolValue = AllowLeadingAndTrailingSpacesAndZeroes == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(TrailingSeparatorPolicy))
+            {
+                builder.Append("  trailingSeparatorPolicy:");
+                builder.AppendLine($" '{TrailingSeparatorPolicy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TrimLeadingAndTrailingSpacesAndZeroes))
+            {
+                builder.Append("  trimLeadingAndTrailingSpacesAndZeroes:");
+                var boolValue = TrimLeadingAndTrailingSpacesAndZeroes == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<EdifactValidationOverride>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EdifactValidationOverride>)this).GetFormatFromOptions(options) : options.Format;
@@ -141,6 +209,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EdifactValidationOverride)} does not support '{options.Format}' format.");
             }
@@ -157,6 +227,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEdifactValidationOverride(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EdifactValidationOverride)} does not support '{options.Format}' format.");
             }
