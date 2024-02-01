@@ -104,6 +104,19 @@ namespace Azure.Communication.CallAutomation
             return new RecordingStateChanged(callConnectionId, serverCallId, correlationId, recordingId, state, startDateTime);
         }
 
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TeamsComplianceRecordingStateChanged"/>. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
+        /// <param name="recordingId"> The call recording id. </param>
+        /// <param name="state"></param>
+        /// <param name="startDateTime"> The time of the recording started. </param>
+        /// <returns> A new <see cref="CallAutomation.TeamsComplianceRecordingStateChanged"/> instance for mocking. </returns>
+        public static TeamsComplianceRecordingStateChanged TeamsComplianceRecordingStateChanged(string callConnectionId = null, string serverCallId = null, string correlationId = null, string recordingId = null, RecordingState state = default, DateTimeOffset? startDateTime = null)
+        {
+            return new TeamsComplianceRecordingStateChanged(callConnectionId, serverCallId, correlationId, recordingId, state, startDateTime);
+        }
+
         /// <summary> Initializes a new instance of <see cref="CallAutomation.PlayCompleted"/>. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
