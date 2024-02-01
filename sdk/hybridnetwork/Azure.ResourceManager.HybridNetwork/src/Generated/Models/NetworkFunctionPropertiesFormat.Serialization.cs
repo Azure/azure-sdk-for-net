@@ -7,13 +7,14 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     [PersistableModelProxy(typeof(UnknownNetworkFunctionPropertiesFormat))]
-    public partial class NetworkFunctionPropertiesFormat : IUtf8JsonSerializable, IJsonModel<NetworkFunctionPropertiesFormat>
+    public partial class NetworkFunctionPropertiesFormat : IUtf8JsonSerializable, IJsonModel<NetworkFunctionPropertiesFormat>, IPersistableModel<NetworkFunctionPropertiesFormat>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFunctionPropertiesFormat>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -137,6 +138,109 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return UnknownNetworkFunctionPropertiesFormat.DeserializeUnknownNetworkFunctionPropertiesFormat(element);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PublisherName))
+            {
+                builder.Append("  publisherName:");
+                builder.AppendLine($" '{PublisherName}'");
+            }
+
+            if (Optional.IsDefined(PublisherScope))
+            {
+                builder.Append("  publisherScope:");
+                builder.AppendLine($" '{PublisherScope.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NetworkFunctionDefinitionGroupName))
+            {
+                builder.Append("  networkFunctionDefinitionGroupName:");
+                builder.AppendLine($" '{NetworkFunctionDefinitionGroupName}'");
+            }
+
+            if (Optional.IsDefined(NetworkFunctionDefinitionVersion))
+            {
+                builder.Append("  networkFunctionDefinitionVersion:");
+                builder.AppendLine($" '{NetworkFunctionDefinitionVersion}'");
+            }
+
+            if (Optional.IsDefined(NetworkFunctionDefinitionOfferingLocation))
+            {
+                builder.Append("  networkFunctionDefinitionOfferingLocation:");
+                builder.AppendLine($" '{NetworkFunctionDefinitionOfferingLocation}'");
+            }
+
+            if (Optional.IsDefined(NetworkFunctionDefinitionVersionResourceReference))
+            {
+                builder.Append("  networkFunctionDefinitionVersionResourceReference:");
+                AppendChildObject(builder, NetworkFunctionDefinitionVersionResourceReference, options, 2);
+            }
+
+            if (Optional.IsDefined(NfviType))
+            {
+                builder.Append("  nfviType:");
+                builder.AppendLine($" '{NfviType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NfviId))
+            {
+                builder.Append("  nfviId:");
+                builder.AppendLine($" '{NfviId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AllowSoftwareUpdate))
+            {
+                builder.Append("  allowSoftwareUpdate:");
+                var boolValue = AllowSoftwareUpdate.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ConfigurationType))
+            {
+                builder.Append("  configurationType:");
+                builder.AppendLine($" '{ConfigurationType.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(RoleOverrideValues))
+            {
+                builder.Append("  roleOverrideValues:");
+                builder.AppendLine(" [");
+                foreach (var item in RoleOverrideValues)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<NetworkFunctionPropertiesFormat>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
@@ -145,6 +249,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support '{options.Format}' format.");
             }
@@ -161,6 +267,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkFunctionPropertiesFormat(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkFunctionPropertiesFormat)} does not support '{options.Format}' format.");
             }

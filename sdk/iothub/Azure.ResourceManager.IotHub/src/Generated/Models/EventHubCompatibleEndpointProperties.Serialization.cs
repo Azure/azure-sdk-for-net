@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class EventHubCompatibleEndpointProperties : IUtf8JsonSerializable, IJsonModel<EventHubCompatibleEndpointProperties>
+    public partial class EventHubCompatibleEndpointProperties : IUtf8JsonSerializable, IJsonModel<EventHubCompatibleEndpointProperties>, IPersistableModel<EventHubCompatibleEndpointProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubCompatibleEndpointProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -154,6 +155,66 @@ namespace Azure.ResourceManager.IotHub.Models
             return new EventHubCompatibleEndpointProperties(Optional.ToNullable(retentionTimeInDays), Optional.ToNullable(partitionCount), Optional.ToList(partitionIds), path.Value, endpoint.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(RetentionTimeInDays))
+            {
+                builder.Append("  retentionTimeInDays:");
+                builder.AppendLine($" '{RetentionTimeInDays.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PartitionCount))
+            {
+                builder.Append("  partitionCount:");
+                builder.AppendLine($" '{PartitionCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(PartitionIds))
+            {
+                builder.Append("  partitionIds:");
+                builder.AppendLine(" [");
+                foreach (var item in PartitionIds)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(EventHubCompatibleName))
+            {
+                builder.Append("  path:");
+                builder.AppendLine($" '{EventHubCompatibleName}'");
+            }
+
+            if (Optional.IsDefined(Endpoint))
+            {
+                builder.Append("  endpoint:");
+                builder.AppendLine($" '{Endpoint}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<EventHubCompatibleEndpointProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EventHubCompatibleEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -162,6 +223,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EventHubCompatibleEndpointProperties)} does not support '{options.Format}' format.");
             }
@@ -178,6 +241,8 @@ namespace Azure.ResourceManager.IotHub.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEventHubCompatibleEndpointProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EventHubCompatibleEndpointProperties)} does not support '{options.Format}' format.");
             }

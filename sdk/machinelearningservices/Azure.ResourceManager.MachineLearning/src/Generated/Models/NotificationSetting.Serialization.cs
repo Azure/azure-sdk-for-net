@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class NotificationSetting : IUtf8JsonSerializable, IJsonModel<NotificationSetting>
+    public partial class NotificationSetting : IUtf8JsonSerializable, IJsonModel<NotificationSetting>, IPersistableModel<NotificationSetting>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationSetting>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -177,6 +178,66 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new NotificationSetting(Optional.ToList(emailOn), Optional.ToList(emails), Optional.ToDictionary(webhooks), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(EmailOn))
+            {
+                builder.Append("  emailOn:");
+                builder.AppendLine(" [");
+                foreach (var item in EmailOn)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Emails))
+            {
+                builder.Append("  emails:");
+                builder.AppendLine(" [");
+                foreach (var item in Emails)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Webhooks))
+            {
+                builder.Append("  webhooks:");
+                builder.AppendLine(" {");
+                foreach (var item in Webhooks)
+                {
+                    builder.Append($"    {item.Key}: ");
+
+                    AppendChildObject(builder, item.Value, options, 4);
+                }
+                builder.AppendLine("  }");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<NotificationSetting>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NotificationSetting>)this).GetFormatFromOptions(options) : options.Format;
@@ -185,6 +246,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NotificationSetting)} does not support '{options.Format}' format.");
             }
@@ -201,6 +264,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNotificationSetting(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NotificationSetting)} does not support '{options.Format}' format.");
             }

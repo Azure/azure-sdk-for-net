@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaJobInputHttp : IUtf8JsonSerializable, IJsonModel<MediaJobInputHttp>
+    public partial class MediaJobInputHttp : IUtf8JsonSerializable, IJsonModel<MediaJobInputHttp>, IPersistableModel<MediaJobInputHttp>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobInputHttp>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -191,6 +192,83 @@ namespace Azure.ResourceManager.Media.Models
             return new MediaJobInputHttp(odataType, serializedAdditionalRawData, Optional.ToList(files), start.Value, end.Value, label.Value, Optional.ToList(inputDefinitions), baseUri.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BaseUri))
+            {
+                builder.Append("  baseUri:");
+                builder.AppendLine($" '{BaseUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsCollectionDefined(Files))
+            {
+                builder.Append("  files:");
+                builder.AppendLine(" [");
+                foreach (var item in Files)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Start))
+            {
+                builder.Append("  start:");
+                AppendChildObject(builder, Start, options, 2);
+            }
+
+            if (Optional.IsDefined(End))
+            {
+                builder.Append("  end:");
+                AppendChildObject(builder, End, options, 2);
+            }
+
+            if (Optional.IsDefined(Label))
+            {
+                builder.Append("  label:");
+                builder.AppendLine($" '{Label}'");
+            }
+
+            if (Optional.IsCollectionDefined(InputDefinitions))
+            {
+                builder.Append("  inputDefinitions:");
+                builder.AppendLine(" [");
+                foreach (var item in InputDefinitions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(OdataType))
+            {
+                builder.Append("  @odata.type:");
+                builder.AppendLine($" '{OdataType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MediaJobInputHttp>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobInputHttp>)this).GetFormatFromOptions(options) : options.Format;
@@ -199,6 +277,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MediaJobInputHttp)} does not support '{options.Format}' format.");
             }
@@ -215,6 +295,8 @@ namespace Azure.ResourceManager.Media.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMediaJobInputHttp(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MediaJobInputHttp)} does not support '{options.Format}' format.");
             }

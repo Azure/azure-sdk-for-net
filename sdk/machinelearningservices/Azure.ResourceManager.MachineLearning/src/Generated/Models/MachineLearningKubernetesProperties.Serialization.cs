@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningKubernetesProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningKubernetesProperties>
+    public partial class MachineLearningKubernetesProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningKubernetesProperties>, IPersistableModel<MachineLearningKubernetesProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningKubernetesProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -216,6 +217,81 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningKubernetesProperties(relayConnectionString.Value, serviceBusConnectionString.Value, extensionPrincipalId.Value, extensionInstanceReleaseTrain.Value, vcName.Value, @namespace.Value, defaultInstanceType.Value, Optional.ToDictionary(instanceTypes), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(RelayConnectionString))
+            {
+                builder.Append("  relayConnectionString:");
+                builder.AppendLine($" '{RelayConnectionString}'");
+            }
+
+            if (Optional.IsDefined(ServiceBusConnectionString))
+            {
+                builder.Append("  serviceBusConnectionString:");
+                builder.AppendLine($" '{ServiceBusConnectionString}'");
+            }
+
+            if (Optional.IsDefined(ExtensionPrincipalId))
+            {
+                builder.Append("  extensionPrincipalId:");
+                builder.AppendLine($" '{ExtensionPrincipalId}'");
+            }
+
+            if (Optional.IsDefined(ExtensionInstanceReleaseTrain))
+            {
+                builder.Append("  extensionInstanceReleaseTrain:");
+                builder.AppendLine($" '{ExtensionInstanceReleaseTrain}'");
+            }
+
+            if (Optional.IsDefined(VcName))
+            {
+                builder.Append("  vcName:");
+                builder.AppendLine($" '{VcName}'");
+            }
+
+            if (Optional.IsDefined(Namespace))
+            {
+                builder.Append("  namespace:");
+                builder.AppendLine($" '{Namespace}'");
+            }
+
+            if (Optional.IsDefined(DefaultInstanceType))
+            {
+                builder.Append("  defaultInstanceType:");
+                builder.AppendLine($" '{DefaultInstanceType}'");
+            }
+
+            if (Optional.IsCollectionDefined(InstanceTypes))
+            {
+                builder.Append("  instanceTypes:");
+                builder.AppendLine(" {");
+                foreach (var item in InstanceTypes)
+                {
+                    builder.Append($"    {item.Key}: ");
+
+                    AppendChildObject(builder, item.Value, options, 4);
+                }
+                builder.AppendLine("  }");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MachineLearningKubernetesProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningKubernetesProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -224,6 +300,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningKubernetesProperties)} does not support '{options.Format}' format.");
             }
@@ -240,6 +318,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMachineLearningKubernetesProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningKubernetesProperties)} does not support '{options.Format}' format.");
             }

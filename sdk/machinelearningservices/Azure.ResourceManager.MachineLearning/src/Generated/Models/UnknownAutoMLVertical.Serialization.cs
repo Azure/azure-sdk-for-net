@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UnknownAutoMLVertical : IUtf8JsonSerializable, IJsonModel<AutoMLVertical>
+    internal partial class UnknownAutoMLVertical : IUtf8JsonSerializable, IJsonModel<AutoMLVertical>, IPersistableModel<AutoMLVertical>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoMLVertical>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -131,6 +132,50 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new UnknownAutoMLVertical(Optional.ToNullable(logVerbosity), targetColumnName.Value, taskType, trainingData, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(LogVerbosity))
+            {
+                builder.Append("  logVerbosity:");
+                builder.AppendLine($" '{LogVerbosity.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetColumnName))
+            {
+                builder.Append("  targetColumnName:");
+                builder.AppendLine($" '{TargetColumnName}'");
+            }
+
+            if (Optional.IsDefined(TaskType))
+            {
+                builder.Append("  taskType:");
+                builder.AppendLine($" '{TaskType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TrainingData))
+            {
+                builder.Append("  trainingData:");
+                AppendChildObject(builder, TrainingData, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AutoMLVertical>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutoMLVertical>)this).GetFormatFromOptions(options) : options.Format;
@@ -139,6 +184,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AutoMLVertical)} does not support '{options.Format}' format.");
             }
@@ -155,6 +202,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeUnknownAutoMLVertical(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AutoMLVertical)} does not support '{options.Format}' format.");
             }

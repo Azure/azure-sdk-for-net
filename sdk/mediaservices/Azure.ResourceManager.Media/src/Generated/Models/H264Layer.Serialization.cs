@@ -8,12 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using System.Xml;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class H264Layer : IUtf8JsonSerializable, IJsonModel<H264Layer>
+    public partial class H264Layer : IUtf8JsonSerializable, IJsonModel<H264Layer>, IPersistableModel<H264Layer>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<H264Layer>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -275,6 +277,118 @@ namespace Azure.ResourceManager.Media.Models
             return new H264Layer(width.Value, height.Value, label.Value, serializedAdditionalRawData, bitrate, Optional.ToNullable(maxBitrate), Optional.ToNullable(bFrames), frameRate.Value, Optional.ToNullable(slices), Optional.ToNullable(adaptiveBFrame), Optional.ToNullable(profile), level.Value, Optional.ToNullable(bufferWindow), Optional.ToNullable(crf), Optional.ToNullable(referenceFrames), Optional.ToNullable(entropyMode));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Profile))
+            {
+                builder.Append("  profile:");
+                builder.AppendLine($" '{Profile.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Level))
+            {
+                builder.Append("  level:");
+                builder.AppendLine($" '{Level}'");
+            }
+
+            if (Optional.IsDefined(BufferWindow))
+            {
+                builder.Append("  bufferWindow:");
+                var formattedTimeSpan = XmlConvert.ToString(BufferWindow.Value);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(ConstantRateFactor))
+            {
+                builder.Append("  crf:");
+                builder.AppendLine($" '{ConstantRateFactor.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReferenceFrames))
+            {
+                builder.Append("  referenceFrames:");
+                builder.AppendLine($" '{ReferenceFrames.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EntropyMode))
+            {
+                builder.Append("  entropyMode:");
+                builder.AppendLine($" '{EntropyMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Bitrate))
+            {
+                builder.Append("  bitrate:");
+                builder.AppendLine($" '{Bitrate.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxBitrate))
+            {
+                builder.Append("  maxBitrate:");
+                builder.AppendLine($" '{MaxBitrate.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BFrames))
+            {
+                builder.Append("  bFrames:");
+                builder.AppendLine($" '{BFrames.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FrameRate))
+            {
+                builder.Append("  frameRate:");
+                builder.AppendLine($" '{FrameRate}'");
+            }
+
+            if (Optional.IsDefined(Slices))
+            {
+                builder.Append("  slices:");
+                builder.AppendLine($" '{Slices.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UseAdaptiveBFrame))
+            {
+                builder.Append("  adaptiveBFrame:");
+                var boolValue = UseAdaptiveBFrame.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Width))
+            {
+                builder.Append("  width:");
+                builder.AppendLine($" '{Width}'");
+            }
+
+            if (Optional.IsDefined(Height))
+            {
+                builder.Append("  height:");
+                builder.AppendLine($" '{Height}'");
+            }
+
+            if (Optional.IsDefined(Label))
+            {
+                builder.Append("  label:");
+                builder.AppendLine($" '{Label}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<H264Layer>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<H264Layer>)this).GetFormatFromOptions(options) : options.Format;
@@ -283,6 +397,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(H264Layer)} does not support '{options.Format}' format.");
             }
@@ -299,6 +415,8 @@ namespace Azure.ResourceManager.Media.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeH264Layer(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(H264Layer)} does not support '{options.Format}' format.");
             }

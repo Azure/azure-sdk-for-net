@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class Mp4Format : IUtf8JsonSerializable, IJsonModel<Mp4Format>
+    public partial class Mp4Format : IUtf8JsonSerializable, IJsonModel<Mp4Format>, IPersistableModel<Mp4Format>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Mp4Format>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -118,6 +119,49 @@ namespace Azure.ResourceManager.Media.Models
             return new Mp4Format(odataType, filenamePattern, serializedAdditionalRawData, Optional.ToList(outputFiles));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(OutputFiles))
+            {
+                builder.Append("  outputFiles:");
+                builder.AppendLine(" [");
+                foreach (var item in OutputFiles)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(OdataType))
+            {
+                builder.Append("  @odata.type:");
+                builder.AppendLine($" '{OdataType}'");
+            }
+
+            if (Optional.IsDefined(FilenamePattern))
+            {
+                builder.Append("  filenamePattern:");
+                builder.AppendLine($" '{FilenamePattern}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<Mp4Format>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<Mp4Format>)this).GetFormatFromOptions(options) : options.Format;
@@ -126,6 +170,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(Mp4Format)} does not support '{options.Format}' format.");
             }
@@ -142,6 +188,8 @@ namespace Azure.ResourceManager.Media.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMp4Format(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(Mp4Format)} does not support '{options.Format}' format.");
             }

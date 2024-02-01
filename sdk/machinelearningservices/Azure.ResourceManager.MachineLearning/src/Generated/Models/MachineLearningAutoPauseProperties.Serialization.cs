@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningAutoPauseProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningAutoPauseProperties>
+    public partial class MachineLearningAutoPauseProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningAutoPauseProperties>, IPersistableModel<MachineLearningAutoPauseProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningAutoPauseProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -107,6 +108,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningAutoPauseProperties(Optional.ToNullable(delayInMinutes), Optional.ToNullable(enabled), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DelayInMinutes))
+            {
+                builder.Append("  delayInMinutes:");
+                builder.AppendLine($" '{DelayInMinutes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("  enabled:");
+                var boolValue = IsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MachineLearningAutoPauseProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAutoPauseProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -115,6 +149,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningAutoPauseProperties)} does not support '{options.Format}' format.");
             }
@@ -131,6 +167,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMachineLearningAutoPauseProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningAutoPauseProperties)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyFairPlayConfiguration : IUtf8JsonSerializable, IJsonModel<ContentKeyPolicyFairPlayConfiguration>
+    public partial class ContentKeyPolicyFairPlayConfiguration : IUtf8JsonSerializable, IJsonModel<ContentKeyPolicyFairPlayConfiguration>, IPersistableModel<ContentKeyPolicyFairPlayConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicyFairPlayConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -176,6 +177,68 @@ namespace Azure.ResourceManager.Media.Models
             return new ContentKeyPolicyFairPlayConfiguration(odataType, serializedAdditionalRawData, ask, fairPlayPfxPassword, fairPlayPfx, rentalAndLeaseKeyType, rentalDuration, offlineRentalConfiguration.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ApplicationSecretKey))
+            {
+                builder.Append("  ask:");
+                builder.AppendLine($" '{ApplicationSecretKey.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FairPlayPfxPassword))
+            {
+                builder.Append("  fairPlayPfxPassword:");
+                builder.AppendLine($" '{FairPlayPfxPassword}'");
+            }
+
+            if (Optional.IsDefined(FairPlayPfx))
+            {
+                builder.Append("  fairPlayPfx:");
+                builder.AppendLine($" '{FairPlayPfx}'");
+            }
+
+            if (Optional.IsDefined(RentalAndLeaseKeyType))
+            {
+                builder.Append("  rentalAndLeaseKeyType:");
+                builder.AppendLine($" '{RentalAndLeaseKeyType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RentalDuration))
+            {
+                builder.Append("  rentalDuration:");
+                builder.AppendLine($" '{RentalDuration.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OfflineRentalConfiguration))
+            {
+                builder.Append("  offlineRentalConfiguration:");
+                AppendChildObject(builder, OfflineRentalConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(OdataType))
+            {
+                builder.Append("  @odata.type:");
+                builder.AppendLine($" '{OdataType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ContentKeyPolicyFairPlayConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyFairPlayConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -184,6 +247,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContentKeyPolicyFairPlayConfiguration)} does not support '{options.Format}' format.");
             }
@@ -200,6 +265,8 @@ namespace Azure.ResourceManager.Media.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContentKeyPolicyFairPlayConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContentKeyPolicyFairPlayConfiguration)} does not support '{options.Format}' format.");
             }

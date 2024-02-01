@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Logic.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    public partial class IntegrationAccountAgreementData : IUtf8JsonSerializable, IJsonModel<IntegrationAccountAgreementData>
+    public partial class IntegrationAccountAgreementData : IUtf8JsonSerializable, IJsonModel<IntegrationAccountAgreementData>, IPersistableModel<IntegrationAccountAgreementData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationAccountAgreementData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -276,6 +277,127 @@ namespace Azure.ResourceManager.Logic
             return new IntegrationAccountAgreementData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, agreementType, hostPartner, guestPartner, hostIdentity, guestIdentity, content, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdTime:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ChangedOn))
+            {
+                builder.Append("  changedTime:");
+                builder.AppendLine($" '{ChangedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Metadata))
+            {
+                builder.Append("  metadata:");
+                builder.AppendLine($" '{Metadata.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AgreementType))
+            {
+                builder.Append("  agreementType:");
+                builder.AppendLine($" '{AgreementType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HostPartner))
+            {
+                builder.Append("  hostPartner:");
+                builder.AppendLine($" '{HostPartner}'");
+            }
+
+            if (Optional.IsDefined(GuestPartner))
+            {
+                builder.Append("  guestPartner:");
+                builder.AppendLine($" '{GuestPartner}'");
+            }
+
+            if (Optional.IsDefined(HostIdentity))
+            {
+                builder.Append("  hostIdentity:");
+                AppendChildObject(builder, HostIdentity, options, 2);
+            }
+
+            if (Optional.IsDefined(GuestIdentity))
+            {
+                builder.Append("  guestIdentity:");
+                AppendChildObject(builder, GuestIdentity, options, 2);
+            }
+
+            if (Optional.IsDefined(Content))
+            {
+                builder.Append("  content:");
+                AppendChildObject(builder, Content, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<IntegrationAccountAgreementData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountAgreementData>)this).GetFormatFromOptions(options) : options.Format;
@@ -284,6 +406,8 @@ namespace Azure.ResourceManager.Logic
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IntegrationAccountAgreementData)} does not support '{options.Format}' format.");
             }
@@ -300,6 +424,8 @@ namespace Azure.ResourceManager.Logic
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeIntegrationAccountAgreementData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(IntegrationAccountAgreementData)} does not support '{options.Format}' format.");
             }

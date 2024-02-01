@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningComputeStartStopSchedule : IUtf8JsonSerializable, IJsonModel<MachineLearningComputeStartStopSchedule>
+    public partial class MachineLearningComputeStartStopSchedule : IUtf8JsonSerializable, IJsonModel<MachineLearningComputeStartStopSchedule>, IPersistableModel<MachineLearningComputeStartStopSchedule>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningComputeStartStopSchedule>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -205,6 +206,74 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningComputeStartStopSchedule(id.Value, Optional.ToNullable(provisioningStatus), Optional.ToNullable(status), Optional.ToNullable(action), Optional.ToNullable(triggerType), recurrence.Value, cron.Value, schedule.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningStatus))
+            {
+                builder.Append("  provisioningStatus:");
+                builder.AppendLine($" '{ProvisioningStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Action))
+            {
+                builder.Append("  action:");
+                builder.AppendLine($" '{Action.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TriggerType))
+            {
+                builder.Append("  triggerType:");
+                builder.AppendLine($" '{TriggerType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecurrenceSchedule))
+            {
+                builder.Append("  recurrence:");
+                AppendChildObject(builder, RecurrenceSchedule, options, 2);
+            }
+
+            if (Optional.IsDefined(CronSchedule))
+            {
+                builder.Append("  cron:");
+                AppendChildObject(builder, CronSchedule, options, 2);
+            }
+
+            if (Optional.IsDefined(Schedule))
+            {
+                builder.Append("  schedule:");
+                AppendChildObject(builder, Schedule, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MachineLearningComputeStartStopSchedule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeStartStopSchedule>)this).GetFormatFromOptions(options) : options.Format;
@@ -213,6 +282,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningComputeStartStopSchedule)} does not support '{options.Format}' format.");
             }
@@ -229,6 +300,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMachineLearningComputeStartStopSchedule(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningComputeStartStopSchedule)} does not support '{options.Format}' format.");
             }

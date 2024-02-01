@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationAccountAssemblyProperties : IUtf8JsonSerializable, IJsonModel<IntegrationAccountAssemblyProperties>
+    public partial class IntegrationAccountAssemblyProperties : IUtf8JsonSerializable, IJsonModel<IntegrationAccountAssemblyProperties>, IPersistableModel<IntegrationAccountAssemblyProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationAccountAssemblyProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -222,6 +223,86 @@ namespace Azure.ResourceManager.Logic.Models
             return new IntegrationAccountAssemblyProperties(Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, serializedAdditionalRawData, content.Value, Optional.ToNullable(contentType), contentLink.Value, assemblyName, assemblyVersion.Value, assemblyCulture.Value, assemblyPublicKeyToken.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AssemblyName))
+            {
+                builder.Append("  assemblyName:");
+                builder.AppendLine($" '{AssemblyName}'");
+            }
+
+            if (Optional.IsDefined(AssemblyVersion))
+            {
+                builder.Append("  assemblyVersion:");
+                builder.AppendLine($" '{AssemblyVersion}'");
+            }
+
+            if (Optional.IsDefined(AssemblyCulture))
+            {
+                builder.Append("  assemblyCulture:");
+                builder.AppendLine($" '{AssemblyCulture}'");
+            }
+
+            if (Optional.IsDefined(AssemblyPublicKeyToken))
+            {
+                builder.Append("  assemblyPublicKeyToken:");
+                builder.AppendLine($" '{AssemblyPublicKeyToken}'");
+            }
+
+            if (Optional.IsDefined(Content))
+            {
+                builder.Append("  content:");
+                builder.AppendLine($" '{Content.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ContentType))
+            {
+                builder.Append("  contentType:");
+                builder.AppendLine($" '{ContentType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ContentLink))
+            {
+                builder.Append("  contentLink:");
+                AppendChildObject(builder, ContentLink, options, 2);
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdTime:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ChangedOn))
+            {
+                builder.Append("  changedTime:");
+                builder.AppendLine($" '{ChangedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Metadata))
+            {
+                builder.Append("  metadata:");
+                builder.AppendLine($" '{Metadata.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<IntegrationAccountAssemblyProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountAssemblyProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -230,6 +311,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IntegrationAccountAssemblyProperties)} does not support '{options.Format}' format.");
             }
@@ -246,6 +329,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeIntegrationAccountAssemblyProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(IntegrationAccountAssemblyProperties)} does not support '{options.Format}' format.");
             }

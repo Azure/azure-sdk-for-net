@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class DataDriftMonitoringSignal : IUtf8JsonSerializable, IJsonModel<DataDriftMonitoringSignal>
+    public partial class DataDriftMonitoringSignal : IUtf8JsonSerializable, IJsonModel<DataDriftMonitoringSignal>, IPersistableModel<DataDriftMonitoringSignal>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataDriftMonitoringSignal>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -248,6 +249,103 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new DataDriftMonitoringSignal(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, serializedAdditionalRawData, dataSegment.Value, Optional.ToDictionary(featureDataTypeOverride), features.Value, metricThresholds, productionData, referenceData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DataSegment))
+            {
+                builder.Append("  dataSegment:");
+                AppendChildObject(builder, DataSegment, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(FeatureDataTypeOverride))
+            {
+                builder.Append("  featureDataTypeOverride:");
+                builder.AppendLine(" {");
+                foreach (var item in FeatureDataTypeOverride)
+                {
+                    builder.Append($"    {item.Key}: ");
+
+                    builder.AppendLine($" '{item.Value.ToString()}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Features))
+            {
+                builder.Append("  features:");
+                AppendChildObject(builder, Features, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(MetricThresholds))
+            {
+                builder.Append("  metricThresholds:");
+                builder.AppendLine(" [");
+                foreach (var item in MetricThresholds)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ProductionData))
+            {
+                builder.Append("  productionData:");
+                AppendChildObject(builder, ProductionData, options, 2);
+            }
+
+            if (Optional.IsDefined(ReferenceData))
+            {
+                builder.Append("  referenceData:");
+                AppendChildObject(builder, ReferenceData, options, 2);
+            }
+
+            if (Optional.IsDefined(Mode))
+            {
+                builder.Append("  mode:");
+                builder.AppendLine($" '{Mode.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                builder.Append("  properties:");
+                builder.AppendLine(" {");
+                foreach (var item in Properties)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(SignalType))
+            {
+                builder.Append("  signalType:");
+                builder.AppendLine($" '{SignalType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DataDriftMonitoringSignal>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataDriftMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
@@ -256,6 +354,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataDriftMonitoringSignal)} does not support '{options.Format}' format.");
             }
@@ -272,6 +372,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataDriftMonitoringSignal(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataDriftMonitoringSignal)} does not support '{options.Format}' format.");
             }

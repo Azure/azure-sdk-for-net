@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class ComponentKubernetesResources : IUtf8JsonSerializable, IJsonModel<ComponentKubernetesResources>
+    public partial class ComponentKubernetesResources : IUtf8JsonSerializable, IJsonModel<ComponentKubernetesResources>, IPersistableModel<ComponentKubernetesResources>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComponentKubernetesResources>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -202,6 +203,81 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ComponentKubernetesResources(Optional.ToList(deployments), Optional.ToList(pods), Optional.ToList(replicaSets), Optional.ToList(statefulSets), Optional.ToList(daemonSets), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Deployments))
+            {
+                builder.Append("  deployments:");
+                builder.AppendLine(" [");
+                foreach (var item in Deployments)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Pods))
+            {
+                builder.Append("  pods:");
+                builder.AppendLine(" [");
+                foreach (var item in Pods)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ReplicaSets))
+            {
+                builder.Append("  replicaSets:");
+                builder.AppendLine(" [");
+                foreach (var item in ReplicaSets)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(StatefulSets))
+            {
+                builder.Append("  statefulSets:");
+                builder.AppendLine(" [");
+                foreach (var item in StatefulSets)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(DaemonSets))
+            {
+                builder.Append("  daemonSets:");
+                builder.AppendLine(" [");
+                foreach (var item in DaemonSets)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ComponentKubernetesResources>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ComponentKubernetesResources>)this).GetFormatFromOptions(options) : options.Format;
@@ -210,6 +286,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ComponentKubernetesResources)} does not support '{options.Format}' format.");
             }
@@ -226,6 +304,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeComponentKubernetesResources(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ComponentKubernetesResources)} does not support '{options.Format}' format.");
             }

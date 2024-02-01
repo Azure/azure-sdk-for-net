@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    public partial class NetworkFabricControllerData : IUtf8JsonSerializable, IJsonModel<NetworkFabricControllerData>
+    public partial class NetworkFabricControllerData : IUtf8JsonSerializable, IJsonModel<NetworkFabricControllerData>, IPersistableModel<NetworkFabricControllerData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFabricControllerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -438,6 +439,188 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             return new NetworkFabricControllerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, annotation.Value, Optional.ToList(infrastructureExpressRouteConnections), Optional.ToList(workloadExpressRouteConnections), infrastructureServices.Value, workloadServices.Value, managedResourceGroupConfiguration.Value, Optional.ToList(networkFabricIds), Optional.ToNullable(workloadManagementNetwork), Optional.ToNullable(isWorkloadManagementNetworkEnabled), Optional.ToList(tenantInternetGatewayIds), ipv4AddressSpace.Value, ipv6AddressSpace.Value, Optional.ToNullable(nfcSku), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Annotation))
+            {
+                builder.Append("  annotation:");
+                builder.AppendLine($" '{Annotation}'");
+            }
+
+            if (Optional.IsCollectionDefined(InfrastructureExpressRouteConnections))
+            {
+                builder.Append("  infrastructureExpressRouteConnections:");
+                builder.AppendLine(" [");
+                foreach (var item in InfrastructureExpressRouteConnections)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(WorkloadExpressRouteConnections))
+            {
+                builder.Append("  workloadExpressRouteConnections:");
+                builder.AppendLine(" [");
+                foreach (var item in WorkloadExpressRouteConnections)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(InfrastructureServices))
+            {
+                builder.Append("  infrastructureServices:");
+                AppendChildObject(builder, InfrastructureServices, options, 2);
+            }
+
+            if (Optional.IsDefined(WorkloadServices))
+            {
+                builder.Append("  workloadServices:");
+                AppendChildObject(builder, WorkloadServices, options, 2);
+            }
+
+            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
+            {
+                builder.Append("  managedResourceGroupConfiguration:");
+                AppendChildObject(builder, ManagedResourceGroupConfiguration, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(NetworkFabricIds))
+            {
+                builder.Append("  networkFabricIds:");
+                builder.AppendLine(" [");
+                foreach (var item in NetworkFabricIds)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsWorkloadManagementNetwork))
+            {
+                builder.Append("  workloadManagementNetwork:");
+                var boolValue = IsWorkloadManagementNetwork.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsWorkloadManagementNetworkEnabled))
+            {
+                builder.Append("  isWorkloadManagementNetworkEnabled:");
+                builder.AppendLine($" '{IsWorkloadManagementNetworkEnabled.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(TenantInternetGatewayIds))
+            {
+                builder.Append("  tenantInternetGatewayIds:");
+                builder.AppendLine(" [");
+                foreach (var item in TenantInternetGatewayIds)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IPv4AddressSpace))
+            {
+                builder.Append("  ipv4AddressSpace:");
+                builder.AppendLine($" '{IPv4AddressSpace}'");
+            }
+
+            if (Optional.IsDefined(IPv6AddressSpace))
+            {
+                builder.Append("  ipv6AddressSpace:");
+                builder.AppendLine($" '{IPv6AddressSpace}'");
+            }
+
+            if (Optional.IsDefined(NfcSku))
+            {
+                builder.Append("  nfcSku:");
+                builder.AppendLine($" '{NfcSku.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<NetworkFabricControllerData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricControllerData>)this).GetFormatFromOptions(options) : options.Format;
@@ -446,6 +629,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkFabricControllerData)} does not support '{options.Format}' format.");
             }
@@ -462,6 +647,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkFabricControllerData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkFabricControllerData)} does not support '{options.Format}' format.");
             }

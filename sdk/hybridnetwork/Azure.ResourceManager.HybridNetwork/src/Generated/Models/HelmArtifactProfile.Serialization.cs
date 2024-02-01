@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class HelmArtifactProfile : IUtf8JsonSerializable, IJsonModel<HelmArtifactProfile>
+    public partial class HelmArtifactProfile : IUtf8JsonSerializable, IJsonModel<HelmArtifactProfile>, IPersistableModel<HelmArtifactProfile>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HelmArtifactProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -149,6 +150,70 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new HelmArtifactProfile(helmPackageName.Value, helmPackageVersionRange.Value, Optional.ToList(registryValuesPaths), Optional.ToList(imagePullSecretsValuesPaths), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(HelmPackageName))
+            {
+                builder.Append("  helmPackageName:");
+                builder.AppendLine($" '{HelmPackageName}'");
+            }
+
+            if (Optional.IsDefined(HelmPackageVersionRange))
+            {
+                builder.Append("  helmPackageVersionRange:");
+                builder.AppendLine($" '{HelmPackageVersionRange}'");
+            }
+
+            if (Optional.IsCollectionDefined(RegistryValuesPaths))
+            {
+                builder.Append("  registryValuesPaths:");
+                builder.AppendLine(" [");
+                foreach (var item in RegistryValuesPaths)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ImagePullSecretsValuesPaths))
+            {
+                builder.Append("  imagePullSecretsValuesPaths:");
+                builder.AppendLine(" [");
+                foreach (var item in ImagePullSecretsValuesPaths)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<HelmArtifactProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HelmArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -157,6 +222,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HelmArtifactProfile)} does not support '{options.Format}' format.");
             }
@@ -173,6 +240,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHelmArtifactProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HelmArtifactProfile)} does not support '{options.Format}' format.");
             }
