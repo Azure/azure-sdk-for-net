@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.Purview.Samples
 
             // invoke the operation
             string locations = "eastus";
-            BatchFeatureContent content = new BatchFeatureContent()
+            PurviewBatchFeatureContent content = new PurviewBatchFeatureContent()
             {
                 Features =
 {
 "Feature1","Feature2","FeatureThatDoesntExist"
 },
             };
-            BatchFeatureStatus result = await subscriptionResource.SubscriptionGetFeatureAsync(locations, content);
+            PurviewBatchFeatureStatus result = await subscriptionResource.SubscriptionGetFeatureAsync(locations, content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

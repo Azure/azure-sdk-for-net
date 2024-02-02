@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Purview.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            IReadOnlyList<KafkaConfigurationData> value = default;
+            IReadOnlyList<PurviewKafkaConfigurationData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Purview.Models
                 }
                 if (property.NameEquals("value"u8))
                 {
-                    List<KafkaConfigurationData> array = new List<KafkaConfigurationData>();
+                    List<PurviewKafkaConfigurationData> array = new List<PurviewKafkaConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KafkaConfigurationData.DeserializeKafkaConfigurationData(item));
+                        array.Add(PurviewKafkaConfigurationData.DeserializePurviewKafkaConfigurationData(item));
                     }
                     value = array;
                     continue;

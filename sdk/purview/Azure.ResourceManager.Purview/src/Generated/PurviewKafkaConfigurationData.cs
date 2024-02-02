@@ -14,10 +14,10 @@ using Azure.ResourceManager.Purview.Models;
 namespace Azure.ResourceManager.Purview
 {
     /// <summary>
-    /// A class representing the KafkaConfiguration data model.
+    /// A class representing the PurviewKafkaConfiguration data model.
     /// The configuration of the event streaming service resource attached to the Purview account for kafka notifications.
     /// </summary>
-    public partial class KafkaConfigurationData : ResourceData
+    public partial class PurviewKafkaConfigurationData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.Purview
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="KafkaConfigurationData"/>. </summary>
-        public KafkaConfigurationData()
+        /// <summary> Initializes a new instance of <see cref="PurviewKafkaConfigurationData"/>. </summary>
+        public PurviewKafkaConfigurationData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="KafkaConfigurationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewKafkaConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="eventStreamingState"> The state of the event streaming service. </param>
         /// <param name="eventStreamingType"> The event streaming service type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KafkaConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string consumerGroup, Credentials credentials, string eventHubPartitionId, ResourceIdentifier eventHubResourceId, EventHubType? eventHubType, EventStreamingState? eventStreamingState, EventStreamingType? eventStreamingType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal PurviewKafkaConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string consumerGroup, PurviewCredentials credentials, string eventHubPartitionId, ResourceIdentifier eventHubResourceId, PurviewKafkaEventHubType? eventHubType, PurviewEventStreamingState? eventStreamingState, PurviewEventStreamingType? eventStreamingType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ConsumerGroup = consumerGroup;
             Credentials = credentials;
@@ -84,16 +84,16 @@ namespace Azure.ResourceManager.Purview
         /// <summary> Consumer group for hook event hub. </summary>
         public string ConsumerGroup { get; set; }
         /// <summary> Credentials to access the event streaming service attached to the purview account. </summary>
-        public Credentials Credentials { get; set; }
+        public PurviewCredentials Credentials { get; set; }
         /// <summary> Optional partition Id for notification event hub. If not set, all partitions will be leveraged. </summary>
         public string EventHubPartitionId { get; set; }
         /// <summary> Gets or sets the event hub resource id. </summary>
         public ResourceIdentifier EventHubResourceId { get; set; }
         /// <summary> The event hub type. </summary>
-        public EventHubType? EventHubType { get; set; }
+        public PurviewKafkaEventHubType? EventHubType { get; set; }
         /// <summary> The state of the event streaming service. </summary>
-        public EventStreamingState? EventStreamingState { get; set; }
+        public PurviewEventStreamingState? EventStreamingState { get; set; }
         /// <summary> The event streaming service type. </summary>
-        public EventStreamingType? EventStreamingType { get; set; }
+        public PurviewEventStreamingType? EventStreamingType { get; set; }
     }
 }

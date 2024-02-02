@@ -15,16 +15,16 @@ using Azure.ResourceManager.Purview.Models;
 
 namespace Azure.ResourceManager.Purview
 {
-    public partial class KafkaConfigurationData : IUtf8JsonSerializable, IJsonModel<KafkaConfigurationData>
+    public partial class PurviewKafkaConfigurationData : IUtf8JsonSerializable, IJsonModel<PurviewKafkaConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KafkaConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewKafkaConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<KafkaConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PurviewKafkaConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KafkaConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewKafkaConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KafkaConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewKafkaConfigurationData)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -104,19 +104,19 @@ namespace Azure.ResourceManager.Purview
             writer.WriteEndObject();
         }
 
-        KafkaConfigurationData IJsonModel<KafkaConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PurviewKafkaConfigurationData IJsonModel<PurviewKafkaConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KafkaConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewKafkaConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KafkaConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewKafkaConfigurationData)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKafkaConfigurationData(document.RootElement, options);
+            return DeserializePurviewKafkaConfigurationData(document.RootElement, options);
         }
 
-        internal static KafkaConfigurationData DeserializeKafkaConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PurviewKafkaConfigurationData DeserializePurviewKafkaConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -129,12 +129,12 @@ namespace Azure.ResourceManager.Purview
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> consumerGroup = default;
-            Optional<Credentials> credentials = default;
+            Optional<PurviewCredentials> credentials = default;
             Optional<string> eventHubPartitionId = default;
             Optional<ResourceIdentifier> eventHubResourceId = default;
-            Optional<EventHubType> eventHubType = default;
-            Optional<EventStreamingState> eventStreamingState = default;
-            Optional<EventStreamingType> eventStreamingType = default;
+            Optional<PurviewKafkaEventHubType> eventHubType = default;
+            Optional<PurviewEventStreamingState> eventStreamingState = default;
+            Optional<PurviewEventStreamingType> eventStreamingType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Purview
                             {
                                 continue;
                             }
-                            credentials = Credentials.DeserializeCredentials(property0.Value);
+                            credentials = PurviewCredentials.DeserializePurviewCredentials(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("eventHubPartitionId"u8))
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Purview
                             {
                                 continue;
                             }
-                            eventHubType = new EventHubType(property0.Value.GetString());
+                            eventHubType = new PurviewKafkaEventHubType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("eventStreamingState"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Purview
                             {
                                 continue;
                             }
-                            eventStreamingState = new EventStreamingState(property0.Value.GetString());
+                            eventStreamingState = new PurviewEventStreamingState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("eventStreamingType"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Purview
                             {
                                 continue;
                             }
-                            eventStreamingType = new EventStreamingType(property0.Value.GetString());
+                            eventStreamingType = new PurviewEventStreamingType(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -236,38 +236,38 @@ namespace Azure.ResourceManager.Purview
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KafkaConfigurationData(id, name, type, systemData.Value, consumerGroup.Value, credentials.Value, eventHubPartitionId.Value, eventHubResourceId.Value, Optional.ToNullable(eventHubType), Optional.ToNullable(eventStreamingState), Optional.ToNullable(eventStreamingType), serializedAdditionalRawData);
+            return new PurviewKafkaConfigurationData(id, name, type, systemData.Value, consumerGroup.Value, credentials.Value, eventHubPartitionId.Value, eventHubResourceId.Value, Optional.ToNullable(eventHubType), Optional.ToNullable(eventStreamingState), Optional.ToNullable(eventStreamingType), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<KafkaConfigurationData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PurviewKafkaConfigurationData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KafkaConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewKafkaConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KafkaConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewKafkaConfigurationData)} does not support '{options.Format}' format.");
             }
         }
 
-        KafkaConfigurationData IPersistableModel<KafkaConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PurviewKafkaConfigurationData IPersistableModel<PurviewKafkaConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KafkaConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewKafkaConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeKafkaConfigurationData(document.RootElement, options);
+                        return DeserializePurviewKafkaConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KafkaConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewKafkaConfigurationData)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<KafkaConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PurviewKafkaConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

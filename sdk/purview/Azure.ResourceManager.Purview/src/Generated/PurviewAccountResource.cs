@@ -101,11 +101,11 @@ namespace Azure.ResourceManager.Purview
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of KafkaConfigurationResources in the PurviewAccount. </summary>
-        /// <returns> An object representing collection of KafkaConfigurationResources and their operations over a KafkaConfigurationResource. </returns>
-        public virtual KafkaConfigurationCollection GetKafkaConfigurations()
+        /// <summary> Gets a collection of PurviewKafkaConfigurationResources in the PurviewAccount. </summary>
+        /// <returns> An object representing collection of PurviewKafkaConfigurationResources and their operations over a PurviewKafkaConfigurationResource. </returns>
+        public virtual PurviewKafkaConfigurationCollection GetPurviewKafkaConfigurations()
         {
-            return GetCachedClient(client => new KafkaConfigurationCollection(client, Id));
+            return GetCachedClient(client => new PurviewKafkaConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="KafkaConfigurationResource"/></description>
+        /// <description><see cref="PurviewKafkaConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="kafkaConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<KafkaConfigurationResource>> GetKafkaConfigurationAsync(string kafkaConfigurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PurviewKafkaConfigurationResource>> GetPurviewKafkaConfigurationAsync(string kafkaConfigurationName, CancellationToken cancellationToken = default)
         {
-            return await GetKafkaConfigurations().GetAsync(kafkaConfigurationName, cancellationToken).ConfigureAwait(false);
+            return await GetPurviewKafkaConfigurations().GetAsync(kafkaConfigurationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="KafkaConfigurationResource"/></description>
+        /// <description><see cref="PurviewKafkaConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="kafkaConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<KafkaConfigurationResource> GetKafkaConfiguration(string kafkaConfigurationName, CancellationToken cancellationToken = default)
+        public virtual Response<PurviewKafkaConfigurationResource> GetPurviewKafkaConfiguration(string kafkaConfigurationName, CancellationToken cancellationToken = default)
         {
-            return GetKafkaConfigurations().Get(kafkaConfigurationName, cancellationToken);
+            return GetPurviewKafkaConfigurations().Get(kafkaConfigurationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PurviewPrivateEndpointConnectionResources in the PurviewAccount. </summary>
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="content"> Request body with feature names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<BatchFeatureStatus>> AccountGetFeatureAsync(BatchFeatureContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PurviewBatchFeatureStatus>> AccountGetFeatureAsync(PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="content"> Request body with feature names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<BatchFeatureStatus> AccountGetFeature(BatchFeatureContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PurviewBatchFeatureStatus> AccountGetFeature(PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

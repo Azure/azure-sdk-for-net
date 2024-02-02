@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="provisioningState"> Gets or sets the state of the provisioning. </param>
         /// <param name="publicNetworkAccess"> Gets or sets the public network access. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewAccountProperties(AccountPropertiesAccountStatus accountStatus, CloudConnectors cloudConnectors, DateTimeOffset? createdOn, string createdBy, string createdByObjectId, PurviewAccountEndpoint endpoints, string friendlyName, IngestionStorage ingestionStorage, ManagedEventHubState? managedEventHubState, string managedResourceGroupName, PurviewManagedResource managedResources, ManagedResourcesPublicNetworkAccess? managedResourcesPublicNetworkAccess, IReadOnlyList<PurviewPrivateEndpointConnectionData> privateEndpointConnections, PurviewProvisioningState? provisioningState, PurviewPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PurviewAccountProperties(PurviewAccountStatus accountStatus, CloudConnectors cloudConnectors, DateTimeOffset? createdOn, string createdBy, string createdByObjectId, PurviewAccountEndpoint endpoints, string friendlyName, PurviewIngestionStorage ingestionStorage, PurviewManagedEventHubState? managedEventHubState, string managedResourceGroupName, PurviewManagedResource managedResources, ManagedResourcesPublicNetworkAccess? managedResourcesPublicNetworkAccess, IReadOnlyList<PurviewPrivateEndpointConnectionData> privateEndpointConnections, PurviewProvisioningState? provisioningState, PurviewPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccountStatus = accountStatus;
             CloudConnectors = cloudConnectors;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Purview.Models
         }
 
         /// <summary> Gets or sets the status of the account. </summary>
-        public AccountPropertiesAccountStatus AccountStatus { get; }
+        public PurviewAccountStatus AccountStatus { get; }
         /// <summary> External Cloud Service connectors. </summary>
         internal CloudConnectors CloudConnectors { get; set; }
         /// <summary>
@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.Purview.Models
         /// <summary> Gets or sets the friendly name. </summary>
         public string FriendlyName { get; }
         /// <summary> Ingestion Storage Account Info. </summary>
-        public IngestionStorage IngestionStorage { get; set; }
+        public PurviewIngestionStorage IngestionStorage { get; set; }
         /// <summary> Gets or sets the state of managed eventhub. If enabled managed eventhub will be created, if disabled the managed eventhub will be removed. </summary>
-        public ManagedEventHubState? ManagedEventHubState { get; set; }
+        public PurviewManagedEventHubState? ManagedEventHubState { get; set; }
         /// <summary> Gets or sets the managed resource group name. </summary>
         public string ManagedResourceGroupName { get; set; }
         /// <summary> Gets the resource identifiers of the managed resources. </summary>

@@ -11,8 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    /// <summary> List of features with enabled status. </summary>
-    public partial class BatchFeatureStatus
+    /// <summary> Feature request model. </summary>
+    public partial class PurviewBatchFeatureContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.Purview.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BatchFeatureStatus"/>. </summary>
-        internal BatchFeatureStatus()
+        /// <summary> Initializes a new instance of <see cref="PurviewBatchFeatureContent"/>. </summary>
+        public PurviewBatchFeatureContent()
         {
-            Features = new ChangeTrackingDictionary<string, bool>();
+            Features = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchFeatureStatus"/>. </summary>
-        /// <param name="features"> Features with enabled status. </param>
+        /// <summary> Initializes a new instance of <see cref="PurviewBatchFeatureContent"/>. </summary>
+        /// <param name="features"> Set of features. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchFeatureStatus(IReadOnlyDictionary<string, bool> features, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PurviewBatchFeatureContent(IList<string> features, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Features = features;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Features with enabled status. </summary>
-        public IReadOnlyDictionary<string, bool> Features { get; }
+        /// <summary> Set of features. </summary>
+        public IList<string> Features { get; }
     }
 }

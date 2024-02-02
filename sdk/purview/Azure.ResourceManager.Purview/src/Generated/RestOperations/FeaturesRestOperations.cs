@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Purview
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateSubscriptionGetRequest(string subscriptionId, string locations, BatchFeatureContent content)
+        internal HttpMessage CreateSubscriptionGetRequest(string subscriptionId, string locations, PurviewBatchFeatureContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locations"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locations"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BatchFeatureStatus>> SubscriptionGetAsync(string subscriptionId, string locations, BatchFeatureContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<PurviewBatchFeatureStatus>> SubscriptionGetAsync(string subscriptionId, string locations, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locations, nameof(locations));
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Purview
             {
                 case 200:
                     {
-                        BatchFeatureStatus value = default;
+                        PurviewBatchFeatureStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BatchFeatureStatus.DeserializeBatchFeatureStatus(document.RootElement);
+                        value = PurviewBatchFeatureStatus.DeserializePurviewBatchFeatureStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locations"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locations"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BatchFeatureStatus> SubscriptionGet(string subscriptionId, string locations, BatchFeatureContent content, CancellationToken cancellationToken = default)
+        public Response<PurviewBatchFeatureStatus> SubscriptionGet(string subscriptionId, string locations, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locations, nameof(locations));
@@ -108,9 +108,9 @@ namespace Azure.ResourceManager.Purview
             {
                 case 200:
                     {
-                        BatchFeatureStatus value = default;
+                        PurviewBatchFeatureStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BatchFeatureStatus.DeserializeBatchFeatureStatus(document.RootElement);
+                        value = PurviewBatchFeatureStatus.DeserializePurviewBatchFeatureStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Purview
             }
         }
 
-        internal HttpMessage CreateAccountGetRequest(string subscriptionId, string resourceGroupName, string accountName, BatchFeatureContent content)
+        internal HttpMessage CreateAccountGetRequest(string subscriptionId, string resourceGroupName, string accountName, PurviewBatchFeatureContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BatchFeatureStatus>> AccountGetAsync(string subscriptionId, string resourceGroupName, string accountName, BatchFeatureContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<PurviewBatchFeatureStatus>> AccountGetAsync(string subscriptionId, string resourceGroupName, string accountName, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.Purview
             {
                 case 200:
                     {
-                        BatchFeatureStatus value = default;
+                        PurviewBatchFeatureStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BatchFeatureStatus.DeserializeBatchFeatureStatus(document.RootElement);
+                        value = PurviewBatchFeatureStatus.DeserializePurviewBatchFeatureStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BatchFeatureStatus> AccountGet(string subscriptionId, string resourceGroupName, string accountName, BatchFeatureContent content, CancellationToken cancellationToken = default)
+        public Response<PurviewBatchFeatureStatus> AccountGet(string subscriptionId, string resourceGroupName, string accountName, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -195,9 +195,9 @@ namespace Azure.ResourceManager.Purview
             {
                 case 200:
                     {
-                        BatchFeatureStatus value = default;
+                        PurviewBatchFeatureStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BatchFeatureStatus.DeserializeBatchFeatureStatus(document.RootElement);
+                        value = PurviewBatchFeatureStatus.DeserializePurviewBatchFeatureStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -145,15 +145,15 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<AccountPropertiesAccountStatus> accountStatus = default;
+            Optional<PurviewAccountStatus> accountStatus = default;
             Optional<CloudConnectors> cloudConnectors = default;
             Optional<DateTimeOffset> createdAt = default;
             Optional<string> createdBy = default;
             Optional<string> createdByObjectId = default;
             Optional<PurviewAccountEndpoint> endpoints = default;
             Optional<string> friendlyName = default;
-            Optional<IngestionStorage> ingestionStorage = default;
-            Optional<ManagedEventHubState> managedEventHubState = default;
+            Optional<PurviewIngestionStorage> ingestionStorage = default;
+            Optional<PurviewManagedEventHubState> managedEventHubState = default;
             Optional<string> managedResourceGroupName = default;
             Optional<PurviewManagedResource> managedResources = default;
             Optional<ManagedResourcesPublicNetworkAccess> managedResourcesPublicNetworkAccess = default;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    accountStatus = AccountPropertiesAccountStatus.DeserializeAccountPropertiesAccountStatus(property.Value);
+                    accountStatus = PurviewAccountStatus.DeserializePurviewAccountStatus(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cloudConnectors"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    ingestionStorage = IngestionStorage.DeserializeIngestionStorage(property.Value);
+                    ingestionStorage = PurviewIngestionStorage.DeserializePurviewIngestionStorage(property.Value);
                     continue;
                 }
                 if (property.NameEquals("managedEventHubState"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    managedEventHubState = new ManagedEventHubState(property.Value.GetString());
+                    managedEventHubState = new PurviewManagedEventHubState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("managedResourceGroupName"u8))

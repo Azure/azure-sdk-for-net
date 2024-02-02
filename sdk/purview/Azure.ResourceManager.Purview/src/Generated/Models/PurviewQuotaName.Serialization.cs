@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    public partial class QuotaName : IUtf8JsonSerializable, IJsonModel<QuotaName>
+    public partial class PurviewQuotaName : IUtf8JsonSerializable, IJsonModel<PurviewQuotaName>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaName>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewQuotaName>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<QuotaName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PurviewQuotaName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QuotaName>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewQuotaName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewQuotaName)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.Purview.Models
             writer.WriteEndObject();
         }
 
-        QuotaName IJsonModel<QuotaName>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PurviewQuotaName IJsonModel<PurviewQuotaName>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QuotaName>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewQuotaName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewQuotaName)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeQuotaName(document.RootElement, options);
+            return DeserializePurviewQuotaName(document.RootElement, options);
         }
 
-        internal static QuotaName DeserializeQuotaName(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PurviewQuotaName DeserializePurviewQuotaName(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -96,38 +96,38 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QuotaName(localizedValue.Value, value.Value, serializedAdditionalRawData);
+            return new PurviewQuotaName(localizedValue.Value, value.Value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<QuotaName>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PurviewQuotaName>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QuotaName>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewQuotaName>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewQuotaName)} does not support '{options.Format}' format.");
             }
         }
 
-        QuotaName IPersistableModel<QuotaName>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PurviewQuotaName IPersistableModel<PurviewQuotaName>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<QuotaName>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewQuotaName>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeQuotaName(document.RootElement, options);
+                        return DeserializePurviewQuotaName(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewQuotaName)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<QuotaName>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PurviewQuotaName>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

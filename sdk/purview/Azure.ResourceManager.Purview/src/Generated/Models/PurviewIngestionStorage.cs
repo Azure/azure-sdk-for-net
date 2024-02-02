@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    /// <summary> Feature request model. </summary>
-    public partial class BatchFeatureContent
+    /// <summary> Ingestion Storage Account Info. </summary>
+    public partial class PurviewIngestionStorage
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,22 +45,29 @@ namespace Azure.ResourceManager.Purview.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="BatchFeatureContent"/>. </summary>
-        public BatchFeatureContent()
+        /// <summary> Initializes a new instance of <see cref="PurviewIngestionStorage"/>. </summary>
+        public PurviewIngestionStorage()
         {
-            Features = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchFeatureContent"/>. </summary>
-        /// <param name="features"> Set of features. </param>
+        /// <summary> Initializes a new instance of <see cref="PurviewIngestionStorage"/>. </summary>
+        /// <param name="id"> Gets or sets the Id. </param>
+        /// <param name="primaryEndpoint"> Gets or sets the primary endpoint. </param>
+        /// <param name="publicNetworkAccess"> Gets or sets the public network access setting. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchFeatureContent(IList<string> features, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PurviewIngestionStorage(string id, string primaryEndpoint, PurviewPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Features = features;
+            Id = id;
+            PrimaryEndpoint = primaryEndpoint;
+            PublicNetworkAccess = publicNetworkAccess;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Set of features. </summary>
-        public IList<string> Features { get; }
+        /// <summary> Gets or sets the Id. </summary>
+        public string Id { get; }
+        /// <summary> Gets or sets the primary endpoint. </summary>
+        public string PrimaryEndpoint { get; }
+        /// <summary> Gets or sets the public network access setting. </summary>
+        public PurviewPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

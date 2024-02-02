@@ -49,15 +49,15 @@ namespace Azure.ResourceManager.Purview.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="KafkaConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KafkaConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="KafkaConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PurviewKafkaConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PurviewKafkaConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="PurviewKafkaConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KafkaConfigurationResource"/> object. </returns>
-        public virtual KafkaConfigurationResource GetKafkaConfigurationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PurviewKafkaConfigurationResource"/> object. </returns>
+        public virtual PurviewKafkaConfigurationResource GetPurviewKafkaConfigurationResource(ResourceIdentifier id)
         {
-            KafkaConfigurationResource.ValidateResourceId(id);
-            return new KafkaConfigurationResource(Client, id);
+            PurviewKafkaConfigurationResource.ValidateResourceId(id);
+            return new PurviewKafkaConfigurationResource(Client, id);
         }
 
         /// <summary>

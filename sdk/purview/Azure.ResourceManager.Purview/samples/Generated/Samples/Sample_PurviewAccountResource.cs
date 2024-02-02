@@ -258,14 +258,14 @@ namespace Azure.ResourceManager.Purview.Samples
             PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
             // invoke the operation
-            BatchFeatureContent content = new BatchFeatureContent()
+            PurviewBatchFeatureContent content = new PurviewBatchFeatureContent()
             {
                 Features =
 {
 "Feature1","Feature2","FeatureThatDoesntExist"
 },
             };
-            BatchFeatureStatus result = await purviewAccount.AccountGetFeatureAsync(content);
+            PurviewBatchFeatureStatus result = await purviewAccount.AccountGetFeatureAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

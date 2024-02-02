@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locations"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<BatchFeatureStatus>> SubscriptionGetFeatureAsync(string locations, BatchFeatureContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PurviewBatchFeatureStatus>> SubscriptionGetFeatureAsync(string locations, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locations, nameof(locations));
             Argument.AssertNotNull(content, nameof(content));
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locations"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="locations"/> or <paramref name="content"/> is null. </exception>
-        public virtual Response<BatchFeatureStatus> SubscriptionGetFeature(string locations, BatchFeatureContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PurviewBatchFeatureStatus> SubscriptionGetFeature(string locations, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(locations, nameof(locations));
             Argument.AssertNotNull(content, nameof(content));

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    public partial class UsageName : IUtf8JsonSerializable, IJsonModel<UsageName>
+    public partial class PurviewUsageName : IUtf8JsonSerializable, IJsonModel<PurviewUsageName>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UsageName>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewUsageName>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<UsageName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PurviewUsageName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UsageName>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewUsageName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UsageName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewUsageName)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.Purview.Models
             writer.WriteEndObject();
         }
 
-        UsageName IJsonModel<UsageName>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PurviewUsageName IJsonModel<PurviewUsageName>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UsageName>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewUsageName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UsageName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewUsageName)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUsageName(document.RootElement, options);
+            return DeserializePurviewUsageName(document.RootElement, options);
         }
 
-        internal static UsageName DeserializeUsageName(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PurviewUsageName DeserializePurviewUsageName(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -96,38 +96,38 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UsageName(localizedValue.Value, value.Value, serializedAdditionalRawData);
+            return new PurviewUsageName(localizedValue.Value, value.Value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<UsageName>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PurviewUsageName>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UsageName>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewUsageName>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UsageName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewUsageName)} does not support '{options.Format}' format.");
             }
         }
 
-        UsageName IPersistableModel<UsageName>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PurviewUsageName IPersistableModel<PurviewUsageName>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UsageName>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewUsageName>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUsageName(document.RootElement, options);
+                        return DeserializePurviewUsageName(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UsageName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewUsageName)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<UsageName>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PurviewUsageName>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

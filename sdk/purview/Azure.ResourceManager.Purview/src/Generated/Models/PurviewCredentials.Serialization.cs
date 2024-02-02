@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    public partial class Credentials : IUtf8JsonSerializable, IJsonModel<Credentials>
+    public partial class PurviewCredentials : IUtf8JsonSerializable, IJsonModel<PurviewCredentials>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Credentials>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewCredentials>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<Credentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PurviewCredentials>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Credentials>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Credentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewCredentials)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.Purview.Models
             writer.WriteEndObject();
         }
 
-        Credentials IJsonModel<Credentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PurviewCredentials IJsonModel<PurviewCredentials>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Credentials>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Credentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewCredentials)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCredentials(document.RootElement, options);
+            return DeserializePurviewCredentials(document.RootElement, options);
         }
 
-        internal static Credentials DeserializeCredentials(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PurviewCredentials DeserializePurviewCredentials(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Purview.Models
                 return null;
             }
             Optional<string> identityId = default;
-            Optional<CredentialsType> type = default;
+            Optional<PurviewCredentialsType> type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    type = new CredentialsType(property.Value.GetString());
+                    type = new PurviewCredentialsType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,38 +100,38 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new Credentials(identityId.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new PurviewCredentials(identityId.Value, Optional.ToNullable(type), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<Credentials>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PurviewCredentials>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Credentials>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewCredentials>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Credentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewCredentials)} does not support '{options.Format}' format.");
             }
         }
 
-        Credentials IPersistableModel<Credentials>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PurviewCredentials IPersistableModel<PurviewCredentials>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<Credentials>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewCredentials>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCredentials(document.RootElement, options);
+                        return DeserializePurviewCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Credentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewCredentials)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Credentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PurviewCredentials>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    public partial class BatchFeatureContent : IUtf8JsonSerializable, IJsonModel<BatchFeatureContent>
+    public partial class PurviewBatchFeatureContent : IUtf8JsonSerializable, IJsonModel<PurviewBatchFeatureContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchFeatureContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewBatchFeatureContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<BatchFeatureContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PurviewBatchFeatureContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchFeatureContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewBatchFeatureContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchFeatureContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewBatchFeatureContent)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,19 +54,19 @@ namespace Azure.ResourceManager.Purview.Models
             writer.WriteEndObject();
         }
 
-        BatchFeatureContent IJsonModel<BatchFeatureContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PurviewBatchFeatureContent IJsonModel<PurviewBatchFeatureContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchFeatureContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewBatchFeatureContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchFeatureContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewBatchFeatureContent)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeBatchFeatureContent(document.RootElement, options);
+            return DeserializePurviewBatchFeatureContent(document.RootElement, options);
         }
 
-        internal static BatchFeatureContent DeserializeBatchFeatureContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PurviewBatchFeatureContent DeserializePurviewBatchFeatureContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -99,38 +99,38 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchFeatureContent(Optional.ToList(features), serializedAdditionalRawData);
+            return new PurviewBatchFeatureContent(Optional.ToList(features), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<BatchFeatureContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PurviewBatchFeatureContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchFeatureContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewBatchFeatureContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchFeatureContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewBatchFeatureContent)} does not support '{options.Format}' format.");
             }
         }
 
-        BatchFeatureContent IPersistableModel<BatchFeatureContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PurviewBatchFeatureContent IPersistableModel<PurviewBatchFeatureContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BatchFeatureContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewBatchFeatureContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeBatchFeatureContent(document.RootElement, options);
+                        return DeserializePurviewBatchFeatureContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchFeatureContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewBatchFeatureContent)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<BatchFeatureContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PurviewBatchFeatureContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

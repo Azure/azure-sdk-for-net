@@ -12,7 +12,7 @@ using Azure;
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> The account status. </summary>
-    public partial class AccountStatus
+    public partial class PurviewAccountStatus
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -44,18 +44,18 @@ namespace Azure.ResourceManager.Purview.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AccountStatus"/>. </summary>
-        internal AccountStatus()
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountStatus"/>. </summary>
+        internal PurviewAccountStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccountStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountStatus"/>. </summary>
         /// <param name="accountProvisioningState"> Gets the account status code. </param>
         /// <param name="errorDetails"> Gets the account error details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccountStatus(AccountProvisioningState? accountProvisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PurviewAccountStatus(PurviewAccountProvisioningState? accountProvisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AccountProvisioningState = accountProvisioningState;
             ErrorDetails = errorDetails;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Purview.Models
         }
 
         /// <summary> Gets the account status code. </summary>
-        public AccountProvisioningState? AccountProvisioningState { get; }
+        public PurviewAccountProvisioningState? AccountProvisioningState { get; }
         /// <summary> Gets the account error details. </summary>
         public ResponseError ErrorDetails { get; }
     }

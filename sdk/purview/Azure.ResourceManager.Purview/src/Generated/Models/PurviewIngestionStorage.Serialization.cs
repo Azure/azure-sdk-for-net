@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    public partial class IngestionStorage : IUtf8JsonSerializable, IJsonModel<IngestionStorage>
+    public partial class PurviewIngestionStorage : IUtf8JsonSerializable, IJsonModel<PurviewIngestionStorage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IngestionStorage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewIngestionStorage>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<IngestionStorage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PurviewIngestionStorage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IngestionStorage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewIngestionStorage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IngestionStorage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewIngestionStorage)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.Purview.Models
             writer.WriteEndObject();
         }
 
-        IngestionStorage IJsonModel<IngestionStorage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PurviewIngestionStorage IJsonModel<PurviewIngestionStorage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IngestionStorage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewIngestionStorage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IngestionStorage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewIngestionStorage)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIngestionStorage(document.RootElement, options);
+            return DeserializePurviewIngestionStorage(document.RootElement, options);
         }
 
-        internal static IngestionStorage DeserializeIngestionStorage(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PurviewIngestionStorage DeserializePurviewIngestionStorage(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IngestionStorage(id.Value, primaryEndpoint.Value, Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new PurviewIngestionStorage(id.Value, primaryEndpoint.Value, Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<IngestionStorage>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PurviewIngestionStorage>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IngestionStorage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewIngestionStorage>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IngestionStorage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewIngestionStorage)} does not support '{options.Format}' format.");
             }
         }
 
-        IngestionStorage IPersistableModel<IngestionStorage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PurviewIngestionStorage IPersistableModel<PurviewIngestionStorage>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IngestionStorage>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewIngestionStorage>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeIngestionStorage(document.RootElement, options);
+                        return DeserializePurviewIngestionStorage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IngestionStorage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewIngestionStorage)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<IngestionStorage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PurviewIngestionStorage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

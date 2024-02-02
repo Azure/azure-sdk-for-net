@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <summary> Initializes a new instance of <see cref="KafkaConfigurationList"/>. </summary>
         /// <param name="value"> Collection of items of type results. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal KafkaConfigurationList(IEnumerable<KafkaConfigurationData> value)
+        internal KafkaConfigurationList(IEnumerable<PurviewKafkaConfigurationData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value"> Collection of items of type results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KafkaConfigurationList(string nextLink, IReadOnlyList<KafkaConfigurationData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KafkaConfigurationList(string nextLink, IReadOnlyList<PurviewKafkaConfigurationData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
@@ -77,6 +77,6 @@ namespace Azure.ResourceManager.Purview.Models
         /// <summary> The Url of next result page. </summary>
         public string NextLink { get; }
         /// <summary> Collection of items of type results. </summary>
-        public IReadOnlyList<KafkaConfigurationData> Value { get; }
+        public IReadOnlyList<PurviewKafkaConfigurationData> Value { get; }
     }
 }

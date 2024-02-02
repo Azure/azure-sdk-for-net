@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> Credentials to access the event streaming service attached to the purview account. </summary>
-    public partial class Credentials
+    public partial class PurviewCredentials
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Purview.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="Credentials"/>. </summary>
-        public Credentials()
+        /// <summary> Initializes a new instance of <see cref="PurviewCredentials"/>. </summary>
+        public PurviewCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Credentials"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewCredentials"/>. </summary>
         /// <param name="identityId"> Identity identifier for UserAssign type. </param>
         /// <param name="credentialsType"> Identity Type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal Credentials(string identityId, CredentialsType? credentialsType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PurviewCredentials(string identityId, PurviewCredentialsType? credentialsType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IdentityId = identityId;
             CredentialsType = credentialsType;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.Purview.Models
         /// <summary> Identity identifier for UserAssign type. </summary>
         public string IdentityId { get; set; }
         /// <summary> Identity Type. </summary>
-        public CredentialsType? CredentialsType { get; set; }
+        public PurviewCredentialsType? CredentialsType { get; set; }
     }
 }

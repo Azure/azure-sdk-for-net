@@ -16,7 +16,7 @@ using Azure.ResourceManager.Purview.Models;
 
 namespace Azure.ResourceManager.Purview.Samples
 {
-    public partial class Sample_KafkaConfigurationCollection
+    public partial class Sample_PurviewKafkaConfigurationCollection
     {
         // KafkaConfigurations_ListByAccount
         [NUnit.Framework.Test]
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.Purview.Samples
             ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
-            // get the collection of this KafkaConfigurationResource
-            KafkaConfigurationCollection collection = purviewAccount.GetKafkaConfigurations();
+            // get the collection of this PurviewKafkaConfigurationResource
+            PurviewKafkaConfigurationCollection collection = purviewAccount.GetPurviewKafkaConfigurations();
 
             // invoke the operation and iterate over the result
             string skipToken = "token";
-            await foreach (KafkaConfigurationResource item in collection.GetAllAsync(skipToken: skipToken))
+            await foreach (PurviewKafkaConfigurationResource item in collection.GetAllAsync(skipToken: skipToken))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                KafkaConfigurationData resourceData = item.Data;
+                PurviewKafkaConfigurationData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -77,16 +77,16 @@ namespace Azure.ResourceManager.Purview.Samples
             ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
-            // get the collection of this KafkaConfigurationResource
-            KafkaConfigurationCollection collection = purviewAccount.GetKafkaConfigurations();
+            // get the collection of this PurviewKafkaConfigurationResource
+            PurviewKafkaConfigurationCollection collection = purviewAccount.GetPurviewKafkaConfigurations();
 
             // invoke the operation
             string kafkaConfigurationName = "kafkaConfigName";
-            KafkaConfigurationResource result = await collection.GetAsync(kafkaConfigurationName);
+            PurviewKafkaConfigurationResource result = await collection.GetAsync(kafkaConfigurationName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            KafkaConfigurationData resourceData = result.Data;
+            PurviewKafkaConfigurationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.Purview.Samples
             ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
-            // get the collection of this KafkaConfigurationResource
-            KafkaConfigurationCollection collection = purviewAccount.GetKafkaConfigurations();
+            // get the collection of this PurviewKafkaConfigurationResource
+            PurviewKafkaConfigurationCollection collection = purviewAccount.GetPurviewKafkaConfigurations();
 
             // invoke the operation
             string kafkaConfigurationName = "kafkaConfigName";
@@ -143,13 +143,13 @@ namespace Azure.ResourceManager.Purview.Samples
             ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
-            // get the collection of this KafkaConfigurationResource
-            KafkaConfigurationCollection collection = purviewAccount.GetKafkaConfigurations();
+            // get the collection of this PurviewKafkaConfigurationResource
+            PurviewKafkaConfigurationCollection collection = purviewAccount.GetPurviewKafkaConfigurations();
 
             // invoke the operation
             string kafkaConfigurationName = "kafkaConfigName";
-            NullableResponse<KafkaConfigurationResource> response = await collection.GetIfExistsAsync(kafkaConfigurationName);
-            KafkaConfigurationResource result = response.HasValue ? response.Value : null;
+            NullableResponse<PurviewKafkaConfigurationResource> response = await collection.GetIfExistsAsync(kafkaConfigurationName);
+            PurviewKafkaConfigurationResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Purview.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                KafkaConfigurationData resourceData = result.Data;
+                PurviewKafkaConfigurationData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -186,31 +186,31 @@ namespace Azure.ResourceManager.Purview.Samples
             ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
-            // get the collection of this KafkaConfigurationResource
-            KafkaConfigurationCollection collection = purviewAccount.GetKafkaConfigurations();
+            // get the collection of this PurviewKafkaConfigurationResource
+            PurviewKafkaConfigurationCollection collection = purviewAccount.GetPurviewKafkaConfigurations();
 
             // invoke the operation
             string kafkaConfigurationName = "kafkaConfigName";
-            KafkaConfigurationData data = new KafkaConfigurationData()
+            PurviewKafkaConfigurationData data = new PurviewKafkaConfigurationData()
             {
                 ConsumerGroup = "consumerGroup",
-                Credentials = new Credentials()
+                Credentials = new PurviewCredentials()
                 {
                     IdentityId = "/subscriptions/47e8596d-ee73-4eb2-b6b4-cc13c2b87ssd/resourceGroups/testRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/testId",
-                    CredentialsType = CredentialsType.UserAssigned,
+                    CredentialsType = PurviewCredentialsType.UserAssigned,
                 },
                 EventHubPartitionId = "partitionId",
                 EventHubResourceId = new ResourceIdentifier("/subscriptions/225be6fe-ec1c-4d51-a368-f69348d2e6c5/resourceGroups/testRG/providers/Microsoft.EventHub/namespaces/eventHubNameSpaceName"),
-                EventHubType = EventHubType.Notification,
-                EventStreamingState = EventStreamingState.Enabled,
-                EventStreamingType = EventStreamingType.Azure,
+                EventHubType = PurviewKafkaEventHubType.Notification,
+                EventStreamingState = PurviewEventStreamingState.Enabled,
+                EventStreamingType = PurviewEventStreamingType.Azure,
             };
-            ArmOperation<KafkaConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, kafkaConfigurationName, data);
-            KafkaConfigurationResource result = lro.Value;
+            ArmOperation<PurviewKafkaConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, kafkaConfigurationName, data);
+            PurviewKafkaConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            KafkaConfigurationData resourceData = result.Data;
+            PurviewKafkaConfigurationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

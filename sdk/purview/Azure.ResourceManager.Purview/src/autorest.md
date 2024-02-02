@@ -45,8 +45,23 @@ rename-mapping:
   Reason: PurviewAccountNameUnavailableReason
   ScopeType: PurviewAccountScopeType
   Status: PurviewPrivateLinkServiceStatus
-  BatchFeatureRequest: BatchFeatureContent
   PrivateEndpointConnectionStatusUpdateResponse: PrivateEndpointConnectionStatusUpdateResult
+  BatchFeatureRequest: PurviewBatchFeatureContent
+  BatchFeatureStatus:  PurviewBatchFeatureStatus
+  EventHubType: PurviewKafkaEventHubType
+
+prepend-rp-prefix:
+  - KafkaConfiguration
+  - Credentials
+  - CredentialsType
+  - AccountProvisioningState
+  - AccountStatus
+  - EventStreamingState
+  - EventStreamingType
+  - IngestionStorage
+  - ManagedEventHubState
+  - UsageName
+  - QuotaName
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -93,4 +108,6 @@ directive:
       $.AccountProperties.properties.endpoints['$ref'] = '#/definitions/AccountEndpoints';
       delete $.AccountProperties.properties.managedResources['allOf'];
       $.AccountProperties.properties.managedResources['$ref'] = '#/definitions/ManagedResources';
+      delete $.AccountProperties.properties.accountStatus['allOf'];
+      $.AccountProperties.properties.accountStatus['$ref'] = '#/definitions/AccountStatus';
 ```

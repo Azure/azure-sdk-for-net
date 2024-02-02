@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <param name="name"> Quota name. </param>
         /// <param name="unit"> Quota usage unit. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewUsage(int? currentValue, string id, int? limit, UsageName name, string unit, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PurviewUsage(int? currentValue, string id, int? limit, PurviewUsageName name, string unit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CurrentValue = currentValue;
             Id = id;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Purview.Models
         /// <summary> Usage quota limit. </summary>
         public int? Limit { get; }
         /// <summary> Quota name. </summary>
-        public UsageName Name { get; }
+        public PurviewUsageName Name { get; }
         /// <summary> Quota usage unit. </summary>
         public string Unit { get; }
     }

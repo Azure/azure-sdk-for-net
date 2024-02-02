@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Purview.Models
             Optional<int> currentValue = default;
             Optional<string> id = default;
             Optional<int> limit = default;
-            Optional<UsageName> name = default;
+            Optional<PurviewUsageName> name = default;
             Optional<string> unit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    name = UsageName.DeserializeUsageName(property.Value);
+                    name = PurviewUsageName.DeserializePurviewUsageName(property.Value);
                     continue;
                 }
                 if (property.NameEquals("unit"u8))

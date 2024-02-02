@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    public partial class AccountPropertiesAccountStatus : IUtf8JsonSerializable, IJsonModel<AccountPropertiesAccountStatus>
+    public partial class PurviewAccountStatus : IUtf8JsonSerializable, IJsonModel<PurviewAccountStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccountPropertiesAccountStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewAccountStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<AccountPropertiesAccountStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PurviewAccountStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountPropertiesAccountStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewAccountStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountPropertiesAccountStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewAccountStatus)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.Purview.Models
             writer.WriteEndObject();
         }
 
-        AccountPropertiesAccountStatus IJsonModel<AccountPropertiesAccountStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PurviewAccountStatus IJsonModel<PurviewAccountStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountPropertiesAccountStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewAccountStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountPropertiesAccountStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewAccountStatus)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAccountPropertiesAccountStatus(document.RootElement, options);
+            return DeserializePurviewAccountStatus(document.RootElement, options);
         }
 
-        internal static AccountPropertiesAccountStatus DeserializeAccountPropertiesAccountStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PurviewAccountStatus DeserializePurviewAccountStatus(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<AccountProvisioningState> accountProvisioningState = default;
+            Optional<PurviewAccountProvisioningState> accountProvisioningState = default;
             Optional<ResponseError> errorDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    accountProvisioningState = new AccountProvisioningState(property.Value.GetString());
+                    accountProvisioningState = new PurviewAccountProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errorDetails"u8))
@@ -105,38 +105,38 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccountPropertiesAccountStatus(Optional.ToNullable(accountProvisioningState), errorDetails.Value, serializedAdditionalRawData);
+            return new PurviewAccountStatus(Optional.ToNullable(accountProvisioningState), errorDetails.Value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AccountPropertiesAccountStatus>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PurviewAccountStatus>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountPropertiesAccountStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewAccountStatus>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AccountPropertiesAccountStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewAccountStatus)} does not support '{options.Format}' format.");
             }
         }
 
-        AccountPropertiesAccountStatus IPersistableModel<AccountPropertiesAccountStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PurviewAccountStatus IPersistableModel<PurviewAccountStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccountPropertiesAccountStatus>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PurviewAccountStatus>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAccountPropertiesAccountStatus(document.RootElement, options);
+                        return DeserializePurviewAccountStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccountPropertiesAccountStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewAccountStatus)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AccountPropertiesAccountStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PurviewAccountStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

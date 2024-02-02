@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    /// <summary> Ingestion Storage Account Info. </summary>
-    public partial class IngestionStorage
+    /// <summary> Quota name. </summary>
+    public partial class PurviewQuotaName
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -43,31 +43,27 @@ namespace Azure.ResourceManager.Purview.Models
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IngestionStorage"/>. </summary>
-        public IngestionStorage()
+        /// <summary> Initializes a new instance of <see cref="PurviewQuotaName"/>. </summary>
+        internal PurviewQuotaName()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IngestionStorage"/>. </summary>
-        /// <param name="id"> Gets or sets the Id. </param>
-        /// <param name="primaryEndpoint"> Gets or sets the primary endpoint. </param>
-        /// <param name="publicNetworkAccess"> Gets or sets the public network access setting. </param>
+        /// <summary> Initializes a new instance of <see cref="PurviewQuotaName"/>. </summary>
+        /// <param name="localizedValue"> Gets or sets the localized name value. </param>
+        /// <param name="value"> Gets or sets the name value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IngestionStorage(string id, string primaryEndpoint, PurviewPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PurviewQuotaName(string localizedValue, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
-            PrimaryEndpoint = primaryEndpoint;
-            PublicNetworkAccess = publicNetworkAccess;
+            LocalizedValue = localizedValue;
+            Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the Id. </summary>
-        public string Id { get; }
-        /// <summary> Gets or sets the primary endpoint. </summary>
-        public string PrimaryEndpoint { get; }
-        /// <summary> Gets or sets the public network access setting. </summary>
-        public PurviewPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> Gets or sets the localized name value. </summary>
+        public string LocalizedValue { get; }
+        /// <summary> Gets or sets the name value. </summary>
+        public string Value { get; }
     }
 }

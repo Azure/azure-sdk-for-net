@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    /// <summary> Quota name. </summary>
-    public partial class QuotaName
+    /// <summary> List of features with enabled status. </summary>
+    public partial class PurviewBatchFeatureStatus
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -43,27 +44,24 @@ namespace Azure.ResourceManager.Purview.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="QuotaName"/>. </summary>
-        internal QuotaName()
+        /// <summary> Initializes a new instance of <see cref="PurviewBatchFeatureStatus"/>. </summary>
+        internal PurviewBatchFeatureStatus()
         {
+            Features = new ChangeTrackingDictionary<string, bool>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuotaName"/>. </summary>
-        /// <param name="localizedValue"> Gets or sets the localized name value. </param>
-        /// <param name="value"> Gets or sets the name value. </param>
+        /// <summary> Initializes a new instance of <see cref="PurviewBatchFeatureStatus"/>. </summary>
+        /// <param name="features"> Features with enabled status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaName(string localizedValue, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PurviewBatchFeatureStatus(IReadOnlyDictionary<string, bool> features, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            LocalizedValue = localizedValue;
-            Value = value;
+            Features = features;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the localized name value. </summary>
-        public string LocalizedValue { get; }
-        /// <summary> Gets or sets the name value. </summary>
-        public string Value { get; }
+        /// <summary> Features with enabled status. </summary>
+        public IReadOnlyDictionary<string, bool> Features { get; }
     }
 }

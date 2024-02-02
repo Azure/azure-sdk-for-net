@@ -11,18 +11,18 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> Quota name. </summary>
-    public partial class UsageName : QuotaName
+    public partial class PurviewUsageName : PurviewQuotaName
     {
-        /// <summary> Initializes a new instance of <see cref="UsageName"/>. </summary>
-        internal UsageName()
+        /// <summary> Initializes a new instance of <see cref="PurviewUsageName"/>. </summary>
+        internal PurviewUsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UsageName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewUsageName"/>. </summary>
         /// <param name="localizedValue"> Gets or sets the localized name value. </param>
         /// <param name="value"> Gets or sets the name value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UsageName(string localizedValue, string value, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(localizedValue, value, serializedAdditionalRawData)
+        internal PurviewUsageName(string localizedValue, string value, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(localizedValue, value, serializedAdditionalRawData)
         {
         }
     }

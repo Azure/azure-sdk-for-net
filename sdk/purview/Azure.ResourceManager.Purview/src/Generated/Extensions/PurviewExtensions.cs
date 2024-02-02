@@ -60,22 +60,22 @@ namespace Azure.ResourceManager.Purview
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="KafkaConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KafkaConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="KafkaConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PurviewKafkaConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PurviewKafkaConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="PurviewKafkaConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePurviewArmClient.GetKafkaConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewArmClient.GetPurviewKafkaConfigurationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="KafkaConfigurationResource"/> object. </returns>
-        public static KafkaConfigurationResource GetKafkaConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PurviewKafkaConfigurationResource"/> object. </returns>
+        public static PurviewKafkaConfigurationResource GetPurviewKafkaConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockablePurviewArmClient(client).GetKafkaConfigurationResource(id);
+            return GetMockablePurviewArmClient(client).GetPurviewKafkaConfigurationResource(id);
         }
 
         /// <summary>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Purview
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.SubscriptionGetFeature(string,BatchFeatureContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.SubscriptionGetFeature(string,PurviewBatchFeatureContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locations"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locations"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<BatchFeatureStatus>> SubscriptionGetFeatureAsync(this SubscriptionResource subscriptionResource, string locations, BatchFeatureContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<PurviewBatchFeatureStatus>> SubscriptionGetFeatureAsync(this SubscriptionResource subscriptionResource, string locations, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Purview
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.SubscriptionGetFeature(string,BatchFeatureContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.SubscriptionGetFeature(string,PurviewBatchFeatureContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locations"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locations"/> or <paramref name="content"/> is null. </exception>
-        public static Response<BatchFeatureStatus> SubscriptionGetFeature(this SubscriptionResource subscriptionResource, string locations, BatchFeatureContent content, CancellationToken cancellationToken = default)
+        public static Response<PurviewBatchFeatureStatus> SubscriptionGetFeature(this SubscriptionResource subscriptionResource, string locations, PurviewBatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
