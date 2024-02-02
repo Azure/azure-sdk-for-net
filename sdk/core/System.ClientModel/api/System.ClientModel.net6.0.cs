@@ -245,10 +245,4 @@ namespace System.ClientModel.Primitives
         public virtual void Freeze() { }
         public void SetHeader(string name, string value) { }
     }
-    public partial class ResponseBufferingPolicy : System.ClientModel.Primitives.PipelinePolicy
-    {
-        public ResponseBufferingPolicy() { }
-        public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
-        public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
-    }
 }

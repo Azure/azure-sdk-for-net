@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Primitives;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -60,7 +59,7 @@ internal class ReadTimeoutStream : Stream
 
     public override int Read(byte[] buffer, int offset, int count)
     {
-        var source = StartTimeout(default, out bool dispose);
+        CancellationTokenSource source = StartTimeout(default, out bool dispose);
         try
         {
             return _stream.Read(buffer, offset, count);
@@ -68,18 +67,18 @@ internal class ReadTimeoutStream : Stream
         // We dispose stream on timeout so catch and check if cancellation token was cancelled
         catch (IOException ex)
         {
-            ResponseBufferingPolicy.ThrowIfCancellationRequestedOrTimeout(default, source.Token, ex, _readTimeout);
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(default, source.Token, ex, _readTimeout);
             throw;
         }
         // We dispose stream on timeout so catch and check if cancellation token was cancelled
         catch (ObjectDisposedException ex)
         {
-            ResponseBufferingPolicy.ThrowIfCancellationRequestedOrTimeout(default, source.Token, ex, _readTimeout);
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(default, source.Token, ex, _readTimeout);
             throw;
         }
         catch (OperationCanceledException ex)
         {
-            ResponseBufferingPolicy.ThrowIfCancellationRequestedOrTimeout(default, source.Token, ex, _readTimeout);
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(default, source.Token, ex, _readTimeout);
             throw;
         }
         finally
@@ -90,7 +89,7 @@ internal class ReadTimeoutStream : Stream
 
     public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
     {
-        var source = StartTimeout(cancellationToken, out bool dispose);
+        CancellationTokenSource source = StartTimeout(cancellationToken, out bool dispose);
         try
         {
 #pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
@@ -100,18 +99,18 @@ internal class ReadTimeoutStream : Stream
         // We dispose stream on timeout so catch and check if cancellation token was cancelled
         catch (IOException ex)
         {
-            ResponseBufferingPolicy.ThrowIfCancellationRequestedOrTimeout(cancellationToken, source.Token, ex, _readTimeout);
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(cancellationToken, source.Token, ex, _readTimeout);
             throw;
         }
         // We dispose stream on timeout so catch and check if cancellation token was cancelled
         catch (ObjectDisposedException ex)
         {
-            ResponseBufferingPolicy.ThrowIfCancellationRequestedOrTimeout(cancellationToken, source.Token, ex, _readTimeout);
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(cancellationToken, source.Token, ex, _readTimeout);
             throw;
         }
         catch (OperationCanceledException ex)
         {
-            ResponseBufferingPolicy.ThrowIfCancellationRequestedOrTimeout(cancellationToken, source.Token, ex, _readTimeout);
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(cancellationToken, source.Token, ex, _readTimeout);
             throw;
         }
         finally
