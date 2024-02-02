@@ -229,7 +229,7 @@ await chatThreadClient.UpdateTopicAsync(topic: "new topic !");
 Use `SendMessage` to send a message to a thread.
 
 - Use `content` to provide the content for the message, it is required.
-- Use `type` for the content type of the message such as 'Text' or 'Html'. If not speficied, 'Text' will be set.
+- Use `type` for the content type of the message such as 'Text' or 'Html'. If not specified, 'Text' will be set.
 - Use `senderDisplayName` to specify the display name of the sender. If not specified, empty string will be set.
 
 ```C# Snippet:Azure_Communication_Chat_Tests_Samples_SendMessage
