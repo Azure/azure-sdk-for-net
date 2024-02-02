@@ -37,10 +37,6 @@ public abstract class PipelineResponse : IDisposable
     public abstract Stream? ContentStream { get; set; }
 
     private byte[]? _contentBytes;
-    internal bool IsBuffered => _contentBytes != null;
-
-    internal bool ContentExtracted { get; set; }
-
     public virtual BinaryData Content
     {
         get
@@ -83,6 +79,18 @@ public abstract class PipelineResponse : IDisposable
     // Same value as Stream.CopyTo uses by default
     private const int DefaultCopyBufferSize = 81920;
 
+    internal bool TryGetBufferedContent(out MemoryStream bufferedContent)
+    {
+        if (ContentStream is MemoryStream content)
+        {
+            bufferedContent = content;
+            return true;
+        }
+
+        bufferedContent = default!;
+        return false;
+    }
+
     internal void BufferContent(TimeSpan? timeout = default, CancellationTokenSource? cts = default)
         => BufferContentSyncOrAsync(timeout, cts, async: false).EnsureCompleted();
 
@@ -114,7 +122,7 @@ public abstract class PipelineResponse : IDisposable
         ContentStream = bufferStream;
 
         // TODO: Come back and optimize - this is only for POC at this stage.
-        _contentBytes = bufferStream.ToArray();
+        _contentBytes= bufferStream.ToArray();
     }
 
     private static async Task CopyToAsync(Stream source, Stream destination, TimeSpan timeout, CancellationTokenSource cancellationTokenSource)
@@ -128,8 +136,7 @@ public abstract class PipelineResponse : IDisposable
 #pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
                 int bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token).ConfigureAwait(false);
 #pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
-                if (bytesRead == 0)
-                    break;
+                if (bytesRead == 0) break;
                 await destination.WriteAsync(new ReadOnlyMemory<byte>(buffer, 0, bytesRead), cancellationTokenSource.Token).ConfigureAwait(false);
             }
         }
