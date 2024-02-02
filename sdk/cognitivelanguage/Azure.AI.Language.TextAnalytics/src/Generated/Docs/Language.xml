@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="AnalyzeTextAsync(AnalyzeTextTask,CancellationToken)">
+      <example>
+This sample shows how to call AnalyzeTextAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+AnalyzeTextTask body = new AnalyzeTextDynamicClassificationInput(new MultiLanguageAnalysisInput(), new DynamicClassificationTaskParameters(DynamicClassificationType.Multi, new string[] { "<categories>" }));
+Response<AnalyzeTextTaskResult> response = await client.AnalyzeTextAsync(body);
+]]></code>
+This sample shows how to call AnalyzeTextAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+AnalyzeTextTask body = new AnalyzeTextDynamicClassificationInput(new MultiLanguageAnalysisInput
+{
+    Documents = {new MultiLanguageInput("<id>", "<text>")
+    {
+        Language = "<language>",
+    }},
+}, new DynamicClassificationTaskParameters(DynamicClassificationType.Multi, new string[] { "<categories>" })
+{
+    LoggingOptOut = true,
+    ModelVersion = "<modelVersion>",
+});
+Response<AnalyzeTextTaskResult> response = await client.AnalyzeTextAsync(body);
+]]></code></example>
+    </member>
+    <member name="AnalyzeText(AnalyzeTextTask,CancellationToken)">
+      <example>
+This sample shows how to call AnalyzeText.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+AnalyzeTextTask body = new AnalyzeTextDynamicClassificationInput(new MultiLanguageAnalysisInput(), new DynamicClassificationTaskParameters(DynamicClassificationType.Multi, new string[] { "<categories>" }));
+Response<AnalyzeTextTaskResult> response = client.AnalyzeText(body);
+]]></code>
+This sample shows how to call AnalyzeText with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+AnalyzeTextTask body = new AnalyzeTextDynamicClassificationInput(new MultiLanguageAnalysisInput
+{
+    Documents = {new MultiLanguageInput("<id>", "<text>")
+    {
+        Language = "<language>",
+    }},
+}, new DynamicClassificationTaskParameters(DynamicClassificationType.Multi, new string[] { "<categories>" })
+{
+    LoggingOptOut = true,
+    ModelVersion = "<modelVersion>",
+});
+Response<AnalyzeTextTaskResult> response = client.AnalyzeText(body);
+]]></code></example>
+    </member>
+    <member name="AnalyzeTextAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call AnalyzeTextAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    analysisInput = new object(),
+    parameters = new
+    {
+        classificationType = "Multi",
+        categories = new object[]
+        {
+            "<categories>"
+        },
+    },
+    kind = "DynamicClassification",
+});
+Response response = await client.AnalyzeTextAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+]]></code>
+This sample shows how to call AnalyzeTextAsync with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    analysisInput = new
+    {
+        documents = new object[]
+        {
+            new
+            {
+                id = "<id>",
+                text = "<text>",
+                language = "<language>",
+            }
+        },
+    },
+    parameters = new
+    {
+        loggingOptOut = true,
+        modelVersion = "<modelVersion>",
+        classificationType = "Multi",
+        categories = new object[]
+        {
+            "<categories>"
+        },
+    },
+    kind = "DynamicClassification",
+});
+Response response = await client.AnalyzeTextAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+]]></code></example>
+    </member>
+    <member name="AnalyzeText(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call AnalyzeText and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    analysisInput = new object(),
+    parameters = new
+    {
+        classificationType = "Multi",
+        categories = new object[]
+        {
+            "<categories>"
+        },
+    },
+    kind = "DynamicClassification",
+});
+Response response = client.AnalyzeText(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+]]></code>
+This sample shows how to call AnalyzeText with all request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    analysisInput = new
+    {
+        documents = new object[]
+        {
+            new
+            {
+                id = "<id>",
+                text = "<text>",
+                language = "<language>",
+            }
+        },
+    },
+    parameters = new
+    {
+        loggingOptOut = true,
+        modelVersion = "<modelVersion>",
+        classificationType = "Multi",
+        categories = new object[]
+        {
+            "<categories>"
+        },
+    },
+    kind = "DynamicClassification",
+});
+Response response = client.AnalyzeText(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("kind").ToString());
+]]></code></example>
+    </member>
+    <member name="AnalyzeTextJobStatusAsync(string,bool?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call AnalyzeTextJobStatusAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+Response<AnalyzeTextJobState> response = await client.AnalyzeTextJobStatusAsync("<jobId>");
+]]></code>
+This sample shows how to call AnalyzeTextJobStatusAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+Response<AnalyzeTextJobState> response = await client.AnalyzeTextJobStatusAsync("<jobId>", showStats: true, skip: 1234, top: 1234);
+]]></code></example>
+    </member>
+    <member name="AnalyzeTextJobStatus(string,bool?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call AnalyzeTextJobStatus.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+Response<AnalyzeTextJobState> response = client.AnalyzeTextJobStatus("<jobId>");
+]]></code>
+This sample shows how to call AnalyzeTextJobStatus with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+Response<AnalyzeTextJobState> response = client.AnalyzeTextJobStatus("<jobId>", showStats: true, skip: 1234, top: 1234);
+]]></code></example>
+    </member>
+    <member name="AnalyzeTextJobStatusAsync(string,bool?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call AnalyzeTextJobStatusAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+Response response = await client.AnalyzeTextJobStatusAsync("<jobId>", null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+]]></code>
+This sample shows how to call AnalyzeTextJobStatusAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+Response response = await client.AnalyzeTextJobStatusAsync("<jobId>", true, 1234, 1234, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("nextLink").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("statistics").GetProperty("documentsCount").ToString());
+Console.WriteLine(result.GetProperty("statistics").GetProperty("validDocumentsCount").ToString());
+Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousDocumentsCount").ToString());
+Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
+]]></code></example>
+    </member>
+    <member name="AnalyzeTextJobStatus(string,bool?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call AnalyzeTextJobStatus and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+Response response = client.AnalyzeTextJobStatus("<jobId>", null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+]]></code>
+This sample shows how to call AnalyzeTextJobStatus with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+Response response = client.AnalyzeTextJobStatus("<jobId>", true, 1234, 1234, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("error").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("error").GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("error").GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("nextLink").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("lastUpdateDateTime").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("taskName").ToString());
+Console.WriteLine(result.GetProperty("tasks").GetProperty("items")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("statistics").GetProperty("documentsCount").ToString());
+Console.WriteLine(result.GetProperty("statistics").GetProperty("validDocumentsCount").ToString());
+Console.WriteLine(result.GetProperty("statistics").GetProperty("erroneousDocumentsCount").ToString());
+Console.WriteLine(result.GetProperty("statistics").GetProperty("transactionsCount").ToString());
+]]></code></example>
+    </member>
+    <member name="AnalyzeTextSubmitJobAsync(WaitUntil,AnalyzeTextJobsInput,CancellationToken)">
+      <example>
+This sample shows how to call AnalyzeTextSubmitJobAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(new MultiLanguageAnalysisInput(), new AnalyzeTextLROTask[]
+{
+    new CustomEntitiesLROTask()
+});
+Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);
+]]></code>
+This sample shows how to call AnalyzeTextSubmitJobAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(new MultiLanguageAnalysisInput
+{
+    Documents = {new MultiLanguageInput("<id>", "<text>")
+    {
+        Language = "<language>",
+    }},
+}, new AnalyzeTextLROTask[]
+{
+    new CustomEntitiesLROTask
+    {
+        Parameters = new CustomEntitiesTaskParameters("<projectName>", "<deploymentName>")
+        {
+            LoggingOptOut = true,
+            StringIndexType = StringIndexType.TextElementsV8,
+        },
+        TaskName = "<taskName>",
+    }
+})
+{
+    DisplayName = "<displayName>",
+    DefaultLanguage = "<defaultLanguage>",
+};
+Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, analyzeTextJobsInput);
+]]></code></example>
+    </member>
+    <member name="AnalyzeTextSubmitJob(WaitUntil,AnalyzeTextJobsInput,CancellationToken)">
+      <example>
+This sample shows how to call AnalyzeTextSubmitJob.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(new MultiLanguageAnalysisInput(), new AnalyzeTextLROTask[]
+{
+    new CustomEntitiesLROTask()
+});
+Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTextJobsInput);
+]]></code>
+This sample shows how to call AnalyzeTextSubmitJob with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+AnalyzeTextJobsInput analyzeTextJobsInput = new AnalyzeTextJobsInput(new MultiLanguageAnalysisInput
+{
+    Documents = {new MultiLanguageInput("<id>", "<text>")
+    {
+        Language = "<language>",
+    }},
+}, new AnalyzeTextLROTask[]
+{
+    new CustomEntitiesLROTask
+    {
+        Parameters = new CustomEntitiesTaskParameters("<projectName>", "<deploymentName>")
+        {
+            LoggingOptOut = true,
+            StringIndexType = StringIndexType.TextElementsV8,
+        },
+        TaskName = "<taskName>",
+    }
+})
+{
+    DisplayName = "<displayName>",
+    DefaultLanguage = "<defaultLanguage>",
+};
+Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, analyzeTextJobsInput);
+]]></code></example>
+    </member>
+    <member name="AnalyzeTextSubmitJobAsync(WaitUntil,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call AnalyzeTextSubmitJobAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    analysisInput = new object(),
+    tasks = new object[]
+    {
+        new
+        {
+            kind = "CustomEntityRecognition",
+        }
+    },
+});
+Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, content);
+]]></code>
+This sample shows how to call AnalyzeTextSubmitJobAsync with all parameters and request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    displayName = "<displayName>",
+    analysisInput = new
+    {
+        documents = new object[]
+        {
+            new
+            {
+                id = "<id>",
+                text = "<text>",
+                language = "<language>",
+            }
+        },
+    },
+    tasks = new object[]
+    {
+        new
+        {
+            parameters = new
+            {
+                loggingOptOut = true,
+                projectName = "<projectName>",
+                deploymentName = "<deploymentName>",
+                stringIndexType = "TextElements_v8",
+            },
+            taskName = "<taskName>",
+            kind = "CustomEntityRecognition",
+        }
+    },
+    defaultLanguage = "<defaultLanguage>",
+});
+Operation operation = await client.AnalyzeTextSubmitJobAsync(WaitUntil.Completed, content);
+]]></code></example>
+    </member>
+    <member name="AnalyzeTextSubmitJob(WaitUntil,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call AnalyzeTextSubmitJob.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    analysisInput = new object(),
+    tasks = new object[]
+    {
+        new
+        {
+            kind = "CustomEntityRecognition",
+        }
+    },
+});
+Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, content);
+]]></code>
+This sample shows how to call AnalyzeTextSubmitJob with all parameters and request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    displayName = "<displayName>",
+    analysisInput = new
+    {
+        documents = new object[]
+        {
+            new
+            {
+                id = "<id>",
+                text = "<text>",
+                language = "<language>",
+            }
+        },
+    },
+    tasks = new object[]
+    {
+        new
+        {
+            parameters = new
+            {
+                loggingOptOut = true,
+                projectName = "<projectName>",
+                deploymentName = "<deploymentName>",
+                stringIndexType = "TextElements_v8",
+            },
+            taskName = "<taskName>",
+            kind = "CustomEntityRecognition",
+        }
+    },
+    defaultLanguage = "<defaultLanguage>",
+});
+Operation operation = client.AnalyzeTextSubmitJob(WaitUntil.Completed, content);
+]]></code></example>
+    </member>
+    <member name="AnalyzeTextCancelJobAsync(WaitUntil,string,RequestContext)">
+      <example>
+This sample shows how to call AnalyzeTextCancelJobAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+Operation operation = await client.AnalyzeTextCancelJobAsync(WaitUntil.Completed, "<jobId>");
+]]></code>
+This sample shows how to call AnalyzeTextCancelJobAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+Operation operation = await client.AnalyzeTextCancelJobAsync(WaitUntil.Completed, "<jobId>");
+]]></code></example>
+    </member>
+    <member name="AnalyzeTextCancelJob(WaitUntil,string,RequestContext)">
+      <example>
+This sample shows how to call AnalyzeTextCancelJob.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+Operation operation = client.AnalyzeTextCancelJob(WaitUntil.Completed, "<jobId>");
+]]></code>
+This sample shows how to call AnalyzeTextCancelJob with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+Language client = new AnalyzeTextClient(endpoint, credential).GetLanguageClient(apiVersion: "2023-11-15-preview");
+
+Operation operation = client.AnalyzeTextCancelJob(WaitUntil.Completed, "<jobId>");
+]]></code></example>
+    </member>
+  </members>
+</doc>
