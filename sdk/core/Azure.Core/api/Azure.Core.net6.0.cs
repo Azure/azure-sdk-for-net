@@ -524,7 +524,7 @@ namespace Azure.Core
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public System.Guid? Id { get { throw null; } }
+        public string? Id { get { throw null; } }
         Azure.Core.RehydrationToken System.ClientModel.Primitives.IJsonModel<Azure.Core.RehydrationToken>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Core.RehydrationToken>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Core.RehydrationToken System.ClientModel.Primitives.IPersistableModel<Azure.Core.RehydrationToken>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
