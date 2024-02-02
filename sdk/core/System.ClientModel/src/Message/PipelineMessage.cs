@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.Runtime.Serialization;
 using System.Threading;
 
 namespace System.ClientModel.Primitives;
@@ -10,6 +11,7 @@ public class PipelineMessage : IDisposable
 {
     private ArrayBackedPropertyBag<ulong, object> _propertyBag;
     private bool _disposed;
+    private bool _ownsResponse;
 
     protected internal PipelineMessage(PipelineRequest request)
     {
@@ -20,6 +22,8 @@ public class PipelineMessage : IDisposable
 
         BufferResponse = true;
         ResponseClassifier = PipelineMessageClassifier.Default;
+
+        _ownsResponse = true;
     }
 
     public PipelineRequest Request { get; }
@@ -125,7 +129,16 @@ public class PipelineMessage : IDisposable
         }
     }
 
+    public void TransferResponseDisposeOwnership()
+        => _ownsResponse = false;
+
     #region IDisposable
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
 
     protected virtual void Dispose(bool disposing)
     {
@@ -136,21 +149,18 @@ public class PipelineMessage : IDisposable
 
             _propertyBag.Dispose();
 
-            var response = Response;
-            if (response != null)
+            if (_ownsResponse)
             {
-                response.Dispose();
-                Response = null;
+                PipelineResponse? response = Response;
+                if (response != null)
+                {
+                    response.Dispose();
+                    Response = null;
+                }
             }
 
             _disposed = true;
         }
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
     }
 
     #endregion

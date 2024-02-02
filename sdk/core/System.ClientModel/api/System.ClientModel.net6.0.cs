@@ -150,6 +150,7 @@ namespace System.ClientModel.Primitives
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public void SetProperty(System.Type type, object value) { }
+        public void TransferResponseDisposeOwnership() { }
         public bool TryGetProperty(System.Type type, out object? value) { throw null; }
     }
     public abstract partial class PipelineMessageClassifier
