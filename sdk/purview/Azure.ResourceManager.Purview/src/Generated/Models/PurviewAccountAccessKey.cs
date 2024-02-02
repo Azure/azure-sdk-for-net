@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    /// <summary> The Account access keys. </summary>
+    /// <summary> The Purview Account access keys. </summary>
     public partial class PurviewAccountAccessKey
     {
         /// <summary>
