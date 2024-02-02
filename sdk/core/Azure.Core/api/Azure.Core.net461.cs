@@ -239,13 +239,15 @@ namespace Azure
     {
         protected Response() { }
         public abstract string ClientRequestId { get; set; }
-        public virtual new System.BinaryData Content { get { throw null; } }
+        public abstract System.IO.Stream? ContentStream { get; set; }
         public virtual new Azure.Core.ResponseHeaders Headers { get { throw null; } }
         protected internal abstract bool ContainsHeader(string name);
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         public static Azure.Response<T> FromValue<T>(T value, Azure.Response response) { throw null; }
+        protected sealed override System.IO.Stream? GetContentStream() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected override System.ClientModel.Primitives.PipelineResponseHeaders GetHeadersCore() { throw null; }
+        protected sealed override void SetContentStream(System.IO.Stream? stream) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected sealed override void SetIsErrorCore(bool isError) { }
         public override string ToString() { throw null; }
@@ -489,7 +491,6 @@ namespace Azure.Core
         public new Azure.Core.Request Request { get { throw null; } }
         public new Azure.Response Response { get { throw null; } set { } }
         public new Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
-        public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(string name, object value) { }
         public bool TryGetProperty(string name, out object? value) { throw null; }
     }

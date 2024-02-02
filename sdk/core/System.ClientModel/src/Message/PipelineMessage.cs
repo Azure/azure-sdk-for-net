@@ -126,15 +126,6 @@ public class PipelineMessage : IDisposable
         }
     }
 
-    /// <summary>
-    /// Returns the response content stream and releases it ownership to the caller.
-    ///
-    /// After calling this method, any attempt to use the
-    /// <see cref="PipelineResponse.ContentStream"/> or <see cref="PipelineResponse.Content"/>
-    /// properties on <see cref="Response"/> will result in an exception being thrown.
-    /// </summary>
-    /// <returns>The content stream, or <code>null</code> if <see cref="Response"/>
-    /// did not have content set.</returns>
     public Stream? ExtractResponseContent()
     {
         if (Response is null)
@@ -142,12 +133,14 @@ public class PipelineMessage : IDisposable
             return null;
         }
 
-        switch (Response.ContentStream)
+        Stream? s = Response.GetContentStreamInternal();
+
+        switch (s)
         {
             case ResponseShouldNotBeUsedStream responseContent:
                 return responseContent.Original;
             case Stream stream:
-                Response.ContentStream = new ResponseShouldNotBeUsedStream(Response.ContentStream);
+                Response.SetContentStreamInternal(new ResponseShouldNotBeUsedStream(s));
                 return stream;
             default:
                 return null;

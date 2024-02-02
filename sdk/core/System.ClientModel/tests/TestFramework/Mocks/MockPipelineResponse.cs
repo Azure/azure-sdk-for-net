@@ -35,7 +35,7 @@ public class MockPipelineResponse : PipelineResponse
 
     public void SetContent(byte[] content)
     {
-        ContentStream = new MemoryStream(content, 0, content.Length, false, true);
+        SetContentStream(new MemoryStream(content, 0, content.Length, false, true));
     }
 
     public MockPipelineResponse SetContent(string content)
@@ -44,11 +44,17 @@ public class MockPipelineResponse : PipelineResponse
         return this;
     }
 
-    public override Stream? ContentStream
+    public Stream? ContentStream
     {
-        get => _contentStream;
-        set => _contentStream = value;
+        get => GetContentStream();
+        set => SetContentStream(value);
     }
+
+    protected override Stream? GetContentStream()
+        => _contentStream;
+
+    protected override void SetContentStream(Stream? stream)
+        => _contentStream = stream;
 
     protected override PipelineResponseHeaders GetHeadersCore() => _headers;
 

@@ -149,6 +149,7 @@ namespace System.ClientModel.Primitives
         public void Apply(System.ClientModel.Primitives.RequestOptions options) { }
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
+        public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(System.Type type, object value) { }
         public bool TryGetProperty(System.Type type, out object? value) { throw null; }
     }
@@ -205,13 +206,14 @@ namespace System.ClientModel.Primitives
     {
         protected PipelineResponse() { }
         public virtual System.BinaryData Content { get { throw null; } }
-        public abstract System.IO.Stream? ContentStream { get; set; }
         public System.ClientModel.Primitives.PipelineResponseHeaders Headers { get { throw null; } }
         public virtual bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
         public abstract void Dispose();
+        protected abstract System.IO.Stream? GetContentStream();
         protected abstract System.ClientModel.Primitives.PipelineResponseHeaders GetHeadersCore();
+        protected abstract void SetContentStream(System.IO.Stream? stream);
         protected virtual void SetIsErrorCore(bool isError) { }
     }
     public abstract partial class PipelineResponseHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable

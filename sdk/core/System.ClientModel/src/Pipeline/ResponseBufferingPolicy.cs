@@ -64,7 +64,7 @@ public class ResponseBufferingPolicy : PipelinePolicy
         message.AssertResponse();
         message.Response!.NetworkTimeout = invocationNetworkTimeout;
 
-        Stream? responseContentStream = message.Response!.ContentStream;
+        Stream? responseContentStream = message.Response!.GetContentStreamInternal();
         if (responseContentStream is null ||
             message.Response.TryGetBufferedContent(out var _))
         {
@@ -79,7 +79,7 @@ public class ResponseBufferingPolicy : PipelinePolicy
             // If applicable, wrap it in a read-timeout stream.
             if (invocationNetworkTimeout != Timeout.InfiniteTimeSpan)
             {
-                message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, invocationNetworkTimeout);
+                message.Response.SetContentStreamInternal(new ReadTimeoutStream(responseContentStream, invocationNetworkTimeout));
             }
 
             return;

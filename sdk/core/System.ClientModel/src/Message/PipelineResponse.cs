@@ -30,16 +30,11 @@ public abstract class PipelineResponse : IDisposable
 
     protected abstract PipelineResponseHeaders GetHeadersCore();
 
-    /// <summary>
-    /// Gets the contents of HTTP response. Returns <c>null</c> for responses without content.
-    /// </summary>
-    public abstract Stream? ContentStream { get; set; }
-
     public virtual BinaryData Content
     {
         get
         {
-            if (ContentStream == null)
+            if (GetContentStream() == null)
             {
                 return s_emptyBinaryData;
             }
@@ -59,6 +54,12 @@ public abstract class PipelineResponse : IDisposable
             }
         }
     }
+
+    internal Stream? GetContentStreamInternal() => GetContentStream();
+    internal void SetContentStreamInternal(Stream? stream) => SetContentStream(stream);
+
+    protected abstract Stream? GetContentStream();
+    protected abstract void SetContentStream(Stream? stream);
 
     /// <summary>
     /// Indicates whether the status code of the returned response is considered
@@ -84,7 +85,7 @@ public abstract class PipelineResponse : IDisposable
 
     internal bool TryGetBufferedContent(out MemoryStream bufferedContent)
     {
-        if (ContentStream is MemoryStream content)
+        if (GetContentStream() is MemoryStream content)
         {
             bufferedContent = content;
             return true;
@@ -96,7 +97,7 @@ public abstract class PipelineResponse : IDisposable
 
     internal void BufferContent(TimeSpan? timeout = default, CancellationTokenSource? cts = default)
     {
-        Stream? responseContentStream = ContentStream;
+        Stream? responseContentStream = GetContentStream();
         if (responseContentStream == null || TryGetBufferedContent(out _))
         {
             // No need to buffer content.
@@ -107,12 +108,12 @@ public abstract class PipelineResponse : IDisposable
         CopyTo(responseContentStream, bufferStream, timeout ?? NetworkTimeout, cts ?? new CancellationTokenSource());
         responseContentStream.Dispose();
         bufferStream.Position = 0;
-        ContentStream = bufferStream;
+        SetContentStream(bufferStream);
     }
 
     internal async Task BufferContentAsync(TimeSpan? timeout = default, CancellationTokenSource? cts = default)
     {
-        Stream? responseContentStream = ContentStream;
+        Stream? responseContentStream = GetContentStream();
         if (responseContentStream == null || TryGetBufferedContent(out _))
         {
             // No need to buffer content.
@@ -123,7 +124,7 @@ public abstract class PipelineResponse : IDisposable
         await CopyToAsync(responseContentStream, bufferStream, timeout ?? NetworkTimeout, cts ?? new CancellationTokenSource()).ConfigureAwait(false);
         responseContentStream.Dispose();
         bufferStream.Position = 0;
-        ContentStream = bufferStream;
+        SetContentStream(bufferStream);
     }
 
     private static async Task CopyToAsync(Stream source, Stream destination, TimeSpan timeout, CancellationTokenSource cancellationTokenSource)

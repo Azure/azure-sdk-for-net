@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Maps;
-using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Maps;
+using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Client;
 
@@ -369,11 +369,11 @@ public class MapsClientTests
 
             public override string ReasonPhrase => "CustomTransportResponse";
 
-            public override Stream ContentStream
-            {
-                get => _stream;
-                set => _stream = value;
-            }
+            protected override Stream GetContentStream()
+                => _stream;
+
+            protected override void SetContentStream(Stream stream)
+                => _stream = stream;
 
             public override void Dispose()
             {

@@ -37,17 +37,28 @@ public partial class HttpClientPipelineTransport
         protected override PipelineResponseHeaders GetHeadersCore()
             => new HttpClientResponseHeaders(_httpResponse, _httpResponseContent);
 
-        public override Stream? ContentStream
-        {
-            get => _contentStream;
-            set
-            {
-                // Make sure we don't dispose the content if the stream was replaced
-                _httpResponse.Content = null;
+        protected override Stream? GetContentStream()
+            => _contentStream;
 
-                _contentStream = value;
-            }
+        protected override void SetContentStream(Stream? stream)
+        {
+            // Make sure we don't dispose the content if the stream was replaced
+            _httpResponse.Content = null;
+
+            _contentStream = stream;
         }
+
+        //public override Stream? ContentStream
+        //{
+        //    get => _contentStream;
+        //    set
+        //    {
+        //        // Make sure we don't dispose the content if the stream was replaced
+        //        _httpResponse.Content = null;
+
+        //        _contentStream = value;
+        //    }
+        //}
 
         #region IDisposable
 

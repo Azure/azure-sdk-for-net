@@ -170,10 +170,12 @@ public class MockPipelineTransport : PipelineTransport
 
         public override string ReasonPhrase => throw new NotImplementedException();
 
-        public override Stream? ContentStream
+        protected override Stream? GetContentStream()
+            => null;
+
+        protected override void SetContentStream(Stream? stream)
         {
-            get => null;
-            set => throw new NotImplementedException();
+            throw new NotImplementedException();
         }
 
         protected override PipelineResponseHeaders GetHeadersCore()

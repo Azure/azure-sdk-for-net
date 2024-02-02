@@ -97,7 +97,7 @@ public class ClientRetryPolicy : PipelinePolicy
                 }
 
                 // Dispose the content stream to free up a connection if the request has any
-                message.Response?.ContentStream?.Dispose();
+                message.Response?.GetContentStreamInternal()?.Dispose();
 
                 message.RetryCount++;
                 OnTryComplete(message);

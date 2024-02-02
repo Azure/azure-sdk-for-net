@@ -54,7 +54,7 @@ public class ClientResultExceptionTests
     {
         byte[] content = new byte[] { 0 };
 
-        PipelineResponse response = new MockPipelineResponse(200, "MockReason");
+        MockPipelineResponse response = new MockPipelineResponse(200, "MockReason");
         response.ContentStream = new UnbufferedStream(content);
 
         ClientResultException exception = new ClientResultException(response);

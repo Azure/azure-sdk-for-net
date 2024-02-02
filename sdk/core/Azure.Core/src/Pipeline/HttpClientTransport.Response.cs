@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -37,8 +38,9 @@ namespace Azure.Core.Pipeline
 
             public override Stream? ContentStream
             {
-                get => _pipelineResponse.ContentStream;
-                set => _pipelineResponse.ContentStream = value;
+                // TODO: solve the adapter problem here.
+                get => throw new NotImplementedException();
+                set => throw new NotImplementedException();
             }
 
             protected internal override bool ContainsHeader(string name)
@@ -64,5 +66,36 @@ namespace Azure.Core.Pipeline
                 response?.Dispose();
             }
         }
+
+        //private class AzureCorePipelineResponse : PipelineResponse
+        //{
+        //    private readonly PipelineResponse _response;
+        //    public AzureCorePipelineResponse(PipelineResponse response)
+        //    {
+        //        _response = response;
+        //    }
+
+        //    public override int Status => _response.Status;
+
+        //    public override string ReasonPhrase => _response.ReasonPhrase;
+
+        //    public override void Dispose()
+        //    {
+        //        _response?.Dispose();
+        //    }
+
+        //    protected override Stream? GetContentStream()
+        //     => _response
+
+        //    protected override PipelineResponseHeaders GetHeadersCore()
+        //    {
+        //        throw new System.NotImplementedException();
+        //    }
+
+        //    protected override void SetContentStream(Stream? stream)
+        //    {
+        //        throw new System.NotImplementedException();
+        //    }
+        //}
     }
 }
