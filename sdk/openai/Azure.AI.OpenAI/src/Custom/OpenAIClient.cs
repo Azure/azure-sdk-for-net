@@ -842,34 +842,88 @@ public partial class OpenAIClient
         return Response.FromValue(AudioTranslation.FromResponse(rawResponse), rawResponse);
     }
 
-    /// <summary> Generates audio from the input text.. </summary>
+    /// <summary> Synthesize audio from the input text. </summary>
     /// <param name="audioSpeechOptions">
-    /// Speech synthesis request.
+    ///     The configuration information for the speech synthesis request that controls the content,
+    ///     voice, and other details about the generated audio.
     /// </param>
-    /// <param name="cancellationToken"> The cancellation token to use. </param>
+    /// <param name="cancellationToken">
+    ///     An optional cancellation token that may be used to abort an ongoing request.
+    /// </param>
     /// <exception cref="ArgumentNullException">
-    ///     <paramref name="audioSpeechOptions"/> or <paramref name="audioSpeechOptions.Input"/> is null or <paramref name="audioSpeechOptions.Voice"/> is null.
+    ///     <paramref name="audioSpeechOptions"/> or <paramref name="audioSpeechOptions.DeploymentName"/> is null.
     /// </exception>
-    public virtual Task<Response<AudioSpeechResponse>> GetAudioSpeechAsync(
+    /// <exception cref="ArgumentException">
+    ///     <paramref name="audioSpeechOptions.DeploymentName"/> is an empty string.
+    /// </exception>
+    public virtual async Task<Response<BinaryData>> GetAudioSpeechAsync(
         AudioSpeechOptions audioSpeechOptions,
         CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        Argument.AssertNotNull(audioSpeechOptions, nameof(audioSpeechOptions));
+        Argument.AssertNotNullOrEmpty(audioSpeechOptions.DeploymentName, nameof(audioSpeechOptions.DeploymentName));
+
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioSpeech");
+        scope.Start();
+
+        try
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            HttpMessage message = CreatePostRequestMessage(
+                audioSpeechOptions.DeploymentName,
+                "audio/speech",
+                content: audioSpeechOptions.ToRequestContent(),
+                context);
+            Response rawResponse = await _pipeline.ProcessMessageAsync(message, context, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(rawResponse.Content, rawResponse);
+        }
+        catch (Exception e)
+        {
+            scope.Failed(e);
+            throw;
+        }
     }
 
-    /// <summary> Generates audio from the input text.. </summary>
+    /// <summary> Synthesize audio from the input text. </summary>
     /// <param name="audioSpeechOptions">
-    /// Speech synthesis request.
+    ///     The configuration information for the speech synthesis request that controls the content,
+    ///     voice, and other details about the generated audio.
     /// </param>
-    /// <param name="cancellationToken"> The cancellation token to use. </param>
+    /// <param name="cancellationToken">
+    ///     An optional cancellation token that may be used to abort an ongoing request.
+    /// </param>
     /// <exception cref="ArgumentNullException">
-    ///     <paramref name="audioSpeechOptions"/> or <paramref name="audioSpeechOptions.Input"/> is null or <paramref name="audioSpeechOptions.Voice"/> is null.
+    ///     <paramref name="audioSpeechOptions"/> or <paramref name="audioSpeechOptions.DeploymentName"/> is null.
     /// </exception>
-    public virtual Response<AudioSpeechResponse> GetAudioSpeech(
+    /// <exception cref="ArgumentException">
+    ///     <paramref name="audioSpeechOptions.DeploymentName"/> is an empty string.
+    /// </exception>
+    public virtual Response<BinaryData> GetAudioSpeech(
         AudioSpeechOptions audioSpeechOptions,
         CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        Argument.AssertNotNull(audioSpeechOptions, nameof(audioSpeechOptions));
+        Argument.AssertNotNullOrEmpty(audioSpeechOptions.DeploymentName, nameof(audioSpeechOptions.DeploymentName));
+
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioSpeech");
+        scope.Start();
+
+        try
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            HttpMessage message = CreatePostRequestMessage(
+                audioSpeechOptions.DeploymentName,
+                "audio/speech",
+                content: audioSpeechOptions.ToRequestContent(),
+                context);
+            Response rawResponse = _pipeline.ProcessMessage(message, context, cancellationToken);
+            return Response.FromValue(rawResponse.Content, rawResponse);
+        }
+        catch (Exception e)
+        {
+            scope.Failed(e);
+            throw;
+        }
     }
 
     internal RequestUriBuilder GetUri(string deploymentOrModelName, string operationPath)

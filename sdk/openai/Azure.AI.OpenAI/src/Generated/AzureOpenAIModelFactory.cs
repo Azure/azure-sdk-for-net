@@ -446,17 +446,6 @@ namespace Azure.AI.OpenAI
             return new EmbeddingsUsage(promptTokens, totalTokens, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenAI.AudioSpeechOptions"/>. </summary>
-        /// <param name="input"> The text to synthesize audio for. The maximum length is 4096 characters. </param>
-        /// <param name="voice"> The voice to use for speech synthesis. </param>
-        /// <param name="responseFormat"> The format to synthesize the audio in. </param>
-        /// <param name="speed"> The speed of the synthesize audio. Select a value from `0.25` to `4.0`. `1.0` is the default. </param>
-        /// <returns> A new <see cref="OpenAI.AudioSpeechOptions"/> instance for mocking. </returns>
-        public static AudioSpeechOptions AudioSpeechOptions(string input = null, string voice = null, string responseFormat = null, float? speed = null)
-        {
-            return new AudioSpeechOptions(input, voice, responseFormat, speed, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="OpenAI.AudioSpeechResponse"/>. </summary>
         /// <param name="audio"> The synthesized audio. </param>
         /// <returns> A new <see cref="OpenAI.AudioSpeechResponse"/> instance for mocking. </returns>
