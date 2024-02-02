@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(Longitude))
             {
                 writer.WritePropertyName("longitude"u8);
-                WriteLongitude(writer);
+                writer.WriteNumberValue(Longitude.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Latitude))
             {
                 writer.WritePropertyName("latitude"u8);
-                WriteLatitude(writer);
+                writer.WriteNumberValue(Latitude.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(PhysicalLocation))
             {
@@ -157,12 +157,20 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("longitude"u8))
                 {
-                    ReadLongitude(property, ref longitude);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    longitude = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("latitude"u8))
                 {
-                    ReadLatitude(property, ref latitude);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    latitude = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("physicalLocation"u8))
