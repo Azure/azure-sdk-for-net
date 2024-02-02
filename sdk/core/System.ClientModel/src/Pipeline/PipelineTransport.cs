@@ -57,8 +57,7 @@ public abstract class PipelineTransport : PipelinePolicy
     {
         Debug.Assert(message.NetworkTimeout is not null, "NetworkTimeout is not set on PipelineMessage.");
 
-        // Implement network timeout behavior around the call to ProcessCore,
-        // where the derived implements concrete transport process fuctionality.
+        // Implement network timeout behavior around call to ProcessCore.
         TimeSpan networkTimeout = (TimeSpan)message.NetworkTimeout!;
         CancellationToken userToken = message.CancellationToken;
         using CancellationTokenSource joinedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(userToken);
@@ -96,6 +95,7 @@ public abstract class PipelineTransport : PipelinePolicy
         message.Response.SetIsError(ClassifyResponse(message));
         message.Response.NetworkTimeout = networkTimeout;
 
+        // Either buffer the response, or wrap it in a timeout stream.
         if (async)
         {
             await message.Response.ProcessContentAsync(message.BufferResponse, userToken, joinedTokenSource).ConfigureAwait(false);
