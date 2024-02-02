@@ -112,7 +112,7 @@ else
 # On some machines, where people modified date format via Windows Registry,
 # "$ParsedReleaseDate.ToString("MM/dd/yyyy")" produces the date as "MM-dd-yyyy", which is probably a bug somewhere,
 # yet if we concatenate the parts individually, everything works as expected.
-$releaseDateString = $ParsedReleaseDate.ToString("MM") + "/" + $ParsedReleaseDate.ToString("dd") + "/" + $ParsedReleaseDate.ToString("yyyy")
+$releaseDateString = $ParsedReleaseDate.ToSTring("MM/dd/yyyy", [CultureInfo]::InvariantCulture)
 $month = $ParsedReleaseDate.ToString("MMMM")
 
 Write-Host "Assuming release is in $month with release date $releaseDateString" -ForegroundColor Green
