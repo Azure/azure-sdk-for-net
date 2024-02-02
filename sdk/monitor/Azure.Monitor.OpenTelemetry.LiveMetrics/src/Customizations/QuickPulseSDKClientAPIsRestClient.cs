@@ -46,11 +46,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                         CollectionConfigurationInfo value = default;
                         if (message.Response.Headers.ContentLength != 0)
                         {
-                            // TODO: This deserialization was auto generated. I assume this is used for filtering.
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             value = CollectionConfigurationInfo.DeserializeCollectionConfigurationInfo(document.RootElement);
                         }
-                        return new QuickPulseResponse(success: true, message.Response.Headers);
+                        return new QuickPulseResponse(success: true, message.Response.Headers, value);
                     }
                 case 400:
                 case 401:
@@ -101,11 +100,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                         CollectionConfigurationInfo value = default;
                         if (message.Response.Headers.ContentLength != 0)
                         {
-                            // TODO: This deserialization was auto generated. I assume this is used for filtering.
                             using var document = JsonDocument.Parse(message.Response.ContentStream);
                             value = CollectionConfigurationInfo.DeserializeCollectionConfigurationInfo(document.RootElement);
                         }
-                        return new QuickPulseResponse(success: true, message.Response.Headers);
+                        return new QuickPulseResponse(success: true, message.Response.Headers, value);
                     }
                 case 400:
                 case 401:

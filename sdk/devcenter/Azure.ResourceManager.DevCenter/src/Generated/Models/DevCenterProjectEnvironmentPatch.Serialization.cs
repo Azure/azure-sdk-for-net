@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter.Models
 {
-    public partial class DevCenterProjectEnvironmentPatch : IUtf8JsonSerializable
+    public partial class DevCenterProjectEnvironmentPatch : IUtf8JsonSerializable, IJsonModel<DevCenterProjectEnvironmentPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevCenterProjectEnvironmentPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DevCenterProjectEnvironmentPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterProjectEnvironmentPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -60,7 +72,168 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        DevCenterProjectEnvironmentPatch IJsonModel<DevCenterProjectEnvironmentPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterProjectEnvironmentPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevCenterProjectEnvironmentPatch(document.RootElement, options);
+        }
+
+        internal static DevCenterProjectEnvironmentPatch DeserializeDevCenterProjectEnvironmentPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<ResourceIdentifier> deploymentTargetId = default;
+            Optional<EnvironmentTypeEnableStatus> status = default;
+            Optional<ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment> creatorRoleAssignment = default;
+            Optional<IDictionary<string, DevCenterUserRoleAssignments>> userRoleAssignments = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("deploymentTargetId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            deploymentTargetId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("status"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            status = new EnvironmentTypeEnableStatus(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("creatorRoleAssignment"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            creatorRoleAssignment = ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment.DeserializeProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("userRoleAssignments"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, DevCenterUserRoleAssignments> dictionary = new Dictionary<string, DevCenterUserRoleAssignments>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, DevCenterUserRoleAssignments.DeserializeDevCenterUserRoleAssignments(property1.Value));
+                            }
+                            userRoleAssignments = dictionary;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DevCenterProjectEnvironmentPatch(Optional.ToDictionary(tags), identity, deploymentTargetId.Value, Optional.ToNullable(status), creatorRoleAssignment.Value, Optional.ToDictionary(userRoleAssignments), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<DevCenterProjectEnvironmentPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterProjectEnvironmentPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DevCenterProjectEnvironmentPatch IPersistableModel<DevCenterProjectEnvironmentPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevCenterProjectEnvironmentPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDevCenterProjectEnvironmentPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevCenterProjectEnvironmentPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevCenterProjectEnvironmentPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

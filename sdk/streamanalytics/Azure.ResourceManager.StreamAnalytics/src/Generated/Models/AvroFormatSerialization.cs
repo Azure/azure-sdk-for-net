@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -20,8 +21,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         /// <summary> Initializes a new instance of <see cref="AvroFormatSerialization"/>. </summary>
         /// <param name="eventSerializationType"> Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties that are associated with the Avro serialization type. Required on PUT (CreateOrReplace) requests. </param>
-        internal AvroFormatSerialization(EventSerializationType eventSerializationType, BinaryData properties) : base(eventSerializationType)
+        internal AvroFormatSerialization(EventSerializationType eventSerializationType, IDictionary<string, BinaryData> serializedAdditionalRawData, BinaryData properties) : base(eventSerializationType, serializedAdditionalRawData)
         {
             Properties = properties;
             EventSerializationType = eventSerializationType;

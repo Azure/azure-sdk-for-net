@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Defines a Sampling Algorithm that generates values based on previous values. </summary>
@@ -18,7 +21,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="BayesianSamplingAlgorithm"/>. </summary>
         /// <param name="samplingAlgorithmType"> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </param>
-        internal BayesianSamplingAlgorithm(SamplingAlgorithmType samplingAlgorithmType) : base(samplingAlgorithmType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BayesianSamplingAlgorithm(SamplingAlgorithmType samplingAlgorithmType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(samplingAlgorithmType, serializedAdditionalRawData)
         {
             SamplingAlgorithmType = samplingAlgorithmType;
         }

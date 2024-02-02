@@ -19,6 +19,38 @@ namespace Azure.ResourceManager.StoragePool
     /// </summary>
     public partial class DiskPoolIscsiTargetData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DiskPoolIscsiTargetData"/>. </summary>
         /// <param name="aclMode"> Mode for Target connectivity. </param>
         /// <param name="targetIqn"> iSCSI Target IQN (iSCSI Qualified Name); example: "iqn.2005-03.org.iscsi:server". </param>
@@ -56,7 +88,8 @@ namespace Azure.ResourceManager.StoragePool
         /// <param name="endpoints"> List of private IPv4 addresses to connect to the iSCSI Target. </param>
         /// <param name="port"> The port used by iSCSI Target portal group. </param>
         /// <param name="sessions"> List of identifiers for active sessions on the iSCSI target. </param>
-        internal DiskPoolIscsiTargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedBy, IReadOnlyList<string> managedByExtended, DiskPoolIscsiTargetAclMode aclMode, IList<DiskPoolIscsiTargetPortalGroupAcl> staticAcls, IList<ManagedDiskIscsiLun> luns, string targetIqn, DiskPoolIscsiTargetProvisioningState provisioningState, StoragePoolOperationalStatus status, IList<string> endpoints, int? port, IReadOnlyList<string> sessions) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DiskPoolIscsiTargetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string managedBy, IReadOnlyList<string> managedByExtended, DiskPoolIscsiTargetAclMode aclMode, IList<DiskPoolIscsiTargetPortalGroupAcl> staticAcls, IList<ManagedDiskIscsiLun> luns, string targetIqn, DiskPoolIscsiTargetProvisioningState provisioningState, StoragePoolOperationalStatus status, IList<string> endpoints, int? port, IReadOnlyList<string> sessions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ManagedBy = managedBy;
             ManagedByExtended = managedByExtended;
@@ -69,6 +102,12 @@ namespace Azure.ResourceManager.StoragePool
             Endpoints = endpoints;
             Port = port;
             Sessions = sessions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiskPoolIscsiTargetData"/> for deserialization. </summary>
+        internal DiskPoolIscsiTargetData()
+        {
         }
 
         /// <summary> Azure resource id. Indicates if this resource is managed by another Azure resource. </summary>

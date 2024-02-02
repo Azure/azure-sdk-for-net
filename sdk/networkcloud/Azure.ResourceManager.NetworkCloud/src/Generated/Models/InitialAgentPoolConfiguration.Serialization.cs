@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class InitialAgentPoolConfiguration : IUtf8JsonSerializable
+    public partial class InitialAgentPoolConfiguration : IUtf8JsonSerializable, IJsonModel<InitialAgentPoolConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InitialAgentPoolConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InitialAgentPoolConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InitialAgentPoolConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InitialAgentPoolConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AdministratorConfiguration))
             {
@@ -74,11 +84,40 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             writer.WritePropertyName("vmSkuName"u8);
             writer.WriteStringValue(VmSkuName);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InitialAgentPoolConfiguration DeserializeInitialAgentPoolConfiguration(JsonElement element)
+        InitialAgentPoolConfiguration IJsonModel<InitialAgentPoolConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InitialAgentPoolConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InitialAgentPoolConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInitialAgentPoolConfiguration(document.RootElement, options);
+        }
+
+        internal static InitialAgentPoolConfiguration DeserializeInitialAgentPoolConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -94,6 +133,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<IList<KubernetesLabel>> taints = default;
             Optional<AgentPoolUpgradeSettings> upgradeSettings = default;
             string vmSkuName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("administratorConfiguration"u8))
@@ -194,8 +235,44 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     vmSkuName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InitialAgentPoolConfiguration(administratorConfiguration.Value, agentOptions.Value, attachedNetworkConfiguration.Value, Optional.ToList(availabilityZones), count, Optional.ToList(labels), mode, name, Optional.ToList(taints), upgradeSettings.Value, vmSkuName);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InitialAgentPoolConfiguration(administratorConfiguration.Value, agentOptions.Value, attachedNetworkConfiguration.Value, Optional.ToList(availabilityZones), count, Optional.ToList(labels), mode, name, Optional.ToList(taints), upgradeSettings.Value, vmSkuName, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InitialAgentPoolConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InitialAgentPoolConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InitialAgentPoolConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        InitialAgentPoolConfiguration IPersistableModel<InitialAgentPoolConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InitialAgentPoolConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInitialAgentPoolConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InitialAgentPoolConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InitialAgentPoolConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

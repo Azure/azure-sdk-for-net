@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,10 +15,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication
 {
-    public partial class CommunicationServiceResourceData : IUtf8JsonSerializable
+    public partial class CommunicationServiceResourceData : IUtf8JsonSerializable, IJsonModel<CommunicationServiceResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommunicationServiceResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CommunicationServiceResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CommunicationServiceResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CommunicationServiceResourceData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -38,12 +47,57 @@ namespace Azure.ResourceManager.Communication
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(HostName))
+            {
+                writer.WritePropertyName("hostName"u8);
+                writer.WriteStringValue(HostName);
+            }
             if (Optional.IsDefined(DataLocation))
             {
                 writer.WritePropertyName("dataLocation"u8);
                 writer.WriteStringValue(DataLocation);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NotificationHubId))
+            {
+                writer.WritePropertyName("notificationHubId"u8);
+                writer.WriteStringValue(NotificationHubId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ImmutableResourceId))
+            {
+                writer.WritePropertyName("immutableResourceId"u8);
+                writer.WriteStringValue(ImmutableResourceId.Value);
             }
             if (Optional.IsCollectionDefined(LinkedDomains))
             {
@@ -56,11 +110,40 @@ namespace Azure.ResourceManager.Communication
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CommunicationServiceResourceData DeserializeCommunicationServiceResourceData(JsonElement element)
+        CommunicationServiceResourceData IJsonModel<CommunicationServiceResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CommunicationServiceResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CommunicationServiceResourceData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommunicationServiceResourceData(document.RootElement, options);
+        }
+
+        internal static CommunicationServiceResourceData DeserializeCommunicationServiceResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -79,6 +162,8 @@ namespace Azure.ResourceManager.Communication
             Optional<string> version = default;
             Optional<Guid> immutableResourceId = default;
             Optional<IList<string>> linkedDomains = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -202,8 +287,44 @@ namespace Azure.ResourceManager.Communication
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CommunicationServiceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), hostName.Value, dataLocation.Value, notificationHubId.Value, version.Value, Optional.ToNullable(immutableResourceId), Optional.ToList(linkedDomains));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CommunicationServiceResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), hostName.Value, dataLocation.Value, notificationHubId.Value, version.Value, Optional.ToNullable(immutableResourceId), Optional.ToList(linkedDomains), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CommunicationServiceResourceData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommunicationServiceResourceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CommunicationServiceResourceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CommunicationServiceResourceData IPersistableModel<CommunicationServiceResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommunicationServiceResourceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCommunicationServiceResourceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CommunicationServiceResourceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CommunicationServiceResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel.Primitives;
 
 namespace ClientModel.Tests.Mocks;
@@ -29,7 +30,7 @@ public class MockMessageClassifier : PipelineMessageClassifier
 
     public string Id { get; set; }
 
-    public override bool IsErrorResponse(PipelineMessage message)
+    public override bool TryClassify(PipelineMessage message, out bool isError)
     {
         if (_successCodes is not null)
         {
@@ -37,13 +38,20 @@ public class MockMessageClassifier : PipelineMessageClassifier
             {
                 if (message.Response!.Status == code)
                 {
+                    isError = true;
                     return true;
                 }
             }
 
-            return false;
+            isError = false;
+            return true;
         }
 
-        return base.IsErrorResponse(message);
+        return Default.TryClassify(message, out isError);
+    }
+
+    public override bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable)
+    {
+        return Default.TryClassify(message, exception, out isRetriable);
     }
 }

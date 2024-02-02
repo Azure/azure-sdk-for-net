@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.Sql.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithInstance", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData(e), LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithInstance", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.Sql.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithInstance", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData(e), LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithInstance", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByLocationRequest(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData(e), LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByLocationRequest(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData(e), LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "MockableSqlSubscriptionResource.GetLongTermRetentionManagedInstanceBackupsWithLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -983,7 +983,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByLocationRequest(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "MockableSqlSubscriptionResource.GetLongTermRetentionBackupsWithLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData(e), LongTermRetentionBackupsClientDiagnostics, Pipeline, "MockableSqlSubscriptionResource.GetLongTermRetentionBackupsWithLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1012,7 +1012,7 @@ namespace Azure.ResourceManager.Sql.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByLocationRequest(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "MockableSqlSubscriptionResource.GetLongTermRetentionBackupsWithLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData(e), LongTermRetentionBackupsClientDiagnostics, Pipeline, "MockableSqlSubscriptionResource.GetLongTermRetentionBackupsWithLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1046,7 +1046,7 @@ namespace Azure.ResourceManager.Sql.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByServerRequest(Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "MockableSqlSubscriptionResource.GetLongTermRetentionBackupsWithServer", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData(e), LongTermRetentionBackupsClientDiagnostics, Pipeline, "MockableSqlSubscriptionResource.GetLongTermRetentionBackupsWithServer", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1080,7 +1080,7 @@ namespace Azure.ResourceManager.Sql.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByServerRequest(Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "MockableSqlSubscriptionResource.GetLongTermRetentionBackupsWithServer", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData(e), LongTermRetentionBackupsClientDiagnostics, Pipeline, "MockableSqlSubscriptionResource.GetLongTermRetentionBackupsWithServer", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

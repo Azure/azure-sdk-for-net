@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> An update to an Instance pool. </summary>
     public partial class InstancePoolPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="InstancePoolPatch"/>. </summary>
         public InstancePoolPatch()
         {
@@ -27,7 +60,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="licenseType"> The license type. Possible values are 'LicenseIncluded' (price for SQL license is included) and 'BasePrice' (without SQL license price). </param>
         /// <param name="dnsZone"> The Dns Zone that the managed instance pool is in. </param>
         /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this managed instance. </param>
-        internal InstancePoolPatch(SqlSku sku, IDictionary<string, string> tags, ResourceIdentifier subnetId, int? vCores, InstancePoolLicenseType? licenseType, string dnsZone, ResourceIdentifier maintenanceConfigurationId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstancePoolPatch(SqlSku sku, IDictionary<string, string> tags, ResourceIdentifier subnetId, int? vCores, InstancePoolLicenseType? licenseType, string dnsZone, ResourceIdentifier maintenanceConfigurationId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Tags = tags;
@@ -36,6 +70,7 @@ namespace Azure.ResourceManager.Sql.Models
             LicenseType = licenseType;
             DnsZone = dnsZone;
             MaintenanceConfigurationId = maintenanceConfigurationId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name and tier of the SKU. </summary>

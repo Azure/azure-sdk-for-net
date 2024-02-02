@@ -24,6 +24,7 @@ modelerfour:
 model-namespace: false
 public-clients: false
 head-as-boolean: false
+use-model-reader-writer: true
 
 # this is temporary, to be removed when we find the owner of this feature
 operation-groups-to-omit:

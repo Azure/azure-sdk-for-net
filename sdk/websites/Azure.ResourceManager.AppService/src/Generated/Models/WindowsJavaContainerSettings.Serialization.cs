@@ -6,15 +6,100 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class WindowsJavaContainerSettings
+    public partial class WindowsJavaContainerSettings : IUtf8JsonSerializable, IJsonModel<WindowsJavaContainerSettings>
     {
-        internal static WindowsJavaContainerSettings DeserializeWindowsJavaContainerSettings(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WindowsJavaContainerSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WindowsJavaContainerSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsJavaContainerSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WindowsJavaContainerSettings)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(JavaContainer))
+            {
+                writer.WritePropertyName("javaContainer"u8);
+                writer.WriteStringValue(JavaContainer);
+            }
+            if (options.Format != "W" && Optional.IsDefined(JavaContainerVersion))
+            {
+                writer.WritePropertyName("javaContainerVersion"u8);
+                writer.WriteStringValue(JavaContainerVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsPreview))
+            {
+                writer.WritePropertyName("isPreview"u8);
+                writer.WriteBooleanValue(IsPreview.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsDeprecated))
+            {
+                writer.WritePropertyName("isDeprecated"u8);
+                writer.WriteBooleanValue(IsDeprecated.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsHidden))
+            {
+                writer.WritePropertyName("isHidden"u8);
+                writer.WriteBooleanValue(IsHidden.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndOfLifeOn))
+            {
+                writer.WritePropertyName("endOfLifeDate"u8);
+                writer.WriteStringValue(EndOfLifeOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsAutoUpdate))
+            {
+                writer.WritePropertyName("isAutoUpdate"u8);
+                writer.WriteBooleanValue(IsAutoUpdate.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsEarlyAccess))
+            {
+                writer.WritePropertyName("isEarlyAccess"u8);
+                writer.WriteBooleanValue(IsEarlyAccess.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        WindowsJavaContainerSettings IJsonModel<WindowsJavaContainerSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsJavaContainerSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WindowsJavaContainerSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWindowsJavaContainerSettings(document.RootElement, options);
+        }
+
+        internal static WindowsJavaContainerSettings DeserializeWindowsJavaContainerSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -27,6 +112,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<DateTimeOffset> endOfLifeDate = default;
             Optional<bool> isAutoUpdate = default;
             Optional<bool> isEarlyAccess = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("javaContainer"u8))
@@ -93,8 +180,44 @@ namespace Azure.ResourceManager.AppService.Models
                     isEarlyAccess = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WindowsJavaContainerSettings(javaContainer.Value, javaContainerVersion.Value, Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(isAutoUpdate), Optional.ToNullable(isEarlyAccess));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WindowsJavaContainerSettings(javaContainer.Value, javaContainerVersion.Value, Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(isAutoUpdate), Optional.ToNullable(isEarlyAccess), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WindowsJavaContainerSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsJavaContainerSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WindowsJavaContainerSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        WindowsJavaContainerSettings IPersistableModel<WindowsJavaContainerSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsJavaContainerSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWindowsJavaContainerSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WindowsJavaContainerSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WindowsJavaContainerSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

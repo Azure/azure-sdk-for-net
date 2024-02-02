@@ -18,11 +18,12 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return;
             }
-            if (string.IsNullOrEmpty(property.Value.GetString()))
+            var idString = property.Value.GetString();
+            if (string.IsNullOrEmpty(idString))
             {
                 return;
             }
-            policyDefinitionId = new ResourceIdentifier(property.Value.GetString());
+            policyDefinitionId = new ResourceIdentifier(idString);
         }
     }
 }

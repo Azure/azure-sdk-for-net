@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> General planned failover model custom properties. </summary>
@@ -18,7 +21,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <summary> Initializes a new instance of <see cref="GeneralPlannedFailoverModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
-        internal GeneralPlannedFailoverModelCustomProperties(string instanceType) : base(instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GeneralPlannedFailoverModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
         {
             InstanceType = instanceType ?? "PlannedFailoverModelCustomProperties";
         }

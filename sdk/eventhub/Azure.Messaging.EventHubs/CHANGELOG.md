@@ -4,15 +4,19 @@
 
 ### Features Added
 
+- Added a `CheckpointPosition` struct to `Azure.Messaging.EventHubs.Processor` to use when updating a checkpoint. The specified position indicates that an event processor should begin reading from the next event. Added new `UpdateCheckpointAsync` overloads to `CheckpointStore`, `PluggableCheckpointStoreEventProcessor<TPartition` and `EventProcessor<TPartition>` that accept the `CheckpointPosition` struct instead of individual values for offset and sequence number.
+
 ### Breaking Changes
 
 - The type of several existing values in the `EventData.SystemProperties` collection have been changed so that they are properly represented as .NET string types.  Previously, the underlying AMQP types were unintentionally returned, forcing callers to call `ToString()` to read the value.
 
   This is a behavioral breaking change that will impacts only those callers who were explicitly casting system property values to `AmqpAddress` or `AmqpMessageId` before calling `ToString()`.   The affected system properties are:
   - MessageId
-  - CorelationId
+  - CorrelationId
   - To
   - ReplyTo
+
+- The base implementations of both `UpdateCheckpointAsync` method overloads in `PluggableCheckpointStoreEventProcessor<TPartition>` and `EventProcessor<TPartition>` now choose sequence number over offset when writing a checkpoint and both values are provided. Previously, writing a checkpoint prioritized offset over sequence number.  There is no behavioral change for those using the official checkpoint store implementations.
 
 ### Bugs Fixed
 
@@ -23,6 +27,8 @@
 - Fixed a race condition that could lead to a synchronization primitive being double-released if `IsRunning` was called concurrently while starting or stopping an event processor.
 
 - Fixed an issue with event processor validation where an exception for quota exceeded may inappropriately be surfaced when starting the processor.
+
+- In the rare case that an event processor's load balancing and health monitoring task cannot recover from an error, it will now properly surrender ownership when processing stops.
 
 - Reduced the timeout for transient service failures when starting the buffered producer. This ixed an issue where the buffered producer appeared to hang for an extended period of time when starting if it had issues querying Event Hub metadata for the first time.
 
@@ -35,6 +41,12 @@
 - Removed the custom sizes for the AMQP sending and receiving buffers, allowing the optimized defaults of the host platform to be used.  This offers non-trivial performance increase on Linux-based platforms and a minor improvement on macOS.  Windows performance remains unchanged as the default and custom buffer sizes are equivalent.
 
 - Improved efficiency of partition management during load balancing, reducing the number of operations performed and deferring waiting for lost partitions until the processor is stopped or the partition is reclaimed.  Allocations were also non-trivially reduced.
+
+- Improved the approach used by the processor to manage the background tasks for partition processing and load balancing.  These tasks are now marked as long-running and have improved error recovery.
+
+- Initialization of the load balancing task is now performed in the background and will no longer cause delays when starting the processor.
+
+- In the rare case that an event processor's load balancing and health monitoring task cannot recover from an error, the processor now signals the error handler with a wrapped exception that makes clear that processing will terminate.  Previously, the source exception was surfaced to the error handler and the impact was not clear.
 
 - The "Event Receive Completed" log now includes the maximum batch size and wait time that were used for the operation.
 

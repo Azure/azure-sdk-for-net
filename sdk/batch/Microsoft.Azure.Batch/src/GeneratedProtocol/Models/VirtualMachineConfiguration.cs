@@ -55,7 +55,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// pool.</param>
         /// <param name="osDisk">Settings for the operating system disk of the
         /// Virtual Machine.</param>
-        public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSKUId, WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), IList<DataDisk> dataDisks = default(IList<DataDisk>), string licenseType = default(string), ContainerConfiguration containerConfiguration = default(ContainerConfiguration), DiskEncryptionConfiguration diskEncryptionConfiguration = default(DiskEncryptionConfiguration), NodePlacementConfiguration nodePlacementConfiguration = default(NodePlacementConfiguration), IList<VMExtension> extensions = default(IList<VMExtension>), OSDisk osDisk = default(OSDisk))
+        /// <param name="securityProfile">Specifies the security profile
+        /// settings for the virtual machine or virtual machine scale
+        /// set.</param>
+        /// <param name="serviceArtifactReference">Specifies the service
+        /// artifact reference id used to set same image version for all
+        /// virtual machines in the scale set when using 'latest' image
+        /// version.</param>
+        public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSKUId, WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), IList<DataDisk> dataDisks = default(IList<DataDisk>), string licenseType = default(string), ContainerConfiguration containerConfiguration = default(ContainerConfiguration), DiskEncryptionConfiguration diskEncryptionConfiguration = default(DiskEncryptionConfiguration), NodePlacementConfiguration nodePlacementConfiguration = default(NodePlacementConfiguration), IList<VMExtension> extensions = default(IList<VMExtension>), OSDisk osDisk = default(OSDisk), SecurityProfile securityProfile = default(SecurityProfile), ServiceArtifactReference serviceArtifactReference = default(ServiceArtifactReference))
         {
             ImageReference = imageReference;
             NodeAgentSKUId = nodeAgentSKUId;
@@ -67,6 +74,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             NodePlacementConfiguration = nodePlacementConfiguration;
             Extensions = extensions;
             OsDisk = osDisk;
+            SecurityProfile = securityProfile;
+            ServiceArtifactReference = serviceArtifactReference;
             CustomInit();
         }
 
@@ -196,6 +205,25 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [JsonProperty(PropertyName = "osDisk")]
         public OSDisk OsDisk { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the security profile settings for the
+        /// virtual machine or virtual machine scale set.
+        /// </summary>
+        [JsonProperty(PropertyName = "securityProfile")]
+        public SecurityProfile SecurityProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the service artifact reference id used to
+        /// set same image version for all virtual machines in the scale set
+        /// when using 'latest' image version.
+        /// </summary>
+        /// <remarks>
+        /// The service artifact reference id in the form of
+        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/serviceArtifacts/{serviceArtifactName}/vmArtifactsProfiles/{vmArtifactsProfilesName}
+        /// </remarks>
+        [JsonProperty(PropertyName = "serviceArtifactReference")]
+        public ServiceArtifactReference ServiceArtifactReference { get; set; }
 
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class OpenIdConnectClientCredential : IUtf8JsonSerializable
+    public partial class OpenIdConnectClientCredential : IUtf8JsonSerializable, IJsonModel<OpenIdConnectClientCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OpenIdConnectClientCredential>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OpenIdConnectClientCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OpenIdConnectClientCredential>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OpenIdConnectClientCredential)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Method))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OpenIdConnectClientCredential DeserializeOpenIdConnectClientCredential(JsonElement element)
+        OpenIdConnectClientCredential IJsonModel<OpenIdConnectClientCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OpenIdConnectClientCredential>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OpenIdConnectClientCredential)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOpenIdConnectClientCredential(document.RootElement, options);
+        }
+
+        internal static OpenIdConnectClientCredential DeserializeOpenIdConnectClientCredential(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ClientCredentialMethod> method = default;
             Optional<string> clientSecretSettingName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("method"u8))
@@ -52,8 +94,44 @@ namespace Azure.ResourceManager.AppService.Models
                     clientSecretSettingName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OpenIdConnectClientCredential(Optional.ToNullable(method), clientSecretSettingName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OpenIdConnectClientCredential(Optional.ToNullable(method), clientSecretSettingName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OpenIdConnectClientCredential>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OpenIdConnectClientCredential>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OpenIdConnectClientCredential)} does not support '{options.Format}' format.");
+            }
+        }
+
+        OpenIdConnectClientCredential IPersistableModel<OpenIdConnectClientCredential>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OpenIdConnectClientCredential>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOpenIdConnectClientCredential(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OpenIdConnectClientCredential)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OpenIdConnectClientCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

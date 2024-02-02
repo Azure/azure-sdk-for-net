@@ -1,16 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Diagnostics;
-using System.Globalization;
-using System.Runtime.CompilerServices;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
-using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 using OpenTelemetry;
-
-using ExceptionDocument = Azure.Monitor.OpenTelemetry.LiveMetrics.Models.Exception;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 {
@@ -41,44 +35,37 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 _manager.LiveMetricsResource = LiveMetricsResource;
             }
 
-            string? statusCodeAttributeValue = null;
-
-            foreach (ref readonly var tag in activity.EnumerateTagObjects())
-            {
-                if (tag.Key == SemanticConventions.AttributeHttpResponseStatusCode)
-                {
-                    statusCodeAttributeValue = tag.Value?.ToString();
-                    break;
-                }
-            }
-
             if (activity.Kind == ActivityKind.Server || activity.Kind == ActivityKind.Consumer)
             {
-                AddRequestDocument(activity, statusCodeAttributeValue);
+                AddRequestDocument(activity);
             }
             else
             {
-                AddRemoteDependencyDocument(activity, statusCodeAttributeValue);
+                AddRemoteDependencyDocument(activity);
             }
 
             if (activity.Events != null)
             {
                 foreach (ref readonly var @event in activity.EnumerateEvents())
                 {
-                    string? exceptionType = null;
-                    string? exceptionMessage = null;
+                    string exceptionType = string.Empty;
+                    string exceptionMessage = string.Empty;
 
                     foreach (ref readonly var tag in @event.EnumerateTagObjects())
                     {
                         // TODO: see if these can be cached
-                        if (tag.Key == SemanticConventions.AttributeExceptionType)
+                        if (tag.Value == null)
                         {
-                            exceptionType = tag.Value?.ToString();
                             continue;
                         }
-                        if (tag.Key == SemanticConventions.AttributeExceptionMessage)
+                        else if (tag.Key == SemanticConventions.AttributeExceptionType)
                         {
-                            exceptionMessage = tag.Value?.ToString();
+                            exceptionType = tag.Value.ToString();
+                            continue;
+                        }
+                        else if (tag.Key == SemanticConventions.AttributeExceptionMessage)
+                        {
+                            exceptionMessage = tag.Value.ToString();
                             continue;
                         }
                     }
@@ -96,6 +83,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 {
                     try
                     {
+                        _manager.Dispose();
                     }
                     catch (System.Exception)
                     {
@@ -108,79 +96,22 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
             base.Dispose(disposing);
         }
 
-        private void AddExceptionDocument(string? exceptionType, string? exceptionMessage)
+        private void AddExceptionDocument(string exceptionType, string exceptionMessage)
         {
-            ExceptionDocument exceptionDocumentIngress = new()
-            {
-                ExceptionType = exceptionType,
-                ExceptionMessage = exceptionMessage,
-                DocumentType = DocumentIngressDocumentType.Exception,
-                // TODO: DocumentStreamIds = new List<string>(),
-                // TODO: Properties = new Dictionary<string, string>(), - Validate with UX team if this is needed.
-            };
-
+            var exceptionDocumentIngress = DocumentHelper.CreateException(exceptionType, exceptionMessage);
             _manager._documentBuffer.WriteDocument(exceptionDocumentIngress);
         }
 
-        private void AddRemoteDependencyDocument(Activity activity, string? statusCodeAttributeValue)
+        private void AddRemoteDependencyDocument(Activity activity)
         {
-            RemoteDependency remoteDependencyDocumentIngress = new()
-            {
-                Name = activity.DisplayName,
-                // TODO: Implementation needs to be copied from Exporter.
-                // TODO: Value of dependencyTelemetry.Data
-                CommandName = "",
-                // TODO: Value of dependencyTelemetry.ResultCode
-                ResultCode = "",
-                Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
-                                                ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
-                                                : SchemaConstants.Duration_MaxValue,
-                DocumentType = DocumentIngressDocumentType.RemoteDependency,
-                // TODO: DocumentStreamIds = new List<string>(),
-                // TODO: Properties = new Dictionary<string, string>(), - Validate with UX team if this is needed.
-
-                Extension_IsSuccess = IsSuccess(activity, statusCodeAttributeValue),
-                Extension_Duration = activity.Duration.TotalMilliseconds,
-            };
-
+            var remoteDependencyDocumentIngress = DocumentHelper.ConvertToRemoteDependency(activity);
             _manager._documentBuffer.WriteDocument(remoteDependencyDocumentIngress);
         }
 
-        private void AddRequestDocument(Activity activity, string? statusCodeAttributeValue)
+        private void AddRequestDocument(Activity activity)
         {
-            Request requestDocumentIngress = new()
-            {
-                Name = activity.DisplayName,
-                // TODO: Implementation needs to be copied from Exporter.
-                // Value of requestTelemetry.ResultCode
-                Url = "",
-                ResponseCode = statusCodeAttributeValue,
-                Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
-                                                ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
-                                                : SchemaConstants.Duration_MaxValue,
-                DocumentType = DocumentIngressDocumentType.Request,
-                // TODO: DocumentStreamIds = new List<string>(),
-                // TODO: Properties = new Dictionary<string, string>(), - Validate with UX team if this is needed.
-
-                Extension_IsSuccess = IsSuccess(activity, statusCodeAttributeValue),
-                Extension_Duration = activity.Duration.TotalMilliseconds,
-            };
-
+            var requestDocumentIngress = DocumentHelper.ConvertToRequest(activity);
             _manager._documentBuffer.WriteDocument(requestDocumentIngress);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static bool IsSuccess(Activity activity, string? responseCode)
-        {
-            if (responseCode != null && int.TryParse(responseCode, out int statusCode))
-            {
-                bool isSuccessStatusCode = statusCode != 0 && statusCode < 400;
-                return activity.Status != ActivityStatusCode.Error && isSuccessStatusCode;
-            }
-            else
-            {
-                return activity.Status != ActivityStatusCode.Error;
-            }
         }
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class MongoDBIndexConfig : IUtf8JsonSerializable
+    public partial class MongoDBIndexConfig : IUtf8JsonSerializable, IJsonModel<MongoDBIndexConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBIndexConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MongoDBIndexConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBIndexConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MongoDBIndexConfig)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExpireAfterSeconds))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("unique"u8);
                 writer.WriteBooleanValue(IsUnique.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MongoDBIndexConfig DeserializeMongoDBIndexConfig(JsonElement element)
+        MongoDBIndexConfig IJsonModel<MongoDBIndexConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBIndexConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MongoDBIndexConfig)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBIndexConfig(document.RootElement, options);
+        }
+
+        internal static MongoDBIndexConfig DeserializeMongoDBIndexConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> expireAfterSeconds = default;
             Optional<bool> unique = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("expireAfterSeconds"u8))
@@ -56,8 +98,44 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     unique = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MongoDBIndexConfig(Optional.ToNullable(expireAfterSeconds), Optional.ToNullable(unique));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MongoDBIndexConfig(Optional.ToNullable(expireAfterSeconds), Optional.ToNullable(unique), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MongoDBIndexConfig>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBIndexConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBIndexConfig)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MongoDBIndexConfig IPersistableModel<MongoDBIndexConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBIndexConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMongoDBIndexConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBIndexConfig)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MongoDBIndexConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
