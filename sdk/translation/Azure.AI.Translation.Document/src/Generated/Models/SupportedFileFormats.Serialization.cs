@@ -7,11 +7,12 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.AI.Translation.Document;
 
 namespace Azure.AI.Translation.Document.Models
 {
-    internal partial class SupportedFileFormats
+    public partial class SupportedFileFormats
     {
         internal static SupportedFileFormats DeserializeSupportedFileFormats(JsonElement element)
         {
@@ -34,6 +35,14 @@ namespace Azure.AI.Translation.Document.Models
                 }
             }
             return new SupportedFileFormats(value);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SupportedFileFormats FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSupportedFileFormats(document.RootElement);
         }
     }
 }

@@ -13,8 +13,8 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
-    /// <summary> Base type for List return in our api. </summary>
-    internal partial class SupportedFileFormats
+    /// <summary> List of supported file formats. </summary>
+    public partial class SupportedFileFormats
     {
         /// <summary> Initializes a new instance of <see cref="SupportedFileFormats"/>. </summary>
         /// <param name="value"> list of objects. </param>

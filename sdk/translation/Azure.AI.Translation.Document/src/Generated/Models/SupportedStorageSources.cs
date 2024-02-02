@@ -12,8 +12,8 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
-    /// <summary> Base type for List return in our api. </summary>
-    internal partial class SupportedStorageSources
+    /// <summary> List of supported storage sources. </summary>
+    public partial class SupportedStorageSources
     {
         /// <summary> Initializes a new instance of <see cref="SupportedStorageSources"/>. </summary>
         /// <param name="value"> list of objects. </param>

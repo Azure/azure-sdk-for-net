@@ -7,7 +7,7 @@
 
 namespace Azure.AI.Translation.Document.Models
 {
-    /// <summary> The StatusSummary. </summary>
+    /// <summary> Status Summary. </summary>
     internal partial class StatusSummary
     {
         /// <summary> Initializes a new instance of <see cref="StatusSummary"/>. </summary>

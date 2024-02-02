@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Document
@@ -72,6 +73,14 @@ namespace Azure.AI.Translation.Document
                 }
             }
             return new DocumentTranslationFileFormat(format, fileExtensions, contentTypes, defaultVersion.Value, Optional.ToList(versions));
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentTranslationFileFormat FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentTranslationFileFormat(document.RootElement);
         }
     }
 }

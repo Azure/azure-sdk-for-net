@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
-    /// <summary> The FileFormat. </summary>
+    /// <summary> File Format. </summary>
     public partial class DocumentTranslationFileFormat
     {
         /// <summary> Initializes a new instance of <see cref="DocumentTranslationFileFormat"/>. </summary>

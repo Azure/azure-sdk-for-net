@@ -45,7 +45,10 @@ namespace Azure.AI.Translation.Document
         /// <param name="lastModified"> Date time in which the operation's status has been updated. </param>
         /// <param name="status"> List of possible statuses for job or document. </param>
         /// <param name="translatedToLanguageCode"> To language. </param>
-        /// <param name="error"> This contains an outer error with error code, message, details, target and an inner error with more descriptive details. </param>
+        /// <param name="error">
+        /// This contains an outer error with error code, message, details, target and an
+        /// inner error with more descriptive details.
+        /// </param>
         /// <param name="progress"> Progress of the translation if available. </param>
         /// <param name="id"> Document Id. </param>
         /// <param name="charactersCharged"> Character charged by the API. </param>

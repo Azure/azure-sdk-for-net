@@ -7,7 +7,7 @@
 
 namespace Azure.AI.Translation.Document.Models
 {
-    /// <summary> The DocumentFilter. </summary>
+    /// <summary> Document filter. </summary>
     internal partial class DocumentFilter
     {
         /// <summary> Initializes a new instance of <see cref="DocumentFilter"/>. </summary>
@@ -17,11 +17,14 @@ namespace Azure.AI.Translation.Document.Models
 
         /// <summary> Initializes a new instance of <see cref="DocumentFilter"/>. </summary>
         /// <param name="prefix">
-        /// A case-sensitive prefix string to filter documents in the source path for translation.
-        /// For example, when using a Azure storage blob Uri, use the prefix to restrict sub folders for translation.
+        /// A case-sensitive prefix string to filter documents in the source path for
+        /// translation.
+        /// For example, when using a Azure storage blob Uri, use the prefix
+        /// to restrict sub folders for translation.
         /// </param>
         /// <param name="suffix">
-        /// A case-sensitive suffix string to filter documents in the source path for translation.
+        /// A case-sensitive suffix string to filter documents in the source path for
+        /// translation.
         /// This is most often use for file extensions
         /// </param>
         internal DocumentFilter(string prefix, string suffix)
@@ -31,12 +34,15 @@ namespace Azure.AI.Translation.Document.Models
         }
 
         /// <summary>
-        /// A case-sensitive prefix string to filter documents in the source path for translation.
-        /// For example, when using a Azure storage blob Uri, use the prefix to restrict sub folders for translation.
+        /// A case-sensitive prefix string to filter documents in the source path for
+        /// translation.
+        /// For example, when using a Azure storage blob Uri, use the prefix
+        /// to restrict sub folders for translation.
         /// </summary>
         public string Prefix { get; set; }
         /// <summary>
-        /// A case-sensitive suffix string to filter documents in the source path for translation.
+        /// A case-sensitive suffix string to filter documents in the source path for
+        /// translation.
         /// This is most often use for file extensions
         /// </summary>
         public string Suffix { get; set; }

@@ -14,7 +14,7 @@ using Azure.Core;
 namespace Azure.AI.Translation.Document.Models
 {
     /// <summary> Translation job submission batch request. </summary>
-    internal partial class StartTranslationDetails
+    public partial class StartTranslationDetails
     {
         /// <summary> Initializes a new instance of <see cref="StartTranslationDetails"/>. </summary>
         /// <param name="inputs"> The input list of documents or folders containing documents. </param>
