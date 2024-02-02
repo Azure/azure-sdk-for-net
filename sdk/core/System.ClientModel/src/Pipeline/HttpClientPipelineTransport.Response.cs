@@ -87,12 +87,12 @@ public partial class HttpClientPipelineTransport
                 // not disposed, because the entity that replaced the response content
                 // intentionally left the network stream undisposed.
 
-                var contentStream = _contentStream;
-                if (contentStream is not null && !TryGetBufferedContent(out _))
-                {
-                    contentStream?.Dispose();
-                    _contentStream = null;
-                }
+                //var contentStream = _contentStream;
+                //if (contentStream is not null && !TryGetBufferedContent(out _))
+                //{
+                //    contentStream?.Dispose();
+                //    _contentStream = null;
+                //}
 
                 _disposed = true;
             }
