@@ -4,5 +4,7 @@
     <PackageId>Azure.ResourceManager.Fleet</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider azurefleet.</Description>
     <PackageTags>azure;management;arm;resource manager;azurefleet</PackageTags>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Azure.ResourceManager.Fleet</Title>
   </PropertyGroup>
 </Project>

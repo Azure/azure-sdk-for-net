@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Fleet.Models
             Optional<bool> writeAcceleratorEnabled = default;
             DiskCreateOptionType createOption = default;
             Optional<int> diskSizeGB = default;
-            Optional<VirtualMachineScaleSetManagedDiskParameters> managedDisk = default;
+            Optional<VirtualMachineScaleSetManagedDiskContent> managedDisk = default;
             Optional<long> diskIOPSReadWrite = default;
             Optional<long> diskMBpsReadWrite = default;
             Optional<DiskDeleteOptionType> deleteOption = default;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Fleet.Models
                     {
                         continue;
                     }
-                    managedDisk = VirtualMachineScaleSetManagedDiskParameters.DeserializeVirtualMachineScaleSetManagedDiskParameters(property.Value);
+                    managedDisk = VirtualMachineScaleSetManagedDiskContent.DeserializeVirtualMachineScaleSetManagedDiskParameters(property.Value);
                     continue;
                 }
                 if (property.NameEquals("diskIOPSReadWrite"u8))

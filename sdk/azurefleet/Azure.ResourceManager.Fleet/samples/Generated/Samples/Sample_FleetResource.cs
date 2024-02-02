@@ -313,7 +313,7 @@ CertificateStore = "ofo",
 {
 "ibogdijam"
 },
-                                ManagedDisk = new VirtualMachineScaleSetManagedDiskParameters()
+                                ManagedDisk = new VirtualMachineScaleSetManagedDiskContent()
                                 {
                                     StorageAccountType = StorageAccountType.StandardLRS,
                                     DiskEncryptionSetId = new ResourceIdentifier("hinhonboozgfbrfwyy"),
@@ -333,7 +333,7 @@ Name = "lxrutjmjctse",
 Caching = CachingType.None,
 WriteAcceleratorEnabled = true,
 DiskSizeGB = 24,
-ManagedDisk = new VirtualMachineScaleSetManagedDiskParameters()
+ManagedDisk = new VirtualMachineScaleSetManagedDiskContent()
 {
 StorageAccountType = StorageAccountType.StandardLRS,
 DiskEncryptionSetId = new ResourceIdentifier("hinhonboozgfbrfwyy"),

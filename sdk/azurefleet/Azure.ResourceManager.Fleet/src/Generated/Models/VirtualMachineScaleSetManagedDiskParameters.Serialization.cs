@@ -11,7 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Fleet.Models
 {
-    public partial class VirtualMachineScaleSetManagedDiskParameters : IUtf8JsonSerializable
+    public partial class VirtualMachineScaleSetManagedDiskContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Fleet.Models
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineScaleSetManagedDiskParameters DeserializeVirtualMachineScaleSetManagedDiskParameters(JsonElement element)
+        internal static VirtualMachineScaleSetManagedDiskContent DeserializeVirtualMachineScaleSetManagedDiskParameters(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Fleet.Models
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetManagedDiskParameters(Optional.ToNullable(storageAccountType), diskEncryptionSet, securityProfile.Value);
+            return new VirtualMachineScaleSetManagedDiskContent(Optional.ToNullable(storageAccountType), diskEncryptionSet, securityProfile.Value);
         }
     }
 }
