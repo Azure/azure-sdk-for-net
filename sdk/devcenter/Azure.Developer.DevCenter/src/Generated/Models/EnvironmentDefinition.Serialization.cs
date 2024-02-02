@@ -29,8 +29,11 @@ namespace Azure.Developer.DevCenter.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
             writer.WritePropertyName("catalogName"u8);
             writer.WriteStringValue(CatalogName);
             if (Optional.IsDefined(Description))

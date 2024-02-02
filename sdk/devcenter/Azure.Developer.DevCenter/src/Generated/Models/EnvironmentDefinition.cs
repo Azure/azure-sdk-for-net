@@ -48,17 +48,14 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="EnvironmentDefinition"/>. </summary>
         /// <param name="id"> The ID of the environment definition. </param>
-        /// <param name="name"> Name of the environment definition. </param>
         /// <param name="catalogName"> Name of the catalog. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="name"/> or <paramref name="catalogName"/> is null. </exception>
-        internal EnvironmentDefinition(string id, string name, string catalogName)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="catalogName"/> is null. </exception>
+        internal EnvironmentDefinition(string id, string catalogName)
         {
             Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(catalogName, nameof(catalogName));
 
             Id = id;
-            Name = name;
             CatalogName = catalogName;
             Parameters = new ChangeTrackingList<EnvironmentDefinitionParameter>();
         }

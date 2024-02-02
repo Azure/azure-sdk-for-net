@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -47,13 +46,8 @@ namespace Azure.Developer.DevCenter.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DevCenterCatalog"/>. </summary>
-        /// <param name="name"> Name of the catalog. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal DevCenterCatalog(string name)
+        internal DevCenterCatalog()
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="DevCenterCatalog"/>. </summary>
@@ -63,11 +57,6 @@ namespace Azure.Developer.DevCenter.Models
         {
             Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DevCenterCatalog"/> for deserialization. </summary>
-        internal DevCenterCatalog()
-        {
         }
 
         /// <summary> Name of the catalog. </summary>

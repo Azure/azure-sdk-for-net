@@ -32,7 +32,7 @@ namespace Azure.Developer.DevCenter.Models
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteBase64StringValue(Parameters.ToArray(), "D");
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -102,7 +102,7 @@ namespace Azure.Developer.DevCenter.Models
                 return null;
             }
             Optional<BinaryData> parameters = default;
-            Optional<string> name = default;
+            string name = default;
             string environmentType = default;
             Optional<Guid> user = default;
             Optional<EnvironmentProvisioningState> provisioningState = default;
@@ -185,7 +185,7 @@ namespace Azure.Developer.DevCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevCenterEnvironment(parameters.Value, name.Value, environmentType, Optional.ToNullable(user), Optional.ToNullable(provisioningState), resourceGroupId.Value, catalogName, environmentDefinitionName, error.Value, serializedAdditionalRawData);
+            return new DevCenterEnvironment(parameters.Value, name, environmentType, Optional.ToNullable(user), Optional.ToNullable(provisioningState), resourceGroupId.Value, catalogName, environmentDefinitionName, error.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevCenterEnvironment>.Write(ModelReaderWriterOptions options)

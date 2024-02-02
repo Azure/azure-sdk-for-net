@@ -93,7 +93,7 @@ Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("maxDevBoxesPerUser").ToString());
 ]]></code></example>
     </member>
-    <member name="GetProjectsAsync(string,int?,CancellationToken)">
+    <member name="GetProjectsAsync(CancellationToken)">
       <example>
 This sample shows how to call GetProjectsAsync.
 <code><![CDATA[
@@ -111,12 +111,12 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-await foreach (DevCenterProject item in client.GetProjectsAsync(filter: "<filter>", maxCount: 1234))
+await foreach (DevCenterProject item in client.GetProjectsAsync())
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetProjects(string,int?,CancellationToken)">
+    <member name="GetProjects(CancellationToken)">
       <example>
 This sample shows how to call GetProjects.
 <code><![CDATA[
@@ -134,12 +134,12 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-foreach (DevCenterProject item in client.GetProjects(filter: "<filter>", maxCount: 1234))
+foreach (DevCenterProject item in client.GetProjects())
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetProjectsAsync(string,int?,RequestContext)">
+    <member name="GetProjectsAsync(RequestContext)">
       <example>
 This sample shows how to call GetProjectsAsync and parse the result.
 <code><![CDATA[
@@ -147,7 +147,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetProjectsAsync(null, null, null))
+await foreach (BinaryData item in client.GetProjectsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -159,7 +159,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetProjectsAsync("<filter>", 1234, null))
+await foreach (BinaryData item in client.GetProjectsAsync(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -168,7 +168,7 @@ await foreach (BinaryData item in client.GetProjectsAsync("<filter>", 1234, null
 }
 ]]></code></example>
     </member>
-    <member name="GetProjects(string,int?,RequestContext)">
+    <member name="GetProjects(RequestContext)">
       <example>
 This sample shows how to call GetProjects and parse the result.
 <code><![CDATA[
@@ -176,7 +176,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetProjects(null, null, null))
+foreach (BinaryData item in client.GetProjects(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
@@ -188,7 +188,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevCenterClient client = new DevCenterClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetProjects("<filter>", 1234, null))
+foreach (BinaryData item in client.GetProjects(null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());

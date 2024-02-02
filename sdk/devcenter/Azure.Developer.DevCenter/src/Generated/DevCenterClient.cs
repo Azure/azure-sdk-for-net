@@ -46,7 +46,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary> Gets a project. </summary>
-        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -61,7 +61,7 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary> Gets a project. </summary>
-        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -90,7 +90,7 @@ namespace Azure.Developer.DevCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -130,7 +130,7 @@ namespace Azure.Developer.DevCenter
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="projectName"> The DevCenter Project upon which to execute operations. </param>
+        /// <param name="projectName"> Name of the project. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -156,28 +156,24 @@ namespace Azure.Developer.DevCenter
         }
 
         /// <summary> Lists all projects. </summary>
-        /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectsAsync(string,int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<DevCenterProject> GetProjectsAsync(string filter = null, int? maxCount = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectsAsync(CancellationToken)']/*" />
+        public virtual AsyncPageable<DevCenterProject> GetProjectsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(filter, maxCount, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, filter, maxCount, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DevCenterProject.DeserializeDevCenterProject(e), ClientDiagnostics, _pipeline, "DevCenterClient.GetProjects", "value", "nextLink", context);
         }
 
         /// <summary> Lists all projects. </summary>
-        /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjects(string,int?,CancellationToken)']/*" />
-        public virtual Pageable<DevCenterProject> GetProjects(string filter = null, int? maxCount = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjects(CancellationToken)']/*" />
+        public virtual Pageable<DevCenterProject> GetProjects(CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(filter, maxCount, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, filter, maxCount, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DevCenterProject.DeserializeDevCenterProject(e), ClientDiagnostics, _pipeline, "DevCenterClient.GetProjects", "value", "nextLink", context);
         }
 
@@ -191,21 +187,19 @@ namespace Azure.Developer.DevCenter
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetProjectsAsync(string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetProjectsAsync(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectsAsync(string,int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetProjectsAsync(string filter, int? maxCount, RequestContext context)
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjectsAsync(RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetProjectsAsync(RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(filter, maxCount, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, filter, maxCount, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetProjects", "value", "nextLink", context);
         }
 
@@ -219,25 +213,23 @@ namespace Azure.Developer.DevCenter
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetProjects(string,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetProjects(CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> An OData filter clause to apply to the operation. </param>
-        /// <param name="maxCount"> The maximum number of resources to return from the operation. Example: 'top=10'. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjects(string,int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetProjects(string filter, int? maxCount, RequestContext context)
+        /// <include file="Docs/DevCenterClient.xml" path="doc/members/member[@name='GetProjects(RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetProjects(RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(filter, maxCount, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, filter, maxCount, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DevCenterClient.GetProjects", "value", "nextLink", context);
         }
 
-        internal HttpMessage CreateGetProjectsRequest(string filter, int? maxCount, RequestContext context)
+        internal HttpMessage CreateGetProjectsRequest(RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -246,14 +238,6 @@ namespace Azure.Developer.DevCenter
             uri.Reset(_endpoint);
             uri.AppendPath("/projects", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (filter != null)
-            {
-                uri.AppendQuery("filter", filter, true);
-            }
-            if (maxCount != null)
-            {
-                uri.AppendQuery("top", maxCount.Value, true);
-            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -274,7 +258,7 @@ namespace Azure.Developer.DevCenter
             return message;
         }
 
-        internal HttpMessage CreateGetProjectsNextPageRequest(string nextLink, string filter, int? maxCount, RequestContext context)
+        internal HttpMessage CreateGetProjectsNextPageRequest(string nextLink, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
