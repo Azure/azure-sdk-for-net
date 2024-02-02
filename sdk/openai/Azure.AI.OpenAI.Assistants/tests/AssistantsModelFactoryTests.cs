@@ -186,7 +186,7 @@ public class AssistantsModelFactoryTests
         string functionCallName = "function_call_name";
         string functionCallArguments = "function_call_arguments";
         string functionCallOutput = "function_call_output";
-        RunStepFunctionToolCall mockFunctionToolCall = AssistantsModelFactory.FunctionToolCall(
+        RunStepFunctionToolCall mockFunctionToolCall = AssistantsModelFactory.RunStepFunctionToolCall(
             functionToolCallId,
             functionCallName,
             functionCallArguments,
