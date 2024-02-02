@@ -16,6 +16,7 @@ namespace Azure.Core
     {
         private ArrayBackedPropertyBag<ulong, object> _propertyBag;
         private Response? _response;
+        private bool _ownsResponse;
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpMessage"/>.
@@ -177,7 +178,9 @@ namespace Azure.Core
             _propertyBag.Set((ulong)type.TypeHandle.Value, value);
 
         /// <summary>
-        /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="Azure.Response.ContentStream"/> or <see cref="Azure.Response.Content"/> would result in exception.
+        /// Returns the response content stream and releases it ownership to the caller.
+        /// After calling this methods using <see cref="Azure.Response.ContentStream"/>
+        /// or <see cref="Azure.Response.Content"/> would result in exception.
         /// </summary>
         /// <returns>The content stream or null if response didn't have any.</returns>
         public Stream? ExtractResponseContent()
@@ -195,6 +198,15 @@ namespace Azure.Core
         }
 
         /// <summary>
+        /// Transfers dispose ownership of the message's Response property to the
+        /// holder of the Response.  After calling this method, the <see cref="Response"/>
+        /// property will still hold the response object, but when this object is
+        /// disposed, it will no longer dispose the response as well.
+        /// </summary>
+        public void TransferResponseDisposeOwnership()
+            => _ownsResponse = false;
+
+        /// <summary>
         /// Disposes the request and response.
         /// </summary>
         public void Dispose()
@@ -202,11 +214,14 @@ namespace Azure.Core
             Request.Dispose();
             _propertyBag.Dispose();
 
-            var response = _response;
-            if (response != null)
+            if (_ownsResponse)
             {
-                _response = null;
-                response.Dispose();
+                var response = _response;
+                if (response != null)
+                {
+                    _response = null;
+                    response.Dispose();
+                }
             }
         }
 

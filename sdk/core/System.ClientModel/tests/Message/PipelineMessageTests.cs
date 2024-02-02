@@ -1,14 +1,21 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using ClientModel.Tests.Mocks;
+using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Message;
 
-public class PipelineMessageTests
+public class PipelineMessageTests : SyncAsyncTestBase
 {
+    public PipelineMessageTests(bool isAsync) : base(isAsync)
+    {
+    }
+
     [Test]
     public void ApplyAddsRequestHeaders()
     {
@@ -109,6 +116,44 @@ public class PipelineMessageTests
 
         message.TryGetProperty(typeof(T4), out value);
         Assert.AreEqual(4444, ((T4)value!).Value);
+    }
+
+    [Test]
+    public async Task UnbufferedStreamAccessibleAfterMessageDisposed()
+    {
+        byte[] serverBytes = new byte[1000];
+        new Random().NextBytes(serverBytes);
+
+        ClientPipelineOptions options = new() { NetworkTimeout = Timeout.InfiniteTimeSpan };
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+
+        using TestServer testServer = new(async context =>
+        {
+            await context.Response.Body.WriteAsync(serverBytes, 0, serverBytes.Length).ConfigureAwait(false);
+        });
+
+        PipelineResponse response;
+        using (PipelineMessage message = pipeline.CreateMessage())
+        {
+            message.Request.Uri = testServer.Address;
+            message.BufferResponse = false;
+
+            await pipeline.SendSyncOrAsync(message, IsAsync);
+
+            message.TransferResponseDisposeOwnership();
+            response = message.Response!;
+        }
+
+        Assert.NotNull(response.ContentStream);
+        byte[] clientBytes = new byte[serverBytes.Length];
+        int readLength = 0;
+        while (readLength < serverBytes.Length)
+        {
+            readLength += await response.ContentStream!.ReadAsync(clientBytes, 0, serverBytes.Length);
+        }
+
+        Assert.AreEqual(serverBytes.Length, readLength);
+        CollectionAssert.AreEqual(serverBytes, clientBytes);
     }
 
     #region Helpers
