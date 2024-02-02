@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,10 +14,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class FhirServicePatch : IUtf8JsonSerializable
+    public partial class FhirServicePatch : IUtf8JsonSerializable, IJsonModel<FhirServicePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirServicePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FhirServicePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FhirServicePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FhirServicePatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -34,17 +44,48 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FhirServicePatch DeserializeFhirServicePatch(JsonElement element)
+        FhirServicePatch IJsonModel<FhirServicePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FhirServicePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FhirServicePatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFhirServicePatch(document.RootElement, options);
+        }
+
+        internal static FhirServicePatch DeserializeFhirServicePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -71,8 +112,44 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     tags = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FhirServicePatch(Optional.ToDictionary(tags), identity);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FhirServicePatch(Optional.ToDictionary(tags), serializedAdditionalRawData, identity);
         }
+
+        BinaryData IPersistableModel<FhirServicePatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FhirServicePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FhirServicePatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        FhirServicePatch IPersistableModel<FhirServicePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FhirServicePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFhirServicePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FhirServicePatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FhirServicePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

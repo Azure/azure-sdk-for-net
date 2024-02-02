@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The AzMonMonitoringAlertNotificationSettings. </summary>
@@ -18,7 +21,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="AzMonMonitoringAlertNotificationSettings"/>. </summary>
         /// <param name="alertNotificationType"> [Required] Specifies the type of signal to monitor. </param>
-        internal AzMonMonitoringAlertNotificationSettings(MonitoringAlertNotificationType alertNotificationType) : base(alertNotificationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzMonMonitoringAlertNotificationSettings(MonitoringAlertNotificationType alertNotificationType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(alertNotificationType, serializedAdditionalRawData)
         {
             AlertNotificationType = alertNotificationType;
         }

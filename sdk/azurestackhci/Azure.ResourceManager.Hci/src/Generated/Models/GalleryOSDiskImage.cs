@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> This is the OS disk image. </summary>
@@ -17,7 +20,8 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="GalleryOSDiskImage"/>. </summary>
         /// <param name="sizeInMB"> This property indicates the size of the VHD to be created. </param>
-        internal GalleryOSDiskImage(long? sizeInMB) : base(sizeInMB)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GalleryOSDiskImage(long? sizeInMB, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(sizeInMB, serializedAdditionalRawData)
         {
         }
     }

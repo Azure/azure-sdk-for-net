@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchImageReference : IUtf8JsonSerializable
+    public partial class BatchImageReference : IUtf8JsonSerializable, IJsonModel<BatchImageReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchImageReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BatchImageReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchImageReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchImageReference)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Publisher))
             {
@@ -40,11 +51,40 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BatchImageReference DeserializeBatchImageReference(JsonElement element)
+        BatchImageReference IJsonModel<BatchImageReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchImageReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchImageReference)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchImageReference(document.RootElement, options);
+        }
+
+        internal static BatchImageReference DeserializeBatchImageReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +94,8 @@ namespace Azure.ResourceManager.Batch.Models
             Optional<string> sku = default;
             Optional<string> version = default;
             Optional<ResourceIdentifier> id = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publisher"u8))
@@ -85,8 +127,44 @@ namespace Azure.ResourceManager.Batch.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchImageReference(publisher.Value, offer.Value, sku.Value, version.Value, id.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BatchImageReference(publisher.Value, offer.Value, sku.Value, version.Value, id.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BatchImageReference>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchImageReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BatchImageReference)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BatchImageReference IPersistableModel<BatchImageReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchImageReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBatchImageReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchImageReference)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BatchImageReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

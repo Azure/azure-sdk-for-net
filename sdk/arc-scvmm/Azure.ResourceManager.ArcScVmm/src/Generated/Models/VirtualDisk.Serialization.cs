@@ -5,20 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    public partial class VirtualDisk : IUtf8JsonSerializable
+    public partial class VirtualDisk : IUtf8JsonSerializable, IJsonModel<VirtualDisk>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualDisk>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VirtualDisk>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualDisk>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualDisk)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(DiskId))
             {
@@ -29,6 +45,11 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaxDiskSizeGB))
+            {
+                writer.WritePropertyName("maxDiskSizeGB"u8);
+                writer.WriteNumberValue(MaxDiskSizeGB.Value);
             }
             if (Optional.IsDefined(Bus))
             {
@@ -50,6 +71,16 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 writer.WritePropertyName("vhdType"u8);
                 writer.WriteStringValue(VhdType);
             }
+            if (options.Format != "W" && Optional.IsDefined(VolumeType))
+            {
+                writer.WritePropertyName("volumeType"u8);
+                writer.WriteStringValue(VolumeType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(VhdFormatType))
+            {
+                writer.WritePropertyName("vhdFormatType"u8);
+                writer.WriteStringValue(VhdFormatType);
+            }
             if (Optional.IsDefined(TemplateDiskId))
             {
                 writer.WritePropertyName("templateDiskId"u8);
@@ -65,11 +96,40 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 writer.WritePropertyName("createDiffDisk"u8);
                 writer.WriteStringValue(CreateDiffDisk.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualDisk DeserializeVirtualDisk(JsonElement element)
+        VirtualDisk IJsonModel<VirtualDisk>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualDisk>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualDisk)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualDisk(document.RootElement, options);
+        }
+
+        internal static VirtualDisk DeserializeVirtualDisk(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -88,6 +148,8 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             Optional<string> templateDiskId = default;
             Optional<StorageQoSPolicyDetails> storageQoSPolicy = default;
             Optional<CreateDiffDisk> createDiffDisk = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -184,8 +246,44 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     createDiffDisk = new CreateDiffDisk(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualDisk(name.Value, displayName.Value, diskId.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(maxDiskSizeGB), Optional.ToNullable(bus), Optional.ToNullable(lun), busType.Value, vhdType.Value, volumeType.Value, vhdFormatType.Value, templateDiskId.Value, storageQoSPolicy.Value, Optional.ToNullable(createDiffDisk));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualDisk(name.Value, displayName.Value, diskId.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(maxDiskSizeGB), Optional.ToNullable(bus), Optional.ToNullable(lun), busType.Value, vhdType.Value, volumeType.Value, vhdFormatType.Value, templateDiskId.Value, storageQoSPolicy.Value, Optional.ToNullable(createDiffDisk), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualDisk>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualDisk>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualDisk)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VirtualDisk IPersistableModel<VirtualDisk>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualDisk>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualDisk(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualDisk)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualDisk>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

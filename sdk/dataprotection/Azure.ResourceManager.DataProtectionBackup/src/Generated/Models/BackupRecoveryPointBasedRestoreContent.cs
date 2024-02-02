@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -48,11 +49,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// Contains information of the Identity Details for the BI.
         /// If it is null, default will be considered as System Assigned.
         /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointId"></param>
-        internal BackupRecoveryPointBasedRestoreContent(string objectType, RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, DataProtectionIdentityDetails identityDetails, string recoveryPointId) : base(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId, identityDetails)
+        internal BackupRecoveryPointBasedRestoreContent(string objectType, RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, DataProtectionIdentityDetails identityDetails, IDictionary<string, BinaryData> serializedAdditionalRawData, string recoveryPointId) : base(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId, identityDetails, serializedAdditionalRawData)
         {
             RecoveryPointId = recoveryPointId;
             ObjectType = objectType ?? "AzureBackupRecoveryPointBasedRestoreRequest";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupRecoveryPointBasedRestoreContent"/> for deserialization. </summary>
+        internal BackupRecoveryPointBasedRestoreContent()
+        {
         }
 
         /// <summary> Gets the recovery point id. </summary>

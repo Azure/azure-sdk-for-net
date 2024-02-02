@@ -6,15 +6,75 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DomainControlCenterSsoRequestInfo
+    public partial class DomainControlCenterSsoRequestInfo : IUtf8JsonSerializable, IJsonModel<DomainControlCenterSsoRequestInfo>
     {
-        internal static DomainControlCenterSsoRequestInfo DeserializeDomainControlCenterSsoRequestInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainControlCenterSsoRequestInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DomainControlCenterSsoRequestInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DomainControlCenterSsoRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DomainControlCenterSsoRequestInfo)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Uri))
+            {
+                writer.WritePropertyName("url"u8);
+                writer.WriteStringValue(Uri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PostParameterKey))
+            {
+                writer.WritePropertyName("postParameterKey"u8);
+                writer.WriteStringValue(PostParameterKey);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PostParameterValue))
+            {
+                writer.WritePropertyName("postParameterValue"u8);
+                writer.WriteStringValue(PostParameterValue);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DomainControlCenterSsoRequestInfo IJsonModel<DomainControlCenterSsoRequestInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DomainControlCenterSsoRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DomainControlCenterSsoRequestInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDomainControlCenterSsoRequestInfo(document.RootElement, options);
+        }
+
+        internal static DomainControlCenterSsoRequestInfo DeserializeDomainControlCenterSsoRequestInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +82,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<Uri> url = default;
             Optional<string> postParameterKey = default;
             Optional<string> postParameterValue = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))
@@ -43,8 +105,44 @@ namespace Azure.ResourceManager.AppService.Models
                     postParameterValue = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DomainControlCenterSsoRequestInfo(url.Value, postParameterKey.Value, postParameterValue.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DomainControlCenterSsoRequestInfo(url.Value, postParameterKey.Value, postParameterValue.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DomainControlCenterSsoRequestInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DomainControlCenterSsoRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DomainControlCenterSsoRequestInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DomainControlCenterSsoRequestInfo IPersistableModel<DomainControlCenterSsoRequestInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DomainControlCenterSsoRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDomainControlCenterSsoRequestInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DomainControlCenterSsoRequestInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DomainControlCenterSsoRequestInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

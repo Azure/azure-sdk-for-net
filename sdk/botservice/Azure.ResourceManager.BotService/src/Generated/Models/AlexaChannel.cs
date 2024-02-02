@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -24,8 +26,9 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="etag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The set of properties specific to Alexa channel resource. </param>
-        internal AlexaChannel(string channelName, ETag? etag, string provisioningState, AzureLocation? location, AlexaChannelProperties properties) : base(channelName, etag, provisioningState, location)
+        internal AlexaChannel(string channelName, ETag? etag, string provisioningState, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, AlexaChannelProperties properties) : base(channelName, etag, provisioningState, location, serializedAdditionalRawData)
         {
             Properties = properties;
             ChannelName = channelName ?? "AlexaChannel";

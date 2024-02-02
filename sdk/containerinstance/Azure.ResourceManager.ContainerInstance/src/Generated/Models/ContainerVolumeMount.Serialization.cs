@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerVolumeMount : IUtf8JsonSerializable
+    public partial class ContainerVolumeMount : IUtf8JsonSerializable, IJsonModel<ContainerVolumeMount>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerVolumeMount>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerVolumeMount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerVolumeMount>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerVolumeMount)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -24,11 +35,40 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerVolumeMount DeserializeContainerVolumeMount(JsonElement element)
+        ContainerVolumeMount IJsonModel<ContainerVolumeMount>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerVolumeMount>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerVolumeMount)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerVolumeMount(document.RootElement, options);
+        }
+
+        internal static ContainerVolumeMount DeserializeContainerVolumeMount(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +76,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             string name = default;
             string mountPath = default;
             Optional<bool> readOnly = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -57,8 +99,44 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     readOnly = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerVolumeMount(name, mountPath, Optional.ToNullable(readOnly));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerVolumeMount(name, mountPath, Optional.ToNullable(readOnly), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerVolumeMount>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerVolumeMount>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerVolumeMount)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContainerVolumeMount IPersistableModel<ContainerVolumeMount>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerVolumeMount>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerVolumeMount(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerVolumeMount)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerVolumeMount>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

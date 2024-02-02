@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationStatusResult"/> for deserialization. </summary>
-        internal OperationStatusResult()
+        protected OperationStatusResult()
         {
         }
 

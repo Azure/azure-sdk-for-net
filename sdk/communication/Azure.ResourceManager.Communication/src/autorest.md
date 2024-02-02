@@ -17,6 +17,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 override-operation-name:
   CommunicationServices_CheckNameAvailability: CheckCommunicationNameAvailability
@@ -76,7 +77,7 @@ rename-mapping:
   ProvisioningState: CommunicationServiceProvisioningState
   SuppressionListResource.properties.createdTimeStamp: -|date-time
   SuppressionListResource.properties.lastUpdatedTimeStamp: -|date-time
-  
+
 directive:
  - from: types.json
    where: $.parameters.SubscriptionIdParameter

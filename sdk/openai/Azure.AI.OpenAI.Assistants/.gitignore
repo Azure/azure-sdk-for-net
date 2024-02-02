@@ -1,0 +1,4 @@
+package-lock.json
+TempTypeSpecFiles/
+tests/SessionRecords
+**/Generated/configuration.json

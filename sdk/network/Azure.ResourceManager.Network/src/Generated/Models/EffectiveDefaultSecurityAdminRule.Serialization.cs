@@ -6,16 +6,180 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class EffectiveDefaultSecurityAdminRule
+    public partial class EffectiveDefaultSecurityAdminRule : IUtf8JsonSerializable, IJsonModel<EffectiveDefaultSecurityAdminRule>
     {
-        internal static EffectiveDefaultSecurityAdminRule DeserializeEffectiveDefaultSecurityAdminRule(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveDefaultSecurityAdminRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EffectiveDefaultSecurityAdminRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EffectiveDefaultSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EffectiveDefaultSecurityAdminRule)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (Optional.IsDefined(ConfigurationDescription))
+            {
+                writer.WritePropertyName("configurationDescription"u8);
+                writer.WriteStringValue(ConfigurationDescription);
+            }
+            if (Optional.IsDefined(RuleCollectionDescription))
+            {
+                writer.WritePropertyName("ruleCollectionDescription"u8);
+                writer.WriteStringValue(RuleCollectionDescription);
+            }
+            if (Optional.IsCollectionDefined(RuleCollectionAppliesToGroups))
+            {
+                writer.WritePropertyName("ruleCollectionAppliesToGroups"u8);
+                writer.WriteStartArray();
+                foreach (var item in RuleCollectionAppliesToGroups)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(RuleGroups))
+            {
+                writer.WritePropertyName("ruleGroups"u8);
+                writer.WriteStartArray();
+                foreach (var item in RuleGroups)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(Flag))
+            {
+                writer.WritePropertyName("flag"u8);
+                writer.WriteStringValue(Flag);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Protocol))
+            {
+                writer.WritePropertyName("protocol"u8);
+                writer.WriteStringValue(Protocol.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Sources))
+            {
+                writer.WritePropertyName("sources"u8);
+                writer.WriteStartArray();
+                foreach (var item in Sources)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Destinations))
+            {
+                writer.WritePropertyName("destinations"u8);
+                writer.WriteStartArray();
+                foreach (var item in Destinations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SourcePortRanges))
+            {
+                writer.WritePropertyName("sourcePortRanges"u8);
+                writer.WriteStartArray();
+                foreach (var item in SourcePortRanges)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(DestinationPortRanges))
+            {
+                writer.WritePropertyName("destinationPortRanges"u8);
+                writer.WriteStartArray();
+                foreach (var item in DestinationPortRanges)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Access))
+            {
+                writer.WritePropertyName("access"u8);
+                writer.WriteStringValue(Access.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Priority))
+            {
+                writer.WritePropertyName("priority"u8);
+                writer.WriteNumberValue(Priority.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Direction))
+            {
+                writer.WritePropertyName("direction"u8);
+                writer.WriteStringValue(Direction.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
+            {
+                writer.WritePropertyName("resourceGuid"u8);
+                writer.WriteStringValue(ResourceGuid.Value);
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        EffectiveDefaultSecurityAdminRule IJsonModel<EffectiveDefaultSecurityAdminRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EffectiveDefaultSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EffectiveDefaultSecurityAdminRule)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEffectiveDefaultSecurityAdminRule(document.RootElement, options);
+        }
+
+        internal static EffectiveDefaultSecurityAdminRule DeserializeEffectiveDefaultSecurityAdminRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,6 +202,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<SecurityConfigurationRuleDirection> direction = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<Guid> resourceGuid = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -224,8 +390,44 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EffectiveDefaultSecurityAdminRule(id.Value, configurationDescription.Value, ruleCollectionDescription.Value, Optional.ToList(ruleCollectionAppliesToGroups), Optional.ToList(ruleGroups), kind, description.Value, flag.Value, Optional.ToNullable(protocol), Optional.ToList(sources), Optional.ToList(destinations), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EffectiveDefaultSecurityAdminRule(id.Value, configurationDescription.Value, ruleCollectionDescription.Value, Optional.ToList(ruleCollectionAppliesToGroups), Optional.ToList(ruleGroups), kind, serializedAdditionalRawData, description.Value, flag.Value, Optional.ToNullable(protocol), Optional.ToList(sources), Optional.ToList(destinations), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
         }
+
+        BinaryData IPersistableModel<EffectiveDefaultSecurityAdminRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EffectiveDefaultSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EffectiveDefaultSecurityAdminRule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EffectiveDefaultSecurityAdminRule IPersistableModel<EffectiveDefaultSecurityAdminRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EffectiveDefaultSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEffectiveDefaultSecurityAdminRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EffectiveDefaultSecurityAdminRule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EffectiveDefaultSecurityAdminRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -16,7 +16,7 @@ This script merely allows the abstraction of some of this "combination" work.
 - Must have the `test-proxy` available on your PATH
   - `test-proxy` is honored when the proxy is installed as a `dotnet tool`
   - `Azure.Sdk.Tools.TestProxy` is honored when the standalone executable is on your PATH
-  - Preference for `dotnet tool` if present
+  - Defaults to `dotnet tool` if both are present on the PATH.
 
 ### Call the script
 

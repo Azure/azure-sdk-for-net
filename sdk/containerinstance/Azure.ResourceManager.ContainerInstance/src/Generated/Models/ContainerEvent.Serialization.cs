@@ -6,15 +6,90 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerEvent
+    public partial class ContainerEvent : IUtf8JsonSerializable, IJsonModel<ContainerEvent>
     {
-        internal static ContainerEvent DeserializeContainerEvent(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerEvent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerEvent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerEvent)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FirstTimestamp))
+            {
+                writer.WritePropertyName("firstTimestamp"u8);
+                writer.WriteStringValue(FirstTimestamp.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastTimestamp))
+            {
+                writer.WritePropertyName("lastTimestamp"u8);
+                writer.WriteStringValue(LastTimestamp.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EventType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(EventType);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ContainerEvent IJsonModel<ContainerEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerEvent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerEvent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerEvent(document.RootElement, options);
+        }
+
+        internal static ContainerEvent DeserializeContainerEvent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +100,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             Optional<string> name = default;
             Optional<string> message = default;
             Optional<string> type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -69,8 +146,44 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerEvent(Optional.ToNullable(count), Optional.ToNullable(firstTimestamp), Optional.ToNullable(lastTimestamp), name.Value, message.Value, type.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerEvent(Optional.ToNullable(count), Optional.ToNullable(firstTimestamp), Optional.ToNullable(lastTimestamp), name.Value, message.Value, type.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerEvent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerEvent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerEvent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContainerEvent IPersistableModel<ContainerEvent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerEvent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerEvent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerEvent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

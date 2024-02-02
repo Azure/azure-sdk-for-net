@@ -5,15 +5,161 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class BinaryHardening
+    public partial class BinaryHardening : IUtf8JsonSerializable, IJsonModel<BinaryHardening>
     {
-        internal static BinaryHardening DeserializeBinaryHardening(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BinaryHardening>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BinaryHardening>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BinaryHardening>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BinaryHardening)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(BinaryHardeningId))
+            {
+                if (BinaryHardeningId != null)
+                {
+                    writer.WritePropertyName("binaryHardeningId"u8);
+                    writer.WriteStringValue(BinaryHardeningId);
+                }
+                else
+                {
+                    writer.WriteNull("binaryHardeningId");
+                }
+            }
+            if (Optional.IsDefined(Architecture))
+            {
+                if (Architecture != null)
+                {
+                    writer.WritePropertyName("architecture"u8);
+                    writer.WriteStringValue(Architecture);
+                }
+                else
+                {
+                    writer.WriteNull("architecture");
+                }
+            }
+            if (Optional.IsDefined(Path))
+            {
+                if (Path != null)
+                {
+                    writer.WritePropertyName("path"u8);
+                    writer.WriteStringValue(Path);
+                }
+                else
+                {
+                    writer.WriteNull("path");
+                }
+            }
+            if (Optional.IsDefined(Class))
+            {
+                if (Class != null)
+                {
+                    writer.WritePropertyName("class"u8);
+                    writer.WriteStringValue(Class);
+                }
+                else
+                {
+                    writer.WriteNull("class");
+                }
+            }
+            if (Optional.IsDefined(Runpath))
+            {
+                if (Runpath != null)
+                {
+                    writer.WritePropertyName("runpath"u8);
+                    writer.WriteStringValue(Runpath);
+                }
+                else
+                {
+                    writer.WriteNull("runpath");
+                }
+            }
+            if (Optional.IsDefined(Rpath))
+            {
+                if (Rpath != null)
+                {
+                    writer.WritePropertyName("rpath"u8);
+                    writer.WriteStringValue(Rpath);
+                }
+                else
+                {
+                    writer.WriteNull("rpath");
+                }
+            }
+            writer.WritePropertyName("features"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Nx))
+            {
+                writer.WritePropertyName("nx"u8);
+                writer.WriteStringValue(Nx.Value.ToString());
+            }
+            if (Optional.IsDefined(Pie))
+            {
+                writer.WritePropertyName("pie"u8);
+                writer.WriteStringValue(Pie.Value.ToString());
+            }
+            if (Optional.IsDefined(Relro))
+            {
+                writer.WritePropertyName("relro"u8);
+                writer.WriteStringValue(Relro.Value.ToString());
+            }
+            if (Optional.IsDefined(Canary))
+            {
+                writer.WritePropertyName("canary"u8);
+                writer.WriteStringValue(Canary.Value.ToString());
+            }
+            if (Optional.IsDefined(Stripped))
+            {
+                writer.WritePropertyName("stripped"u8);
+                writer.WriteStringValue(Stripped.Value.ToString());
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        BinaryHardening IJsonModel<BinaryHardening>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BinaryHardening>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BinaryHardening)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBinaryHardening(document.RootElement, options);
+        }
+
+        internal static BinaryHardening DeserializeBinaryHardening(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -29,6 +175,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Optional<RelroFlag> relro = default;
             Optional<CanaryFlag> canary = default;
             Optional<StrippedFlag> stripped = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("binaryHardeningId"u8))
@@ -148,8 +296,44 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BinaryHardening(binaryHardeningId.Value, architecture.Value, path.Value, @class.Value, runpath.Value, rpath.Value, Optional.ToNullable(nx), Optional.ToNullable(pie), Optional.ToNullable(relro), Optional.ToNullable(canary), Optional.ToNullable(stripped));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BinaryHardening(binaryHardeningId.Value, architecture.Value, path.Value, @class.Value, runpath.Value, rpath.Value, Optional.ToNullable(nx), Optional.ToNullable(pie), Optional.ToNullable(relro), Optional.ToNullable(canary), Optional.ToNullable(stripped), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BinaryHardening>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BinaryHardening>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BinaryHardening)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BinaryHardening IPersistableModel<BinaryHardening>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BinaryHardening>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBinaryHardening(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BinaryHardening)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BinaryHardening>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

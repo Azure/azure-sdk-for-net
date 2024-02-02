@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> The parameters to list SAS credentials of a storage account. </summary>
     public partial class AccountSasContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AccountSasContent"/>. </summary>
         /// <param name="services"> The signed services accessible with the account SAS. Possible values include: Blob (b), Queue (q), Table (t), File (f). </param>
         /// <param name="resourceTypes"> The signed resource types that are accessible with the account SAS. Service (s): Access to service-level APIs; Container (c): Access to container-level APIs; Object (o): Access to object-level APIs for blobs, queue messages, table entities, and files. </param>
@@ -34,7 +67,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="sharedAccessStartOn"> The time at which the SAS becomes valid. </param>
         /// <param name="sharedAccessExpireOn"> The time at which the shared access signature becomes invalid. </param>
         /// <param name="keyToSign"> The key to sign the account SAS token with. </param>
-        internal AccountSasContent(StorageAccountSasSignedService services, StorageAccountSasSignedResourceType resourceTypes, StorageAccountSasPermission permissions, string ipAddressOrRange, StorageAccountHttpProtocol? protocols, DateTimeOffset? sharedAccessStartOn, DateTimeOffset sharedAccessExpireOn, string keyToSign)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AccountSasContent(StorageAccountSasSignedService services, StorageAccountSasSignedResourceType resourceTypes, StorageAccountSasPermission permissions, string ipAddressOrRange, StorageAccountHttpProtocol? protocols, DateTimeOffset? sharedAccessStartOn, DateTimeOffset sharedAccessExpireOn, string keyToSign, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Services = services;
             ResourceTypes = resourceTypes;
@@ -44,6 +78,12 @@ namespace Azure.ResourceManager.Storage.Models
             SharedAccessStartOn = sharedAccessStartOn;
             SharedAccessExpireOn = sharedAccessExpireOn;
             KeyToSign = keyToSign;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AccountSasContent"/> for deserialization. </summary>
+        internal AccountSasContent()
+        {
         }
 
         /// <summary> The signed services accessible with the account SAS. Possible values include: Blob (b), Queue (q), Table (t), File (f). </summary>

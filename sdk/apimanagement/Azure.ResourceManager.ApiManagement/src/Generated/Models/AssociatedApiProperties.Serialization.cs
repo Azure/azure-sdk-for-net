@@ -6,16 +6,165 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class AssociatedApiProperties
+    public partial class AssociatedApiProperties : IUtf8JsonSerializable, IJsonModel<AssociatedApiProperties>
     {
-        internal static AssociatedApiProperties DeserializeAssociatedApiProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssociatedApiProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AssociatedApiProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AssociatedApiProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AssociatedApiProperties)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(ServiceUri))
+            {
+                writer.WritePropertyName("serviceUrl"u8);
+                writer.WriteStringValue(ServiceUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(Path))
+            {
+                writer.WritePropertyName("path"u8);
+                writer.WriteStringValue(Path);
+            }
+            if (Optional.IsCollectionDefined(Protocols))
+            {
+                writer.WritePropertyName("protocols"u8);
+                writer.WriteStartArray();
+                foreach (var item in Protocols)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(AuthenticationSettings))
+            {
+                writer.WritePropertyName("authenticationSettings"u8);
+                writer.WriteObjectValue(AuthenticationSettings);
+            }
+            if (Optional.IsDefined(SubscriptionKeyParameterNames))
+            {
+                writer.WritePropertyName("subscriptionKeyParameterNames"u8);
+                writer.WriteObjectValue(SubscriptionKeyParameterNames);
+            }
+            if (Optional.IsDefined(ApiType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ApiType.Value.ToString());
+            }
+            if (Optional.IsDefined(ApiRevision))
+            {
+                writer.WritePropertyName("apiRevision"u8);
+                writer.WriteStringValue(ApiRevision);
+            }
+            if (Optional.IsDefined(ApiVersion))
+            {
+                writer.WritePropertyName("apiVersion"u8);
+                writer.WriteStringValue(ApiVersion);
+            }
+            if (Optional.IsDefined(IsCurrent))
+            {
+                writer.WritePropertyName("isCurrent"u8);
+                writer.WriteBooleanValue(IsCurrent.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsOnline))
+            {
+                writer.WritePropertyName("isOnline"u8);
+                writer.WriteBooleanValue(IsOnline.Value);
+            }
+            if (Optional.IsDefined(ApiRevisionDescription))
+            {
+                writer.WritePropertyName("apiRevisionDescription"u8);
+                writer.WriteStringValue(ApiRevisionDescription);
+            }
+            if (Optional.IsDefined(ApiVersionDescription))
+            {
+                writer.WritePropertyName("apiVersionDescription"u8);
+                writer.WriteStringValue(ApiVersionDescription);
+            }
+            if (Optional.IsDefined(ApiVersionSetId))
+            {
+                writer.WritePropertyName("apiVersionSetId"u8);
+                writer.WriteStringValue(ApiVersionSetId);
+            }
+            if (Optional.IsDefined(IsSubscriptionRequired))
+            {
+                writer.WritePropertyName("subscriptionRequired"u8);
+                writer.WriteBooleanValue(IsSubscriptionRequired.Value);
+            }
+            if (Optional.IsDefined(TermsOfServiceUri))
+            {
+                writer.WritePropertyName("termsOfServiceUrl"u8);
+                writer.WriteStringValue(TermsOfServiceUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(Contact))
+            {
+                writer.WritePropertyName("contact"u8);
+                writer.WriteObjectValue(Contact);
+            }
+            if (Optional.IsDefined(License))
+            {
+                writer.WritePropertyName("license"u8);
+                writer.WriteObjectValue(License);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AssociatedApiProperties IJsonModel<AssociatedApiProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssociatedApiProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AssociatedApiProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAssociatedApiProperties(document.RootElement, options);
+        }
+
+        internal static AssociatedApiProperties DeserializeAssociatedApiProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +189,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<Uri> termsOfServiceUri = default;
             Optional<ApiContactInformation> contact = default;
             Optional<ApiLicenseInformation> license = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -195,8 +346,44 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     license = ApiLicenseInformation.DeserializeApiLicenseInformation(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AssociatedApiProperties(description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value, id.Value, name.Value, serviceUri.Value, path.Value, Optional.ToList(protocols));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AssociatedApiProperties(description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value, serializedAdditionalRawData, id.Value, name.Value, serviceUri.Value, path.Value, Optional.ToList(protocols));
         }
+
+        BinaryData IPersistableModel<AssociatedApiProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssociatedApiProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AssociatedApiProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AssociatedApiProperties IPersistableModel<AssociatedApiProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssociatedApiProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAssociatedApiProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AssociatedApiProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AssociatedApiProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

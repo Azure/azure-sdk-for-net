@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class LoadBalancerResourceNames : IUtf8JsonSerializable
+    public partial class LoadBalancerResourceNames : IUtf8JsonSerializable, IJsonModel<LoadBalancerResourceNames>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadBalancerResourceNames>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LoadBalancerResourceNames>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerResourceNames>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LoadBalancerName))
             {
@@ -51,11 +61,40 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LoadBalancerResourceNames DeserializeLoadBalancerResourceNames(JsonElement element)
+        LoadBalancerResourceNames IJsonModel<LoadBalancerResourceNames>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerResourceNames>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLoadBalancerResourceNames(document.RootElement, options);
+        }
+
+        internal static LoadBalancerResourceNames DeserializeLoadBalancerResourceNames(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +103,8 @@ namespace Azure.ResourceManager.Workloads.Models
             Optional<IList<string>> frontendIPConfigurationNames = default;
             Optional<IList<string>> backendPoolNames = default;
             Optional<IList<string>> healthProbeNames = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loadBalancerName"u8))
@@ -113,8 +154,44 @@ namespace Azure.ResourceManager.Workloads.Models
                     healthProbeNames = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LoadBalancerResourceNames(loadBalancerName.Value, Optional.ToList(frontendIPConfigurationNames), Optional.ToList(backendPoolNames), Optional.ToList(healthProbeNames));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LoadBalancerResourceNames(loadBalancerName.Value, Optional.ToList(frontendIPConfigurationNames), Optional.ToList(backendPoolNames), Optional.ToList(healthProbeNames), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LoadBalancerResourceNames>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerResourceNames>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support '{options.Format}' format.");
+            }
+        }
+
+        LoadBalancerResourceNames IPersistableModel<LoadBalancerResourceNames>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerResourceNames>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLoadBalancerResourceNames(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LoadBalancerResourceNames>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
