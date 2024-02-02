@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using ClientModel.Tests.Mocks;
 using NUnit.Framework;
+using SyncAsyncTestBase = ClientModel.Tests.SyncAsyncTestBase;
 
 namespace System.ClientModel.Tests.Message;
 
