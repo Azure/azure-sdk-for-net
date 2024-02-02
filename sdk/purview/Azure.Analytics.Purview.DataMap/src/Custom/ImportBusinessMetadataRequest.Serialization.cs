@@ -1,12 +1,11 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text.Json;
-using Azure;
+using System.Net.Http;
 using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap;
-
 public partial class ImportBusinessMetadataRequest
 {
     // CUSTOM CODE NOTE:
@@ -15,10 +14,9 @@ public partial class ImportBusinessMetadataRequest
 
     internal virtual RequestContent ToRequestContent()
     {
-        MultipartFormDataContent content = new MutipartFormDataContent();
+        MultipartFormDataContent content = new MultipartFormDataContent();
         content.Add(MultipartContent.Create(File), "file", "file", null);
         return content;
     }
-
 }
 

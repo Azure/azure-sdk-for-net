@@ -124,13 +124,5 @@ namespace Azure.Analytics.Purview.DataMap
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeImportBusinessMetadataRequest(document.RootElement);
         }
-
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
-        }
     }
 }
