@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.IO;
 using System.Net;
 using System.Threading;
 using Azure;
@@ -65,6 +66,58 @@ public class MapsClient
         }
 
         return response;
+    }
+
+    public virtual Response<Stream> GetStream(CancellationToken cancellationToken = default)
+    {
+        RequestContext options = cancellationToken.CanBeCanceled ?
+            new RequestContext() { CancellationToken = cancellationToken } :
+            new RequestContext();
+
+        return GetStream(options);
+    }
+
+    public virtual Response<Stream> GetStream(RequestContext context)
+    {
+        context ??= new RequestContext();
+
+        using HttpMessage message = CreateGetStreamRequest(context);
+        message.BufferResponse = false;
+
+        _pipeline.Send(message, context.CancellationToken);
+
+        Response response = message.Response;
+
+        if (response.IsError && context.ErrorOptions == ErrorOptions.Default)
+        {
+            throw new RequestFailedException(response);
+        }
+
+        Stream stream = message.ExtractResponseContent();
+
+        return Response.FromValue(stream, response);
+    }
+
+    private HttpMessage CreateGetStreamRequest(RequestContext context)
+    {
+        HttpMessage message = _pipeline.CreateMessage();
+        message.ResponseClassifier = new StatusCodeClassifier(stackalloc ushort[] { 200 });
+
+        Request request = message.Request;
+        request.Method = RequestMethod.Get;
+
+        RawRequestUriBuilder uriBuilder = new();
+        uriBuilder.Reset(_endpoint);
+        uriBuilder.AppendRaw("geolocation/ip", false);
+        uriBuilder.AppendPath("/json", false);
+        uriBuilder.AppendQuery("api-version", _apiVersion, true);
+        request.Uri = uriBuilder;
+
+        request.Headers.Add("Accept", "application/json");
+
+        message.Apply(context);
+
+        return message;
     }
 
     private HttpMessage CreateGetLocationRequest(string ipAddress, RequestContext context)

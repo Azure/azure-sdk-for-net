@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.IO;
 using System.Net;
 using System.Text;
 
@@ -64,6 +65,61 @@ public class MapsClient
         }
 
         return ClientResult.FromResponse(response);
+    }
+
+    public virtual ClientResult<Stream> GetStream()
+    {
+        return GetStream();
+    }
+
+    public virtual ClientResult<Stream> GetStream(RequestOptions options)
+    {
+        options ??= new RequestOptions();
+
+        using PipelineMessage message = CreateGetStreamRequest(options);
+        message.BufferResponse = false;
+
+        _pipeline.Send(message);
+
+        PipelineResponse response = message.Response!;
+
+        if (response.IsError && options.ErrorOptions == ClientErrorBehaviors.Default)
+        {
+            throw new ClientResultException(response);
+        }
+
+        Stream stream = message.ExtractResponseContent();
+
+        return ClientResult.FromValue(stream, response);
+    }
+
+    private PipelineMessage CreateGetStreamRequest(RequestOptions options)
+    {
+        PipelineMessage message = _pipeline.CreateMessage();
+        message.ResponseClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+
+        PipelineRequest request = message.Request;
+        request.Method = "GET";
+
+        UriBuilder uriBuilder = new(_endpoint.ToString());
+
+        StringBuilder path = new();
+        path.Append("geolocation/ip");
+        path.Append("/json");
+        uriBuilder.Path += path.ToString();
+
+        StringBuilder query = new();
+        query.Append("api-version=");
+        query.Append(Uri.EscapeDataString(_apiVersion));
+        uriBuilder.Query = query.ToString();
+
+        request.Uri = uriBuilder.Uri;
+
+        request.Headers.Add("Accept", "application/json");
+
+        message.Apply(options);
+
+        return message;
     }
 
     private PipelineMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)

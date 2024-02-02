@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.IO;
 using System.Threading;
 
 namespace System.ClientModel.Primitives;
@@ -122,6 +123,85 @@ public class PipelineMessage : IDisposable
         if (Response is null)
         {
             throw new InvalidOperationException("Response is not set on message.");
+        }
+    }
+
+    /// <summary>
+    /// Returns the response content stream and releases it ownership to the caller.
+    ///
+    /// After calling this method, any attempt to use the
+    /// <see cref="PipelineResponse.ContentStream"/> or <see cref="PipelineResponse.Content"/>
+    /// properties on <see cref="Response"/> will result in an exception being thrown.
+    /// </summary>
+    /// <returns>The content stream, or <code>null</code> if <see cref="Response"/>
+    /// did not have content set.</returns>
+    public Stream? ExtractResponseContent()
+    {
+        if (Response is null)
+        {
+            return null;
+        }
+
+        switch (Response.ContentStream)
+        {
+            case ResponseShouldNotBeUsedStream responseContent:
+                return responseContent.Original;
+            case Stream stream:
+                Response.ContentStream = new ResponseShouldNotBeUsedStream(Response.ContentStream);
+                return stream;
+            default:
+                return null;
+        }
+    }
+
+    private class ResponseShouldNotBeUsedStream : Stream
+    {
+        public Stream Original { get; }
+
+        public ResponseShouldNotBeUsedStream(Stream original)
+        {
+            Original = original;
+        }
+
+        private static Exception CreateException()
+        {
+            return new InvalidOperationException("The operation has called ExtractResponseContent and will provide the stream as part of its response type.");
+        }
+
+        public override void Flush()
+        {
+            throw CreateException();
+        }
+
+        public override int Read(byte[] buffer, int offset, int count)
+        {
+            throw CreateException();
+        }
+
+        public override long Seek(long offset, SeekOrigin origin)
+        {
+            throw CreateException();
+        }
+
+        public override void SetLength(long value)
+        {
+            throw CreateException();
+        }
+
+        public override void Write(byte[] buffer, int offset, int count)
+        {
+            throw CreateException();
+        }
+
+        public override bool CanRead => throw CreateException();
+        public override bool CanSeek => throw CreateException();
+        public override bool CanWrite => throw CreateException();
+        public override long Length => throw CreateException();
+
+        public override long Position
+        {
+            get => throw CreateException();
+            set => throw CreateException();
         }
     }
 
