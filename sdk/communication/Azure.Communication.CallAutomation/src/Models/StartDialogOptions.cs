@@ -9,13 +9,13 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The Dialog Options.
     /// </summary>
-    public class StartDialog
+    public class StartDialogOptions
     {
         /// <summary>
         /// Creates a new instance of the DialogOptions.
         /// </summary>
         /// <param name="dialog"></param>
-        public StartDialog(BaseDialog dialog)
+        public StartDialogOptions(BaseDialog dialog)
         {
             DialogId = Guid.NewGuid().ToString();
             Dialog = dialog;
@@ -25,7 +25,7 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="dialogId"></param>
         /// <param name="dialog"></param>
-        public StartDialog(string dialogId, BaseDialog dialog)
+        public StartDialogOptions(string dialogId, BaseDialog dialog)
         {
             DialogId = dialogId;
             Dialog = dialog;
