@@ -30,6 +30,7 @@ namespace Azure.Core
             ResponseClassifier = responseClassifier;
             BufferResponse = true;
             _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
+            _ownsResponse = true;
         }
 
         /// <summary>
