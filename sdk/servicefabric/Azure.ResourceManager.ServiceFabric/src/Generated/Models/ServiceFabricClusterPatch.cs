@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="certificateCommonNames"> Describes a list of server certificates referenced by common name that are used to secure the cluster. </param>
         /// <param name="clientCertificateCommonNames"> The list of client certificates referenced by common name that are allowed to manage the cluster. This will overwrite the existing list. </param>
         /// <param name="clientCertificateThumbprints"> The list of client certificates referenced by thumbprint that are allowed to manage the cluster. This will overwrite the existing list. </param>
-        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property can only by set the user when **upgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </param>
+        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property can only by set the user when **upgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](https://learn.microsoft.com/rest/api/servicefabric/cluster-versions/list). To get the list of available version for existing clusters use **availableClusterVersions**. </param>
         /// <param name="isEventStoreServiceEnabled"> Indicates if the event store service is enabled. </param>
         /// <param name="fabricSettings"> The list of custom fabric settings to configure the cluster. This will overwrite the existing list. </param>
         /// <param name="nodeTypes"> The list of node types in the cluster. This will overwrite the existing list. </param>
@@ -91,8 +91,9 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="upgradePauseEndOn"> The end timestamp of pause runtime version upgrades on the cluster (UTC). </param>
         /// <param name="isWaveUpgradePaused"> Boolean to pause automatic runtime version upgrades to the cluster. </param>
         /// <param name="notifications"> Indicates a list of notification channels for cluster events. </param>
+        /// <param name="isHttpGatewayExclusiveAuthModeEnabled"> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthEndpointPort must be defined. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricClusterPatch(IDictionary<string, string> tags, IList<ClusterAddOnFeature> addOnFeatures, ClusterCertificateDescription certificate, ClusterServerCertificateCommonNames certificateCommonNames, IList<ClusterClientCertificateCommonName> clientCertificateCommonNames, IList<ClusterClientCertificateThumbprint> clientCertificateThumbprints, string clusterCodeVersion, bool? isEventStoreServiceEnabled, IList<SettingsSectionDescription> fabricSettings, IList<ClusterNodeTypeDescription> nodeTypes, ClusterReliabilityLevel? reliabilityLevel, ClusterCertificateDescription reverseProxyCertificate, ClusterUpgradePolicy upgradeDescription, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, ClusterUpgradeMode? upgradeMode, SfZonalUpgradeMode? sfZonalUpgradeMode, VmssZonalUpgradeMode? vmssZonalUpgradeMode, bool? isInfrastructureServiceManagerEnabled, ClusterUpgradeCadence? upgradeWave, DateTimeOffset? upgradePauseStartOn, DateTimeOffset? upgradePauseEndOn, bool? isWaveUpgradePaused, IList<ClusterNotification> notifications, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceFabricClusterPatch(IDictionary<string, string> tags, IList<ClusterAddOnFeature> addOnFeatures, ClusterCertificateDescription certificate, ClusterServerCertificateCommonNames certificateCommonNames, IList<ClusterClientCertificateCommonName> clientCertificateCommonNames, IList<ClusterClientCertificateThumbprint> clientCertificateThumbprints, string clusterCodeVersion, bool? isEventStoreServiceEnabled, IList<SettingsSectionDescription> fabricSettings, IList<ClusterNodeTypeDescription> nodeTypes, ClusterReliabilityLevel? reliabilityLevel, ClusterCertificateDescription reverseProxyCertificate, ClusterUpgradePolicy upgradeDescription, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, ClusterUpgradeMode? upgradeMode, SfZonalUpgradeMode? sfZonalUpgradeMode, VmssZonalUpgradeMode? vmssZonalUpgradeMode, bool? isInfrastructureServiceManagerEnabled, ClusterUpgradeCadence? upgradeWave, DateTimeOffset? upgradePauseStartOn, DateTimeOffset? upgradePauseEndOn, bool? isWaveUpgradePaused, IList<ClusterNotification> notifications, bool? isHttpGatewayExclusiveAuthModeEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             AddOnFeatures = addOnFeatures;
@@ -117,6 +118,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             UpgradePauseEndOn = upgradePauseEndOn;
             IsWaveUpgradePaused = isWaveUpgradePaused;
             Notifications = notifications;
+            IsHttpGatewayExclusiveAuthModeEnabled = isHttpGatewayExclusiveAuthModeEnabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -132,7 +134,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public IList<ClusterClientCertificateCommonName> ClientCertificateCommonNames { get; }
         /// <summary> The list of client certificates referenced by thumbprint that are allowed to manage the cluster. This will overwrite the existing list. </summary>
         public IList<ClusterClientCertificateThumbprint> ClientCertificateThumbprints { get; }
-        /// <summary> The Service Fabric runtime version of the cluster. This property can only by set the user when **upgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </summary>
+        /// <summary> The Service Fabric runtime version of the cluster. This property can only by set the user when **upgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](https://learn.microsoft.com/rest/api/servicefabric/cluster-versions/list). To get the list of available version for existing clusters use **availableClusterVersions**. </summary>
         public string ClusterCodeVersion { get; set; }
         /// <summary> Indicates if the event store service is enabled. </summary>
         public bool? IsEventStoreServiceEnabled { get; set; }
@@ -185,5 +187,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public bool? IsWaveUpgradePaused { get; set; }
         /// <summary> Indicates a list of notification channels for cluster events. </summary>
         public IList<ClusterNotification> Notifications { get; }
+        /// <summary> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthEndpointPort must be defined. </summary>
+        public bool? IsHttpGatewayExclusiveAuthModeEnabled { get; set; }
     }
 }

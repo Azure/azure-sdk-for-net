@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    public partial class SignalRServiceUsageName
+    public partial class SignalRServiceUsageName : IUtf8JsonSerializable, IJsonModel<SignalRServiceUsageName>
     {
-        internal static SignalRServiceUsageName DeserializeSignalRServiceUsageName(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRServiceUsageName>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SignalRServiceUsageName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SignalRServiceUsageName>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SignalRServiceUsageName)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
+            }
+            if (Optional.IsDefined(LocalizedValue))
+            {
+                writer.WritePropertyName("localizedValue"u8);
+                writer.WriteStringValue(LocalizedValue);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SignalRServiceUsageName IJsonModel<SignalRServiceUsageName>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SignalRServiceUsageName>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SignalRServiceUsageName)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSignalRServiceUsageName(document.RootElement, options);
+        }
+
+        internal static SignalRServiceUsageName DeserializeSignalRServiceUsageName(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> value = default;
             Optional<string> localizedValue = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -32,8 +90,44 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     localizedValue = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SignalRServiceUsageName(value.Value, localizedValue.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SignalRServiceUsageName(value.Value, localizedValue.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SignalRServiceUsageName>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SignalRServiceUsageName>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SignalRServiceUsageName)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SignalRServiceUsageName IPersistableModel<SignalRServiceUsageName>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SignalRServiceUsageName>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSignalRServiceUsageName(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SignalRServiceUsageName)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SignalRServiceUsageName>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -19,7 +19,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Microsoft Azure Hybrid Container Service management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.HybridContainerService --prerelease
+dotnet add package Azure.ResourceManager.HybridContainerService
 ```
 
 ### Prerequisites
