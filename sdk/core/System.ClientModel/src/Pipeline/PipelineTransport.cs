@@ -4,7 +4,6 @@
 using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -57,8 +56,10 @@ public abstract class PipelineTransport : PipelinePolicy
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, bool async)
     {
         Debug.Assert(message.NetworkTimeout is not null, "NetworkTimeout is not set on PipelineMessage.");
-        TimeSpan networkTimeout = (TimeSpan)message.NetworkTimeout!;
 
+        // Implement network timeout behavior around the call to ProcessCore,
+        // where the derived implements concrete transport process fuctionality.
+        TimeSpan networkTimeout = (TimeSpan)message.NetworkTimeout!;
         CancellationToken userToken = message.CancellationToken;
         using CancellationTokenSource joinedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(userToken);
         joinedTokenSource.CancelAfter(networkTimeout);
@@ -93,53 +94,15 @@ public abstract class PipelineTransport : PipelinePolicy
         }
 
         message.Response.SetIsError(ClassifyResponse(message));
-        message.Response!.NetworkTimeout = networkTimeout;
+        message.Response.NetworkTimeout = networkTimeout;
 
-        if (message.Response!.ContentStream is null)
+        if (async)
         {
-            // No need to buffer if there is no content stream.
-            return;
+            await message.Response.ProcessContentAsync(message.BufferResponse, userToken, joinedTokenSource).ConfigureAwait(false);
         }
-
-        if (!message.BufferResponse)
+        else
         {
-            // Don't buffer the response content, e.g. in order to return the
-            // network stream to the end user of a client as part of a streaming
-            // API.  In this case, we wrap the content stream in a read-timeout
-            // stream, to respect the client's network timeout setting.
-            WrapNetworkStream(message, networkTimeout);
-            return;
-        }
-
-        // If we got this far, buffer the response.
-
-        // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
-        // register callback to dispose the stream on cancellation.
-        if (networkTimeout != Timeout.InfiniteTimeSpan || userToken.CanBeCanceled)
-        {
-            joinedTokenSource.Token.Register(state => ((Stream?)state)?.Dispose(), message.Response!.ContentStream);
-        }
-
-        try
-        {
-            if (async)
-            {
-                await message.Response.BufferContentAsync(networkTimeout, joinedTokenSource).ConfigureAwait(false);
-            }
-            else
-            {
-                message.Response.BufferContent(networkTimeout, joinedTokenSource);
-            }
-        }
-        // We dispose stream on timeout or user cancellation so catch and check if cancellation token was cancelled
-        catch (Exception ex)
-            when (ex is ObjectDisposedException
-                      or IOException
-                      or OperationCanceledException
-                      or NotSupportedException)
-        {
-            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(userToken, joinedTokenSource.Token, ex, networkTimeout);
-            throw;
+            message.Response.ProcessContent(message.BufferResponse, userToken, joinedTokenSource);
         }
     }
 
@@ -157,15 +120,6 @@ public abstract class PipelineTransport : PipelinePolicy
         }
 
         return isError;
-    }
-
-    private static void WrapNetworkStream(PipelineMessage message, TimeSpan networkTimeout)
-    {
-        if (networkTimeout != Timeout.InfiniteTimeSpan)
-        {
-            Stream contentStream = message.Response!.ContentStream!;
-            message.Response!.ContentStream = new ReadTimeoutStream(contentStream, networkTimeout);
-        }
     }
 
     #endregion
