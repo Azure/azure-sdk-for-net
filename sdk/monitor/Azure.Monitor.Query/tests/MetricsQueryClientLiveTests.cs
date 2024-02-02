@@ -336,7 +336,8 @@ namespace Azure.Monitor.Query.Tests
             Assert.Throws<KeyNotFoundException>(() => { results.Value.GetMetricByName("Guinness"); });
         }
 
-        [RecordedTest]
+        [Test]
+        [Ignore("Will replace when Swagger GAs")]
         public async Task MetricsBatchQueryAsync()
         {
             MetricsBatchQueryClient client = CreateBatchClient();
@@ -364,8 +365,8 @@ namespace Azure.Monitor.Query.Tests
             }
         }
 
-        [SyncOnly]
-        [RecordedTest]
+        [Test]
+        [Ignore("Will replace when Swagger GAs")]
         public void MetricsBatchInvalid()
         {
             MetricsBatchQueryClient client = CreateBatchClient();
