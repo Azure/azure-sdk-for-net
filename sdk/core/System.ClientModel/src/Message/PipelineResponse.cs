@@ -73,7 +73,7 @@ public abstract class PipelineResponse : IDisposable
 
     protected virtual void SetIsErrorCore(bool isError) => _isError = isError;
 
-    internal TimeSpan NetworkTimeout { get; set; } = ClientPipeline.DefaultNetworkTimeout;
+    internal TimeSpan NetworkTimeout { get; set; }
 
     public abstract void Dispose();
 
