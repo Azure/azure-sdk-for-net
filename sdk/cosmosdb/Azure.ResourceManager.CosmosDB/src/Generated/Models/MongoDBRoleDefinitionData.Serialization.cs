@@ -177,11 +177,7 @@ namespace Azure.ResourceManager.CosmosDB
                         }
                         if (property0.NameEquals("type"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            type0 = property0.Value.GetString().ToMongoDBRoleDefinitionType();
+                            ReadRoleDefinitionType(property0, ref type0);
                             continue;
                         }
                         if (property0.NameEquals("databaseName"u8))

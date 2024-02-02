@@ -12,20 +12,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Redis.Models
 {
+    [CodeGenSerialization(nameof(IsRdbBackupEnabled), DeserializationValueHook = nameof(ReadIsRdbBackupEnabled))]
+    [CodeGenSerialization(nameof(IsAofBackupEnabled), DeserializationValueHook = nameof(ReadIsAofBackupEnabled))]
+    [CodeGenSerialization(nameof(RdbBackupMaxSnapshotCount), SerializationValueHook = nameof(WriteRdbBackupMaxSnapshotCount), DeserializationValueHook = nameof(ReadRdbBackupMaxSnapshotCount))]
     public partial class RedisCommonConfiguration : IUtf8JsonSerializable, IJsonModel<RedisCommonConfiguration>
     {
-        /// <summary> Specifies whether the rdb backup is enabled. </summary>
-        [CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(ReadIsRdbBackupEnabled))]
-        public bool? IsRdbBackupEnabled { get; set; }
-
-        /// <summary> Specifies whether the aof backup is enabled. </summary>
-        [CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(ReadIsAofBackupEnabled))]
-        public bool? IsAofBackupEnabled { get; set; }
-
-        /// <summary> Specifies the maximum number of snapshots for rdb backup. </summary>
-        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(WriteRdbBackupMaxSnapshotCount), DeserializationValueHook = nameof(ReadRdbBackupMaxSnapshotCount))]
-        public int? RdbBackupMaxSnapshotCount { get; set; }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void WriteRdbBackupMaxSnapshotCount(Utf8JsonWriter writer)
         {

@@ -44,11 +44,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("offerExpiresAfterSeconds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    offerExpiresAfterSeconds = property.Value.GetTimeSpan("P");
+                    ReadOfferExpiresAfter(property, ref offerExpiresAfterSeconds);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
