@@ -1,8 +1,12 @@
-﻿namespace Microsoft.ApplicationInsights.Extensibility.Filtering
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
     /// <summary>
     /// Defines an AND group of filters.
@@ -36,7 +40,7 @@
                 {
                     filterPassed = filter.Check(document);
                 }
-                catch (Exception)
+                catch (System.Exception)
                 {
                     // the filter has failed to run (possibly incompatible field value in telemetry), consider the telemetry item filtered out by this conjunction group
                     ////!!!
@@ -69,7 +73,7 @@
                     var filter = new Filter<TTelemetry>(filterInfo);
                     this.filters.Add(filter);
                 }
-                catch (Exception e)
+                catch (System.Exception e)
                 {
                     errorList.Add(
                         CollectionConfigurationError.CreateError(

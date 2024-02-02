@@ -48,6 +48,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             {
                 // TODO: Filtering would be taken into account here before adding a document to the dataPoint.
                 // TODO: item.DocumentStreamIds = new List<string> { "" }; - Will add the identifier for the specific filtering rules (if applicable). See also "matchingDocumentStreamIds" in AI SDK.
+                //TODO: Apply filters
+                //foreach (CalculatedMetric<TTelemetry> metric in metrics)
+                //    if (metric.CheckFilters(telemetry, out filteringErrors))
 
                 dataPoint.Documents.Add(item);
 

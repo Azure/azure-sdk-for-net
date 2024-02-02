@@ -1,17 +1,14 @@
-﻿namespace Microsoft.ApplicationInsights.Extensibility.Filtering
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 {
-    internal enum TelemetryType
+    internal class TelemetryType
     {
-        Request = 0,
-
-        Dependency = 1,
-
-        Exception = 2,
-
-        Event = 3,
-
-        PerformanceCounter = 5,
-
-        Trace = 6,
+        public const string Request = "Request";
+        public const string Dependency = "Dependency";
+        public const string Exception = "Exception";
+        public const string Event = "Event";
+        public const string Trace = "Trace";
     }
 }

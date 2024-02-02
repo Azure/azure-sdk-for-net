@@ -1,20 +1,22 @@
-﻿namespace Microsoft.ApplicationInsights.Extensibility.Filtering
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq.Expressions;
     using System.Reflection;
-
-    using Microsoft.ApplicationInsights.Common;
+    using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
     /// <summary>
-    /// Represents a single configured metric that needs to be calculated and reported on top of the telemetry items 
-    /// that pass through the pipeline. Includes a set of filters that define which telemetry items to consider, a projection 
-    /// which defines which field to use as a value, and an aggregation which dictates the algorithm of arriving at 
+    /// Represents a single configured metric that needs to be calculated and reported on top of the telemetry items
+    /// that pass through the pipeline. Includes a set of filters that define which telemetry items to consider, a projection
+    /// which defines which field to use as a value, and an aggregation which dictates the algorithm of arriving at
     /// a single reportable value within a second.
     /// </summary>
-    internal class CalculatedMetric<TTelemetry>
+    internal class DerivedMetric<TTelemetry>
     {
         private const string ProjectionCount = "Count()";
 
@@ -30,16 +32,15 @@
             "ToString",
             new[] { typeof(IFormatProvider) });
 
-        private readonly CalculatedMetricInfo info;
+        private readonly DerivedMetricInfo info;
 
         /// <summary>
         /// OR-connected collection of AND-connected filter groups.
         /// </summary>
         private readonly List<FilterConjunctionGroup<TTelemetry>> filterGroups = new List<FilterConjunctionGroup<TTelemetry>>();
 
-        private Func<TTelemetry, double> projectionLambda;
-
-        public CalculatedMetric(CalculatedMetricInfo info, out CollectionConfigurationError[] errors)
+        private Func<TTelemetry, double>? projectionLambda;
+        public DerivedMetric(DerivedMetricInfo info, out CollectionConfigurationError[] errors)
         {
             if (info == null)
             {
@@ -48,20 +49,20 @@
 
             this.info = info;
 
-            this.CreateFilters(out errors);
+            CreateFilters(out errors);
 
-            this.CreateProjection();
+            CreateProjection();
         }
 
         public string Id => this.info.Id;
 
-        public AggregationType AggregationType => this.info.Aggregation;
+        public DerivedMetricInfoAggregation? AggregationType => this.info.Aggregation;  // TODO: this was enum. Need to double check new type is parsed and used correctly.
 
         public bool CheckFilters(TTelemetry document, out CollectionConfigurationError[] errors)
         {
             if (this.filterGroups.Count < 1)
             {
-                errors = ArrayExtensions.Empty<CollectionConfigurationError>();
+                errors = Array.Empty<CollectionConfigurationError>();
                 return true;
             }
 
@@ -89,6 +90,11 @@
 
         public double Project(TTelemetry document)
         {
+            if (this.projectionLambda == null)
+            {
+                throw new ArgumentException("Projection lambda is not initialized.");
+            }
+
             try
             {
                 return this.projectionLambda(document);
@@ -114,13 +120,13 @@
             {
                 foreach (FilterConjunctionGroupInfo filterConjunctionGroupInfo in this.info.FilterGroups)
                 {
-                    CollectionConfigurationError[] groupErrors = null;
+                    CollectionConfigurationError[]? groupErrors = null;
                     try
                     {
                         var conjunctionFilterGroup = new FilterConjunctionGroup<TTelemetry>(filterConjunctionGroupInfo, out groupErrors);
                         this.filterGroups.Add(conjunctionFilterGroup);
                     }
-                    catch (Exception e)
+                    catch (System.Exception e)
                     {
                         errorList.Add(
                             CollectionConfigurationError.CreateError(
@@ -134,7 +140,7 @@
                     {
                         foreach (var error in groupErrors)
                         {
-                            error.Data["MetricId"] = this.info.Id;
+                            UpdateMetricIdOfError(error, this.info.Id);
                         }
 
                         errorList.AddRange(groupErrors);
@@ -143,6 +149,18 @@
             }
 
             errors = errorList.ToArray();
+        }
+
+        private void UpdateMetricIdOfError(CollectionConfigurationError error, string id)
+        {
+            for (int i = 0; i < error.Data.Count; i++)
+            {
+                if (error.Data[i].Key == "MetricId")
+                {
+                    error.Data[i].Value = id;
+                    return;
+                }
+            }
         }
 
         private void CreateProjection()
@@ -162,7 +180,7 @@
                 else
                 {
                     Filter<TTelemetry>.FieldNameType fieldNameType;
-                    Type fieldType = Filter<TTelemetry>.GetFieldType(this.info.Projection, out fieldNameType);
+                    Type? fieldType = Filter<TTelemetry>.GetFieldType(this.info.Projection, out fieldNameType);
                     if (fieldNameType == Filter<TTelemetry>.FieldNameType.AnyField)
                     {
                         throw new ArgumentOutOfRangeException(
@@ -192,7 +210,7 @@
                     projectionExpression = Expression.Call(DoubleParseMethodInfo, fieldExpressionToString, invariantCulture);
                 }
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
                 throw new ArgumentOutOfRangeException(string.Format(CultureInfo.InvariantCulture, "Could not construct the projection."), e);
             }
@@ -203,7 +221,7 @@
 
                 this.projectionLambda = lambdaExpression.Compile();
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
                 throw new ArgumentOutOfRangeException(string.Format(CultureInfo.InvariantCulture, "Could not compile the projection."), e);
             }

@@ -1,4 +1,7 @@
-﻿namespace Microsoft.ApplicationInsights.Extensibility.Filtering
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 {
     using System;
     using System.Collections.Generic;
@@ -7,6 +10,7 @@
     using System.Linq;
     using System.Linq.Expressions;
     using System.Reflection;
+    using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
     /// <summary>
     /// Filter determines whether a telemetry document matches the criterion.
@@ -35,7 +39,7 @@
 
         private static readonly MethodInfo ValueTypeToStringMethodInfo = GetMethodInfo<ValueType, string>(x => x.ToString());
 
-        private static readonly MethodInfo UriToStringMethodInfo = GetMethodInfo<Uri, string>(x => x.ToString());
+        private static readonly MethodInfo UriToStringMethodInfo = GetMethodInfo<Uri, string>(x => x.AbsoluteUri);
 
         private static readonly MethodInfo StringIndexOfMethodInfo =
             GetMethodInfo<string, string, int>((x, y) => x.IndexOf(y, StringComparison.OrdinalIgnoreCase));
@@ -70,7 +74,7 @@
 
         private readonly string comparand;
 
-        private readonly Predicate predicate;
+        private readonly Predicate? predicate;
 
         private readonly string fieldName;
 
@@ -83,11 +87,11 @@
             this.info = filterInfo;
 
             this.fieldName = filterInfo.FieldName;
-            this.predicate = filterInfo.Predicate;
+            this.predicate = FilterInfoPredicateUtility.ToPredicate(filterInfo.Predicate);
             this.comparand = filterInfo.Comparand;
 
             FieldNameType fieldNameType;
-            Type fieldType = GetFieldType(filterInfo.FieldName, out fieldNameType);
+            Type? fieldType = GetFieldType(filterInfo.FieldName, out fieldNameType);
             this.ThrowOnInvalidFilter(
                 null,
                 fieldNameType == FieldNameType.AnyField && this.predicate != Predicate.Contains && this.predicate != Predicate.DoesNotContain);
@@ -122,7 +126,7 @@
                     comparisonExpression = this.ProduceComparatorExpressionForSingleFieldCondition(fieldExpression, fieldType);
                 }
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
                 throw new ArgumentOutOfRangeException(string.Format(CultureInfo.InvariantCulture, "Could not construct the filter."), e);
             }
@@ -135,7 +139,7 @@
 
                 this.filterLambda = lambdaExpression.Compile();
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
                 throw new ArgumentOutOfRangeException(string.Format(CultureInfo.InvariantCulture, "Could not compile the filter."), e);
             }
@@ -158,7 +162,7 @@
             {
                 return this.filterLambda(document);
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
                 throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, "Runtime error while filtering."), e);
             }
@@ -202,7 +206,7 @@
             }
         }
 
-        internal static Type GetFieldType(string fieldName, out FieldNameType fieldNameType)
+        internal static Type? GetFieldType(string fieldName, out FieldNameType fieldNameType)
         {
             if (fieldName.StartsWith(FieldNameCustomDimensionsPrefix, StringComparison.Ordinal))
             {
@@ -283,7 +287,7 @@
 
                 return propertyType;
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
                 throw new ArgumentOutOfRangeException(
                     string.Format(CultureInfo.InvariantCulture, "Error finding property {0} in the type {1}", fieldName, typeof(TTelemetry).FullName),
@@ -322,7 +326,7 @@
                    ?? false;
         }
 
-        private Expression ProduceComparatorExpressionForSingleFieldCondition(Expression fieldExpression, Type fieldType, bool isFieldTypeNullable = false)
+        private Expression ProduceComparatorExpressionForSingleFieldCondition(Expression fieldExpression, Type? fieldType, bool isFieldTypeNullable = false)
         {
             // this must determine an appropriate runtime comparison given the field type, the predicate, and the comparand
             TypeCode fieldTypeCode = Type.GetTypeCode(fieldType);
@@ -331,6 +335,10 @@
                 case TypeCode.Boolean:
                     {
                         this.ThrowOnInvalidFilter(fieldType, !this.comparandBoolean.HasValue);
+                        if (!this.comparandBoolean.HasValue)
+                        {
+                            throw new ArgumentException("The comparandBoolean variable doesn't have value.", nameof(comparandDouble));
+                        }
 
                         switch (this.predicate)
                         {
@@ -361,12 +369,12 @@
                         if (fieldType.GetTypeInfo().IsEnum)
                         {
                             // this is actually an Enum
-                            object enumValue = null;
+                            object? enumValue = null;
                             try
                             {
                                 enumValue = Enum.Parse(fieldType, this.comparand, true);
                             }
-                            catch (Exception)
+                            catch (System.Exception)
                             {
                                 // we must throw unless this.predicate is either Contains or DoesNotContain, in which case it's ok
                                 this.ThrowOnInvalidFilter(fieldType, this.predicate != Predicate.Contains && this.predicate != Predicate.DoesNotContain);
@@ -438,6 +446,7 @@
                             {
                                 case Predicate.Equal:
                                     this.ThrowOnInvalidFilter(fieldType, !this.comparandDouble.HasValue);
+#pragma warning disable CS8629 // Nullable value type will not be null. ThrowOnInvalidFilter would have thrown if it was null.
                                     return Expression.Equal(
                                         fieldConvertedExpression,
                                         Expression.Constant(this.comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
@@ -466,6 +475,7 @@
                                     return Expression.GreaterThanOrEqual(
                                         fieldConvertedExpression,
                                         Expression.Constant(this.comparandDouble.Value, isFieldTypeNullable ? typeof(Nullable<>).MakeGenericType(typeof(double)) : typeof(double)));
+#pragma warning restore CS8629 // Nullable value type will not be null. ThrowOnInvalidFilter would have thrown if it was null.
                                 case Predicate.Contains:
                                     // fieldValue.ToString(CultureInfo.InvariantCulture).IndexOf(this.comparand, StringComparison.OrdinalIgnoreCase) != -1
                                     Expression toStringCall = isFieldTypeNullable
@@ -531,6 +541,7 @@
                         switch (this.predicate)
                         {
                             case Predicate.Equal:
+#pragma warning disable CS8629 // Nullable value type will not be null. ThrowOnInvalidFilter would have thrown if it was null.
                                 Func<TimeSpan, bool> comparator = fieldValue => fieldValue == this.comparandTimeSpan.Value;
                                 return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldExpression);
                             case Predicate.NotEqual:
@@ -548,6 +559,7 @@
                             case Predicate.GreaterThanOrEqual:
                                 comparator = fieldValue => fieldValue >= this.comparandTimeSpan.Value;
                                 return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldExpression);
+#pragma warning restore CS8629 // Nullable value type will not be null. ThrowOnInvalidFilter would have thrown if it was null.
                             default:
                                 this.ThrowOnInvalidFilter(fieldType);
                                 break;
@@ -593,7 +605,9 @@
                     break;
             }
 
-            return null;
+            // TODO: Throwing an exception for now instead of returning null. This is an unknown state and should be investigated.
+            // return null;
+            throw new ArgumentException("Unknown state");
         }
 
         private Expression ProduceComparatorExpressionForAnyFieldCondition(ParameterExpression documentExpression)
@@ -653,7 +667,7 @@
                                                ? Expression.OrElse(comparisonExpression, propertyComparatorExpression)
                                                : Expression.AndAlso(comparisonExpression, propertyComparatorExpression);
                 }
-                catch (Exception)
+                catch (System.Exception)
                 {
                     // probably an unsupported property (e.g. bool), ignore and continue
                 }
@@ -662,10 +676,11 @@
             return comparisonExpression;
         }
 
-        private Expression CreateStringToDoubleComparisonBlock(Expression fieldExpression, Predicate predicate)
+        private Expression CreateStringToDoubleComparisonBlock(Expression fieldExpression, Predicate? predicate)
         {
             ParameterExpression tempVariable = Expression.Variable(typeof(double));
             MethodCallExpression doubleTryParseCall = Expression.Call(DoubleTryParseMethodInfo, fieldExpression, DoubleDefaultNumberStyles, InvariantCulture, tempVariable);
+
 
             BinaryExpression comparisonExpression;
             switch (predicate)
@@ -693,7 +708,7 @@
             return Expression.Block(typeof(bool), new[] { tempVariable }, andExpression);
         }
 
-        private void ThrowOnInvalidFilter(Type fieldType, bool conditionToThrow = true)
+        private void ThrowOnInvalidFilter(Type? fieldType, bool conditionToThrow = true)
         {
             if (conditionToThrow)
             {
