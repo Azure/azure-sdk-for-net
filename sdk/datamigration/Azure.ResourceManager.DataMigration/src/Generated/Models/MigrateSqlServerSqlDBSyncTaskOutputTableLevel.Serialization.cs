@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlDBSyncTaskOutputTableLevel : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputTableLevel>
+    public partial class MigrateSqlServerSqlDBSyncTaskOutputTableLevel : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputTableLevel>, IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputTableLevel>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputTableLevel>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -283,6 +284,116 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlDBSyncTaskOutputTableLevel(id.Value, resultType, serializedAdditionalRawData, tableName.Value, databaseName.Value, Optional.ToNullable(cdcInsertCounter), Optional.ToNullable(cdcUpdateCounter), Optional.ToNullable(cdcDeleteCounter), Optional.ToNullable(fullLoadEstFinishTime), Optional.ToNullable(fullLoadStartedOn), Optional.ToNullable(fullLoadEndedOn), Optional.ToNullable(fullLoadTotalRows), Optional.ToNullable(state), Optional.ToNullable(totalChangesApplied), Optional.ToNullable(dataErrorsCounter), Optional.ToNullable(lastModifiedTime));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TableName))
+            {
+                builder.Append("  tableName:");
+                builder.AppendLine($" '{TableName}'");
+            }
+
+            if (Optional.IsDefined(DatabaseName))
+            {
+                builder.Append("  databaseName:");
+                builder.AppendLine($" '{DatabaseName}'");
+            }
+
+            if (Optional.IsDefined(CdcInsertCounter))
+            {
+                builder.Append("  cdcInsertCounter:");
+                builder.AppendLine($" '{CdcInsertCounter.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CdcUpdateCounter))
+            {
+                builder.Append("  cdcUpdateCounter:");
+                builder.AppendLine($" '{CdcUpdateCounter.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CdcDeleteCounter))
+            {
+                builder.Append("  cdcDeleteCounter:");
+                builder.AppendLine($" '{CdcDeleteCounter.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FullLoadEstFinishOn))
+            {
+                builder.Append("  fullLoadEstFinishTime:");
+                builder.AppendLine($" '{FullLoadEstFinishOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FullLoadStartedOn))
+            {
+                builder.Append("  fullLoadStartedOn:");
+                builder.AppendLine($" '{FullLoadStartedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FullLoadEndedOn))
+            {
+                builder.Append("  fullLoadEndedOn:");
+                builder.AppendLine($" '{FullLoadEndedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FullLoadTotalRows))
+            {
+                builder.Append("  fullLoadTotalRows:");
+                builder.AppendLine($" '{FullLoadTotalRows.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalChangesApplied))
+            {
+                builder.Append("  totalChangesApplied:");
+                builder.AppendLine($" '{TotalChangesApplied.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DataErrorsCounter))
+            {
+                builder.Append("  dataErrorsCounter:");
+                builder.AppendLine($" '{DataErrorsCounter.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("  lastModifiedTime:");
+                builder.AppendLine($" '{LastModifiedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id}'");
+            }
+
+            if (Optional.IsDefined(ResultType))
+            {
+                builder.Append("  resultType:");
+                builder.AppendLine($" '{ResultType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputTableLevel>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputTableLevel>)this).GetFormatFromOptions(options) : options.Format;
@@ -291,6 +402,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputTableLevel)} does not support '{options.Format}' format.");
             }
@@ -307,6 +420,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMigrateSqlServerSqlDBSyncTaskOutputTableLevel(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputTableLevel)} does not support '{options.Format}' format.");
             }

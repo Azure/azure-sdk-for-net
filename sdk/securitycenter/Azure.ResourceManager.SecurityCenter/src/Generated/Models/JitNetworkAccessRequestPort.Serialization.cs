@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class JitNetworkAccessRequestPort : IUtf8JsonSerializable, IJsonModel<JitNetworkAccessRequestPort>
+    public partial class JitNetworkAccessRequestPort : IUtf8JsonSerializable, IJsonModel<JitNetworkAccessRequestPort>, IPersistableModel<JitNetworkAccessRequestPort>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JitNetworkAccessRequestPort>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -160,6 +161,78 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new JitNetworkAccessRequestPort(number, allowedSourceAddressPrefix.Value, Optional.ToList(allowedSourceAddressPrefixes), endTimeUtc, status, statusReason, Optional.ToNullable(mappedPort), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Number))
+            {
+                builder.Append("  number:");
+                builder.AppendLine($" '{Number.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AllowedSourceAddressPrefix))
+            {
+                builder.Append("  allowedSourceAddressPrefix:");
+                builder.AppendLine($" '{AllowedSourceAddressPrefix}'");
+            }
+
+            if (Optional.IsCollectionDefined(AllowedSourceAddressPrefixes))
+            {
+                builder.Append("  allowedSourceAddressPrefixes:");
+                builder.AppendLine(" [");
+                foreach (var item in AllowedSourceAddressPrefixes)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(EndOn))
+            {
+                builder.Append("  endTimeUtc:");
+                builder.AppendLine($" '{EndOn.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StatusReason))
+            {
+                builder.Append("  statusReason:");
+                builder.AppendLine($" '{StatusReason.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MappedPort))
+            {
+                builder.Append("  mappedPort:");
+                builder.AppendLine($" '{MappedPort.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<JitNetworkAccessRequestPort>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessRequestPort>)this).GetFormatFromOptions(options) : options.Format;
@@ -168,6 +241,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(JitNetworkAccessRequestPort)} does not support '{options.Format}' format.");
             }
@@ -184,6 +259,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeJitNetworkAccessRequestPort(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(JitNetworkAccessRequestPort)} does not support '{options.Format}' format.");
             }

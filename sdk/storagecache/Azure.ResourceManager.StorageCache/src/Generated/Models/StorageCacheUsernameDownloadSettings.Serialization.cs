@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheUsernameDownloadSettings : IUtf8JsonSerializable, IJsonModel<StorageCacheUsernameDownloadSettings>
+    public partial class StorageCacheUsernameDownloadSettings : IUtf8JsonSerializable, IJsonModel<StorageCacheUsernameDownloadSettings>, IPersistableModel<StorageCacheUsernameDownloadSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageCacheUsernameDownloadSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -249,6 +250,102 @@ namespace Azure.ResourceManager.StorageCache.Models
             return new StorageCacheUsernameDownloadSettings(Optional.ToNullable(extendedGroups), Optional.ToNullable(usernameSource), groupFileUri.Value, userFileUri.Value, ldapServer.Value, ldapBaseDN.Value, Optional.ToNullable(encryptLdapConnection), Optional.ToNullable(requireValidCertificate), Optional.ToNullable(autoDownloadCertificate), caCertificateUri.Value, Optional.ToNullable(usernameDownloaded), credentials.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(EnableExtendedGroups))
+            {
+                builder.Append("  extendedGroups:");
+                var boolValue = EnableExtendedGroups.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(UsernameSource))
+            {
+                builder.Append("  usernameSource:");
+                builder.AppendLine($" '{UsernameSource.ToString()}'");
+            }
+
+            if (Optional.IsDefined(GroupFileUri))
+            {
+                builder.Append("  groupFileURI:");
+                builder.AppendLine($" '{GroupFileUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(UserFileUri))
+            {
+                builder.Append("  userFileURI:");
+                builder.AppendLine($" '{UserFileUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(LdapServer))
+            {
+                builder.Append("  ldapServer:");
+                builder.AppendLine($" '{LdapServer}'");
+            }
+
+            if (Optional.IsDefined(LdapBaseDN))
+            {
+                builder.Append("  ldapBaseDN:");
+                builder.AppendLine($" '{LdapBaseDN}'");
+            }
+
+            if (Optional.IsDefined(EncryptLdapConnection))
+            {
+                builder.Append("  encryptLdapConnection:");
+                var boolValue = EncryptLdapConnection.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RequireValidCertificate))
+            {
+                builder.Append("  requireValidCertificate:");
+                var boolValue = RequireValidCertificate.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AutoDownloadCertificate))
+            {
+                builder.Append("  autoDownloadCertificate:");
+                var boolValue = AutoDownloadCertificate.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CaCertificateUri))
+            {
+                builder.Append("  caCertificateURI:");
+                builder.AppendLine($" '{CaCertificateUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(UsernameDownloaded))
+            {
+                builder.Append("  usernameDownloaded:");
+                builder.AppendLine($" '{UsernameDownloaded.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Credentials))
+            {
+                builder.Append("  credentials:");
+                AppendChildObject(builder, Credentials, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<StorageCacheUsernameDownloadSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheUsernameDownloadSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -257,6 +354,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support '{options.Format}' format.");
             }
@@ -273,6 +372,8 @@ namespace Azure.ResourceManager.StorageCache.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStorageCacheUsernameDownloadSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support '{options.Format}' format.");
             }

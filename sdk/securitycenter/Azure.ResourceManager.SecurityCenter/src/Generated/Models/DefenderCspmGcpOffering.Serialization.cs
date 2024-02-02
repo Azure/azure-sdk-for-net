@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderCspmGcpOffering : IUtf8JsonSerializable, IJsonModel<DefenderCspmGcpOffering>
+    public partial class DefenderCspmGcpOffering : IUtf8JsonSerializable, IJsonModel<DefenderCspmGcpOffering>, IPersistableModel<DefenderCspmGcpOffering>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderCspmGcpOffering>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -171,6 +172,68 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DefenderCspmGcpOffering(offeringType, description.Value, serializedAdditionalRawData, ciemDiscovery.Value, vmScanners.Value, dataSensitivityDiscovery.Value, mdcContainersImageAssessment.Value, mdcContainersAgentlessDiscoveryK8S.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CiemDiscovery))
+            {
+                builder.Append("  ciemDiscovery:");
+                AppendChildObject(builder, CiemDiscovery, options, 2);
+            }
+
+            if (Optional.IsDefined(VmScanners))
+            {
+                builder.Append("  vmScanners:");
+                AppendChildObject(builder, VmScanners, options, 2);
+            }
+
+            if (Optional.IsDefined(DataSensitivityDiscovery))
+            {
+                builder.Append("  dataSensitivityDiscovery:");
+                AppendChildObject(builder, DataSensitivityDiscovery, options, 2);
+            }
+
+            if (Optional.IsDefined(MdcContainersImageAssessment))
+            {
+                builder.Append("  mdcContainersImageAssessment:");
+                AppendChildObject(builder, MdcContainersImageAssessment, options, 2);
+            }
+
+            if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
+            {
+                builder.Append("  mdcContainersAgentlessDiscoveryK8s:");
+                AppendChildObject(builder, MdcContainersAgentlessDiscoveryK8S, options, 2);
+            }
+
+            if (Optional.IsDefined(OfferingType))
+            {
+                builder.Append("  offeringType:");
+                builder.AppendLine($" '{OfferingType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DefenderCspmGcpOffering>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DefenderCspmGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
@@ -179,6 +242,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DefenderCspmGcpOffering)} does not support '{options.Format}' format.");
             }
@@ -195,6 +260,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDefenderCspmGcpOffering(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DefenderCspmGcpOffering)} does not support '{options.Format}' format.");
             }

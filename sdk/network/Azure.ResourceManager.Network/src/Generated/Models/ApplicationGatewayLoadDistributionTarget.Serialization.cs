@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayLoadDistributionTarget : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayLoadDistributionTarget>
+    public partial class ApplicationGatewayLoadDistributionTarget : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayLoadDistributionTarget>, IPersistableModel<ApplicationGatewayLoadDistributionTarget>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayLoadDistributionTarget>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -180,6 +181,62 @@ namespace Azure.ResourceManager.Network.Models
             return new ApplicationGatewayLoadDistributionTarget(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(weightPerServer), backendAddressPool);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WeightPerServer))
+            {
+                builder.Append("  weightPerServer:");
+                builder.AppendLine($" '{WeightPerServer.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BackendAddressPool))
+            {
+                builder.Append("  backendAddressPool:");
+                AppendChildObject(builder, BackendAddressPool, options, 2);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ApplicationGatewayLoadDistributionTarget>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayLoadDistributionTarget>)this).GetFormatFromOptions(options) : options.Format;
@@ -188,6 +245,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApplicationGatewayLoadDistributionTarget)} does not support '{options.Format}' format.");
             }
@@ -204,6 +263,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeApplicationGatewayLoadDistributionTarget(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ApplicationGatewayLoadDistributionTarget)} does not support '{options.Format}' format.");
             }

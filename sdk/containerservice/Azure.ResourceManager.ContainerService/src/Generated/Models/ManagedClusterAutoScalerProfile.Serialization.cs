@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterAutoScalerProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterAutoScalerProfile>
+    public partial class ManagedClusterAutoScalerProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterAutoScalerProfile>, IPersistableModel<ManagedClusterAutoScalerProfile>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterAutoScalerProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -268,6 +269,128 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterAutoScalerProfile(balanceSimilarNodeGroups.Value, Optional.ToNullable(expander), maxEmptyBulkDelete.Value, maxGracefulTerminationSec.Value, maxNodeProvisionTime.Value, maxTotalUnreadyPercentage.Value, newPodScaleUpDelay.Value, okTotalUnreadyCount.Value, scanInterval.Value, scaleDownDelayAfterAdd.Value, scaleDownDelayAfterDelete.Value, scaleDownDelayAfterFailure.Value, scaleDownUnneededTime.Value, scaleDownUnreadyTime.Value, scaleDownUtilizationThreshold.Value, skipNodesWithLocalStorage.Value, skipNodesWithSystemPods.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BalanceSimilarNodeGroups))
+            {
+                builder.Append("  balance-similar-node-groups:");
+                builder.AppendLine($" '{BalanceSimilarNodeGroups}'");
+            }
+
+            if (Optional.IsDefined(Expander))
+            {
+                builder.Append("  expander:");
+                builder.AppendLine($" '{Expander.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxEmptyBulkDelete))
+            {
+                builder.Append("  max-empty-bulk-delete:");
+                builder.AppendLine($" '{MaxEmptyBulkDelete}'");
+            }
+
+            if (Optional.IsDefined(MaxGracefulTerminationSec))
+            {
+                builder.Append("  max-graceful-termination-sec:");
+                builder.AppendLine($" '{MaxGracefulTerminationSec}'");
+            }
+
+            if (Optional.IsDefined(MaxNodeProvisionTime))
+            {
+                builder.Append("  max-node-provision-time:");
+                builder.AppendLine($" '{MaxNodeProvisionTime}'");
+            }
+
+            if (Optional.IsDefined(MaxTotalUnreadyPercentage))
+            {
+                builder.Append("  max-total-unready-percentage:");
+                builder.AppendLine($" '{MaxTotalUnreadyPercentage}'");
+            }
+
+            if (Optional.IsDefined(NewPodScaleUpDelay))
+            {
+                builder.Append("  new-pod-scale-up-delay:");
+                builder.AppendLine($" '{NewPodScaleUpDelay}'");
+            }
+
+            if (Optional.IsDefined(OkTotalUnreadyCount))
+            {
+                builder.Append("  ok-total-unready-count:");
+                builder.AppendLine($" '{OkTotalUnreadyCount}'");
+            }
+
+            if (Optional.IsDefined(ScanIntervalInSeconds))
+            {
+                builder.Append("  scan-interval:");
+                builder.AppendLine($" '{ScanIntervalInSeconds}'");
+            }
+
+            if (Optional.IsDefined(ScaleDownDelayAfterAdd))
+            {
+                builder.Append("  scale-down-delay-after-add:");
+                builder.AppendLine($" '{ScaleDownDelayAfterAdd}'");
+            }
+
+            if (Optional.IsDefined(ScaleDownDelayAfterDelete))
+            {
+                builder.Append("  scale-down-delay-after-delete:");
+                builder.AppendLine($" '{ScaleDownDelayAfterDelete}'");
+            }
+
+            if (Optional.IsDefined(ScaleDownDelayAfterFailure))
+            {
+                builder.Append("  scale-down-delay-after-failure:");
+                builder.AppendLine($" '{ScaleDownDelayAfterFailure}'");
+            }
+
+            if (Optional.IsDefined(ScaleDownUnneededTime))
+            {
+                builder.Append("  scale-down-unneeded-time:");
+                builder.AppendLine($" '{ScaleDownUnneededTime}'");
+            }
+
+            if (Optional.IsDefined(ScaleDownUnreadyTime))
+            {
+                builder.Append("  scale-down-unready-time:");
+                builder.AppendLine($" '{ScaleDownUnreadyTime}'");
+            }
+
+            if (Optional.IsDefined(ScaleDownUtilizationThreshold))
+            {
+                builder.Append("  scale-down-utilization-threshold:");
+                builder.AppendLine($" '{ScaleDownUtilizationThreshold}'");
+            }
+
+            if (Optional.IsDefined(SkipNodesWithLocalStorage))
+            {
+                builder.Append("  skip-nodes-with-local-storage:");
+                builder.AppendLine($" '{SkipNodesWithLocalStorage}'");
+            }
+
+            if (Optional.IsDefined(SkipNodesWithSystemPods))
+            {
+                builder.Append("  skip-nodes-with-system-pods:");
+                builder.AppendLine($" '{SkipNodesWithSystemPods}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ManagedClusterAutoScalerProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -276,6 +399,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support '{options.Format}' format.");
             }
@@ -292,6 +417,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeManagedClusterAutoScalerProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support '{options.Format}' format.");
             }

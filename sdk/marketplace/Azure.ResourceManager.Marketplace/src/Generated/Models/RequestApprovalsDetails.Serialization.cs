@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class RequestApprovalsDetails : IUtf8JsonSerializable, IJsonModel<RequestApprovalsDetails>
+    public partial class RequestApprovalsDetails : IUtf8JsonSerializable, IJsonModel<RequestApprovalsDetails>, IPersistableModel<RequestApprovalsDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequestApprovalsDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -165,6 +166,67 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new RequestApprovalsDetails(offerId.Value, displayName.Value, publisherId.Value, Optional.ToNullable(messageCode), icon.Value, Optional.ToList(plans), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(OfferId))
+            {
+                builder.Append("  offerId:");
+                builder.AppendLine($" '{OfferId}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(PublisherId))
+            {
+                builder.Append("  publisherId:");
+                builder.AppendLine($" '{PublisherId}'");
+            }
+
+            if (Optional.IsDefined(MessageCode))
+            {
+                builder.Append("  messageCode:");
+                builder.AppendLine($" '{MessageCode.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IconUri))
+            {
+                builder.Append("  icon:");
+                builder.AppendLine($" '{IconUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsCollectionDefined(Plans))
+            {
+                builder.Append("  plans:");
+                builder.AppendLine(" [");
+                foreach (var item in Plans)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<RequestApprovalsDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RequestApprovalsDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -173,6 +235,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RequestApprovalsDetails)} does not support '{options.Format}' format.");
             }
@@ -189,6 +253,8 @@ namespace Azure.ResourceManager.Marketplace.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRequestApprovalsDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RequestApprovalsDetails)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class AS2EnvelopeSettings : IUtf8JsonSerializable, IJsonModel<AS2EnvelopeSettings>
+    public partial class AS2EnvelopeSettings : IUtf8JsonSerializable, IJsonModel<AS2EnvelopeSettings>, IPersistableModel<AS2EnvelopeSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AS2EnvelopeSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -117,6 +118,59 @@ namespace Azure.ResourceManager.Logic.Models
             return new AS2EnvelopeSettings(messageContentType, transmitFileNameInMimeHeader, fileNameTemplate, suspendMessageOnFileNameGenerationError, autogenerateFileName, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MessageContentType))
+            {
+                builder.Append("  messageContentType:");
+                builder.AppendLine($" '{MessageContentType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TransmitFileNameInMimeHeader))
+            {
+                builder.Append("  transmitFileNameInMimeHeader:");
+                var boolValue = TransmitFileNameInMimeHeader == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(FileNameTemplate))
+            {
+                builder.Append("  fileNameTemplate:");
+                builder.AppendLine($" '{FileNameTemplate}'");
+            }
+
+            if (Optional.IsDefined(SuspendMessageOnFileNameGenerationError))
+            {
+                builder.Append("  suspendMessageOnFileNameGenerationError:");
+                var boolValue = SuspendMessageOnFileNameGenerationError == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AutoGenerateFileName))
+            {
+                builder.Append("  autogenerateFileName:");
+                var boolValue = AutoGenerateFileName == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AS2EnvelopeSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AS2EnvelopeSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -125,6 +179,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AS2EnvelopeSettings)} does not support '{options.Format}' format.");
             }
@@ -141,6 +197,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAS2EnvelopeSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AS2EnvelopeSettings)} does not support '{options.Format}' format.");
             }

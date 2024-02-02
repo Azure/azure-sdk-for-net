@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecurityConnectorData : IUtf8JsonSerializable, IJsonModel<SecurityConnectorData>
+    public partial class SecurityConnectorData : IUtf8JsonSerializable, IJsonModel<SecurityConnectorData>, IPersistableModel<SecurityConnectorData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityConnectorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -284,6 +285,120 @@ namespace Azure.ResourceManager.SecurityCenter
             return new SecurityConnectorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, hierarchyIdentifier.Value, Optional.ToNullable(hierarchyIdentifierTrialEndDate), Optional.ToNullable(environmentName), Optional.ToList(offerings), environmentData.Value, kind.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(HierarchyIdentifier))
+            {
+                builder.Append("  hierarchyIdentifier:");
+                builder.AppendLine($" '{HierarchyIdentifier}'");
+            }
+
+            if (Optional.IsDefined(HierarchyIdentifierTrialEndOn))
+            {
+                builder.Append("  hierarchyIdentifierTrialEndDate:");
+                builder.AppendLine($" '{HierarchyIdentifierTrialEndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnvironmentName))
+            {
+                builder.Append("  environmentName:");
+                builder.AppendLine($" '{EnvironmentName.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Offerings))
+            {
+                builder.Append("  offerings:");
+                builder.AppendLine(" [");
+                foreach (var item in Offerings)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(EnvironmentData))
+            {
+                builder.Append("  environmentData:");
+                AppendChildObject(builder, EnvironmentData, options, 2);
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SecurityConnectorData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityConnectorData>)this).GetFormatFromOptions(options) : options.Format;
@@ -292,6 +407,8 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityConnectorData)} does not support '{options.Format}' format.");
             }
@@ -308,6 +425,8 @@ namespace Azure.ResourceManager.SecurityCenter
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityConnectorData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityConnectorData)} does not support '{options.Format}' format.");
             }

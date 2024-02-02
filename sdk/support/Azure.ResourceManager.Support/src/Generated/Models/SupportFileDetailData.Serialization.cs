@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Support
 {
-    public partial class SupportFileDetailData : IUtf8JsonSerializable, IJsonModel<SupportFileDetailData>
+    public partial class SupportFileDetailData : IUtf8JsonSerializable, IJsonModel<SupportFileDetailData>, IPersistableModel<SupportFileDetailData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportFileDetailData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -201,6 +202,74 @@ namespace Azure.ResourceManager.Support
             return new SupportFileDetailData(id, name, type, systemData.Value, Optional.ToNullable(createdOn), Optional.ToNullable(chunkSize), Optional.ToNullable(fileSize), Optional.ToNullable(numberOfChunks), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdOn:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ChunkSize))
+            {
+                builder.Append("  chunkSize:");
+                builder.AppendLine($" '{ChunkSize.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FileSize))
+            {
+                builder.Append("  fileSize:");
+                builder.AppendLine($" '{FileSize.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NumberOfChunks))
+            {
+                builder.Append("  numberOfChunks:");
+                builder.AppendLine($" '{NumberOfChunks.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SupportFileDetailData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SupportFileDetailData>)this).GetFormatFromOptions(options) : options.Format;
@@ -209,6 +278,8 @@ namespace Azure.ResourceManager.Support
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SupportFileDetailData)} does not support '{options.Format}' format.");
             }
@@ -225,6 +296,8 @@ namespace Azure.ResourceManager.Support
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSupportFileDetailData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SupportFileDetailData)} does not support '{options.Format}' format.");
             }

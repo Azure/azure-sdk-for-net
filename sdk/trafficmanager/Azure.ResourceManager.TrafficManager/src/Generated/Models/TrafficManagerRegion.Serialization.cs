@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class TrafficManagerRegion : IUtf8JsonSerializable, IJsonModel<TrafficManagerRegion>
+    public partial class TrafficManagerRegion : IUtf8JsonSerializable, IJsonModel<TrafficManagerRegion>, IPersistableModel<TrafficManagerRegion>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerRegion>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -124,6 +125,49 @@ namespace Azure.ResourceManager.TrafficManager.Models
             return new TrafficManagerRegion(code.Value, name.Value, Optional.ToList(regions), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Code))
+            {
+                builder.Append("  code:");
+                builder.AppendLine($" '{Code}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsCollectionDefined(Regions))
+            {
+                builder.Append("  regions:");
+                builder.AppendLine(" [");
+                foreach (var item in Regions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<TrafficManagerRegion>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerRegion>)this).GetFormatFromOptions(options) : options.Format;
@@ -132,6 +176,8 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TrafficManagerRegion)} does not support '{options.Format}' format.");
             }
@@ -148,6 +194,8 @@ namespace Azure.ResourceManager.TrafficManager.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeTrafficManagerRegion(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(TrafficManagerRegion)} does not support '{options.Format}' format.");
             }

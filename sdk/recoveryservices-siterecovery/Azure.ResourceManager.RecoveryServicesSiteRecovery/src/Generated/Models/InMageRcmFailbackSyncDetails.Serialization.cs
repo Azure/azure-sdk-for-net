@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmFailbackSyncDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmFailbackSyncDetails>
+    public partial class InMageRcmFailbackSyncDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmFailbackSyncDetails>, IPersistableModel<InMageRcmFailbackSyncDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmFailbackSyncDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -197,6 +198,74 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmFailbackSyncDetails(Optional.ToNullable(progressHealth), Optional.ToNullable(transferredBytes), Optional.ToNullable(last15MinutesTransferredBytes), Optional.ToNullable(lastDataTransferTimeUtc), Optional.ToNullable(processedBytes), Optional.ToNullable(startTime), Optional.ToNullable(lastRefreshTime), Optional.ToNullable(progressPercentage), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProgressHealth))
+            {
+                builder.Append("  progressHealth:");
+                builder.AppendLine($" '{ProgressHealth.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TransferredBytes))
+            {
+                builder.Append("  transferredBytes:");
+                builder.AppendLine($" '{TransferredBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Last15MinutesTransferredBytes))
+            {
+                builder.Append("  last15MinutesTransferredBytes:");
+                builder.AppendLine($" '{Last15MinutesTransferredBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastDataTransferOn))
+            {
+                builder.Append("  lastDataTransferTimeUtc:");
+                builder.AppendLine($" '{LastDataTransferOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProcessedBytes))
+            {
+                builder.Append("  processedBytes:");
+                builder.AppendLine($" '{ProcessedBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startTime:");
+                builder.AppendLine($" '{StartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastRefreshedOn))
+            {
+                builder.Append("  lastRefreshTime:");
+                builder.AppendLine($" '{LastRefreshedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProgressPercentage))
+            {
+                builder.Append("  progressPercentage:");
+                builder.AppendLine($" '{ProgressPercentage.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<InMageRcmFailbackSyncDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackSyncDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -205,6 +274,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmFailbackSyncDetails)} does not support '{options.Format}' format.");
             }
@@ -221,6 +292,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeInMageRcmFailbackSyncDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmFailbackSyncDetails)} does not support '{options.Format}' format.");
             }

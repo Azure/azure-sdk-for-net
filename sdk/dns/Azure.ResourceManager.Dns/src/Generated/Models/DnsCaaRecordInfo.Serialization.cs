@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class DnsCaaRecordInfo : IUtf8JsonSerializable, IJsonModel<DnsCaaRecordInfo>
+    public partial class DnsCaaRecordInfo : IUtf8JsonSerializable, IJsonModel<DnsCaaRecordInfo>, IPersistableModel<DnsCaaRecordInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsCaaRecordInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -114,6 +115,44 @@ namespace Azure.ResourceManager.Dns.Models
             return new DnsCaaRecordInfo(Optional.ToNullable(flags), tag.Value, value.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Flags))
+            {
+                builder.Append("  flags:");
+                builder.AppendLine($" '{Flags.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Tag))
+            {
+                builder.Append("  tag:");
+                builder.AppendLine($" '{Tag}'");
+            }
+
+            if (Optional.IsDefined(Value))
+            {
+                builder.Append("  value:");
+                builder.AppendLine($" '{Value}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DnsCaaRecordInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DnsCaaRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -122,6 +161,8 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DnsCaaRecordInfo)} does not support '{options.Format}' format.");
             }
@@ -138,6 +179,8 @@ namespace Azure.ResourceManager.Dns.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDnsCaaRecordInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DnsCaaRecordInfo)} does not support '{options.Format}' format.");
             }

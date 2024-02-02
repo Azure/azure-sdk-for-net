@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ManagementPartner.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagementPartner
 {
-    public partial class PartnerResponseData : IUtf8JsonSerializable, IJsonModel<PartnerResponseData>
+    public partial class PartnerResponseData : IUtf8JsonSerializable, IJsonModel<PartnerResponseData>, IPersistableModel<PartnerResponseData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerResponseData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -265,6 +266,104 @@ namespace Azure.ResourceManager.ManagementPartner
             return new PartnerResponseData(id, name, type, systemData.Value, Optional.ToNullable(etag), partnerId.Value, partnerName.Value, Optional.ToNullable(tenantId), objectId.Value, Optional.ToNullable(version), Optional.ToNullable(updatedTime), Optional.ToNullable(createdTime), Optional.ToNullable(state), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PartnerId))
+            {
+                builder.Append("  partnerId:");
+                builder.AppendLine($" '{PartnerId}'");
+            }
+
+            if (Optional.IsDefined(PartnerName))
+            {
+                builder.Append("  partnerName:");
+                builder.AppendLine($" '{PartnerName}'");
+            }
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("  tenantId:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ObjectId))
+            {
+                builder.Append("  objectId:");
+                builder.AppendLine($" '{ObjectId}'");
+            }
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("  version:");
+                builder.AppendLine($" '{Version.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UpdatedOn))
+            {
+                builder.Append("  updatedTime:");
+                builder.AppendLine($" '{UpdatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdTime:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PartnerResponseData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PartnerResponseData>)this).GetFormatFromOptions(options) : options.Format;
@@ -273,6 +372,8 @@ namespace Azure.ResourceManager.ManagementPartner
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PartnerResponseData)} does not support '{options.Format}' format.");
             }
@@ -289,6 +390,8 @@ namespace Azure.ResourceManager.ManagementPartner
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePartnerResponseData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PartnerResponseData)} does not support '{options.Format}' format.");
             }

@@ -9,12 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class AdditionalLocation : IUtf8JsonSerializable, IJsonModel<AdditionalLocation>
+    public partial class AdditionalLocation : IUtf8JsonSerializable, IJsonModel<AdditionalLocation>, IPersistableModel<AdditionalLocation>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdditionalLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -268,6 +269,117 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new AdditionalLocation(location, sku, Optional.ToList(zones), Optional.ToList(publicIPAddresses), Optional.ToList(privateIPAddresses), publicIPAddressId.Value, virtualNetworkConfiguration.Value, gatewayRegionalUri.Value, Optional.ToNullable(disableGateway), Optional.ToNullable(platformVersion), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                builder.Append("  zones:");
+                builder.AppendLine(" [");
+                foreach (var item in Zones)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(PublicIPAddresses))
+            {
+                builder.Append("  publicIPAddresses:");
+                builder.AppendLine(" [");
+                foreach (var item in PublicIPAddresses)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(PrivateIPAddresses))
+            {
+                builder.Append("  privateIPAddresses:");
+                builder.AppendLine(" [");
+                foreach (var item in PrivateIPAddresses)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(PublicIPAddressId))
+            {
+                builder.Append("  publicIpAddressId:");
+                builder.AppendLine($" '{PublicIPAddressId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VirtualNetworkConfiguration))
+            {
+                builder.Append("  virtualNetworkConfiguration:");
+                AppendChildObject(builder, VirtualNetworkConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(GatewayRegionalUri))
+            {
+                builder.Append("  gatewayRegionalUrl:");
+                builder.AppendLine($" '{GatewayRegionalUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(DisableGateway))
+            {
+                builder.Append("  disableGateway:");
+                var boolValue = DisableGateway.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(PlatformVersion))
+            {
+                builder.Append("  platformVersion:");
+                builder.AppendLine($" '{PlatformVersion.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AdditionalLocation>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AdditionalLocation>)this).GetFormatFromOptions(options) : options.Format;
@@ -276,6 +388,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AdditionalLocation)} does not support '{options.Format}' format.");
             }
@@ -292,6 +406,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAdditionalLocation(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AdditionalLocation)} does not support '{options.Format}' format.");
             }

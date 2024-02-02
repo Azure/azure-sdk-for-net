@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoSkuDescription : IUtf8JsonSerializable, IJsonModel<KustoSkuDescription>
+    public partial class KustoSkuDescription : IUtf8JsonSerializable, IJsonModel<KustoSkuDescription>, IPersistableModel<KustoSkuDescription>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoSkuDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -204,6 +205,82 @@ namespace Azure.ResourceManager.Kusto.Models
             return new KustoSkuDescription(resourceType.Value, name.Value, tier.Value, Optional.ToList(locations), Optional.ToList(locationInfo), Optional.ToList(restrictions), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  resourceType:");
+                builder.AppendLine($" '{ResourceType}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Tier))
+            {
+                builder.Append("  tier:");
+                builder.AppendLine($" '{Tier}'");
+            }
+
+            if (Optional.IsCollectionDefined(Locations))
+            {
+                builder.Append("  locations:");
+                builder.AppendLine(" [");
+                foreach (var item in Locations)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(LocationInfo))
+            {
+                builder.Append("  locationInfo:");
+                builder.AppendLine(" [");
+                foreach (var item in LocationInfo)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Restrictions))
+            {
+                builder.Append("  restrictions:");
+                builder.AppendLine(" [");
+                foreach (var item in Restrictions)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<KustoSkuDescription>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KustoSkuDescription>)this).GetFormatFromOptions(options) : options.Format;
@@ -212,6 +289,8 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KustoSkuDescription)} does not support '{options.Format}' format.");
             }
@@ -228,6 +307,8 @@ namespace Azure.ResourceManager.Kusto.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeKustoSkuDescription(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(KustoSkuDescription)} does not support '{options.Format}' format.");
             }

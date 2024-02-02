@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class SavingsPlanUtilizationSummary : IUtf8JsonSerializable, IJsonModel<SavingsPlanUtilizationSummary>
+    public partial class SavingsPlanUtilizationSummary : IUtf8JsonSerializable, IJsonModel<SavingsPlanUtilizationSummary>, IPersistableModel<SavingsPlanUtilizationSummary>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SavingsPlanUtilizationSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -257,6 +258,104 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new SavingsPlanUtilizationSummary(id, name, type, systemData.Value, kind, serializedAdditionalRawData, armSkuName.Value, benefitId.Value, benefitOrderId.Value, Optional.ToNullable(benefitType), Optional.ToNullable(usageDate), Optional.ToNullable(avgUtilizationPercentage), Optional.ToNullable(minUtilizationPercentage), Optional.ToNullable(maxUtilizationPercentage));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ArmSkuName))
+            {
+                builder.Append("  armSkuName:");
+                builder.AppendLine($" '{ArmSkuName}'");
+            }
+
+            if (Optional.IsDefined(BenefitId))
+            {
+                builder.Append("  benefitId:");
+                builder.AppendLine($" '{BenefitId}'");
+            }
+
+            if (Optional.IsDefined(BenefitOrderId))
+            {
+                builder.Append("  benefitOrderId:");
+                builder.AppendLine($" '{BenefitOrderId}'");
+            }
+
+            if (Optional.IsDefined(BenefitType))
+            {
+                builder.Append("  benefitType:");
+                builder.AppendLine($" '{BenefitType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UsageOn))
+            {
+                builder.Append("  usageDate:");
+                builder.AppendLine($" '{UsageOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AvgUtilizationPercentage))
+            {
+                builder.Append("  avgUtilizationPercentage:");
+                builder.AppendLine($" '{AvgUtilizationPercentage.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MinUtilizationPercentage))
+            {
+                builder.Append("  minUtilizationPercentage:");
+                builder.AppendLine($" '{MinUtilizationPercentage.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxUtilizationPercentage))
+            {
+                builder.Append("  maxUtilizationPercentage:");
+                builder.AppendLine($" '{MaxUtilizationPercentage.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SavingsPlanUtilizationSummary>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
@@ -265,6 +364,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SavingsPlanUtilizationSummary)} does not support '{options.Format}' format.");
             }
@@ -281,6 +382,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSavingsPlanUtilizationSummary(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SavingsPlanUtilizationSummary)} does not support '{options.Format}' format.");
             }

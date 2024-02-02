@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.SqlVirtualMachine.Models;
 
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
-    public partial class SqlVmGroupData : IUtf8JsonSerializable, IJsonModel<SqlVmGroupData>
+    public partial class SqlVmGroupData : IUtf8JsonSerializable, IJsonModel<SqlVmGroupData>, IPersistableModel<SqlVmGroupData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlVmGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -273,6 +274,115 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             return new SqlVmGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, provisioningState.Value, sqlImageOffer.Value, Optional.ToNullable(sqlImageSku), Optional.ToNullable(scaleType), Optional.ToNullable(clusterManagerType), Optional.ToNullable(clusterConfiguration), windowsServerFailoverClusterDomainProfile.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(SqlImageOffer))
+            {
+                builder.Append("  sqlImageOffer:");
+                builder.AppendLine($" '{SqlImageOffer}'");
+            }
+
+            if (Optional.IsDefined(SqlImageSku))
+            {
+                builder.Append("  sqlImageSku:");
+                builder.AppendLine($" '{SqlImageSku.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ScaleType))
+            {
+                builder.Append("  scaleType:");
+                builder.AppendLine($" '{ScaleType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClusterManagerType))
+            {
+                builder.Append("  clusterManagerType:");
+                builder.AppendLine($" '{ClusterManagerType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClusterConfiguration))
+            {
+                builder.Append("  clusterConfiguration:");
+                builder.AppendLine($" '{ClusterConfiguration.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WindowsServerFailoverClusterDomainProfile))
+            {
+                builder.Append("  wsfcDomainProfile:");
+                AppendChildObject(builder, WindowsServerFailoverClusterDomainProfile, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SqlVmGroupData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlVmGroupData>)this).GetFormatFromOptions(options) : options.Format;
@@ -281,6 +391,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SqlVmGroupData)} does not support '{options.Format}' format.");
             }
@@ -297,6 +409,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSqlVmGroupData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SqlVmGroupData)} does not support '{options.Format}' format.");
             }

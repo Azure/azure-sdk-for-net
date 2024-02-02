@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class UnknownJobDetails : IUtf8JsonSerializable, IJsonModel<DataBoxBasicJobDetails>
+    internal partial class UnknownJobDetails : IUtf8JsonSerializable, IJsonModel<DataBoxBasicJobDetails>, IPersistableModel<DataBoxBasicJobDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxBasicJobDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -405,6 +406,171 @@ namespace Azure.ResourceManager.DataBox.Models
             return new UnknownJobDetails(Optional.ToList(jobStages), contactDetails, shippingAddress.Value, deliveryPackage.Value, returnPackage.Value, Optional.ToList(dataImportDetails), Optional.ToList(dataExportDetails), jobDetailsType, preferences.Value, reverseShippingDetails.Value, Optional.ToList(copyLogDetails), reverseShipmentLabelSasKey.Value, chainOfCustodySasKey.Value, deviceErasureDetails.Value, keyEncryptionKey.Value, Optional.ToNullable(expectedDataSizeInTerabytes), Optional.ToList(actions), lastMitigationActionOnJob.Value, dataCenterAddress.Value, Optional.ToNullable(dataCenterCode), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(JobStages))
+            {
+                builder.Append("  jobStages:");
+                builder.AppendLine(" [");
+                foreach (var item in JobStages)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ContactDetails))
+            {
+                builder.Append("  contactDetails:");
+                AppendChildObject(builder, ContactDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(ShippingAddress))
+            {
+                builder.Append("  shippingAddress:");
+                AppendChildObject(builder, ShippingAddress, options, 2);
+            }
+
+            if (Optional.IsDefined(DeliveryPackage))
+            {
+                builder.Append("  deliveryPackage:");
+                AppendChildObject(builder, DeliveryPackage, options, 2);
+            }
+
+            if (Optional.IsDefined(ReturnPackage))
+            {
+                builder.Append("  returnPackage:");
+                AppendChildObject(builder, ReturnPackage, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(DataImportDetails))
+            {
+                builder.Append("  dataImportDetails:");
+                builder.AppendLine(" [");
+                foreach (var item in DataImportDetails)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(DataExportDetails))
+            {
+                builder.Append("  dataExportDetails:");
+                builder.AppendLine(" [");
+                foreach (var item in DataExportDetails)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(JobDetailsType))
+            {
+                builder.Append("  jobDetailsType:");
+                builder.AppendLine($" '{JobDetailsType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Preferences))
+            {
+                builder.Append("  preferences:");
+                AppendChildObject(builder, Preferences, options, 2);
+            }
+
+            if (Optional.IsDefined(ReverseShippingDetails))
+            {
+                builder.Append("  reverseShippingDetails:");
+                AppendChildObject(builder, ReverseShippingDetails, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(CopyLogDetails))
+            {
+                builder.Append("  copyLogDetails:");
+                builder.AppendLine(" [");
+                foreach (var item in CopyLogDetails)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ReverseShipmentLabelSasKey))
+            {
+                builder.Append("  reverseShipmentLabelSasKey:");
+                builder.AppendLine($" '{ReverseShipmentLabelSasKey}'");
+            }
+
+            if (Optional.IsDefined(ChainOfCustodySasKey))
+            {
+                builder.Append("  chainOfCustodySasKey:");
+                builder.AppendLine($" '{ChainOfCustodySasKey}'");
+            }
+
+            if (Optional.IsDefined(DeviceErasureDetails))
+            {
+                builder.Append("  deviceErasureDetails:");
+                AppendChildObject(builder, DeviceErasureDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(KeyEncryptionKey))
+            {
+                builder.Append("  keyEncryptionKey:");
+                AppendChildObject(builder, KeyEncryptionKey, options, 2);
+            }
+
+            if (Optional.IsDefined(ExpectedDataSizeInTerabytes))
+            {
+                builder.Append("  expectedDataSizeInTeraBytes:");
+                builder.AppendLine($" '{ExpectedDataSizeInTerabytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Actions))
+            {
+                builder.Append("  actions:");
+                builder.AppendLine(" [");
+                foreach (var item in Actions)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(LastMitigationActionOnJob))
+            {
+                builder.Append("  lastMitigationActionOnJob:");
+                AppendChildObject(builder, LastMitigationActionOnJob, options, 2);
+            }
+
+            if (Optional.IsDefined(DataCenterAddress))
+            {
+                builder.Append("  datacenterAddress:");
+                AppendChildObject(builder, DataCenterAddress, options, 2);
+            }
+
+            if (Optional.IsDefined(DataCenterCode))
+            {
+                builder.Append("  dataCenterCode:");
+                builder.AppendLine($" '{DataCenterCode.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DataBoxBasicJobDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxBasicJobDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -413,6 +579,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxBasicJobDetails)} does not support '{options.Format}' format.");
             }
@@ -429,6 +597,8 @@ namespace Azure.ResourceManager.DataBox.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeUnknownJobDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataBoxBasicJobDetails)} does not support '{options.Format}' format.");
             }

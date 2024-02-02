@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NatRule : IUtf8JsonSerializable, IJsonModel<NatRule>
+    public partial class NatRule : IUtf8JsonSerializable, IJsonModel<NatRule>, IPersistableModel<NatRule>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NatRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -265,6 +266,137 @@ namespace Azure.ResourceManager.Network.Models
             return new NatRule(name.Value, description.Value, ruleType, serializedAdditionalRawData, Optional.ToList(ipProtocols), Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), translatedAddress.Value, translatedPort.Value, Optional.ToList(sourceIPGroups), translatedFqdn.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(IPProtocols))
+            {
+                builder.Append("  ipProtocols:");
+                builder.AppendLine(" [");
+                foreach (var item in IPProtocols)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(SourceAddresses))
+            {
+                builder.Append("  sourceAddresses:");
+                builder.AppendLine(" [");
+                foreach (var item in SourceAddresses)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(DestinationAddresses))
+            {
+                builder.Append("  destinationAddresses:");
+                builder.AppendLine(" [");
+                foreach (var item in DestinationAddresses)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(DestinationPorts))
+            {
+                builder.Append("  destinationPorts:");
+                builder.AppendLine(" [");
+                foreach (var item in DestinationPorts)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(TranslatedAddress))
+            {
+                builder.Append("  translatedAddress:");
+                builder.AppendLine($" '{TranslatedAddress}'");
+            }
+
+            if (Optional.IsDefined(TranslatedPort))
+            {
+                builder.Append("  translatedPort:");
+                builder.AppendLine($" '{TranslatedPort}'");
+            }
+
+            if (Optional.IsCollectionDefined(SourceIPGroups))
+            {
+                builder.Append("  sourceIpGroups:");
+                builder.AppendLine(" [");
+                foreach (var item in SourceIPGroups)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(TranslatedFqdn))
+            {
+                builder.Append("  translatedFqdn:");
+                builder.AppendLine($" '{TranslatedFqdn}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(RuleType))
+            {
+                builder.Append("  ruleType:");
+                builder.AppendLine($" '{RuleType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<NatRule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NatRule>)this).GetFormatFromOptions(options) : options.Format;
@@ -273,6 +405,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NatRule)} does not support '{options.Format}' format.");
             }
@@ -289,6 +423,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNatRule(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NatRule)} does not support '{options.Format}' format.");
             }

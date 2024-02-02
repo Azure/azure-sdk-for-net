@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class ServerEndpointSyncActivityStatus : IUtf8JsonSerializable, IJsonModel<ServerEndpointSyncActivityStatus>
+    public partial class ServerEndpointSyncActivityStatus : IUtf8JsonSerializable, IJsonModel<ServerEndpointSyncActivityStatus>, IPersistableModel<ServerEndpointSyncActivityStatus>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerEndpointSyncActivityStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -197,6 +198,74 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointSyncActivityStatus(Optional.ToNullable(timestamp), Optional.ToNullable(perItemErrorCount), Optional.ToNullable(appliedItemCount), Optional.ToNullable(totalItemCount), Optional.ToNullable(appliedBytes), Optional.ToNullable(totalBytes), Optional.ToNullable(syncMode), Optional.ToNullable(sessionMinutesRemaining), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Timestamp))
+            {
+                builder.Append("  timestamp:");
+                builder.AppendLine($" '{Timestamp.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PerItemErrorCount))
+            {
+                builder.Append("  perItemErrorCount:");
+                builder.AppendLine($" '{PerItemErrorCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AppliedItemCount))
+            {
+                builder.Append("  appliedItemCount:");
+                builder.AppendLine($" '{AppliedItemCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalItemCount))
+            {
+                builder.Append("  totalItemCount:");
+                builder.AppendLine($" '{TotalItemCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AppliedBytes))
+            {
+                builder.Append("  appliedBytes:");
+                builder.AppendLine($" '{AppliedBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalBytes))
+            {
+                builder.Append("  totalBytes:");
+                builder.AppendLine($" '{TotalBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SyncMode))
+            {
+                builder.Append("  syncMode:");
+                builder.AppendLine($" '{SyncMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SessionMinutesRemaining))
+            {
+                builder.Append("  sessionMinutesRemaining:");
+                builder.AppendLine($" '{SessionMinutesRemaining.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ServerEndpointSyncActivityStatus>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointSyncActivityStatus>)this).GetFormatFromOptions(options) : options.Format;
@@ -205,6 +274,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServerEndpointSyncActivityStatus)} does not support '{options.Format}' format.");
             }
@@ -221,6 +292,8 @@ namespace Azure.ResourceManager.StorageSync.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeServerEndpointSyncActivityStatus(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ServerEndpointSyncActivityStatus)} does not support '{options.Format}' format.");
             }

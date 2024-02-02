@@ -9,12 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageAzureV2ReplicationDetails : IUtf8JsonSerializable, IJsonModel<InMageAzureV2ReplicationDetails>
+    public partial class InMageAzureV2ReplicationDetails : IUtf8JsonSerializable, IJsonModel<InMageAzureV2ReplicationDetails>, IPersistableModel<InMageAzureV2ReplicationDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageAzureV2ReplicationDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -1130,6 +1131,552 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageAzureV2ReplicationDetails(instanceType, serializedAdditionalRawData, infrastructureVmId.Value, vCenterInfrastructureId.Value, protectionStage.Value, vmId.Value, vmProtectionState.Value, vmProtectionStateDescription.Value, Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(rpoInSeconds), Optional.ToNullable(compressedDataRateInMB), Optional.ToNullable(uncompressedDataRateInMB), ipAddress.Value, agentVersion.Value, Optional.ToNullable(agentExpireOn), isAgentUpdateRequired.Value, isRebootAfterUpdateRequired.Value, Optional.ToNullable(lastHeartbeat), Optional.ToNullable(processServerId), processServerName.Value, multiVmGroupId.Value, multiVmGroupName.Value, multiVmSyncStatus.Value, Optional.ToList(protectedDisks), diskResized.Value, masterTargetId.Value, Optional.ToNullable(sourceVmCpuCount), Optional.ToNullable(sourceVmRamSizeInMB), osType.Value, vhdName.Value, osDiskId.Value, Optional.ToList(azureVmDiskDetails), recoveryAzureVmName.Value, recoveryAzureVmSize.Value, recoveryAzureStorageAccount.Value, recoveryAzureLogStorageAccountId.Value, Optional.ToList(vmNics), selectedRecoveryAzureNetworkId.Value, selectedTfoAzureNetworkId.Value, selectedSourceNicId.Value, discoveryType.Value, enableRdpOnTargetOption.Value, Optional.ToList(datastores), targetVmId.Value, recoveryAzureResourceGroupId.Value, recoveryAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, useManagedDisks.Value, licenseType.Value, sqlServerLicenseType.Value, Optional.ToList(validationErrors), Optional.ToNullable(lastRpoCalculatedTime), Optional.ToNullable(lastUpdateReceivedTime), replicaId.Value, osVersion.Value, Optional.ToList(protectedManagedDisks), Optional.ToNullable(lastRecoveryPointReceived), firmwareType.Value, azureVmGeneration.Value, Optional.ToNullable(isAdditionalStatsAvailable), Optional.ToNullable(totalDataTransferred), totalProgressHealth.Value, Optional.ToDictionary(targetVmTags), Optional.ToDictionary(seedManagedDiskTags), Optional.ToDictionary(targetManagedDiskTags), Optional.ToDictionary(targetNicTags), Optional.ToList(switchProviderBlockingErrorDetails), switchProviderDetails.Value, Optional.ToList(supportedOSVersions), Optional.ToList(allAvailableOSUpgradeConfigurations), osName.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(InfrastructureVmId))
+            {
+                builder.Append("  infrastructureVmId:");
+                builder.AppendLine($" '{InfrastructureVmId}'");
+            }
+
+            if (Optional.IsDefined(VCenterInfrastructureId))
+            {
+                builder.Append("  vCenterInfrastructureId:");
+                builder.AppendLine($" '{VCenterInfrastructureId}'");
+            }
+
+            if (Optional.IsDefined(ProtectionStage))
+            {
+                builder.Append("  protectionStage:");
+                builder.AppendLine($" '{ProtectionStage}'");
+            }
+
+            if (Optional.IsDefined(VmId))
+            {
+                builder.Append("  vmId:");
+                builder.AppendLine($" '{VmId}'");
+            }
+
+            if (Optional.IsDefined(VmProtectionState))
+            {
+                builder.Append("  vmProtectionState:");
+                builder.AppendLine($" '{VmProtectionState}'");
+            }
+
+            if (Optional.IsDefined(VmProtectionStateDescription))
+            {
+                builder.Append("  vmProtectionStateDescription:");
+                builder.AppendLine($" '{VmProtectionStateDescription}'");
+            }
+
+            if (Optional.IsDefined(ResyncProgressPercentage))
+            {
+                builder.Append("  resyncProgressPercentage:");
+                builder.AppendLine($" '{ResyncProgressPercentage.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RpoInSeconds))
+            {
+                builder.Append("  rpoInSeconds:");
+                builder.AppendLine($" '{RpoInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CompressedDataRateInMB))
+            {
+                builder.Append("  compressedDataRateInMB:");
+                builder.AppendLine($" '{CompressedDataRateInMB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UncompressedDataRateInMB))
+            {
+                builder.Append("  uncompressedDataRateInMB:");
+                builder.AppendLine($" '{UncompressedDataRateInMB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IPAddress))
+            {
+                builder.Append("  ipAddress:");
+                builder.AppendLine($" '{IPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AgentVersion))
+            {
+                builder.Append("  agentVersion:");
+                builder.AppendLine($" '{AgentVersion}'");
+            }
+
+            if (Optional.IsDefined(AgentExpireOn))
+            {
+                builder.Append("  agentExpiryDate:");
+                builder.AppendLine($" '{AgentExpireOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsAgentUpdateRequired))
+            {
+                builder.Append("  isAgentUpdateRequired:");
+                builder.AppendLine($" '{IsAgentUpdateRequired}'");
+            }
+
+            if (Optional.IsDefined(IsRebootAfterUpdateRequired))
+            {
+                builder.Append("  isRebootAfterUpdateRequired:");
+                builder.AppendLine($" '{IsRebootAfterUpdateRequired}'");
+            }
+
+            if (Optional.IsDefined(LastHeartbeat))
+            {
+                builder.Append("  lastHeartbeat:");
+                builder.AppendLine($" '{LastHeartbeat.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProcessServerId))
+            {
+                builder.Append("  processServerId:");
+                builder.AppendLine($" '{ProcessServerId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProcessServerName))
+            {
+                builder.Append("  processServerName:");
+                builder.AppendLine($" '{ProcessServerName}'");
+            }
+
+            if (Optional.IsDefined(MultiVmGroupId))
+            {
+                builder.Append("  multiVmGroupId:");
+                builder.AppendLine($" '{MultiVmGroupId}'");
+            }
+
+            if (Optional.IsDefined(MultiVmGroupName))
+            {
+                builder.Append("  multiVmGroupName:");
+                builder.AppendLine($" '{MultiVmGroupName}'");
+            }
+
+            if (Optional.IsDefined(MultiVmSyncStatus))
+            {
+                builder.Append("  multiVmSyncStatus:");
+                builder.AppendLine($" '{MultiVmSyncStatus}'");
+            }
+
+            if (Optional.IsCollectionDefined(ProtectedDisks))
+            {
+                builder.Append("  protectedDisks:");
+                builder.AppendLine(" [");
+                foreach (var item in ProtectedDisks)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(DiskResized))
+            {
+                builder.Append("  diskResized:");
+                builder.AppendLine($" '{DiskResized}'");
+            }
+
+            if (Optional.IsDefined(MasterTargetId))
+            {
+                builder.Append("  masterTargetId:");
+                builder.AppendLine($" '{MasterTargetId}'");
+            }
+
+            if (Optional.IsDefined(SourceVmCpuCount))
+            {
+                builder.Append("  sourceVmCpuCount:");
+                builder.AppendLine($" '{SourceVmCpuCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceVmRamSizeInMB))
+            {
+                builder.Append("  sourceVmRamSizeInMB:");
+                builder.AppendLine($" '{SourceVmRamSizeInMB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OSType))
+            {
+                builder.Append("  osType:");
+                builder.AppendLine($" '{OSType}'");
+            }
+
+            if (Optional.IsDefined(VhdName))
+            {
+                builder.Append("  vhdName:");
+                builder.AppendLine($" '{VhdName}'");
+            }
+
+            if (Optional.IsDefined(OSDiskId))
+            {
+                builder.Append("  osDiskId:");
+                builder.AppendLine($" '{OSDiskId}'");
+            }
+
+            if (Optional.IsCollectionDefined(AzureVmDiskDetails))
+            {
+                builder.Append("  azureVMDiskDetails:");
+                builder.AppendLine(" [");
+                foreach (var item in AzureVmDiskDetails)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(RecoveryAzureVmName))
+            {
+                builder.Append("  recoveryAzureVMName:");
+                builder.AppendLine($" '{RecoveryAzureVmName}'");
+            }
+
+            if (Optional.IsDefined(RecoveryAzureVmSize))
+            {
+                builder.Append("  recoveryAzureVMSize:");
+                builder.AppendLine($" '{RecoveryAzureVmSize}'");
+            }
+
+            if (Optional.IsDefined(RecoveryAzureStorageAccount))
+            {
+                builder.Append("  recoveryAzureStorageAccount:");
+                builder.AppendLine($" '{RecoveryAzureStorageAccount}'");
+            }
+
+            if (Optional.IsDefined(RecoveryAzureLogStorageAccountId))
+            {
+                builder.Append("  recoveryAzureLogStorageAccountId:");
+                builder.AppendLine($" '{RecoveryAzureLogStorageAccountId.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(VmNics))
+            {
+                builder.Append("  vmNics:");
+                builder.AppendLine(" [");
+                foreach (var item in VmNics)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(SelectedRecoveryAzureNetworkId))
+            {
+                builder.Append("  selectedRecoveryAzureNetworkId:");
+                builder.AppendLine($" '{SelectedRecoveryAzureNetworkId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SelectedTfoAzureNetworkId))
+            {
+                builder.Append("  selectedTfoAzureNetworkId:");
+                builder.AppendLine($" '{SelectedTfoAzureNetworkId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SelectedSourceNicId))
+            {
+                builder.Append("  selectedSourceNicId:");
+                builder.AppendLine($" '{SelectedSourceNicId}'");
+            }
+
+            if (Optional.IsDefined(DiscoveryType))
+            {
+                builder.Append("  discoveryType:");
+                builder.AppendLine($" '{DiscoveryType}'");
+            }
+
+            if (Optional.IsDefined(EnableRdpOnTargetOption))
+            {
+                builder.Append("  enableRdpOnTargetOption:");
+                builder.AppendLine($" '{EnableRdpOnTargetOption}'");
+            }
+
+            if (Optional.IsCollectionDefined(Datastores))
+            {
+                builder.Append("  datastores:");
+                builder.AppendLine(" [");
+                foreach (var item in Datastores)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(TargetVmId))
+            {
+                builder.Append("  targetVmId:");
+                builder.AppendLine($" '{TargetVmId}'");
+            }
+
+            if (Optional.IsDefined(RecoveryAzureResourceGroupId))
+            {
+                builder.Append("  recoveryAzureResourceGroupId:");
+                builder.AppendLine($" '{RecoveryAzureResourceGroupId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecoveryAvailabilitySetId))
+            {
+                builder.Append("  recoveryAvailabilitySetId:");
+                builder.AppendLine($" '{RecoveryAvailabilitySetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetAvailabilityZone))
+            {
+                builder.Append("  targetAvailabilityZone:");
+                builder.AppendLine($" '{TargetAvailabilityZone}'");
+            }
+
+            if (Optional.IsDefined(TargetProximityPlacementGroupId))
+            {
+                builder.Append("  targetProximityPlacementGroupId:");
+                builder.AppendLine($" '{TargetProximityPlacementGroupId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UseManagedDisks))
+            {
+                builder.Append("  useManagedDisks:");
+                builder.AppendLine($" '{UseManagedDisks}'");
+            }
+
+            if (Optional.IsDefined(LicenseType))
+            {
+                builder.Append("  licenseType:");
+                builder.AppendLine($" '{LicenseType}'");
+            }
+
+            if (Optional.IsDefined(SqlServerLicenseType))
+            {
+                builder.Append("  sqlServerLicenseType:");
+                builder.AppendLine($" '{SqlServerLicenseType}'");
+            }
+
+            if (Optional.IsCollectionDefined(ValidationErrors))
+            {
+                builder.Append("  validationErrors:");
+                builder.AppendLine(" [");
+                foreach (var item in ValidationErrors)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(LastRpoCalculatedOn))
+            {
+                builder.Append("  lastRpoCalculatedTime:");
+                builder.AppendLine($" '{LastRpoCalculatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastUpdateReceivedOn))
+            {
+                builder.Append("  lastUpdateReceivedTime:");
+                builder.AppendLine($" '{LastUpdateReceivedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReplicaId))
+            {
+                builder.Append("  replicaId:");
+                builder.AppendLine($" '{ReplicaId}'");
+            }
+
+            if (Optional.IsDefined(OSVersion))
+            {
+                builder.Append("  osVersion:");
+                builder.AppendLine($" '{OSVersion}'");
+            }
+
+            if (Optional.IsCollectionDefined(ProtectedManagedDisks))
+            {
+                builder.Append("  protectedManagedDisks:");
+                builder.AppendLine(" [");
+                foreach (var item in ProtectedManagedDisks)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(LastRecoveryPointReceived))
+            {
+                builder.Append("  lastRecoveryPointReceived:");
+                builder.AppendLine($" '{LastRecoveryPointReceived.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FirmwareType))
+            {
+                builder.Append("  firmwareType:");
+                builder.AppendLine($" '{FirmwareType}'");
+            }
+
+            if (Optional.IsDefined(AzureVmGeneration))
+            {
+                builder.Append("  azureVmGeneration:");
+                builder.AppendLine($" '{AzureVmGeneration}'");
+            }
+
+            if (Optional.IsDefined(IsAdditionalStatsAvailable))
+            {
+                builder.Append("  isAdditionalStatsAvailable:");
+                var boolValue = IsAdditionalStatsAvailable.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(TotalDataTransferred))
+            {
+                builder.Append("  totalDataTransferred:");
+                builder.AppendLine($" '{TotalDataTransferred.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalProgressHealth))
+            {
+                builder.Append("  totalProgressHealth:");
+                builder.AppendLine($" '{TotalProgressHealth}'");
+            }
+
+            if (Optional.IsCollectionDefined(TargetVmTags))
+            {
+                builder.Append("  targetVmTags:");
+                builder.AppendLine(" {");
+                foreach (var item in TargetVmTags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsCollectionDefined(SeedManagedDiskTags))
+            {
+                builder.Append("  seedManagedDiskTags:");
+                builder.AppendLine(" {");
+                foreach (var item in SeedManagedDiskTags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsCollectionDefined(TargetManagedDiskTags))
+            {
+                builder.Append("  targetManagedDiskTags:");
+                builder.AppendLine(" {");
+                foreach (var item in TargetManagedDiskTags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsCollectionDefined(TargetNicTags))
+            {
+                builder.Append("  targetNicTags:");
+                builder.AppendLine(" {");
+                foreach (var item in TargetNicTags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsCollectionDefined(SwitchProviderBlockingErrorDetails))
+            {
+                builder.Append("  switchProviderBlockingErrorDetails:");
+                builder.AppendLine(" [");
+                foreach (var item in SwitchProviderBlockingErrorDetails)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(SwitchProviderDetails))
+            {
+                builder.Append("  switchProviderDetails:");
+                AppendChildObject(builder, SwitchProviderDetails, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(SupportedOSVersions))
+            {
+                builder.Append("  supportedOSVersions:");
+                builder.AppendLine(" [");
+                foreach (var item in SupportedOSVersions)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(AllAvailableOSUpgradeConfigurations))
+            {
+                builder.Append("  allAvailableOSUpgradeConfigurations:");
+                builder.AppendLine(" [");
+                foreach (var item in AllAvailableOSUpgradeConfigurations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(OSName))
+            {
+                builder.Append("  osName:");
+                builder.AppendLine($" '{OSName}'");
+            }
+
+            if (Optional.IsDefined(InstanceType))
+            {
+                builder.Append("  instanceType:");
+                builder.AppendLine($" '{InstanceType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<InMageAzureV2ReplicationDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2ReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -1138,6 +1685,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(InMageAzureV2ReplicationDetails)} does not support '{options.Format}' format.");
             }
@@ -1154,6 +1703,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeInMageAzureV2ReplicationDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(InMageAzureV2ReplicationDetails)} does not support '{options.Format}' format.");
             }

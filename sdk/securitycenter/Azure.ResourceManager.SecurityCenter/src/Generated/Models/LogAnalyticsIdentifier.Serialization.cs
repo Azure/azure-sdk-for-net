@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class LogAnalyticsIdentifier : IUtf8JsonSerializable, IJsonModel<LogAnalyticsIdentifier>
+    public partial class LogAnalyticsIdentifier : IUtf8JsonSerializable, IJsonModel<LogAnalyticsIdentifier>, IPersistableModel<LogAnalyticsIdentifier>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsIdentifier>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -137,6 +138,56 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new LogAnalyticsIdentifier(type, serializedAdditionalRawData, Optional.ToNullable(workspaceId), workspaceSubscriptionId.Value, workspaceResourceGroup.Value, Optional.ToNullable(agentId));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(WorkspaceId))
+            {
+                builder.Append("  workspaceId:");
+                builder.AppendLine($" '{WorkspaceId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WorkspaceSubscriptionId))
+            {
+                builder.Append("  workspaceSubscriptionId:");
+                builder.AppendLine($" '{WorkspaceSubscriptionId}'");
+            }
+
+            if (Optional.IsDefined(WorkspaceResourceGroup))
+            {
+                builder.Append("  workspaceResourceGroup:");
+                builder.AppendLine($" '{WorkspaceResourceGroup}'");
+            }
+
+            if (Optional.IsDefined(AgentId))
+            {
+                builder.Append("  agentId:");
+                builder.AppendLine($" '{AgentId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResourceIdentifierType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceIdentifierType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<LogAnalyticsIdentifier>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsIdentifier>)this).GetFormatFromOptions(options) : options.Format;
@@ -145,6 +196,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LogAnalyticsIdentifier)} does not support '{options.Format}' format.");
             }
@@ -161,6 +214,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeLogAnalyticsIdentifier(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(LogAnalyticsIdentifier)} does not support '{options.Format}' format.");
             }

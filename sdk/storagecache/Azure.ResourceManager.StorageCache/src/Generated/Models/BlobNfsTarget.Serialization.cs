@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class BlobNfsTarget : IUtf8JsonSerializable, IJsonModel<BlobNfsTarget>
+    public partial class BlobNfsTarget : IUtf8JsonSerializable, IJsonModel<BlobNfsTarget>, IPersistableModel<BlobNfsTarget>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobNfsTarget>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -133,6 +134,50 @@ namespace Azure.ResourceManager.StorageCache.Models
             return new BlobNfsTarget(target.Value, usageModel.Value, Optional.ToNullable(verificationTimer), Optional.ToNullable(writeBackTimer), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Target))
+            {
+                builder.Append("  target:");
+                builder.AppendLine($" '{Target.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UsageModel))
+            {
+                builder.Append("  usageModel:");
+                builder.AppendLine($" '{UsageModel}'");
+            }
+
+            if (Optional.IsDefined(VerificationDelayInSeconds))
+            {
+                builder.Append("  verificationTimer:");
+                builder.AppendLine($" '{VerificationDelayInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WriteBackDelayInSeconds))
+            {
+                builder.Append("  writeBackTimer:");
+                builder.AppendLine($" '{WriteBackDelayInSeconds.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BlobNfsTarget>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BlobNfsTarget>)this).GetFormatFromOptions(options) : options.Format;
@@ -141,6 +186,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BlobNfsTarget)} does not support '{options.Format}' format.");
             }
@@ -157,6 +204,8 @@ namespace Azure.ResourceManager.StorageCache.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBlobNfsTarget(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BlobNfsTarget)} does not support '{options.Format}' format.");
             }

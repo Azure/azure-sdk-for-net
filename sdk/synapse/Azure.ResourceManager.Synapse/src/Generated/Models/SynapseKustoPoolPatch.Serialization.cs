@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseKustoPoolPatch : IUtf8JsonSerializable, IJsonModel<SynapseKustoPoolPatch>
+    public partial class SynapseKustoPoolPatch : IUtf8JsonSerializable, IJsonModel<SynapseKustoPoolPatch>, IPersistableModel<SynapseKustoPoolPatch>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseKustoPoolPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -328,6 +329,135 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseKustoPoolPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), sku.Value, Optional.ToNullable(state), Optional.ToNullable(provisioningState), uri.Value, dataIngestionUri.Value, stateReason.Value, optimizedAutoscale.Value, Optional.ToNullable(enableStreamingIngest), Optional.ToNullable(enablePurge), languageExtensions.Value, Optional.ToNullable(workspaceUID), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Uri))
+            {
+                builder.Append("  uri:");
+                builder.AppendLine($" '{Uri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(DataIngestionUri))
+            {
+                builder.Append("  dataIngestionUri:");
+                builder.AppendLine($" '{DataIngestionUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(StateReason))
+            {
+                builder.Append("  stateReason:");
+                builder.AppendLine($" '{StateReason}'");
+            }
+
+            if (Optional.IsDefined(OptimizedAutoscale))
+            {
+                builder.Append("  optimizedAutoscale:");
+                AppendChildObject(builder, OptimizedAutoscale, options, 2);
+            }
+
+            if (Optional.IsDefined(EnableStreamingIngest))
+            {
+                builder.Append("  enableStreamingIngest:");
+                var boolValue = EnableStreamingIngest.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EnablePurge))
+            {
+                builder.Append("  enablePurge:");
+                var boolValue = EnablePurge.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(LanguageExtensions))
+            {
+                builder.Append("  languageExtensions:");
+                AppendChildObject(builder, LanguageExtensions, options, 2);
+            }
+
+            if (Optional.IsDefined(WorkspaceUid))
+            {
+                builder.Append("  workspaceUID:");
+                builder.AppendLine($" '{WorkspaceUid.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SynapseKustoPoolPatch>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseKustoPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
@@ -336,6 +466,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SynapseKustoPoolPatch)} does not support '{options.Format}' format.");
             }
@@ -352,6 +484,8 @@ namespace Azure.ResourceManager.Synapse.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSynapseKustoPoolPatch(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SynapseKustoPoolPatch)} does not support '{options.Format}' format.");
             }

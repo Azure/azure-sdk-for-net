@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceProviderManifestProperties : IUtf8JsonSerializable, IJsonModel<ResourceProviderManifestProperties>
+    public partial class ResourceProviderManifestProperties : IUtf8JsonSerializable, IJsonModel<ResourceProviderManifestProperties>, IPersistableModel<ResourceProviderManifestProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceProviderManifestProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -286,6 +287,118 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceProviderManifestProperties(providerAuthentication.Value, Optional.ToList(providerAuthorizations), @namespace.Value, providerVersion.Value, Optional.ToNullable(providerType), Optional.ToList(requiredFeatures), featuresRule.Value, requestHeaderOptions.Value, management.Value, Optional.ToList(capabilities), metadata.Value, templateDeploymentOptions.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProviderAuthentication))
+            {
+                builder.Append("  providerAuthentication:");
+                AppendChildObject(builder, ProviderAuthentication, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(ProviderAuthorizations))
+            {
+                builder.Append("  providerAuthorizations:");
+                builder.AppendLine(" [");
+                foreach (var item in ProviderAuthorizations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Namespace))
+            {
+                builder.Append("  namespace:");
+                builder.AppendLine($" '{Namespace}'");
+            }
+
+            if (Optional.IsDefined(ProviderVersion))
+            {
+                builder.Append("  providerVersion:");
+                builder.AppendLine($" '{ProviderVersion}'");
+            }
+
+            if (Optional.IsDefined(ProviderType))
+            {
+                builder.Append("  providerType:");
+                builder.AppendLine($" '{ProviderType.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(RequiredFeatures))
+            {
+                builder.Append("  requiredFeatures:");
+                builder.AppendLine(" [");
+                foreach (var item in RequiredFeatures)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(FeaturesRule))
+            {
+                builder.Append("  featuresRule:");
+                AppendChildObject(builder, FeaturesRule, options, 2);
+            }
+
+            if (Optional.IsDefined(RequestHeaderOptions))
+            {
+                builder.Append("  requestHeaderOptions:");
+                AppendChildObject(builder, RequestHeaderOptions, options, 2);
+            }
+
+            if (Optional.IsDefined(Management))
+            {
+                builder.Append("  management:");
+                AppendChildObject(builder, Management, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Capabilities))
+            {
+                builder.Append("  capabilities:");
+                builder.AppendLine(" [");
+                foreach (var item in Capabilities)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Metadata))
+            {
+                builder.Append("  metadata:");
+                builder.AppendLine($" '{Metadata.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TemplateDeploymentOptions))
+            {
+                builder.Append("  templateDeploymentOptions:");
+                AppendChildObject(builder, TemplateDeploymentOptions, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ResourceProviderManifestProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderManifestProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -294,6 +407,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ResourceProviderManifestProperties)} does not support '{options.Format}' format.");
             }
@@ -310,6 +425,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeResourceProviderManifestProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ResourceProviderManifestProperties)} does not support '{options.Format}' format.");
             }

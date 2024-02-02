@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class VMwareStorageProfile : IUtf8JsonSerializable, IJsonModel<VMwareStorageProfile>
+    public partial class VMwareStorageProfile : IUtf8JsonSerializable, IJsonModel<VMwareStorageProfile>, IPersistableModel<VMwareStorageProfile>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareStorageProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -127,6 +128,48 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             return new VMwareStorageProfile(Optional.ToList(disks), Optional.ToList(scsiControllers), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Disks))
+            {
+                builder.Append("  disks:");
+                builder.AppendLine(" [");
+                foreach (var item in Disks)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ScsiControllers))
+            {
+                builder.Append("  scsiControllers:");
+                builder.AppendLine(" [");
+                foreach (var item in ScsiControllers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VMwareStorageProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VMwareStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -135,6 +178,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VMwareStorageProfile)} does not support '{options.Format}' format.");
             }
@@ -151,6 +196,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVMwareStorageProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VMwareStorageProfile)} does not support '{options.Format}' format.");
             }

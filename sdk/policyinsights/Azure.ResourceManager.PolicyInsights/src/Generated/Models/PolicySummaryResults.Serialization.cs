@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class PolicySummaryResults : IUtf8JsonSerializable, IJsonModel<PolicySummaryResults>
+    public partial class PolicySummaryResults : IUtf8JsonSerializable, IJsonModel<PolicySummaryResults>, IPersistableModel<PolicySummaryResults>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicySummaryResults>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -197,6 +198,77 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             return new PolicySummaryResults(queryResultsUri.Value, Optional.ToNullable(nonCompliantResources), Optional.ToNullable(nonCompliantPolicies), Optional.ToList(resourceDetails), Optional.ToList(policyDetails), Optional.ToList(policyGroupDetails), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(QueryResultsUri))
+            {
+                builder.Append("  queryResultsUri:");
+                builder.AppendLine($" '{QueryResultsUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(NonCompliantResources))
+            {
+                builder.Append("  nonCompliantResources:");
+                builder.AppendLine($" '{NonCompliantResources.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NonCompliantPolicies))
+            {
+                builder.Append("  nonCompliantPolicies:");
+                builder.AppendLine($" '{NonCompliantPolicies.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ResourceDetails))
+            {
+                builder.Append("  resourceDetails:");
+                builder.AppendLine(" [");
+                foreach (var item in ResourceDetails)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(PolicyDetails))
+            {
+                builder.Append("  policyDetails:");
+                builder.AppendLine(" [");
+                foreach (var item in PolicyDetails)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(PolicyGroupDetails))
+            {
+                builder.Append("  policyGroupDetails:");
+                builder.AppendLine(" [");
+                foreach (var item in PolicyGroupDetails)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PolicySummaryResults>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PolicySummaryResults>)this).GetFormatFromOptions(options) : options.Format;
@@ -205,6 +277,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PolicySummaryResults)} does not support '{options.Format}' format.");
             }
@@ -221,6 +295,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePolicySummaryResults(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PolicySummaryResults)} does not support '{options.Format}' format.");
             }

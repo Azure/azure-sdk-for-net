@@ -8,12 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using System.Xml;
 using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabVirtualMachineProfile : IUtf8JsonSerializable, IJsonModel<LabVirtualMachineProfile>
+    public partial class LabVirtualMachineProfile : IUtf8JsonSerializable, IJsonModel<LabVirtualMachineProfile>, IPersistableModel<LabVirtualMachineProfile>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabVirtualMachineProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -177,6 +179,81 @@ namespace Azure.ResourceManager.LabServices.Models
             return new LabVirtualMachineProfile(createOption, imageReference, Optional.ToNullable(osType), sku, additionalCapabilities.Value, usageQuota, Optional.ToNullable(useSharedPassword), adminUser, nonAdminUser.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CreateOption))
+            {
+                builder.Append("  createOption:");
+                builder.AppendLine($" '{CreateOption.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ImageReference))
+            {
+                builder.Append("  imageReference:");
+                AppendChildObject(builder, ImageReference, options, 2);
+            }
+
+            if (Optional.IsDefined(OSType))
+            {
+                builder.Append("  osType:");
+                builder.AppendLine($" '{OSType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsDefined(AdditionalCapabilities))
+            {
+                builder.Append("  additionalCapabilities:");
+                AppendChildObject(builder, AdditionalCapabilities, options, 2);
+            }
+
+            if (Optional.IsDefined(UsageQuota))
+            {
+                builder.Append("  usageQuota:");
+                var formattedTimeSpan = XmlConvert.ToString(UsageQuota);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(UseSharedPassword))
+            {
+                builder.Append("  useSharedPassword:");
+                builder.AppendLine($" '{UseSharedPassword.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AdminUser))
+            {
+                builder.Append("  adminUser:");
+                AppendChildObject(builder, AdminUser, options, 2);
+            }
+
+            if (Optional.IsDefined(NonAdminUser))
+            {
+                builder.Append("  nonAdminUser:");
+                AppendChildObject(builder, NonAdminUser, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<LabVirtualMachineProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LabVirtualMachineProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -185,6 +262,8 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LabVirtualMachineProfile)} does not support '{options.Format}' format.");
             }
@@ -201,6 +280,8 @@ namespace Azure.ResourceManager.LabServices.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeLabVirtualMachineProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(LabVirtualMachineProfile)} does not support '{options.Format}' format.");
             }

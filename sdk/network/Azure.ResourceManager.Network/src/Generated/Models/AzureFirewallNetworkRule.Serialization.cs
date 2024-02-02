@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AzureFirewallNetworkRule : IUtf8JsonSerializable, IJsonModel<AzureFirewallNetworkRule>
+    public partial class AzureFirewallNetworkRule : IUtf8JsonSerializable, IJsonModel<AzureFirewallNetworkRule>, IPersistableModel<AzureFirewallNetworkRule>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureFirewallNetworkRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -274,6 +275,145 @@ namespace Azure.ResourceManager.Network.Models
             return new AzureFirewallNetworkRule(name.Value, description.Value, Optional.ToList(protocols), Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(destinationPorts), Optional.ToList(destinationFqdns), Optional.ToList(sourceIPGroups), Optional.ToList(destinationIPGroups), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsCollectionDefined(Protocols))
+            {
+                builder.Append("  protocols:");
+                builder.AppendLine(" [");
+                foreach (var item in Protocols)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(SourceAddresses))
+            {
+                builder.Append("  sourceAddresses:");
+                builder.AppendLine(" [");
+                foreach (var item in SourceAddresses)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(DestinationAddresses))
+            {
+                builder.Append("  destinationAddresses:");
+                builder.AppendLine(" [");
+                foreach (var item in DestinationAddresses)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(DestinationPorts))
+            {
+                builder.Append("  destinationPorts:");
+                builder.AppendLine(" [");
+                foreach (var item in DestinationPorts)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(DestinationFqdns))
+            {
+                builder.Append("  destinationFqdns:");
+                builder.AppendLine(" [");
+                foreach (var item in DestinationFqdns)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(SourceIPGroups))
+            {
+                builder.Append("  sourceIpGroups:");
+                builder.AppendLine(" [");
+                foreach (var item in SourceIPGroups)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(DestinationIPGroups))
+            {
+                builder.Append("  destinationIpGroups:");
+                builder.AppendLine(" [");
+                foreach (var item in DestinationIPGroups)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AzureFirewallNetworkRule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureFirewallNetworkRule>)this).GetFormatFromOptions(options) : options.Format;
@@ -282,6 +422,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AzureFirewallNetworkRule)} does not support '{options.Format}' format.");
             }
@@ -298,6 +440,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAzureFirewallNetworkRule(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AzureFirewallNetworkRule)} does not support '{options.Format}' format.");
             }

@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class MachineInstallPatchesResult : IUtf8JsonSerializable, IJsonModel<MachineInstallPatchesResult>
+    public partial class MachineInstallPatchesResult : IUtf8JsonSerializable, IJsonModel<MachineInstallPatchesResult>, IPersistableModel<MachineInstallPatchesResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineInstallPatchesResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -299,6 +300,117 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new MachineInstallPatchesResult(Optional.ToNullable(status), installationActivityId.Value, Optional.ToNullable(rebootStatus), Optional.ToNullable(maintenanceWindowExceeded), Optional.ToNullable(excludedPatchCount), Optional.ToNullable(notSelectedPatchCount), Optional.ToNullable(pendingPatchCount), Optional.ToNullable(installedPatchCount), Optional.ToNullable(failedPatchCount), Optional.ToNullable(startDateTime), Optional.ToNullable(lastModifiedDateTime), Optional.ToNullable(startedBy), Optional.ToNullable(patchServiceUsed), Optional.ToNullable(osType), errorDetails.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InstallationActivityId))
+            {
+                builder.Append("  installationActivityId:");
+                builder.AppendLine($" '{InstallationActivityId}'");
+            }
+
+            if (Optional.IsDefined(RebootStatus))
+            {
+                builder.Append("  rebootStatus:");
+                builder.AppendLine($" '{RebootStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaintenanceWindowExceeded))
+            {
+                builder.Append("  maintenanceWindowExceeded:");
+                var boolValue = MaintenanceWindowExceeded.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ExcludedPatchCount))
+            {
+                builder.Append("  excludedPatchCount:");
+                builder.AppendLine($" '{ExcludedPatchCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NotSelectedPatchCount))
+            {
+                builder.Append("  notSelectedPatchCount:");
+                builder.AppendLine($" '{NotSelectedPatchCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PendingPatchCount))
+            {
+                builder.Append("  pendingPatchCount:");
+                builder.AppendLine($" '{PendingPatchCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InstalledPatchCount))
+            {
+                builder.Append("  installedPatchCount:");
+                builder.AppendLine($" '{InstalledPatchCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FailedPatchCount))
+            {
+                builder.Append("  failedPatchCount:");
+                builder.AppendLine($" '{FailedPatchCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startDateTime:");
+                builder.AppendLine($" '{StartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("  lastModifiedDateTime:");
+                builder.AppendLine($" '{LastModifiedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartedBy))
+            {
+                builder.Append("  startedBy:");
+                builder.AppendLine($" '{StartedBy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PatchServiceUsed))
+            {
+                builder.Append("  patchServiceUsed:");
+                builder.AppendLine($" '{PatchServiceUsed.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OSType))
+            {
+                builder.Append("  osType:");
+                builder.AppendLine($" '{OSType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ErrorDetails))
+            {
+                builder.Append("  errorDetails:");
+                AppendChildObject(builder, ErrorDetails, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MachineInstallPatchesResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -307,6 +419,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support '{options.Format}' format.");
             }
@@ -323,6 +437,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMachineInstallPatchesResult(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support '{options.Format}' format.");
             }

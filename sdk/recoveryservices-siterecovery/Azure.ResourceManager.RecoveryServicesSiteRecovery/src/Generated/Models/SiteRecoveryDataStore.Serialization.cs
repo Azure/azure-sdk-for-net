@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryDataStore : IUtf8JsonSerializable, IJsonModel<SiteRecoveryDataStore>
+    public partial class SiteRecoveryDataStore : IUtf8JsonSerializable, IJsonModel<SiteRecoveryDataStore>, IPersistableModel<SiteRecoveryDataStore>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryDataStore>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -136,6 +137,56 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryDataStore(symbolicName.Value, Optional.ToNullable(uuid), capacity.Value, freeSpace.Value, type.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SymbolicName))
+            {
+                builder.Append("  symbolicName:");
+                builder.AppendLine($" '{SymbolicName}'");
+            }
+
+            if (Optional.IsDefined(Uuid))
+            {
+                builder.Append("  uuid:");
+                builder.AppendLine($" '{Uuid.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Capacity))
+            {
+                builder.Append("  capacity:");
+                builder.AppendLine($" '{Capacity}'");
+            }
+
+            if (Optional.IsDefined(FreeSpace))
+            {
+                builder.Append("  freeSpace:");
+                builder.AppendLine($" '{FreeSpace}'");
+            }
+
+            if (Optional.IsDefined(DataStoreType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{DataStoreType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SiteRecoveryDataStore>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryDataStore>)this).GetFormatFromOptions(options) : options.Format;
@@ -144,6 +195,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryDataStore)} does not support '{options.Format}' format.");
             }
@@ -160,6 +213,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSiteRecoveryDataStore(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryDataStore)} does not support '{options.Format}' format.");
             }

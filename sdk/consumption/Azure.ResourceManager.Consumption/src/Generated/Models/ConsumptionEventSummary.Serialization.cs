@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionEventSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionEventSummary>
+    public partial class ConsumptionEventSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionEventSummary>, IPersistableModel<ConsumptionEventSummary>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionEventSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -463,6 +464,188 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionEventSummary(id, name, type, systemData.Value, Optional.ToNullable(transactionDate), description.Value, newCredit.Value, adjustments.Value, creditExpired.Value, charges.Value, closedBalance.Value, Optional.ToNullable(eventType), invoiceNumber.Value, billingProfileId.Value, billingProfileDisplayName.Value, lotId.Value, lotSource.Value, canceledCredit.Value, creditCurrency.Value, billingCurrency.Value, reseller.Value, creditExpiredInBillingCurrency.Value, newCreditInBillingCurrency.Value, adjustmentsInBillingCurrency.Value, chargesInBillingCurrency.Value, closedBalanceInBillingCurrency.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TransactOn))
+            {
+                builder.Append("  transactionDate:");
+                builder.AppendLine($" '{TransactOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(NewCredit))
+            {
+                builder.Append("  newCredit:");
+                AppendChildObject(builder, NewCredit, options, 2);
+            }
+
+            if (Optional.IsDefined(Adjustments))
+            {
+                builder.Append("  adjustments:");
+                AppendChildObject(builder, Adjustments, options, 2);
+            }
+
+            if (Optional.IsDefined(CreditExpired))
+            {
+                builder.Append("  creditExpired:");
+                AppendChildObject(builder, CreditExpired, options, 2);
+            }
+
+            if (Optional.IsDefined(Charges))
+            {
+                builder.Append("  charges:");
+                AppendChildObject(builder, Charges, options, 2);
+            }
+
+            if (Optional.IsDefined(ClosedBalance))
+            {
+                builder.Append("  closedBalance:");
+                AppendChildObject(builder, ClosedBalance, options, 2);
+            }
+
+            if (Optional.IsDefined(EventType))
+            {
+                builder.Append("  eventType:");
+                builder.AppendLine($" '{EventType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InvoiceNumber))
+            {
+                builder.Append("  invoiceNumber:");
+                builder.AppendLine($" '{InvoiceNumber}'");
+            }
+
+            if (Optional.IsDefined(BillingProfileId))
+            {
+                builder.Append("  billingProfileId:");
+                builder.AppendLine($" '{BillingProfileId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BillingProfileDisplayName))
+            {
+                builder.Append("  billingProfileDisplayName:");
+                builder.AppendLine($" '{BillingProfileDisplayName}'");
+            }
+
+            if (Optional.IsDefined(LotId))
+            {
+                builder.Append("  lotId:");
+                builder.AppendLine($" '{LotId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LotSource))
+            {
+                builder.Append("  lotSource:");
+                builder.AppendLine($" '{LotSource}'");
+            }
+
+            if (Optional.IsDefined(CanceledCredit))
+            {
+                builder.Append("  canceledCredit:");
+                AppendChildObject(builder, CanceledCredit, options, 2);
+            }
+
+            if (Optional.IsDefined(CreditCurrency))
+            {
+                builder.Append("  creditCurrency:");
+                builder.AppendLine($" '{CreditCurrency}'");
+            }
+
+            if (Optional.IsDefined(BillingCurrency))
+            {
+                builder.Append("  billingCurrency:");
+                builder.AppendLine($" '{BillingCurrency}'");
+            }
+
+            if (Optional.IsDefined(Reseller))
+            {
+                builder.Append("  reseller:");
+                AppendChildObject(builder, Reseller, options, 2);
+            }
+
+            if (Optional.IsDefined(CreditExpiredInBillingCurrency))
+            {
+                builder.Append("  creditExpiredInBillingCurrency:");
+                AppendChildObject(builder, CreditExpiredInBillingCurrency, options, 2);
+            }
+
+            if (Optional.IsDefined(NewCreditInBillingCurrency))
+            {
+                builder.Append("  newCreditInBillingCurrency:");
+                AppendChildObject(builder, NewCreditInBillingCurrency, options, 2);
+            }
+
+            if (Optional.IsDefined(AdjustmentsInBillingCurrency))
+            {
+                builder.Append("  adjustmentsInBillingCurrency:");
+                AppendChildObject(builder, AdjustmentsInBillingCurrency, options, 2);
+            }
+
+            if (Optional.IsDefined(ChargesInBillingCurrency))
+            {
+                builder.Append("  chargesInBillingCurrency:");
+                AppendChildObject(builder, ChargesInBillingCurrency, options, 2);
+            }
+
+            if (Optional.IsDefined(ClosedBalanceInBillingCurrency))
+            {
+                builder.Append("  closedBalanceInBillingCurrency:");
+                AppendChildObject(builder, ClosedBalanceInBillingCurrency, options, 2);
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  eTag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ConsumptionEventSummary>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionEventSummary>)this).GetFormatFromOptions(options) : options.Format;
@@ -471,6 +654,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support '{options.Format}' format.");
             }
@@ -487,6 +672,8 @@ namespace Azure.ResourceManager.Consumption.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConsumptionEventSummary(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support '{options.Format}' format.");
             }

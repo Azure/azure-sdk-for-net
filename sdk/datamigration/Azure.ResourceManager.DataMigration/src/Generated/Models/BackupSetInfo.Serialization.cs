@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class BackupSetInfo : IUtf8JsonSerializable, IJsonModel<BackupSetInfo>
+    public partial class BackupSetInfo : IUtf8JsonSerializable, IJsonModel<BackupSetInfo>, IPersistableModel<BackupSetInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupSetInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -221,6 +222,92 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new BackupSetInfo(backupSetId.Value, firstLsn.Value, lastLsn.Value, Optional.ToNullable(lastModifiedTime), Optional.ToNullable(backupType), Optional.ToList(listOfBackupFiles), databaseName.Value, Optional.ToNullable(backupStartDate), Optional.ToNullable(backupFinishedDate), Optional.ToNullable(isBackupRestored), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BackupSetId))
+            {
+                builder.Append("  backupSetId:");
+                builder.AppendLine($" '{BackupSetId}'");
+            }
+
+            if (Optional.IsDefined(FirstLsn))
+            {
+                builder.Append("  firstLsn:");
+                builder.AppendLine($" '{FirstLsn}'");
+            }
+
+            if (Optional.IsDefined(LastLsn))
+            {
+                builder.Append("  lastLsn:");
+                builder.AppendLine($" '{LastLsn}'");
+            }
+
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("  lastModifiedTime:");
+                builder.AppendLine($" '{LastModifiedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BackupType))
+            {
+                builder.Append("  backupType:");
+                builder.AppendLine($" '{BackupType.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ListOfBackupFiles))
+            {
+                builder.Append("  listOfBackupFiles:");
+                builder.AppendLine(" [");
+                foreach (var item in ListOfBackupFiles)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(DatabaseName))
+            {
+                builder.Append("  databaseName:");
+                builder.AppendLine($" '{DatabaseName}'");
+            }
+
+            if (Optional.IsDefined(BackupStartOn))
+            {
+                builder.Append("  backupStartDate:");
+                builder.AppendLine($" '{BackupStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BackupFinishedOn))
+            {
+                builder.Append("  backupFinishedDate:");
+                builder.AppendLine($" '{BackupFinishedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsBackupRestored))
+            {
+                builder.Append("  isBackupRestored:");
+                var boolValue = IsBackupRestored.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BackupSetInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackupSetInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -229,6 +316,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BackupSetInfo)} does not support '{options.Format}' format.");
             }
@@ -245,6 +334,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBackupSetInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BackupSetInfo)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
-    public partial class ManagedServicesEligibleAuthorization : IUtf8JsonSerializable, IJsonModel<ManagedServicesEligibleAuthorization>
+    public partial class ManagedServicesEligibleAuthorization : IUtf8JsonSerializable, IJsonModel<ManagedServicesEligibleAuthorization>, IPersistableModel<ManagedServicesEligibleAuthorization>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServicesEligibleAuthorization>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -119,6 +120,50 @@ namespace Azure.ResourceManager.ManagedServices.Models
             return new ManagedServicesEligibleAuthorization(principalId, principalIdDisplayName.Value, roleDefinitionId, justInTimeAccessPolicy.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PrincipalId))
+            {
+                builder.Append("  principalId:");
+                builder.AppendLine($" '{PrincipalId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrincipalIdDisplayName))
+            {
+                builder.Append("  principalIdDisplayName:");
+                builder.AppendLine($" '{PrincipalIdDisplayName}'");
+            }
+
+            if (Optional.IsDefined(RoleDefinitionId))
+            {
+                builder.Append("  roleDefinitionId:");
+                builder.AppendLine($" '{RoleDefinitionId}'");
+            }
+
+            if (Optional.IsDefined(JustInTimeAccessPolicy))
+            {
+                builder.Append("  justInTimeAccessPolicy:");
+                AppendChildObject(builder, JustInTimeAccessPolicy, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ManagedServicesEligibleAuthorization>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesEligibleAuthorization>)this).GetFormatFromOptions(options) : options.Format;
@@ -127,6 +172,8 @@ namespace Azure.ResourceManager.ManagedServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedServicesEligibleAuthorization)} does not support '{options.Format}' format.");
             }
@@ -143,6 +190,8 @@ namespace Azure.ResourceManager.ManagedServices.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeManagedServicesEligibleAuthorization(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ManagedServicesEligibleAuthorization)} does not support '{options.Format}' format.");
             }

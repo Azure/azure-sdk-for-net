@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class UnknownActiveBaseSecurityAdminRule : IUtf8JsonSerializable, IJsonModel<ActiveBaseSecurityAdminRule>
+    internal partial class UnknownActiveBaseSecurityAdminRule : IUtf8JsonSerializable, IJsonModel<ActiveBaseSecurityAdminRule>, IPersistableModel<ActiveBaseSecurityAdminRule>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActiveBaseSecurityAdminRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -194,6 +195,84 @@ namespace Azure.ResourceManager.Network.Models
             return new UnknownActiveBaseSecurityAdminRule(id.Value, Optional.ToNullable(commitTime), region.Value, configurationDescription.Value, ruleCollectionDescription.Value, Optional.ToList(ruleCollectionAppliesToGroups), Optional.ToList(ruleGroups), kind, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id}'");
+            }
+
+            if (Optional.IsDefined(CommitOn))
+            {
+                builder.Append("  commitTime:");
+                builder.AppendLine($" '{CommitOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Region))
+            {
+                builder.Append("  region:");
+                builder.AppendLine($" '{Region}'");
+            }
+
+            if (Optional.IsDefined(ConfigurationDescription))
+            {
+                builder.Append("  configurationDescription:");
+                builder.AppendLine($" '{ConfigurationDescription}'");
+            }
+
+            if (Optional.IsDefined(RuleCollectionDescription))
+            {
+                builder.Append("  ruleCollectionDescription:");
+                builder.AppendLine($" '{RuleCollectionDescription}'");
+            }
+
+            if (Optional.IsCollectionDefined(RuleCollectionAppliesToGroups))
+            {
+                builder.Append("  ruleCollectionAppliesToGroups:");
+                builder.AppendLine(" [");
+                foreach (var item in RuleCollectionAppliesToGroups)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(RuleGroups))
+            {
+                builder.Append("  ruleGroups:");
+                builder.AppendLine(" [");
+                foreach (var item in RuleGroups)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ActiveBaseSecurityAdminRule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ActiveBaseSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
@@ -202,6 +281,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ActiveBaseSecurityAdminRule)} does not support '{options.Format}' format.");
             }
@@ -218,6 +299,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeUnknownActiveBaseSecurityAdminRule(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ActiveBaseSecurityAdminRule)} does not support '{options.Format}' format.");
             }

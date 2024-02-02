@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    public partial class SearchServicePrivateEndpointConnectionProperties : IUtf8JsonSerializable, IJsonModel<SearchServicePrivateEndpointConnectionProperties>
+    public partial class SearchServicePrivateEndpointConnectionProperties : IUtf8JsonSerializable, IJsonModel<SearchServicePrivateEndpointConnectionProperties>, IPersistableModel<SearchServicePrivateEndpointConnectionProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SearchServicePrivateEndpointConnectionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -134,6 +135,50 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchServicePrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState.Value, groupId.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PrivateEndpoint))
+            {
+                builder.Append("  privateEndpoint:");
+                AppendChildObject(builder, PrivateEndpoint, options, 2);
+            }
+
+            if (Optional.IsDefined(ConnectionState))
+            {
+                builder.Append("  privateLinkServiceConnectionState:");
+                AppendChildObject(builder, ConnectionState, options, 2);
+            }
+
+            if (Optional.IsDefined(GroupId))
+            {
+                builder.Append("  groupId:");
+                builder.AppendLine($" '{GroupId}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SearchServicePrivateEndpointConnectionProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SearchServicePrivateEndpointConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -142,6 +187,8 @@ namespace Azure.ResourceManager.Search.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SearchServicePrivateEndpointConnectionProperties)} does not support '{options.Format}' format.");
             }
@@ -158,6 +205,8 @@ namespace Azure.ResourceManager.Search.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSearchServicePrivateEndpointConnectionProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SearchServicePrivateEndpointConnectionProperties)} does not support '{options.Format}' format.");
             }

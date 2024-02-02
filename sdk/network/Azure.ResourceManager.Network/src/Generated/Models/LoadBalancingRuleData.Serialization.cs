@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class LoadBalancingRuleData : IUtf8JsonSerializable, IJsonModel<LoadBalancingRuleData>
+    public partial class LoadBalancingRuleData : IUtf8JsonSerializable, IJsonModel<LoadBalancingRuleData>, IPersistableModel<LoadBalancingRuleData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LoadBalancingRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -356,6 +357,136 @@ namespace Azure.ResourceManager.Network
             return new LoadBalancingRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), frontendIPConfiguration, backendAddressPool, Optional.ToList(backendAddressPools), probe, Optional.ToNullable(protocol), Optional.ToNullable(loadDistribution), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(disableOutboundSnat), Optional.ToNullable(provisioningState));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FrontendIPConfiguration))
+            {
+                builder.Append("  frontendIPConfiguration:");
+                AppendChildObject(builder, FrontendIPConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(BackendAddressPool))
+            {
+                builder.Append("  backendAddressPool:");
+                AppendChildObject(builder, BackendAddressPool, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(BackendAddressPools))
+            {
+                builder.Append("  backendAddressPools:");
+                builder.AppendLine(" [");
+                foreach (var item in BackendAddressPools)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Probe))
+            {
+                builder.Append("  probe:");
+                AppendChildObject(builder, Probe, options, 2);
+            }
+
+            if (Optional.IsDefined(Protocol))
+            {
+                builder.Append("  protocol:");
+                builder.AppendLine($" '{Protocol.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LoadDistribution))
+            {
+                builder.Append("  loadDistribution:");
+                builder.AppendLine($" '{LoadDistribution.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FrontendPort))
+            {
+                builder.Append("  frontendPort:");
+                builder.AppendLine($" '{FrontendPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BackendPort))
+            {
+                builder.Append("  backendPort:");
+                builder.AppendLine($" '{BackendPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IdleTimeoutInMinutes))
+            {
+                builder.Append("  idleTimeoutInMinutes:");
+                builder.AppendLine($" '{IdleTimeoutInMinutes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnableFloatingIP))
+            {
+                builder.Append("  enableFloatingIP:");
+                var boolValue = EnableFloatingIP.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EnableTcpReset))
+            {
+                builder.Append("  enableTcpReset:");
+                var boolValue = EnableTcpReset.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DisableOutboundSnat))
+            {
+                builder.Append("  disableOutboundSnat:");
+                var boolValue = DisableOutboundSnat.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<LoadBalancingRuleData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancingRuleData>)this).GetFormatFromOptions(options) : options.Format;
@@ -364,6 +495,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LoadBalancingRuleData)} does not support '{options.Format}' format.");
             }
@@ -380,6 +513,8 @@ namespace Azure.ResourceManager.Network
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeLoadBalancingRuleData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(LoadBalancingRuleData)} does not support '{options.Format}' format.");
             }

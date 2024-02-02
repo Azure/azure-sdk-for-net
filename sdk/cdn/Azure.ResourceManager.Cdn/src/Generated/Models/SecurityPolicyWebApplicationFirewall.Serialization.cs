@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class SecurityPolicyWebApplicationFirewall : IUtf8JsonSerializable, IJsonModel<SecurityPolicyWebApplicationFirewall>
+    public partial class SecurityPolicyWebApplicationFirewall : IUtf8JsonSerializable, IJsonModel<SecurityPolicyWebApplicationFirewall>, IPersistableModel<SecurityPolicyWebApplicationFirewall>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityPolicyWebApplicationFirewall>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -126,6 +127,49 @@ namespace Azure.ResourceManager.Cdn.Models
             return new SecurityPolicyWebApplicationFirewall(type, serializedAdditionalRawData, wafPolicy, Optional.ToList(associations));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(WafPolicy))
+            {
+                builder.Append("  wafPolicy:");
+                AppendChildObject(builder, WafPolicy, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Associations))
+            {
+                builder.Append("  associations:");
+                builder.AppendLine(" [");
+                foreach (var item in Associations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(PolicyType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{PolicyType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SecurityPolicyWebApplicationFirewall>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyWebApplicationFirewall>)this).GetFormatFromOptions(options) : options.Format;
@@ -134,6 +178,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityPolicyWebApplicationFirewall)} does not support '{options.Format}' format.");
             }
@@ -150,6 +196,8 @@ namespace Azure.ResourceManager.Cdn.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityPolicyWebApplicationFirewall(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityPolicyWebApplicationFirewall)} does not support '{options.Format}' format.");
             }

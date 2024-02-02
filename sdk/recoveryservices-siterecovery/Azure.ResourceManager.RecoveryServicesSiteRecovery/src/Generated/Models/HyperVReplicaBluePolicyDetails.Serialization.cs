@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVReplicaBluePolicyDetails : IUtf8JsonSerializable, IJsonModel<HyperVReplicaBluePolicyDetails>
+    public partial class HyperVReplicaBluePolicyDetails : IUtf8JsonSerializable, IJsonModel<HyperVReplicaBluePolicyDetails>, IPersistableModel<HyperVReplicaBluePolicyDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVReplicaBluePolicyDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -226,6 +227,98 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new HyperVReplicaBluePolicyDetails(instanceType, serializedAdditionalRawData, Optional.ToNullable(replicationFrequencyInSeconds), Optional.ToNullable(recoveryPoints), Optional.ToNullable(applicationConsistentSnapshotFrequencyInHours), compression.Value, initialReplicationMethod.Value, onlineReplicationStartTime.Value, offlineReplicationImportPath.Value, offlineReplicationExportPath.Value, Optional.ToNullable(replicationPort), Optional.ToNullable(allowedAuthenticationType), replicaDeletionOption.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ReplicationFrequencyInSeconds))
+            {
+                builder.Append("  replicationFrequencyInSeconds:");
+                builder.AppendLine($" '{ReplicationFrequencyInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecoveryPoints))
+            {
+                builder.Append("  recoveryPoints:");
+                builder.AppendLine($" '{RecoveryPoints.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ApplicationConsistentSnapshotFrequencyInHours))
+            {
+                builder.Append("  applicationConsistentSnapshotFrequencyInHours:");
+                builder.AppendLine($" '{ApplicationConsistentSnapshotFrequencyInHours.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Compression))
+            {
+                builder.Append("  compression:");
+                builder.AppendLine($" '{Compression}'");
+            }
+
+            if (Optional.IsDefined(InitialReplicationMethod))
+            {
+                builder.Append("  initialReplicationMethod:");
+                builder.AppendLine($" '{InitialReplicationMethod}'");
+            }
+
+            if (Optional.IsDefined(OnlineReplicationStartTime))
+            {
+                builder.Append("  onlineReplicationStartTime:");
+                builder.AppendLine($" '{OnlineReplicationStartTime}'");
+            }
+
+            if (Optional.IsDefined(OfflineReplicationImportPath))
+            {
+                builder.Append("  offlineReplicationImportPath:");
+                builder.AppendLine($" '{OfflineReplicationImportPath}'");
+            }
+
+            if (Optional.IsDefined(OfflineReplicationExportPath))
+            {
+                builder.Append("  offlineReplicationExportPath:");
+                builder.AppendLine($" '{OfflineReplicationExportPath}'");
+            }
+
+            if (Optional.IsDefined(ReplicationPort))
+            {
+                builder.Append("  replicationPort:");
+                builder.AppendLine($" '{ReplicationPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AllowedAuthenticationType))
+            {
+                builder.Append("  allowedAuthenticationType:");
+                builder.AppendLine($" '{AllowedAuthenticationType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReplicaDeletionOption))
+            {
+                builder.Append("  replicaDeletionOption:");
+                builder.AppendLine($" '{ReplicaDeletionOption}'");
+            }
+
+            if (Optional.IsDefined(InstanceType))
+            {
+                builder.Append("  instanceType:");
+                builder.AppendLine($" '{InstanceType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<HyperVReplicaBluePolicyDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaBluePolicyDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -234,6 +327,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HyperVReplicaBluePolicyDetails)} does not support '{options.Format}' format.");
             }
@@ -250,6 +345,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHyperVReplicaBluePolicyDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HyperVReplicaBluePolicyDetails)} does not support '{options.Format}' format.");
             }

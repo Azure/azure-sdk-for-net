@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class HybridComputeServiceStatuses : IUtf8JsonSerializable, IJsonModel<HybridComputeServiceStatuses>
+    public partial class HybridComputeServiceStatuses : IUtf8JsonSerializable, IJsonModel<HybridComputeServiceStatuses>, IPersistableModel<HybridComputeServiceStatuses>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeServiceStatuses>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -107,6 +108,38 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeServiceStatuses(extensionService.Value, guestConfigurationService.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ExtensionService))
+            {
+                builder.Append("  extensionService:");
+                AppendChildObject(builder, ExtensionService, options, 2);
+            }
+
+            if (Optional.IsDefined(GuestConfigurationService))
+            {
+                builder.Append("  guestConfigurationService:");
+                AppendChildObject(builder, GuestConfigurationService, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<HybridComputeServiceStatuses>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeServiceStatuses>)this).GetFormatFromOptions(options) : options.Format;
@@ -115,6 +148,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HybridComputeServiceStatuses)} does not support '{options.Format}' format.");
             }
@@ -131,6 +166,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHybridComputeServiceStatuses(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HybridComputeServiceStatuses)} does not support '{options.Format}' format.");
             }

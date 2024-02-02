@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.MobileNetwork.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MobileNetwork
 {
-    public partial class PacketCoreControlPlaneVersionData : IUtf8JsonSerializable, IJsonModel<PacketCoreControlPlaneVersionData>
+    public partial class PacketCoreControlPlaneVersionData : IUtf8JsonSerializable, IJsonModel<PacketCoreControlPlaneVersionData>, IPersistableModel<PacketCoreControlPlaneVersionData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PacketCoreControlPlaneVersionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -182,6 +183,67 @@ namespace Azure.ResourceManager.MobileNetwork
             return new PacketCoreControlPlaneVersionData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToList(platforms), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Platforms))
+            {
+                builder.Append("  platforms:");
+                builder.AppendLine(" [");
+                foreach (var item in Platforms)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PacketCoreControlPlaneVersionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PacketCoreControlPlaneVersionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -190,6 +252,8 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PacketCoreControlPlaneVersionData)} does not support '{options.Format}' format.");
             }
@@ -206,6 +270,8 @@ namespace Azure.ResourceManager.MobileNetwork
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePacketCoreControlPlaneVersionData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PacketCoreControlPlaneVersionData)} does not support '{options.Format}' format.");
             }

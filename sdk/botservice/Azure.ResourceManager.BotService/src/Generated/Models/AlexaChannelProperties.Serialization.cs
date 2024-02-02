@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class AlexaChannelProperties : IUtf8JsonSerializable, IJsonModel<AlexaChannelProperties>
+    public partial class AlexaChannelProperties : IUtf8JsonSerializable, IJsonModel<AlexaChannelProperties>, IPersistableModel<AlexaChannelProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlexaChannelProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -119,6 +120,51 @@ namespace Azure.ResourceManager.BotService.Models
             return new AlexaChannelProperties(alexaSkillId, urlFragment.Value, serviceEndpointUri.Value, isEnabled, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AlexaSkillId))
+            {
+                builder.Append("  alexaSkillId:");
+                builder.AppendLine($" '{AlexaSkillId}'");
+            }
+
+            if (Optional.IsDefined(UriFragment))
+            {
+                builder.Append("  urlFragment:");
+                builder.AppendLine($" '{UriFragment}'");
+            }
+
+            if (Optional.IsDefined(ServiceEndpointUri))
+            {
+                builder.Append("  serviceEndpointUri:");
+                builder.AppendLine($" '{ServiceEndpointUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("  isEnabled:");
+                var boolValue = IsEnabled == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AlexaChannelProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AlexaChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -127,6 +173,8 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AlexaChannelProperties)} does not support '{options.Format}' format.");
             }
@@ -143,6 +191,8 @@ namespace Azure.ResourceManager.BotService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAlexaChannelProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AlexaChannelProperties)} does not support '{options.Format}' format.");
             }

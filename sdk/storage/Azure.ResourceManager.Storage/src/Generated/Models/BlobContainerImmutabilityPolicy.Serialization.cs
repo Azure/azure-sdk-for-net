@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class BlobContainerImmutabilityPolicy : IUtf8JsonSerializable, IJsonModel<BlobContainerImmutabilityPolicy>
+    public partial class BlobContainerImmutabilityPolicy : IUtf8JsonSerializable, IJsonModel<BlobContainerImmutabilityPolicy>, IPersistableModel<BlobContainerImmutabilityPolicy>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BlobContainerImmutabilityPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -193,6 +194,69 @@ namespace Azure.ResourceManager.Storage.Models
             return new BlobContainerImmutabilityPolicy(Optional.ToNullable(etag), Optional.ToList(updateHistory), Optional.ToNullable(immutabilityPeriodSinceCreationInDays), Optional.ToNullable(state), Optional.ToNullable(allowProtectedAppendWrites), Optional.ToNullable(allowProtectedAppendWritesAll), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(UpdateHistory))
+            {
+                builder.Append("  updateHistory:");
+                builder.AppendLine(" [");
+                foreach (var item in UpdateHistory)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays))
+            {
+                builder.Append("  immutabilityPeriodSinceCreationInDays:");
+                builder.AppendLine($" '{ImmutabilityPeriodSinceCreationInDays.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AllowProtectedAppendWrites))
+            {
+                builder.Append("  allowProtectedAppendWrites:");
+                var boolValue = AllowProtectedAppendWrites.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AllowProtectedAppendWritesAll))
+            {
+                builder.Append("  allowProtectedAppendWritesAll:");
+                var boolValue = AllowProtectedAppendWritesAll.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BlobContainerImmutabilityPolicy>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BlobContainerImmutabilityPolicy>)this).GetFormatFromOptions(options) : options.Format;
@@ -201,6 +265,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BlobContainerImmutabilityPolicy)} does not support '{options.Format}' format.");
             }
@@ -217,6 +283,8 @@ namespace Azure.ResourceManager.Storage.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBlobContainerImmutabilityPolicy(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BlobContainerImmutabilityPolicy)} does not support '{options.Format}' format.");
             }

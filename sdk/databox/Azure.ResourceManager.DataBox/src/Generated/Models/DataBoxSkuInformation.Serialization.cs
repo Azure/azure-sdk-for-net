@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxSkuInformation : IUtf8JsonSerializable, IJsonModel<DataBoxSkuInformation>
+    public partial class DataBoxSkuInformation : IUtf8JsonSerializable, IJsonModel<DataBoxSkuInformation>, IPersistableModel<DataBoxSkuInformation>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxSkuInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -274,6 +275,117 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxSkuInformation(sku.Value, Optional.ToNullable(enabled), Optional.ToList(dataLocationToServiceLocationMap), capacity.Value, Optional.ToList(costs), Optional.ToList(apiVersions), Optional.ToNullable(disabledReason), disabledReasonMessage.Value, requiredFeature.Value, Optional.ToList(countriesWithinCommerceBoundary), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("  enabled:");
+                var boolValue = IsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(DataLocationToServiceLocationMap))
+            {
+                builder.Append("  dataLocationToServiceLocationMap:");
+                builder.AppendLine(" [");
+                foreach (var item in DataLocationToServiceLocationMap)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Capacity))
+            {
+                builder.Append("  capacity:");
+                AppendChildObject(builder, Capacity, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Costs))
+            {
+                builder.Append("  costs:");
+                builder.AppendLine(" [");
+                foreach (var item in Costs)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ApiVersions))
+            {
+                builder.Append("  apiVersions:");
+                builder.AppendLine(" [");
+                foreach (var item in ApiVersions)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(DisabledReason))
+            {
+                builder.Append("  disabledReason:");
+                builder.AppendLine($" '{DisabledReason.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DisabledReasonMessage))
+            {
+                builder.Append("  disabledReasonMessage:");
+                builder.AppendLine($" '{DisabledReasonMessage}'");
+            }
+
+            if (Optional.IsDefined(RequiredFeature))
+            {
+                builder.Append("  requiredFeature:");
+                builder.AppendLine($" '{RequiredFeature}'");
+            }
+
+            if (Optional.IsCollectionDefined(CountriesWithinCommerceBoundary))
+            {
+                builder.Append("  countriesWithinCommerceBoundary:");
+                builder.AppendLine(" [");
+                foreach (var item in CountriesWithinCommerceBoundary)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DataBoxSkuInformation>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxSkuInformation>)this).GetFormatFromOptions(options) : options.Format;
@@ -282,6 +394,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxSkuInformation)} does not support '{options.Format}' format.");
             }
@@ -298,6 +412,8 @@ namespace Azure.ResourceManager.DataBox.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataBoxSkuInformation(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataBoxSkuInformation)} does not support '{options.Format}' format.");
             }

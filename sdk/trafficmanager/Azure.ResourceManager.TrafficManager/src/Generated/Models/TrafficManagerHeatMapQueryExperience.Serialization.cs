@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class TrafficManagerHeatMapQueryExperience : IUtf8JsonSerializable, IJsonModel<TrafficManagerHeatMapQueryExperience>
+    public partial class TrafficManagerHeatMapQueryExperience : IUtf8JsonSerializable, IJsonModel<TrafficManagerHeatMapQueryExperience>, IPersistableModel<TrafficManagerHeatMapQueryExperience>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerHeatMapQueryExperience>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -108,6 +109,44 @@ namespace Azure.ResourceManager.TrafficManager.Models
             return new TrafficManagerHeatMapQueryExperience(endpointId, queryCount, Optional.ToNullable(latency), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(EndpointId))
+            {
+                builder.Append("  endpointId:");
+                builder.AppendLine($" '{EndpointId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(QueryCount))
+            {
+                builder.Append("  queryCount:");
+                builder.AppendLine($" '{QueryCount.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Latency))
+            {
+                builder.Append("  latency:");
+                builder.AppendLine($" '{Latency.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<TrafficManagerHeatMapQueryExperience>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerHeatMapQueryExperience>)this).GetFormatFromOptions(options) : options.Format;
@@ -116,6 +155,8 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TrafficManagerHeatMapQueryExperience)} does not support '{options.Format}' format.");
             }
@@ -132,6 +173,8 @@ namespace Azure.ResourceManager.TrafficManager.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeTrafficManagerHeatMapQueryExperience(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(TrafficManagerHeatMapQueryExperience)} does not support '{options.Format}' format.");
             }

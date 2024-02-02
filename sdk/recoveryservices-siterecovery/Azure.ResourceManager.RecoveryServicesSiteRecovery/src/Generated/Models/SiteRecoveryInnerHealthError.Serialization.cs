@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryInnerHealthError : IUtf8JsonSerializable, IJsonModel<SiteRecoveryInnerHealthError>
+    public partial class SiteRecoveryInnerHealthError : IUtf8JsonSerializable, IJsonModel<SiteRecoveryInnerHealthError>, IPersistableModel<SiteRecoveryInnerHealthError>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryInnerHealthError>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -239,6 +240,110 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryInnerHealthError(errorSource.Value, errorType.Value, errorLevel.Value, errorCategory.Value, errorCode.Value, summaryMessage.Value, errorMessage.Value, possibleCauses.Value, recommendedAction.Value, Optional.ToNullable(creationTimeUtc), recoveryProviderErrorMessage.Value, entityId.Value, errorId.Value, Optional.ToNullable(customerResolvability), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ErrorSource))
+            {
+                builder.Append("  errorSource:");
+                builder.AppendLine($" '{ErrorSource}'");
+            }
+
+            if (Optional.IsDefined(ErrorType))
+            {
+                builder.Append("  errorType:");
+                builder.AppendLine($" '{ErrorType}'");
+            }
+
+            if (Optional.IsDefined(ErrorLevel))
+            {
+                builder.Append("  errorLevel:");
+                builder.AppendLine($" '{ErrorLevel}'");
+            }
+
+            if (Optional.IsDefined(ErrorCategory))
+            {
+                builder.Append("  errorCategory:");
+                builder.AppendLine($" '{ErrorCategory}'");
+            }
+
+            if (Optional.IsDefined(ErrorCode))
+            {
+                builder.Append("  errorCode:");
+                builder.AppendLine($" '{ErrorCode}'");
+            }
+
+            if (Optional.IsDefined(SummaryMessage))
+            {
+                builder.Append("  summaryMessage:");
+                builder.AppendLine($" '{SummaryMessage}'");
+            }
+
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                builder.Append("  errorMessage:");
+                builder.AppendLine($" '{ErrorMessage}'");
+            }
+
+            if (Optional.IsDefined(PossibleCauses))
+            {
+                builder.Append("  possibleCauses:");
+                builder.AppendLine($" '{PossibleCauses}'");
+            }
+
+            if (Optional.IsDefined(RecommendedAction))
+            {
+                builder.Append("  recommendedAction:");
+                builder.AppendLine($" '{RecommendedAction}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  creationTimeUtc:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecoveryProviderErrorMessage))
+            {
+                builder.Append("  recoveryProviderErrorMessage:");
+                builder.AppendLine($" '{RecoveryProviderErrorMessage}'");
+            }
+
+            if (Optional.IsDefined(EntityId))
+            {
+                builder.Append("  entityId:");
+                builder.AppendLine($" '{EntityId}'");
+            }
+
+            if (Optional.IsDefined(ErrorId))
+            {
+                builder.Append("  errorId:");
+                builder.AppendLine($" '{ErrorId}'");
+            }
+
+            if (Optional.IsDefined(CustomerResolvability))
+            {
+                builder.Append("  customerResolvability:");
+                builder.AppendLine($" '{CustomerResolvability.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SiteRecoveryInnerHealthError>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryInnerHealthError>)this).GetFormatFromOptions(options) : options.Format;
@@ -247,6 +352,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryInnerHealthError)} does not support '{options.Format}' format.");
             }
@@ -263,6 +370,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSiteRecoveryInnerHealthError(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryInnerHealthError)} does not support '{options.Format}' format.");
             }

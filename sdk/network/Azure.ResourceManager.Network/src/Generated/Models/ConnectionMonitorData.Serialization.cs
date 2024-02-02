@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ConnectionMonitorData : IUtf8JsonSerializable, IJsonModel<ConnectionMonitorData>
+    public partial class ConnectionMonitorData : IUtf8JsonSerializable, IJsonModel<ConnectionMonitorData>, IPersistableModel<ConnectionMonitorData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectionMonitorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -426,6 +427,178 @@ namespace Azure.ResourceManager.Network
             return new ConnectionMonitorData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToNullable(location), Optional.ToDictionary(tags), source.Value, destination.Value, Optional.ToNullable(autoStart), Optional.ToNullable(monitoringIntervalInSeconds), Optional.ToList(endpoints), Optional.ToList(testConfigurations), Optional.ToList(testGroups), Optional.ToList(outputs), notes.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), monitoringStatus.Value, Optional.ToNullable(connectionMonitorType), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Source))
+            {
+                builder.Append("  source:");
+                AppendChildObject(builder, Source, options, 2);
+            }
+
+            if (Optional.IsDefined(Destination))
+            {
+                builder.Append("  destination:");
+                AppendChildObject(builder, Destination, options, 2);
+            }
+
+            if (Optional.IsDefined(AutoStart))
+            {
+                builder.Append("  autoStart:");
+                var boolValue = AutoStart.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(MonitoringIntervalInSeconds))
+            {
+                builder.Append("  monitoringIntervalInSeconds:");
+                builder.AppendLine($" '{MonitoringIntervalInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Endpoints))
+            {
+                builder.Append("  endpoints:");
+                builder.AppendLine(" [");
+                foreach (var item in Endpoints)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(TestConfigurations))
+            {
+                builder.Append("  testConfigurations:");
+                builder.AppendLine(" [");
+                foreach (var item in TestConfigurations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(TestGroups))
+            {
+                builder.Append("  testGroups:");
+                builder.AppendLine(" [");
+                foreach (var item in TestGroups)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Outputs))
+            {
+                builder.Append("  outputs:");
+                builder.AppendLine(" [");
+                foreach (var item in Outputs)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Notes))
+            {
+                builder.Append("  notes:");
+                builder.AppendLine($" '{Notes}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startTime:");
+                builder.AppendLine($" '{StartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MonitoringStatus))
+            {
+                builder.Append("  monitoringStatus:");
+                builder.AppendLine($" '{MonitoringStatus}'");
+            }
+
+            if (Optional.IsDefined(ConnectionMonitorType))
+            {
+                builder.Append("  connectionMonitorType:");
+                builder.AppendLine($" '{ConnectionMonitorType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ConnectionMonitorData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorData>)this).GetFormatFromOptions(options) : options.Format;
@@ -434,6 +607,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConnectionMonitorData)} does not support '{options.Format}' format.");
             }
@@ -450,6 +625,8 @@ namespace Azure.ResourceManager.Network
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConnectionMonitorData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ConnectionMonitorData)} does not support '{options.Format}' format.");
             }

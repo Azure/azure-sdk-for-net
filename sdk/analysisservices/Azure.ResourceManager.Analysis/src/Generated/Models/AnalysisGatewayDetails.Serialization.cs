@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    public partial class AnalysisGatewayDetails : IUtf8JsonSerializable, IJsonModel<AnalysisGatewayDetails>
+    public partial class AnalysisGatewayDetails : IUtf8JsonSerializable, IJsonModel<AnalysisGatewayDetails>, IPersistableModel<AnalysisGatewayDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisGatewayDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -114,6 +115,44 @@ namespace Azure.ResourceManager.Analysis.Models
             return new AnalysisGatewayDetails(gatewayResourceId.Value, gatewayObjectId.Value, dmtsClusterUri.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(GatewayResourceId))
+            {
+                builder.Append("  gatewayResourceId:");
+                builder.AppendLine($" '{GatewayResourceId}'");
+            }
+
+            if (Optional.IsDefined(GatewayObjectId))
+            {
+                builder.Append("  gatewayObjectId:");
+                builder.AppendLine($" '{GatewayObjectId}'");
+            }
+
+            if (Optional.IsDefined(DmtsClusterUri))
+            {
+                builder.Append("  dmtsClusterUri:");
+                builder.AppendLine($" '{DmtsClusterUri.AbsoluteUri}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AnalysisGatewayDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisGatewayDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -122,6 +161,8 @@ namespace Azure.ResourceManager.Analysis.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AnalysisGatewayDetails)} does not support '{options.Format}' format.");
             }
@@ -138,6 +179,8 @@ namespace Azure.ResourceManager.Analysis.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAnalysisGatewayDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AnalysisGatewayDetails)} does not support '{options.Format}' format.");
             }

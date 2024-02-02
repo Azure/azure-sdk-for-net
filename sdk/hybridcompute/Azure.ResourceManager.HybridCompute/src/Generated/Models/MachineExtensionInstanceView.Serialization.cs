@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class MachineExtensionInstanceView : IUtf8JsonSerializable, IJsonModel<MachineExtensionInstanceView>
+    public partial class MachineExtensionInstanceView : IUtf8JsonSerializable, IJsonModel<MachineExtensionInstanceView>, IPersistableModel<MachineExtensionInstanceView>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineExtensionInstanceView>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -125,6 +126,50 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new MachineExtensionInstanceView(name.Value, type.Value, typeHandlerVersion.Value, status.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(MachineExtensionInstanceViewType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{MachineExtensionInstanceViewType}'");
+            }
+
+            if (Optional.IsDefined(TypeHandlerVersion))
+            {
+                builder.Append("  typeHandlerVersion:");
+                builder.AppendLine($" '{TypeHandlerVersion}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                AppendChildObject(builder, Status, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MachineExtensionInstanceView>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineExtensionInstanceView>)this).GetFormatFromOptions(options) : options.Format;
@@ -133,6 +178,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineExtensionInstanceView)} does not support '{options.Format}' format.");
             }
@@ -149,6 +196,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMachineExtensionInstanceView(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MachineExtensionInstanceView)} does not support '{options.Format}' format.");
             }

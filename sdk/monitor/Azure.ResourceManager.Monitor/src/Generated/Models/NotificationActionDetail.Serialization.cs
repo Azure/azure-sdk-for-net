@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class NotificationActionDetail : IUtf8JsonSerializable, IJsonModel<NotificationActionDetail>
+    public partial class NotificationActionDetail : IUtf8JsonSerializable, IJsonModel<NotificationActionDetail>, IPersistableModel<NotificationActionDetail>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NotificationActionDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -147,6 +148,62 @@ namespace Azure.ResourceManager.Monitor.Models
             return new NotificationActionDetail(mechanismType.Value, name.Value, status.Value, subState.Value, Optional.ToNullable(sendTime), detail.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MechanismType))
+            {
+                builder.Append("  MechanismType:");
+                builder.AppendLine($" '{MechanismType}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  Name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  Status:");
+                builder.AppendLine($" '{Status}'");
+            }
+
+            if (Optional.IsDefined(SubState))
+            {
+                builder.Append("  SubState:");
+                builder.AppendLine($" '{SubState}'");
+            }
+
+            if (Optional.IsDefined(SendOn))
+            {
+                builder.Append("  SendTime:");
+                builder.AppendLine($" '{SendOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Detail))
+            {
+                builder.Append("  Detail:");
+                builder.AppendLine($" '{Detail}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<NotificationActionDetail>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NotificationActionDetail>)this).GetFormatFromOptions(options) : options.Format;
@@ -155,6 +212,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NotificationActionDetail)} does not support '{options.Format}' format.");
             }
@@ -171,6 +230,8 @@ namespace Azure.ResourceManager.Monitor.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNotificationActionDetail(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NotificationActionDetail)} does not support '{options.Format}' format.");
             }

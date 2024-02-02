@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class PriceSheetProperties : IUtf8JsonSerializable, IJsonModel<PriceSheetProperties>
+    public partial class PriceSheetProperties : IUtf8JsonSerializable, IJsonModel<PriceSheetProperties>, IPersistableModel<PriceSheetProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PriceSheetProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -196,6 +197,80 @@ namespace Azure.ResourceManager.Consumption.Models
             return new PriceSheetProperties(billingPeriodId.Value, Optional.ToNullable(meterId), meterDetails.Value, unitOfMeasure.Value, Optional.ToNullable(includedQuantity), partNumber.Value, Optional.ToNullable(unitPrice), currencyCode.Value, offerId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BillingPeriodId))
+            {
+                builder.Append("  billingPeriodId:");
+                builder.AppendLine($" '{BillingPeriodId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MeterId))
+            {
+                builder.Append("  meterId:");
+                builder.AppendLine($" '{MeterId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MeterDetails))
+            {
+                builder.Append("  meterDetails:");
+                AppendChildObject(builder, MeterDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(UnitOfMeasure))
+            {
+                builder.Append("  unitOfMeasure:");
+                builder.AppendLine($" '{UnitOfMeasure}'");
+            }
+
+            if (Optional.IsDefined(IncludedQuantity))
+            {
+                builder.Append("  includedQuantity:");
+                builder.AppendLine($" '{IncludedQuantity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PartNumber))
+            {
+                builder.Append("  partNumber:");
+                builder.AppendLine($" '{PartNumber}'");
+            }
+
+            if (Optional.IsDefined(UnitPrice))
+            {
+                builder.Append("  unitPrice:");
+                builder.AppendLine($" '{UnitPrice.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CurrencyCode))
+            {
+                builder.Append("  currencyCode:");
+                builder.AppendLine($" '{CurrencyCode}'");
+            }
+
+            if (Optional.IsDefined(OfferId))
+            {
+                builder.Append("  offerId:");
+                builder.AppendLine($" '{OfferId}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PriceSheetProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -204,6 +279,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support '{options.Format}' format.");
             }
@@ -220,6 +297,8 @@ namespace Azure.ResourceManager.Consumption.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePriceSheetProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support '{options.Format}' format.");
             }

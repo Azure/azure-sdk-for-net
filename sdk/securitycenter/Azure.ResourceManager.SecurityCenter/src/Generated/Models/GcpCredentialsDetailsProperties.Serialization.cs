@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GcpCredentialsDetailsProperties : IUtf8JsonSerializable, IJsonModel<GcpCredentialsDetailsProperties>
+    public partial class GcpCredentialsDetailsProperties : IUtf8JsonSerializable, IJsonModel<GcpCredentialsDetailsProperties>, IPersistableModel<GcpCredentialsDetailsProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GcpCredentialsDetailsProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -213,6 +214,115 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GcpCredentialsDetailsProperties(Optional.ToNullable(authenticationProvisioningState), Optional.ToList(grantedPermissions), authenticationType, serializedAdditionalRawData, organizationId, type, projectId, privateKeyId, privateKey, clientEmail, clientId, authUri, tokenUri, authProviderX509CertUrl, clientX509CertUrl);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(OrganizationId))
+            {
+                builder.Append("  organizationId:");
+                builder.AppendLine($" '{OrganizationId}'");
+            }
+
+            if (Optional.IsDefined(GcpCredentialType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{GcpCredentialType}'");
+            }
+
+            if (Optional.IsDefined(ProjectId))
+            {
+                builder.Append("  projectId:");
+                builder.AppendLine($" '{ProjectId}'");
+            }
+
+            if (Optional.IsDefined(PrivateKeyId))
+            {
+                builder.Append("  privateKeyId:");
+                builder.AppendLine($" '{PrivateKeyId}'");
+            }
+
+            if (Optional.IsDefined(PrivateKey))
+            {
+                builder.Append("  privateKey:");
+                builder.AppendLine($" '{PrivateKey}'");
+            }
+
+            if (Optional.IsDefined(ClientEmail))
+            {
+                builder.Append("  clientEmail:");
+                builder.AppendLine($" '{ClientEmail}'");
+            }
+
+            if (Optional.IsDefined(ClientId))
+            {
+                builder.Append("  clientId:");
+                builder.AppendLine($" '{ClientId}'");
+            }
+
+            if (Optional.IsDefined(AuthUri))
+            {
+                builder.Append("  authUri:");
+                builder.AppendLine($" '{AuthUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(TokenUri))
+            {
+                builder.Append("  tokenUri:");
+                builder.AppendLine($" '{TokenUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(AuthProviderX509CertUri))
+            {
+                builder.Append("  authProviderX509CertUrl:");
+                builder.AppendLine($" '{AuthProviderX509CertUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(ClientX509CertUri))
+            {
+                builder.Append("  clientX509CertUrl:");
+                builder.AppendLine($" '{ClientX509CertUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(AuthenticationProvisioningState))
+            {
+                builder.Append("  authenticationProvisioningState:");
+                builder.AppendLine($" '{AuthenticationProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(GrantedPermissions))
+            {
+                builder.Append("  grantedPermissions:");
+                builder.AppendLine(" [");
+                foreach (var item in GrantedPermissions)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(AuthenticationType))
+            {
+                builder.Append("  authenticationType:");
+                builder.AppendLine($" '{AuthenticationType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<GcpCredentialsDetailsProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GcpCredentialsDetailsProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -221,6 +331,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GcpCredentialsDetailsProperties)} does not support '{options.Format}' format.");
             }
@@ -237,6 +349,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeGcpCredentialsDetailsProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(GcpCredentialsDetailsProperties)} does not support '{options.Format}' format.");
             }

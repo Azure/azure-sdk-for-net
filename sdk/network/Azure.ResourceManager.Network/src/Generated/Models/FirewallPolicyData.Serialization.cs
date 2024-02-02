@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -17,7 +18,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class FirewallPolicyData : IUtf8JsonSerializable, IJsonModel<FirewallPolicyData>
+    public partial class FirewallPolicyData : IUtf8JsonSerializable, IJsonModel<FirewallPolicyData>, IPersistableModel<FirewallPolicyData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallPolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -474,6 +475,190 @@ namespace Azure.ResourceManager.Network
             return new FirewallPolicyData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), identity, size.Value, Optional.ToList(ruleCollectionGroups), Optional.ToNullable(provisioningState), basePolicy, Optional.ToList(firewalls), Optional.ToList(childPolicies), Optional.ToNullable(threatIntelMode), threatIntelWhitelist.Value, insights.Value, snat.Value, sql.Value, dnsSettings.Value, explicitProxy.Value, intrusionDetection.Value, transportSecurity.Value, sku.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2);
+            }
+
+            if (Optional.IsDefined(Size))
+            {
+                builder.Append("  size:");
+                builder.AppendLine($" '{Size}'");
+            }
+
+            if (Optional.IsCollectionDefined(RuleCollectionGroups))
+            {
+                builder.Append("  ruleCollectionGroups:");
+                builder.AppendLine(" [");
+                foreach (var item in RuleCollectionGroups)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BasePolicy))
+            {
+                builder.Append("  basePolicy:");
+                AppendChildObject(builder, BasePolicy, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Firewalls))
+            {
+                builder.Append("  firewalls:");
+                builder.AppendLine(" [");
+                foreach (var item in Firewalls)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ChildPolicies))
+            {
+                builder.Append("  childPolicies:");
+                builder.AppendLine(" [");
+                foreach (var item in ChildPolicies)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ThreatIntelMode))
+            {
+                builder.Append("  threatIntelMode:");
+                builder.AppendLine($" '{ThreatIntelMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ThreatIntelWhitelist))
+            {
+                builder.Append("  threatIntelWhitelist:");
+                AppendChildObject(builder, ThreatIntelWhitelist, options, 2);
+            }
+
+            if (Optional.IsDefined(Insights))
+            {
+                builder.Append("  insights:");
+                AppendChildObject(builder, Insights, options, 2);
+            }
+
+            if (Optional.IsDefined(Snat))
+            {
+                builder.Append("  snat:");
+                AppendChildObject(builder, Snat, options, 2);
+            }
+
+            if (Optional.IsDefined(Sql))
+            {
+                builder.Append("  sql:");
+                AppendChildObject(builder, Sql, options, 2);
+            }
+
+            if (Optional.IsDefined(DnsSettings))
+            {
+                builder.Append("  dnsSettings:");
+                AppendChildObject(builder, DnsSettings, options, 2);
+            }
+
+            if (Optional.IsDefined(ExplicitProxy))
+            {
+                builder.Append("  explicitProxy:");
+                AppendChildObject(builder, ExplicitProxy, options, 2);
+            }
+
+            if (Optional.IsDefined(IntrusionDetection))
+            {
+                builder.Append("  intrusionDetection:");
+                AppendChildObject(builder, IntrusionDetection, options, 2);
+            }
+
+            if (Optional.IsDefined(TransportSecurity))
+            {
+                builder.Append("  transportSecurity:");
+                AppendChildObject(builder, TransportSecurity, options, 2);
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<FirewallPolicyData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
@@ -482,6 +667,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FirewallPolicyData)} does not support '{options.Format}' format.");
             }
@@ -498,6 +685,8 @@ namespace Azure.ResourceManager.Network
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFirewallPolicyData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FirewallPolicyData)} does not support '{options.Format}' format.");
             }

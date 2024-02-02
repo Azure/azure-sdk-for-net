@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Logic.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    public partial class LogicWorkflowRunActionData : IUtf8JsonSerializable, IJsonModel<LogicWorkflowRunActionData>
+    public partial class LogicWorkflowRunActionData : IUtf8JsonSerializable, IJsonModel<LogicWorkflowRunActionData>, IPersistableModel<LogicWorkflowRunActionData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowRunActionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -327,6 +328,121 @@ namespace Azure.ResourceManager.Logic
             return new LogicWorkflowRunActionData(id, name, type, systemData.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(status), code.Value, error.Value, Optional.ToNullable(trackingId), correlation.Value, inputsLink.Value, outputsLink.Value, trackedProperties.Value, Optional.ToList(retryHistory), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startTime:");
+                builder.AppendLine($" '{StartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndOn))
+            {
+                builder.Append("  endTime:");
+                builder.AppendLine($" '{EndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Code))
+            {
+                builder.Append("  code:");
+                builder.AppendLine($" '{Code}'");
+            }
+
+            if (Optional.IsDefined(Error))
+            {
+                builder.Append("  error:");
+                builder.AppendLine($" '{Error.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TrackingId))
+            {
+                builder.Append("  trackingId:");
+                builder.AppendLine($" '{TrackingId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Correlation))
+            {
+                builder.Append("  correlation:");
+                AppendChildObject(builder, Correlation, options, 2);
+            }
+
+            if (Optional.IsDefined(InputsLink))
+            {
+                builder.Append("  inputsLink:");
+                AppendChildObject(builder, InputsLink, options, 2);
+            }
+
+            if (Optional.IsDefined(OutputsLink))
+            {
+                builder.Append("  outputsLink:");
+                AppendChildObject(builder, OutputsLink, options, 2);
+            }
+
+            if (Optional.IsDefined(TrackedProperties))
+            {
+                builder.Append("  trackedProperties:");
+                builder.AppendLine($" '{TrackedProperties.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(RetryHistory))
+            {
+                builder.Append("  retryHistory:");
+                builder.AppendLine(" [");
+                foreach (var item in RetryHistory)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<LogicWorkflowRunActionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowRunActionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -335,6 +451,8 @@ namespace Azure.ResourceManager.Logic
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LogicWorkflowRunActionData)} does not support '{options.Format}' format.");
             }
@@ -351,6 +469,8 @@ namespace Azure.ResourceManager.Logic
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeLogicWorkflowRunActionData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(LogicWorkflowRunActionData)} does not support '{options.Format}' format.");
             }

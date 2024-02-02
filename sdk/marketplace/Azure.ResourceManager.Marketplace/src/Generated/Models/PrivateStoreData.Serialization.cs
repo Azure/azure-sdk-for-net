@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    public partial class PrivateStoreData : IUtf8JsonSerializable, IJsonModel<PrivateStoreData>
+    public partial class PrivateStoreData : IUtf8JsonSerializable, IJsonModel<PrivateStoreData>, IPersistableModel<PrivateStoreData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateStoreData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -335,6 +336,133 @@ namespace Azure.ResourceManager.Marketplace
             return new PrivateStoreData(id, name, type, systemData.Value, Optional.ToNullable(availability), Optional.ToNullable(privateStoreId), Optional.ToNullable(eTag), privateStoreName.Value, Optional.ToNullable(tenantId), Optional.ToNullable(isGov), Optional.ToList(collectionIds), Optional.ToDictionary(branding), Optional.ToList(recipients), Optional.ToNullable(sendToAllMarketplaceAdmins), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Availability))
+            {
+                builder.Append("  availability:");
+                builder.AppendLine($" '{Availability.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrivateStoreId))
+            {
+                builder.Append("  privateStoreId:");
+                builder.AppendLine($" '{PrivateStoreId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  eTag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrivateStoreName))
+            {
+                builder.Append("  privateStoreName:");
+                builder.AppendLine($" '{PrivateStoreName}'");
+            }
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("  tenantId:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsGov))
+            {
+                builder.Append("  isGov:");
+                var boolValue = IsGov.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(CollectionIds))
+            {
+                builder.Append("  collectionIds:");
+                builder.AppendLine(" [");
+                foreach (var item in CollectionIds)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Branding))
+            {
+                builder.Append("  branding:");
+                builder.AppendLine(" {");
+                foreach (var item in Branding)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsCollectionDefined(Recipients))
+            {
+                builder.Append("  recipients:");
+                builder.AppendLine(" [");
+                foreach (var item in Recipients)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(SendToAllMarketplaceAdmins))
+            {
+                builder.Append("  sendToAllMarketplaceAdmins:");
+                var boolValue = SendToAllMarketplaceAdmins.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PrivateStoreData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PrivateStoreData>)this).GetFormatFromOptions(options) : options.Format;
@@ -343,6 +471,8 @@ namespace Azure.ResourceManager.Marketplace
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PrivateStoreData)} does not support '{options.Format}' format.");
             }
@@ -359,6 +489,8 @@ namespace Azure.ResourceManager.Marketplace
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePrivateStoreData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PrivateStoreData)} does not support '{options.Format}' format.");
             }

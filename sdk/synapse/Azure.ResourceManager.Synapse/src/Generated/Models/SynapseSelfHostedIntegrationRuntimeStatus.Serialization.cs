@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseSelfHostedIntegrationRuntimeStatus : IUtf8JsonSerializable, IJsonModel<SynapseSelfHostedIntegrationRuntimeStatus>
+    public partial class SynapseSelfHostedIntegrationRuntimeStatus : IUtf8JsonSerializable, IJsonModel<SynapseSelfHostedIntegrationRuntimeStatus>, IPersistableModel<SynapseSelfHostedIntegrationRuntimeStatus>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSelfHostedIntegrationRuntimeStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -420,6 +421,216 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseSelfHostedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), taskQueueId.Value, nodeCommunicationChannelEncryptionMode.Value, Optional.ToNullable(internalChannelEncryption), version.Value, Optional.ToList(nodes), Optional.ToNullable(scheduledUpdateDate), updateDelayOffset.Value, localTimeZoneOffset.Value, Optional.ToDictionary(capabilities), Optional.ToList(serviceUrls), Optional.ToNullable(autoUpdate), versionStatus.Value, Optional.ToList(links), pushedVersion.Value, latestVersion.Value, Optional.ToNullable(autoUpdateEta), serviceRegion.Value, Optional.ToList(newerVersions));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CreateOn))
+            {
+                builder.Append("  createTime:");
+                builder.AppendLine($" '{CreateOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TaskQueueId))
+            {
+                builder.Append("  taskQueueId:");
+                builder.AppendLine($" '{TaskQueueId}'");
+            }
+
+            if (Optional.IsDefined(NodeCommunicationChannelEncryptionMode))
+            {
+                builder.Append("  nodeCommunicationChannelEncryptionMode:");
+                builder.AppendLine($" '{NodeCommunicationChannelEncryptionMode}'");
+            }
+
+            if (Optional.IsDefined(InternalChannelEncryption))
+            {
+                builder.Append("  internalChannelEncryption:");
+                builder.AppendLine($" '{InternalChannelEncryption.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("  version:");
+                builder.AppendLine($" '{Version}'");
+            }
+
+            if (Optional.IsCollectionDefined(Nodes))
+            {
+                builder.Append("  nodes:");
+                builder.AppendLine(" [");
+                foreach (var item in Nodes)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ScheduledUpdateOn))
+            {
+                builder.Append("  scheduledUpdateDate:");
+                builder.AppendLine($" '{ScheduledUpdateOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UpdateDelayOffset))
+            {
+                builder.Append("  updateDelayOffset:");
+                builder.AppendLine($" '{UpdateDelayOffset}'");
+            }
+
+            if (Optional.IsDefined(LocalTimeZoneOffset))
+            {
+                builder.Append("  localTimeZoneOffset:");
+                builder.AppendLine($" '{LocalTimeZoneOffset}'");
+            }
+
+            if (Optional.IsCollectionDefined(Capabilities))
+            {
+                builder.Append("  capabilities:");
+                builder.AppendLine(" {");
+                foreach (var item in Capabilities)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsCollectionDefined(ServiceUrls))
+            {
+                builder.Append("  serviceUrls:");
+                builder.AppendLine(" [");
+                foreach (var item in ServiceUrls)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(AutoUpdate))
+            {
+                builder.Append("  autoUpdate:");
+                builder.AppendLine($" '{AutoUpdate.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VersionStatus))
+            {
+                builder.Append("  versionStatus:");
+                builder.AppendLine($" '{VersionStatus}'");
+            }
+
+            if (Optional.IsCollectionDefined(Links))
+            {
+                builder.Append("  links:");
+                builder.AppendLine(" [");
+                foreach (var item in Links)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(PushedVersion))
+            {
+                builder.Append("  pushedVersion:");
+                builder.AppendLine($" '{PushedVersion}'");
+            }
+
+            if (Optional.IsDefined(LatestVersion))
+            {
+                builder.Append("  latestVersion:");
+                builder.AppendLine($" '{LatestVersion}'");
+            }
+
+            if (Optional.IsDefined(AutoUpdateEta))
+            {
+                builder.Append("  autoUpdateETA:");
+                builder.AppendLine($" '{AutoUpdateEta.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ServiceRegion))
+            {
+                builder.Append("  serviceRegion:");
+                builder.AppendLine($" '{ServiceRegion}'");
+            }
+
+            if (Optional.IsCollectionDefined(NewerVersions))
+            {
+                builder.Append("  newerVersions:");
+                builder.AppendLine(" [");
+                foreach (var item in NewerVersions)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(RuntimeType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{RuntimeType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DataFactoryName))
+            {
+                builder.Append("  dataFactoryName:");
+                builder.AppendLine($" '{DataFactoryName}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(AdditionalProperties))
+            {
+                builder.Append("  AdditionalProperties:");
+                builder.AppendLine(" {");
+                foreach (var item in AdditionalProperties)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value.ToString()}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SynapseSelfHostedIntegrationRuntimeStatus>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSelfHostedIntegrationRuntimeStatus>)this).GetFormatFromOptions(options) : options.Format;
@@ -428,6 +639,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntimeStatus)} does not support '{options.Format}' format.");
             }
@@ -444,6 +657,8 @@ namespace Azure.ResourceManager.Synapse.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSynapseSelfHostedIntegrationRuntimeStatus(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntimeStatus)} does not support '{options.Format}' format.");
             }

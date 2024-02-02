@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class CSharpFunctionBinding : IUtf8JsonSerializable, IJsonModel<CSharpFunctionBinding>
+    public partial class CSharpFunctionBinding : IUtf8JsonSerializable, IJsonModel<CSharpFunctionBinding>, IPersistableModel<CSharpFunctionBinding>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CSharpFunctionBinding>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -148,6 +149,56 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             return new CSharpFunctionBinding(type, serializedAdditionalRawData, dllPath.Value, @class.Value, method.Value, Optional.ToNullable(updateMode));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DllPath))
+            {
+                builder.Append("  dllPath:");
+                builder.AppendLine($" '{DllPath}'");
+            }
+
+            if (Optional.IsDefined(Class))
+            {
+                builder.Append("  class:");
+                builder.AppendLine($" '{Class}'");
+            }
+
+            if (Optional.IsDefined(Method))
+            {
+                builder.Append("  method:");
+                builder.AppendLine($" '{Method}'");
+            }
+
+            if (Optional.IsDefined(UpdateMode))
+            {
+                builder.Append("  updateMode:");
+                builder.AppendLine($" '{UpdateMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FunctionBindingType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{FunctionBindingType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<CSharpFunctionBinding>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CSharpFunctionBinding>)this).GetFormatFromOptions(options) : options.Format;
@@ -156,6 +207,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CSharpFunctionBinding)} does not support '{options.Format}' format.");
             }
@@ -172,6 +225,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCSharpFunctionBinding(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CSharpFunctionBinding)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class StackMajorVersion : IUtf8JsonSerializable, IJsonModel<StackMajorVersion>
+    public partial class StackMajorVersion : IUtf8JsonSerializable, IJsonModel<StackMajorVersion>, IPersistableModel<StackMajorVersion>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StackMajorVersion>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -289,6 +290,118 @@ namespace Azure.ResourceManager.AppService.Models
             return new StackMajorVersion(displayVersion.Value, runtimeVersion.Value, Optional.ToNullable(isDefault), Optional.ToList(minorVersions), Optional.ToNullable(applicationInsights), Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToDictionary(appSettingsDictionary), Optional.ToDictionary(siteConfigPropertiesDictionary), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DisplayVersion))
+            {
+                builder.Append("  displayVersion:");
+                builder.AppendLine($" '{DisplayVersion}'");
+            }
+
+            if (Optional.IsDefined(RuntimeVersion))
+            {
+                builder.Append("  runtimeVersion:");
+                builder.AppendLine($" '{RuntimeVersion}'");
+            }
+
+            if (Optional.IsDefined(IsDefault))
+            {
+                builder.Append("  isDefault:");
+                var boolValue = IsDefault.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(MinorVersions))
+            {
+                builder.Append("  minorVersions:");
+                builder.AppendLine(" [");
+                foreach (var item in MinorVersions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsApplicationInsights))
+            {
+                builder.Append("  applicationInsights:");
+                var boolValue = IsApplicationInsights.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsPreview))
+            {
+                builder.Append("  isPreview:");
+                var boolValue = IsPreview.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsDeprecated))
+            {
+                builder.Append("  isDeprecated:");
+                var boolValue = IsDeprecated.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsHidden))
+            {
+                builder.Append("  isHidden:");
+                var boolValue = IsHidden.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(AppSettingsDictionary))
+            {
+                builder.Append("  appSettingsDictionary:");
+                builder.AppendLine(" {");
+                foreach (var item in AppSettingsDictionary)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value.ToString()}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsCollectionDefined(SiteConfigPropertiesDictionary))
+            {
+                builder.Append("  siteConfigPropertiesDictionary:");
+                builder.AppendLine(" {");
+                foreach (var item in SiteConfigPropertiesDictionary)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value.ToString()}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<StackMajorVersion>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StackMajorVersion>)this).GetFormatFromOptions(options) : options.Format;
@@ -297,6 +410,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StackMajorVersion)} does not support '{options.Format}' format.");
             }
@@ -313,6 +428,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStackMajorVersion(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StackMajorVersion)} does not support '{options.Format}' format.");
             }

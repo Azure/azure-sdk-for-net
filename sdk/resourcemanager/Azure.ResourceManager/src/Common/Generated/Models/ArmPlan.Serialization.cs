@@ -7,6 +7,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -14,7 +15,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(ArmPlanConverter))]
-    public partial class ArmPlan : IUtf8JsonSerializable, IJsonModel<ArmPlan>
+    public partial class ArmPlan : IUtf8JsonSerializable, IJsonModel<ArmPlan>, IPersistableModel<ArmPlan>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmPlan>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -102,6 +103,56 @@ namespace Azure.ResourceManager.Models
             return new ArmPlan(name, publisher, product, promotionCode.Value, version.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Publisher))
+            {
+                builder.Append("  publisher:");
+                builder.AppendLine($" '{Publisher}'");
+            }
+
+            if (Optional.IsDefined(Product))
+            {
+                builder.Append("  product:");
+                builder.AppendLine($" '{Product}'");
+            }
+
+            if (Optional.IsDefined(PromotionCode))
+            {
+                builder.Append("  promotionCode:");
+                builder.AppendLine($" '{PromotionCode}'");
+            }
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("  version:");
+                builder.AppendLine($" '{Version}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ArmPlan>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArmPlan>)this).GetFormatFromOptions(options) : options.Format;
@@ -110,6 +161,8 @@ namespace Azure.ResourceManager.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ArmPlan)} does not support '{options.Format}' format.");
             }
@@ -126,6 +179,8 @@ namespace Azure.ResourceManager.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeArmPlan(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ArmPlan)} does not support '{options.Format}' format.");
             }

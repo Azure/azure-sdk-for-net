@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AudioTrack : IUtf8JsonSerializable, IJsonModel<AudioTrack>
+    public partial class AudioTrack : IUtf8JsonSerializable, IJsonModel<AudioTrack>, IPersistableModel<AudioTrack>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AudioTrack>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -186,6 +187,74 @@ namespace Azure.ResourceManager.Media.Models
             return new AudioTrack(odataType, serializedAdditionalRawData, fileName.Value, displayName.Value, languageCode.Value, hlsSettings.Value, dashSettings.Value, Optional.ToNullable(mpeg4TrackId), Optional.ToNullable(bitRate));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(FileName))
+            {
+                builder.Append("  fileName:");
+                builder.AppendLine($" '{FileName}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(LanguageCode))
+            {
+                builder.Append("  languageCode:");
+                builder.AppendLine($" '{LanguageCode}'");
+            }
+
+            if (Optional.IsDefined(HlsSettings))
+            {
+                builder.Append("  hlsSettings:");
+                AppendChildObject(builder, HlsSettings, options, 2);
+            }
+
+            if (Optional.IsDefined(DashSettings))
+            {
+                builder.Append("  dashSettings:");
+                AppendChildObject(builder, DashSettings, options, 2);
+            }
+
+            if (Optional.IsDefined(Mpeg4TrackId))
+            {
+                builder.Append("  mpeg4TrackId:");
+                builder.AppendLine($" '{Mpeg4TrackId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BitRate))
+            {
+                builder.Append("  bitRate:");
+                builder.AppendLine($" '{BitRate.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OdataType))
+            {
+                builder.Append("  @odata.type:");
+                builder.AppendLine($" '{OdataType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AudioTrack>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AudioTrack>)this).GetFormatFromOptions(options) : options.Format;
@@ -194,6 +263,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AudioTrack)} does not support '{options.Format}' format.");
             }
@@ -210,6 +281,8 @@ namespace Azure.ResourceManager.Media.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAudioTrack(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AudioTrack)} does not support '{options.Format}' format.");
             }

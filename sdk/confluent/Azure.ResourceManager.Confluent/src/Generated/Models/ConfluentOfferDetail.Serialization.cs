@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    public partial class ConfluentOfferDetail : IUtf8JsonSerializable, IJsonModel<ConfluentOfferDetail>
+    public partial class ConfluentOfferDetail : IUtf8JsonSerializable, IJsonModel<ConfluentOfferDetail>, IPersistableModel<ConfluentOfferDetail>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfluentOfferDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -132,6 +133,62 @@ namespace Azure.ResourceManager.Confluent.Models
             return new ConfluentOfferDetail(publisherId, id, planId, planName, termUnit, Optional.ToNullable(status), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PublisherId))
+            {
+                builder.Append("  publisherId:");
+                builder.AppendLine($" '{PublisherId}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id}'");
+            }
+
+            if (Optional.IsDefined(PlanId))
+            {
+                builder.Append("  planId:");
+                builder.AppendLine($" '{PlanId}'");
+            }
+
+            if (Optional.IsDefined(PlanName))
+            {
+                builder.Append("  planName:");
+                builder.AppendLine($" '{PlanName}'");
+            }
+
+            if (Optional.IsDefined(TermUnit))
+            {
+                builder.Append("  termUnit:");
+                builder.AppendLine($" '{TermUnit}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ConfluentOfferDetail>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConfluentOfferDetail>)this).GetFormatFromOptions(options) : options.Format;
@@ -140,6 +197,8 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConfluentOfferDetail)} does not support '{options.Format}' format.");
             }
@@ -156,6 +215,8 @@ namespace Azure.ResourceManager.Confluent.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConfluentOfferDetail(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ConfluentOfferDetail)} does not support '{options.Format}' format.");
             }

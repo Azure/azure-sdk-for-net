@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch
 {
-    public partial class BatchAccountPoolData : IUtf8JsonSerializable, IJsonModel<BatchAccountPoolData>
+    public partial class BatchAccountPoolData : IUtf8JsonSerializable, IJsonModel<BatchAccountPoolData>, IPersistableModel<BatchAccountPoolData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountPoolData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -664,6 +665,276 @@ namespace Azure.ResourceManager.Batch
             return new BatchAccountPoolData(id, name, type, systemData.Value, identity, displayName.Value, Optional.ToNullable(lastModified), Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(provisioningStateTransitionTime), Optional.ToNullable(allocationState), Optional.ToNullable(allocationStateTransitionTime), vmSize.Value, deploymentConfiguration.Value, Optional.ToNullable(currentDedicatedNodes), Optional.ToNullable(currentLowPriorityNodes), scaleSettings.Value, autoScaleRun.Value, Optional.ToNullable(interNodeCommunication), networkConfiguration.Value, Optional.ToNullable(taskSlotsPerNode), taskSchedulingPolicy.Value, Optional.ToList(userAccounts), Optional.ToList(metadata), startTask.Value, Optional.ToList(certificates), Optional.ToList(applicationPackages), Optional.ToList(applicationLicenses), resizeOperationStatus.Value, Optional.ToList(mountConfiguration), Optional.ToNullable(targetNodeCommunicationMode), Optional.ToNullable(currentNodeCommunicationMode), Optional.ToDictionary(resourceTags), Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2);
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("  lastModified:");
+                builder.AppendLine($" '{LastModifiedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  creationTime:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningStateTransitOn))
+            {
+                builder.Append("  provisioningStateTransitionTime:");
+                builder.AppendLine($" '{ProvisioningStateTransitOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AllocationState))
+            {
+                builder.Append("  allocationState:");
+                builder.AppendLine($" '{AllocationState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AllocationStateTransitionOn))
+            {
+                builder.Append("  allocationStateTransitionTime:");
+                builder.AppendLine($" '{AllocationStateTransitionOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VmSize))
+            {
+                builder.Append("  vmSize:");
+                builder.AppendLine($" '{VmSize}'");
+            }
+
+            if (Optional.IsDefined(DeploymentConfiguration))
+            {
+                builder.Append("  deploymentConfiguration:");
+                AppendChildObject(builder, DeploymentConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(CurrentDedicatedNodes))
+            {
+                builder.Append("  currentDedicatedNodes:");
+                builder.AppendLine($" '{CurrentDedicatedNodes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CurrentLowPriorityNodes))
+            {
+                builder.Append("  currentLowPriorityNodes:");
+                builder.AppendLine($" '{CurrentLowPriorityNodes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ScaleSettings))
+            {
+                builder.Append("  scaleSettings:");
+                AppendChildObject(builder, ScaleSettings, options, 2);
+            }
+
+            if (Optional.IsDefined(AutoScaleRun))
+            {
+                builder.Append("  autoScaleRun:");
+                AppendChildObject(builder, AutoScaleRun, options, 2);
+            }
+
+            if (Optional.IsDefined(InterNodeCommunication))
+            {
+                builder.Append("  interNodeCommunication:");
+                builder.AppendLine($" '{InterNodeCommunication.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NetworkConfiguration))
+            {
+                builder.Append("  networkConfiguration:");
+                AppendChildObject(builder, NetworkConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(TaskSlotsPerNode))
+            {
+                builder.Append("  taskSlotsPerNode:");
+                builder.AppendLine($" '{TaskSlotsPerNode.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TaskSchedulingPolicy))
+            {
+                builder.Append("  taskSchedulingPolicy:");
+                AppendChildObject(builder, TaskSchedulingPolicy, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(UserAccounts))
+            {
+                builder.Append("  userAccounts:");
+                builder.AppendLine(" [");
+                foreach (var item in UserAccounts)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                builder.Append("  metadata:");
+                builder.AppendLine(" [");
+                foreach (var item in Metadata)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(StartTask))
+            {
+                builder.Append("  startTask:");
+                AppendChildObject(builder, StartTask, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Certificates))
+            {
+                builder.Append("  certificates:");
+                builder.AppendLine(" [");
+                foreach (var item in Certificates)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ApplicationPackages))
+            {
+                builder.Append("  applicationPackages:");
+                builder.AppendLine(" [");
+                foreach (var item in ApplicationPackages)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ApplicationLicenses))
+            {
+                builder.Append("  applicationLicenses:");
+                builder.AppendLine(" [");
+                foreach (var item in ApplicationLicenses)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ResizeOperationStatus))
+            {
+                builder.Append("  resizeOperationStatus:");
+                AppendChildObject(builder, ResizeOperationStatus, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(MountConfiguration))
+            {
+                builder.Append("  mountConfiguration:");
+                builder.AppendLine(" [");
+                foreach (var item in MountConfiguration)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(TargetNodeCommunicationMode))
+            {
+                builder.Append("  targetNodeCommunicationMode:");
+                builder.AppendLine($" '{TargetNodeCommunicationMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CurrentNodeCommunicationMode))
+            {
+                builder.Append("  currentNodeCommunicationMode:");
+                builder.AppendLine($" '{CurrentNodeCommunicationMode.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ResourceTags))
+            {
+                builder.Append("  resourceTags:");
+                builder.AppendLine(" {");
+                foreach (var item in ResourceTags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BatchAccountPoolData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolData>)this).GetFormatFromOptions(options) : options.Format;
@@ -672,6 +943,8 @@ namespace Azure.ResourceManager.Batch
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BatchAccountPoolData)} does not support '{options.Format}' format.");
             }
@@ -688,6 +961,8 @@ namespace Azure.ResourceManager.Batch
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBatchAccountPoolData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BatchAccountPoolData)} does not support '{options.Format}' format.");
             }

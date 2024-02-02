@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public partial class Assessment : IUtf8JsonSerializable, IJsonModel<Assessment>
+    public partial class Assessment : IUtf8JsonSerializable, IJsonModel<Assessment>, IPersistableModel<Assessment>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Assessment>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -176,6 +177,73 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new Assessment(name.Value, Optional.ToNullable(severity), description.Value, remediation.Value, Optional.ToNullable(isPass), policyId.Value, Optional.ToList(resourceList), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Severity))
+            {
+                builder.Append("  severity:");
+                builder.AppendLine($" '{Severity.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(Remediation))
+            {
+                builder.Append("  remediation:");
+                builder.AppendLine($" '{Remediation}'");
+            }
+
+            if (Optional.IsDefined(IsPass))
+            {
+                builder.Append("  isPass:");
+                builder.AppendLine($" '{IsPass.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PolicyId))
+            {
+                builder.Append("  policyId:");
+                builder.AppendLine($" '{PolicyId}'");
+            }
+
+            if (Optional.IsCollectionDefined(ResourceList))
+            {
+                builder.Append("  resourceList:");
+                builder.AppendLine(" [");
+                foreach (var item in ResourceList)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<Assessment>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<Assessment>)this).GetFormatFromOptions(options) : options.Format;
@@ -184,6 +252,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(Assessment)} does not support '{options.Format}' format.");
             }
@@ -200,6 +270,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAssessment(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(Assessment)} does not support '{options.Format}' format.");
             }

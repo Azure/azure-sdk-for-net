@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class BackendTlsProperties : IUtf8JsonSerializable, IJsonModel<BackendTlsProperties>
+    public partial class BackendTlsProperties : IUtf8JsonSerializable, IJsonModel<BackendTlsProperties>, IPersistableModel<BackendTlsProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackendTlsProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -107,6 +108,40 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new BackendTlsProperties(Optional.ToNullable(validateCertificateChain), Optional.ToNullable(validateCertificateName), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ShouldValidateCertificateChain))
+            {
+                builder.Append("  validateCertificateChain:");
+                var boolValue = ShouldValidateCertificateChain.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ShouldValidateCertificateName))
+            {
+                builder.Append("  validateCertificateName:");
+                var boolValue = ShouldValidateCertificateName.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BackendTlsProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackendTlsProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -115,6 +150,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BackendTlsProperties)} does not support '{options.Format}' format.");
             }
@@ -131,6 +168,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBackendTlsProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BackendTlsProperties)} does not support '{options.Format}' format.");
             }

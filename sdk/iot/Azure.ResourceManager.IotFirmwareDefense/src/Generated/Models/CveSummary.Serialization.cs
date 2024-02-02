@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class CveSummary : IUtf8JsonSerializable, IJsonModel<CveSummary>
+    public partial class CveSummary : IUtf8JsonSerializable, IJsonModel<CveSummary>, IPersistableModel<CveSummary>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CveSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -215,6 +216,62 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new CveSummary(Optional.ToNullable(critical), Optional.ToNullable(high), Optional.ToNullable(medium), Optional.ToNullable(low), Optional.ToNullable(unknown), Optional.ToNullable(undefined), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Critical))
+            {
+                builder.Append("  critical:");
+                builder.AppendLine($" '{Critical.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(High))
+            {
+                builder.Append("  high:");
+                builder.AppendLine($" '{High.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Medium))
+            {
+                builder.Append("  medium:");
+                builder.AppendLine($" '{Medium.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Low))
+            {
+                builder.Append("  low:");
+                builder.AppendLine($" '{Low.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Unknown))
+            {
+                builder.Append("  unknown:");
+                builder.AppendLine($" '{Unknown.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Undefined))
+            {
+                builder.Append("  undefined:");
+                builder.AppendLine($" '{Undefined.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<CveSummary>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CveSummary>)this).GetFormatFromOptions(options) : options.Format;
@@ -223,6 +280,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CveSummary)} does not support '{options.Format}' format.");
             }
@@ -239,6 +298,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCveSummary(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CveSummary)} does not support '{options.Format}' format.");
             }

@@ -7,13 +7,14 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     [PersistableModelProxy(typeof(UnknownBackupDatasourceParameters))]
-    public partial class BackupDataSourceSettings : IUtf8JsonSerializable, IJsonModel<BackupDataSourceSettings>
+    public partial class BackupDataSourceSettings : IUtf8JsonSerializable, IJsonModel<BackupDataSourceSettings>, IPersistableModel<BackupDataSourceSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupDataSourceSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -77,6 +78,32 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return UnknownBackupDatasourceParameters.DeserializeUnknownBackupDatasourceParameters(element);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ObjectType))
+            {
+                builder.Append("  objectType:");
+                builder.AppendLine($" '{ObjectType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BackupDataSourceSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackupDataSourceSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -85,6 +112,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BackupDataSourceSettings)} does not support '{options.Format}' format.");
             }
@@ -101,6 +130,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBackupDataSourceSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BackupDataSourceSettings)} does not support '{options.Format}' format.");
             }

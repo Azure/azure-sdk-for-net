@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupEngineExtendedInfo : IUtf8JsonSerializable, IJsonModel<BackupEngineExtendedInfo>
+    public partial class BackupEngineExtendedInfo : IUtf8JsonSerializable, IJsonModel<BackupEngineExtendedInfo>, IPersistableModel<BackupEngineExtendedInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupEngineExtendedInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -193,6 +194,74 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupEngineExtendedInfo(databaseName.Value, Optional.ToNullable(protectedItemsCount), Optional.ToNullable(protectedServersCount), Optional.ToNullable(diskCount), Optional.ToNullable(usedDiskSpace), Optional.ToNullable(availableDiskSpace), Optional.ToNullable(refreshedAt), Optional.ToNullable(azureProtectedInstances), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DatabaseName))
+            {
+                builder.Append("  databaseName:");
+                builder.AppendLine($" '{DatabaseName}'");
+            }
+
+            if (Optional.IsDefined(ProtectedItemsCount))
+            {
+                builder.Append("  protectedItemsCount:");
+                builder.AppendLine($" '{ProtectedItemsCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProtectedServersCount))
+            {
+                builder.Append("  protectedServersCount:");
+                builder.AppendLine($" '{ProtectedServersCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiskCount))
+            {
+                builder.Append("  diskCount:");
+                builder.AppendLine($" '{DiskCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UsedDiskSpace))
+            {
+                builder.Append("  usedDiskSpace:");
+                builder.AppendLine($" '{UsedDiskSpace.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AvailableDiskSpace))
+            {
+                builder.Append("  availableDiskSpace:");
+                builder.AppendLine($" '{AvailableDiskSpace.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RefreshedOn))
+            {
+                builder.Append("  refreshedAt:");
+                builder.AppendLine($" '{RefreshedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AzureProtectedInstances))
+            {
+                builder.Append("  azureProtectedInstances:");
+                builder.AppendLine($" '{AzureProtectedInstances.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BackupEngineExtendedInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackupEngineExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -201,6 +270,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BackupEngineExtendedInfo)} does not support '{options.Format}' format.");
             }
@@ -217,6 +288,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBackupEngineExtendedInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BackupEngineExtendedInfo)} does not support '{options.Format}' format.");
             }

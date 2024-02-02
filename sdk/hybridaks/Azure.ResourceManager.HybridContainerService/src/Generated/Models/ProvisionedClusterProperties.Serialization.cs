@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class ProvisionedClusterProperties : IUtf8JsonSerializable, IJsonModel<ProvisionedClusterProperties>
+    public partial class ProvisionedClusterProperties : IUtf8JsonSerializable, IJsonModel<ProvisionedClusterProperties>, IPersistableModel<ProvisionedClusterProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProvisionedClusterProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -263,6 +264,103 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new ProvisionedClusterProperties(linuxProfile.Value, controlPlane.Value, kubernetesVersion.Value, networkProfile.Value, storageProfile.Value, clusterVmAccessProfile.Value, Optional.ToList(agentPoolProfiles), cloudProviderProfile.Value, Optional.ToNullable(provisioningState), status.Value, licenseProfile.Value, autoScalerProfile.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(LinuxProfile))
+            {
+                builder.Append("  linuxProfile:");
+                AppendChildObject(builder, LinuxProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(ControlPlane))
+            {
+                builder.Append("  controlPlane:");
+                AppendChildObject(builder, ControlPlane, options, 2);
+            }
+
+            if (Optional.IsDefined(KubernetesVersion))
+            {
+                builder.Append("  kubernetesVersion:");
+                builder.AppendLine($" '{KubernetesVersion}'");
+            }
+
+            if (Optional.IsDefined(NetworkProfile))
+            {
+                builder.Append("  networkProfile:");
+                AppendChildObject(builder, NetworkProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(StorageProfile))
+            {
+                builder.Append("  storageProfile:");
+                AppendChildObject(builder, StorageProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(ClusterVmAccessProfile))
+            {
+                builder.Append("  clusterVMAccessProfile:");
+                AppendChildObject(builder, ClusterVmAccessProfile, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(AgentPoolProfiles))
+            {
+                builder.Append("  agentPoolProfiles:");
+                builder.AppendLine(" [");
+                foreach (var item in AgentPoolProfiles)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(CloudProviderProfile))
+            {
+                builder.Append("  cloudProviderProfile:");
+                AppendChildObject(builder, CloudProviderProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                AppendChildObject(builder, Status, options, 2);
+            }
+
+            if (Optional.IsDefined(LicenseProfile))
+            {
+                builder.Append("  licenseProfile:");
+                AppendChildObject(builder, LicenseProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(AutoScalerProfile))
+            {
+                builder.Append("  autoScalerProfile:");
+                AppendChildObject(builder, AutoScalerProfile, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ProvisionedClusterProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProvisionedClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -271,6 +369,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ProvisionedClusterProperties)} does not support '{options.Format}' format.");
             }
@@ -287,6 +387,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeProvisionedClusterProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ProvisionedClusterProperties)} does not support '{options.Format}' format.");
             }

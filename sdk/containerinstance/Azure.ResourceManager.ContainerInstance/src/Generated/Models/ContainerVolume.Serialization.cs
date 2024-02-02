@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerVolume : IUtf8JsonSerializable, IJsonModel<ContainerVolume>
+    public partial class ContainerVolume : IUtf8JsonSerializable, IJsonModel<ContainerVolume>, IPersistableModel<ContainerVolume>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerVolume>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -163,6 +164,67 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerVolume(name, azureFile.Value, emptyDir.Value, Optional.ToDictionary(secret), gitRepo.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(AzureFile))
+            {
+                builder.Append("  azureFile:");
+                AppendChildObject(builder, AzureFile, options, 2);
+            }
+
+            if (Optional.IsDefined(EmptyDir))
+            {
+                builder.Append("  emptyDir:");
+                builder.AppendLine($" '{EmptyDir.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Secret))
+            {
+                builder.Append("  secret:");
+                builder.AppendLine(" {");
+                foreach (var item in Secret)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(GitRepo))
+            {
+                builder.Append("  gitRepo:");
+                AppendChildObject(builder, GitRepo, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ContainerVolume>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerVolume>)this).GetFormatFromOptions(options) : options.Format;
@@ -171,6 +233,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerVolume)} does not support '{options.Format}' format.");
             }
@@ -187,6 +251,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerVolume(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerVolume)} does not support '{options.Format}' format.");
             }

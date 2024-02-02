@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmFabricSpecificDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmFabricSpecificDetails>
+    public partial class InMageRcmFabricSpecificDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmFabricSpecificDetails>, IPersistableModel<InMageRcmFabricSpecificDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmFabricSpecificDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -397,6 +398,168 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmFabricSpecificDetails(instanceType, serializedAdditionalRawData, vmwareSiteId.Value, physicalSiteId.Value, serviceEndpoint.Value, serviceResourceId.Value, serviceContainerId.Value, dataPlaneUri.Value, controlPlaneUri.Value, sourceAgentIdentityDetails.Value, Optional.ToList(processServers), Optional.ToList(rcmProxies), Optional.ToList(pushInstallers), Optional.ToList(replicationAgents), Optional.ToList(reprotectAgents), Optional.ToList(marsAgents), Optional.ToList(dras), Optional.ToList(agentDetails));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(VMwareSiteId))
+            {
+                builder.Append("  vmwareSiteId:");
+                builder.AppendLine($" '{VMwareSiteId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PhysicalSiteId))
+            {
+                builder.Append("  physicalSiteId:");
+                builder.AppendLine($" '{PhysicalSiteId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ServiceEndpoint))
+            {
+                builder.Append("  serviceEndpoint:");
+                builder.AppendLine($" '{ServiceEndpoint}'");
+            }
+
+            if (Optional.IsDefined(ServiceResourceId))
+            {
+                builder.Append("  serviceResourceId:");
+                builder.AppendLine($" '{ServiceResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ServiceContainerId))
+            {
+                builder.Append("  serviceContainerId:");
+                builder.AppendLine($" '{ServiceContainerId}'");
+            }
+
+            if (Optional.IsDefined(DataPlaneUri))
+            {
+                builder.Append("  dataPlaneUri:");
+                builder.AppendLine($" '{DataPlaneUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(ControlPlaneUri))
+            {
+                builder.Append("  controlPlaneUri:");
+                builder.AppendLine($" '{ControlPlaneUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(SourceAgentIdentityDetails))
+            {
+                builder.Append("  sourceAgentIdentityDetails:");
+                AppendChildObject(builder, SourceAgentIdentityDetails, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(ProcessServers))
+            {
+                builder.Append("  processServers:");
+                builder.AppendLine(" [");
+                foreach (var item in ProcessServers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(RcmProxies))
+            {
+                builder.Append("  rcmProxies:");
+                builder.AppendLine(" [");
+                foreach (var item in RcmProxies)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(PushInstallers))
+            {
+                builder.Append("  pushInstallers:");
+                builder.AppendLine(" [");
+                foreach (var item in PushInstallers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ReplicationAgents))
+            {
+                builder.Append("  replicationAgents:");
+                builder.AppendLine(" [");
+                foreach (var item in ReplicationAgents)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ReprotectAgents))
+            {
+                builder.Append("  reprotectAgents:");
+                builder.AppendLine(" [");
+                foreach (var item in ReprotectAgents)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(MarsAgents))
+            {
+                builder.Append("  marsAgents:");
+                builder.AppendLine(" [");
+                foreach (var item in MarsAgents)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Dras))
+            {
+                builder.Append("  dras:");
+                builder.AppendLine(" [");
+                foreach (var item in Dras)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(AgentDetails))
+            {
+                builder.Append("  agentDetails:");
+                builder.AppendLine(" [");
+                foreach (var item in AgentDetails)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(InstanceType))
+            {
+                builder.Append("  instanceType:");
+                builder.AppendLine($" '{InstanceType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<InMageRcmFabricSpecificDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFabricSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -405,6 +568,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmFabricSpecificDetails)} does not support '{options.Format}' format.");
             }
@@ -421,6 +586,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeInMageRcmFabricSpecificDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmFabricSpecificDetails)} does not support '{options.Format}' format.");
             }

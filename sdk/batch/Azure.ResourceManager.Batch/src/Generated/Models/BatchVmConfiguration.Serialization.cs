@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchVmConfiguration : IUtf8JsonSerializable, IJsonModel<BatchVmConfiguration>
+    public partial class BatchVmConfiguration : IUtf8JsonSerializable, IJsonModel<BatchVmConfiguration>, IPersistableModel<BatchVmConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchVmConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -260,6 +261,108 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchVmConfiguration(imageReference, nodeAgentSkuId, windowsConfiguration.Value, Optional.ToList(dataDisks), licenseType.Value, containerConfiguration.Value, diskEncryptionConfiguration.Value, nodePlacementConfiguration.Value, Optional.ToList(extensions), osDisk.Value, securityProfile.Value, serviceArtifactReference, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ImageReference))
+            {
+                builder.Append("  imageReference:");
+                AppendChildObject(builder, ImageReference, options, 2);
+            }
+
+            if (Optional.IsDefined(NodeAgentSkuId))
+            {
+                builder.Append("  nodeAgentSkuId:");
+                builder.AppendLine($" '{NodeAgentSkuId}'");
+            }
+
+            if (Optional.IsDefined(WindowsConfiguration))
+            {
+                builder.Append("  windowsConfiguration:");
+                AppendChildObject(builder, WindowsConfiguration, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(DataDisks))
+            {
+                builder.Append("  dataDisks:");
+                builder.AppendLine(" [");
+                foreach (var item in DataDisks)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(LicenseType))
+            {
+                builder.Append("  licenseType:");
+                builder.AppendLine($" '{LicenseType}'");
+            }
+
+            if (Optional.IsDefined(ContainerConfiguration))
+            {
+                builder.Append("  containerConfiguration:");
+                AppendChildObject(builder, ContainerConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(DiskEncryptionConfiguration))
+            {
+                builder.Append("  diskEncryptionConfiguration:");
+                AppendChildObject(builder, DiskEncryptionConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(NodePlacementConfiguration))
+            {
+                builder.Append("  nodePlacementConfiguration:");
+                AppendChildObject(builder, NodePlacementConfiguration, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Extensions))
+            {
+                builder.Append("  extensions:");
+                builder.AppendLine(" [");
+                foreach (var item in Extensions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(OSDisk))
+            {
+                builder.Append("  osDisk:");
+                AppendChildObject(builder, OSDisk, options, 2);
+            }
+
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                builder.Append("  securityProfile:");
+                AppendChildObject(builder, SecurityProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(ServiceArtifactReference))
+            {
+                builder.Append("  serviceArtifactReference:");
+                AppendChildObject(builder, ServiceArtifactReference, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BatchVmConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BatchVmConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -268,6 +371,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BatchVmConfiguration)} does not support '{options.Format}' format.");
             }
@@ -284,6 +389,8 @@ namespace Azure.ResourceManager.Batch.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBatchVmConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BatchVmConfiguration)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataLakeStore.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeStore
 {
-    public partial class DataLakeStoreAccountData : IUtf8JsonSerializable, IJsonModel<DataLakeStoreAccountData>
+    public partial class DataLakeStoreAccountData : IUtf8JsonSerializable, IJsonModel<DataLakeStoreAccountData>, IPersistableModel<DataLakeStoreAccountData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeStoreAccountData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -490,6 +491,202 @@ namespace Azure.ResourceManager.DataLakeStore
             return new DataLakeStoreAccountData(id, name, type, systemData.Value, identity, Optional.ToNullable(accountId), Optional.ToNullable(provisioningState), Optional.ToNullable(state), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), endpoint.Value, defaultGroup.Value, encryptionConfig.Value, Optional.ToNullable(encryptionState), Optional.ToNullable(encryptionProvisioningState), Optional.ToList(firewallRules), Optional.ToList(virtualNetworkRules), Optional.ToNullable(firewallState), Optional.ToNullable(firewallAllowAzureIPs), Optional.ToList(trustedIdProviders), Optional.ToNullable(trustedIdProviderState), Optional.ToNullable(newTier), Optional.ToNullable(currentTier), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2);
+            }
+
+            if (Optional.IsDefined(AccountId))
+            {
+                builder.Append("  accountId:");
+                builder.AppendLine($" '{AccountId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  creationTime:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("  lastModifiedTime:");
+                builder.AppendLine($" '{LastModifiedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Endpoint))
+            {
+                builder.Append("  endpoint:");
+                builder.AppendLine($" '{Endpoint}'");
+            }
+
+            if (Optional.IsDefined(DefaultGroup))
+            {
+                builder.Append("  defaultGroup:");
+                builder.AppendLine($" '{DefaultGroup}'");
+            }
+
+            if (Optional.IsDefined(EncryptionConfig))
+            {
+                builder.Append("  encryptionConfig:");
+                AppendChildObject(builder, EncryptionConfig, options, 2);
+            }
+
+            if (Optional.IsDefined(EncryptionState))
+            {
+                builder.Append("  encryptionState:");
+                builder.AppendLine($" '{EncryptionState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EncryptionProvisioningState))
+            {
+                builder.Append("  encryptionProvisioningState:");
+                builder.AppendLine($" '{EncryptionProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(FirewallRules))
+            {
+                builder.Append("  firewallRules:");
+                builder.AppendLine(" [");
+                foreach (var item in FirewallRules)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(VirtualNetworkRules))
+            {
+                builder.Append("  virtualNetworkRules:");
+                builder.AppendLine(" [");
+                foreach (var item in VirtualNetworkRules)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(FirewallState))
+            {
+                builder.Append("  firewallState:");
+                builder.AppendLine($" '{FirewallState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FirewallAllowAzureIPs))
+            {
+                builder.Append("  firewallAllowAzureIps:");
+                builder.AppendLine($" '{FirewallAllowAzureIPs.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(TrustedIdProviders))
+            {
+                builder.Append("  trustedIdProviders:");
+                builder.AppendLine(" [");
+                foreach (var item in TrustedIdProviders)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(TrustedIdProviderState))
+            {
+                builder.Append("  trustedIdProviderState:");
+                builder.AppendLine($" '{TrustedIdProviderState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NewTier))
+            {
+                builder.Append("  newTier:");
+                builder.AppendLine($" '{NewTier.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CurrentTier))
+            {
+                builder.Append("  currentTier:");
+                builder.AppendLine($" '{CurrentTier.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DataLakeStoreAccountData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreAccountData>)this).GetFormatFromOptions(options) : options.Format;
@@ -498,6 +695,8 @@ namespace Azure.ResourceManager.DataLakeStore
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataLakeStoreAccountData)} does not support '{options.Format}' format.");
             }
@@ -514,6 +713,8 @@ namespace Azure.ResourceManager.DataLakeStore
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataLakeStoreAccountData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataLakeStoreAccountData)} does not support '{options.Format}' format.");
             }

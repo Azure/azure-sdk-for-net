@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesBucket : IUtf8JsonSerializable, IJsonModel<KubernetesBucket>
+    public partial class KubernetesBucket : IUtf8JsonSerializable, IJsonModel<KubernetesBucket>, IPersistableModel<KubernetesBucket>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesBucket>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -210,6 +211,69 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             return new KubernetesBucket(url.Value, bucketName.Value, Optional.ToNullable(insecure), Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), accessKey.Value, localAuthRef.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Uri))
+            {
+                builder.Append("  url:");
+                builder.AppendLine($" '{Uri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(BucketName))
+            {
+                builder.Append("  bucketName:");
+                builder.AppendLine($" '{BucketName}'");
+            }
+
+            if (Optional.IsDefined(UseInsecureCommunication))
+            {
+                builder.Append("  insecure:");
+                var boolValue = UseInsecureCommunication.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(TimeoutInSeconds))
+            {
+                builder.Append("  timeoutInSeconds:");
+                builder.AppendLine($" '{TimeoutInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SyncIntervalInSeconds))
+            {
+                builder.Append("  syncIntervalInSeconds:");
+                builder.AppendLine($" '{SyncIntervalInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AccessKey))
+            {
+                builder.Append("  accessKey:");
+                builder.AppendLine($" '{AccessKey}'");
+            }
+
+            if (Optional.IsDefined(LocalAuthRef))
+            {
+                builder.Append("  localAuthRef:");
+                builder.AppendLine($" '{LocalAuthRef}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<KubernetesBucket>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesBucket>)this).GetFormatFromOptions(options) : options.Format;
@@ -218,6 +282,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KubernetesBucket)} does not support '{options.Format}' format.");
             }
@@ -234,6 +300,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeKubernetesBucket(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(KubernetesBucket)} does not support '{options.Format}' format.");
             }

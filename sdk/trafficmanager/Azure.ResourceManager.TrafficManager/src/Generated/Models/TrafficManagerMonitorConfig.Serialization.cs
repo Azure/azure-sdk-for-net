@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class TrafficManagerMonitorConfig : IUtf8JsonSerializable, IJsonModel<TrafficManagerMonitorConfig>
+    public partial class TrafficManagerMonitorConfig : IUtf8JsonSerializable, IJsonModel<TrafficManagerMonitorConfig>, IPersistableModel<TrafficManagerMonitorConfig>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerMonitorConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -228,6 +229,90 @@ namespace Azure.ResourceManager.TrafficManager.Models
             return new TrafficManagerMonitorConfig(Optional.ToNullable(profileMonitorStatus), Optional.ToNullable(protocol), Optional.ToNullable(port), path.Value, Optional.ToNullable(intervalInSeconds), Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(toleratedNumberOfFailures), Optional.ToList(customHeaders), Optional.ToList(expectedStatusCodeRanges), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProfileMonitorStatus))
+            {
+                builder.Append("  profileMonitorStatus:");
+                builder.AppendLine($" '{ProfileMonitorStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Protocol))
+            {
+                builder.Append("  protocol:");
+                builder.AppendLine($" '{Protocol.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Port))
+            {
+                builder.Append("  port:");
+                builder.AppendLine($" '{Port.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Path))
+            {
+                builder.Append("  path:");
+                builder.AppendLine($" '{Path}'");
+            }
+
+            if (Optional.IsDefined(IntervalInSeconds))
+            {
+                builder.Append("  intervalInSeconds:");
+                builder.AppendLine($" '{IntervalInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TimeoutInSeconds))
+            {
+                builder.Append("  timeoutInSeconds:");
+                builder.AppendLine($" '{TimeoutInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ToleratedNumberOfFailures))
+            {
+                builder.Append("  toleratedNumberOfFailures:");
+                builder.AppendLine($" '{ToleratedNumberOfFailures.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(CustomHeaders))
+            {
+                builder.Append("  customHeaders:");
+                builder.AppendLine(" [");
+                foreach (var item in CustomHeaders)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ExpectedStatusCodeRanges))
+            {
+                builder.Append("  expectedStatusCodeRanges:");
+                builder.AppendLine(" [");
+                foreach (var item in ExpectedStatusCodeRanges)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<TrafficManagerMonitorConfig>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerMonitorConfig>)this).GetFormatFromOptions(options) : options.Format;
@@ -236,6 +321,8 @@ namespace Azure.ResourceManager.TrafficManager.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TrafficManagerMonitorConfig)} does not support '{options.Format}' format.");
             }
@@ -252,6 +339,8 @@ namespace Azure.ResourceManager.TrafficManager.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeTrafficManagerMonitorConfig(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(TrafficManagerMonitorConfig)} does not support '{options.Format}' format.");
             }

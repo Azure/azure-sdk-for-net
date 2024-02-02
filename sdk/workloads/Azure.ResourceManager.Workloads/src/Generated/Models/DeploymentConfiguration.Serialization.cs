@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class DeploymentConfiguration : IUtf8JsonSerializable, IJsonModel<DeploymentConfiguration>
+    public partial class DeploymentConfiguration : IUtf8JsonSerializable, IJsonModel<DeploymentConfiguration>, IPersistableModel<DeploymentConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -130,6 +131,50 @@ namespace Azure.ResourceManager.Workloads.Models
             return new DeploymentConfiguration(configurationType, serializedAdditionalRawData, Optional.ToNullable(appLocation), infrastructureConfiguration.Value, softwareConfiguration.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AppLocation))
+            {
+                builder.Append("  appLocation:");
+                builder.AppendLine($" '{AppLocation.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InfrastructureConfiguration))
+            {
+                builder.Append("  infrastructureConfiguration:");
+                AppendChildObject(builder, InfrastructureConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(SoftwareConfiguration))
+            {
+                builder.Append("  softwareConfiguration:");
+                AppendChildObject(builder, SoftwareConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(ConfigurationType))
+            {
+                builder.Append("  configurationType:");
+                builder.AppendLine($" '{ConfigurationType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DeploymentConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeploymentConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -138,6 +183,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DeploymentConfiguration)} does not support '{options.Format}' format.");
             }
@@ -154,6 +201,8 @@ namespace Azure.ResourceManager.Workloads.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDeploymentConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DeploymentConfiguration)} does not support '{options.Format}' format.");
             }

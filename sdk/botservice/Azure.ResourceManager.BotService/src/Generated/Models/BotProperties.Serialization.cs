@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class BotProperties : IUtf8JsonSerializable, IJsonModel<BotProperties>
+    public partial class BotProperties : IUtf8JsonSerializable, IJsonModel<BotProperties>, IPersistableModel<BotProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -612,6 +613,297 @@ namespace Azure.ResourceManager.BotService.Models
             return new BotProperties(displayName, description.Value, iconUrl.Value, endpoint, endpointVersion.Value, Optional.ToDictionary(allSettings), Optional.ToDictionary(parameters), manifestUrl.Value, Optional.ToNullable(msaAppType), msaAppId, msaAppTenantId.Value, msaAppMSIResourceId.Value, Optional.ToList(configuredChannels), Optional.ToList(enabledChannels), developerAppInsightKey.Value, developerAppInsightsApiKey.Value, developerAppInsightsApplicationId.Value, Optional.ToList(luisAppIds), luisKey.Value, Optional.ToNullable(isCmekEnabled), cmekKeyVaultUrl.Value, cmekEncryptionStatus.Value, Optional.ToNullable(tenantId), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(isStreamingSupported), Optional.ToNullable(isDeveloperAppInsightsApiKeySet), migrationToken.Value, Optional.ToNullable(disableLocalAuth), schemaTransformationVersion.Value, storageResourceId.Value, Optional.ToList(privateEndpointConnections), openWithHint.Value, appPasswordHint.Value, provisioningState.Value, publishingCredentials.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(IconUri))
+            {
+                builder.Append("  iconUrl:");
+                builder.AppendLine($" '{IconUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(Endpoint))
+            {
+                builder.Append("  endpoint:");
+                builder.AppendLine($" '{Endpoint.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(EndpointVersion))
+            {
+                builder.Append("  endpointVersion:");
+                builder.AppendLine($" '{EndpointVersion}'");
+            }
+
+            if (Optional.IsCollectionDefined(AllSettings))
+            {
+                builder.Append("  allSettings:");
+                builder.AppendLine(" {");
+                foreach (var item in AllSettings)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsCollectionDefined(Parameters))
+            {
+                builder.Append("  parameters:");
+                builder.AppendLine(" {");
+                foreach (var item in Parameters)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(ManifestUri))
+            {
+                builder.Append("  manifestUrl:");
+                builder.AppendLine($" '{ManifestUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(MsaAppType))
+            {
+                builder.Append("  msaAppType:");
+                builder.AppendLine($" '{MsaAppType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MsaAppId))
+            {
+                builder.Append("  msaAppId:");
+                builder.AppendLine($" '{MsaAppId}'");
+            }
+
+            if (Optional.IsDefined(MsaAppTenantId))
+            {
+                builder.Append("  msaAppTenantId:");
+                builder.AppendLine($" '{MsaAppTenantId}'");
+            }
+
+            if (Optional.IsDefined(MsaAppMSIResourceId))
+            {
+                builder.Append("  msaAppMSIResourceId:");
+                builder.AppendLine($" '{MsaAppMSIResourceId.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ConfiguredChannels))
+            {
+                builder.Append("  configuredChannels:");
+                builder.AppendLine(" [");
+                foreach (var item in ConfiguredChannels)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(EnabledChannels))
+            {
+                builder.Append("  enabledChannels:");
+                builder.AppendLine(" [");
+                foreach (var item in EnabledChannels)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(DeveloperAppInsightKey))
+            {
+                builder.Append("  developerAppInsightKey:");
+                builder.AppendLine($" '{DeveloperAppInsightKey}'");
+            }
+
+            if (Optional.IsDefined(DeveloperAppInsightsApiKey))
+            {
+                builder.Append("  developerAppInsightsApiKey:");
+                builder.AppendLine($" '{DeveloperAppInsightsApiKey}'");
+            }
+
+            if (Optional.IsDefined(DeveloperAppInsightsApplicationId))
+            {
+                builder.Append("  developerAppInsightsApplicationId:");
+                builder.AppendLine($" '{DeveloperAppInsightsApplicationId}'");
+            }
+
+            if (Optional.IsCollectionDefined(LuisAppIds))
+            {
+                builder.Append("  luisAppIds:");
+                builder.AppendLine(" [");
+                foreach (var item in LuisAppIds)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(LuisKey))
+            {
+                builder.Append("  luisKey:");
+                builder.AppendLine($" '{LuisKey}'");
+            }
+
+            if (Optional.IsDefined(IsCmekEnabled))
+            {
+                builder.Append("  isCmekEnabled:");
+                var boolValue = IsCmekEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CmekKeyVaultUri))
+            {
+                builder.Append("  cmekKeyVaultUrl:");
+                builder.AppendLine($" '{CmekKeyVaultUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(CmekEncryptionStatus))
+            {
+                builder.Append("  cmekEncryptionStatus:");
+                builder.AppendLine($" '{CmekEncryptionStatus}'");
+            }
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("  tenantId:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                builder.Append("  publicNetworkAccess:");
+                builder.AppendLine($" '{PublicNetworkAccess.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsStreamingSupported))
+            {
+                builder.Append("  isStreamingSupported:");
+                var boolValue = IsStreamingSupported.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsDeveloperAppInsightsApiKeySet))
+            {
+                builder.Append("  isDeveloperAppInsightsApiKeySet:");
+                var boolValue = IsDeveloperAppInsightsApiKeySet.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(MigrationToken))
+            {
+                builder.Append("  migrationToken:");
+                builder.AppendLine($" '{MigrationToken}'");
+            }
+
+            if (Optional.IsDefined(IsLocalAuthDisabled))
+            {
+                builder.Append("  disableLocalAuth:");
+                var boolValue = IsLocalAuthDisabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SchemaTransformationVersion))
+            {
+                builder.Append("  schemaTransformationVersion:");
+                builder.AppendLine($" '{SchemaTransformationVersion}'");
+            }
+
+            if (Optional.IsDefined(StorageResourceId))
+            {
+                builder.Append("  storageResourceId:");
+                builder.AppendLine($" '{StorageResourceId.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                builder.Append("  privateEndpointConnections:");
+                builder.AppendLine(" [");
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(OpenWithHint))
+            {
+                builder.Append("  openWithHint:");
+                builder.AppendLine($" '{OpenWithHint}'");
+            }
+
+            if (Optional.IsDefined(AppPasswordHint))
+            {
+                builder.Append("  appPasswordHint:");
+                builder.AppendLine($" '{AppPasswordHint}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(PublishingCredentials))
+            {
+                builder.Append("  publishingCredentials:");
+                builder.AppendLine($" '{PublishingCredentials}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BotProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BotProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -620,6 +912,8 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BotProperties)} does not support '{options.Format}' format.");
             }
@@ -636,6 +930,8 @@ namespace Azure.ResourceManager.BotService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBotProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BotProperties)} does not support '{options.Format}' format.");
             }

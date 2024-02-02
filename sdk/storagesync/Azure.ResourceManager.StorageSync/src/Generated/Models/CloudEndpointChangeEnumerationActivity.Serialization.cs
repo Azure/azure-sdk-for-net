@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class CloudEndpointChangeEnumerationActivity : IUtf8JsonSerializable, IJsonModel<CloudEndpointChangeEnumerationActivity>
+    public partial class CloudEndpointChangeEnumerationActivity : IUtf8JsonSerializable, IJsonModel<CloudEndpointChangeEnumerationActivity>, IPersistableModel<CloudEndpointChangeEnumerationActivity>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudEndpointChangeEnumerationActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -272,6 +273,104 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudEndpointChangeEnumerationActivity(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(operationState), Optional.ToNullable(statusCode), Optional.ToNullable(startedTimestamp), Optional.ToNullable(processedFilesCount), Optional.ToNullable(processedDirectoriesCount), Optional.ToNullable(totalFilesCount), Optional.ToNullable(totalDirectoriesCount), Optional.ToNullable(totalSizeBytes), Optional.ToNullable(progressPercent), Optional.ToNullable(minutesRemaining), Optional.ToNullable(totalCountsState), Optional.ToNullable(deletesProgressPercent), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(LastUpdatedOn))
+            {
+                builder.Append("  lastUpdatedTimestamp:");
+                builder.AppendLine($" '{LastUpdatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OperationState))
+            {
+                builder.Append("  operationState:");
+                builder.AppendLine($" '{OperationState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StatusCode))
+            {
+                builder.Append("  statusCode:");
+                builder.AppendLine($" '{StatusCode.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartedOn))
+            {
+                builder.Append("  startedTimestamp:");
+                builder.AppendLine($" '{StartedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProcessedFilesCount))
+            {
+                builder.Append("  processedFilesCount:");
+                builder.AppendLine($" '{ProcessedFilesCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProcessedDirectoriesCount))
+            {
+                builder.Append("  processedDirectoriesCount:");
+                builder.AppendLine($" '{ProcessedDirectoriesCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalFilesCount))
+            {
+                builder.Append("  totalFilesCount:");
+                builder.AppendLine($" '{TotalFilesCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalDirectoriesCount))
+            {
+                builder.Append("  totalDirectoriesCount:");
+                builder.AppendLine($" '{TotalDirectoriesCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalSizeInBytes))
+            {
+                builder.Append("  totalSizeBytes:");
+                builder.AppendLine($" '{TotalSizeInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProgressPercent))
+            {
+                builder.Append("  progressPercent:");
+                builder.AppendLine($" '{ProgressPercent.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MinutesRemaining))
+            {
+                builder.Append("  minutesRemaining:");
+                builder.AppendLine($" '{MinutesRemaining.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TotalCountsState))
+            {
+                builder.Append("  totalCountsState:");
+                builder.AppendLine($" '{TotalCountsState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DeletesProgressPercent))
+            {
+                builder.Append("  deletesProgressPercent:");
+                builder.AppendLine($" '{DeletesProgressPercent.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<CloudEndpointChangeEnumerationActivity>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CloudEndpointChangeEnumerationActivity>)this).GetFormatFromOptions(options) : options.Format;
@@ -280,6 +379,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationActivity)} does not support '{options.Format}' format.");
             }
@@ -296,6 +397,8 @@ namespace Azure.ResourceManager.StorageSync.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCloudEndpointChangeEnumerationActivity(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationActivity)} does not support '{options.Format}' format.");
             }

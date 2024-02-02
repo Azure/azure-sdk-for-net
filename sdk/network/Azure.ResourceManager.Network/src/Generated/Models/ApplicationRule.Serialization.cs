@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationRule : IUtf8JsonSerializable, IJsonModel<ApplicationRule>
+    public partial class ApplicationRule : IUtf8JsonSerializable, IJsonModel<ApplicationRule>, IPersistableModel<ApplicationRule>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -347,6 +348,185 @@ namespace Azure.ResourceManager.Network.Models
             return new ApplicationRule(name.Value, description.Value, ruleType, serializedAdditionalRawData, Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(protocols), Optional.ToList(targetFqdns), Optional.ToList(targetUrls), Optional.ToList(fqdnTags), Optional.ToList(sourceIPGroups), Optional.ToNullable(terminateTLS), Optional.ToList(webCategories), Optional.ToList(httpHeadersToInsert));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(SourceAddresses))
+            {
+                builder.Append("  sourceAddresses:");
+                builder.AppendLine(" [");
+                foreach (var item in SourceAddresses)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(DestinationAddresses))
+            {
+                builder.Append("  destinationAddresses:");
+                builder.AppendLine(" [");
+                foreach (var item in DestinationAddresses)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Protocols))
+            {
+                builder.Append("  protocols:");
+                builder.AppendLine(" [");
+                foreach (var item in Protocols)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(TargetFqdns))
+            {
+                builder.Append("  targetFqdns:");
+                builder.AppendLine(" [");
+                foreach (var item in TargetFqdns)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(TargetUrls))
+            {
+                builder.Append("  targetUrls:");
+                builder.AppendLine(" [");
+                foreach (var item in TargetUrls)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(FqdnTags))
+            {
+                builder.Append("  fqdnTags:");
+                builder.AppendLine(" [");
+                foreach (var item in FqdnTags)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(SourceIPGroups))
+            {
+                builder.Append("  sourceIpGroups:");
+                builder.AppendLine(" [");
+                foreach (var item in SourceIPGroups)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(TerminateTLS))
+            {
+                builder.Append("  terminateTLS:");
+                var boolValue = TerminateTLS.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(WebCategories))
+            {
+                builder.Append("  webCategories:");
+                builder.AppendLine(" [");
+                foreach (var item in WebCategories)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(HttpHeadersToInsert))
+            {
+                builder.Append("  httpHeadersToInsert:");
+                builder.AppendLine(" [");
+                foreach (var item in HttpHeadersToInsert)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(RuleType))
+            {
+                builder.Append("  ruleType:");
+                builder.AppendLine($" '{RuleType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ApplicationRule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationRule>)this).GetFormatFromOptions(options) : options.Format;
@@ -355,6 +535,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApplicationRule)} does not support '{options.Format}' format.");
             }
@@ -371,6 +553,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeApplicationRule(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ApplicationRule)} does not support '{options.Format}' format.");
             }

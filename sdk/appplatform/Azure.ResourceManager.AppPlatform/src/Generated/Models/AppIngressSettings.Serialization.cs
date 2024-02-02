@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppIngressSettings : IUtf8JsonSerializable, IJsonModel<AppIngressSettings>
+    public partial class AppIngressSettings : IUtf8JsonSerializable, IJsonModel<AppIngressSettings>, IPersistableModel<AppIngressSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppIngressSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -167,6 +168,62 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppIngressSettings(Optional.ToNullable(readTimeoutInSeconds), Optional.ToNullable(sendTimeoutInSeconds), Optional.ToNullable(sessionAffinity), Optional.ToNullable(sessionCookieMaxAge), Optional.ToNullable(backendProtocol), clientAuth.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ReadTimeoutInSeconds))
+            {
+                builder.Append("  readTimeoutInSeconds:");
+                builder.AppendLine($" '{ReadTimeoutInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SendTimeoutInSeconds))
+            {
+                builder.Append("  sendTimeoutInSeconds:");
+                builder.AppendLine($" '{SendTimeoutInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SessionAffinity))
+            {
+                builder.Append("  sessionAffinity:");
+                builder.AppendLine($" '{SessionAffinity.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SessionCookieMaxAge))
+            {
+                builder.Append("  sessionCookieMaxAge:");
+                builder.AppendLine($" '{SessionCookieMaxAge.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BackendProtocol))
+            {
+                builder.Append("  backendProtocol:");
+                builder.AppendLine($" '{BackendProtocol.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ClientAuth))
+            {
+                builder.Append("  clientAuth:");
+                AppendChildObject(builder, ClientAuth, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AppIngressSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppIngressSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -175,6 +232,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AppIngressSettings)} does not support '{options.Format}' format.");
             }
@@ -191,6 +250,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAppIngressSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AppIngressSettings)} does not support '{options.Format}' format.");
             }

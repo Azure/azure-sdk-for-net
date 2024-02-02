@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForServersAwsOffering : IUtf8JsonSerializable, IJsonModel<DefenderForServersAwsOffering>
+    public partial class DefenderForServersAwsOffering : IUtf8JsonSerializable, IJsonModel<DefenderForServersAwsOffering>, IPersistableModel<DefenderForServersAwsOffering>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForServersAwsOffering>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -186,6 +187,74 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new DefenderForServersAwsOffering(offeringType, description.Value, serializedAdditionalRawData, defenderForServers.Value, arcAutoProvisioning.Value, vaAutoProvisioning.Value, mdeAutoProvisioning.Value, subPlan.Value, vmScanners.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DefenderForServers))
+            {
+                builder.Append("  defenderForServers:");
+                AppendChildObject(builder, DefenderForServers, options, 2);
+            }
+
+            if (Optional.IsDefined(ArcAutoProvisioning))
+            {
+                builder.Append("  arcAutoProvisioning:");
+                AppendChildObject(builder, ArcAutoProvisioning, options, 2);
+            }
+
+            if (Optional.IsDefined(VaAutoProvisioning))
+            {
+                builder.Append("  vaAutoProvisioning:");
+                AppendChildObject(builder, VaAutoProvisioning, options, 2);
+            }
+
+            if (Optional.IsDefined(MdeAutoProvisioning))
+            {
+                builder.Append("  mdeAutoProvisioning:");
+                AppendChildObject(builder, MdeAutoProvisioning, options, 2);
+            }
+
+            if (Optional.IsDefined(SubPlan))
+            {
+                builder.Append("  subPlan:");
+                AppendChildObject(builder, SubPlan, options, 2);
+            }
+
+            if (Optional.IsDefined(VmScanners))
+            {
+                builder.Append("  vmScanners:");
+                AppendChildObject(builder, VmScanners, options, 2);
+            }
+
+            if (Optional.IsDefined(OfferingType))
+            {
+                builder.Append("  offeringType:");
+                builder.AppendLine($" '{OfferingType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DefenderForServersAwsOffering>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
@@ -194,6 +263,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DefenderForServersAwsOffering)} does not support '{options.Format}' format.");
             }
@@ -210,6 +281,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDefenderForServersAwsOffering(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DefenderForServersAwsOffering)} does not support '{options.Format}' format.");
             }

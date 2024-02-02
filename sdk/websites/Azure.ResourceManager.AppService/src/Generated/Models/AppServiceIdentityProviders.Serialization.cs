@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceIdentityProviders : IUtf8JsonSerializable, IJsonModel<AppServiceIdentityProviders>
+    public partial class AppServiceIdentityProviders : IUtf8JsonSerializable, IJsonModel<AppServiceIdentityProviders>, IPersistableModel<AppServiceIdentityProviders>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceIdentityProviders>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -223,6 +224,87 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceIdentityProviders(azureActiveDirectory.Value, facebook.Value, gitHub.Value, google.Value, legacyMicrosoftAccount.Value, twitter.Value, apple.Value, azureStaticWebApps.Value, Optional.ToDictionary(customOpenIdConnectProviders), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AzureActiveDirectory))
+            {
+                builder.Append("  azureActiveDirectory:");
+                AppendChildObject(builder, AzureActiveDirectory, options, 2);
+            }
+
+            if (Optional.IsDefined(Facebook))
+            {
+                builder.Append("  facebook:");
+                AppendChildObject(builder, Facebook, options, 2);
+            }
+
+            if (Optional.IsDefined(GitHub))
+            {
+                builder.Append("  gitHub:");
+                AppendChildObject(builder, GitHub, options, 2);
+            }
+
+            if (Optional.IsDefined(Google))
+            {
+                builder.Append("  google:");
+                AppendChildObject(builder, Google, options, 2);
+            }
+
+            if (Optional.IsDefined(LegacyMicrosoftAccount))
+            {
+                builder.Append("  legacyMicrosoftAccount:");
+                AppendChildObject(builder, LegacyMicrosoftAccount, options, 2);
+            }
+
+            if (Optional.IsDefined(Twitter))
+            {
+                builder.Append("  twitter:");
+                AppendChildObject(builder, Twitter, options, 2);
+            }
+
+            if (Optional.IsDefined(Apple))
+            {
+                builder.Append("  apple:");
+                AppendChildObject(builder, Apple, options, 2);
+            }
+
+            if (Optional.IsDefined(AzureStaticWebApps))
+            {
+                builder.Append("  azureStaticWebApps:");
+                AppendChildObject(builder, AzureStaticWebApps, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders))
+            {
+                builder.Append("  customOpenIdConnectProviders:");
+                builder.AppendLine(" {");
+                foreach (var item in CustomOpenIdConnectProviders)
+                {
+                    builder.Append($"    {item.Key}: ");
+
+                    AppendChildObject(builder, item.Value, options, 4);
+                }
+                builder.AppendLine("  }");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AppServiceIdentityProviders>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceIdentityProviders>)this).GetFormatFromOptions(options) : options.Format;
@@ -231,6 +313,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AppServiceIdentityProviders)} does not support '{options.Format}' format.");
             }
@@ -247,6 +331,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAppServiceIdentityProviders(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AppServiceIdentityProviders)} does not support '{options.Format}' format.");
             }

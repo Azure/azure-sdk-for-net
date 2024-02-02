@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteCircuitRoutesTableSummary : IUtf8JsonSerializable, IJsonModel<ExpressRouteCircuitRoutesTableSummary>
+    public partial class ExpressRouteCircuitRoutesTableSummary : IUtf8JsonSerializable, IJsonModel<ExpressRouteCircuitRoutesTableSummary>, IPersistableModel<ExpressRouteCircuitRoutesTableSummary>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteCircuitRoutesTableSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -140,6 +141,56 @@ namespace Azure.ResourceManager.Network.Models
             return new ExpressRouteCircuitRoutesTableSummary(neighbor.Value, Optional.ToNullable(v), Optional.ToNullable(@as), upDown.Value, statePfxRcd.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Neighbor))
+            {
+                builder.Append("  neighbor:");
+                builder.AppendLine($" '{Neighbor}'");
+            }
+
+            if (Optional.IsDefined(V))
+            {
+                builder.Append("  v:");
+                builder.AppendLine($" '{V.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(As))
+            {
+                builder.Append("  as:");
+                builder.AppendLine($" '{As.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UpDown))
+            {
+                builder.Append("  upDown:");
+                builder.AppendLine($" '{UpDown}'");
+            }
+
+            if (Optional.IsDefined(StatePfxRcd))
+            {
+                builder.Append("  statePfxRcd:");
+                builder.AppendLine($" '{StatePfxRcd}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ExpressRouteCircuitRoutesTableSummary>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitRoutesTableSummary>)this).GetFormatFromOptions(options) : options.Format;
@@ -148,6 +199,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ExpressRouteCircuitRoutesTableSummary)} does not support '{options.Format}' format.");
             }
@@ -164,6 +217,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeExpressRouteCircuitRoutesTableSummary(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ExpressRouteCircuitRoutesTableSummary)} does not support '{options.Format}' format.");
             }

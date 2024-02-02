@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class MobileNetworkInterfaceProperties : IUtf8JsonSerializable, IJsonModel<MobileNetworkInterfaceProperties>
+    public partial class MobileNetworkInterfaceProperties : IUtf8JsonSerializable, IJsonModel<MobileNetworkInterfaceProperties>, IPersistableModel<MobileNetworkInterfaceProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MobileNetworkInterfaceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -121,6 +122,50 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new MobileNetworkInterfaceProperties(name.Value, ipv4Address.Value, ipv4Subnet.Value, ipv4Gateway.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(IPv4Address))
+            {
+                builder.Append("  ipv4Address:");
+                builder.AppendLine($" '{IPv4Address}'");
+            }
+
+            if (Optional.IsDefined(IPv4Subnet))
+            {
+                builder.Append("  ipv4Subnet:");
+                builder.AppendLine($" '{IPv4Subnet}'");
+            }
+
+            if (Optional.IsDefined(IPv4Gateway))
+            {
+                builder.Append("  ipv4Gateway:");
+                builder.AppendLine($" '{IPv4Gateway}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MobileNetworkInterfaceProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkInterfaceProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -129,6 +174,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MobileNetworkInterfaceProperties)} does not support '{options.Format}' format.");
             }
@@ -145,6 +192,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMobileNetworkInterfaceProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MobileNetworkInterfaceProperties)} does not support '{options.Format}' format.");
             }

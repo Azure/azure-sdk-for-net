@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    public partial class ChatTranscriptMessageProperties : IUtf8JsonSerializable, IJsonModel<ChatTranscriptMessageProperties>
+    public partial class ChatTranscriptMessageProperties : IUtf8JsonSerializable, IJsonModel<ChatTranscriptMessageProperties>, IPersistableModel<ChatTranscriptMessageProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatTranscriptMessageProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -141,6 +142,56 @@ namespace Azure.ResourceManager.Support.Models
             return new ChatTranscriptMessageProperties(Optional.ToNullable(contentType), Optional.ToNullable(communicationDirection), sender.Value, body, Optional.ToNullable(createdDate), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ContentType))
+            {
+                builder.Append("  contentType:");
+                builder.AppendLine($" '{ContentType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CommunicationDirection))
+            {
+                builder.Append("  communicationDirection:");
+                builder.AppendLine($" '{CommunicationDirection.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Sender))
+            {
+                builder.Append("  sender:");
+                builder.AppendLine($" '{Sender}'");
+            }
+
+            if (Optional.IsDefined(Body))
+            {
+                builder.Append("  body:");
+                builder.AppendLine($" '{Body}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdDate:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ChatTranscriptMessageProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ChatTranscriptMessageProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -149,6 +200,8 @@ namespace Azure.ResourceManager.Support.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support '{options.Format}' format.");
             }
@@ -165,6 +218,8 @@ namespace Azure.ResourceManager.Support.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeChatTranscriptMessageProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support '{options.Format}' format.");
             }

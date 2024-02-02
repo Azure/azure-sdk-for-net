@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class LatencyMetric : IUtf8JsonSerializable, IJsonModel<LatencyMetric>
+    public partial class LatencyMetric : IUtf8JsonSerializable, IJsonModel<LatencyMetric>, IPersistableModel<LatencyMetric>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LatencyMetric>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -223,6 +224,86 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new LatencyMetric(name.Value, Optional.ToNullable(endDateTimeUtc), Optional.ToNullable(aValue), Optional.ToNullable(bValue), Optional.ToNullable(delta), Optional.ToNullable(deltaPercent), Optional.ToNullable(acLower95CI), Optional.ToNullable(ahUpper95CI), Optional.ToNullable(bcLower95CI), Optional.ToNullable(bUpper95CI), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(EndOn))
+            {
+                builder.Append("  endDateTimeUTC:");
+                builder.AppendLine($" '{EndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AValue))
+            {
+                builder.Append("  aValue:");
+                builder.AppendLine($" '{AValue.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BValue))
+            {
+                builder.Append("  bValue:");
+                builder.AppendLine($" '{BValue.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Delta))
+            {
+                builder.Append("  delta:");
+                builder.AppendLine($" '{Delta.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DeltaPercent))
+            {
+                builder.Append("  deltaPercent:");
+                builder.AppendLine($" '{DeltaPercent.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ACLower95CI))
+            {
+                builder.Append("  aCLower95CI:");
+                builder.AppendLine($" '{ACLower95CI.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AHUpper95CI))
+            {
+                builder.Append("  aHUpper95CI:");
+                builder.AppendLine($" '{AHUpper95CI.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BCLower95CI))
+            {
+                builder.Append("  bCLower95CI:");
+                builder.AppendLine($" '{BCLower95CI.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BUpper95CI))
+            {
+                builder.Append("  bUpper95CI:");
+                builder.AppendLine($" '{BUpper95CI.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<LatencyMetric>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LatencyMetric>)this).GetFormatFromOptions(options) : options.Format;
@@ -231,6 +312,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LatencyMetric)} does not support '{options.Format}' format.");
             }
@@ -247,6 +330,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeLatencyMetric(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(LatencyMetric)} does not support '{options.Format}' format.");
             }

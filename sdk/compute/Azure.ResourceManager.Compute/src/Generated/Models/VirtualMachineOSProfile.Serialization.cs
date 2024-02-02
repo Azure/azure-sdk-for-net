@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineOSProfile : IUtf8JsonSerializable, IJsonModel<VirtualMachineOSProfile>
+    public partial class VirtualMachineOSProfile : IUtf8JsonSerializable, IJsonModel<VirtualMachineOSProfile>, IPersistableModel<VirtualMachineOSProfile>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineOSProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -206,6 +207,87 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineOSProfile(computerName.Value, adminUsername.Value, adminPassword.Value, customData.Value, windowsConfiguration.Value, linuxConfiguration.Value, Optional.ToList(secrets), Optional.ToNullable(allowExtensionOperations), Optional.ToNullable(requireGuestProvisionSignal), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ComputerName))
+            {
+                builder.Append("  computerName:");
+                builder.AppendLine($" '{ComputerName}'");
+            }
+
+            if (Optional.IsDefined(AdminUsername))
+            {
+                builder.Append("  adminUsername:");
+                builder.AppendLine($" '{AdminUsername}'");
+            }
+
+            if (Optional.IsDefined(AdminPassword))
+            {
+                builder.Append("  adminPassword:");
+                builder.AppendLine($" '{AdminPassword}'");
+            }
+
+            if (Optional.IsDefined(CustomData))
+            {
+                builder.Append("  customData:");
+                builder.AppendLine($" '{CustomData}'");
+            }
+
+            if (Optional.IsDefined(WindowsConfiguration))
+            {
+                builder.Append("  windowsConfiguration:");
+                AppendChildObject(builder, WindowsConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(LinuxConfiguration))
+            {
+                builder.Append("  linuxConfiguration:");
+                AppendChildObject(builder, LinuxConfiguration, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Secrets))
+            {
+                builder.Append("  secrets:");
+                builder.AppendLine(" [");
+                foreach (var item in Secrets)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(AllowExtensionOperations))
+            {
+                builder.Append("  allowExtensionOperations:");
+                var boolValue = AllowExtensionOperations.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RequireGuestProvisionSignal))
+            {
+                builder.Append("  requireGuestProvisionSignal:");
+                var boolValue = RequireGuestProvisionSignal.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VirtualMachineOSProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineOSProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -214,6 +296,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineOSProfile)} does not support '{options.Format}' format.");
             }
@@ -230,6 +314,8 @@ namespace Azure.ResourceManager.Compute.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVirtualMachineOSProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineOSProfile)} does not support '{options.Format}' format.");
             }

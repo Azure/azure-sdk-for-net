@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class SiteConfigData : IUtf8JsonSerializable, IJsonModel<SiteConfigData>
+    public partial class SiteConfigData : IUtf8JsonSerializable, IJsonModel<SiteConfigData>, IPersistableModel<SiteConfigData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteConfigData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -1775,6 +1776,519 @@ namespace Azure.ResourceManager.AppService
             return new SiteConfigData(id, name, type, systemData.Value, Optional.ToNullable(numberOfWorkers), Optional.ToList(defaultDocuments), netFrameworkVersion.Value, phpVersion.Value, pythonVersion.Value, nodeVersion.Value, powerShellVersion.Value, linuxFxVersion.Value, windowsFxVersion.Value, Optional.ToNullable(requestTracingEnabled), Optional.ToNullable(requestTracingExpirationTime), Optional.ToNullable(remoteDebuggingEnabled), remoteDebuggingVersion.Value, Optional.ToNullable(httpLoggingEnabled), Optional.ToNullable(acrUseManagedIdentityCreds), acrUserManagedIdentityId.Value, Optional.ToNullable(logsDirectorySizeLimit), Optional.ToNullable(detailedErrorLoggingEnabled), publishingUsername.Value, Optional.ToList(appSettings), Optional.ToList(connectionStrings), machineKey.Value, Optional.ToList(handlerMappings), documentRoot.Value, Optional.ToNullable(scmType), Optional.ToNullable(use32BitWorkerProcess), Optional.ToNullable(webSocketsEnabled), Optional.ToNullable(alwaysOn), javaVersion.Value, javaContainer.Value, javaContainerVersion.Value, appCommandLine.Value, Optional.ToNullable(managedPipelineMode), Optional.ToList(virtualApplications), Optional.ToNullable(loadBalancing), experiments.Value, limits.Value, Optional.ToNullable(autoHealEnabled), autoHealRules.Value, tracingOptions.Value, vnetName.Value, Optional.ToNullable(vnetRouteAllEnabled), Optional.ToNullable(vnetPrivatePortsCount), cors.Value, push.Value, apiDefinition.Value, apiManagementConfig.Value, autoSwapSlotName.Value, Optional.ToNullable(localMySqlEnabled), Optional.ToNullable(managedServiceIdentityId), Optional.ToNullable(xManagedServiceIdentityId), keyVaultReferenceIdentity.Value, Optional.ToList(ipSecurityRestrictions), Optional.ToList(scmIPSecurityRestrictions), Optional.ToNullable(scmIPSecurityRestrictionsUseMain), Optional.ToNullable(http20Enabled), Optional.ToNullable(minTlsVersion), Optional.ToNullable(scmMinTlsVersion), Optional.ToNullable(ftpsState), Optional.ToNullable(preWarmedInstanceCount), Optional.ToNullable(functionAppScaleLimit), healthCheckPath.Value, Optional.ToNullable(functionsRuntimeScaleMonitoringEnabled), websiteTimeZone.Value, Optional.ToNullable(minimumElasticInstanceCount), Optional.ToDictionary(azureStorageAccounts), publicNetworkAccess.Value, kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(NumberOfWorkers))
+            {
+                builder.Append("  numberOfWorkers:");
+                builder.AppendLine($" '{NumberOfWorkers.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(DefaultDocuments))
+            {
+                builder.Append("  defaultDocuments:");
+                builder.AppendLine(" [");
+                foreach (var item in DefaultDocuments)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(NetFrameworkVersion))
+            {
+                builder.Append("  netFrameworkVersion:");
+                builder.AppendLine($" '{NetFrameworkVersion}'");
+            }
+
+            if (Optional.IsDefined(PhpVersion))
+            {
+                builder.Append("  phpVersion:");
+                builder.AppendLine($" '{PhpVersion}'");
+            }
+
+            if (Optional.IsDefined(PythonVersion))
+            {
+                builder.Append("  pythonVersion:");
+                builder.AppendLine($" '{PythonVersion}'");
+            }
+
+            if (Optional.IsDefined(NodeVersion))
+            {
+                builder.Append("  nodeVersion:");
+                builder.AppendLine($" '{NodeVersion}'");
+            }
+
+            if (Optional.IsDefined(PowerShellVersion))
+            {
+                builder.Append("  powerShellVersion:");
+                builder.AppendLine($" '{PowerShellVersion}'");
+            }
+
+            if (Optional.IsDefined(LinuxFxVersion))
+            {
+                builder.Append("  linuxFxVersion:");
+                builder.AppendLine($" '{LinuxFxVersion}'");
+            }
+
+            if (Optional.IsDefined(WindowsFxVersion))
+            {
+                builder.Append("  windowsFxVersion:");
+                builder.AppendLine($" '{WindowsFxVersion}'");
+            }
+
+            if (Optional.IsDefined(IsRequestTracingEnabled))
+            {
+                builder.Append("  requestTracingEnabled:");
+                var boolValue = IsRequestTracingEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RequestTracingExpirationOn))
+            {
+                builder.Append("  requestTracingExpirationTime:");
+                builder.AppendLine($" '{RequestTracingExpirationOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsRemoteDebuggingEnabled))
+            {
+                builder.Append("  remoteDebuggingEnabled:");
+                var boolValue = IsRemoteDebuggingEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RemoteDebuggingVersion))
+            {
+                builder.Append("  remoteDebuggingVersion:");
+                builder.AppendLine($" '{RemoteDebuggingVersion}'");
+            }
+
+            if (Optional.IsDefined(IsHttpLoggingEnabled))
+            {
+                builder.Append("  httpLoggingEnabled:");
+                var boolValue = IsHttpLoggingEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(UseManagedIdentityCreds))
+            {
+                builder.Append("  acrUseManagedIdentityCreds:");
+                var boolValue = UseManagedIdentityCreds.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AcrUserManagedIdentityId))
+            {
+                builder.Append("  acrUserManagedIdentityID:");
+                builder.AppendLine($" '{AcrUserManagedIdentityId}'");
+            }
+
+            if (Optional.IsDefined(LogsDirectorySizeLimit))
+            {
+                builder.Append("  logsDirectorySizeLimit:");
+                builder.AppendLine($" '{LogsDirectorySizeLimit.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsDetailedErrorLoggingEnabled))
+            {
+                builder.Append("  detailedErrorLoggingEnabled:");
+                var boolValue = IsDetailedErrorLoggingEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(PublishingUsername))
+            {
+                builder.Append("  publishingUsername:");
+                builder.AppendLine($" '{PublishingUsername}'");
+            }
+
+            if (Optional.IsCollectionDefined(AppSettings))
+            {
+                builder.Append("  appSettings:");
+                builder.AppendLine(" [");
+                foreach (var item in AppSettings)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ConnectionStrings))
+            {
+                builder.Append("  connectionStrings:");
+                builder.AppendLine(" [");
+                foreach (var item in ConnectionStrings)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(MachineKey))
+            {
+                builder.Append("  machineKey:");
+                AppendChildObject(builder, MachineKey, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(HandlerMappings))
+            {
+                builder.Append("  handlerMappings:");
+                builder.AppendLine(" [");
+                foreach (var item in HandlerMappings)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(DocumentRoot))
+            {
+                builder.Append("  documentRoot:");
+                builder.AppendLine($" '{DocumentRoot}'");
+            }
+
+            if (Optional.IsDefined(ScmType))
+            {
+                builder.Append("  scmType:");
+                builder.AppendLine($" '{ScmType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Use32BitWorkerProcess))
+            {
+                builder.Append("  use32BitWorkerProcess:");
+                var boolValue = Use32BitWorkerProcess.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsWebSocketsEnabled))
+            {
+                builder.Append("  webSocketsEnabled:");
+                var boolValue = IsWebSocketsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsAlwaysOn))
+            {
+                builder.Append("  alwaysOn:");
+                var boolValue = IsAlwaysOn.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(JavaVersion))
+            {
+                builder.Append("  javaVersion:");
+                builder.AppendLine($" '{JavaVersion}'");
+            }
+
+            if (Optional.IsDefined(JavaContainer))
+            {
+                builder.Append("  javaContainer:");
+                builder.AppendLine($" '{JavaContainer}'");
+            }
+
+            if (Optional.IsDefined(JavaContainerVersion))
+            {
+                builder.Append("  javaContainerVersion:");
+                builder.AppendLine($" '{JavaContainerVersion}'");
+            }
+
+            if (Optional.IsDefined(AppCommandLine))
+            {
+                builder.Append("  appCommandLine:");
+                builder.AppendLine($" '{AppCommandLine}'");
+            }
+
+            if (Optional.IsDefined(ManagedPipelineMode))
+            {
+                builder.Append("  managedPipelineMode:");
+                builder.AppendLine($" '{ManagedPipelineMode.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(VirtualApplications))
+            {
+                builder.Append("  virtualApplications:");
+                builder.AppendLine(" [");
+                foreach (var item in VirtualApplications)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(LoadBalancing))
+            {
+                builder.Append("  loadBalancing:");
+                builder.AppendLine($" '{LoadBalancing.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Experiments))
+            {
+                builder.Append("  experiments:");
+                AppendChildObject(builder, Experiments, options, 2);
+            }
+
+            if (Optional.IsDefined(Limits))
+            {
+                builder.Append("  limits:");
+                AppendChildObject(builder, Limits, options, 2);
+            }
+
+            if (Optional.IsDefined(IsAutoHealEnabled))
+            {
+                builder.Append("  autoHealEnabled:");
+                var boolValue = IsAutoHealEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AutoHealRules))
+            {
+                builder.Append("  autoHealRules:");
+                AppendChildObject(builder, AutoHealRules, options, 2);
+            }
+
+            if (Optional.IsDefined(TracingOptions))
+            {
+                builder.Append("  tracingOptions:");
+                builder.AppendLine($" '{TracingOptions}'");
+            }
+
+            if (Optional.IsDefined(VnetName))
+            {
+                builder.Append("  vnetName:");
+                builder.AppendLine($" '{VnetName}'");
+            }
+
+            if (Optional.IsDefined(IsVnetRouteAllEnabled))
+            {
+                builder.Append("  vnetRouteAllEnabled:");
+                var boolValue = IsVnetRouteAllEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(VnetPrivatePortsCount))
+            {
+                builder.Append("  vnetPrivatePortsCount:");
+                builder.AppendLine($" '{VnetPrivatePortsCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Cors))
+            {
+                builder.Append("  cors:");
+                AppendChildObject(builder, Cors, options, 2);
+            }
+
+            if (Optional.IsDefined(Push))
+            {
+                builder.Append("  push:");
+                AppendChildObject(builder, Push, options, 2);
+            }
+
+            if (Optional.IsDefined(ApiDefinition))
+            {
+                builder.Append("  apiDefinition:");
+                AppendChildObject(builder, ApiDefinition, options, 2);
+            }
+
+            if (Optional.IsDefined(ApiManagementConfig))
+            {
+                builder.Append("  apiManagementConfig:");
+                AppendChildObject(builder, ApiManagementConfig, options, 2);
+            }
+
+            if (Optional.IsDefined(AutoSwapSlotName))
+            {
+                builder.Append("  autoSwapSlotName:");
+                builder.AppendLine($" '{AutoSwapSlotName}'");
+            }
+
+            if (Optional.IsDefined(IsLocalMySqlEnabled))
+            {
+                builder.Append("  localMySqlEnabled:");
+                var boolValue = IsLocalMySqlEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ManagedServiceIdentityId))
+            {
+                builder.Append("  managedServiceIdentityId:");
+                builder.AppendLine($" '{ManagedServiceIdentityId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(XManagedServiceIdentityId))
+            {
+                builder.Append("  xManagedServiceIdentityId:");
+                builder.AppendLine($" '{XManagedServiceIdentityId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(KeyVaultReferenceIdentity))
+            {
+                builder.Append("  keyVaultReferenceIdentity:");
+                builder.AppendLine($" '{KeyVaultReferenceIdentity}'");
+            }
+
+            if (Optional.IsCollectionDefined(IPSecurityRestrictions))
+            {
+                builder.Append("  ipSecurityRestrictions:");
+                builder.AppendLine(" [");
+                foreach (var item in IPSecurityRestrictions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ScmIPSecurityRestrictions))
+            {
+                builder.Append("  scmIpSecurityRestrictions:");
+                builder.AppendLine(" [");
+                foreach (var item in ScmIPSecurityRestrictions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(AllowIPSecurityRestrictionsForScmToUseMain))
+            {
+                builder.Append("  scmIpSecurityRestrictionsUseMain:");
+                var boolValue = AllowIPSecurityRestrictionsForScmToUseMain.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsHttp20Enabled))
+            {
+                builder.Append("  http20Enabled:");
+                var boolValue = IsHttp20Enabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(MinTlsVersion))
+            {
+                builder.Append("  minTlsVersion:");
+                builder.AppendLine($" '{MinTlsVersion.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ScmMinTlsVersion))
+            {
+                builder.Append("  scmMinTlsVersion:");
+                builder.AppendLine($" '{ScmMinTlsVersion.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FtpsState))
+            {
+                builder.Append("  ftpsState:");
+                builder.AppendLine($" '{FtpsState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PreWarmedInstanceCount))
+            {
+                builder.Append("  preWarmedInstanceCount:");
+                builder.AppendLine($" '{PreWarmedInstanceCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FunctionAppScaleLimit))
+            {
+                builder.Append("  functionAppScaleLimit:");
+                builder.AppendLine($" '{FunctionAppScaleLimit.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HealthCheckPath))
+            {
+                builder.Append("  healthCheckPath:");
+                builder.AppendLine($" '{HealthCheckPath}'");
+            }
+
+            if (Optional.IsDefined(IsFunctionsRuntimeScaleMonitoringEnabled))
+            {
+                builder.Append("  functionsRuntimeScaleMonitoringEnabled:");
+                var boolValue = IsFunctionsRuntimeScaleMonitoringEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(WebsiteTimeZone))
+            {
+                builder.Append("  websiteTimeZone:");
+                builder.AppendLine($" '{WebsiteTimeZone}'");
+            }
+
+            if (Optional.IsDefined(MinimumElasticInstanceCount))
+            {
+                builder.Append("  minimumElasticInstanceCount:");
+                builder.AppendLine($" '{MinimumElasticInstanceCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(AzureStorageAccounts))
+            {
+                builder.Append("  azureStorageAccounts:");
+                builder.AppendLine(" {");
+                foreach (var item in AzureStorageAccounts)
+                {
+                    builder.Append($"    {item.Key}: ");
+
+                    AppendChildObject(builder, item.Value, options, 4);
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                builder.Append("  publicNetworkAccess:");
+                builder.AppendLine($" '{PublicNetworkAccess}'");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SiteConfigData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteConfigData>)this).GetFormatFromOptions(options) : options.Format;
@@ -1783,6 +2297,8 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SiteConfigData)} does not support '{options.Format}' format.");
             }
@@ -1799,6 +2315,8 @@ namespace Azure.ResourceManager.AppService
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSiteConfigData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SiteConfigData)} does not support '{options.Format}' format.");
             }

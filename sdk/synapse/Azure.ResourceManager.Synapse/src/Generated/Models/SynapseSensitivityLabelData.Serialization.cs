@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseSensitivityLabelData : IUtf8JsonSerializable, IJsonModel<SynapseSensitivityLabelData>
+    public partial class SynapseSensitivityLabelData : IUtf8JsonSerializable, IJsonModel<SynapseSensitivityLabelData>, IPersistableModel<SynapseSensitivityLabelData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSensitivityLabelData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -268,6 +269,111 @@ namespace Azure.ResourceManager.Synapse
             return new SynapseSensitivityLabelData(id, name, type, systemData.Value, managedBy.Value, schemaName.Value, tableName.Value, columnName.Value, labelName.Value, Optional.ToNullable(labelId), informationType.Value, Optional.ToNullable(informationTypeId), Optional.ToNullable(isDisabled), Optional.ToNullable(rank), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ManagedBy))
+            {
+                builder.Append("  managedBy:");
+                builder.AppendLine($" '{ManagedBy}'");
+            }
+
+            if (Optional.IsDefined(SchemaName))
+            {
+                builder.Append("  schemaName:");
+                builder.AppendLine($" '{SchemaName}'");
+            }
+
+            if (Optional.IsDefined(TableName))
+            {
+                builder.Append("  tableName:");
+                builder.AppendLine($" '{TableName}'");
+            }
+
+            if (Optional.IsDefined(ColumnName))
+            {
+                builder.Append("  columnName:");
+                builder.AppendLine($" '{ColumnName}'");
+            }
+
+            if (Optional.IsDefined(LabelName))
+            {
+                builder.Append("  labelName:");
+                builder.AppendLine($" '{LabelName}'");
+            }
+
+            if (Optional.IsDefined(LabelId))
+            {
+                builder.Append("  labelId:");
+                builder.AppendLine($" '{LabelId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InformationType))
+            {
+                builder.Append("  informationType:");
+                builder.AppendLine($" '{InformationType}'");
+            }
+
+            if (Optional.IsDefined(InformationTypeId))
+            {
+                builder.Append("  informationTypeId:");
+                builder.AppendLine($" '{InformationTypeId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsDisabled))
+            {
+                builder.Append("  isDisabled:");
+                var boolValue = IsDisabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Rank))
+            {
+                builder.Append("  rank:");
+                builder.AppendLine($" '{Rank.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SynapseSensitivityLabelData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSensitivityLabelData>)this).GetFormatFromOptions(options) : options.Format;
@@ -276,6 +382,8 @@ namespace Azure.ResourceManager.Synapse
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SynapseSensitivityLabelData)} does not support '{options.Format}' format.");
             }
@@ -292,6 +400,8 @@ namespace Azure.ResourceManager.Synapse
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSynapseSensitivityLabelData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SynapseSensitivityLabelData)} does not support '{options.Format}' format.");
             }

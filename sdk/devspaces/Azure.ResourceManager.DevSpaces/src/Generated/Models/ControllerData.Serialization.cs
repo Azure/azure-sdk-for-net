@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DevSpaces.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevSpaces
 {
-    public partial class ControllerData : IUtf8JsonSerializable, IJsonModel<ControllerData>
+    public partial class ControllerData : IUtf8JsonSerializable, IJsonModel<ControllerData>, IPersistableModel<ControllerData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ControllerData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -248,6 +249,115 @@ namespace Azure.ResourceManager.DevSpaces
             return new ControllerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(provisioningState), hostSuffix.Value, dataPlaneFqdn.Value, targetContainerHostApiServerFqdn.Value, targetContainerHostResourceId, targetContainerHostCredentialsBase64, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HostSuffix))
+            {
+                builder.Append("  hostSuffix:");
+                builder.AppendLine($" '{HostSuffix}'");
+            }
+
+            if (Optional.IsDefined(DataPlaneFqdn))
+            {
+                builder.Append("  dataPlaneFqdn:");
+                builder.AppendLine($" '{DataPlaneFqdn}'");
+            }
+
+            if (Optional.IsDefined(TargetContainerHostApiServerFqdn))
+            {
+                builder.Append("  targetContainerHostApiServerFqdn:");
+                builder.AppendLine($" '{TargetContainerHostApiServerFqdn}'");
+            }
+
+            if (Optional.IsDefined(TargetContainerHostResourceId))
+            {
+                builder.Append("  targetContainerHostResourceId:");
+                builder.AppendLine($" '{TargetContainerHostResourceId}'");
+            }
+
+            if (Optional.IsDefined(TargetContainerHostCredentialsBase64))
+            {
+                builder.Append("  targetContainerHostCredentialsBase64:");
+                builder.AppendLine($" '{TargetContainerHostCredentialsBase64}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ControllerData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ControllerData>)this).GetFormatFromOptions(options) : options.Format;
@@ -256,6 +366,8 @@ namespace Azure.ResourceManager.DevSpaces
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ControllerData)} does not support '{options.Format}' format.");
             }
@@ -272,6 +384,8 @@ namespace Azure.ResourceManager.DevSpaces
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeControllerData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ControllerData)} does not support '{options.Format}' format.");
             }

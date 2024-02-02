@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class ImageModelDistributionSettingsClassification : IUtf8JsonSerializable, IJsonModel<ImageModelDistributionSettingsClassification>
+    public partial class ImageModelDistributionSettingsClassification : IUtf8JsonSerializable, IJsonModel<ImageModelDistributionSettingsClassification>, IPersistableModel<ImageModelDistributionSettingsClassification>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageModelDistributionSettingsClassification>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -813,6 +814,218 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new ImageModelDistributionSettingsClassification(amsGradient.Value, augmentations.Value, beta1.Value, beta2.Value, distributed.Value, earlyStopping.Value, earlyStoppingDelay.Value, earlyStoppingPatience.Value, enableOnnxNormalization.Value, evaluationFrequency.Value, gradientAccumulationStep.Value, layersToFreeze.Value, learningRate.Value, learningRateScheduler.Value, modelName.Value, momentum.Value, nesterov.Value, numberOfEpochs.Value, numberOfWorkers.Value, optimizer.Value, randomSeed.Value, stepLRGamma.Value, stepLRStepSize.Value, trainingBatchSize.Value, validationBatchSize.Value, warmupCosineLRCycles.Value, warmupCosineLRWarmupEpochs.Value, weightDecay.Value, serializedAdditionalRawData, trainingCropSize.Value, validationCropSize.Value, validationResizeSize.Value, weightedLoss.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TrainingCropSize))
+            {
+                builder.Append("  trainingCropSize:");
+                builder.AppendLine($" '{TrainingCropSize}'");
+            }
+
+            if (Optional.IsDefined(ValidationCropSize))
+            {
+                builder.Append("  validationCropSize:");
+                builder.AppendLine($" '{ValidationCropSize}'");
+            }
+
+            if (Optional.IsDefined(ValidationResizeSize))
+            {
+                builder.Append("  validationResizeSize:");
+                builder.AppendLine($" '{ValidationResizeSize}'");
+            }
+
+            if (Optional.IsDefined(WeightedLoss))
+            {
+                builder.Append("  weightedLoss:");
+                builder.AppendLine($" '{WeightedLoss}'");
+            }
+
+            if (Optional.IsDefined(AmsGradient))
+            {
+                builder.Append("  amsGradient:");
+                builder.AppendLine($" '{AmsGradient}'");
+            }
+
+            if (Optional.IsDefined(Augmentations))
+            {
+                builder.Append("  augmentations:");
+                builder.AppendLine($" '{Augmentations}'");
+            }
+
+            if (Optional.IsDefined(Beta1))
+            {
+                builder.Append("  beta1:");
+                builder.AppendLine($" '{Beta1}'");
+            }
+
+            if (Optional.IsDefined(Beta2))
+            {
+                builder.Append("  beta2:");
+                builder.AppendLine($" '{Beta2}'");
+            }
+
+            if (Optional.IsDefined(Distributed))
+            {
+                builder.Append("  distributed:");
+                builder.AppendLine($" '{Distributed}'");
+            }
+
+            if (Optional.IsDefined(EarlyStopping))
+            {
+                builder.Append("  earlyStopping:");
+                builder.AppendLine($" '{EarlyStopping}'");
+            }
+
+            if (Optional.IsDefined(EarlyStoppingDelay))
+            {
+                builder.Append("  earlyStoppingDelay:");
+                builder.AppendLine($" '{EarlyStoppingDelay}'");
+            }
+
+            if (Optional.IsDefined(EarlyStoppingPatience))
+            {
+                builder.Append("  earlyStoppingPatience:");
+                builder.AppendLine($" '{EarlyStoppingPatience}'");
+            }
+
+            if (Optional.IsDefined(EnableOnnxNormalization))
+            {
+                builder.Append("  enableOnnxNormalization:");
+                builder.AppendLine($" '{EnableOnnxNormalization}'");
+            }
+
+            if (Optional.IsDefined(EvaluationFrequency))
+            {
+                builder.Append("  evaluationFrequency:");
+                builder.AppendLine($" '{EvaluationFrequency}'");
+            }
+
+            if (Optional.IsDefined(GradientAccumulationStep))
+            {
+                builder.Append("  gradientAccumulationStep:");
+                builder.AppendLine($" '{GradientAccumulationStep}'");
+            }
+
+            if (Optional.IsDefined(LayersToFreeze))
+            {
+                builder.Append("  layersToFreeze:");
+                builder.AppendLine($" '{LayersToFreeze}'");
+            }
+
+            if (Optional.IsDefined(LearningRate))
+            {
+                builder.Append("  learningRate:");
+                builder.AppendLine($" '{LearningRate}'");
+            }
+
+            if (Optional.IsDefined(LearningRateScheduler))
+            {
+                builder.Append("  learningRateScheduler:");
+                builder.AppendLine($" '{LearningRateScheduler}'");
+            }
+
+            if (Optional.IsDefined(ModelName))
+            {
+                builder.Append("  modelName:");
+                builder.AppendLine($" '{ModelName}'");
+            }
+
+            if (Optional.IsDefined(Momentum))
+            {
+                builder.Append("  momentum:");
+                builder.AppendLine($" '{Momentum}'");
+            }
+
+            if (Optional.IsDefined(Nesterov))
+            {
+                builder.Append("  nesterov:");
+                builder.AppendLine($" '{Nesterov}'");
+            }
+
+            if (Optional.IsDefined(NumberOfEpochs))
+            {
+                builder.Append("  numberOfEpochs:");
+                builder.AppendLine($" '{NumberOfEpochs}'");
+            }
+
+            if (Optional.IsDefined(NumberOfWorkers))
+            {
+                builder.Append("  numberOfWorkers:");
+                builder.AppendLine($" '{NumberOfWorkers}'");
+            }
+
+            if (Optional.IsDefined(Optimizer))
+            {
+                builder.Append("  optimizer:");
+                builder.AppendLine($" '{Optimizer}'");
+            }
+
+            if (Optional.IsDefined(RandomSeed))
+            {
+                builder.Append("  randomSeed:");
+                builder.AppendLine($" '{RandomSeed}'");
+            }
+
+            if (Optional.IsDefined(StepLRGamma))
+            {
+                builder.Append("  stepLRGamma:");
+                builder.AppendLine($" '{StepLRGamma}'");
+            }
+
+            if (Optional.IsDefined(StepLRStepSize))
+            {
+                builder.Append("  stepLRStepSize:");
+                builder.AppendLine($" '{StepLRStepSize}'");
+            }
+
+            if (Optional.IsDefined(TrainingBatchSize))
+            {
+                builder.Append("  trainingBatchSize:");
+                builder.AppendLine($" '{TrainingBatchSize}'");
+            }
+
+            if (Optional.IsDefined(ValidationBatchSize))
+            {
+                builder.Append("  validationBatchSize:");
+                builder.AppendLine($" '{ValidationBatchSize}'");
+            }
+
+            if (Optional.IsDefined(WarmupCosineLRCycles))
+            {
+                builder.Append("  warmupCosineLRCycles:");
+                builder.AppendLine($" '{WarmupCosineLRCycles}'");
+            }
+
+            if (Optional.IsDefined(WarmupCosineLRWarmupEpochs))
+            {
+                builder.Append("  warmupCosineLRWarmupEpochs:");
+                builder.AppendLine($" '{WarmupCosineLRWarmupEpochs}'");
+            }
+
+            if (Optional.IsDefined(WeightDecay))
+            {
+                builder.Append("  weightDecay:");
+                builder.AppendLine($" '{WeightDecay}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ImageModelDistributionSettingsClassification>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ImageModelDistributionSettingsClassification>)this).GetFormatFromOptions(options) : options.Format;
@@ -821,6 +1034,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ImageModelDistributionSettingsClassification)} does not support '{options.Format}' format.");
             }
@@ -837,6 +1052,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeImageModelDistributionSettingsClassification(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ImageModelDistributionSettingsClassification)} does not support '{options.Format}' format.");
             }

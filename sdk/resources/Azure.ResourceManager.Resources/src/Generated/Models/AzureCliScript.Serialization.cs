@@ -8,13 +8,15 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using System.Xml;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class AzureCliScript : IUtf8JsonSerializable, IJsonModel<AzureCliScript>
+    public partial class AzureCliScript : IUtf8JsonSerializable, IJsonModel<AzureCliScript>, IPersistableModel<AzureCliScript>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureCliScript>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -436,6 +438,192 @@ namespace Azure.ResourceManager.Resources.Models
             return new AzureCliScript(id, name, type, systemData.Value, identity.Value, location, Optional.ToDictionary(tags), kind, serializedAdditionalRawData, containerSettings.Value, storageAccountSettings.Value, Optional.ToNullable(cleanupPreference), Optional.ToNullable(provisioningState), status.Value, outputs.Value, primaryScriptUri.Value, Optional.ToList(supportingScriptUris), scriptContent.Value, arguments.Value, Optional.ToList(environmentVariables), forceUpdateTag.Value, retentionInterval, Optional.ToNullable(timeout), azCliVersion);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ContainerSettings))
+            {
+                builder.Append("  containerSettings:");
+                AppendChildObject(builder, ContainerSettings, options, 2);
+            }
+
+            if (Optional.IsDefined(StorageAccountSettings))
+            {
+                builder.Append("  storageAccountSettings:");
+                AppendChildObject(builder, StorageAccountSettings, options, 2);
+            }
+
+            if (Optional.IsDefined(CleanupPreference))
+            {
+                builder.Append("  cleanupPreference:");
+                builder.AppendLine($" '{CleanupPreference.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                AppendChildObject(builder, Status, options, 2);
+            }
+
+            if (Optional.IsDefined(Outputs))
+            {
+                builder.Append("  outputs:");
+                builder.AppendLine($" '{Outputs.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrimaryScriptUri))
+            {
+                builder.Append("  primaryScriptUri:");
+                builder.AppendLine($" '{PrimaryScriptUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsCollectionDefined(SupportingScriptUris))
+            {
+                builder.Append("  supportingScriptUris:");
+                builder.AppendLine(" [");
+                foreach (var item in SupportingScriptUris)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item.AbsoluteUri}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ScriptContent))
+            {
+                builder.Append("  scriptContent:");
+                builder.AppendLine($" '{ScriptContent}'");
+            }
+
+            if (Optional.IsDefined(Arguments))
+            {
+                builder.Append("  arguments:");
+                builder.AppendLine($" '{Arguments}'");
+            }
+
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            {
+                builder.Append("  environmentVariables:");
+                builder.AppendLine(" [");
+                foreach (var item in EnvironmentVariables)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ForceUpdateTag))
+            {
+                builder.Append("  forceUpdateTag:");
+                builder.AppendLine($" '{ForceUpdateTag}'");
+            }
+
+            if (Optional.IsDefined(RetentionInterval))
+            {
+                builder.Append("  retentionInterval:");
+                var formattedTimeSpan = XmlConvert.ToString(RetentionInterval);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(Timeout))
+            {
+                builder.Append("  timeout:");
+                var formattedTimeSpan = XmlConvert.ToString(Timeout.Value);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(AzCliVersion))
+            {
+                builder.Append("  azCliVersion:");
+                builder.AppendLine($" '{AzCliVersion}'");
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2);
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AzureCliScript>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AzureCliScript>)this).GetFormatFromOptions(options) : options.Format;
@@ -444,6 +632,8 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AzureCliScript)} does not support '{options.Format}' format.");
             }
@@ -460,6 +650,8 @@ namespace Azure.ResourceManager.Resources.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAzureCliScript(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AzureCliScript)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.ResourceHealth.Models;
 
 namespace Azure.ResourceManager.ResourceHealth
 {
-    public partial class ResourceHealthEventData : IUtf8JsonSerializable, IJsonModel<ResourceHealthEventData>
+    public partial class ResourceHealthEventData : IUtf8JsonSerializable, IJsonModel<ResourceHealthEventData>, IPersistableModel<ResourceHealthEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceHealthEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -608,6 +609,261 @@ namespace Azure.ResourceManager.ResourceHealth
             return new ResourceHealthEventData(id, name, type, systemData.Value, Optional.ToNullable(eventType), Optional.ToNullable(eventSubType), Optional.ToNullable(eventSource), Optional.ToNullable(status), title.Value, summary.Value, header.Value, Optional.ToNullable(level), Optional.ToNullable(eventLevel), externalIncidentId.Value, reason.Value, article.Value, Optional.ToList(links), Optional.ToNullable(impactStartTime), Optional.ToNullable(impactMitigationTime), Optional.ToList(impact), recommendedActions.Value, Optional.ToList(faqs), Optional.ToNullable(isHIR), Optional.ToNullable(enableMicrosoftSupport), description.Value, Optional.ToNullable(platformInitiated), Optional.ToNullable(enableChatWithUs), Optional.ToNullable(priority), Optional.ToNullable(lastUpdateTime), hirStage.Value, additionalInformation.Value, Optional.ToNullable(duration), impactType.Value, maintenanceId.Value, maintenanceType.Value, argQuery.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(EventType))
+            {
+                builder.Append("  eventType:");
+                builder.AppendLine($" '{EventType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EventSubType))
+            {
+                builder.Append("  eventSubType:");
+                builder.AppendLine($" '{EventSubType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EventSource))
+            {
+                builder.Append("  eventSource:");
+                builder.AppendLine($" '{EventSource.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Title))
+            {
+                builder.Append("  title:");
+                builder.AppendLine($" '{Title}'");
+            }
+
+            if (Optional.IsDefined(Summary))
+            {
+                builder.Append("  summary:");
+                builder.AppendLine($" '{Summary}'");
+            }
+
+            if (Optional.IsDefined(Header))
+            {
+                builder.Append("  header:");
+                builder.AppendLine($" '{Header}'");
+            }
+
+            if (Optional.IsDefined(Level))
+            {
+                builder.Append("  level:");
+                builder.AppendLine($" '{Level.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EventLevel))
+            {
+                builder.Append("  eventLevel:");
+                builder.AppendLine($" '{EventLevel.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExternalIncidentId))
+            {
+                builder.Append("  externalIncidentId:");
+                builder.AppendLine($" '{ExternalIncidentId}'");
+            }
+
+            if (Optional.IsDefined(Reason))
+            {
+                builder.Append("  reason:");
+                builder.AppendLine($" '{Reason}'");
+            }
+
+            if (Optional.IsDefined(Article))
+            {
+                builder.Append("  article:");
+                AppendChildObject(builder, Article, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Links))
+            {
+                builder.Append("  links:");
+                builder.AppendLine(" [");
+                foreach (var item in Links)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ImpactStartOn))
+            {
+                builder.Append("  impactStartTime:");
+                builder.AppendLine($" '{ImpactStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ImpactMitigationOn))
+            {
+                builder.Append("  impactMitigationTime:");
+                builder.AppendLine($" '{ImpactMitigationOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Impact))
+            {
+                builder.Append("  impact:");
+                builder.AppendLine(" [");
+                foreach (var item in Impact)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(RecommendedActions))
+            {
+                builder.Append("  recommendedActions:");
+                AppendChildObject(builder, RecommendedActions, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Faqs))
+            {
+                builder.Append("  faqs:");
+                builder.AppendLine(" [");
+                foreach (var item in Faqs)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsHirEvent))
+            {
+                builder.Append("  isHIR:");
+                var boolValue = IsHirEvent.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsMicrosoftSupportEnabled))
+            {
+                builder.Append("  enableMicrosoftSupport:");
+                var boolValue = IsMicrosoftSupportEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(IsPlatformInitiated))
+            {
+                builder.Append("  platformInitiated:");
+                var boolValue = IsPlatformInitiated.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsChatWithUsEnabled))
+            {
+                builder.Append("  enableChatWithUs:");
+                var boolValue = IsChatWithUsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Priority))
+            {
+                builder.Append("  priority:");
+                builder.AppendLine($" '{Priority.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastUpdateOn))
+            {
+                builder.Append("  lastUpdateTime:");
+                builder.AppendLine($" '{LastUpdateOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HirStage))
+            {
+                builder.Append("  hirStage:");
+                builder.AppendLine($" '{HirStage}'");
+            }
+
+            if (Optional.IsDefined(AdditionalInformation))
+            {
+                builder.Append("  additionalInformation:");
+                AppendChildObject(builder, AdditionalInformation, options, 2);
+            }
+
+            if (Optional.IsDefined(Duration))
+            {
+                builder.Append("  duration:");
+                builder.AppendLine($" '{Duration.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ImpactType))
+            {
+                builder.Append("  impactType:");
+                builder.AppendLine($" '{ImpactType}'");
+            }
+
+            if (Optional.IsDefined(MaintenanceId))
+            {
+                builder.Append("  maintenanceId:");
+                builder.AppendLine($" '{MaintenanceId}'");
+            }
+
+            if (Optional.IsDefined(MaintenanceType))
+            {
+                builder.Append("  maintenanceType:");
+                builder.AppendLine($" '{MaintenanceType}'");
+            }
+
+            if (Optional.IsDefined(ArgQuery))
+            {
+                builder.Append("  argQuery:");
+                builder.AppendLine($" '{ArgQuery}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ResourceHealthEventData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventData>)this).GetFormatFromOptions(options) : options.Format;
@@ -616,6 +872,8 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ResourceHealthEventData)} does not support '{options.Format}' format.");
             }
@@ -632,6 +890,8 @@ namespace Azure.ResourceManager.ResourceHealth
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeResourceHealthEventData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ResourceHealthEventData)} does not support '{options.Format}' format.");
             }

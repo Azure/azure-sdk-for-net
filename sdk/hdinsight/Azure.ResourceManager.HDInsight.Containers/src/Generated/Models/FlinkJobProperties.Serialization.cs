@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class FlinkJobProperties : IUtf8JsonSerializable, IJsonModel<FlinkJobProperties>
+    public partial class FlinkJobProperties : IUtf8JsonSerializable, IJsonModel<FlinkJobProperties>, IPersistableModel<FlinkJobProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FlinkJobProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -244,6 +245,121 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             return new FlinkJobProperties(jobType, serializedAdditionalRawData, jobName, jobJarDirectory.Value, jarName.Value, entryClass.Value, args.Value, savePointName.Value, Optional.ToNullable(action), Optional.ToDictionary(flinkConfiguration), jobId.Value, status.Value, jobOutput.Value, actionResult.Value, lastSavePoint.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(JobName))
+            {
+                builder.Append("  jobName:");
+                builder.AppendLine($" '{JobName}'");
+            }
+
+            if (Optional.IsDefined(JobJarDirectory))
+            {
+                builder.Append("  jobJarDirectory:");
+                builder.AppendLine($" '{JobJarDirectory}'");
+            }
+
+            if (Optional.IsDefined(JarName))
+            {
+                builder.Append("  jarName:");
+                builder.AppendLine($" '{JarName}'");
+            }
+
+            if (Optional.IsDefined(EntryClass))
+            {
+                builder.Append("  entryClass:");
+                builder.AppendLine($" '{EntryClass}'");
+            }
+
+            if (Optional.IsDefined(Args))
+            {
+                builder.Append("  args:");
+                builder.AppendLine($" '{Args}'");
+            }
+
+            if (Optional.IsDefined(SavePointName))
+            {
+                builder.Append("  savePointName:");
+                builder.AppendLine($" '{SavePointName}'");
+            }
+
+            if (Optional.IsDefined(Action))
+            {
+                builder.Append("  action:");
+                builder.AppendLine($" '{Action.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(FlinkConfiguration))
+            {
+                builder.Append("  flinkConfiguration:");
+                builder.AppendLine(" {");
+                foreach (var item in FlinkConfiguration)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(JobId))
+            {
+                builder.Append("  jobId:");
+                builder.AppendLine($" '{JobId}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status}'");
+            }
+
+            if (Optional.IsDefined(JobOutput))
+            {
+                builder.Append("  jobOutput:");
+                builder.AppendLine($" '{JobOutput}'");
+            }
+
+            if (Optional.IsDefined(ActionResult))
+            {
+                builder.Append("  actionResult:");
+                builder.AppendLine($" '{ActionResult}'");
+            }
+
+            if (Optional.IsDefined(LastSavePoint))
+            {
+                builder.Append("  lastSavePoint:");
+                builder.AppendLine($" '{LastSavePoint}'");
+            }
+
+            if (Optional.IsDefined(JobType))
+            {
+                builder.Append("  jobType:");
+                builder.AppendLine($" '{JobType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<FlinkJobProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FlinkJobProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -252,6 +368,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FlinkJobProperties)} does not support '{options.Format}' format.");
             }
@@ -268,6 +386,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFlinkJobProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FlinkJobProperties)} does not support '{options.Format}' format.");
             }

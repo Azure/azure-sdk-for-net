@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class SubscriptionMonitorMetric : IUtf8JsonSerializable, IJsonModel<SubscriptionMonitorMetric>
+    public partial class SubscriptionMonitorMetric : IUtf8JsonSerializable, IJsonModel<SubscriptionMonitorMetric>, IPersistableModel<SubscriptionMonitorMetric>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionMonitorMetric>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -160,6 +161,79 @@ namespace Azure.ResourceManager.Monitor.Models
             return new SubscriptionMonitorMetric(id, type, name, displayDescription.Value, errorCode.Value, errorMessage.Value, unit, timeseries, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id}'");
+            }
+
+            if (Optional.IsDefined(SubscriptionScopeMetricType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{SubscriptionScopeMetricType}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                AppendChildObject(builder, Name, options, 2);
+            }
+
+            if (Optional.IsDefined(DisplayDescription))
+            {
+                builder.Append("  displayDescription:");
+                builder.AppendLine($" '{DisplayDescription}'");
+            }
+
+            if (Optional.IsDefined(ErrorCode))
+            {
+                builder.Append("  errorCode:");
+                builder.AppendLine($" '{ErrorCode}'");
+            }
+
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                builder.Append("  errorMessage:");
+                builder.AppendLine($" '{ErrorMessage}'");
+            }
+
+            if (Optional.IsDefined(Unit))
+            {
+                builder.Append("  unit:");
+                builder.AppendLine($" '{Unit.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Timeseries))
+            {
+                builder.Append("  timeseries:");
+                builder.AppendLine(" [");
+                foreach (var item in Timeseries)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SubscriptionMonitorMetric>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionMonitorMetric>)this).GetFormatFromOptions(options) : options.Format;
@@ -168,6 +242,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SubscriptionMonitorMetric)} does not support '{options.Format}' format.");
             }
@@ -184,6 +260,8 @@ namespace Azure.ResourceManager.Monitor.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSubscriptionMonitorMetric(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SubscriptionMonitorMetric)} does not support '{options.Format}' format.");
             }

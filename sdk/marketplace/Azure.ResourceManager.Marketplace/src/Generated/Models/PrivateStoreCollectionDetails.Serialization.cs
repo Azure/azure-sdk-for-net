@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class PrivateStoreCollectionDetails : IUtf8JsonSerializable, IJsonModel<PrivateStoreCollectionDetails>
+    public partial class PrivateStoreCollectionDetails : IUtf8JsonSerializable, IJsonModel<PrivateStoreCollectionDetails>, IPersistableModel<PrivateStoreCollectionDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateStoreCollectionDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -103,6 +104,38 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new PrivateStoreCollectionDetails(collectionName.Value, Optional.ToNullable(collectionId), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CollectionName))
+            {
+                builder.Append("  collectionName:");
+                builder.AppendLine($" '{CollectionName}'");
+            }
+
+            if (Optional.IsDefined(CollectionId))
+            {
+                builder.Append("  collectionId:");
+                builder.AppendLine($" '{CollectionId.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PrivateStoreCollectionDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PrivateStoreCollectionDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -111,6 +144,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PrivateStoreCollectionDetails)} does not support '{options.Format}' format.");
             }
@@ -127,6 +162,8 @@ namespace Azure.ResourceManager.Marketplace.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePrivateStoreCollectionDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PrivateStoreCollectionDetails)} does not support '{options.Format}' format.");
             }

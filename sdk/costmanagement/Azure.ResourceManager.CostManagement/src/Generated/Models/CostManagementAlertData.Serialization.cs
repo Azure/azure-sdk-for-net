@@ -7,12 +7,13 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    public partial class CostManagementAlertData : IUtf8JsonSerializable, IJsonModel<CostManagementAlertData>
+    public partial class CostManagementAlertData : IUtf8JsonSerializable, IJsonModel<CostManagementAlertData>, IPersistableModel<CostManagementAlertData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CostManagementAlertData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -138,6 +139,122 @@ namespace Azure.ResourceManager.CostManagement
             return DeserializeCostManagementAlertData(document.RootElement, options);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Definition))
+            {
+                builder.Append("  definition:");
+                AppendChildObject(builder, Definition, options, 2);
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(Source))
+            {
+                builder.Append("  source:");
+                builder.AppendLine($" '{Source.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Details))
+            {
+                builder.Append("  details:");
+                AppendChildObject(builder, Details, options, 2);
+            }
+
+            if (Optional.IsDefined(CostEntityId))
+            {
+                builder.Append("  costEntityId:");
+                builder.AppendLine($" '{CostEntityId}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  creationTime:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CloseOn))
+            {
+                builder.Append("  closeTime:");
+                builder.AppendLine($" '{CloseOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ModifiedOn))
+            {
+                builder.Append("  modificationTime:");
+                builder.AppendLine($" '{ModifiedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StatusModificationUserName))
+            {
+                builder.Append("  statusModificationUserName:");
+                builder.AppendLine($" '{StatusModificationUserName}'");
+            }
+
+            if (Optional.IsDefined(StatusModifiedOn))
+            {
+                builder.Append("  statusModificationTime:");
+                builder.AppendLine($" '{StatusModifiedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  eTag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<CostManagementAlertData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CostManagementAlertData>)this).GetFormatFromOptions(options) : options.Format;
@@ -146,6 +263,8 @@ namespace Azure.ResourceManager.CostManagement
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CostManagementAlertData)} does not support '{options.Format}' format.");
             }
@@ -162,6 +281,8 @@ namespace Azure.ResourceManager.CostManagement
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCostManagementAlertData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CostManagementAlertData)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    public partial class SynapseSqlPoolData : IUtf8JsonSerializable, IJsonModel<SynapseSqlPoolData>
+    public partial class SynapseSqlPoolData : IUtf8JsonSerializable, IJsonModel<SynapseSqlPoolData>, IPersistableModel<SynapseSqlPoolData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSqlPoolData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -336,6 +337,145 @@ namespace Azure.ResourceManager.Synapse
             return new SynapseSqlPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, Optional.ToNullable(maxSizeBytes), collation.Value, sourceDatabaseId.Value, recoverableDatabaseId.Value, provisioningState.Value, status.Value, Optional.ToNullable(restorePointInTime), Optional.ToNullable(createMode), Optional.ToNullable(creationDate), Optional.ToNullable(storageAccountType), Optional.ToNullable(sourceDatabaseDeletionDate), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsDefined(MaxSizeBytes))
+            {
+                builder.Append("  maxSizeBytes:");
+                builder.AppendLine($" '{MaxSizeBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Collation))
+            {
+                builder.Append("  collation:");
+                builder.AppendLine($" '{Collation}'");
+            }
+
+            if (Optional.IsDefined(SourceDatabaseId))
+            {
+                builder.Append("  sourceDatabaseId:");
+                builder.AppendLine($" '{SourceDatabaseId}'");
+            }
+
+            if (Optional.IsDefined(RecoverableDatabaseId))
+            {
+                builder.Append("  recoverableDatabaseId:");
+                builder.AppendLine($" '{RecoverableDatabaseId}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status}'");
+            }
+
+            if (Optional.IsDefined(RestorePointInTime))
+            {
+                builder.Append("  restorePointInTime:");
+                builder.AppendLine($" '{RestorePointInTime.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreateMode))
+            {
+                builder.Append("  createMode:");
+                builder.AppendLine($" '{CreateMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  creationDate:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StorageAccountType))
+            {
+                builder.Append("  storageAccountType:");
+                builder.AppendLine($" '{StorageAccountType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceDatabaseDeletionOn))
+            {
+                builder.Append("  sourceDatabaseDeletionDate:");
+                builder.AppendLine($" '{SourceDatabaseDeletionOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SynapseSqlPoolData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSqlPoolData>)this).GetFormatFromOptions(options) : options.Format;
@@ -344,6 +484,8 @@ namespace Azure.ResourceManager.Synapse
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SynapseSqlPoolData)} does not support '{options.Format}' format.");
             }
@@ -360,6 +502,8 @@ namespace Azure.ResourceManager.Synapse
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSynapseSqlPoolData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SynapseSqlPoolData)} does not support '{options.Format}' format.");
             }

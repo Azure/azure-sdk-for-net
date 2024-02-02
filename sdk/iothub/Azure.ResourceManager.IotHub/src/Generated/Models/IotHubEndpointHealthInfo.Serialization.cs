@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubEndpointHealthInfo : IUtf8JsonSerializable, IJsonModel<IotHubEndpointHealthInfo>
+    public partial class IotHubEndpointHealthInfo : IUtf8JsonSerializable, IJsonModel<IotHubEndpointHealthInfo>, IPersistableModel<IotHubEndpointHealthInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubEndpointHealthInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -159,6 +160,62 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubEndpointHealthInfo(endpointId.Value, Optional.ToNullable(healthStatus), lastKnownError.Value, Optional.ToNullable(lastKnownErrorTime), Optional.ToNullable(lastSuccessfulSendAttemptTime), Optional.ToNullable(lastSendAttemptTime), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(EndpointId))
+            {
+                builder.Append("  endpointId:");
+                builder.AppendLine($" '{EndpointId}'");
+            }
+
+            if (Optional.IsDefined(HealthStatus))
+            {
+                builder.Append("  healthStatus:");
+                builder.AppendLine($" '{HealthStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastKnownError))
+            {
+                builder.Append("  lastKnownError:");
+                builder.AppendLine($" '{LastKnownError}'");
+            }
+
+            if (Optional.IsDefined(LastKnownErrorOn))
+            {
+                builder.Append("  lastKnownErrorTime:");
+                builder.AppendLine($" '{LastKnownErrorOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastSuccessfulSendAttemptOn))
+            {
+                builder.Append("  lastSuccessfulSendAttemptTime:");
+                builder.AppendLine($" '{LastSuccessfulSendAttemptOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastSendAttemptOn))
+            {
+                builder.Append("  lastSendAttemptTime:");
+                builder.AppendLine($" '{LastSendAttemptOn.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<IotHubEndpointHealthInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IotHubEndpointHealthInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -167,6 +224,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IotHubEndpointHealthInfo)} does not support '{options.Format}' format.");
             }
@@ -183,6 +242,8 @@ namespace Azure.ResourceManager.IotHub.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeIotHubEndpointHealthInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(IotHubEndpointHealthInfo)} does not support '{options.Format}' format.");
             }

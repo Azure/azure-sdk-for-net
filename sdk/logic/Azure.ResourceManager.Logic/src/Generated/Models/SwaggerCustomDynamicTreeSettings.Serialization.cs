@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class SwaggerCustomDynamicTreeSettings : IUtf8JsonSerializable, IJsonModel<SwaggerCustomDynamicTreeSettings>
+    public partial class SwaggerCustomDynamicTreeSettings : IUtf8JsonSerializable, IJsonModel<SwaggerCustomDynamicTreeSettings>, IPersistableModel<SwaggerCustomDynamicTreeSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SwaggerCustomDynamicTreeSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -107,6 +108,40 @@ namespace Azure.ResourceManager.Logic.Models
             return new SwaggerCustomDynamicTreeSettings(Optional.ToNullable(canSelectParentNodes), Optional.ToNullable(canSelectLeafNodes), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CanSelectParentNodes))
+            {
+                builder.Append("  CanSelectParentNodes:");
+                var boolValue = CanSelectParentNodes.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CanSelectLeafNodes))
+            {
+                builder.Append("  CanSelectLeafNodes:");
+                var boolValue = CanSelectLeafNodes.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SwaggerCustomDynamicTreeSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SwaggerCustomDynamicTreeSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -115,6 +150,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeSettings)} does not support '{options.Format}' format.");
             }
@@ -131,6 +168,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSwaggerCustomDynamicTreeSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeSettings)} does not support '{options.Format}' format.");
             }

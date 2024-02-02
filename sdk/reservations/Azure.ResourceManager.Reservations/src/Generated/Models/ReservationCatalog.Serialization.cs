@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationCatalog : IUtf8JsonSerializable, IJsonModel<ReservationCatalog>
+    public partial class ReservationCatalog : IUtf8JsonSerializable, IJsonModel<ReservationCatalog>, IPersistableModel<ReservationCatalog>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationCatalog>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -309,6 +310,133 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationCatalog(resourceType.Value, name.Value, Optional.ToDictionary(billingPlans), Optional.ToList(terms), Optional.ToList(locations), Optional.ToList(skuProperties), msrp.Value, Optional.ToList(restrictions), tier.Value, size.Value, Optional.ToList(capabilities), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AppliedResourceType))
+            {
+                builder.Append("  resourceType:");
+                builder.AppendLine($" '{AppliedResourceType}'");
+            }
+
+            if (Optional.IsDefined(SkuName))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{SkuName}'");
+            }
+
+            if (Optional.IsCollectionDefined(BillingPlans))
+            {
+                builder.Append("  billingPlans:");
+                builder.AppendLine(" {");
+                foreach (var item in BillingPlans)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine(" [");
+                    foreach (var item0 in item.Value)
+                    {
+                        builder.AppendLine($"    '{item0.ToString()}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsCollectionDefined(Terms))
+            {
+                builder.Append("  terms:");
+                builder.AppendLine(" [");
+                foreach (var item in Terms)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Locations))
+            {
+                builder.Append("  locations:");
+                builder.AppendLine(" [");
+                foreach (var item in Locations)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(SkuProperties))
+            {
+                builder.Append("  skuProperties:");
+                builder.AppendLine(" [");
+                foreach (var item in SkuProperties)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Msrp))
+            {
+                builder.Append("  msrp:");
+                AppendChildObject(builder, Msrp, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Restrictions))
+            {
+                builder.Append("  restrictions:");
+                builder.AppendLine(" [");
+                foreach (var item in Restrictions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Tier))
+            {
+                builder.Append("  tier:");
+                builder.AppendLine($" '{Tier}'");
+            }
+
+            if (Optional.IsDefined(Size))
+            {
+                builder.Append("  size:");
+                builder.AppendLine($" '{Size}'");
+            }
+
+            if (Optional.IsCollectionDefined(Capabilities))
+            {
+                builder.Append("  capabilities:");
+                builder.AppendLine(" [");
+                foreach (var item in Capabilities)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ReservationCatalog>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ReservationCatalog>)this).GetFormatFromOptions(options) : options.Format;
@@ -317,6 +445,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ReservationCatalog)} does not support '{options.Format}' format.");
             }
@@ -333,6 +463,8 @@ namespace Azure.ResourceManager.Reservations.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeReservationCatalog(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ReservationCatalog)} does not support '{options.Format}' format.");
             }

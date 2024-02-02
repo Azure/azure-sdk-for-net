@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
-    public partial class SignalRSkuCapacity : IUtf8JsonSerializable, IJsonModel<SignalRSkuCapacity>
+    public partial class SignalRSkuCapacity : IUtf8JsonSerializable, IJsonModel<SignalRSkuCapacity>, IPersistableModel<SignalRSkuCapacity>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRSkuCapacity>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -162,6 +163,61 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToList(allowedValues), Optional.ToNullable(scaleType), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Minimum))
+            {
+                builder.Append("  minimum:");
+                builder.AppendLine($" '{Minimum.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Maximum))
+            {
+                builder.Append("  maximum:");
+                builder.AppendLine($" '{Maximum.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Default))
+            {
+                builder.Append("  default:");
+                builder.AppendLine($" '{Default.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(AllowedValues))
+            {
+                builder.Append("  allowedValues:");
+                builder.AppendLine(" [");
+                foreach (var item in AllowedValues)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ScaleType))
+            {
+                builder.Append("  scaleType:");
+                builder.AppendLine($" '{ScaleType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SignalRSkuCapacity>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SignalRSkuCapacity>)this).GetFormatFromOptions(options) : options.Format;
@@ -170,6 +226,8 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SignalRSkuCapacity)} does not support '{options.Format}' format.");
             }
@@ -186,6 +244,8 @@ namespace Azure.ResourceManager.SignalR.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSignalRSkuCapacity(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SignalRSkuCapacity)} does not support '{options.Format}' format.");
             }

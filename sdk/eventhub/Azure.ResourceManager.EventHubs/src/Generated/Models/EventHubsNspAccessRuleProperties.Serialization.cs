@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    public partial class EventHubsNspAccessRuleProperties : IUtf8JsonSerializable, IJsonModel<EventHubsNspAccessRuleProperties>
+    public partial class EventHubsNspAccessRuleProperties : IUtf8JsonSerializable, IJsonModel<EventHubsNspAccessRuleProperties>, IPersistableModel<EventHubsNspAccessRuleProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsNspAccessRuleProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -193,6 +194,86 @@ namespace Azure.ResourceManager.EventHubs.Models
             return new EventHubsNspAccessRuleProperties(Optional.ToNullable(direction), Optional.ToList(addressPrefixes), Optional.ToList(subscriptions), Optional.ToList(networkSecurityPerimeters), Optional.ToList(fullyQualifiedDomainNames), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Direction))
+            {
+                builder.Append("  direction:");
+                builder.AppendLine($" '{Direction.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(AddressPrefixes))
+            {
+                builder.Append("  addressPrefixes:");
+                builder.AppendLine(" [");
+                foreach (var item in AddressPrefixes)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Subscriptions))
+            {
+                builder.Append("  subscriptions:");
+                builder.AppendLine(" [");
+                foreach (var item in Subscriptions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(NetworkSecurityPerimeters))
+            {
+                builder.Append("  networkSecurityPerimeters:");
+                builder.AppendLine(" [");
+                foreach (var item in NetworkSecurityPerimeters)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(FullyQualifiedDomainNames))
+            {
+                builder.Append("  fullyQualifiedDomainNames:");
+                builder.AppendLine(" [");
+                foreach (var item in FullyQualifiedDomainNames)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<EventHubsNspAccessRuleProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsNspAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -201,6 +282,8 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EventHubsNspAccessRuleProperties)} does not support '{options.Format}' format.");
             }
@@ -217,6 +300,8 @@ namespace Azure.ResourceManager.EventHubs.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEventHubsNspAccessRuleProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EventHubsNspAccessRuleProperties)} does not support '{options.Format}' format.");
             }

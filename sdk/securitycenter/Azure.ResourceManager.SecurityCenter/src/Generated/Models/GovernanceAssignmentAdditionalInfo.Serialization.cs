@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GovernanceAssignmentAdditionalInfo : IUtf8JsonSerializable, IJsonModel<GovernanceAssignmentAdditionalInfo>
+    public partial class GovernanceAssignmentAdditionalInfo : IUtf8JsonSerializable, IJsonModel<GovernanceAssignmentAdditionalInfo>, IPersistableModel<GovernanceAssignmentAdditionalInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GovernanceAssignmentAdditionalInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -114,6 +115,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new GovernanceAssignmentAdditionalInfo(Optional.ToNullable(ticketNumber), ticketLink.Value, ticketStatus.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TicketNumber))
+            {
+                builder.Append("  ticketNumber:");
+                builder.AppendLine($" '{TicketNumber.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TicketLink))
+            {
+                builder.Append("  ticketLink:");
+                builder.AppendLine($" '{TicketLink}'");
+            }
+
+            if (Optional.IsDefined(TicketStatus))
+            {
+                builder.Append("  ticketStatus:");
+                builder.AppendLine($" '{TicketStatus}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<GovernanceAssignmentAdditionalInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GovernanceAssignmentAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -122,6 +161,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GovernanceAssignmentAdditionalInfo)} does not support '{options.Format}' format.");
             }
@@ -138,6 +179,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeGovernanceAssignmentAdditionalInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(GovernanceAssignmentAdditionalInfo)} does not support '{options.Format}' format.");
             }

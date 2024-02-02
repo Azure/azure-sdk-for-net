@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class AmlFileSystemClientInfo : IUtf8JsonSerializable, IJsonModel<AmlFileSystemClientInfo>
+    public partial class AmlFileSystemClientInfo : IUtf8JsonSerializable, IJsonModel<AmlFileSystemClientInfo>, IPersistableModel<AmlFileSystemClientInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlFileSystemClientInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -125,6 +126,50 @@ namespace Azure.ResourceManager.StorageCache.Models
             return new AmlFileSystemClientInfo(mgsAddress.Value, mountCommand.Value, lustreVersion.Value, containerStorageInterface.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MgsAddress))
+            {
+                builder.Append("  mgsAddress:");
+                builder.AppendLine($" '{MgsAddress}'");
+            }
+
+            if (Optional.IsDefined(MountCommand))
+            {
+                builder.Append("  mountCommand:");
+                builder.AppendLine($" '{MountCommand}'");
+            }
+
+            if (Optional.IsDefined(LustreVersion))
+            {
+                builder.Append("  lustreVersion:");
+                builder.AppendLine($" '{LustreVersion}'");
+            }
+
+            if (Optional.IsDefined(ContainerStorageInterface))
+            {
+                builder.Append("  containerStorageInterface:");
+                AppendChildObject(builder, ContainerStorageInterface, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AmlFileSystemClientInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemClientInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -133,6 +178,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AmlFileSystemClientInfo)} does not support '{options.Format}' format.");
             }
@@ -149,6 +196,8 @@ namespace Azure.ResourceManager.StorageCache.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAmlFileSystemClientInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AmlFileSystemClientInfo)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterNodeTypeDescription : IUtf8JsonSerializable, IJsonModel<ClusterNodeTypeDescription>
+    public partial class ClusterNodeTypeDescription : IUtf8JsonSerializable, IJsonModel<ClusterNodeTypeDescription>, IPersistableModel<ClusterNodeTypeDescription>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterNodeTypeDescription>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -259,6 +260,129 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             return new ClusterNodeTypeDescription(name, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), clientConnectionEndpointPort, httpGatewayEndpointPort, Optional.ToNullable(durabilityLevel), applicationPorts.Value, ephemeralPorts.Value, isPrimary, vmInstanceCount, Optional.ToNullable(reverseProxyEndpointPort), Optional.ToNullable(isStateless), Optional.ToNullable(multipleAvailabilityZones), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsCollectionDefined(PlacementProperties))
+            {
+                builder.Append("  placementProperties:");
+                builder.AppendLine(" {");
+                foreach (var item in PlacementProperties)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsCollectionDefined(Capacities))
+            {
+                builder.Append("  capacities:");
+                builder.AppendLine(" {");
+                foreach (var item in Capacities)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(ClientConnectionEndpointPort))
+            {
+                builder.Append("  clientConnectionEndpointPort:");
+                builder.AppendLine($" '{ClientConnectionEndpointPort.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HttpGatewayEndpointPort))
+            {
+                builder.Append("  httpGatewayEndpointPort:");
+                builder.AppendLine($" '{HttpGatewayEndpointPort.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DurabilityLevel))
+            {
+                builder.Append("  durabilityLevel:");
+                builder.AppendLine($" '{DurabilityLevel.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ApplicationPorts))
+            {
+                builder.Append("  applicationPorts:");
+                AppendChildObject(builder, ApplicationPorts, options, 2);
+            }
+
+            if (Optional.IsDefined(EphemeralPorts))
+            {
+                builder.Append("  ephemeralPorts:");
+                AppendChildObject(builder, EphemeralPorts, options, 2);
+            }
+
+            if (Optional.IsDefined(IsPrimary))
+            {
+                builder.Append("  isPrimary:");
+                var boolValue = IsPrimary == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(VmInstanceCount))
+            {
+                builder.Append("  vmInstanceCount:");
+                builder.AppendLine($" '{VmInstanceCount.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReverseProxyEndpointPort))
+            {
+                builder.Append("  reverseProxyEndpointPort:");
+                builder.AppendLine($" '{ReverseProxyEndpointPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsStateless))
+            {
+                builder.Append("  isStateless:");
+                var boolValue = IsStateless.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsMultipleAvailabilityZonesSupported))
+            {
+                builder.Append("  multipleAvailabilityZones:");
+                var boolValue = IsMultipleAvailabilityZonesSupported.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ClusterNodeTypeDescription>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ClusterNodeTypeDescription>)this).GetFormatFromOptions(options) : options.Format;
@@ -267,6 +391,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ClusterNodeTypeDescription)} does not support '{options.Format}' format.");
             }
@@ -283,6 +409,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeClusterNodeTypeDescription(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ClusterNodeTypeDescription)} does not support '{options.Format}' format.");
             }

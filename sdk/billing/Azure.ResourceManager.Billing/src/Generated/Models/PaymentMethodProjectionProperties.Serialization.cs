@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class PaymentMethodProjectionProperties : IUtf8JsonSerializable, IJsonModel<PaymentMethodProjectionProperties>
+    public partial class PaymentMethodProjectionProperties : IUtf8JsonSerializable, IJsonModel<PaymentMethodProjectionProperties>, IPersistableModel<PaymentMethodProjectionProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PaymentMethodProjectionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -202,6 +203,85 @@ namespace Azure.ResourceManager.Billing.Models
             return new PaymentMethodProjectionProperties(id.Value, Optional.ToNullable(family), type.Value, accountHolderName.Value, expiration.Value, lastFourDigits.Value, displayName.Value, Optional.ToList(logos), Optional.ToNullable(status), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PaymentMethodId))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{PaymentMethodId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Family))
+            {
+                builder.Append("  family:");
+                builder.AppendLine($" '{Family.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PaymentMethodProjectionPropertiesType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{PaymentMethodProjectionPropertiesType}'");
+            }
+
+            if (Optional.IsDefined(AccountHolderName))
+            {
+                builder.Append("  accountHolderName:");
+                builder.AppendLine($" '{AccountHolderName}'");
+            }
+
+            if (Optional.IsDefined(Expiration))
+            {
+                builder.Append("  expiration:");
+                builder.AppendLine($" '{Expiration}'");
+            }
+
+            if (Optional.IsDefined(LastFourDigits))
+            {
+                builder.Append("  lastFourDigits:");
+                builder.AppendLine($" '{LastFourDigits}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsCollectionDefined(Logos))
+            {
+                builder.Append("  logos:");
+                builder.AppendLine(" [");
+                foreach (var item in Logos)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PaymentMethodProjectionProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PaymentMethodProjectionProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -210,6 +290,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support '{options.Format}' format.");
             }
@@ -226,6 +308,8 @@ namespace Azure.ResourceManager.Billing.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePaymentMethodProjectionProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support '{options.Format}' format.");
             }

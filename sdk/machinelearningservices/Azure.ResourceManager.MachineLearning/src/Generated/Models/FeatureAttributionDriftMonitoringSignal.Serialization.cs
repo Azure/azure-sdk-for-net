@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class FeatureAttributionDriftMonitoringSignal : IUtf8JsonSerializable, IJsonModel<FeatureAttributionDriftMonitoringSignal>
+    public partial class FeatureAttributionDriftMonitoringSignal : IUtf8JsonSerializable, IJsonModel<FeatureAttributionDriftMonitoringSignal>, IPersistableModel<FeatureAttributionDriftMonitoringSignal>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FeatureAttributionDriftMonitoringSignal>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -168,6 +169,78 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new FeatureAttributionDriftMonitoringSignal(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, serializedAdditionalRawData, metricThreshold, productionData, referenceData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MetricThreshold))
+            {
+                builder.Append("  metricThreshold:");
+                AppendChildObject(builder, MetricThreshold, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(ProductionData))
+            {
+                builder.Append("  productionData:");
+                builder.AppendLine(" [");
+                foreach (var item in ProductionData)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ReferenceData))
+            {
+                builder.Append("  referenceData:");
+                AppendChildObject(builder, ReferenceData, options, 2);
+            }
+
+            if (Optional.IsDefined(Mode))
+            {
+                builder.Append("  mode:");
+                builder.AppendLine($" '{Mode.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                builder.Append("  properties:");
+                builder.AppendLine(" {");
+                foreach (var item in Properties)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(SignalType))
+            {
+                builder.Append("  signalType:");
+                builder.AppendLine($" '{SignalType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<FeatureAttributionDriftMonitoringSignal>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FeatureAttributionDriftMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
@@ -176,6 +249,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FeatureAttributionDriftMonitoringSignal)} does not support '{options.Format}' format.");
             }
@@ -192,6 +267,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFeatureAttributionDriftMonitoringSignal(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FeatureAttributionDriftMonitoringSignal)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterServerCertificateCommonName : IUtf8JsonSerializable, IJsonModel<ClusterServerCertificateCommonName>
+    public partial class ClusterServerCertificateCommonName : IUtf8JsonSerializable, IJsonModel<ClusterServerCertificateCommonName>, IPersistableModel<ClusterServerCertificateCommonName>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterServerCertificateCommonName>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -100,6 +101,38 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             return new ClusterServerCertificateCommonName(certificateCommonName, certificateIssuerThumbprint, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CertificateCommonName))
+            {
+                builder.Append("  certificateCommonName:");
+                builder.AppendLine($" '{CertificateCommonName}'");
+            }
+
+            if (Optional.IsDefined(CertificateIssuerThumbprint))
+            {
+                builder.Append("  certificateIssuerThumbprint:");
+                builder.AppendLine($" '{CertificateIssuerThumbprint.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ClusterServerCertificateCommonName>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ClusterServerCertificateCommonName>)this).GetFormatFromOptions(options) : options.Format;
@@ -108,6 +141,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ClusterServerCertificateCommonName)} does not support '{options.Format}' format.");
             }
@@ -124,6 +159,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeClusterServerCertificateCommonName(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ClusterServerCertificateCommonName)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsAlertDetailsOverride : IUtf8JsonSerializable, IJsonModel<SecurityInsightsAlertDetailsOverride>
+    public partial class SecurityInsightsAlertDetailsOverride : IUtf8JsonSerializable, IJsonModel<SecurityInsightsAlertDetailsOverride>, IPersistableModel<SecurityInsightsAlertDetailsOverride>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsAlertDetailsOverride>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -121,6 +122,50 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new SecurityInsightsAlertDetailsOverride(alertDisplayNameFormat.Value, alertDescriptionFormat.Value, alertTacticsColumnName.Value, alertSeverityColumnName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AlertDisplayNameFormat))
+            {
+                builder.Append("  alertDisplayNameFormat:");
+                builder.AppendLine($" '{AlertDisplayNameFormat}'");
+            }
+
+            if (Optional.IsDefined(AlertDescriptionFormat))
+            {
+                builder.Append("  alertDescriptionFormat:");
+                builder.AppendLine($" '{AlertDescriptionFormat}'");
+            }
+
+            if (Optional.IsDefined(AlertTacticsColumnName))
+            {
+                builder.Append("  alertTacticsColumnName:");
+                builder.AppendLine($" '{AlertTacticsColumnName}'");
+            }
+
+            if (Optional.IsDefined(AlertSeverityColumnName))
+            {
+                builder.Append("  alertSeverityColumnName:");
+                builder.AppendLine($" '{AlertSeverityColumnName}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SecurityInsightsAlertDetailsOverride>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlertDetailsOverride>)this).GetFormatFromOptions(options) : options.Format;
@@ -129,6 +174,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsAlertDetailsOverride)} does not support '{options.Format}' format.");
             }
@@ -145,6 +192,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityInsightsAlertDetailsOverride(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityInsightsAlertDetailsOverride)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RecoveryPlanAutomationRunbookActionDetails : IUtf8JsonSerializable, IJsonModel<RecoveryPlanAutomationRunbookActionDetails>
+    public partial class RecoveryPlanAutomationRunbookActionDetails : IUtf8JsonSerializable, IJsonModel<RecoveryPlanAutomationRunbookActionDetails>, IPersistableModel<RecoveryPlanAutomationRunbookActionDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryPlanAutomationRunbookActionDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -119,6 +120,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new RecoveryPlanAutomationRunbookActionDetails(instanceType, serializedAdditionalRawData, runbookId.Value, timeout.Value, fabricLocation);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(RunbookId))
+            {
+                builder.Append("  runbookId:");
+                builder.AppendLine($" '{RunbookId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Timeout))
+            {
+                builder.Append("  timeout:");
+                builder.AppendLine($" '{Timeout}'");
+            }
+
+            if (Optional.IsDefined(FabricLocation))
+            {
+                builder.Append("  fabricLocation:");
+                builder.AppendLine($" '{FabricLocation.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InstanceType))
+            {
+                builder.Append("  instanceType:");
+                builder.AppendLine($" '{InstanceType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<RecoveryPlanAutomationRunbookActionDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanAutomationRunbookActionDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -127,6 +172,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RecoveryPlanAutomationRunbookActionDetails)} does not support '{options.Format}' format.");
             }
@@ -143,6 +190,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRecoveryPlanAutomationRunbookActionDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RecoveryPlanAutomationRunbookActionDetails)} does not support '{options.Format}' format.");
             }

@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecureScoreData : IUtf8JsonSerializable, IJsonModel<SecureScoreData>
+    public partial class SecureScoreData : IUtf8JsonSerializable, IJsonModel<SecureScoreData>, IPersistableModel<SecureScoreData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecureScoreData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -227,6 +228,80 @@ namespace Azure.ResourceManager.SecurityCenter
             return new SecureScoreData(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(weight), Optional.ToNullable(max), Optional.ToNullable(current), Optional.ToNullable(percentage), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(Weight))
+            {
+                builder.Append("  weight:");
+                builder.AppendLine($" '{Weight.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Max))
+            {
+                builder.Append("  max:");
+                builder.AppendLine($" '{Max.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Current))
+            {
+                builder.Append("  current:");
+                builder.AppendLine($" '{Current.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Percentage))
+            {
+                builder.Append("  percentage:");
+                builder.AppendLine($" '{Percentage.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SecureScoreData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecureScoreData>)this).GetFormatFromOptions(options) : options.Format;
@@ -235,6 +310,8 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecureScoreData)} does not support '{options.Format}' format.");
             }
@@ -251,6 +328,8 @@ namespace Azure.ResourceManager.SecurityCenter
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecureScoreData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecureScoreData)} does not support '{options.Format}' format.");
             }

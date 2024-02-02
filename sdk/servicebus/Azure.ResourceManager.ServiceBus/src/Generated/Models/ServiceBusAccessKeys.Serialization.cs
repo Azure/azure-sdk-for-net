@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class ServiceBusAccessKeys : IUtf8JsonSerializable, IJsonModel<ServiceBusAccessKeys>
+    public partial class ServiceBusAccessKeys : IUtf8JsonSerializable, IJsonModel<ServiceBusAccessKeys>, IPersistableModel<ServiceBusAccessKeys>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusAccessKeys>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -154,6 +155,68 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusAccessKeys(primaryConnectionString.Value, secondaryConnectionString.Value, aliasPrimaryConnectionString.Value, aliasSecondaryConnectionString.Value, primaryKey.Value, secondaryKey.Value, keyName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PrimaryConnectionString))
+            {
+                builder.Append("  primaryConnectionString:");
+                builder.AppendLine($" '{PrimaryConnectionString}'");
+            }
+
+            if (Optional.IsDefined(SecondaryConnectionString))
+            {
+                builder.Append("  secondaryConnectionString:");
+                builder.AppendLine($" '{SecondaryConnectionString}'");
+            }
+
+            if (Optional.IsDefined(AliasPrimaryConnectionString))
+            {
+                builder.Append("  aliasPrimaryConnectionString:");
+                builder.AppendLine($" '{AliasPrimaryConnectionString}'");
+            }
+
+            if (Optional.IsDefined(AliasSecondaryConnectionString))
+            {
+                builder.Append("  aliasSecondaryConnectionString:");
+                builder.AppendLine($" '{AliasSecondaryConnectionString}'");
+            }
+
+            if (Optional.IsDefined(PrimaryKey))
+            {
+                builder.Append("  primaryKey:");
+                builder.AppendLine($" '{PrimaryKey}'");
+            }
+
+            if (Optional.IsDefined(SecondaryKey))
+            {
+                builder.Append("  secondaryKey:");
+                builder.AppendLine($" '{SecondaryKey}'");
+            }
+
+            if (Optional.IsDefined(KeyName))
+            {
+                builder.Append("  keyName:");
+                builder.AppendLine($" '{KeyName}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ServiceBusAccessKeys>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
@@ -162,6 +225,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServiceBusAccessKeys)} does not support '{options.Format}' format.");
             }
@@ -178,6 +243,8 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeServiceBusAccessKeys(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ServiceBusAccessKeys)} does not support '{options.Format}' format.");
             }

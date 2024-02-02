@@ -9,13 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SecurityEvent : IUtf8JsonSerializable, IJsonModel<SecurityEvent>
+    public partial class SecurityEvent : IUtf8JsonSerializable, IJsonModel<SecurityEvent>, IPersistableModel<SecurityEvent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityEvent>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -257,6 +258,104 @@ namespace Azure.ResourceManager.Sql.Models
             return new SecurityEvent(id, name, type, systemData.Value, Optional.ToNullable(eventTime), Optional.ToNullable(securityEventType), subscription.Value, server.Value, database.Value, clientIP.Value, applicationName.Value, principalName.Value, securityEventSqlInjectionAdditionalProperties.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(EventOn))
+            {
+                builder.Append("  eventTime:");
+                builder.AppendLine($" '{EventOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SecurityEventType))
+            {
+                builder.Append("  securityEventType:");
+                builder.AppendLine($" '{SecurityEventType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Subscription))
+            {
+                builder.Append("  subscription:");
+                builder.AppendLine($" '{Subscription}'");
+            }
+
+            if (Optional.IsDefined(Server))
+            {
+                builder.Append("  server:");
+                builder.AppendLine($" '{Server}'");
+            }
+
+            if (Optional.IsDefined(Database))
+            {
+                builder.Append("  database:");
+                builder.AppendLine($" '{Database}'");
+            }
+
+            if (Optional.IsDefined(ClientIP))
+            {
+                builder.Append("  clientIp:");
+                builder.AppendLine($" '{ClientIP.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ApplicationName))
+            {
+                builder.Append("  applicationName:");
+                builder.AppendLine($" '{ApplicationName}'");
+            }
+
+            if (Optional.IsDefined(PrincipalName))
+            {
+                builder.Append("  principalName:");
+                builder.AppendLine($" '{PrincipalName}'");
+            }
+
+            if (Optional.IsDefined(SecurityEventSqlInjectionAdditionalProperties))
+            {
+                builder.Append("  securityEventSqlInjectionAdditionalProperties:");
+                AppendChildObject(builder, SecurityEventSqlInjectionAdditionalProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SecurityEvent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityEvent>)this).GetFormatFromOptions(options) : options.Format;
@@ -265,6 +364,8 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityEvent)} does not support '{options.Format}' format.");
             }
@@ -281,6 +382,8 @@ namespace Azure.ResourceManager.Sql.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityEvent(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityEvent)} does not support '{options.Format}' format.");
             }

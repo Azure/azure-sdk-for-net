@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class AverageServiceLoadScalingTrigger : IUtf8JsonSerializable, IJsonModel<AverageServiceLoadScalingTrigger>
+    public partial class AverageServiceLoadScalingTrigger : IUtf8JsonSerializable, IJsonModel<AverageServiceLoadScalingTrigger>, IPersistableModel<AverageServiceLoadScalingTrigger>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AverageServiceLoadScalingTrigger>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -125,6 +126,63 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new AverageServiceLoadScalingTrigger(kind, serializedAdditionalRawData, metricName, lowerLoadThreshold, upperLoadThreshold, scaleInterval, useOnlyPrimaryLoad);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MetricName))
+            {
+                builder.Append("  metricName:");
+                builder.AppendLine($" '{MetricName}'");
+            }
+
+            if (Optional.IsDefined(LowerLoadThreshold))
+            {
+                builder.Append("  lowerLoadThreshold:");
+                builder.AppendLine($" '{LowerLoadThreshold.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UpperLoadThreshold))
+            {
+                builder.Append("  upperLoadThreshold:");
+                builder.AppendLine($" '{UpperLoadThreshold.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ScaleInterval))
+            {
+                builder.Append("  scaleInterval:");
+                builder.AppendLine($" '{ScaleInterval}'");
+            }
+
+            if (Optional.IsDefined(UseOnlyPrimaryLoad))
+            {
+                builder.Append("  useOnlyPrimaryLoad:");
+                var boolValue = UseOnlyPrimaryLoad == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AverageServiceLoadScalingTrigger>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AverageServiceLoadScalingTrigger>)this).GetFormatFromOptions(options) : options.Format;
@@ -133,6 +191,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AverageServiceLoadScalingTrigger)} does not support '{options.Format}' format.");
             }
@@ -149,6 +209,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAverageServiceLoadScalingTrigger(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AverageServiceLoadScalingTrigger)} does not support '{options.Format}' format.");
             }

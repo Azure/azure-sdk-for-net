@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class IscsiTargetInfo : IUtf8JsonSerializable, IJsonModel<IscsiTargetInfo>
+    public partial class IscsiTargetInfo : IUtf8JsonSerializable, IJsonModel<IscsiTargetInfo>, IPersistableModel<IscsiTargetInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IscsiTargetInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -144,6 +145,56 @@ namespace Azure.ResourceManager.ElasticSan.Models
             return new IscsiTargetInfo(targetIqn.Value, targetPortalHostname.Value, Optional.ToNullable(targetPortalPort), Optional.ToNullable(provisioningState), Optional.ToNullable(status), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TargetIqn))
+            {
+                builder.Append("  targetIqn:");
+                builder.AppendLine($" '{TargetIqn}'");
+            }
+
+            if (Optional.IsDefined(TargetPortalHostname))
+            {
+                builder.Append("  targetPortalHostname:");
+                builder.AppendLine($" '{TargetPortalHostname}'");
+            }
+
+            if (Optional.IsDefined(TargetPortalPort))
+            {
+                builder.Append("  targetPortalPort:");
+                builder.AppendLine($" '{TargetPortalPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<IscsiTargetInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IscsiTargetInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -152,6 +203,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IscsiTargetInfo)} does not support '{options.Format}' format.");
             }
@@ -168,6 +221,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeIscsiTargetInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(IscsiTargetInfo)} does not support '{options.Format}' format.");
             }

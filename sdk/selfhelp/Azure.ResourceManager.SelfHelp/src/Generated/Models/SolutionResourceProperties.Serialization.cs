@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SolutionResourceProperties : IUtf8JsonSerializable, IJsonModel<SolutionResourceProperties>
+    public partial class SolutionResourceProperties : IUtf8JsonSerializable, IJsonModel<SolutionResourceProperties>, IPersistableModel<SolutionResourceProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SolutionResourceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -216,6 +217,95 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SolutionResourceProperties(Optional.ToList(triggerCriteria), Optional.ToDictionary(parameters), solutionId.Value, Optional.ToNullable(provisioningState), title.Value, content.Value, replacementMaps.Value, Optional.ToList(sections), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(TriggerCriteria))
+            {
+                builder.Append("  triggerCriteria:");
+                builder.AppendLine(" [");
+                foreach (var item in TriggerCriteria)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Parameters))
+            {
+                builder.Append("  parameters:");
+                builder.AppendLine(" {");
+                foreach (var item in Parameters)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(SolutionId))
+            {
+                builder.Append("  solutionId:");
+                builder.AppendLine($" '{SolutionId}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Title))
+            {
+                builder.Append("  title:");
+                builder.AppendLine($" '{Title}'");
+            }
+
+            if (Optional.IsDefined(Content))
+            {
+                builder.Append("  content:");
+                builder.AppendLine($" '{Content}'");
+            }
+
+            if (Optional.IsDefined(ReplacementMaps))
+            {
+                builder.Append("  replacementMaps:");
+                AppendChildObject(builder, ReplacementMaps, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Sections))
+            {
+                builder.Append("  sections:");
+                builder.AppendLine(" [");
+                foreach (var item in Sections)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SolutionResourceProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SolutionResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -224,6 +314,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SolutionResourceProperties)} does not support '{options.Format}' format.");
             }
@@ -240,6 +332,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSolutionResourceProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SolutionResourceProperties)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class IPv6FirewallRuleData : IUtf8JsonSerializable, IJsonModel<IPv6FirewallRuleData>
+    public partial class IPv6FirewallRuleData : IUtf8JsonSerializable, IJsonModel<IPv6FirewallRuleData>, IPersistableModel<IPv6FirewallRuleData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPv6FirewallRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -155,6 +156,56 @@ namespace Azure.ResourceManager.Sql
             return new IPv6FirewallRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, startIPv6Address.Value, endIPv6Address.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(StartIPv6Address))
+            {
+                builder.Append("  startIPv6Address:");
+                builder.AppendLine($" '{StartIPv6Address}'");
+            }
+
+            if (Optional.IsDefined(EndIPv6Address))
+            {
+                builder.Append("  endIPv6Address:");
+                builder.AppendLine($" '{EndIPv6Address}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<IPv6FirewallRuleData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IPv6FirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
@@ -163,6 +214,8 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IPv6FirewallRuleData)} does not support '{options.Format}' format.");
             }
@@ -179,6 +232,8 @@ namespace Azure.ResourceManager.Sql
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeIPv6FirewallRuleData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(IPv6FirewallRuleData)} does not support '{options.Format}' format.");
             }

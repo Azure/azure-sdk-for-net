@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformBuilderProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformBuilderProperties>
+    public partial class AppPlatformBuilderProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformBuilderProperties>, IPersistableModel<AppPlatformBuilderProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformBuilderProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -132,6 +133,49 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformBuilderProperties(Optional.ToNullable(provisioningState), stack.Value, Optional.ToList(buildpackGroups), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Stack))
+            {
+                builder.Append("  stack:");
+                AppendChildObject(builder, Stack, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(BuildpackGroups))
+            {
+                builder.Append("  buildpackGroups:");
+                builder.AppendLine(" [");
+                foreach (var item in BuildpackGroups)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AppPlatformBuilderProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformBuilderProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -140,6 +184,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AppPlatformBuilderProperties)} does not support '{options.Format}' format.");
             }
@@ -156,6 +202,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAppPlatformBuilderProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AppPlatformBuilderProperties)} does not support '{options.Format}' format.");
             }

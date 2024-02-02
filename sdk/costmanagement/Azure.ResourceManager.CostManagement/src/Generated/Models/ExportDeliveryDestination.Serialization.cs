@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class ExportDeliveryDestination : IUtf8JsonSerializable, IJsonModel<ExportDeliveryDestination>
+    public partial class ExportDeliveryDestination : IUtf8JsonSerializable, IJsonModel<ExportDeliveryDestination>, IPersistableModel<ExportDeliveryDestination>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportDeliveryDestination>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -133,6 +134,56 @@ namespace Azure.ResourceManager.CostManagement.Models
             return new ExportDeliveryDestination(resourceId.Value, container, rootFolderPath.Value, sasToken.Value, storageAccount.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ResourceId))
+            {
+                builder.Append("  resourceId:");
+                builder.AppendLine($" '{ResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Container))
+            {
+                builder.Append("  container:");
+                builder.AppendLine($" '{Container}'");
+            }
+
+            if (Optional.IsDefined(RootFolderPath))
+            {
+                builder.Append("  rootFolderPath:");
+                builder.AppendLine($" '{RootFolderPath}'");
+            }
+
+            if (Optional.IsDefined(SasToken))
+            {
+                builder.Append("  sasToken:");
+                builder.AppendLine($" '{SasToken}'");
+            }
+
+            if (Optional.IsDefined(StorageAccount))
+            {
+                builder.Append("  storageAccount:");
+                builder.AppendLine($" '{StorageAccount}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ExportDeliveryDestination>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExportDeliveryDestination>)this).GetFormatFromOptions(options) : options.Format;
@@ -141,6 +192,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ExportDeliveryDestination)} does not support '{options.Format}' format.");
             }
@@ -157,6 +210,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeExportDeliveryDestination(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ExportDeliveryDestination)} does not support '{options.Format}' format.");
             }

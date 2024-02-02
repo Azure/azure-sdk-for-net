@@ -8,12 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using System.Xml;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class SoftwareUpdateConfigurationSpecificProperties : IUtf8JsonSerializable, IJsonModel<SoftwareUpdateConfigurationSpecificProperties>
+    public partial class SoftwareUpdateConfigurationSpecificProperties : IUtf8JsonSerializable, IJsonModel<SoftwareUpdateConfigurationSpecificProperties>, IPersistableModel<SoftwareUpdateConfigurationSpecificProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareUpdateConfigurationSpecificProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -195,6 +197,89 @@ namespace Azure.ResourceManager.Automation.Models
             return new SoftwareUpdateConfigurationSpecificProperties(operatingSystem, windows.Value, linux.Value, Optional.ToNullable(duration), Optional.ToList(azureVirtualMachines), Optional.ToList(nonAzureComputerNames), targets.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(OperatingSystem))
+            {
+                builder.Append("  operatingSystem:");
+                builder.AppendLine($" '{OperatingSystem.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Windows))
+            {
+                builder.Append("  windows:");
+                AppendChildObject(builder, Windows, options, 2);
+            }
+
+            if (Optional.IsDefined(Linux))
+            {
+                builder.Append("  linux:");
+                AppendChildObject(builder, Linux, options, 2);
+            }
+
+            if (Optional.IsDefined(Duration))
+            {
+                builder.Append("  duration:");
+                var formattedTimeSpan = XmlConvert.ToString(Duration.Value);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsCollectionDefined(AzureVirtualMachines))
+            {
+                builder.Append("  azureVirtualMachines:");
+                builder.AppendLine(" [");
+                foreach (var item in AzureVirtualMachines)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(NonAzureComputerNames))
+            {
+                builder.Append("  nonAzureComputerNames:");
+                builder.AppendLine(" [");
+                foreach (var item in NonAzureComputerNames)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Targets))
+            {
+                builder.Append("  targets:");
+                AppendChildObject(builder, Targets, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SoftwareUpdateConfigurationSpecificProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationSpecificProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -203,6 +288,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationSpecificProperties)} does not support '{options.Format}' format.");
             }
@@ -219,6 +306,8 @@ namespace Azure.ResourceManager.Automation.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSoftwareUpdateConfigurationSpecificProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationSpecificProperties)} does not support '{options.Format}' format.");
             }

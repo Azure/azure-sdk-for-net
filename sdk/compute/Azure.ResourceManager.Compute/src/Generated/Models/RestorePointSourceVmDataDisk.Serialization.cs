@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RestorePointSourceVmDataDisk : IUtf8JsonSerializable, IJsonModel<RestorePointSourceVmDataDisk>
+    public partial class RestorePointSourceVmDataDisk : IUtf8JsonSerializable, IJsonModel<RestorePointSourceVmDataDisk>, IPersistableModel<RestorePointSourceVmDataDisk>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RestorePointSourceVmDataDisk>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -178,6 +179,69 @@ namespace Azure.ResourceManager.Compute.Models
             return new RestorePointSourceVmDataDisk(Optional.ToNullable(lun), name.Value, Optional.ToNullable(caching), Optional.ToNullable(diskSizeGB), managedDisk.Value, diskRestorePoint.Value, Optional.ToNullable(writeAcceleratorEnabled), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Lun))
+            {
+                builder.Append("  lun:");
+                builder.AppendLine($" '{Lun.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Caching))
+            {
+                builder.Append("  caching:");
+                builder.AppendLine($" '{Caching.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiskSizeGB))
+            {
+                builder.Append("  diskSizeGB:");
+                builder.AppendLine($" '{DiskSizeGB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ManagedDisk))
+            {
+                builder.Append("  managedDisk:");
+                AppendChildObject(builder, ManagedDisk, options, 2);
+            }
+
+            if (Optional.IsDefined(DiskRestorePoint))
+            {
+                builder.Append("  diskRestorePoint:");
+                AppendChildObject(builder, DiskRestorePoint, options, 2);
+            }
+
+            if (Optional.IsDefined(WriteAcceleratorEnabled))
+            {
+                builder.Append("  writeAcceleratorEnabled:");
+                var boolValue = WriteAcceleratorEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<RestorePointSourceVmDataDisk>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RestorePointSourceVmDataDisk>)this).GetFormatFromOptions(options) : options.Format;
@@ -186,6 +250,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RestorePointSourceVmDataDisk)} does not support '{options.Format}' format.");
             }
@@ -202,6 +268,8 @@ namespace Azure.ResourceManager.Compute.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRestorePointSourceVmDataDisk(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RestorePointSourceVmDataDisk)} does not support '{options.Format}' format.");
             }

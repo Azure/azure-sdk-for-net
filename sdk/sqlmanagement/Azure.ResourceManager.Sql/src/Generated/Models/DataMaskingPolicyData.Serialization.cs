@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class DataMaskingPolicyData : IUtf8JsonSerializable, IJsonModel<DataMaskingPolicyData>
+    public partial class DataMaskingPolicyData : IUtf8JsonSerializable, IJsonModel<DataMaskingPolicyData>, IPersistableModel<DataMaskingPolicyData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataMaskingPolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -216,6 +217,86 @@ namespace Azure.ResourceManager.Sql
             return new DataMaskingPolicyData(id, name, type, systemData.Value, Optional.ToNullable(location), kind.Value, Optional.ToNullable(dataMaskingState), exemptPrincipals.Value, applicationPrincipals.Value, maskingLevel.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(DataMaskingState))
+            {
+                builder.Append("  dataMaskingState:");
+                builder.AppendLine($" '{DataMaskingState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExemptPrincipals))
+            {
+                builder.Append("  exemptPrincipals:");
+                builder.AppendLine($" '{ExemptPrincipals}'");
+            }
+
+            if (Optional.IsDefined(ApplicationPrincipals))
+            {
+                builder.Append("  applicationPrincipals:");
+                builder.AppendLine($" '{ApplicationPrincipals}'");
+            }
+
+            if (Optional.IsDefined(MaskingLevel))
+            {
+                builder.Append("  maskingLevel:");
+                builder.AppendLine($" '{MaskingLevel}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DataMaskingPolicyData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataMaskingPolicyData>)this).GetFormatFromOptions(options) : options.Format;
@@ -224,6 +305,8 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataMaskingPolicyData)} does not support '{options.Format}' format.");
             }
@@ -240,6 +323,8 @@ namespace Azure.ResourceManager.Sql
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataMaskingPolicyData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataMaskingPolicyData)} does not support '{options.Format}' format.");
             }

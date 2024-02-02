@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlDBTaskOutputMigrationLevel : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlDBTaskOutputMigrationLevel>
+    public partial class MigrateSqlServerSqlDBTaskOutputMigrationLevel : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlDBTaskOutputMigrationLevel>, IPersistableModel<MigrateSqlServerSqlDBTaskOutputMigrationLevel>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlDBTaskOutputMigrationLevel>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -299,6 +300,133 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlDBTaskOutputMigrationLevel(id.Value, resultType, serializedAdditionalRawData, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(durationInSeconds), Optional.ToNullable(status), statusMessage.Value, message.Value, databases.Value, databaseSummary.Value, migrationValidationResult.Value, migrationReportResult.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToList(exceptionsAndWarnings));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(StartedOn))
+            {
+                builder.Append("  startedOn:");
+                builder.AppendLine($" '{StartedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndedOn))
+            {
+                builder.Append("  endedOn:");
+                builder.AppendLine($" '{EndedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DurationInSeconds))
+            {
+                builder.Append("  durationInSeconds:");
+                builder.AppendLine($" '{DurationInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StatusMessage))
+            {
+                builder.Append("  statusMessage:");
+                builder.AppendLine($" '{StatusMessage}'");
+            }
+
+            if (Optional.IsDefined(Message))
+            {
+                builder.Append("  message:");
+                builder.AppendLine($" '{Message}'");
+            }
+
+            if (Optional.IsDefined(Databases))
+            {
+                builder.Append("  databases:");
+                builder.AppendLine($" '{Databases}'");
+            }
+
+            if (Optional.IsDefined(DatabaseSummary))
+            {
+                builder.Append("  databaseSummary:");
+                builder.AppendLine($" '{DatabaseSummary}'");
+            }
+
+            if (Optional.IsDefined(MigrationValidationResult))
+            {
+                builder.Append("  migrationValidationResult:");
+                AppendChildObject(builder, MigrationValidationResult, options, 2);
+            }
+
+            if (Optional.IsDefined(MigrationReportResult))
+            {
+                builder.Append("  migrationReportResult:");
+                AppendChildObject(builder, MigrationReportResult, options, 2);
+            }
+
+            if (Optional.IsDefined(SourceServerVersion))
+            {
+                builder.Append("  sourceServerVersion:");
+                builder.AppendLine($" '{SourceServerVersion}'");
+            }
+
+            if (Optional.IsDefined(SourceServerBrandVersion))
+            {
+                builder.Append("  sourceServerBrandVersion:");
+                builder.AppendLine($" '{SourceServerBrandVersion}'");
+            }
+
+            if (Optional.IsDefined(TargetServerVersion))
+            {
+                builder.Append("  targetServerVersion:");
+                builder.AppendLine($" '{TargetServerVersion}'");
+            }
+
+            if (Optional.IsDefined(TargetServerBrandVersion))
+            {
+                builder.Append("  targetServerBrandVersion:");
+                builder.AppendLine($" '{TargetServerBrandVersion}'");
+            }
+
+            if (Optional.IsCollectionDefined(ExceptionsAndWarnings))
+            {
+                builder.Append("  exceptionsAndWarnings:");
+                builder.AppendLine(" [");
+                foreach (var item in ExceptionsAndWarnings)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id}'");
+            }
+
+            if (Optional.IsDefined(ResultType))
+            {
+                builder.Append("  resultType:");
+                builder.AppendLine($" '{ResultType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MigrateSqlServerSqlDBTaskOutputMigrationLevel>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBTaskOutputMigrationLevel>)this).GetFormatFromOptions(options) : options.Format;
@@ -307,6 +435,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputMigrationLevel)} does not support '{options.Format}' format.");
             }
@@ -323,6 +453,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMigrateSqlServerSqlDBTaskOutputMigrationLevel(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputMigrationLevel)} does not support '{options.Format}' format.");
             }

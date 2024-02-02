@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Support.Models;
 
 namespace Azure.ResourceManager.Support
 {
-    public partial class SupportTicketData : IUtf8JsonSerializable, IJsonModel<SupportTicketData>
+    public partial class SupportTicketData : IUtf8JsonSerializable, IJsonModel<SupportTicketData>, IPersistableModel<SupportTicketData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportTicketData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -486,6 +487,212 @@ namespace Azure.ResourceManager.Support
             return new SupportTicketData(id, name, type, systemData.Value, supportTicketId.Value, description.Value, problemClassificationId.Value, problemClassificationDisplayName.Value, Optional.ToNullable(severity), enrollmentId.Value, Optional.ToNullable(require24X7Response), Optional.ToNullable(advancedDiagnosticConsent), problemScopingQuestions.Value, supportPlanId.Value, contactDetails.Value, serviceLevelAgreement.Value, supportEngineer.Value, supportPlanType.Value, supportPlanDisplayName.Value, title.Value, Optional.ToNullable(problemStartTime), serviceId.Value, serviceDisplayName.Value, status.Value, Optional.ToNullable(createdDate), Optional.ToNullable(modifiedDate), fileWorkspaceName.Value, technicalTicketDetails.Value, quotaTicketDetails.Value, Optional.ToList(secondaryConsent), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SupportTicketId))
+            {
+                builder.Append("  supportTicketId:");
+                builder.AppendLine($" '{SupportTicketId}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(ProblemClassificationId))
+            {
+                builder.Append("  problemClassificationId:");
+                builder.AppendLine($" '{ProblemClassificationId}'");
+            }
+
+            if (Optional.IsDefined(ProblemClassificationDisplayName))
+            {
+                builder.Append("  problemClassificationDisplayName:");
+                builder.AppendLine($" '{ProblemClassificationDisplayName}'");
+            }
+
+            if (Optional.IsDefined(Severity))
+            {
+                builder.Append("  severity:");
+                builder.AppendLine($" '{Severity.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnrollmentId))
+            {
+                builder.Append("  enrollmentId:");
+                builder.AppendLine($" '{EnrollmentId}'");
+            }
+
+            if (Optional.IsDefined(Require24X7Response))
+            {
+                builder.Append("  require24X7Response:");
+                var boolValue = Require24X7Response.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AdvancedDiagnosticConsent))
+            {
+                builder.Append("  advancedDiagnosticConsent:");
+                builder.AppendLine($" '{AdvancedDiagnosticConsent.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProblemScopingQuestions))
+            {
+                builder.Append("  problemScopingQuestions:");
+                builder.AppendLine($" '{ProblemScopingQuestions}'");
+            }
+
+            if (Optional.IsDefined(SupportPlanId))
+            {
+                builder.Append("  supportPlanId:");
+                builder.AppendLine($" '{SupportPlanId}'");
+            }
+
+            if (Optional.IsDefined(ContactDetails))
+            {
+                builder.Append("  contactDetails:");
+                AppendChildObject(builder, ContactDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(ServiceLevelAgreement))
+            {
+                builder.Append("  serviceLevelAgreement:");
+                AppendChildObject(builder, ServiceLevelAgreement, options, 2);
+            }
+
+            if (Optional.IsDefined(SupportEngineer))
+            {
+                builder.Append("  supportEngineer:");
+                AppendChildObject(builder, SupportEngineer, options, 2);
+            }
+
+            if (Optional.IsDefined(SupportPlanType))
+            {
+                builder.Append("  supportPlanType:");
+                builder.AppendLine($" '{SupportPlanType}'");
+            }
+
+            if (Optional.IsDefined(SupportPlanDisplayName))
+            {
+                builder.Append("  supportPlanDisplayName:");
+                builder.AppendLine($" '{SupportPlanDisplayName}'");
+            }
+
+            if (Optional.IsDefined(Title))
+            {
+                builder.Append("  title:");
+                builder.AppendLine($" '{Title}'");
+            }
+
+            if (Optional.IsDefined(ProblemStartOn))
+            {
+                builder.Append("  problemStartTime:");
+                builder.AppendLine($" '{ProblemStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ServiceId))
+            {
+                builder.Append("  serviceId:");
+                builder.AppendLine($" '{ServiceId}'");
+            }
+
+            if (Optional.IsDefined(ServiceDisplayName))
+            {
+                builder.Append("  serviceDisplayName:");
+                builder.AppendLine($" '{ServiceDisplayName}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdDate:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ModifiedOn))
+            {
+                builder.Append("  modifiedDate:");
+                builder.AppendLine($" '{ModifiedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FileWorkspaceName))
+            {
+                builder.Append("  fileWorkspaceName:");
+                builder.AppendLine($" '{FileWorkspaceName}'");
+            }
+
+            if (Optional.IsDefined(TechnicalTicketDetails))
+            {
+                builder.Append("  technicalTicketDetails:");
+                AppendChildObject(builder, TechnicalTicketDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(QuotaTicketDetails))
+            {
+                builder.Append("  quotaTicketDetails:");
+                AppendChildObject(builder, QuotaTicketDetails, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(SecondaryConsent))
+            {
+                builder.Append("  secondaryConsent:");
+                builder.AppendLine(" [");
+                foreach (var item in SecondaryConsent)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SupportTicketData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SupportTicketData>)this).GetFormatFromOptions(options) : options.Format;
@@ -494,6 +701,8 @@ namespace Azure.ResourceManager.Support
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SupportTicketData)} does not support '{options.Format}' format.");
             }
@@ -510,6 +719,8 @@ namespace Azure.ResourceManager.Support
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSupportTicketData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SupportTicketData)} does not support '{options.Format}' format.");
             }

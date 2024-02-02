@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    public partial class SapApplicationServerInstanceData : IUtf8JsonSerializable, IJsonModel<SapApplicationServerInstanceData>
+    public partial class SapApplicationServerInstanceData : IUtf8JsonSerializable, IJsonModel<SapApplicationServerInstanceData>, IPersistableModel<SapApplicationServerInstanceData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapApplicationServerInstanceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -416,6 +417,168 @@ namespace Azure.ResourceManager.Workloads
             return new SapApplicationServerInstanceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, instanceNo.Value, subnet.Value, hostname.Value, kernelVersion.Value, kernelPatch.Value, ipAddress.Value, Optional.ToNullable(gatewayPort), Optional.ToNullable(icmHttpPort), Optional.ToNullable(icmHttpsPort), loadBalancerDetails, Optional.ToList(vmDetails), Optional.ToNullable(status), Optional.ToNullable(health), Optional.ToNullable(provisioningState), errors.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(InstanceNo))
+            {
+                builder.Append("  instanceNo:");
+                builder.AppendLine($" '{InstanceNo}'");
+            }
+
+            if (Optional.IsDefined(SubnetId))
+            {
+                builder.Append("  subnet:");
+                builder.AppendLine($" '{SubnetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Hostname))
+            {
+                builder.Append("  hostname:");
+                builder.AppendLine($" '{Hostname}'");
+            }
+
+            if (Optional.IsDefined(KernelVersion))
+            {
+                builder.Append("  kernelVersion:");
+                builder.AppendLine($" '{KernelVersion}'");
+            }
+
+            if (Optional.IsDefined(KernelPatch))
+            {
+                builder.Append("  kernelPatch:");
+                builder.AppendLine($" '{KernelPatch}'");
+            }
+
+            if (Optional.IsDefined(IPAddress))
+            {
+                builder.Append("  ipAddress:");
+                builder.AppendLine($" '{IPAddress}'");
+            }
+
+            if (Optional.IsDefined(GatewayPort))
+            {
+                builder.Append("  gatewayPort:");
+                builder.AppendLine($" '{GatewayPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IcmHttpPort))
+            {
+                builder.Append("  icmHttpPort:");
+                builder.AppendLine($" '{IcmHttpPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IcmHttpsPort))
+            {
+                builder.Append("  icmHttpsPort:");
+                builder.AppendLine($" '{IcmHttpsPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LoadBalancerDetails))
+            {
+                builder.Append("  loadBalancerDetails:");
+                AppendChildObject(builder, LoadBalancerDetails, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(VmDetails))
+            {
+                builder.Append("  vmDetails:");
+                builder.AppendLine(" [");
+                foreach (var item in VmDetails)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Health))
+            {
+                builder.Append("  health:");
+                builder.AppendLine($" '{Health.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Errors))
+            {
+                builder.Append("  errors:");
+                AppendChildObject(builder, Errors, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SapApplicationServerInstanceData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SapApplicationServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
@@ -424,6 +587,8 @@ namespace Azure.ResourceManager.Workloads
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SapApplicationServerInstanceData)} does not support '{options.Format}' format.");
             }
@@ -440,6 +605,8 @@ namespace Azure.ResourceManager.Workloads
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSapApplicationServerInstanceData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SapApplicationServerInstanceData)} does not support '{options.Format}' format.");
             }

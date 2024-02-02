@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CassandraDataCenterProperties : IUtf8JsonSerializable, IJsonModel<CassandraDataCenterProperties>
+    public partial class CassandraDataCenterProperties : IUtf8JsonSerializable, IJsonModel<CassandraDataCenterProperties>, IPersistableModel<CassandraDataCenterProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraDataCenterProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -300,6 +301,123 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new CassandraDataCenterProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(dataCenterLocation), delegatedSubnetId.Value, Optional.ToNullable(nodeCount), Optional.ToList(seedNodes), base64EncodedCassandraYamlFragment.Value, managedDiskCustomerKeyUri.Value, backupStorageCustomerKeyUri.Value, sku.Value, diskSku.Value, Optional.ToNullable(diskCapacity), Optional.ToNullable(availabilityZone), authenticationMethodLdapProperties.Value, Optional.ToNullable(deallocated), provisionError.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DataCenterLocation))
+            {
+                builder.Append("  dataCenterLocation:");
+                builder.AppendLine($" '{DataCenterLocation.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DelegatedSubnetId))
+            {
+                builder.Append("  delegatedSubnetId:");
+                builder.AppendLine($" '{DelegatedSubnetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NodeCount))
+            {
+                builder.Append("  nodeCount:");
+                builder.AppendLine($" '{NodeCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(SeedNodes))
+            {
+                builder.Append("  seedNodes:");
+                builder.AppendLine(" [");
+                foreach (var item in SeedNodes)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Base64EncodedCassandraYamlFragment))
+            {
+                builder.Append("  base64EncodedCassandraYamlFragment:");
+                builder.AppendLine($" '{Base64EncodedCassandraYamlFragment}'");
+            }
+
+            if (Optional.IsDefined(ManagedDiskCustomerKeyUri))
+            {
+                builder.Append("  managedDiskCustomerKeyUri:");
+                builder.AppendLine($" '{ManagedDiskCustomerKeyUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(BackupStorageCustomerKeyUri))
+            {
+                builder.Append("  backupStorageCustomerKeyUri:");
+                builder.AppendLine($" '{BackupStorageCustomerKeyUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                builder.AppendLine($" '{Sku}'");
+            }
+
+            if (Optional.IsDefined(DiskSku))
+            {
+                builder.Append("  diskSku:");
+                builder.AppendLine($" '{DiskSku}'");
+            }
+
+            if (Optional.IsDefined(DiskCapacity))
+            {
+                builder.Append("  diskCapacity:");
+                builder.AppendLine($" '{DiskCapacity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DoesSupportAvailabilityZone))
+            {
+                builder.Append("  availabilityZone:");
+                var boolValue = DoesSupportAvailabilityZone.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AuthenticationMethodLdapProperties))
+            {
+                builder.Append("  authenticationMethodLdapProperties:");
+                AppendChildObject(builder, AuthenticationMethodLdapProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(Deallocated))
+            {
+                builder.Append("  deallocated:");
+                var boolValue = Deallocated.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ProvisionError))
+            {
+                builder.Append("  provisionError:");
+                AppendChildObject(builder, ProvisionError, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<CassandraDataCenterProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CassandraDataCenterProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -308,6 +426,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CassandraDataCenterProperties)} does not support '{options.Format}' format.");
             }
@@ -324,6 +444,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCassandraDataCenterProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CassandraDataCenterProperties)} does not support '{options.Format}' format.");
             }

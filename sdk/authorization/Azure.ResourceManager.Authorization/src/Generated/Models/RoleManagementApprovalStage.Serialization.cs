@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleManagementApprovalStage : IUtf8JsonSerializable, IJsonModel<RoleManagementApprovalStage>
+    public partial class RoleManagementApprovalStage : IUtf8JsonSerializable, IJsonModel<RoleManagementApprovalStage>, IPersistableModel<RoleManagementApprovalStage>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleManagementApprovalStage>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -187,6 +188,74 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleManagementApprovalStage(Optional.ToNullable(approvalStageTimeOutInDays), Optional.ToNullable(isApproverJustificationRequired), Optional.ToNullable(escalationTimeInMinutes), Optional.ToList(primaryApprovers), Optional.ToNullable(isEscalationEnabled), Optional.ToList(escalationApprovers), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ApprovalStageTimeOutInDays))
+            {
+                builder.Append("  approvalStageTimeOutInDays:");
+                builder.AppendLine($" '{ApprovalStageTimeOutInDays.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsApproverJustificationRequired))
+            {
+                builder.Append("  isApproverJustificationRequired:");
+                var boolValue = IsApproverJustificationRequired.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EscalationTimeInMinutes))
+            {
+                builder.Append("  escalationTimeInMinutes:");
+                builder.AppendLine($" '{EscalationTimeInMinutes.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(PrimaryApprovers))
+            {
+                builder.Append("  primaryApprovers:");
+                builder.AppendLine(" [");
+                foreach (var item in PrimaryApprovers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsEscalationEnabled))
+            {
+                builder.Append("  isEscalationEnabled:");
+                var boolValue = IsEscalationEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(EscalationApprovers))
+            {
+                builder.Append("  escalationApprovers:");
+                builder.AppendLine(" [");
+                foreach (var item in EscalationApprovers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<RoleManagementApprovalStage>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RoleManagementApprovalStage>)this).GetFormatFromOptions(options) : options.Format;
@@ -195,6 +264,8 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RoleManagementApprovalStage)} does not support '{options.Format}' format.");
             }
@@ -211,6 +282,8 @@ namespace Azure.ResourceManager.Authorization.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRoleManagementApprovalStage(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RoleManagementApprovalStage)} does not support '{options.Format}' format.");
             }

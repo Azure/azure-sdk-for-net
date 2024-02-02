@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationPurchaseContent : IUtf8JsonSerializable, IJsonModel<ReservationPurchaseContent>
+    public partial class ReservationPurchaseContent : IUtf8JsonSerializable, IJsonModel<ReservationPurchaseContent>, IPersistableModel<ReservationPurchaseContent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationPurchaseContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -316,6 +317,121 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationPurchaseContent(sku.Value, Optional.ToNullable(location), Optional.ToNullable(reservedResourceType), billingScopeId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(quantity), displayName.Value, Optional.ToNullable(appliedScopeType), Optional.ToList(appliedScopes), appliedScopeProperties.Value, Optional.ToNullable(renew), reservedResourceProperties.Value, Optional.ToNullable(reviewDateTime), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReservedResourceType))
+            {
+                builder.Append("  reservedResourceType:");
+                builder.AppendLine($" '{ReservedResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BillingScopeId))
+            {
+                builder.Append("  billingScopeId:");
+                builder.AppendLine($" '{BillingScopeId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Term))
+            {
+                builder.Append("  term:");
+                builder.AppendLine($" '{Term.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BillingPlan))
+            {
+                builder.Append("  billingPlan:");
+                builder.AppendLine($" '{BillingPlan.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Quantity))
+            {
+                builder.Append("  quantity:");
+                builder.AppendLine($" '{Quantity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(AppliedScopeType))
+            {
+                builder.Append("  appliedScopeType:");
+                builder.AppendLine($" '{AppliedScopeType.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(AppliedScopes))
+            {
+                builder.Append("  appliedScopes:");
+                builder.AppendLine(" [");
+                foreach (var item in AppliedScopes)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(AppliedScopeProperties))
+            {
+                builder.Append("  appliedScopeProperties:");
+                AppendChildObject(builder, AppliedScopeProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(IsRenewEnabled))
+            {
+                builder.Append("  renew:");
+                var boolValue = IsRenewEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ReservedResourceProperties))
+            {
+                builder.Append("  reservedResourceProperties:");
+                AppendChildObject(builder, ReservedResourceProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(ReviewOn))
+            {
+                builder.Append("  reviewDateTime:");
+                builder.AppendLine($" '{ReviewOn.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ReservationPurchaseContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ReservationPurchaseContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -324,6 +440,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ReservationPurchaseContent)} does not support '{options.Format}' format.");
             }
@@ -340,6 +458,8 @@ namespace Azure.ResourceManager.Reservations.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeReservationPurchaseContent(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ReservationPurchaseContent)} does not support '{options.Format}' format.");
             }

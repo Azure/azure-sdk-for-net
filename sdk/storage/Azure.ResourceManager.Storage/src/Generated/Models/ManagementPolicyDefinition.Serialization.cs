@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ManagementPolicyDefinition : IUtf8JsonSerializable, IJsonModel<ManagementPolicyDefinition>
+    public partial class ManagementPolicyDefinition : IUtf8JsonSerializable, IJsonModel<ManagementPolicyDefinition>, IPersistableModel<ManagementPolicyDefinition>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementPolicyDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -100,6 +101,38 @@ namespace Azure.ResourceManager.Storage.Models
             return new ManagementPolicyDefinition(actions, filters.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Actions))
+            {
+                builder.Append("  actions:");
+                AppendChildObject(builder, Actions, options, 2);
+            }
+
+            if (Optional.IsDefined(Filters))
+            {
+                builder.Append("  filters:");
+                AppendChildObject(builder, Filters, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ManagementPolicyDefinition>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicyDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -108,6 +141,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagementPolicyDefinition)} does not support '{options.Format}' format.");
             }
@@ -124,6 +159,8 @@ namespace Azure.ResourceManager.Storage.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeManagementPolicyDefinition(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ManagementPolicyDefinition)} does not support '{options.Format}' format.");
             }

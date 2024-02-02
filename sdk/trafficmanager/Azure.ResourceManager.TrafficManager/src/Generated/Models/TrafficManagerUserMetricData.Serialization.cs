@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager
 {
-    public partial class TrafficManagerUserMetricData : IUtf8JsonSerializable, IJsonModel<TrafficManagerUserMetricData>
+    public partial class TrafficManagerUserMetricData : IUtf8JsonSerializable, IJsonModel<TrafficManagerUserMetricData>, IPersistableModel<TrafficManagerUserMetricData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerUserMetricData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -144,6 +145,50 @@ namespace Azure.ResourceManager.TrafficManager
             return new TrafficManagerUserMetricData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, key.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Key))
+            {
+                builder.Append("  key:");
+                builder.AppendLine($" '{Key}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<TrafficManagerUserMetricData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerUserMetricData>)this).GetFormatFromOptions(options) : options.Format;
@@ -152,6 +197,8 @@ namespace Azure.ResourceManager.TrafficManager
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TrafficManagerUserMetricData)} does not support '{options.Format}' format.");
             }
@@ -168,6 +215,8 @@ namespace Azure.ResourceManager.TrafficManager
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeTrafficManagerUserMetricData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(TrafficManagerUserMetricData)} does not support '{options.Format}' format.");
             }

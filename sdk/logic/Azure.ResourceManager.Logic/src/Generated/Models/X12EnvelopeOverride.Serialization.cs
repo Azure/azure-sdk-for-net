@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12EnvelopeOverride : IUtf8JsonSerializable, IJsonModel<X12EnvelopeOverride>
+    public partial class X12EnvelopeOverride : IUtf8JsonSerializable, IJsonModel<X12EnvelopeOverride>, IPersistableModel<X12EnvelopeOverride>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<X12EnvelopeOverride>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -160,6 +161,86 @@ namespace Azure.ResourceManager.Logic.Models
             return new X12EnvelopeOverride(targetNamespace, protocolVersion, messageId, responsibleAgencyCode, headerVersion, senderApplicationId, receiverApplicationId, functionalIdentifierCode.Value, dateFormat, timeFormat, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TargetNamespace))
+            {
+                builder.Append("  targetNamespace:");
+                builder.AppendLine($" '{TargetNamespace}'");
+            }
+
+            if (Optional.IsDefined(ProtocolVersion))
+            {
+                builder.Append("  protocolVersion:");
+                builder.AppendLine($" '{ProtocolVersion}'");
+            }
+
+            if (Optional.IsDefined(MessageId))
+            {
+                builder.Append("  messageId:");
+                builder.AppendLine($" '{MessageId}'");
+            }
+
+            if (Optional.IsDefined(ResponsibleAgencyCode))
+            {
+                builder.Append("  responsibleAgencyCode:");
+                builder.AppendLine($" '{ResponsibleAgencyCode}'");
+            }
+
+            if (Optional.IsDefined(HeaderVersion))
+            {
+                builder.Append("  headerVersion:");
+                builder.AppendLine($" '{HeaderVersion}'");
+            }
+
+            if (Optional.IsDefined(SenderApplicationId))
+            {
+                builder.Append("  senderApplicationId:");
+                builder.AppendLine($" '{SenderApplicationId}'");
+            }
+
+            if (Optional.IsDefined(ReceiverApplicationId))
+            {
+                builder.Append("  receiverApplicationId:");
+                builder.AppendLine($" '{ReceiverApplicationId}'");
+            }
+
+            if (Optional.IsDefined(FunctionalIdentifierCode))
+            {
+                builder.Append("  functionalIdentifierCode:");
+                builder.AppendLine($" '{FunctionalIdentifierCode}'");
+            }
+
+            if (Optional.IsDefined(DateFormat))
+            {
+                builder.Append("  dateFormat:");
+                builder.AppendLine($" '{DateFormat.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TimeFormat))
+            {
+                builder.Append("  timeFormat:");
+                builder.AppendLine($" '{TimeFormat.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<X12EnvelopeOverride>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<X12EnvelopeOverride>)this).GetFormatFromOptions(options) : options.Format;
@@ -168,6 +249,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(X12EnvelopeOverride)} does not support '{options.Format}' format.");
             }
@@ -184,6 +267,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeX12EnvelopeOverride(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(X12EnvelopeOverride)} does not support '{options.Format}' format.");
             }

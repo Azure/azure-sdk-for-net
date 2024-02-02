@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    public partial class SupportQuotaChangeContent : IUtf8JsonSerializable, IJsonModel<SupportQuotaChangeContent>
+    public partial class SupportQuotaChangeContent : IUtf8JsonSerializable, IJsonModel<SupportQuotaChangeContent>, IPersistableModel<SupportQuotaChangeContent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportQuotaChangeContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -99,6 +100,38 @@ namespace Azure.ResourceManager.Support.Models
             return new SupportQuotaChangeContent(region.Value, payload.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Region))
+            {
+                builder.Append("  region:");
+                builder.AppendLine($" '{Region}'");
+            }
+
+            if (Optional.IsDefined(Payload))
+            {
+                builder.Append("  payload:");
+                builder.AppendLine($" '{Payload}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SupportQuotaChangeContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SupportQuotaChangeContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -107,6 +140,8 @@ namespace Azure.ResourceManager.Support.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SupportQuotaChangeContent)} does not support '{options.Format}' format.");
             }
@@ -123,6 +158,8 @@ namespace Azure.ResourceManager.Support.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSupportQuotaChangeContent(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SupportQuotaChangeContent)} does not support '{options.Format}' format.");
             }

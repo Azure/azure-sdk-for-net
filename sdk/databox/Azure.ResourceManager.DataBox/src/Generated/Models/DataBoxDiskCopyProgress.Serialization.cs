@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class DataBoxDiskCopyProgress : IUtf8JsonSerializable, IJsonModel<DataBoxDiskCopyProgress>
+    public partial class DataBoxDiskCopyProgress : IUtf8JsonSerializable, IJsonModel<DataBoxDiskCopyProgress>, IPersistableModel<DataBoxDiskCopyProgress>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxDiskCopyProgress>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -174,6 +175,67 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxDiskCopyProgress(serialNumber.Value, Optional.ToNullable(bytesCopied), Optional.ToNullable(percentComplete), Optional.ToNullable(status), error.Value, Optional.ToList(actions), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SerialNumber))
+            {
+                builder.Append("  serialNumber:");
+                builder.AppendLine($" '{SerialNumber}'");
+            }
+
+            if (Optional.IsDefined(BytesCopied))
+            {
+                builder.Append("  bytesCopied:");
+                builder.AppendLine($" '{BytesCopied.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PercentComplete))
+            {
+                builder.Append("  percentComplete:");
+                builder.AppendLine($" '{PercentComplete.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Error))
+            {
+                builder.Append("  error:");
+                AppendChildObject(builder, Error, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Actions))
+            {
+                builder.Append("  actions:");
+                builder.AppendLine(" [");
+                foreach (var item in Actions)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DataBoxDiskCopyProgress>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
@@ -182,6 +244,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxDiskCopyProgress)} does not support '{options.Format}' format.");
             }
@@ -198,6 +262,8 @@ namespace Azure.ResourceManager.DataBox.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataBoxDiskCopyProgress(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataBoxDiskCopyProgress)} does not support '{options.Format}' format.");
             }

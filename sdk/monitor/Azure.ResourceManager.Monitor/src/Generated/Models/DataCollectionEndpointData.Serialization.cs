@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class DataCollectionEndpointData : IUtf8JsonSerializable, IJsonModel<DataCollectionEndpointData>
+    public partial class DataCollectionEndpointData : IUtf8JsonSerializable, IJsonModel<DataCollectionEndpointData>, IPersistableModel<DataCollectionEndpointData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionEndpointData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -374,6 +375,156 @@ namespace Azure.ResourceManager.Monitor
             return new DataCollectionEndpointData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), identity, Optional.ToNullable(etag), description.Value, immutableId.Value, configurationAccess.Value, logsIngestion.Value, metricsIngestion.Value, networkAcls.Value, Optional.ToNullable(provisioningState), Optional.ToList(privateLinkScopedResources), failoverConfiguration.Value, metadata.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2);
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(ImmutableId))
+            {
+                builder.Append("  immutableId:");
+                builder.AppendLine($" '{ImmutableId}'");
+            }
+
+            if (Optional.IsDefined(ConfigurationAccess))
+            {
+                builder.Append("  configurationAccess:");
+                AppendChildObject(builder, ConfigurationAccess, options, 2);
+            }
+
+            if (Optional.IsDefined(LogsIngestion))
+            {
+                builder.Append("  logsIngestion:");
+                AppendChildObject(builder, LogsIngestion, options, 2);
+            }
+
+            if (Optional.IsDefined(MetricsIngestion))
+            {
+                builder.Append("  metricsIngestion:");
+                AppendChildObject(builder, MetricsIngestion, options, 2);
+            }
+
+            if (Optional.IsDefined(NetworkAcls))
+            {
+                builder.Append("  networkAcls:");
+                AppendChildObject(builder, NetworkAcls, options, 2);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(PrivateLinkScopedResources))
+            {
+                builder.Append("  privateLinkScopedResources:");
+                builder.AppendLine(" [");
+                foreach (var item in PrivateLinkScopedResources)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(FailoverConfiguration))
+            {
+                builder.Append("  failoverConfiguration:");
+                AppendChildObject(builder, FailoverConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(Metadata))
+            {
+                builder.Append("  metadata:");
+                AppendChildObject(builder, Metadata, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DataCollectionEndpointData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointData>)this).GetFormatFromOptions(options) : options.Format;
@@ -382,6 +533,8 @@ namespace Azure.ResourceManager.Monitor
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataCollectionEndpointData)} does not support '{options.Format}' format.");
             }
@@ -398,6 +551,8 @@ namespace Azure.ResourceManager.Monitor
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataCollectionEndpointData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataCollectionEndpointData)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    public partial class SupportContactProfile : IUtf8JsonSerializable, IJsonModel<SupportContactProfile>
+    public partial class SupportContactProfile : IUtf8JsonSerializable, IJsonModel<SupportContactProfile>, IPersistableModel<SupportContactProfile>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportContactProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -169,6 +170,90 @@ namespace Azure.ResourceManager.Support.Models
             return new SupportContactProfile(firstName, lastName, preferredContactMethod, primaryEmailAddress, Optional.ToList(additionalEmailAddresses), phoneNumber.Value, preferredTimeZone, country, preferredSupportLanguage, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(FirstName))
+            {
+                builder.Append("  firstName:");
+                builder.AppendLine($" '{FirstName}'");
+            }
+
+            if (Optional.IsDefined(LastName))
+            {
+                builder.Append("  lastName:");
+                builder.AppendLine($" '{LastName}'");
+            }
+
+            if (Optional.IsDefined(PreferredContactMethod))
+            {
+                builder.Append("  preferredContactMethod:");
+                builder.AppendLine($" '{PreferredContactMethod.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrimaryEmailAddress))
+            {
+                builder.Append("  primaryEmailAddress:");
+                builder.AppendLine($" '{PrimaryEmailAddress}'");
+            }
+
+            if (Optional.IsCollectionDefined(AdditionalEmailAddresses))
+            {
+                builder.Append("  additionalEmailAddresses:");
+                builder.AppendLine(" [");
+                foreach (var item in AdditionalEmailAddresses)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(PhoneNumber))
+            {
+                builder.Append("  phoneNumber:");
+                builder.AppendLine($" '{PhoneNumber}'");
+            }
+
+            if (Optional.IsDefined(PreferredTimeZone))
+            {
+                builder.Append("  preferredTimeZone:");
+                builder.AppendLine($" '{PreferredTimeZone}'");
+            }
+
+            if (Optional.IsDefined(Country))
+            {
+                builder.Append("  country:");
+                builder.AppendLine($" '{Country}'");
+            }
+
+            if (Optional.IsDefined(PreferredSupportLanguage))
+            {
+                builder.Append("  preferredSupportLanguage:");
+                builder.AppendLine($" '{PreferredSupportLanguage}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SupportContactProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SupportContactProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -177,6 +262,8 @@ namespace Azure.ResourceManager.Support.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SupportContactProfile)} does not support '{options.Format}' format.");
             }
@@ -193,6 +280,8 @@ namespace Azure.ResourceManager.Support.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSupportContactProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SupportContactProfile)} does not support '{options.Format}' format.");
             }

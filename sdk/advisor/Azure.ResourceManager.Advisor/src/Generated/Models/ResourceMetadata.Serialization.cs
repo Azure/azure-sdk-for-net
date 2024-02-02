@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Advisor.Models
 {
-    public partial class ResourceMetadata : IUtf8JsonSerializable, IJsonModel<ResourceMetadata>
+    public partial class ResourceMetadata : IUtf8JsonSerializable, IJsonModel<ResourceMetadata>, IPersistableModel<ResourceMetadata>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -166,6 +167,67 @@ namespace Azure.ResourceManager.Advisor.Models
             return new ResourceMetadata(resourceId.Value, source.Value, Optional.ToDictionary(action), singular.Value, plural.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ResourceId))
+            {
+                builder.Append("  resourceId:");
+                builder.AppendLine($" '{ResourceId}'");
+            }
+
+            if (Optional.IsDefined(Source))
+            {
+                builder.Append("  source:");
+                builder.AppendLine($" '{Source}'");
+            }
+
+            if (Optional.IsCollectionDefined(Action))
+            {
+                builder.Append("  action:");
+                builder.AppendLine(" {");
+                foreach (var item in Action)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value.ToString()}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Singular))
+            {
+                builder.Append("  singular:");
+                builder.AppendLine($" '{Singular}'");
+            }
+
+            if (Optional.IsDefined(Plural))
+            {
+                builder.Append("  plural:");
+                builder.AppendLine($" '{Plural}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ResourceMetadata>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceMetadata>)this).GetFormatFromOptions(options) : options.Format;
@@ -174,6 +236,8 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ResourceMetadata)} does not support '{options.Format}' format.");
             }
@@ -190,6 +254,8 @@ namespace Azure.ResourceManager.Advisor.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeResourceMetadata(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ResourceMetadata)} does not support '{options.Format}' format.");
             }

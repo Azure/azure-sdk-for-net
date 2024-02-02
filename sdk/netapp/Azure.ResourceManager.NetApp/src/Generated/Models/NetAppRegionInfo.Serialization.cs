@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppRegionInfo : IUtf8JsonSerializable, IJsonModel<NetAppRegionInfo>
+    public partial class NetAppRegionInfo : IUtf8JsonSerializable, IJsonModel<NetAppRegionInfo>, IPersistableModel<NetAppRegionInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppRegionInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -117,6 +118,43 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppRegionInfo(Optional.ToNullable(storageToNetworkProximity), Optional.ToList(availabilityZoneMappings), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(StorageToNetworkProximity))
+            {
+                builder.Append("  storageToNetworkProximity:");
+                builder.AppendLine($" '{StorageToNetworkProximity.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(AvailabilityZoneMappings))
+            {
+                builder.Append("  availabilityZoneMappings:");
+                builder.AppendLine(" [");
+                foreach (var item in AvailabilityZoneMappings)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<NetAppRegionInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetAppRegionInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -125,6 +163,8 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetAppRegionInfo)} does not support '{options.Format}' format.");
             }
@@ -141,6 +181,8 @@ namespace Azure.ResourceManager.NetApp.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetAppRegionInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetAppRegionInfo)} does not support '{options.Format}' format.");
             }

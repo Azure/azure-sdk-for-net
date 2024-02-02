@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class UnknownInputDefinition : IUtf8JsonSerializable, IJsonModel<MediaJobInputDefinition>
+    internal partial class UnknownInputDefinition : IUtf8JsonSerializable, IJsonModel<MediaJobInputDefinition>, IPersistableModel<MediaJobInputDefinition>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobInputDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -110,6 +111,43 @@ namespace Azure.ResourceManager.Media.Models
             return new UnknownInputDefinition(odataType, Optional.ToList(includedTracks), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(OdataType))
+            {
+                builder.Append("  @odata.type:");
+                builder.AppendLine($" '{OdataType}'");
+            }
+
+            if (Optional.IsCollectionDefined(IncludedTracks))
+            {
+                builder.Append("  includedTracks:");
+                builder.AppendLine(" [");
+                foreach (var item in IncludedTracks)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MediaJobInputDefinition>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobInputDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -118,6 +156,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MediaJobInputDefinition)} does not support '{options.Format}' format.");
             }
@@ -134,6 +174,8 @@ namespace Azure.ResourceManager.Media.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeUnknownInputDefinition(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MediaJobInputDefinition)} does not support '{options.Format}' format.");
             }

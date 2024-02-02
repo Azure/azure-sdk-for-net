@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    public partial class SphereDeviceInsight : IUtf8JsonSerializable, IJsonModel<SphereDeviceInsight>
+    public partial class SphereDeviceInsight : IUtf8JsonSerializable, IJsonModel<SphereDeviceInsight>, IPersistableModel<SphereDeviceInsight>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SphereDeviceInsight>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -141,6 +142,74 @@ namespace Azure.ResourceManager.Sphere.Models
             return new SphereDeviceInsight(deviceId, description, startTimestampUtc, endTimestampUtc, eventCategory, eventClass, eventType, eventCount, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DeviceId))
+            {
+                builder.Append("  deviceId:");
+                builder.AppendLine($" '{DeviceId}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(StartTimestampUtc))
+            {
+                builder.Append("  startTimestampUtc:");
+                builder.AppendLine($" '{StartTimestampUtc.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndTimestampUtc))
+            {
+                builder.Append("  endTimestampUtc:");
+                builder.AppendLine($" '{EndTimestampUtc.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EventCategory))
+            {
+                builder.Append("  eventCategory:");
+                builder.AppendLine($" '{EventCategory}'");
+            }
+
+            if (Optional.IsDefined(EventClass))
+            {
+                builder.Append("  eventClass:");
+                builder.AppendLine($" '{EventClass}'");
+            }
+
+            if (Optional.IsDefined(EventType))
+            {
+                builder.Append("  eventType:");
+                builder.AppendLine($" '{EventType}'");
+            }
+
+            if (Optional.IsDefined(EventCount))
+            {
+                builder.Append("  eventCount:");
+                builder.AppendLine($" '{EventCount.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SphereDeviceInsight>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SphereDeviceInsight>)this).GetFormatFromOptions(options) : options.Format;
@@ -149,6 +218,8 @@ namespace Azure.ResourceManager.Sphere.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SphereDeviceInsight)} does not support '{options.Format}' format.");
             }
@@ -165,6 +236,8 @@ namespace Azure.ResourceManager.Sphere.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSphereDeviceInsight(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SphereDeviceInsight)} does not support '{options.Format}' format.");
             }

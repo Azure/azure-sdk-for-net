@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class ProcessModuleInfoData : IUtf8JsonSerializable, IJsonModel<ProcessModuleInfoData>
+    public partial class ProcessModuleInfoData : IUtf8JsonSerializable, IJsonModel<ProcessModuleInfoData>, IPersistableModel<ProcessModuleInfoData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProcessModuleInfoData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -281,6 +282,123 @@ namespace Azure.ResourceManager.AppService
             return new ProcessModuleInfoData(id, name, type, systemData.Value, baseAddress.Value, fileName.Value, href.Value, filePath.Value, Optional.ToNullable(moduleMemorySize), fileVersion.Value, fileDescription.Value, product.Value, productVersion.Value, Optional.ToNullable(isDebug), language.Value, kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BaseAddress))
+            {
+                builder.Append("  base_address:");
+                builder.AppendLine($" '{BaseAddress}'");
+            }
+
+            if (Optional.IsDefined(FileName))
+            {
+                builder.Append("  file_name:");
+                builder.AppendLine($" '{FileName}'");
+            }
+
+            if (Optional.IsDefined(Href))
+            {
+                builder.Append("  href:");
+                builder.AppendLine($" '{Href}'");
+            }
+
+            if (Optional.IsDefined(FilePath))
+            {
+                builder.Append("  file_path:");
+                builder.AppendLine($" '{FilePath}'");
+            }
+
+            if (Optional.IsDefined(ModuleMemorySize))
+            {
+                builder.Append("  module_memory_size:");
+                builder.AppendLine($" '{ModuleMemorySize.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FileVersion))
+            {
+                builder.Append("  file_version:");
+                builder.AppendLine($" '{FileVersion}'");
+            }
+
+            if (Optional.IsDefined(FileDescription))
+            {
+                builder.Append("  file_description:");
+                builder.AppendLine($" '{FileDescription}'");
+            }
+
+            if (Optional.IsDefined(Product))
+            {
+                builder.Append("  product:");
+                builder.AppendLine($" '{Product}'");
+            }
+
+            if (Optional.IsDefined(ProductVersion))
+            {
+                builder.Append("  product_version:");
+                builder.AppendLine($" '{ProductVersion}'");
+            }
+
+            if (Optional.IsDefined(IsDebug))
+            {
+                builder.Append("  is_debug:");
+                var boolValue = IsDebug.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Language))
+            {
+                builder.Append("  language:");
+                builder.AppendLine($" '{Language}'");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ProcessModuleInfoData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProcessModuleInfoData>)this).GetFormatFromOptions(options) : options.Format;
@@ -289,6 +407,8 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ProcessModuleInfoData)} does not support '{options.Format}' format.");
             }
@@ -305,6 +425,8 @@ namespace Azure.ResourceManager.AppService
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeProcessModuleInfoData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ProcessModuleInfoData)} does not support '{options.Format}' format.");
             }

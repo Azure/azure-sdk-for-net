@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class QueryApprovalRequestResult : IUtf8JsonSerializable, IJsonModel<QueryApprovalRequestResult>
+    public partial class QueryApprovalRequestResult : IUtf8JsonSerializable, IJsonModel<QueryApprovalRequestResult>, IPersistableModel<QueryApprovalRequestResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryApprovalRequestResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -145,6 +146,57 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new QueryApprovalRequestResult(uniqueOfferId.Value, Optional.ToDictionary(plansDetails), Optional.ToNullable(etag), Optional.ToNullable(messageCode), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(UniqueOfferId))
+            {
+                builder.Append("  uniqueOfferId:");
+                builder.AppendLine($" '{UniqueOfferId}'");
+            }
+
+            if (Optional.IsCollectionDefined(PlansDetails))
+            {
+                builder.Append("  plansDetails:");
+                builder.AppendLine(" {");
+                foreach (var item in PlansDetails)
+                {
+                    builder.Append($"    {item.Key}: ");
+
+                    AppendChildObject(builder, item.Value, options, 4);
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MessageCode))
+            {
+                builder.Append("  messageCode:");
+                builder.AppendLine($" '{MessageCode.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<QueryApprovalRequestResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<QueryApprovalRequestResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -153,6 +205,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(QueryApprovalRequestResult)} does not support '{options.Format}' format.");
             }
@@ -169,6 +223,8 @@ namespace Azure.ResourceManager.Marketplace.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeQueryApprovalRequestResult(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(QueryApprovalRequestResult)} does not support '{options.Format}' format.");
             }

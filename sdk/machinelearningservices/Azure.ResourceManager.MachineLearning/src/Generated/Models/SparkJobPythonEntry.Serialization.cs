@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class SparkJobPythonEntry : IUtf8JsonSerializable, IJsonModel<SparkJobPythonEntry>
+    public partial class SparkJobPythonEntry : IUtf8JsonSerializable, IJsonModel<SparkJobPythonEntry>, IPersistableModel<SparkJobPythonEntry>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SparkJobPythonEntry>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -93,6 +94,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new SparkJobPythonEntry(sparkJobEntryType, serializedAdditionalRawData, file);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(File))
+            {
+                builder.Append("  file:");
+                builder.AppendLine($" '{File}'");
+            }
+
+            if (Optional.IsDefined(SparkJobEntryType))
+            {
+                builder.Append("  sparkJobEntryType:");
+                builder.AppendLine($" '{SparkJobEntryType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SparkJobPythonEntry>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SparkJobPythonEntry>)this).GetFormatFromOptions(options) : options.Format;
@@ -101,6 +134,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SparkJobPythonEntry)} does not support '{options.Format}' format.");
             }
@@ -117,6 +152,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSparkJobPythonEntry(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SparkJobPythonEntry)} does not support '{options.Format}' format.");
             }

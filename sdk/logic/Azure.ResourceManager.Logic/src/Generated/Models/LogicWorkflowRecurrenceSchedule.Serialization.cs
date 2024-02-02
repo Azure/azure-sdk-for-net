@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkflowRecurrenceSchedule : IUtf8JsonSerializable, IJsonModel<LogicWorkflowRecurrenceSchedule>
+    public partial class LogicWorkflowRecurrenceSchedule : IUtf8JsonSerializable, IJsonModel<LogicWorkflowRecurrenceSchedule>, IPersistableModel<LogicWorkflowRecurrenceSchedule>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowRecurrenceSchedule>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -202,6 +203,81 @@ namespace Azure.ResourceManager.Logic.Models
             return new LogicWorkflowRecurrenceSchedule(Optional.ToList(minutes), Optional.ToList(hours), Optional.ToList(weekDays), Optional.ToList(monthDays), Optional.ToList(monthlyOccurrences), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Minutes))
+            {
+                builder.Append("  minutes:");
+                builder.AppendLine(" [");
+                foreach (var item in Minutes)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Hours))
+            {
+                builder.Append("  hours:");
+                builder.AppendLine(" [");
+                foreach (var item in Hours)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(WeekDays))
+            {
+                builder.Append("  weekDays:");
+                builder.AppendLine(" [");
+                foreach (var item in WeekDays)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(MonthDays))
+            {
+                builder.Append("  monthDays:");
+                builder.AppendLine(" [");
+                foreach (var item in MonthDays)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(MonthlyOccurrences))
+            {
+                builder.Append("  monthlyOccurrences:");
+                builder.AppendLine(" [");
+                foreach (var item in MonthlyOccurrences)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<LogicWorkflowRecurrenceSchedule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowRecurrenceSchedule>)this).GetFormatFromOptions(options) : options.Format;
@@ -210,6 +286,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LogicWorkflowRecurrenceSchedule)} does not support '{options.Format}' format.");
             }
@@ -226,6 +304,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeLogicWorkflowRecurrenceSchedule(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(LogicWorkflowRecurrenceSchedule)} does not support '{options.Format}' format.");
             }

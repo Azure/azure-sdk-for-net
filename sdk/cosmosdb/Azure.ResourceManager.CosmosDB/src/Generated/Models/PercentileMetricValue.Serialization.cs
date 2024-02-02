@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class PercentileMetricValue : IUtf8JsonSerializable, IJsonModel<PercentileMetricValue>
+    public partial class PercentileMetricValue : IUtf8JsonSerializable, IJsonModel<PercentileMetricValue>, IPersistableModel<PercentileMetricValue>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PercentileMetricValue>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -272,6 +273,104 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new PercentileMetricValue(Optional.ToNullable(count), Optional.ToNullable(average), Optional.ToNullable(maximum), Optional.ToNullable(minimum), Optional.ToNullable(timestamp), Optional.ToNullable(total), serializedAdditionalRawData, Optional.ToNullable(p10), Optional.ToNullable(p25), Optional.ToNullable(p50), Optional.ToNullable(p75), Optional.ToNullable(p90), Optional.ToNullable(p95), Optional.ToNullable(p99));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(P10))
+            {
+                builder.Append("  P10:");
+                builder.AppendLine($" '{P10.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(P25))
+            {
+                builder.Append("  P25:");
+                builder.AppendLine($" '{P25.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(P50))
+            {
+                builder.Append("  P50:");
+                builder.AppendLine($" '{P50.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(P75))
+            {
+                builder.Append("  P75:");
+                builder.AppendLine($" '{P75.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(P90))
+            {
+                builder.Append("  P90:");
+                builder.AppendLine($" '{P90.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(P95))
+            {
+                builder.Append("  P95:");
+                builder.AppendLine($" '{P95.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(P99))
+            {
+                builder.Append("  P99:");
+                builder.AppendLine($" '{P99.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Count))
+            {
+                builder.Append("  _count:");
+                builder.AppendLine($" '{Count.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Average))
+            {
+                builder.Append("  average:");
+                builder.AppendLine($" '{Average.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Maximum))
+            {
+                builder.Append("  maximum:");
+                builder.AppendLine($" '{Maximum.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Minimum))
+            {
+                builder.Append("  minimum:");
+                builder.AppendLine($" '{Minimum.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Timestamp))
+            {
+                builder.Append("  timestamp:");
+                builder.AppendLine($" '{Timestamp.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Total))
+            {
+                builder.Append("  total:");
+                builder.AppendLine($" '{Total.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PercentileMetricValue>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PercentileMetricValue>)this).GetFormatFromOptions(options) : options.Format;
@@ -280,6 +379,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PercentileMetricValue)} does not support '{options.Format}' format.");
             }
@@ -296,6 +397,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePercentileMetricValue(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PercentileMetricValue)} does not support '{options.Format}' format.");
             }

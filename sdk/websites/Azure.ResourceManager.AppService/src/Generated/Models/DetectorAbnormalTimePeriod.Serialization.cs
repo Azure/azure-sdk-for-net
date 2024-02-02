@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class DetectorAbnormalTimePeriod : IUtf8JsonSerializable, IJsonModel<DetectorAbnormalTimePeriod>
+    public partial class DetectorAbnormalTimePeriod : IUtf8JsonSerializable, IJsonModel<DetectorAbnormalTimePeriod>, IPersistableModel<DetectorAbnormalTimePeriod>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DetectorAbnormalTimePeriod>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -231,6 +232,94 @@ namespace Azure.ResourceManager.AppService.Models
             return new DetectorAbnormalTimePeriod(Optional.ToNullable(startTime), Optional.ToNullable(endTime), message.Value, source.Value, Optional.ToNullable(priority), Optional.ToList(metaData), Optional.ToNullable(type), Optional.ToList(solutions), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startTime:");
+                builder.AppendLine($" '{StartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndOn))
+            {
+                builder.Append("  endTime:");
+                builder.AppendLine($" '{EndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Message))
+            {
+                builder.Append("  message:");
+                builder.AppendLine($" '{Message}'");
+            }
+
+            if (Optional.IsDefined(Source))
+            {
+                builder.Append("  source:");
+                builder.AppendLine($" '{Source}'");
+            }
+
+            if (Optional.IsDefined(Priority))
+            {
+                builder.Append("  priority:");
+                builder.AppendLine($" '{Priority.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(MetaData))
+            {
+                builder.Append("  metaData:");
+                builder.AppendLine(" [");
+                foreach (var item in MetaData)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine(" [");
+                    foreach (var item0 in item)
+                    {
+                        AppendChildObject(builder, item0, options, 4);
+                    }
+                    builder.AppendLine("  ]");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IssueType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{IssueType.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Solutions))
+            {
+                builder.Append("  solutions:");
+                builder.AppendLine(" [");
+                foreach (var item in Solutions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DetectorAbnormalTimePeriod>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DetectorAbnormalTimePeriod>)this).GetFormatFromOptions(options) : options.Format;
@@ -239,6 +328,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DetectorAbnormalTimePeriod)} does not support '{options.Format}' format.");
             }
@@ -255,6 +346,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDetectorAbnormalTimePeriod(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DetectorAbnormalTimePeriod)} does not support '{options.Format}' format.");
             }
