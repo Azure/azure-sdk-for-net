@@ -224,7 +224,7 @@ namespace Azure.Core.TestFramework
                                 GetVariable("TENANT_ID"),
                                 GetVariable("CLIENT_ID"),
                                 clientSecret,
-                                new ClientSecretCredentialOptions { AuthorityHost = new Uri(AuthorityHostUrl) });
+                                new ClientSecretCredentialOptions { AuthorityHost = new Uri(GetVariable("AZURE_AUTHORITY_HOST")) });
                         }
 
                         _credential = new ClientSecretCredential(
