@@ -49,23 +49,10 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of <see cref="AudioSpeechOptions"/>. </summary>
         /// <param name="input"> The text to synthesize audio for. The maximum length is 4096 characters. </param>
         /// <param name="voice"> The voice to use for speech synthesis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> or <paramref name="voice"/> is null. </exception>
-        internal AudioSpeechOptions(string input, string voice)
-        {
-            Argument.AssertNotNull(input, nameof(input));
-            Argument.AssertNotNull(voice, nameof(voice));
-
-            Input = input;
-            Voice = voice;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AudioSpeechOptions"/>. </summary>
-        /// <param name="input"> The text to synthesize audio for. The maximum length is 4096 characters. </param>
-        /// <param name="voice"> The voice to use for speech synthesis. </param>
         /// <param name="responseFormat"> The format to synthesize the audio in. </param>
         /// <param name="speed"> The speed of the synthesize audio. Select a value from `0.25` to `4.0`. `1.0` is the default. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AudioSpeechOptions(string input, string voice, string responseFormat, float? speed, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AudioSpeechOptions(string input, AudioSpeechVoice voice, AudioSpeechOutputFormat? responseFormat, float? speed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Input = input;
             Voice = voice;
@@ -73,19 +60,5 @@ namespace Azure.AI.OpenAI
             Speed = speed;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Initializes a new instance of <see cref="AudioSpeechOptions"/> for deserialization. </summary>
-        internal AudioSpeechOptions()
-        {
-        }
-
-        /// <summary> The text to synthesize audio for. The maximum length is 4096 characters. </summary>
-        public string Input { get; }
-        /// <summary> The voice to use for speech synthesis. </summary>
-        public string Voice { get; }
-        /// <summary> The format to synthesize the audio in. </summary>
-        public string ResponseFormat { get; }
-        /// <summary> The speed of the synthesize audio. Select a value from `0.25` to `4.0`. `1.0` is the default. </summary>
-        public float? Speed { get; }
     }
 }

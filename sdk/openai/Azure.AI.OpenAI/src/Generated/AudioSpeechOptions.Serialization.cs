@@ -16,8 +16,6 @@ namespace Azure.AI.OpenAI
 {
     public partial class AudioSpeechOptions : IUtf8JsonSerializable, IJsonModel<AudioSpeechOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AudioSpeechOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
         void IJsonModel<AudioSpeechOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AudioSpeechOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -30,11 +28,11 @@ namespace Azure.AI.OpenAI
             writer.WritePropertyName("input"u8);
             writer.WriteStringValue(Input);
             writer.WritePropertyName("voice"u8);
-            writer.WriteStringValue(Voice);
+            writer.WriteStringValue(Voice.ToString());
             if (Optional.IsDefined(ResponseFormat))
             {
                 writer.WritePropertyName("response_format"u8);
-                writer.WriteStringValue(ResponseFormat);
+                writer.WriteStringValue(ResponseFormat.Value.ToString());
             }
             if (Optional.IsDefined(Speed))
             {
@@ -80,8 +78,8 @@ namespace Azure.AI.OpenAI
                 return null;
             }
             string input = default;
-            string voice = default;
-            Optional<string> responseFormat = default;
+            AudioSpeechVoice voice = default;
+            Optional<AudioSpeechOutputFormat> responseFormat = default;
             Optional<float> speed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,12 +92,16 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("voice"u8))
                 {
-                    voice = property.Value.GetString();
+                    voice = new AudioSpeechVoice(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("response_format"u8))
                 {
-                    responseFormat = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    responseFormat = new AudioSpeechOutputFormat(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("speed"u8))
@@ -117,7 +119,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AudioSpeechOptions(input, voice, responseFormat.Value, Optional.ToNullable(speed), serializedAdditionalRawData);
+            return new AudioSpeechOptions(input, voice, Optional.ToNullable(responseFormat), Optional.ToNullable(speed), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AudioSpeechOptions>.Write(ModelReaderWriterOptions options)
