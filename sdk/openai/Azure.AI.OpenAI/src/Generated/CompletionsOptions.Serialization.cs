@@ -52,7 +52,13 @@ namespace Azure.AI.OpenAI
             if (Optional.IsCollectionDefined(TokenSelectionBiases))
             {
                 writer.WritePropertyName("logit_bias"u8);
-                SerializeTokenSelectionBiases(writer);
+                writer.WriteStartObject();
+                foreach (var item in TokenSelectionBiases)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteNumberValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(User))
             {
@@ -205,7 +211,16 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("logit_bias"u8))
                 {
-                    DeserializeTokenSelectionBiases(property, ref logitBias);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<int, int> dictionary = new Dictionary<int, int>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetInt32());
+                    }
+                    logitBias = dictionary;
                     continue;
                 }
                 if (property.NameEquals("user"u8))
