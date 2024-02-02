@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         private readonly QuickPulseSDKClientAPIsRestClient _quickPulseSDKClientAPIsRestClient;
         private readonly ConnectionVars _connectionVars;
         private readonly bool _isAadEnabled;
-        private readonly string _streamId = Guid.NewGuid().ToString();
+        private readonly string _streamId = Guid.NewGuid().ToString(); // StreamId should be unique per application instance.
         private bool _disposedValue;
 
         public Manager(LiveMetricsExporterOptions options, IPlatform platform)

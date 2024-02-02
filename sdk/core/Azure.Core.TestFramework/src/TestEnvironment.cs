@@ -214,12 +214,24 @@ namespace Azure.Core.TestFramework
                     }
                     else
                     {
+                        // If the recording is null but we are in Record Mode this means the Credential is being used
+                        // outside of a test (for example, in ExtendResourceGroupExpirationAsync method). Attempt to use the env
+                        // vars, but don't cache the credential so that subsequent usages of this property that are within a
+                        // test will store the variables in the recording. For example, in the ExtendResourceGroupExpirationAsync method.
+                        if (_recording == null)
+                        {
+                            return new ClientSecretCredential(
+                                GetVariable("TENANT_ID"),
+                                GetVariable("CLIENT_ID"),
+                                clientSecret,
+                                new ClientSecretCredentialOptions { AuthorityHost = new Uri(GetVariable("AZURE_AUTHORITY_HOST")) });
+                        }
+
                         _credential = new ClientSecretCredential(
                             TenantId,
                             ClientId,
                             clientSecret,
-                            new ClientSecretCredentialOptions { AuthorityHost = new Uri(AuthorityHostUrl) }
-                        );
+                            new ClientSecretCredentialOptions { AuthorityHost = new Uri(AuthorityHostUrl) });
                     }
                 }
 
@@ -296,24 +308,15 @@ namespace Azure.Core.TestFramework
                 return;
             }
 
-            // determine whether it is even possible to talk to the management endpoint
-            string resourceGroup = GetOptionalVariable("RESOURCE_GROUP");
-            if (resourceGroup == null)
-            {
-                return;
-            }
+            string resourceGroup = GetVariable("RESOURCE_GROUP");
 
-            string subscription = GetOptionalVariable("SUBSCRIPTION_ID");
-            if (subscription == null)
-            {
-                return;
-            }
+            string subscription = GetVariable("SUBSCRIPTION_ID");
 
             HttpPipeline pipeline = HttpPipelineBuilder.Build(ClientOptions.Default, new BearerTokenAuthenticationPolicy(Credential, "https://management.azure.com/.default"));
 
             // create the GET request for the resource group information
             Request request = pipeline.CreateRequest();
-            Uri uri = new Uri($"{ResourceManagerUrl}/subscriptions/{subscription}/resourcegroups/{resourceGroup}?api-version=2021-04-01");
+            Uri uri = new Uri($"{GetVariable("RESOURCE_MANAGER_URL")}/subscriptions/{subscription}/resourcegroups/{resourceGroup}?api-version=2021-04-01");
             request.Uri.Reset(uri);
             request.Method = RequestMethod.Get;
 
