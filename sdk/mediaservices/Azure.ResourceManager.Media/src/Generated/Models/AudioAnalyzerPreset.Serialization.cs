@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AudioAnalyzerPreset : IUtf8JsonSerializable, IJsonModel<AudioAnalyzerPreset>
+    public partial class AudioAnalyzerPreset : IUtf8JsonSerializable, IJsonModel<AudioAnalyzerPreset>, IPersistableModel<AudioAnalyzerPreset>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AudioAnalyzerPreset>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -144,6 +145,61 @@ namespace Azure.ResourceManager.Media.Models
             return new AudioAnalyzerPreset(odataType, serializedAdditionalRawData, audioLanguage.Value, Optional.ToNullable(mode), Optional.ToDictionary(experimentalOptions));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AudioLanguage))
+            {
+                builder.Append("  audioLanguage:");
+                builder.AppendLine($" '{AudioLanguage}'");
+            }
+
+            if (Optional.IsDefined(Mode))
+            {
+                builder.Append("  mode:");
+                builder.AppendLine($" '{Mode.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ExperimentalOptions))
+            {
+                builder.Append("  experimentalOptions:");
+                builder.AppendLine(" {");
+                foreach (var item in ExperimentalOptions)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(OdataType))
+            {
+                builder.Append("  @odata.type:");
+                builder.AppendLine($" '{OdataType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AudioAnalyzerPreset>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AudioAnalyzerPreset>)this).GetFormatFromOptions(options) : options.Format;
@@ -152,6 +208,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AudioAnalyzerPreset)} does not support '{options.Format}' format.");
             }
@@ -168,6 +226,8 @@ namespace Azure.ResourceManager.Media.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAudioAnalyzerPreset(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AudioAnalyzerPreset)} does not support '{options.Format}' format.");
             }

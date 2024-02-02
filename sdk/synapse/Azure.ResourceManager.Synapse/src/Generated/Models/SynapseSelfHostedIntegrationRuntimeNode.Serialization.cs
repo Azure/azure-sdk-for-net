@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseSelfHostedIntegrationRuntimeNode : IUtf8JsonSerializable, IJsonModel<SynapseSelfHostedIntegrationRuntimeNode>
+    public partial class SynapseSelfHostedIntegrationRuntimeNode : IUtf8JsonSerializable, IJsonModel<SynapseSelfHostedIntegrationRuntimeNode>, IPersistableModel<SynapseSelfHostedIntegrationRuntimeNode>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSelfHostedIntegrationRuntimeNode>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -336,6 +337,163 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseSelfHostedIntegrationRuntimeNode(nodeName.Value, machineName.Value, hostServiceUri.Value, Optional.ToNullable(status), Optional.ToDictionary(capabilities), versionStatus.Value, version.Value, Optional.ToNullable(registerTime), Optional.ToNullable(lastConnectTime), Optional.ToNullable(expiryTime), Optional.ToNullable(lastStartTime), Optional.ToNullable(lastStopTime), Optional.ToNullable(lastUpdateResult), Optional.ToNullable(lastStartUpdateTime), Optional.ToNullable(lastEndUpdateTime), Optional.ToNullable(isActiveDispatcher), Optional.ToNullable(concurrentJobsLimit), Optional.ToNullable(maxConcurrentJobs), additionalProperties);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(NodeName))
+            {
+                builder.Append("  nodeName:");
+                builder.AppendLine($" '{NodeName}'");
+            }
+
+            if (Optional.IsDefined(MachineName))
+            {
+                builder.Append("  machineName:");
+                builder.AppendLine($" '{MachineName}'");
+            }
+
+            if (Optional.IsDefined(HostServiceUri))
+            {
+                builder.Append("  hostServiceUri:");
+                builder.AppendLine($" '{HostServiceUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Capabilities))
+            {
+                builder.Append("  capabilities:");
+                builder.AppendLine(" {");
+                foreach (var item in Capabilities)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(VersionStatus))
+            {
+                builder.Append("  versionStatus:");
+                builder.AppendLine($" '{VersionStatus}'");
+            }
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("  version:");
+                builder.AppendLine($" '{Version}'");
+            }
+
+            if (Optional.IsDefined(RegisterOn))
+            {
+                builder.Append("  registerTime:");
+                builder.AppendLine($" '{RegisterOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastConnectedOn))
+            {
+                builder.Append("  lastConnectTime:");
+                builder.AppendLine($" '{LastConnectedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExpireOn))
+            {
+                builder.Append("  expiryTime:");
+                builder.AppendLine($" '{ExpireOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastStartedOn))
+            {
+                builder.Append("  lastStartTime:");
+                builder.AppendLine($" '{LastStartedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastStopOn))
+            {
+                builder.Append("  lastStopTime:");
+                builder.AppendLine($" '{LastStopOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastUpdateResult))
+            {
+                builder.Append("  lastUpdateResult:");
+                builder.AppendLine($" '{LastUpdateResult.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastStartUpdateOn))
+            {
+                builder.Append("  lastStartUpdateTime:");
+                builder.AppendLine($" '{LastStartUpdateOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastEndUpdateOn))
+            {
+                builder.Append("  lastEndUpdateTime:");
+                builder.AppendLine($" '{LastEndUpdateOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsActiveDispatcher))
+            {
+                builder.Append("  isActiveDispatcher:");
+                var boolValue = IsActiveDispatcher.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ConcurrentJobsLimit))
+            {
+                builder.Append("  concurrentJobsLimit:");
+                builder.AppendLine($" '{ConcurrentJobsLimit.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxConcurrentJobs))
+            {
+                builder.Append("  maxConcurrentJobs:");
+                builder.AppendLine($" '{MaxConcurrentJobs.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(AdditionalProperties))
+            {
+                builder.Append("  AdditionalProperties:");
+                builder.AppendLine(" {");
+                foreach (var item in AdditionalProperties)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value.ToString()}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SynapseSelfHostedIntegrationRuntimeNode>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSelfHostedIntegrationRuntimeNode>)this).GetFormatFromOptions(options) : options.Format;
@@ -344,6 +502,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntimeNode)} does not support '{options.Format}' format.");
             }
@@ -360,6 +520,8 @@ namespace Azure.ResourceManager.Synapse.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSynapseSelfHostedIntegrationRuntimeNode(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SynapseSelfHostedIntegrationRuntimeNode)} does not support '{options.Format}' format.");
             }

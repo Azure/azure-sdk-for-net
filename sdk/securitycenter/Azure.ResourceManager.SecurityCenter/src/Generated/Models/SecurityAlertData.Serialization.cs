@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class SecurityAlertData : IUtf8JsonSerializable, IJsonModel<SecurityAlertData>
+    public partial class SecurityAlertData : IUtf8JsonSerializable, IJsonModel<SecurityAlertData>, IPersistableModel<SecurityAlertData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAlertData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -601,6 +602,285 @@ namespace Azure.ResourceManager.SecurityCenter
             return new SecurityAlertData(id, name, type, systemData.Value, version.Value, alertType.Value, systemAlertId.Value, productComponentName.Value, alertDisplayName.Value, description.Value, Optional.ToNullable(severity), Optional.ToNullable(intent), Optional.ToNullable(startTimeUtc), Optional.ToNullable(endTimeUtc), Optional.ToList(resourceIdentifiers), Optional.ToList(remediationSteps), vendorName.Value, Optional.ToNullable(status), Optional.ToList(extendedLinks), alertUri.Value, Optional.ToNullable(timeGeneratedUtc), productName.Value, Optional.ToNullable(processingEndTimeUtc), Optional.ToList(entities), Optional.ToNullable(isIncident), correlationKey.Value, Optional.ToDictionary(extendedProperties), compromisedEntity.Value, Optional.ToList(techniques), Optional.ToList(subTechniques), supportingEvidence.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("  version:");
+                builder.AppendLine($" '{Version}'");
+            }
+
+            if (Optional.IsDefined(AlertType))
+            {
+                builder.Append("  alertType:");
+                builder.AppendLine($" '{AlertType}'");
+            }
+
+            if (Optional.IsDefined(SystemAlertId))
+            {
+                builder.Append("  systemAlertId:");
+                builder.AppendLine($" '{SystemAlertId}'");
+            }
+
+            if (Optional.IsDefined(ProductComponentName))
+            {
+                builder.Append("  productComponentName:");
+                builder.AppendLine($" '{ProductComponentName}'");
+            }
+
+            if (Optional.IsDefined(AlertDisplayName))
+            {
+                builder.Append("  alertDisplayName:");
+                builder.AppendLine($" '{AlertDisplayName}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(Severity))
+            {
+                builder.Append("  severity:");
+                builder.AppendLine($" '{Severity.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Intent))
+            {
+                builder.Append("  intent:");
+                builder.AppendLine($" '{Intent.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startTimeUtc:");
+                builder.AppendLine($" '{StartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndOn))
+            {
+                builder.Append("  endTimeUtc:");
+                builder.AppendLine($" '{EndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ResourceIdentifiers))
+            {
+                builder.Append("  resourceIdentifiers:");
+                builder.AppendLine(" [");
+                foreach (var item in ResourceIdentifiers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(RemediationSteps))
+            {
+                builder.Append("  remediationSteps:");
+                builder.AppendLine(" [");
+                foreach (var item in RemediationSteps)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(VendorName))
+            {
+                builder.Append("  vendorName:");
+                builder.AppendLine($" '{VendorName}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ExtendedLinks))
+            {
+                builder.Append("  extendedLinks:");
+                builder.AppendLine(" [");
+                foreach (var item in ExtendedLinks)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine(" {");
+                    foreach (var item0 in item)
+                    {
+                        builder.Append($"    {item0.Key}: ");
+                        if (item0.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item0.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(AlertUri))
+            {
+                builder.Append("  alertUri:");
+                builder.AppendLine($" '{AlertUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(GeneratedOn))
+            {
+                builder.Append("  timeGeneratedUtc:");
+                builder.AppendLine($" '{GeneratedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProductName))
+            {
+                builder.Append("  productName:");
+                builder.AppendLine($" '{ProductName}'");
+            }
+
+            if (Optional.IsDefined(ProcessingEndOn))
+            {
+                builder.Append("  processingEndTimeUtc:");
+                builder.AppendLine($" '{ProcessingEndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Entities))
+            {
+                builder.Append("  entities:");
+                builder.AppendLine(" [");
+                foreach (var item in Entities)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsIncident))
+            {
+                builder.Append("  isIncident:");
+                var boolValue = IsIncident.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(CorrelationKey))
+            {
+                builder.Append("  correlationKey:");
+                builder.AppendLine($" '{CorrelationKey}'");
+            }
+
+            if (Optional.IsCollectionDefined(ExtendedProperties))
+            {
+                builder.Append("  extendedProperties:");
+                builder.AppendLine(" {");
+                foreach (var item in ExtendedProperties)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(CompromisedEntity))
+            {
+                builder.Append("  compromisedEntity:");
+                builder.AppendLine($" '{CompromisedEntity}'");
+            }
+
+            if (Optional.IsCollectionDefined(Techniques))
+            {
+                builder.Append("  techniques:");
+                builder.AppendLine(" [");
+                foreach (var item in Techniques)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(SubTechniques))
+            {
+                builder.Append("  subTechniques:");
+                builder.AppendLine(" [");
+                foreach (var item in SubTechniques)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(SupportingEvidence))
+            {
+                builder.Append("  supportingEvidence:");
+                AppendChildObject(builder, SupportingEvidence, options, 2);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SecurityAlertData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAlertData>)this).GetFormatFromOptions(options) : options.Format;
@@ -609,6 +889,8 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SecurityAlertData)} does not support '{options.Format}' format.");
             }
@@ -625,6 +907,8 @@ namespace Azure.ResourceManager.SecurityCenter
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSecurityAlertData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SecurityAlertData)} does not support '{options.Format}' format.");
             }

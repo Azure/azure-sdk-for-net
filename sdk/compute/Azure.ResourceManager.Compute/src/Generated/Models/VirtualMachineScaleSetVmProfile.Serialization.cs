@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetVmProfile : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetVmProfile>
+    public partial class VirtualMachineScaleSetVmProfile : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetVmProfile>, IPersistableModel<VirtualMachineScaleSetVmProfile>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetVmProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -340,6 +341,134 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineScaleSetVmProfile(osProfile.Value, storageProfile.Value, networkProfile.Value, securityProfile.Value, diagnosticsProfile.Value, extensionProfile.Value, licenseType.Value, Optional.ToNullable(priority), Optional.ToNullable(evictionPolicy), billingProfile.Value, scheduledEventsProfile.Value, userData.Value, capacityReservation.Value, applicationProfile.Value, hardwareProfile.Value, serviceArtifactReference, securityPostureReference.Value, Optional.ToNullable(timeCreated), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(OSProfile))
+            {
+                builder.Append("  osProfile:");
+                AppendChildObject(builder, OSProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(StorageProfile))
+            {
+                builder.Append("  storageProfile:");
+                AppendChildObject(builder, StorageProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(NetworkProfile))
+            {
+                builder.Append("  networkProfile:");
+                AppendChildObject(builder, NetworkProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                builder.Append("  securityProfile:");
+                AppendChildObject(builder, SecurityProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(DiagnosticsProfile))
+            {
+                builder.Append("  diagnosticsProfile:");
+                AppendChildObject(builder, DiagnosticsProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(ExtensionProfile))
+            {
+                builder.Append("  extensionProfile:");
+                AppendChildObject(builder, ExtensionProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(LicenseType))
+            {
+                builder.Append("  licenseType:");
+                builder.AppendLine($" '{LicenseType}'");
+            }
+
+            if (Optional.IsDefined(Priority))
+            {
+                builder.Append("  priority:");
+                builder.AppendLine($" '{Priority.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EvictionPolicy))
+            {
+                builder.Append("  evictionPolicy:");
+                builder.AppendLine($" '{EvictionPolicy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BillingProfile))
+            {
+                builder.Append("  billingProfile:");
+                AppendChildObject(builder, BillingProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(ScheduledEventsProfile))
+            {
+                builder.Append("  scheduledEventsProfile:");
+                AppendChildObject(builder, ScheduledEventsProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(UserData))
+            {
+                builder.Append("  userData:");
+                builder.AppendLine($" '{UserData}'");
+            }
+
+            if (Optional.IsDefined(CapacityReservation))
+            {
+                builder.Append("  capacityReservation:");
+                AppendChildObject(builder, CapacityReservation, options, 2);
+            }
+
+            if (Optional.IsDefined(ApplicationProfile))
+            {
+                builder.Append("  applicationProfile:");
+                AppendChildObject(builder, ApplicationProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(HardwareProfile))
+            {
+                builder.Append("  hardwareProfile:");
+                AppendChildObject(builder, HardwareProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(ServiceArtifactReference))
+            {
+                builder.Append("  serviceArtifactReference:");
+                AppendChildObject(builder, ServiceArtifactReference, options, 2);
+            }
+
+            if (Optional.IsDefined(SecurityPostureReference))
+            {
+                builder.Append("  securityPostureReference:");
+                AppendChildObject(builder, SecurityPostureReference, options, 2);
+            }
+
+            if (Optional.IsDefined(TimeCreated))
+            {
+                builder.Append("  timeCreated:");
+                builder.AppendLine($" '{TimeCreated.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VirtualMachineScaleSetVmProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -348,6 +477,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmProfile)} does not support '{options.Format}' format.");
             }
@@ -364,6 +495,8 @@ namespace Azure.ResourceManager.Compute.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVirtualMachineScaleSetVmProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmProfile)} does not support '{options.Format}' format.");
             }

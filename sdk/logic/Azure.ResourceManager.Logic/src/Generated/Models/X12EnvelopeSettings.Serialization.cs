@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12EnvelopeSettings : IUtf8JsonSerializable, IJsonModel<X12EnvelopeSettings>
+    public partial class X12EnvelopeSettings : IUtf8JsonSerializable, IJsonModel<X12EnvelopeSettings>, IPersistableModel<X12EnvelopeSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<X12EnvelopeSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -278,6 +279,176 @@ namespace Azure.ResourceManager.Logic.Models
             return new X12EnvelopeSettings(controlStandardsId, useControlStandardsIdAsRepetitionCharacter, senderApplicationId, receiverApplicationId, controlVersionNumber, interchangeControlNumberLowerBound, interchangeControlNumberUpperBound, rolloverInterchangeControlNumber, enableDefaultGroupHeaders, functionalGroupId.Value, groupControlNumberLowerBound, groupControlNumberUpperBound, rolloverGroupControlNumber, groupHeaderAgencyCode, groupHeaderVersion, transactionSetControlNumberLowerBound, transactionSetControlNumberUpperBound, rolloverTransactionSetControlNumber, transactionSetControlNumberPrefix.Value, transactionSetControlNumberSuffix.Value, overwriteExistingTransactionSetControlNumber, groupHeaderDateFormat, groupHeaderTimeFormat, usageIndicator, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ControlStandardsId))
+            {
+                builder.Append("  controlStandardsId:");
+                builder.AppendLine($" '{ControlStandardsId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UseControlStandardsIdAsRepetitionCharacter))
+            {
+                builder.Append("  useControlStandardsIdAsRepetitionCharacter:");
+                var boolValue = UseControlStandardsIdAsRepetitionCharacter == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SenderApplicationId))
+            {
+                builder.Append("  senderApplicationId:");
+                builder.AppendLine($" '{SenderApplicationId}'");
+            }
+
+            if (Optional.IsDefined(ReceiverApplicationId))
+            {
+                builder.Append("  receiverApplicationId:");
+                builder.AppendLine($" '{ReceiverApplicationId}'");
+            }
+
+            if (Optional.IsDefined(ControlVersionNumber))
+            {
+                builder.Append("  controlVersionNumber:");
+                builder.AppendLine($" '{ControlVersionNumber}'");
+            }
+
+            if (Optional.IsDefined(InterchangeControlNumberLowerBound))
+            {
+                builder.Append("  interchangeControlNumberLowerBound:");
+                builder.AppendLine($" '{InterchangeControlNumberLowerBound.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InterchangeControlNumberUpperBound))
+            {
+                builder.Append("  interchangeControlNumberUpperBound:");
+                builder.AppendLine($" '{InterchangeControlNumberUpperBound.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RolloverInterchangeControlNumber))
+            {
+                builder.Append("  rolloverInterchangeControlNumber:");
+                var boolValue = RolloverInterchangeControlNumber == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EnableDefaultGroupHeaders))
+            {
+                builder.Append("  enableDefaultGroupHeaders:");
+                var boolValue = EnableDefaultGroupHeaders == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(FunctionalGroupId))
+            {
+                builder.Append("  functionalGroupId:");
+                builder.AppendLine($" '{FunctionalGroupId}'");
+            }
+
+            if (Optional.IsDefined(GroupControlNumberLowerBound))
+            {
+                builder.Append("  groupControlNumberLowerBound:");
+                builder.AppendLine($" '{GroupControlNumberLowerBound.ToString()}'");
+            }
+
+            if (Optional.IsDefined(GroupControlNumberUpperBound))
+            {
+                builder.Append("  groupControlNumberUpperBound:");
+                builder.AppendLine($" '{GroupControlNumberUpperBound.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RolloverGroupControlNumber))
+            {
+                builder.Append("  rolloverGroupControlNumber:");
+                var boolValue = RolloverGroupControlNumber == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(GroupHeaderAgencyCode))
+            {
+                builder.Append("  groupHeaderAgencyCode:");
+                builder.AppendLine($" '{GroupHeaderAgencyCode}'");
+            }
+
+            if (Optional.IsDefined(GroupHeaderVersion))
+            {
+                builder.Append("  groupHeaderVersion:");
+                builder.AppendLine($" '{GroupHeaderVersion}'");
+            }
+
+            if (Optional.IsDefined(TransactionSetControlNumberLowerBound))
+            {
+                builder.Append("  transactionSetControlNumberLowerBound:");
+                builder.AppendLine($" '{TransactionSetControlNumberLowerBound.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TransactionSetControlNumberUpperBound))
+            {
+                builder.Append("  transactionSetControlNumberUpperBound:");
+                builder.AppendLine($" '{TransactionSetControlNumberUpperBound.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RolloverTransactionSetControlNumber))
+            {
+                builder.Append("  rolloverTransactionSetControlNumber:");
+                var boolValue = RolloverTransactionSetControlNumber == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(TransactionSetControlNumberPrefix))
+            {
+                builder.Append("  transactionSetControlNumberPrefix:");
+                builder.AppendLine($" '{TransactionSetControlNumberPrefix}'");
+            }
+
+            if (Optional.IsDefined(TransactionSetControlNumberSuffix))
+            {
+                builder.Append("  transactionSetControlNumberSuffix:");
+                builder.AppendLine($" '{TransactionSetControlNumberSuffix}'");
+            }
+
+            if (Optional.IsDefined(OverwriteExistingTransactionSetControlNumber))
+            {
+                builder.Append("  overwriteExistingTransactionSetControlNumber:");
+                var boolValue = OverwriteExistingTransactionSetControlNumber == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(GroupHeaderDateFormat))
+            {
+                builder.Append("  groupHeaderDateFormat:");
+                builder.AppendLine($" '{GroupHeaderDateFormat.ToString()}'");
+            }
+
+            if (Optional.IsDefined(GroupHeaderTimeFormat))
+            {
+                builder.Append("  groupHeaderTimeFormat:");
+                builder.AppendLine($" '{GroupHeaderTimeFormat.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UsageIndicator))
+            {
+                builder.Append("  usageIndicator:");
+                builder.AppendLine($" '{UsageIndicator.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<X12EnvelopeSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<X12EnvelopeSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -286,6 +457,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(X12EnvelopeSettings)} does not support '{options.Format}' format.");
             }
@@ -302,6 +475,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeX12EnvelopeSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(X12EnvelopeSettings)} does not support '{options.Format}' format.");
             }

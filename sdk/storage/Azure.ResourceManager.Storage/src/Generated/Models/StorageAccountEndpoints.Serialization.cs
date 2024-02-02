@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountEndpoints : IUtf8JsonSerializable, IJsonModel<StorageAccountEndpoints>
+    public partial class StorageAccountEndpoints : IUtf8JsonSerializable, IJsonModel<StorageAccountEndpoints>, IPersistableModel<StorageAccountEndpoints>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageAccountEndpoints>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -197,6 +198,74 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageAccountEndpoints(blob.Value, queue.Value, table.Value, file.Value, web.Value, dfs.Value, microsoftEndpoints.Value, internetEndpoints.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BlobUri))
+            {
+                builder.Append("  blob:");
+                builder.AppendLine($" '{BlobUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(QueueUri))
+            {
+                builder.Append("  queue:");
+                builder.AppendLine($" '{QueueUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(TableUri))
+            {
+                builder.Append("  table:");
+                builder.AppendLine($" '{TableUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(FileUri))
+            {
+                builder.Append("  file:");
+                builder.AppendLine($" '{FileUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(WebUri))
+            {
+                builder.Append("  web:");
+                builder.AppendLine($" '{WebUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(DfsUri))
+            {
+                builder.Append("  dfs:");
+                builder.AppendLine($" '{DfsUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(MicrosoftEndpoints))
+            {
+                builder.Append("  microsoftEndpoints:");
+                AppendChildObject(builder, MicrosoftEndpoints, options, 2);
+            }
+
+            if (Optional.IsDefined(InternetEndpoints))
+            {
+                builder.Append("  internetEndpoints:");
+                AppendChildObject(builder, InternetEndpoints, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<StorageAccountEndpoints>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountEndpoints>)this).GetFormatFromOptions(options) : options.Format;
@@ -205,6 +274,8 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StorageAccountEndpoints)} does not support '{options.Format}' format.");
             }
@@ -221,6 +292,8 @@ namespace Azure.ResourceManager.Storage.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStorageAccountEndpoints(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StorageAccountEndpoints)} does not support '{options.Format}' format.");
             }

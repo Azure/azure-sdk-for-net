@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    public partial class DataBoxEdgeOrderData : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeOrderData>
+    public partial class DataBoxEdgeOrderData : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeOrderData>, IPersistableModel<DataBoxEdgeOrderData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeOrderData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -310,6 +311,125 @@ namespace Azure.ResourceManager.DataBoxEdge
             return new DataBoxEdgeOrderData(id, name, type, systemData.Value, kind.Value, orderId.Value, contactInformation.Value, shippingAddress.Value, currentStatus.Value, Optional.ToList(orderHistory), serialNumber.Value, Optional.ToList(deliveryTrackingInfo), Optional.ToList(returnTrackingInfo), Optional.ToNullable(shipmentType), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(OrderId))
+            {
+                builder.Append("  orderId:");
+                builder.AppendLine($" '{OrderId}'");
+            }
+
+            if (Optional.IsDefined(ContactInformation))
+            {
+                builder.Append("  contactInformation:");
+                AppendChildObject(builder, ContactInformation, options, 2);
+            }
+
+            if (Optional.IsDefined(ShippingAddress))
+            {
+                builder.Append("  shippingAddress:");
+                AppendChildObject(builder, ShippingAddress, options, 2);
+            }
+
+            if (Optional.IsDefined(CurrentStatus))
+            {
+                builder.Append("  currentStatus:");
+                AppendChildObject(builder, CurrentStatus, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(OrderHistory))
+            {
+                builder.Append("  orderHistory:");
+                builder.AppendLine(" [");
+                foreach (var item in OrderHistory)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(SerialNumber))
+            {
+                builder.Append("  serialNumber:");
+                builder.AppendLine($" '{SerialNumber}'");
+            }
+
+            if (Optional.IsCollectionDefined(DeliveryTrackingInfo))
+            {
+                builder.Append("  deliveryTrackingInfo:");
+                builder.AppendLine(" [");
+                foreach (var item in DeliveryTrackingInfo)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ReturnTrackingInfo))
+            {
+                builder.Append("  returnTrackingInfo:");
+                builder.AppendLine(" [");
+                foreach (var item in ReturnTrackingInfo)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ShipmentType))
+            {
+                builder.Append("  shipmentType:");
+                builder.AppendLine($" '{ShipmentType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DataBoxEdgeOrderData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeOrderData>)this).GetFormatFromOptions(options) : options.Format;
@@ -318,6 +438,8 @@ namespace Azure.ResourceManager.DataBoxEdge
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeOrderData)} does not support '{options.Format}' format.");
             }
@@ -334,6 +456,8 @@ namespace Azure.ResourceManager.DataBoxEdge
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataBoxEdgeOrderData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeOrderData)} does not support '{options.Format}' format.");
             }

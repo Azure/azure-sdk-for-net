@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ContainerService.Models;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerService
 {
-    public partial class ContainerServiceManagedClusterData : IUtf8JsonSerializable, IJsonModel<ContainerServiceManagedClusterData>
+    public partial class ContainerServiceManagedClusterData : IUtf8JsonSerializable, IJsonModel<ContainerServiceManagedClusterData>, IPersistableModel<ContainerServiceManagedClusterData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceManagedClusterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -813,6 +814,352 @@ namespace Azure.ResourceManager.ContainerService
             return new ContainerServiceManagedClusterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, extendedLocation, identity.Value, provisioningState.Value, powerState.Value, Optional.ToNullable(maxAgentPools), kubernetesVersion.Value, currentKubernetesVersion.Value, dnsPrefix.Value, fqdnSubdomain.Value, fqdn.Value, privateFQDN.Value, azurePortalFQDN.Value, Optional.ToList(agentPoolProfiles), linuxProfile.Value, windowsProfile.Value, servicePrincipalProfile.Value, Optional.ToDictionary(addonProfiles), podIdentityProfile.Value, oidcIssuerProfile.Value, nodeResourceGroup.Value, Optional.ToNullable(enableRBAC), Optional.ToNullable(supportPlan), Optional.ToNullable(enablePodSecurityPolicy), networkProfile.Value, aadProfile.Value, autoUpgradeProfile.Value, upgradeSettings.Value, autoScalerProfile.Value, apiServerAccessProfile.Value, diskEncryptionSetId.Value, Optional.ToDictionary(identityProfile), Optional.ToList(privateLinkResources), Optional.ToNullable(disableLocalAccounts), httpProxyConfig.Value, securityProfile.Value, storageProfile.Value, Optional.ToNullable(publicNetworkAccess), workloadAutoScalerProfile.Value, azureMonitorProfile.Value, serviceMeshProfile.Value, resourceUID.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                builder.Append("  extendedLocation:");
+                AppendChildObject(builder, ExtendedLocation, options, 2);
+            }
+
+            if (Optional.IsDefined(ClusterIdentity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, ClusterIdentity, options, 2);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(PowerState))
+            {
+                builder.Append("  powerState:");
+                AppendChildObject(builder, PowerState, options, 2);
+            }
+
+            if (Optional.IsDefined(MaxAgentPools))
+            {
+                builder.Append("  maxAgentPools:");
+                builder.AppendLine($" '{MaxAgentPools.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(KubernetesVersion))
+            {
+                builder.Append("  kubernetesVersion:");
+                builder.AppendLine($" '{KubernetesVersion}'");
+            }
+
+            if (Optional.IsDefined(CurrentKubernetesVersion))
+            {
+                builder.Append("  currentKubernetesVersion:");
+                builder.AppendLine($" '{CurrentKubernetesVersion}'");
+            }
+
+            if (Optional.IsDefined(DnsPrefix))
+            {
+                builder.Append("  dnsPrefix:");
+                builder.AppendLine($" '{DnsPrefix}'");
+            }
+
+            if (Optional.IsDefined(FqdnSubdomain))
+            {
+                builder.Append("  fqdnSubdomain:");
+                builder.AppendLine($" '{FqdnSubdomain}'");
+            }
+
+            if (Optional.IsDefined(Fqdn))
+            {
+                builder.Append("  fqdn:");
+                builder.AppendLine($" '{Fqdn}'");
+            }
+
+            if (Optional.IsDefined(PrivateFqdn))
+            {
+                builder.Append("  privateFQDN:");
+                builder.AppendLine($" '{PrivateFqdn}'");
+            }
+
+            if (Optional.IsDefined(AzurePortalFqdn))
+            {
+                builder.Append("  azurePortalFQDN:");
+                builder.AppendLine($" '{AzurePortalFqdn}'");
+            }
+
+            if (Optional.IsCollectionDefined(AgentPoolProfiles))
+            {
+                builder.Append("  agentPoolProfiles:");
+                builder.AppendLine(" [");
+                foreach (var item in AgentPoolProfiles)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(LinuxProfile))
+            {
+                builder.Append("  linuxProfile:");
+                AppendChildObject(builder, LinuxProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(WindowsProfile))
+            {
+                builder.Append("  windowsProfile:");
+                AppendChildObject(builder, WindowsProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(ServicePrincipalProfile))
+            {
+                builder.Append("  servicePrincipalProfile:");
+                AppendChildObject(builder, ServicePrincipalProfile, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(AddonProfiles))
+            {
+                builder.Append("  addonProfiles:");
+                builder.AppendLine(" {");
+                foreach (var item in AddonProfiles)
+                {
+                    builder.Append($"    {item.Key}: ");
+
+                    AppendChildObject(builder, item.Value, options, 4);
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(PodIdentityProfile))
+            {
+                builder.Append("  podIdentityProfile:");
+                AppendChildObject(builder, PodIdentityProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(OidcIssuerProfile))
+            {
+                builder.Append("  oidcIssuerProfile:");
+                AppendChildObject(builder, OidcIssuerProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(NodeResourceGroup))
+            {
+                builder.Append("  nodeResourceGroup:");
+                builder.AppendLine($" '{NodeResourceGroup}'");
+            }
+
+            if (Optional.IsDefined(EnableRbac))
+            {
+                builder.Append("  enableRBAC:");
+                var boolValue = EnableRbac.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(SupportPlan))
+            {
+                builder.Append("  supportPlan:");
+                builder.AppendLine($" '{SupportPlan.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnablePodSecurityPolicy))
+            {
+                builder.Append("  enablePodSecurityPolicy:");
+                var boolValue = EnablePodSecurityPolicy.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(NetworkProfile))
+            {
+                builder.Append("  networkProfile:");
+                AppendChildObject(builder, NetworkProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(AadProfile))
+            {
+                builder.Append("  aadProfile:");
+                AppendChildObject(builder, AadProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(AutoUpgradeProfile))
+            {
+                builder.Append("  autoUpgradeProfile:");
+                AppendChildObject(builder, AutoUpgradeProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(UpgradeSettings))
+            {
+                builder.Append("  upgradeSettings:");
+                AppendChildObject(builder, UpgradeSettings, options, 2);
+            }
+
+            if (Optional.IsDefined(AutoScalerProfile))
+            {
+                builder.Append("  autoScalerProfile:");
+                AppendChildObject(builder, AutoScalerProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(ApiServerAccessProfile))
+            {
+                builder.Append("  apiServerAccessProfile:");
+                AppendChildObject(builder, ApiServerAccessProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(DiskEncryptionSetId))
+            {
+                builder.Append("  diskEncryptionSetID:");
+                builder.AppendLine($" '{DiskEncryptionSetId.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(IdentityProfile))
+            {
+                builder.Append("  identityProfile:");
+                builder.AppendLine(" {");
+                foreach (var item in IdentityProfile)
+                {
+                    builder.Append($"    {item.Key}: ");
+
+                    AppendChildObject(builder, item.Value, options, 4);
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsCollectionDefined(PrivateLinkResources))
+            {
+                builder.Append("  privateLinkResources:");
+                builder.AppendLine(" [");
+                foreach (var item in PrivateLinkResources)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(DisableLocalAccounts))
+            {
+                builder.Append("  disableLocalAccounts:");
+                var boolValue = DisableLocalAccounts.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(HttpProxyConfig))
+            {
+                builder.Append("  httpProxyConfig:");
+                AppendChildObject(builder, HttpProxyConfig, options, 2);
+            }
+
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                builder.Append("  securityProfile:");
+                AppendChildObject(builder, SecurityProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(StorageProfile))
+            {
+                builder.Append("  storageProfile:");
+                AppendChildObject(builder, StorageProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                builder.Append("  publicNetworkAccess:");
+                builder.AppendLine($" '{PublicNetworkAccess.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WorkloadAutoScalerProfile))
+            {
+                builder.Append("  workloadAutoScalerProfile:");
+                AppendChildObject(builder, WorkloadAutoScalerProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(AzureMonitorProfile))
+            {
+                builder.Append("  azureMonitorProfile:");
+                AppendChildObject(builder, AzureMonitorProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(ServiceMeshProfile))
+            {
+                builder.Append("  serviceMeshProfile:");
+                AppendChildObject(builder, ServiceMeshProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(ResourceId))
+            {
+                builder.Append("  resourceUID:");
+                builder.AppendLine($" '{ResourceId.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ContainerServiceManagedClusterData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceManagedClusterData>)this).GetFormatFromOptions(options) : options.Format;
@@ -821,6 +1168,8 @@ namespace Azure.ResourceManager.ContainerService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerServiceManagedClusterData)} does not support '{options.Format}' format.");
             }
@@ -837,6 +1186,8 @@ namespace Azure.ResourceManager.ContainerService
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerServiceManagedClusterData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerServiceManagedClusterData)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class MessageServerProperties : IUtf8JsonSerializable, IJsonModel<MessageServerProperties>
+    public partial class MessageServerProperties : IUtf8JsonSerializable, IJsonModel<MessageServerProperties>, IPersistableModel<MessageServerProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageServerProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -206,6 +207,68 @@ namespace Azure.ResourceManager.Workloads.Models
             return new MessageServerProperties(Optional.ToNullable(msPort), Optional.ToNullable(internalMsPort), Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), hostname.Value, ipAddress.Value, Optional.ToNullable(health), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MsPort))
+            {
+                builder.Append("  msPort:");
+                builder.AppendLine($" '{MsPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InternalMsPort))
+            {
+                builder.Append("  internalMsPort:");
+                builder.AppendLine($" '{InternalMsPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HttpPort))
+            {
+                builder.Append("  httpPort:");
+                builder.AppendLine($" '{HttpPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HttpsPort))
+            {
+                builder.Append("  httpsPort:");
+                builder.AppendLine($" '{HttpsPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Hostname))
+            {
+                builder.Append("  hostname:");
+                builder.AppendLine($" '{Hostname}'");
+            }
+
+            if (Optional.IsDefined(IPAddress))
+            {
+                builder.Append("  ipAddress:");
+                builder.AppendLine($" '{IPAddress}'");
+            }
+
+            if (Optional.IsDefined(Health))
+            {
+                builder.Append("  health:");
+                builder.AppendLine($" '{Health.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MessageServerProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MessageServerProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -214,6 +277,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MessageServerProperties)} does not support '{options.Format}' format.");
             }
@@ -230,6 +295,8 @@ namespace Azure.ResourceManager.Workloads.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMessageServerProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MessageServerProperties)} does not support '{options.Format}' format.");
             }

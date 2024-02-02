@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class HybridComputeSettingsProperties : IUtf8JsonSerializable, IJsonModel<HybridComputeSettingsProperties>
+    public partial class HybridComputeSettingsProperties : IUtf8JsonSerializable, IJsonModel<HybridComputeSettingsProperties>, IPersistableModel<HybridComputeSettingsProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeSettingsProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -152,6 +153,62 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new HybridComputeSettingsProperties(Optional.ToNullable(hybridComputeProvisioningState), autoProvision, resourceGroupName.Value, region.Value, proxyServer.Value, servicePrincipal.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(HybridComputeProvisioningState))
+            {
+                builder.Append("  hybridComputeProvisioningState:");
+                builder.AppendLine($" '{HybridComputeProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AutoProvision))
+            {
+                builder.Append("  autoProvision:");
+                builder.AppendLine($" '{AutoProvision.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResourceGroupName))
+            {
+                builder.Append("  resourceGroupName:");
+                builder.AppendLine($" '{ResourceGroupName}'");
+            }
+
+            if (Optional.IsDefined(Region))
+            {
+                builder.Append("  region:");
+                builder.AppendLine($" '{Region}'");
+            }
+
+            if (Optional.IsDefined(ProxyServer))
+            {
+                builder.Append("  proxyServer:");
+                AppendChildObject(builder, ProxyServer, options, 2);
+            }
+
+            if (Optional.IsDefined(ServicePrincipal))
+            {
+                builder.Append("  servicePrincipal:");
+                AppendChildObject(builder, ServicePrincipal, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<HybridComputeSettingsProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -160,6 +217,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HybridComputeSettingsProperties)} does not support '{options.Format}' format.");
             }
@@ -176,6 +235,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHybridComputeSettingsProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HybridComputeSettingsProperties)} does not support '{options.Format}' format.");
             }

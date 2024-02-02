@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SqlPoolUsage : IUtf8JsonSerializable, IJsonModel<SqlPoolUsage>
+    public partial class SqlPoolUsage : IUtf8JsonSerializable, IJsonModel<SqlPoolUsage>, IPersistableModel<SqlPoolUsage>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlPoolUsage>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -166,6 +167,68 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SqlPoolUsage(name.Value, resourceName.Value, displayName.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), unit.Value, Optional.ToNullable(nextResetTime), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceName))
+            {
+                builder.Append("  resourceName:");
+                builder.AppendLine($" '{ResourceName}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(CurrentValue))
+            {
+                builder.Append("  currentValue:");
+                builder.AppendLine($" '{CurrentValue.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Limit))
+            {
+                builder.Append("  limit:");
+                builder.AppendLine($" '{Limit.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Unit))
+            {
+                builder.Append("  unit:");
+                builder.AppendLine($" '{Unit}'");
+            }
+
+            if (Optional.IsDefined(NextResetOn))
+            {
+                builder.Append("  nextResetTime:");
+                builder.AppendLine($" '{NextResetOn.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SqlPoolUsage>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlPoolUsage>)this).GetFormatFromOptions(options) : options.Format;
@@ -174,6 +237,8 @@ namespace Azure.ResourceManager.Synapse.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SqlPoolUsage)} does not support '{options.Format}' format.");
             }
@@ -190,6 +255,8 @@ namespace Azure.ResourceManager.Synapse.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSqlPoolUsage(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SqlPoolUsage)} does not support '{options.Format}' format.");
             }

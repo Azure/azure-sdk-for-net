@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class FeatureStoreSettings : IUtf8JsonSerializable, IJsonModel<FeatureStoreSettings>
+    public partial class FeatureStoreSettings : IUtf8JsonSerializable, IJsonModel<FeatureStoreSettings>, IPersistableModel<FeatureStoreSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FeatureStoreSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -114,6 +115,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new FeatureStoreSettings(computeRuntime.Value, offlineStoreConnectionName.Value, onlineStoreConnectionName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ComputeRuntime))
+            {
+                builder.Append("  computeRuntime:");
+                AppendChildObject(builder, ComputeRuntime, options, 2);
+            }
+
+            if (Optional.IsDefined(OfflineStoreConnectionName))
+            {
+                builder.Append("  offlineStoreConnectionName:");
+                builder.AppendLine($" '{OfflineStoreConnectionName}'");
+            }
+
+            if (Optional.IsDefined(OnlineStoreConnectionName))
+            {
+                builder.Append("  onlineStoreConnectionName:");
+                builder.AppendLine($" '{OnlineStoreConnectionName}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<FeatureStoreSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FeatureStoreSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -122,6 +161,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FeatureStoreSettings)} does not support '{options.Format}' format.");
             }
@@ -138,6 +179,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFeatureStoreSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FeatureStoreSettings)} does not support '{options.Format}' format.");
             }

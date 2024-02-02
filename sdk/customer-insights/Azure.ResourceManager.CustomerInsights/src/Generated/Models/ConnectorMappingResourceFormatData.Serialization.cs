@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.CustomerInsights.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class ConnectorMappingResourceFormatData : IUtf8JsonSerializable, IJsonModel<ConnectorMappingResourceFormatData>
+    public partial class ConnectorMappingResourceFormatData : IUtf8JsonSerializable, IJsonModel<ConnectorMappingResourceFormatData>, IPersistableModel<ConnectorMappingResourceFormatData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectorMappingResourceFormatData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -339,6 +340,140 @@ namespace Azure.ResourceManager.CustomerInsights
             return new ConnectorMappingResourceFormatData(id, name, type, systemData.Value, connectorName.Value, Optional.ToNullable(connectorType), Optional.ToNullable(created), Optional.ToNullable(lastModified), Optional.ToNullable(entityType), entityTypeName.Value, connectorMappingName.Value, displayName.Value, description.Value, dataFormatId.Value, mappingProperties.Value, Optional.ToNullable(nextRunTime), runId.Value, Optional.ToNullable(state), Optional.ToNullable(tenantId), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ConnectorName))
+            {
+                builder.Append("  connectorName:");
+                builder.AppendLine($" '{ConnectorName}'");
+            }
+
+            if (Optional.IsDefined(ConnectorType))
+            {
+                builder.Append("  connectorType:");
+                builder.AppendLine($" '{ConnectorType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Created))
+            {
+                builder.Append("  created:");
+                builder.AppendLine($" '{Created.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastModified))
+            {
+                builder.Append("  lastModified:");
+                builder.AppendLine($" '{LastModified.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EntityType))
+            {
+                builder.Append("  entityType:");
+                builder.AppendLine($" '{EntityType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EntityTypeName))
+            {
+                builder.Append("  entityTypeName:");
+                builder.AppendLine($" '{EntityTypeName}'");
+            }
+
+            if (Optional.IsDefined(ConnectorMappingName))
+            {
+                builder.Append("  connectorMappingName:");
+                builder.AppendLine($" '{ConnectorMappingName}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(DataFormatId))
+            {
+                builder.Append("  dataFormatId:");
+                builder.AppendLine($" '{DataFormatId}'");
+            }
+
+            if (Optional.IsDefined(MappingProperties))
+            {
+                builder.Append("  mappingProperties:");
+                AppendChildObject(builder, MappingProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(NextRunOn))
+            {
+                builder.Append("  nextRunTime:");
+                builder.AppendLine($" '{NextRunOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RunId))
+            {
+                builder.Append("  runId:");
+                builder.AppendLine($" '{RunId}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("  tenantId:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ConnectorMappingResourceFormatData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectorMappingResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
@@ -347,6 +482,8 @@ namespace Azure.ResourceManager.CustomerInsights
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConnectorMappingResourceFormatData)} does not support '{options.Format}' format.");
             }
@@ -363,6 +500,8 @@ namespace Azure.ResourceManager.CustomerInsights
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConnectorMappingResourceFormatData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ConnectorMappingResourceFormatData)} does not support '{options.Format}' format.");
             }

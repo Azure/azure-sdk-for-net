@@ -8,14 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using System.Xml;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    public partial class ServiceBusSubscriptionData : IUtf8JsonSerializable, IJsonModel<ServiceBusSubscriptionData>
+    public partial class ServiceBusSubscriptionData : IUtf8JsonSerializable, IJsonModel<ServiceBusSubscriptionData>, IPersistableModel<ServiceBusSubscriptionData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusSubscriptionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -434,6 +436,179 @@ namespace Azure.ResourceManager.ServiceBus
             return new ServiceBusSubscriptionData(id, name, type, systemData.Value, Optional.ToNullable(messageCount), Optional.ToNullable(createdAt), Optional.ToNullable(accessedAt), Optional.ToNullable(updatedAt), countDetails.Value, Optional.ToNullable(lockDuration), Optional.ToNullable(requiresSession), Optional.ToNullable(defaultMessageTimeToLive), Optional.ToNullable(deadLetteringOnFilterEvaluationExceptions), Optional.ToNullable(deadLetteringOnMessageExpiration), Optional.ToNullable(duplicateDetectionHistoryTimeWindow), Optional.ToNullable(maxDeliveryCount), Optional.ToNullable(status), Optional.ToNullable(enableBatchedOperations), Optional.ToNullable(autoDeleteOnIdle), forwardTo.Value, forwardDeadLetteredMessagesTo.Value, Optional.ToNullable(isClientAffine), clientAffineProperties.Value, Optional.ToNullable(location), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MessageCount))
+            {
+                builder.Append("  messageCount:");
+                builder.AppendLine($" '{MessageCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdAt:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AccessedOn))
+            {
+                builder.Append("  accessedAt:");
+                builder.AppendLine($" '{AccessedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UpdatedOn))
+            {
+                builder.Append("  updatedAt:");
+                builder.AppendLine($" '{UpdatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CountDetails))
+            {
+                builder.Append("  countDetails:");
+                AppendChildObject(builder, CountDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(LockDuration))
+            {
+                builder.Append("  lockDuration:");
+                var formattedTimeSpan = XmlConvert.ToString(LockDuration.Value);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(RequiresSession))
+            {
+                builder.Append("  requiresSession:");
+                var boolValue = RequiresSession.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DefaultMessageTimeToLive))
+            {
+                builder.Append("  defaultMessageTimeToLive:");
+                var formattedTimeSpan = XmlConvert.ToString(DefaultMessageTimeToLive.Value);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(DeadLetteringOnFilterEvaluationExceptions))
+            {
+                builder.Append("  deadLetteringOnFilterEvaluationExceptions:");
+                var boolValue = DeadLetteringOnFilterEvaluationExceptions.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DeadLetteringOnMessageExpiration))
+            {
+                builder.Append("  deadLetteringOnMessageExpiration:");
+                var boolValue = DeadLetteringOnMessageExpiration.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DuplicateDetectionHistoryTimeWindow))
+            {
+                builder.Append("  duplicateDetectionHistoryTimeWindow:");
+                var formattedTimeSpan = XmlConvert.ToString(DuplicateDetectionHistoryTimeWindow.Value);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(MaxDeliveryCount))
+            {
+                builder.Append("  maxDeliveryCount:");
+                builder.AppendLine($" '{MaxDeliveryCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnableBatchedOperations))
+            {
+                builder.Append("  enableBatchedOperations:");
+                var boolValue = EnableBatchedOperations.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AutoDeleteOnIdle))
+            {
+                builder.Append("  autoDeleteOnIdle:");
+                var formattedTimeSpan = XmlConvert.ToString(AutoDeleteOnIdle.Value);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(ForwardTo))
+            {
+                builder.Append("  forwardTo:");
+                builder.AppendLine($" '{ForwardTo}'");
+            }
+
+            if (Optional.IsDefined(ForwardDeadLetteredMessagesTo))
+            {
+                builder.Append("  forwardDeadLetteredMessagesTo:");
+                builder.AppendLine($" '{ForwardDeadLetteredMessagesTo}'");
+            }
+
+            if (Optional.IsDefined(IsClientAffine))
+            {
+                builder.Append("  isClientAffine:");
+                var boolValue = IsClientAffine.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ClientAffineProperties))
+            {
+                builder.Append("  clientAffineProperties:");
+                AppendChildObject(builder, ClientAffineProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ServiceBusSubscriptionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -442,6 +617,8 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ServiceBusSubscriptionData)} does not support '{options.Format}' format.");
             }
@@ -458,6 +635,8 @@ namespace Azure.ResourceManager.ServiceBus
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeServiceBusSubscriptionData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ServiceBusSubscriptionData)} does not support '{options.Format}' format.");
             }

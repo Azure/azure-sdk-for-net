@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchAccountPoolStartTask : IUtf8JsonSerializable, IJsonModel<BatchAccountPoolStartTask>
+    public partial class BatchAccountPoolStartTask : IUtf8JsonSerializable, IJsonModel<BatchAccountPoolStartTask>, IPersistableModel<BatchAccountPoolStartTask>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountPoolStartTask>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -198,6 +199,79 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchAccountPoolStartTask(commandLine.Value, Optional.ToList(resourceFiles), Optional.ToList(environmentSettings), userIdentity.Value, Optional.ToNullable(maxTaskRetryCount), Optional.ToNullable(waitForSuccess), containerSettings.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CommandLine))
+            {
+                builder.Append("  commandLine:");
+                builder.AppendLine($" '{CommandLine}'");
+            }
+
+            if (Optional.IsCollectionDefined(ResourceFiles))
+            {
+                builder.Append("  resourceFiles:");
+                builder.AppendLine(" [");
+                foreach (var item in ResourceFiles)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(EnvironmentSettings))
+            {
+                builder.Append("  environmentSettings:");
+                builder.AppendLine(" [");
+                foreach (var item in EnvironmentSettings)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(UserIdentity))
+            {
+                builder.Append("  userIdentity:");
+                AppendChildObject(builder, UserIdentity, options, 2);
+            }
+
+            if (Optional.IsDefined(MaxTaskRetryCount))
+            {
+                builder.Append("  maxTaskRetryCount:");
+                builder.AppendLine($" '{MaxTaskRetryCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(WaitForSuccess))
+            {
+                builder.Append("  waitForSuccess:");
+                var boolValue = WaitForSuccess.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ContainerSettings))
+            {
+                builder.Append("  containerSettings:");
+                AppendChildObject(builder, ContainerSettings, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BatchAccountPoolStartTask>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolStartTask>)this).GetFormatFromOptions(options) : options.Format;
@@ -206,6 +280,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BatchAccountPoolStartTask)} does not support '{options.Format}' format.");
             }
@@ -222,6 +298,8 @@ namespace Azure.ResourceManager.Batch.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBatchAccountPoolStartTask(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BatchAccountPoolStartTask)} does not support '{options.Format}' format.");
             }

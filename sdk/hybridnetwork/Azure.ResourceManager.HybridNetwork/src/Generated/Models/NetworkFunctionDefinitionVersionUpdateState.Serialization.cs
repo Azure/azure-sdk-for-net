@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class NetworkFunctionDefinitionVersionUpdateState : IUtf8JsonSerializable, IJsonModel<NetworkFunctionDefinitionVersionUpdateState>
+    public partial class NetworkFunctionDefinitionVersionUpdateState : IUtf8JsonSerializable, IJsonModel<NetworkFunctionDefinitionVersionUpdateState>, IPersistableModel<NetworkFunctionDefinitionVersionUpdateState>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkFunctionDefinitionVersionUpdateState>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -92,6 +93,32 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new NetworkFunctionDefinitionVersionUpdateState(Optional.ToNullable(versionState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(VersionState))
+            {
+                builder.Append("  versionState:");
+                builder.AppendLine($" '{VersionState.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<NetworkFunctionDefinitionVersionUpdateState>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFunctionDefinitionVersionUpdateState>)this).GetFormatFromOptions(options) : options.Format;
@@ -100,6 +127,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkFunctionDefinitionVersionUpdateState)} does not support '{options.Format}' format.");
             }
@@ -116,6 +145,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkFunctionDefinitionVersionUpdateState(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkFunctionDefinitionVersionUpdateState)} does not support '{options.Format}' format.");
             }

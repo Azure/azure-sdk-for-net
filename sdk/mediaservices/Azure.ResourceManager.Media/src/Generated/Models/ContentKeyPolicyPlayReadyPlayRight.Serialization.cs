@@ -8,12 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using System.Xml;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyPlayReadyPlayRight : IUtf8JsonSerializable, IJsonModel<ContentKeyPolicyPlayReadyPlayRight>
+    public partial class ContentKeyPolicyPlayReadyPlayRight : IUtf8JsonSerializable, IJsonModel<ContentKeyPolicyPlayReadyPlayRight>, IPersistableModel<ContentKeyPolicyPlayReadyPlayRight>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicyPlayReadyPlayRight>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -244,6 +246,108 @@ namespace Azure.ResourceManager.Media.Models
             return new ContentKeyPolicyPlayReadyPlayRight(Optional.ToNullable(firstPlayExpiration), Optional.ToNullable(scmsRestriction), Optional.ToNullable(agcAndColorStripeRestriction), explicitAnalogTelevisionOutputRestriction.Value, digitalVideoOnlyContentRestriction, imageConstraintForAnalogComponentVideoRestriction, imageConstraintForAnalogComputerMonitorRestriction, allowPassingVideoContentToUnknownOutput, Optional.ToNullable(uncompressedDigitalVideoOpl), Optional.ToNullable(compressedDigitalVideoOpl), Optional.ToNullable(analogVideoOpl), Optional.ToNullable(compressedDigitalAudioOpl), Optional.ToNullable(uncompressedDigitalAudioOpl), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(FirstPlayExpiration))
+            {
+                builder.Append("  firstPlayExpiration:");
+                var formattedTimeSpan = XmlConvert.ToString(FirstPlayExpiration.Value);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(ScmsRestriction))
+            {
+                builder.Append("  scmsRestriction:");
+                builder.AppendLine($" '{ScmsRestriction.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AgcAndColorStripeRestriction))
+            {
+                builder.Append("  agcAndColorStripeRestriction:");
+                builder.AppendLine($" '{AgcAndColorStripeRestriction.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExplicitAnalogTelevisionOutputRestriction))
+            {
+                builder.Append("  explicitAnalogTelevisionOutputRestriction:");
+                AppendChildObject(builder, ExplicitAnalogTelevisionOutputRestriction, options, 2);
+            }
+
+            if (Optional.IsDefined(HasDigitalVideoOnlyContentRestriction))
+            {
+                builder.Append("  digitalVideoOnlyContentRestriction:");
+                var boolValue = HasDigitalVideoOnlyContentRestriction == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(HasImageConstraintForAnalogComponentVideoRestriction))
+            {
+                builder.Append("  imageConstraintForAnalogComponentVideoRestriction:");
+                var boolValue = HasImageConstraintForAnalogComponentVideoRestriction == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(HasImageConstraintForAnalogComputerMonitorRestriction))
+            {
+                builder.Append("  imageConstraintForAnalogComputerMonitorRestriction:");
+                var boolValue = HasImageConstraintForAnalogComputerMonitorRestriction == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(AllowPassingVideoContentToUnknownOutput))
+            {
+                builder.Append("  allowPassingVideoContentToUnknownOutput:");
+                builder.AppendLine($" '{AllowPassingVideoContentToUnknownOutput.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UncompressedDigitalVideoOutputProtectionLevel))
+            {
+                builder.Append("  uncompressedDigitalVideoOpl:");
+                builder.AppendLine($" '{UncompressedDigitalVideoOutputProtectionLevel.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CompressedDigitalVideoOutputProtectionLevel))
+            {
+                builder.Append("  compressedDigitalVideoOpl:");
+                builder.AppendLine($" '{CompressedDigitalVideoOutputProtectionLevel.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AnalogVideoOutputProtectionLevel))
+            {
+                builder.Append("  analogVideoOpl:");
+                builder.AppendLine($" '{AnalogVideoOutputProtectionLevel.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CompressedDigitalAudioOutputProtectionLevel))
+            {
+                builder.Append("  compressedDigitalAudioOpl:");
+                builder.AppendLine($" '{CompressedDigitalAudioOutputProtectionLevel.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UncompressedDigitalAudioOutputProtectionLevel))
+            {
+                builder.Append("  uncompressedDigitalAudioOpl:");
+                builder.AppendLine($" '{UncompressedDigitalAudioOutputProtectionLevel.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ContentKeyPolicyPlayReadyPlayRight>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyPlayRight>)this).GetFormatFromOptions(options) : options.Format;
@@ -252,6 +356,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyPlayRight)} does not support '{options.Format}' format.");
             }
@@ -268,6 +374,8 @@ namespace Azure.ResourceManager.Media.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContentKeyPolicyPlayReadyPlayRight(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyPlayRight)} does not support '{options.Format}' format.");
             }

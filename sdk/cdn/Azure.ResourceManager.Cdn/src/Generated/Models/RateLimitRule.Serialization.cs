@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class RateLimitRule : IUtf8JsonSerializable, IJsonModel<RateLimitRule>
+    public partial class RateLimitRule : IUtf8JsonSerializable, IJsonModel<RateLimitRule>, IPersistableModel<RateLimitRule>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RateLimitRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -150,6 +151,73 @@ namespace Azure.ResourceManager.Cdn.Models
             return new RateLimitRule(name, Optional.ToNullable(enabledState), priority, matchConditions, action, serializedAdditionalRawData, rateLimitThreshold, rateLimitDurationInMinutes);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(RateLimitThreshold))
+            {
+                builder.Append("  rateLimitThreshold:");
+                builder.AppendLine($" '{RateLimitThreshold.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RateLimitDurationInMinutes))
+            {
+                builder.Append("  rateLimitDurationInMinutes:");
+                builder.AppendLine($" '{RateLimitDurationInMinutes.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(EnabledState))
+            {
+                builder.Append("  enabledState:");
+                builder.AppendLine($" '{EnabledState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Priority))
+            {
+                builder.Append("  priority:");
+                builder.AppendLine($" '{Priority.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(MatchConditions))
+            {
+                builder.Append("  matchConditions:");
+                builder.AppendLine(" [");
+                foreach (var item in MatchConditions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Action))
+            {
+                builder.Append("  action:");
+                builder.AppendLine($" '{Action.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<RateLimitRule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RateLimitRule>)this).GetFormatFromOptions(options) : options.Format;
@@ -158,6 +226,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RateLimitRule)} does not support '{options.Format}' format.");
             }
@@ -174,6 +244,8 @@ namespace Azure.ResourceManager.Cdn.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRateLimitRule(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RateLimitRule)} does not support '{options.Format}' format.");
             }

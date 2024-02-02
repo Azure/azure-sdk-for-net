@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
-    public partial class KustoEventHubDataConnection : IUtf8JsonSerializable, IJsonModel<KustoEventHubDataConnection>
+    public partial class KustoEventHubDataConnection : IUtf8JsonSerializable, IJsonModel<KustoEventHubDataConnection>, IPersistableModel<KustoEventHubDataConnection>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoEventHubDataConnection>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -342,6 +343,144 @@ namespace Azure.ResourceManager.Kusto.Models
             return new KustoEventHubDataConnection(id, name, type, systemData.Value, Optional.ToNullable(location), kind, serializedAdditionalRawData, eventHubResourceId.Value, consumerGroup.Value, tableName.Value, mappingRuleName.Value, Optional.ToNullable(dataFormat), Optional.ToList(eventSystemProperties), Optional.ToNullable(compression), Optional.ToNullable(provisioningState), managedIdentityResourceId.Value, Optional.ToNullable(managedIdentityObjectId), Optional.ToNullable(databaseRouting), Optional.ToNullable(retrievalStartDate));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(EventHubResourceId))
+            {
+                builder.Append("  eventHubResourceId:");
+                builder.AppendLine($" '{EventHubResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ConsumerGroup))
+            {
+                builder.Append("  consumerGroup:");
+                builder.AppendLine($" '{ConsumerGroup}'");
+            }
+
+            if (Optional.IsDefined(TableName))
+            {
+                builder.Append("  tableName:");
+                builder.AppendLine($" '{TableName}'");
+            }
+
+            if (Optional.IsDefined(MappingRuleName))
+            {
+                builder.Append("  mappingRuleName:");
+                builder.AppendLine($" '{MappingRuleName}'");
+            }
+
+            if (Optional.IsDefined(DataFormat))
+            {
+                builder.Append("  dataFormat:");
+                builder.AppendLine($" '{DataFormat.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(EventSystemProperties))
+            {
+                builder.Append("  eventSystemProperties:");
+                builder.AppendLine(" [");
+                foreach (var item in EventSystemProperties)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Compression))
+            {
+                builder.Append("  compression:");
+                builder.AppendLine($" '{Compression.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ManagedIdentityResourceId))
+            {
+                builder.Append("  managedIdentityResourceId:");
+                builder.AppendLine($" '{ManagedIdentityResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ManagedIdentityObjectId))
+            {
+                builder.Append("  managedIdentityObjectId:");
+                builder.AppendLine($" '{ManagedIdentityObjectId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DatabaseRouting))
+            {
+                builder.Append("  databaseRouting:");
+                builder.AppendLine($" '{DatabaseRouting.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RetrievalStartOn))
+            {
+                builder.Append("  retrievalStartDate:");
+                builder.AppendLine($" '{RetrievalStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<KustoEventHubDataConnection>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KustoEventHubDataConnection>)this).GetFormatFromOptions(options) : options.Format;
@@ -350,6 +489,8 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KustoEventHubDataConnection)} does not support '{options.Format}' format.");
             }
@@ -366,6 +507,8 @@ namespace Azure.ResourceManager.Kusto.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeKustoEventHubDataConnection(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(KustoEventHubDataConnection)} does not support '{options.Format}' format.");
             }

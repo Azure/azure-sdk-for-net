@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class DscReportResource : IUtf8JsonSerializable, IJsonModel<DscReportResource>
+    public partial class DscReportResource : IUtf8JsonSerializable, IJsonModel<DscReportResource>, IPersistableModel<DscReportResource>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DscReportResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -209,6 +210,91 @@ namespace Azure.ResourceManager.Automation.Models
             return new DscReportResource(resourceId.Value, sourceInfo.Value, Optional.ToList(dependsOn), moduleName.Value, moduleVersion.Value, resourceName.Value, error.Value, status.Value, Optional.ToNullable(durationInSeconds), Optional.ToNullable(startDate), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ResourceId))
+            {
+                builder.Append("  resourceId:");
+                builder.AppendLine($" '{ResourceId}'");
+            }
+
+            if (Optional.IsDefined(SourceInfo))
+            {
+                builder.Append("  sourceInfo:");
+                builder.AppendLine($" '{SourceInfo}'");
+            }
+
+            if (Optional.IsCollectionDefined(DependsOn))
+            {
+                builder.Append("  dependsOn:");
+                builder.AppendLine(" [");
+                foreach (var item in DependsOn)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ModuleName))
+            {
+                builder.Append("  moduleName:");
+                builder.AppendLine($" '{ModuleName}'");
+            }
+
+            if (Optional.IsDefined(ModuleVersion))
+            {
+                builder.Append("  moduleVersion:");
+                builder.AppendLine($" '{ModuleVersion}'");
+            }
+
+            if (Optional.IsDefined(ResourceName))
+            {
+                builder.Append("  resourceName:");
+                builder.AppendLine($" '{ResourceName}'");
+            }
+
+            if (Optional.IsDefined(Error))
+            {
+                builder.Append("  error:");
+                builder.AppendLine($" '{Error}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status}'");
+            }
+
+            if (Optional.IsDefined(DurationInSeconds))
+            {
+                builder.Append("  durationInSeconds:");
+                builder.AppendLine($" '{DurationInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startDate:");
+                builder.AppendLine($" '{StartOn.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DscReportResource>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DscReportResource>)this).GetFormatFromOptions(options) : options.Format;
@@ -217,6 +303,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DscReportResource)} does not support '{options.Format}' format.");
             }
@@ -233,6 +321,8 @@ namespace Azure.ResourceManager.Automation.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDscReportResource(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DscReportResource)} does not support '{options.Format}' format.");
             }

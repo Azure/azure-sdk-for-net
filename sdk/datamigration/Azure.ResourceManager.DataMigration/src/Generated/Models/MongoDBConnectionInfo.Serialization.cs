@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBConnectionInfo : IUtf8JsonSerializable, IJsonModel<MongoDBConnectionInfo>
+    public partial class MongoDBConnectionInfo : IUtf8JsonSerializable, IJsonModel<MongoDBConnectionInfo>, IPersistableModel<MongoDBConnectionInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBConnectionInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -245,6 +246,113 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MongoDBConnectionInfo(type, userName.Value, password.Value, serializedAdditionalRawData, connectionString, dataSource.Value, Optional.ToNullable(encryptConnection), serverBrandVersion.Value, serverVersion.Value, serverName.Value, Optional.ToNullable(trustServerCertificate), Optional.ToNullable(enforceSSL), Optional.ToNullable(port), additionalSettings.Value, Optional.ToNullable(authentication));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ConnectionString))
+            {
+                builder.Append("  connectionString:");
+                builder.AppendLine($" '{ConnectionString}'");
+            }
+
+            if (Optional.IsDefined(DataSource))
+            {
+                builder.Append("  dataSource:");
+                builder.AppendLine($" '{DataSource}'");
+            }
+
+            if (Optional.IsDefined(EncryptConnection))
+            {
+                builder.Append("  encryptConnection:");
+                var boolValue = EncryptConnection.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ServerBrandVersion))
+            {
+                builder.Append("  serverBrandVersion:");
+                builder.AppendLine($" '{ServerBrandVersion}'");
+            }
+
+            if (Optional.IsDefined(ServerVersion))
+            {
+                builder.Append("  serverVersion:");
+                builder.AppendLine($" '{ServerVersion}'");
+            }
+
+            if (Optional.IsDefined(ServerName))
+            {
+                builder.Append("  serverName:");
+                builder.AppendLine($" '{ServerName}'");
+            }
+
+            if (Optional.IsDefined(TrustServerCertificate))
+            {
+                builder.Append("  trustServerCertificate:");
+                var boolValue = TrustServerCertificate.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EnforceSSL))
+            {
+                builder.Append("  enforceSSL:");
+                var boolValue = EnforceSSL.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Port))
+            {
+                builder.Append("  port:");
+                builder.AppendLine($" '{Port.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AdditionalSettings))
+            {
+                builder.Append("  additionalSettings:");
+                builder.AppendLine($" '{AdditionalSettings}'");
+            }
+
+            if (Optional.IsDefined(Authentication))
+            {
+                builder.Append("  authentication:");
+                builder.AppendLine($" '{Authentication.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ConnectionInfoType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ConnectionInfoType}'");
+            }
+
+            if (Optional.IsDefined(UserName))
+            {
+                builder.Append("  userName:");
+                builder.AppendLine($" '{UserName}'");
+            }
+
+            if (Optional.IsDefined(Password))
+            {
+                builder.Append("  password:");
+                builder.AppendLine($" '{Password}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MongoDBConnectionInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -253,6 +361,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MongoDBConnectionInfo)} does not support '{options.Format}' format.");
             }
@@ -269,6 +379,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMongoDBConnectionInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MongoDBConnectionInfo)} does not support '{options.Format}' format.");
             }

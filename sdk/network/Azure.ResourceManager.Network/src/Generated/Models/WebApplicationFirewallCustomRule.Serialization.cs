@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class WebApplicationFirewallCustomRule : IUtf8JsonSerializable, IJsonModel<WebApplicationFirewallCustomRule>
+    public partial class WebApplicationFirewallCustomRule : IUtf8JsonSerializable, IJsonModel<WebApplicationFirewallCustomRule>, IPersistableModel<WebApplicationFirewallCustomRule>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebApplicationFirewallCustomRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -216,6 +217,96 @@ namespace Azure.ResourceManager.Network.Models
             return new WebApplicationFirewallCustomRule(name.Value, Optional.ToNullable(etag), priority, Optional.ToNullable(state), Optional.ToNullable(rateLimitDuration), Optional.ToNullable(rateLimitThreshold), ruleType, matchConditions, Optional.ToList(groupByUserSession), action, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Priority))
+            {
+                builder.Append("  priority:");
+                builder.AppendLine($" '{Priority.ToString()}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RateLimitDuration))
+            {
+                builder.Append("  rateLimitDuration:");
+                builder.AppendLine($" '{RateLimitDuration.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RateLimitThreshold))
+            {
+                builder.Append("  rateLimitThreshold:");
+                builder.AppendLine($" '{RateLimitThreshold.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RuleType))
+            {
+                builder.Append("  ruleType:");
+                builder.AppendLine($" '{RuleType.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(MatchConditions))
+            {
+                builder.Append("  matchConditions:");
+                builder.AppendLine(" [");
+                foreach (var item in MatchConditions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(GroupByUserSession))
+            {
+                builder.Append("  groupByUserSession:");
+                builder.AppendLine(" [");
+                foreach (var item in GroupByUserSession)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Action))
+            {
+                builder.Append("  action:");
+                builder.AppendLine($" '{Action.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<WebApplicationFirewallCustomRule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebApplicationFirewallCustomRule>)this).GetFormatFromOptions(options) : options.Format;
@@ -224,6 +315,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(WebApplicationFirewallCustomRule)} does not support '{options.Format}' format.");
             }
@@ -240,6 +333,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeWebApplicationFirewallCustomRule(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(WebApplicationFirewallCustomRule)} does not support '{options.Format}' format.");
             }

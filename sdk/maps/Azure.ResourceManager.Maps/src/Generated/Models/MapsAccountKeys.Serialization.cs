@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Maps.Models
 {
-    public partial class MapsAccountKeys : IUtf8JsonSerializable, IJsonModel<MapsAccountKeys>
+    public partial class MapsAccountKeys : IUtf8JsonSerializable, IJsonModel<MapsAccountKeys>, IPersistableModel<MapsAccountKeys>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapsAccountKeys>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -129,6 +130,50 @@ namespace Azure.ResourceManager.Maps.Models
             return new MapsAccountKeys(Optional.ToNullable(primaryKeyLastUpdated), primaryKey.Value, secondaryKey.Value, Optional.ToNullable(secondaryKeyLastUpdated), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PrimaryKeyLastUpdatedOn))
+            {
+                builder.Append("  primaryKeyLastUpdated:");
+                builder.AppendLine($" '{PrimaryKeyLastUpdatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrimaryKey))
+            {
+                builder.Append("  primaryKey:");
+                builder.AppendLine($" '{PrimaryKey}'");
+            }
+
+            if (Optional.IsDefined(SecondaryKey))
+            {
+                builder.Append("  secondaryKey:");
+                builder.AppendLine($" '{SecondaryKey}'");
+            }
+
+            if (Optional.IsDefined(SecondaryKeyLastUpdatedOn))
+            {
+                builder.Append("  secondaryKeyLastUpdated:");
+                builder.AppendLine($" '{SecondaryKeyLastUpdatedOn.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MapsAccountKeys>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MapsAccountKeys>)this).GetFormatFromOptions(options) : options.Format;
@@ -137,6 +182,8 @@ namespace Azure.ResourceManager.Maps.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MapsAccountKeys)} does not support '{options.Format}' format.");
             }
@@ -153,6 +200,8 @@ namespace Azure.ResourceManager.Maps.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMapsAccountKeys(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MapsAccountKeys)} does not support '{options.Format}' format.");
             }

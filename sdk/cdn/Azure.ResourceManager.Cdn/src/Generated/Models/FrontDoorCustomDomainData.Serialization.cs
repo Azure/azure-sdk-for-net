@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class FrontDoorCustomDomainData : IUtf8JsonSerializable, IJsonModel<FrontDoorCustomDomainData>
+    public partial class FrontDoorCustomDomainData : IUtf8JsonSerializable, IJsonModel<FrontDoorCustomDomainData>, IPersistableModel<FrontDoorCustomDomainData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorCustomDomainData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -278,6 +279,104 @@ namespace Azure.ResourceManager.Cdn
             return new FrontDoorCustomDomainData(id, name, type, systemData.Value, profileName.Value, tlsSettings.Value, azureDnsZone, preValidatedCustomDomainResourceId.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), Optional.ToNullable(domainValidationState), hostName.Value, validationProperties.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProfileName))
+            {
+                builder.Append("  profileName:");
+                builder.AppendLine($" '{ProfileName}'");
+            }
+
+            if (Optional.IsDefined(TlsSettings))
+            {
+                builder.Append("  tlsSettings:");
+                AppendChildObject(builder, TlsSettings, options, 2);
+            }
+
+            if (Optional.IsDefined(DnsZone))
+            {
+                builder.Append("  azureDnsZone:");
+                AppendChildObject(builder, DnsZone, options, 2);
+            }
+
+            if (Optional.IsDefined(PreValidatedCustomDomainResource))
+            {
+                builder.Append("  preValidatedCustomDomainResourceId:");
+                AppendChildObject(builder, PreValidatedCustomDomainResource, options, 2);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DeploymentStatus))
+            {
+                builder.Append("  deploymentStatus:");
+                builder.AppendLine($" '{DeploymentStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DomainValidationState))
+            {
+                builder.Append("  domainValidationState:");
+                builder.AppendLine($" '{DomainValidationState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HostName))
+            {
+                builder.Append("  hostName:");
+                builder.AppendLine($" '{HostName}'");
+            }
+
+            if (Optional.IsDefined(ValidationProperties))
+            {
+                builder.Append("  validationProperties:");
+                AppendChildObject(builder, ValidationProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<FrontDoorCustomDomainData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainData>)this).GetFormatFromOptions(options) : options.Format;
@@ -286,6 +385,8 @@ namespace Azure.ResourceManager.Cdn
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FrontDoorCustomDomainData)} does not support '{options.Format}' format.");
             }
@@ -302,6 +403,8 @@ namespace Azure.ResourceManager.Cdn
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFrontDoorCustomDomainData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FrontDoorCustomDomainData)} does not support '{options.Format}' format.");
             }

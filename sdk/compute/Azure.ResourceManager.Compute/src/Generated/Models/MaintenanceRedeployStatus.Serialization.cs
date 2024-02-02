@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class MaintenanceRedeployStatus : IUtf8JsonSerializable, IJsonModel<MaintenanceRedeployStatus>
+    public partial class MaintenanceRedeployStatus : IUtf8JsonSerializable, IJsonModel<MaintenanceRedeployStatus>, IPersistableModel<MaintenanceRedeployStatus>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaintenanceRedeployStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -178,6 +179,69 @@ namespace Azure.ResourceManager.Compute.Models
             return new MaintenanceRedeployStatus(Optional.ToNullable(isCustomerInitiatedMaintenanceAllowed), Optional.ToNullable(preMaintenanceWindowStartTime), Optional.ToNullable(preMaintenanceWindowEndTime), Optional.ToNullable(maintenanceWindowStartTime), Optional.ToNullable(maintenanceWindowEndTime), Optional.ToNullable(lastOperationResultCode), lastOperationMessage.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(IsCustomerInitiatedMaintenanceAllowed))
+            {
+                builder.Append("  isCustomerInitiatedMaintenanceAllowed:");
+                var boolValue = IsCustomerInitiatedMaintenanceAllowed.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(PreMaintenanceWindowStartOn))
+            {
+                builder.Append("  preMaintenanceWindowStartTime:");
+                builder.AppendLine($" '{PreMaintenanceWindowStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PreMaintenanceWindowEndOn))
+            {
+                builder.Append("  preMaintenanceWindowEndTime:");
+                builder.AppendLine($" '{PreMaintenanceWindowEndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaintenanceWindowStartOn))
+            {
+                builder.Append("  maintenanceWindowStartTime:");
+                builder.AppendLine($" '{MaintenanceWindowStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaintenanceWindowEndOn))
+            {
+                builder.Append("  maintenanceWindowEndTime:");
+                builder.AppendLine($" '{MaintenanceWindowEndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastOperationResultCode))
+            {
+                builder.Append("  lastOperationResultCode:");
+                builder.AppendLine($" '{LastOperationResultCode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastOperationMessage))
+            {
+                builder.Append("  lastOperationMessage:");
+                builder.AppendLine($" '{LastOperationMessage}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MaintenanceRedeployStatus>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceRedeployStatus>)this).GetFormatFromOptions(options) : options.Format;
@@ -186,6 +250,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MaintenanceRedeployStatus)} does not support '{options.Format}' format.");
             }
@@ -202,6 +268,8 @@ namespace Azure.ResourceManager.Compute.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMaintenanceRedeployStatus(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MaintenanceRedeployStatus)} does not support '{options.Format}' format.");
             }

@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiManagementCacheData : IUtf8JsonSerializable, IJsonModel<ApiManagementCacheData>
+    public partial class ApiManagementCacheData : IUtf8JsonSerializable, IJsonModel<ApiManagementCacheData>, IPersistableModel<ApiManagementCacheData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementCacheData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -189,6 +190,74 @@ namespace Azure.ResourceManager.ApiManagement
             return new ApiManagementCacheData(id, name, type, systemData.Value, description.Value, connectionString.Value, useFromLocation.Value, resourceId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(ConnectionString))
+            {
+                builder.Append("  connectionString:");
+                builder.AppendLine($" '{ConnectionString}'");
+            }
+
+            if (Optional.IsDefined(UseFromLocation))
+            {
+                builder.Append("  useFromLocation:");
+                builder.AppendLine($" '{UseFromLocation}'");
+            }
+
+            if (Optional.IsDefined(ResourceUri))
+            {
+                builder.Append("  resourceId:");
+                builder.AppendLine($" '{ResourceUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ApiManagementCacheData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementCacheData>)this).GetFormatFromOptions(options) : options.Format;
@@ -197,6 +266,8 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApiManagementCacheData)} does not support '{options.Format}' format.");
             }
@@ -213,6 +284,8 @@ namespace Azure.ResourceManager.ApiManagement
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeApiManagementCacheData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ApiManagementCacheData)} does not support '{options.Format}' format.");
             }

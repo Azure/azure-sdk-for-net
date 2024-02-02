@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AlertsManagement.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AlertsManagement
 {
-    public partial class SmartGroupData : IUtf8JsonSerializable, IJsonModel<SmartGroupData>
+    public partial class SmartGroupData : IUtf8JsonSerializable, IJsonModel<SmartGroupData>, IPersistableModel<SmartGroupData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SmartGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -414,6 +415,169 @@ namespace Azure.ResourceManager.AlertsManagement
             return new SmartGroupData(id, name, type, systemData.Value, Optional.ToNullable(alertsCount), Optional.ToNullable(smartGroupState), Optional.ToNullable(severity), Optional.ToNullable(startDateTime), Optional.ToNullable(lastModifiedDateTime), lastModifiedUserName.Value, Optional.ToList(resources), Optional.ToList(resourceTypes), Optional.ToList(resourceGroups), Optional.ToList(monitorServices), Optional.ToList(monitorConditions), Optional.ToList(alertStates), Optional.ToList(alertSeverities), nextLink.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AlertsCount))
+            {
+                builder.Append("  alertsCount:");
+                builder.AppendLine($" '{AlertsCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SmartGroupState))
+            {
+                builder.Append("  smartGroupState:");
+                builder.AppendLine($" '{SmartGroupState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Severity))
+            {
+                builder.Append("  severity:");
+                builder.AppendLine($" '{Severity.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startDateTime:");
+                builder.AppendLine($" '{StartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                builder.Append("  lastModifiedDateTime:");
+                builder.AppendLine($" '{LastModifiedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastModifiedBy))
+            {
+                builder.Append("  lastModifiedUserName:");
+                builder.AppendLine($" '{LastModifiedBy}'");
+            }
+
+            if (Optional.IsCollectionDefined(Resources))
+            {
+                builder.Append("  resources:");
+                builder.AppendLine(" [");
+                foreach (var item in Resources)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ResourceTypes))
+            {
+                builder.Append("  resourceTypes:");
+                builder.AppendLine(" [");
+                foreach (var item in ResourceTypes)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ResourceGroups))
+            {
+                builder.Append("  resourceGroups:");
+                builder.AppendLine(" [");
+                foreach (var item in ResourceGroups)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(MonitorServices))
+            {
+                builder.Append("  monitorServices:");
+                builder.AppendLine(" [");
+                foreach (var item in MonitorServices)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(MonitorConditions))
+            {
+                builder.Append("  monitorConditions:");
+                builder.AppendLine(" [");
+                foreach (var item in MonitorConditions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(AlertStates))
+            {
+                builder.Append("  alertStates:");
+                builder.AppendLine(" [");
+                foreach (var item in AlertStates)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(AlertSeverities))
+            {
+                builder.Append("  alertSeverities:");
+                builder.AppendLine(" [");
+                foreach (var item in AlertSeverities)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(NextLink))
+            {
+                builder.Append("  nextLink:");
+                builder.AppendLine($" '{NextLink}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SmartGroupData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SmartGroupData>)this).GetFormatFromOptions(options) : options.Format;
@@ -422,6 +586,8 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SmartGroupData)} does not support '{options.Format}' format.");
             }
@@ -438,6 +604,8 @@ namespace Azure.ResourceManager.AlertsManagement
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSmartGroupData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SmartGroupData)} does not support '{options.Format}' format.");
             }

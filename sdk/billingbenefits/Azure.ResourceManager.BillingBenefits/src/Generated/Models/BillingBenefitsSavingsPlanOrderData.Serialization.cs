@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.BillingBenefits.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BillingBenefits
 {
-    public partial class BillingBenefitsSavingsPlanOrderData : IUtf8JsonSerializable, IJsonModel<BillingBenefitsSavingsPlanOrderData>
+    public partial class BillingBenefitsSavingsPlanOrderData : IUtf8JsonSerializable, IJsonModel<BillingBenefitsSavingsPlanOrderData>, IPersistableModel<BillingBenefitsSavingsPlanOrderData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingBenefitsSavingsPlanOrderData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -347,6 +348,144 @@ namespace Azure.ResourceManager.BillingBenefits
             return new BillingBenefitsSavingsPlanOrderData(id, name, type, systemData.Value, sku, displayName.Value, Optional.ToNullable(provisioningState), billingScopeId.Value, billingProfileId.Value, customerId.Value, billingAccountId.Value, Optional.ToNullable(term), Optional.ToNullable(billingPlan), Optional.ToNullable(expiryDateTime), Optional.ToNullable(benefitStartTime), planInformation.Value, Optional.ToList(savingsPlans), extendedStatusInfo.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BillingScopeId))
+            {
+                builder.Append("  billingScopeId:");
+                builder.AppendLine($" '{BillingScopeId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BillingProfileId))
+            {
+                builder.Append("  billingProfileId:");
+                builder.AppendLine($" '{BillingProfileId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CustomerId))
+            {
+                builder.Append("  customerId:");
+                builder.AppendLine($" '{CustomerId}'");
+            }
+
+            if (Optional.IsDefined(BillingAccountId))
+            {
+                builder.Append("  billingAccountId:");
+                builder.AppendLine($" '{BillingAccountId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Term))
+            {
+                builder.Append("  term:");
+                builder.AppendLine($" '{Term.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BillingPlan))
+            {
+                builder.Append("  billingPlan:");
+                builder.AppendLine($" '{BillingPlan.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExpireOn))
+            {
+                builder.Append("  expiryDateTime:");
+                builder.AppendLine($" '{ExpireOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BenefitStartOn))
+            {
+                builder.Append("  benefitStartTime:");
+                builder.AppendLine($" '{BenefitStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PlanInformation))
+            {
+                builder.Append("  planInformation:");
+                AppendChildObject(builder, PlanInformation, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(SavingsPlans))
+            {
+                builder.Append("  savingsPlans:");
+                builder.AppendLine(" [");
+                foreach (var item in SavingsPlans)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ExtendedStatusInfo))
+            {
+                builder.Append("  extendedStatusInfo:");
+                AppendChildObject(builder, ExtendedStatusInfo, options, 2);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BillingBenefitsSavingsPlanOrderData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BillingBenefitsSavingsPlanOrderData>)this).GetFormatFromOptions(options) : options.Format;
@@ -355,6 +494,8 @@ namespace Azure.ResourceManager.BillingBenefits
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanOrderData)} does not support '{options.Format}' format.");
             }
@@ -371,6 +512,8 @@ namespace Azure.ResourceManager.BillingBenefits
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBillingBenefitsSavingsPlanOrderData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BillingBenefitsSavingsPlanOrderData)} does not support '{options.Format}' format.");
             }

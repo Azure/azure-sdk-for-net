@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppAvailableWorkloadProfileProperties : IUtf8JsonSerializable, IJsonModel<ContainerAppAvailableWorkloadProfileProperties>
+    public partial class ContainerAppAvailableWorkloadProfileProperties : IUtf8JsonSerializable, IJsonModel<ContainerAppAvailableWorkloadProfileProperties>, IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppAvailableWorkloadProfileProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -144,6 +145,56 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppAvailableWorkloadProfileProperties(category.Value, Optional.ToNullable(applicability), Optional.ToNullable(cores), Optional.ToNullable(memoryGiB), displayName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Category))
+            {
+                builder.Append("  category:");
+                builder.AppendLine($" '{Category}'");
+            }
+
+            if (Optional.IsDefined(Applicability))
+            {
+                builder.Append("  applicability:");
+                builder.AppendLine($" '{Applicability.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Cores))
+            {
+                builder.Append("  cores:");
+                builder.AppendLine($" '{Cores.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MemoryInGiB))
+            {
+                builder.Append("  memoryGiB:");
+                builder.AppendLine($" '{MemoryInGiB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("  displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAvailableWorkloadProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -152,6 +203,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfileProperties)} does not support '{options.Format}' format.");
             }
@@ -168,6 +221,8 @@ namespace Azure.ResourceManager.AppContainers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerAppAvailableWorkloadProfileProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerAppAvailableWorkloadProfileProperties)} does not support '{options.Format}' format.");
             }

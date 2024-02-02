@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class ProductAvailabilityInformation : IUtf8JsonSerializable, IJsonModel<ProductAvailabilityInformation>
+    public partial class ProductAvailabilityInformation : IUtf8JsonSerializable, IJsonModel<ProductAvailabilityInformation>, IPersistableModel<ProductAvailabilityInformation>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProductAvailabilityInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -118,6 +119,44 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ProductAvailabilityInformation(Optional.ToNullable(availabilityStage), Optional.ToNullable(disabledReason), disabledReasonMessage.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AvailabilityStage))
+            {
+                builder.Append("  availabilityStage:");
+                builder.AppendLine($" '{AvailabilityStage.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DisabledReason))
+            {
+                builder.Append("  disabledReason:");
+                builder.AppendLine($" '{DisabledReason.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DisabledReasonMessage))
+            {
+                builder.Append("  disabledReasonMessage:");
+                builder.AppendLine($" '{DisabledReasonMessage}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ProductAvailabilityInformation>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ProductAvailabilityInformation>)this).GetFormatFromOptions(options) : options.Format;
@@ -126,6 +165,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ProductAvailabilityInformation)} does not support '{options.Format}' format.");
             }
@@ -142,6 +183,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeProductAvailabilityInformation(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ProductAvailabilityInformation)} does not support '{options.Format}' format.");
             }

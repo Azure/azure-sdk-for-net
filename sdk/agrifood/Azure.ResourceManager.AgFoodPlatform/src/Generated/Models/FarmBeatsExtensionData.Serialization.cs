@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AgFoodPlatform.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AgFoodPlatform
 {
-    public partial class FarmBeatsExtensionData : IUtf8JsonSerializable, IJsonModel<FarmBeatsExtensionData>
+    public partial class FarmBeatsExtensionData : IUtf8JsonSerializable, IJsonModel<FarmBeatsExtensionData>, IPersistableModel<FarmBeatsExtensionData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FarmBeatsExtensionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -266,6 +267,115 @@ namespace Azure.ResourceManager.AgFoodPlatform
             return new FarmBeatsExtensionData(id, name, type, systemData.Value, targetResourceType.Value, farmBeatsExtensionId.Value, farmBeatsExtensionName.Value, farmBeatsExtensionVersion.Value, publisherId.Value, description.Value, extensionCategory.Value, extensionAuthLink.Value, extensionApiDocsLink.Value, Optional.ToList(detailedInformation), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TargetResourceType))
+            {
+                builder.Append("  targetResourceType:");
+                builder.AppendLine($" '{TargetResourceType}'");
+            }
+
+            if (Optional.IsDefined(FarmBeatsExtensionId))
+            {
+                builder.Append("  farmBeatsExtensionId:");
+                builder.AppendLine($" '{FarmBeatsExtensionId}'");
+            }
+
+            if (Optional.IsDefined(FarmBeatsExtensionName))
+            {
+                builder.Append("  farmBeatsExtensionName:");
+                builder.AppendLine($" '{FarmBeatsExtensionName}'");
+            }
+
+            if (Optional.IsDefined(FarmBeatsExtensionVersion))
+            {
+                builder.Append("  farmBeatsExtensionVersion:");
+                builder.AppendLine($" '{FarmBeatsExtensionVersion}'");
+            }
+
+            if (Optional.IsDefined(PublisherId))
+            {
+                builder.Append("  publisherId:");
+                builder.AppendLine($" '{PublisherId}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(ExtensionCategory))
+            {
+                builder.Append("  extensionCategory:");
+                builder.AppendLine($" '{ExtensionCategory}'");
+            }
+
+            if (Optional.IsDefined(ExtensionAuthLink))
+            {
+                builder.Append("  extensionAuthLink:");
+                builder.AppendLine($" '{ExtensionAuthLink}'");
+            }
+
+            if (Optional.IsDefined(ExtensionApiDocsLink))
+            {
+                builder.Append("  extensionApiDocsLink:");
+                builder.AppendLine($" '{ExtensionApiDocsLink}'");
+            }
+
+            if (Optional.IsCollectionDefined(DetailedInformation))
+            {
+                builder.Append("  detailedInformation:");
+                builder.AppendLine(" [");
+                foreach (var item in DetailedInformation)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<FarmBeatsExtensionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FarmBeatsExtensionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -274,6 +384,8 @@ namespace Azure.ResourceManager.AgFoodPlatform
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FarmBeatsExtensionData)} does not support '{options.Format}' format.");
             }
@@ -290,6 +402,8 @@ namespace Azure.ResourceManager.AgFoodPlatform
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFarmBeatsExtensionData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FarmBeatsExtensionData)} does not support '{options.Format}' format.");
             }

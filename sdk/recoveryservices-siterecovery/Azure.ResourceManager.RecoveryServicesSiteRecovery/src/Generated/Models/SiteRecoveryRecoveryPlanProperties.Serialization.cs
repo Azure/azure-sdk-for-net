@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryRecoveryPlanProperties : IUtf8JsonSerializable, IJsonModel<SiteRecoveryRecoveryPlanProperties>
+    public partial class SiteRecoveryRecoveryPlanProperties : IUtf8JsonSerializable, IJsonModel<SiteRecoveryRecoveryPlanProperties>, IPersistableModel<SiteRecoveryRecoveryPlanProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryRecoveryPlanProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -333,6 +334,152 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryRecoveryPlanProperties(friendlyName.Value, primaryFabricId.Value, primaryFabricFriendlyName.Value, recoveryFabricId.Value, recoveryFabricFriendlyName.Value, failoverDeploymentModel.Value, Optional.ToList(replicationProviders), Optional.ToList(allowedOperations), Optional.ToNullable(lastPlannedFailoverTime), Optional.ToNullable(lastUnplannedFailoverTime), Optional.ToNullable(lastTestFailoverTime), currentScenario.Value, currentScenarioStatus.Value, currentScenarioStatusDescription.Value, Optional.ToList(groups), Optional.ToList(providerSpecificDetails), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsDefined(PrimaryFabricId))
+            {
+                builder.Append("  primaryFabricId:");
+                builder.AppendLine($" '{PrimaryFabricId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrimaryFabricFriendlyName))
+            {
+                builder.Append("  primaryFabricFriendlyName:");
+                builder.AppendLine($" '{PrimaryFabricFriendlyName}'");
+            }
+
+            if (Optional.IsDefined(RecoveryFabricId))
+            {
+                builder.Append("  recoveryFabricId:");
+                builder.AppendLine($" '{RecoveryFabricId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RecoveryFabricFriendlyName))
+            {
+                builder.Append("  recoveryFabricFriendlyName:");
+                builder.AppendLine($" '{RecoveryFabricFriendlyName}'");
+            }
+
+            if (Optional.IsDefined(FailoverDeploymentModel))
+            {
+                builder.Append("  failoverDeploymentModel:");
+                builder.AppendLine($" '{FailoverDeploymentModel}'");
+            }
+
+            if (Optional.IsCollectionDefined(ReplicationProviders))
+            {
+                builder.Append("  replicationProviders:");
+                builder.AppendLine(" [");
+                foreach (var item in ReplicationProviders)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(AllowedOperations))
+            {
+                builder.Append("  allowedOperations:");
+                builder.AppendLine(" [");
+                foreach (var item in AllowedOperations)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(LastPlannedFailoverOn))
+            {
+                builder.Append("  lastPlannedFailoverTime:");
+                builder.AppendLine($" '{LastPlannedFailoverOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastUnplannedFailoverOn))
+            {
+                builder.Append("  lastUnplannedFailoverTime:");
+                builder.AppendLine($" '{LastUnplannedFailoverOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastTestFailoverOn))
+            {
+                builder.Append("  lastTestFailoverTime:");
+                builder.AppendLine($" '{LastTestFailoverOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CurrentScenario))
+            {
+                builder.Append("  currentScenario:");
+                AppendChildObject(builder, CurrentScenario, options, 2);
+            }
+
+            if (Optional.IsDefined(CurrentScenarioStatus))
+            {
+                builder.Append("  currentScenarioStatus:");
+                builder.AppendLine($" '{CurrentScenarioStatus}'");
+            }
+
+            if (Optional.IsDefined(CurrentScenarioStatusDescription))
+            {
+                builder.Append("  currentScenarioStatusDescription:");
+                builder.AppendLine($" '{CurrentScenarioStatusDescription}'");
+            }
+
+            if (Optional.IsCollectionDefined(Groups))
+            {
+                builder.Append("  groups:");
+                builder.AppendLine(" [");
+                foreach (var item in Groups)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ProviderSpecificDetails))
+            {
+                builder.Append("  providerSpecificDetails:");
+                builder.AppendLine(" [");
+                foreach (var item in ProviderSpecificDetails)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SiteRecoveryRecoveryPlanProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryRecoveryPlanProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -341,6 +488,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryRecoveryPlanProperties)} does not support '{options.Format}' format.");
             }
@@ -357,6 +506,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSiteRecoveryRecoveryPlanProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryRecoveryPlanProperties)} does not support '{options.Format}' format.");
             }

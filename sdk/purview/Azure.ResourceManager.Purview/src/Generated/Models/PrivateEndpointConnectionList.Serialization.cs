@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    internal partial class PrivateEndpointConnectionList : IUtf8JsonSerializable, IJsonModel<PrivateEndpointConnectionList>
+    internal partial class PrivateEndpointConnectionList : IUtf8JsonSerializable, IJsonModel<PrivateEndpointConnectionList>, IPersistableModel<PrivateEndpointConnectionList>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateEndpointConnectionList>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -122,6 +123,49 @@ namespace Azure.ResourceManager.Purview.Models
             return new PrivateEndpointConnectionList(Optional.ToNullable(count), nextLink.Value, value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Count))
+            {
+                builder.Append("  count:");
+                builder.AppendLine($" '{Count.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NextLink))
+            {
+                builder.Append("  nextLink:");
+                builder.AppendLine($" '{NextLink}'");
+            }
+
+            if (Optional.IsCollectionDefined(Value))
+            {
+                builder.Append("  value:");
+                builder.AppendLine(" [");
+                foreach (var item in Value)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PrivateEndpointConnectionList>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionList>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,6 +174,8 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PrivateEndpointConnectionList)} does not support '{options.Format}' format.");
             }
@@ -146,6 +192,8 @@ namespace Azure.ResourceManager.Purview.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePrivateEndpointConnectionList(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PrivateEndpointConnectionList)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ActionIPExtendedCommunityProperties : IUtf8JsonSerializable, IJsonModel<ActionIPExtendedCommunityProperties>
+    public partial class ActionIPExtendedCommunityProperties : IUtf8JsonSerializable, IJsonModel<ActionIPExtendedCommunityProperties>, IPersistableModel<ActionIPExtendedCommunityProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActionIPExtendedCommunityProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -122,6 +123,44 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ActionIPExtendedCommunityProperties(@add.Value, serializedAdditionalRawData, delete.Value, @set.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Delete))
+            {
+                builder.Append("  delete:");
+                AppendChildObject(builder, Delete, options, 2);
+            }
+
+            if (Optional.IsDefined(Set))
+            {
+                builder.Append("  set:");
+                AppendChildObject(builder, Set, options, 2);
+            }
+
+            if (Optional.IsDefined(Add))
+            {
+                builder.Append("  add:");
+                AppendChildObject(builder, Add, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ActionIPExtendedCommunityProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ActionIPExtendedCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,6 +169,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ActionIPExtendedCommunityProperties)} does not support '{options.Format}' format.");
             }
@@ -146,6 +187,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeActionIPExtendedCommunityProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ActionIPExtendedCommunityProperties)} does not support '{options.Format}' format.");
             }

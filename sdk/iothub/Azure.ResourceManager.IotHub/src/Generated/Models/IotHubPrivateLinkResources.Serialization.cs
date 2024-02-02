@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    internal partial class IotHubPrivateLinkResources : IUtf8JsonSerializable, IJsonModel<IotHubPrivateLinkResources>
+    internal partial class IotHubPrivateLinkResources : IUtf8JsonSerializable, IJsonModel<IotHubPrivateLinkResources>, IPersistableModel<IotHubPrivateLinkResources>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubPrivateLinkResources>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -103,6 +104,37 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubPrivateLinkResources(Optional.ToList(value), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Value))
+            {
+                builder.Append("  value:");
+                builder.AppendLine(" [");
+                foreach (var item in Value)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<IotHubPrivateLinkResources>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IotHubPrivateLinkResources>)this).GetFormatFromOptions(options) : options.Format;
@@ -111,6 +143,8 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IotHubPrivateLinkResources)} does not support '{options.Format}' format.");
             }
@@ -127,6 +161,8 @@ namespace Azure.ResourceManager.IotHub.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeIotHubPrivateLinkResources(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(IotHubPrivateLinkResources)} does not support '{options.Format}' format.");
             }

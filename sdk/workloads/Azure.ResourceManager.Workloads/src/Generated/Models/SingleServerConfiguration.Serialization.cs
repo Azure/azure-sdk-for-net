@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SingleServerConfiguration : IUtf8JsonSerializable, IJsonModel<SingleServerConfiguration>
+    public partial class SingleServerConfiguration : IUtf8JsonSerializable, IJsonModel<SingleServerConfiguration>, IPersistableModel<SingleServerConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SingleServerConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -169,6 +170,74 @@ namespace Azure.ResourceManager.Workloads.Models
             return new SingleServerConfiguration(deploymentType, appResourceGroup, serializedAdditionalRawData, networkConfiguration.Value, Optional.ToNullable(databaseType), subnetId, virtualMachineConfiguration, dbDiskConfiguration.Value, customResourceNames.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(NetworkConfiguration))
+            {
+                builder.Append("  networkConfiguration:");
+                AppendChildObject(builder, NetworkConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(DatabaseType))
+            {
+                builder.Append("  databaseType:");
+                builder.AppendLine($" '{DatabaseType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SubnetId))
+            {
+                builder.Append("  subnetId:");
+                builder.AppendLine($" '{SubnetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VirtualMachineConfiguration))
+            {
+                builder.Append("  virtualMachineConfiguration:");
+                AppendChildObject(builder, VirtualMachineConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(DBDiskConfiguration))
+            {
+                builder.Append("  dbDiskConfiguration:");
+                AppendChildObject(builder, DBDiskConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(CustomResourceNames))
+            {
+                builder.Append("  customResourceNames:");
+                AppendChildObject(builder, CustomResourceNames, options, 2);
+            }
+
+            if (Optional.IsDefined(DeploymentType))
+            {
+                builder.Append("  deploymentType:");
+                builder.AppendLine($" '{DeploymentType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AppResourceGroup))
+            {
+                builder.Append("  appResourceGroup:");
+                builder.AppendLine($" '{AppResourceGroup}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SingleServerConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SingleServerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -177,6 +246,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support '{options.Format}' format.");
             }
@@ -193,6 +264,8 @@ namespace Azure.ResourceManager.Workloads.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSingleServerConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SingleServerConfiguration)} does not support '{options.Format}' format.");
             }

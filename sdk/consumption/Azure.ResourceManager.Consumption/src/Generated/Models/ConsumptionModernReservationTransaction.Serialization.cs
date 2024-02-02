@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionModernReservationTransaction : IUtf8JsonSerializable, IJsonModel<ConsumptionModernReservationTransaction>
+    public partial class ConsumptionModernReservationTransaction : IUtf8JsonSerializable, IJsonModel<ConsumptionModernReservationTransaction>, IPersistableModel<ConsumptionModernReservationTransaction>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionModernReservationTransaction>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -414,6 +415,186 @@ namespace Azure.ResourceManager.Consumption.Models
             return new ConsumptionModernReservationTransaction(id, name, type, systemData.Value, Optional.ToNullable(amount), armSkuName.Value, billingFrequency.Value, billingProfileId.Value, billingProfileName.Value, currency.Value, description.Value, Optional.ToNullable(eventDate), eventType.Value, invoice.Value, invoiceId.Value, invoiceSectionId.Value, invoiceSectionName.Value, Optional.ToNullable(purchasingSubscriptionGuid), purchasingSubscriptionName.Value, Optional.ToNullable(quantity), region.Value, reservationOrderId.Value, reservationOrderName.Value, term.Value, Optional.ToList(tags), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Amount))
+            {
+                builder.Append("  amount:");
+                builder.AppendLine($" '{Amount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ArmSkuName))
+            {
+                builder.Append("  armSkuName:");
+                builder.AppendLine($" '{ArmSkuName}'");
+            }
+
+            if (Optional.IsDefined(BillingFrequency))
+            {
+                builder.Append("  billingFrequency:");
+                builder.AppendLine($" '{BillingFrequency}'");
+            }
+
+            if (Optional.IsDefined(BillingProfileId))
+            {
+                builder.Append("  billingProfileId:");
+                builder.AppendLine($" '{BillingProfileId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BillingProfileName))
+            {
+                builder.Append("  billingProfileName:");
+                builder.AppendLine($" '{BillingProfileName}'");
+            }
+
+            if (Optional.IsDefined(Currency))
+            {
+                builder.Append("  currency:");
+                builder.AppendLine($" '{Currency}'");
+            }
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(TransactOn))
+            {
+                builder.Append("  eventDate:");
+                builder.AppendLine($" '{TransactOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EventType))
+            {
+                builder.Append("  eventType:");
+                builder.AppendLine($" '{EventType}'");
+            }
+
+            if (Optional.IsDefined(Invoice))
+            {
+                builder.Append("  invoice:");
+                builder.AppendLine($" '{Invoice}'");
+            }
+
+            if (Optional.IsDefined(InvoiceId))
+            {
+                builder.Append("  invoiceId:");
+                builder.AppendLine($" '{InvoiceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InvoiceSectionId))
+            {
+                builder.Append("  invoiceSectionId:");
+                builder.AppendLine($" '{InvoiceSectionId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InvoiceSectionName))
+            {
+                builder.Append("  invoiceSectionName:");
+                builder.AppendLine($" '{InvoiceSectionName}'");
+            }
+
+            if (Optional.IsDefined(PurchasingSubscriptionGuid))
+            {
+                builder.Append("  purchasingSubscriptionGuid:");
+                builder.AppendLine($" '{PurchasingSubscriptionGuid.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PurchasingSubscriptionName))
+            {
+                builder.Append("  purchasingSubscriptionName:");
+                builder.AppendLine($" '{PurchasingSubscriptionName}'");
+            }
+
+            if (Optional.IsDefined(Quantity))
+            {
+                builder.Append("  quantity:");
+                builder.AppendLine($" '{Quantity.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Region))
+            {
+                builder.Append("  region:");
+                builder.AppendLine($" '{Region}'");
+            }
+
+            if (Optional.IsDefined(ReservationOrderId))
+            {
+                builder.Append("  reservationOrderId:");
+                builder.AppendLine($" '{ReservationOrderId}'");
+            }
+
+            if (Optional.IsDefined(ReservationOrderName))
+            {
+                builder.Append("  reservationOrderName:");
+                builder.AppendLine($" '{ReservationOrderName}'");
+            }
+
+            if (Optional.IsDefined(Term))
+            {
+                builder.Append("  term:");
+                builder.AppendLine($" '{Term}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" [");
+                foreach (var item in Tags)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ConsumptionModernReservationTransaction>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernReservationTransaction>)this).GetFormatFromOptions(options) : options.Format;
@@ -422,6 +603,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionModernReservationTransaction)} does not support '{options.Format}' format.");
             }
@@ -438,6 +621,8 @@ namespace Azure.ResourceManager.Consumption.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConsumptionModernReservationTransaction(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionModernReservationTransaction)} does not support '{options.Format}' format.");
             }

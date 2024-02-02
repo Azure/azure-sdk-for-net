@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
-    public partial class FreeTrialProperties : IUtf8JsonSerializable, IJsonModel<FreeTrialProperties>
+    public partial class FreeTrialProperties : IUtf8JsonSerializable, IJsonModel<FreeTrialProperties>, IPersistableModel<FreeTrialProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FreeTrialProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -154,6 +155,68 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             return new FreeTrialProperties(accountId, createdAt, expiryAt, allocatedValue, usedValue, percentageUsed, state, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AccountId))
+            {
+                builder.Append("  accountId:");
+                builder.AppendLine($" '{AccountId}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdAt:");
+                builder.AppendLine($" '{CreatedOn.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExpiryOn))
+            {
+                builder.Append("  expiryAt:");
+                builder.AppendLine($" '{ExpiryOn.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AllocatedValue))
+            {
+                builder.Append("  allocatedValue:");
+                builder.AppendLine($" '{AllocatedValue.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UsedValue))
+            {
+                builder.Append("  usedValue:");
+                builder.AppendLine($" '{UsedValue.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PercentageUsed))
+            {
+                builder.Append("  percentageUsed:");
+                builder.AppendLine($" '{PercentageUsed.ToString()}'");
+            }
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<FreeTrialProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FreeTrialProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -162,6 +225,8 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FreeTrialProperties)} does not support '{options.Format}' format.");
             }
@@ -178,6 +243,8 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFreeTrialProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FreeTrialProperties)} does not support '{options.Format}' format.");
             }

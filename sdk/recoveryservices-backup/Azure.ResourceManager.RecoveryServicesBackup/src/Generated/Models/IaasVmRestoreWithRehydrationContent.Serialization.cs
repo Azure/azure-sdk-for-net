@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmRestoreWithRehydrationContent : IUtf8JsonSerializable, IJsonModel<IaasVmRestoreWithRehydrationContent>
+    public partial class IaasVmRestoreWithRehydrationContent : IUtf8JsonSerializable, IJsonModel<IaasVmRestoreWithRehydrationContent>, IPersistableModel<IaasVmRestoreWithRehydrationContent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IaasVmRestoreWithRehydrationContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -454,6 +455,194 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new IaasVmRestoreWithRehydrationContent(objectType, serializedAdditionalRawData, recoveryPointId.Value, Optional.ToNullable(recoveryType), sourceResourceId.Value, targetVirtualMachineId.Value, targetResourceGroupId.Value, storageAccountId.Value, virtualNetworkId.Value, subnetId.Value, targetDomainNameId.Value, Optional.ToNullable(region), affinityGroup.Value, Optional.ToNullable(createNewCloudService), Optional.ToNullable(originalStorageAccountOption), encryptionDetails.Value, Optional.ToList(restoreDiskLunList), Optional.ToNullable(restoreWithManagedDisks), diskEncryptionSetId.Value, Optional.ToList(zones), identityInfo.Value, identityBasedRestoreDetails.Value, extendedLocation, securedVmDetails.Value, targetDiskNetworkAccessSettings.Value, recoveryPointRehydrationInfo.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(RecoveryPointRehydrationInfo))
+            {
+                builder.Append("  recoveryPointRehydrationInfo:");
+                AppendChildObject(builder, RecoveryPointRehydrationInfo, options, 2);
+            }
+
+            if (Optional.IsDefined(RecoveryPointId))
+            {
+                builder.Append("  recoveryPointId:");
+                builder.AppendLine($" '{RecoveryPointId}'");
+            }
+
+            if (Optional.IsDefined(RecoveryType))
+            {
+                builder.Append("  recoveryType:");
+                builder.AppendLine($" '{RecoveryType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceResourceId))
+            {
+                builder.Append("  sourceResourceId:");
+                builder.AppendLine($" '{SourceResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetVirtualMachineId))
+            {
+                builder.Append("  targetVirtualMachineId:");
+                builder.AppendLine($" '{TargetVirtualMachineId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetResourceGroupId))
+            {
+                builder.Append("  targetResourceGroupId:");
+                builder.AppendLine($" '{TargetResourceGroupId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StorageAccountId))
+            {
+                builder.Append("  storageAccountId:");
+                builder.AppendLine($" '{StorageAccountId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VirtualNetworkId))
+            {
+                builder.Append("  virtualNetworkId:");
+                builder.AppendLine($" '{VirtualNetworkId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SubnetId))
+            {
+                builder.Append("  subnetId:");
+                builder.AppendLine($" '{SubnetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetDomainNameId))
+            {
+                builder.Append("  targetDomainNameId:");
+                builder.AppendLine($" '{TargetDomainNameId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Region))
+            {
+                builder.Append("  region:");
+                builder.AppendLine($" '{Region.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AffinityGroup))
+            {
+                builder.Append("  affinityGroup:");
+                builder.AppendLine($" '{AffinityGroup}'");
+            }
+
+            if (Optional.IsDefined(DoesCreateNewCloudService))
+            {
+                builder.Append("  createNewCloudService:");
+                var boolValue = DoesCreateNewCloudService.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(OriginalStorageAccountOption))
+            {
+                builder.Append("  originalStorageAccountOption:");
+                var boolValue = OriginalStorageAccountOption.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EncryptionDetails))
+            {
+                builder.Append("  encryptionDetails:");
+                AppendChildObject(builder, EncryptionDetails, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(RestoreDiskLunList))
+            {
+                builder.Append("  restoreDiskLunList:");
+                builder.AppendLine(" [");
+                foreach (var item in RestoreDiskLunList)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(DoesRestoreWithManagedDisks))
+            {
+                builder.Append("  restoreWithManagedDisks:");
+                var boolValue = DoesRestoreWithManagedDisks.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DiskEncryptionSetId))
+            {
+                builder.Append("  diskEncryptionSetId:");
+                builder.AppendLine($" '{DiskEncryptionSetId}'");
+            }
+
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                builder.Append("  zones:");
+                builder.AppendLine(" [");
+                foreach (var item in Zones)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IdentityInfo))
+            {
+                builder.Append("  identityInfo:");
+                AppendChildObject(builder, IdentityInfo, options, 2);
+            }
+
+            if (Optional.IsDefined(IdentityBasedRestoreDetails))
+            {
+                builder.Append("  identityBasedRestoreDetails:");
+                AppendChildObject(builder, IdentityBasedRestoreDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                builder.Append("  extendedLocation:");
+                AppendChildObject(builder, ExtendedLocation, options, 2);
+            }
+
+            if (Optional.IsDefined(SecuredVmDetails))
+            {
+                builder.Append("  securedVMDetails:");
+                AppendChildObject(builder, SecuredVmDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(TargetDiskNetworkAccessSettings))
+            {
+                builder.Append("  targetDiskNetworkAccessSettings:");
+                AppendChildObject(builder, TargetDiskNetworkAccessSettings, options, 2);
+            }
+
+            if (Optional.IsDefined(ObjectType))
+            {
+                builder.Append("  objectType:");
+                builder.AppendLine($" '{ObjectType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<IaasVmRestoreWithRehydrationContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IaasVmRestoreWithRehydrationContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -462,6 +651,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IaasVmRestoreWithRehydrationContent)} does not support '{options.Format}' format.");
             }
@@ -478,6 +669,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeIaasVmRestoreWithRehydrationContent(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(IaasVmRestoreWithRehydrationContent)} does not support '{options.Format}' format.");
             }

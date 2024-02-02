@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class PathRecommendation : IUtf8JsonSerializable, IJsonModel<PathRecommendation>
+    public partial class PathRecommendation : IUtf8JsonSerializable, IJsonModel<PathRecommendation>, IPersistableModel<PathRecommendation>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PathRecommendation>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -228,6 +229,96 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new PathRecommendation(path.Value, Optional.ToNullable(action), Optional.ToNullable(type), publisherInfo.Value, Optional.ToNullable(common), Optional.ToList(userSids), Optional.ToList(usernames), Optional.ToNullable(fileType), Optional.ToNullable(configurationStatus), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Path))
+            {
+                builder.Append("  path:");
+                builder.AppendLine($" '{Path}'");
+            }
+
+            if (Optional.IsDefined(Action))
+            {
+                builder.Append("  action:");
+                builder.AppendLine($" '{Action.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IotSecurityRecommendationType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{IotSecurityRecommendationType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PublisherInfo))
+            {
+                builder.Append("  publisherInfo:");
+                AppendChildObject(builder, PublisherInfo, options, 2);
+            }
+
+            if (Optional.IsDefined(IsCommon))
+            {
+                builder.Append("  common:");
+                var boolValue = IsCommon.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(UserSids))
+            {
+                builder.Append("  userSids:");
+                builder.AppendLine(" [");
+                foreach (var item in UserSids)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Usernames))
+            {
+                builder.Append("  usernames:");
+                builder.AppendLine(" [");
+                foreach (var item in Usernames)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(FileType))
+            {
+                builder.Append("  fileType:");
+                builder.AppendLine($" '{FileType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ConfigurationStatus))
+            {
+                builder.Append("  configurationStatus:");
+                builder.AppendLine($" '{ConfigurationStatus.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PathRecommendation>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PathRecommendation>)this).GetFormatFromOptions(options) : options.Format;
@@ -236,6 +327,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PathRecommendation)} does not support '{options.Format}' format.");
             }
@@ -252,6 +345,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePathRecommendation(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PathRecommendation)} does not support '{options.Format}' format.");
             }

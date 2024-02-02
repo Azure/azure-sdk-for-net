@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
-    public partial class ComplianceReportItem : IUtf8JsonSerializable, IJsonModel<ComplianceReportItem>
+    public partial class ComplianceReportItem : IUtf8JsonSerializable, IJsonModel<ComplianceReportItem>, IPersistableModel<ComplianceReportItem>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComplianceReportItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -228,6 +229,104 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new ComplianceReportItem(categoryName.Value, controlId.Value, controlName.Value, Optional.ToNullable(controlType), Optional.ToNullable(complianceState), policyId.Value, policyDisplayName.Value, policyDescription.Value, subscriptionId.Value, resourceGroup.Value, resourceType.Value, resourceId.Value, statusChangeDate.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CategoryName))
+            {
+                builder.Append("  categoryName:");
+                builder.AppendLine($" '{CategoryName}'");
+            }
+
+            if (Optional.IsDefined(ControlId))
+            {
+                builder.Append("  controlId:");
+                builder.AppendLine($" '{ControlId}'");
+            }
+
+            if (Optional.IsDefined(ControlName))
+            {
+                builder.Append("  controlName:");
+                builder.AppendLine($" '{ControlName}'");
+            }
+
+            if (Optional.IsDefined(ControlType))
+            {
+                builder.Append("  controlType:");
+                builder.AppendLine($" '{ControlType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ComplianceState))
+            {
+                builder.Append("  complianceState:");
+                builder.AppendLine($" '{ComplianceState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PolicyId))
+            {
+                builder.Append("  policyId:");
+                builder.AppendLine($" '{PolicyId}'");
+            }
+
+            if (Optional.IsDefined(PolicyDisplayName))
+            {
+                builder.Append("  policyDisplayName:");
+                builder.AppendLine($" '{PolicyDisplayName}'");
+            }
+
+            if (Optional.IsDefined(PolicyDescription))
+            {
+                builder.Append("  policyDescription:");
+                builder.AppendLine($" '{PolicyDescription}'");
+            }
+
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                builder.Append("  subscriptionId:");
+                builder.AppendLine($" '{SubscriptionId}'");
+            }
+
+            if (Optional.IsDefined(ResourceGroup))
+            {
+                builder.Append("  resourceGroup:");
+                builder.AppendLine($" '{ResourceGroup}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  resourceType:");
+                builder.AppendLine($" '{ResourceType}'");
+            }
+
+            if (Optional.IsDefined(ResourceId))
+            {
+                builder.Append("  resourceId:");
+                builder.AppendLine($" '{ResourceId}'");
+            }
+
+            if (Optional.IsDefined(StatusChangeDate))
+            {
+                builder.Append("  statusChangeDate:");
+                builder.AppendLine($" '{StatusChangeDate}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ComplianceReportItem>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ComplianceReportItem>)this).GetFormatFromOptions(options) : options.Format;
@@ -236,6 +335,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ComplianceReportItem)} does not support '{options.Format}' format.");
             }
@@ -252,6 +353,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeComplianceReportItem(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ComplianceReportItem)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupJobSubTask : IUtf8JsonSerializable, IJsonModel<BackupJobSubTask>
+    public partial class BackupJobSubTask : IUtf8JsonSerializable, IJsonModel<BackupJobSubTask>, IPersistableModel<BackupJobSubTask>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupJobSubTask>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -138,6 +139,67 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new BackupJobSubTask(Optional.ToDictionary(additionalDetails), taskId, taskName, taskProgress.Value, taskStatus, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(AdditionalDetails))
+            {
+                builder.Append("  additionalDetails:");
+                builder.AppendLine(" {");
+                foreach (var item in AdditionalDetails)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(TaskId))
+            {
+                builder.Append("  taskId:");
+                builder.AppendLine($" '{TaskId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TaskName))
+            {
+                builder.Append("  taskName:");
+                builder.AppendLine($" '{TaskName}'");
+            }
+
+            if (Optional.IsDefined(TaskProgress))
+            {
+                builder.Append("  taskProgress:");
+                builder.AppendLine($" '{TaskProgress}'");
+            }
+
+            if (Optional.IsDefined(TaskStatus))
+            {
+                builder.Append("  taskStatus:");
+                builder.AppendLine($" '{TaskStatus}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BackupJobSubTask>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackupJobSubTask>)this).GetFormatFromOptions(options) : options.Format;
@@ -146,6 +208,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BackupJobSubTask)} does not support '{options.Format}' format.");
             }
@@ -162,6 +226,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBackupJobSubTask(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BackupJobSubTask)} does not support '{options.Format}' format.");
             }

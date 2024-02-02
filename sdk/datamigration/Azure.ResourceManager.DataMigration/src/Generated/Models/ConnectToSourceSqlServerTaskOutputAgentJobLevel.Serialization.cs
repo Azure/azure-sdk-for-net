@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToSourceSqlServerTaskOutputAgentJobLevel : IUtf8JsonSerializable, IJsonModel<ConnectToSourceSqlServerTaskOutputAgentJobLevel>
+    public partial class ConnectToSourceSqlServerTaskOutputAgentJobLevel : IUtf8JsonSerializable, IJsonModel<ConnectToSourceSqlServerTaskOutputAgentJobLevel>, IPersistableModel<ConnectToSourceSqlServerTaskOutputAgentJobLevel>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToSourceSqlServerTaskOutputAgentJobLevel>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -199,6 +200,86 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ConnectToSourceSqlServerTaskOutputAgentJobLevel(id.Value, resultType, serializedAdditionalRawData, name.Value, jobCategory.Value, Optional.ToNullable(isEnabled), jobOwner.Value, Optional.ToNullable(lastExecutedOn), Optional.ToList(validationErrors), migrationEligibility.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(JobCategory))
+            {
+                builder.Append("  jobCategory:");
+                builder.AppendLine($" '{JobCategory}'");
+            }
+
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("  isEnabled:");
+                var boolValue = IsEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(JobOwner))
+            {
+                builder.Append("  jobOwner:");
+                builder.AppendLine($" '{JobOwner}'");
+            }
+
+            if (Optional.IsDefined(LastExecutedOn))
+            {
+                builder.Append("  lastExecutedOn:");
+                builder.AppendLine($" '{LastExecutedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ValidationErrors))
+            {
+                builder.Append("  validationErrors:");
+                builder.AppendLine(" [");
+                foreach (var item in ValidationErrors)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(MigrationEligibility))
+            {
+                builder.Append("  migrationEligibility:");
+                AppendChildObject(builder, MigrationEligibility, options, 2);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id}'");
+            }
+
+            if (Optional.IsDefined(ResultType))
+            {
+                builder.Append("  resultType:");
+                builder.AppendLine($" '{ResultType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ConnectToSourceSqlServerTaskOutputAgentJobLevel>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskOutputAgentJobLevel>)this).GetFormatFromOptions(options) : options.Format;
@@ -207,6 +288,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputAgentJobLevel)} does not support '{options.Format}' format.");
             }
@@ -223,6 +306,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeConnectToSourceSqlServerTaskOutputAgentJobLevel(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputAgentJobLevel)} does not support '{options.Format}' format.");
             }

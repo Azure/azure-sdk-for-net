@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class ArtifactStorePropertiesFormat : IUtf8JsonSerializable, IJsonModel<ArtifactStorePropertiesFormat>
+    public partial class ArtifactStorePropertiesFormat : IUtf8JsonSerializable, IJsonModel<ArtifactStorePropertiesFormat>, IPersistableModel<ArtifactStorePropertiesFormat>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArtifactStorePropertiesFormat>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -152,6 +153,56 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ArtifactStorePropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(storeType), Optional.ToNullable(replicationStrategy), managedResourceGroupConfiguration.Value, storageResourceId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StoreType))
+            {
+                builder.Append("  storeType:");
+                builder.AppendLine($" '{StoreType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ReplicationStrategy))
+            {
+                builder.Append("  replicationStrategy:");
+                builder.AppendLine($" '{ReplicationStrategy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
+            {
+                builder.Append("  managedResourceGroupConfiguration:");
+                AppendChildObject(builder, ManagedResourceGroupConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(StorageResourceId))
+            {
+                builder.Append("  storageResourceId:");
+                builder.AppendLine($" '{StorageResourceId.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ArtifactStorePropertiesFormat>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArtifactStorePropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
@@ -160,6 +211,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ArtifactStorePropertiesFormat)} does not support '{options.Format}' format.");
             }
@@ -176,6 +229,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeArtifactStorePropertiesFormat(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ArtifactStorePropertiesFormat)} does not support '{options.Format}' format.");
             }

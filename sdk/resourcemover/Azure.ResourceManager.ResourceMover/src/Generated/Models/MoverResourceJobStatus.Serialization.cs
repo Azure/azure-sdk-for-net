@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoverResourceJobStatus : IUtf8JsonSerializable, IJsonModel<MoverResourceJobStatus>
+    public partial class MoverResourceJobStatus : IUtf8JsonSerializable, IJsonModel<MoverResourceJobStatus>, IPersistableModel<MoverResourceJobStatus>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverResourceJobStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -103,6 +104,38 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return new MoverResourceJobStatus(Optional.ToNullable(jobName), jobProgress.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(JobName))
+            {
+                builder.Append("  jobName:");
+                builder.AppendLine($" '{JobName.ToString()}'");
+            }
+
+            if (Optional.IsDefined(JobProgress))
+            {
+                builder.Append("  jobProgress:");
+                builder.AppendLine($" '{JobProgress}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MoverResourceJobStatus>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MoverResourceJobStatus>)this).GetFormatFromOptions(options) : options.Format;
@@ -111,6 +144,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MoverResourceJobStatus)} does not support '{options.Format}' format.");
             }
@@ -127,6 +162,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMoverResourceJobStatus(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MoverResourceJobStatus)} does not support '{options.Format}' format.");
             }

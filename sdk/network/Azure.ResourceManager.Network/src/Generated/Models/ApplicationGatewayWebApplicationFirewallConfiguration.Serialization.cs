@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayWebApplicationFirewallConfiguration : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayWebApplicationFirewallConfiguration>
+    public partial class ApplicationGatewayWebApplicationFirewallConfiguration : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayWebApplicationFirewallConfiguration>, IPersistableModel<ApplicationGatewayWebApplicationFirewallConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayWebApplicationFirewallConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -219,6 +220,98 @@ namespace Azure.ResourceManager.Network.Models
             return new ApplicationGatewayWebApplicationFirewallConfiguration(enabled, firewallMode, ruleSetType, ruleSetVersion, Optional.ToList(disabledRuleGroups), Optional.ToNullable(requestBodyCheck), Optional.ToNullable(maxRequestBodySize), Optional.ToNullable(maxRequestBodySizeInKb), Optional.ToNullable(fileUploadLimitInMb), Optional.ToList(exclusions), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Enabled))
+            {
+                builder.Append("  enabled:");
+                var boolValue = Enabled == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(FirewallMode))
+            {
+                builder.Append("  firewallMode:");
+                builder.AppendLine($" '{FirewallMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RuleSetType))
+            {
+                builder.Append("  ruleSetType:");
+                builder.AppendLine($" '{RuleSetType}'");
+            }
+
+            if (Optional.IsDefined(RuleSetVersion))
+            {
+                builder.Append("  ruleSetVersion:");
+                builder.AppendLine($" '{RuleSetVersion}'");
+            }
+
+            if (Optional.IsCollectionDefined(DisabledRuleGroups))
+            {
+                builder.Append("  disabledRuleGroups:");
+                builder.AppendLine(" [");
+                foreach (var item in DisabledRuleGroups)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(RequestBodyCheck))
+            {
+                builder.Append("  requestBodyCheck:");
+                var boolValue = RequestBodyCheck.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(MaxRequestBodySize))
+            {
+                builder.Append("  maxRequestBodySize:");
+                builder.AppendLine($" '{MaxRequestBodySize.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MaxRequestBodySizeInKb))
+            {
+                builder.Append("  maxRequestBodySizeInKb:");
+                builder.AppendLine($" '{MaxRequestBodySizeInKb.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FileUploadLimitInMb))
+            {
+                builder.Append("  fileUploadLimitInMb:");
+                builder.AppendLine($" '{FileUploadLimitInMb.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Exclusions))
+            {
+                builder.Append("  exclusions:");
+                builder.AppendLine(" [");
+                foreach (var item in Exclusions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ApplicationGatewayWebApplicationFirewallConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayWebApplicationFirewallConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -227,6 +320,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ApplicationGatewayWebApplicationFirewallConfiguration)} does not support '{options.Format}' format.");
             }
@@ -243,6 +338,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeApplicationGatewayWebApplicationFirewallConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ApplicationGatewayWebApplicationFirewallConfiguration)} does not support '{options.Format}' format.");
             }

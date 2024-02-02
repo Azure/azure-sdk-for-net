@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class BgpConfiguration : IUtf8JsonSerializable, IJsonModel<BgpConfiguration>
+    public partial class BgpConfiguration : IUtf8JsonSerializable, IJsonModel<BgpConfiguration>, IPersistableModel<BgpConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BgpConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -278,6 +279,122 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new BgpConfiguration(annotation.Value, serializedAdditionalRawData, bfdConfiguration.Value, Optional.ToNullable(defaultRouteOriginate), Optional.ToNullable(allowAS), Optional.ToNullable(allowASOverride), Optional.ToNullable(fabricAsn), Optional.ToNullable(peerAsn), Optional.ToList(ipv4ListenRangePrefixes), Optional.ToList(ipv6ListenRangePrefixes), Optional.ToList(ipv4NeighborAddress), Optional.ToList(ipv6NeighborAddress));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BfdConfiguration))
+            {
+                builder.Append("  bfdConfiguration:");
+                AppendChildObject(builder, BfdConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(DefaultRouteOriginate))
+            {
+                builder.Append("  defaultRouteOriginate:");
+                builder.AppendLine($" '{DefaultRouteOriginate.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AllowAS))
+            {
+                builder.Append("  allowAS:");
+                builder.AppendLine($" '{AllowAS.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AllowASOverride))
+            {
+                builder.Append("  allowASOverride:");
+                builder.AppendLine($" '{AllowASOverride.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FabricAsn))
+            {
+                builder.Append("  fabricASN:");
+                builder.AppendLine($" '{FabricAsn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PeerAsn))
+            {
+                builder.Append("  peerASN:");
+                builder.AppendLine($" '{PeerAsn.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(IPv4ListenRangePrefixes))
+            {
+                builder.Append("  ipv4ListenRangePrefixes:");
+                builder.AppendLine(" [");
+                foreach (var item in IPv4ListenRangePrefixes)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(IPv6ListenRangePrefixes))
+            {
+                builder.Append("  ipv6ListenRangePrefixes:");
+                builder.AppendLine(" [");
+                foreach (var item in IPv6ListenRangePrefixes)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(IPv4NeighborAddress))
+            {
+                builder.Append("  ipv4NeighborAddress:");
+                builder.AppendLine(" [");
+                foreach (var item in IPv4NeighborAddress)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(IPv6NeighborAddress))
+            {
+                builder.Append("  ipv6NeighborAddress:");
+                builder.AppendLine(" [");
+                foreach (var item in IPv6NeighborAddress)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Annotation))
+            {
+                builder.Append("  annotation:");
+                builder.AppendLine($" '{Annotation}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BgpConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BgpConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -286,6 +403,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BgpConfiguration)} does not support '{options.Format}' format.");
             }
@@ -302,6 +421,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBgpConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BgpConfiguration)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class SourceAddressInfo : IUtf8JsonSerializable, IJsonModel<SourceAddressInfo>
+    public partial class SourceAddressInfo : IUtf8JsonSerializable, IJsonModel<SourceAddressInfo>, IPersistableModel<SourceAddressInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceAddressInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -177,6 +178,90 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             return new SourceAddressInfo(Optional.ToList(cidrs), Optional.ToList(countries), Optional.ToList(feeds), Optional.ToList(prefixLists), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Cidrs))
+            {
+                builder.Append("  cidrs:");
+                builder.AppendLine(" [");
+                foreach (var item in Cidrs)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Countries))
+            {
+                builder.Append("  countries:");
+                builder.AppendLine(" [");
+                foreach (var item in Countries)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Feeds))
+            {
+                builder.Append("  feeds:");
+                builder.AppendLine(" [");
+                foreach (var item in Feeds)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(PrefixLists))
+            {
+                builder.Append("  prefixLists:");
+                builder.AppendLine(" [");
+                foreach (var item in PrefixLists)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SourceAddressInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SourceAddressInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -185,6 +270,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SourceAddressInfo)} does not support '{options.Format}' format.");
             }
@@ -201,6 +288,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSourceAddressInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SourceAddressInfo)} does not support '{options.Format}' format.");
             }

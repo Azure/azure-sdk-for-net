@@ -7,13 +7,14 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     [PersistableModelProxy(typeof(UnknownLabelingJobMediaProperties))]
-    public partial class LabelingJobMediaProperties : IUtf8JsonSerializable, IJsonModel<LabelingJobMediaProperties>
+    public partial class LabelingJobMediaProperties : IUtf8JsonSerializable, IJsonModel<LabelingJobMediaProperties>, IPersistableModel<LabelingJobMediaProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabelingJobMediaProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -77,6 +78,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return UnknownLabelingJobMediaProperties.DeserializeUnknownLabelingJobMediaProperties(element);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(MediaType))
+            {
+                builder.Append("  mediaType:");
+                builder.AppendLine($" '{MediaType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<LabelingJobMediaProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LabelingJobMediaProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -85,6 +112,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LabelingJobMediaProperties)} does not support '{options.Format}' format.");
             }
@@ -101,6 +130,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeLabelingJobMediaProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(LabelingJobMediaProperties)} does not support '{options.Format}' format.");
             }

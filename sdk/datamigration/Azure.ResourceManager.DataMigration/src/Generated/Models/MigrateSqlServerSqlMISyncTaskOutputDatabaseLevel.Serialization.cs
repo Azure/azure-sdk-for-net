@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel>
+    public partial class MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel>, IPersistableModel<MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -269,6 +270,115 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(id.Value, resultType, serializedAdditionalRawData, sourceDatabaseName.Value, Optional.ToNullable(migrationState), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), fullBackupSetInfo.Value, lastRestoredBackupSetInfo.Value, Optional.ToList(activeBackupSets), containerName.Value, errorPrefix.Value, Optional.ToNullable(isFullBackupRestored), Optional.ToList(exceptionsAndWarnings));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SourceDatabaseName))
+            {
+                builder.Append("  sourceDatabaseName:");
+                builder.AppendLine($" '{SourceDatabaseName}'");
+            }
+
+            if (Optional.IsDefined(MigrationState))
+            {
+                builder.Append("  migrationState:");
+                builder.AppendLine($" '{MigrationState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartedOn))
+            {
+                builder.Append("  startedOn:");
+                builder.AppendLine($" '{StartedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndedOn))
+            {
+                builder.Append("  endedOn:");
+                builder.AppendLine($" '{EndedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FullBackupSetInfo))
+            {
+                builder.Append("  fullBackupSetInfo:");
+                AppendChildObject(builder, FullBackupSetInfo, options, 2);
+            }
+
+            if (Optional.IsDefined(LastRestoredBackupSetInfo))
+            {
+                builder.Append("  lastRestoredBackupSetInfo:");
+                AppendChildObject(builder, LastRestoredBackupSetInfo, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(ActiveBackupSets))
+            {
+                builder.Append("  activeBackupSets:");
+                builder.AppendLine(" [");
+                foreach (var item in ActiveBackupSets)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ContainerName))
+            {
+                builder.Append("  containerName:");
+                builder.AppendLine($" '{ContainerName}'");
+            }
+
+            if (Optional.IsDefined(ErrorPrefix))
+            {
+                builder.Append("  errorPrefix:");
+                builder.AppendLine($" '{ErrorPrefix}'");
+            }
+
+            if (Optional.IsDefined(IsFullBackupRestored))
+            {
+                builder.Append("  isFullBackupRestored:");
+                var boolValue = IsFullBackupRestored.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(ExceptionsAndWarnings))
+            {
+                builder.Append("  exceptionsAndWarnings:");
+                builder.AppendLine(" [");
+                foreach (var item in ExceptionsAndWarnings)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id}'");
+            }
+
+            if (Optional.IsDefined(ResultType))
+            {
+                builder.Append("  resultType:");
+                builder.AppendLine($" '{ResultType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel>)this).GetFormatFromOptions(options) : options.Format;
@@ -277,6 +387,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel)} does not support '{options.Format}' format.");
             }
@@ -293,6 +405,8 @@ namespace Azure.ResourceManager.DataMigration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    public partial class StorageMoverAgentData : IUtf8JsonSerializable, IJsonModel<StorageMoverAgentData>
+    public partial class StorageMoverAgentData : IUtf8JsonSerializable, IJsonModel<StorageMoverAgentData>, IPersistableModel<StorageMoverAgentData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageMoverAgentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -296,6 +297,122 @@ namespace Azure.ResourceManager.StorageMover
             return new StorageMoverAgentData(id, name, type, systemData.Value, description.Value, agentVersion.Value, arcResourceId, arcVmUuid, Optional.ToNullable(agentStatus), Optional.ToNullable(lastStatusUpdate), localIPAddress.Value, Optional.ToNullable(memoryInMB), Optional.ToNullable(numberOfCores), Optional.ToNullable(uptimeInSeconds), errorDetails.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(AgentVersion))
+            {
+                builder.Append("  agentVersion:");
+                builder.AppendLine($" '{AgentVersion}'");
+            }
+
+            if (Optional.IsDefined(ArcResourceId))
+            {
+                builder.Append("  arcResourceId:");
+                builder.AppendLine($" '{ArcResourceId}'");
+            }
+
+            if (Optional.IsDefined(ArcVmUuid))
+            {
+                builder.Append("  arcVmUuid:");
+                builder.AppendLine($" '{ArcVmUuid}'");
+            }
+
+            if (Optional.IsDefined(AgentStatus))
+            {
+                builder.Append("  agentStatus:");
+                builder.AppendLine($" '{AgentStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastStatusUpdate))
+            {
+                builder.Append("  lastStatusUpdate:");
+                builder.AppendLine($" '{LastStatusUpdate.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LocalIPAddress))
+            {
+                builder.Append("  localIPAddress:");
+                builder.AppendLine($" '{LocalIPAddress}'");
+            }
+
+            if (Optional.IsDefined(MemoryInMB))
+            {
+                builder.Append("  memoryInMB:");
+                builder.AppendLine($" '{MemoryInMB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NumberOfCores))
+            {
+                builder.Append("  numberOfCores:");
+                builder.AppendLine($" '{NumberOfCores.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UptimeInSeconds))
+            {
+                builder.Append("  uptimeInSeconds:");
+                builder.AppendLine($" '{UptimeInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ErrorDetails))
+            {
+                builder.Append("  errorDetails:");
+                AppendChildObject(builder, ErrorDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<StorageMoverAgentData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageMoverAgentData>)this).GetFormatFromOptions(options) : options.Format;
@@ -304,6 +421,8 @@ namespace Azure.ResourceManager.StorageMover
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support '{options.Format}' format.");
             }
@@ -320,6 +439,8 @@ namespace Azure.ResourceManager.StorageMover
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeStorageMoverAgentData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support '{options.Format}' format.");
             }

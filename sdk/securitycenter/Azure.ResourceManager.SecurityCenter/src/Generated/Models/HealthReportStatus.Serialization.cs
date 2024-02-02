@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class HealthReportStatus : IUtf8JsonSerializable, IJsonModel<HealthReportStatus>
+    public partial class HealthReportStatus : IUtf8JsonSerializable, IJsonModel<HealthReportStatus>, IPersistableModel<HealthReportStatus>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthReportStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -148,6 +149,56 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new HealthReportStatus(Optional.ToNullable(code), reason.Value, Optional.ToNullable(lastScannedDate), Optional.ToNullable(statusChangeDate), Optional.ToNullable(firstEvaluationDate), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Code))
+            {
+                builder.Append("  code:");
+                builder.AppendLine($" '{Code.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Reason))
+            {
+                builder.Append("  reason:");
+                builder.AppendLine($" '{Reason}'");
+            }
+
+            if (Optional.IsDefined(LastScannedOn))
+            {
+                builder.Append("  lastScannedDate:");
+                builder.AppendLine($" '{LastScannedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StatusChangeOn))
+            {
+                builder.Append("  statusChangeDate:");
+                builder.AppendLine($" '{StatusChangeOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FirstEvaluationOn))
+            {
+                builder.Append("  firstEvaluationDate:");
+                builder.AppendLine($" '{FirstEvaluationOn.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<HealthReportStatus>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HealthReportStatus>)this).GetFormatFromOptions(options) : options.Format;
@@ -156,6 +207,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HealthReportStatus)} does not support '{options.Format}' format.");
             }
@@ -172,6 +225,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHealthReportStatus(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HealthReportStatus)} does not support '{options.Format}' format.");
             }

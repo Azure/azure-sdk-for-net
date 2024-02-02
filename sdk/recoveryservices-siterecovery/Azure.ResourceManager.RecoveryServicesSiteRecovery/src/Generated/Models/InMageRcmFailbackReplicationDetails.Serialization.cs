@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmFailbackReplicationDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmFailbackReplicationDetails>
+    public partial class InMageRcmFailbackReplicationDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmFailbackReplicationDetails>, IPersistableModel<InMageRcmFailbackReplicationDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmFailbackReplicationDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -500,6 +501,217 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new InMageRcmFailbackReplicationDetails(instanceType, serializedAdditionalRawData, internalIdentifier.Value, azureVirtualMachineId.Value, multiVmGroupName.Value, reprotectAgentId.Value, reprotectAgentName.Value, osType.Value, logStorageAccountId.Value, targetvCenterId.Value, targetDataStoreName.Value, targetVmName.Value, Optional.ToNullable(initialReplicationProgressPercentage), Optional.ToNullable(initialReplicationProcessedBytes), Optional.ToNullable(initialReplicationTransferredBytes), Optional.ToNullable(initialReplicationProgressHealth), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTransferredBytes), Optional.ToNullable(resyncProgressHealth), resyncRequired.Value, Optional.ToNullable(resyncState), Optional.ToList(protectedDisks), mobilityAgentDetails.Value, Optional.ToList(vmNics), Optional.ToNullable(lastPlannedFailoverStartTime), Optional.ToNullable(lastPlannedFailoverStatus), discoveredVmDetails.Value, lastUsedPolicyId.Value, lastUsedPolicyFriendlyName.Value, Optional.ToNullable(isAgentRegistrationSuccessfulAfterFailover));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(InternalIdentifier))
+            {
+                builder.Append("  internalIdentifier:");
+                builder.AppendLine($" '{InternalIdentifier}'");
+            }
+
+            if (Optional.IsDefined(AzureVirtualMachineId))
+            {
+                builder.Append("  azureVirtualMachineId:");
+                builder.AppendLine($" '{AzureVirtualMachineId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MultiVmGroupName))
+            {
+                builder.Append("  multiVmGroupName:");
+                builder.AppendLine($" '{MultiVmGroupName}'");
+            }
+
+            if (Optional.IsDefined(ReprotectAgentId))
+            {
+                builder.Append("  reprotectAgentId:");
+                builder.AppendLine($" '{ReprotectAgentId}'");
+            }
+
+            if (Optional.IsDefined(ReprotectAgentName))
+            {
+                builder.Append("  reprotectAgentName:");
+                builder.AppendLine($" '{ReprotectAgentName}'");
+            }
+
+            if (Optional.IsDefined(OSType))
+            {
+                builder.Append("  osType:");
+                builder.AppendLine($" '{OSType}'");
+            }
+
+            if (Optional.IsDefined(LogStorageAccountId))
+            {
+                builder.Append("  logStorageAccountId:");
+                builder.AppendLine($" '{LogStorageAccountId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetVCenterId))
+            {
+                builder.Append("  targetvCenterId:");
+                builder.AppendLine($" '{TargetVCenterId}'");
+            }
+
+            if (Optional.IsDefined(TargetDataStoreName))
+            {
+                builder.Append("  targetDataStoreName:");
+                builder.AppendLine($" '{TargetDataStoreName}'");
+            }
+
+            if (Optional.IsDefined(TargetVmName))
+            {
+                builder.Append("  targetVmName:");
+                builder.AppendLine($" '{TargetVmName}'");
+            }
+
+            if (Optional.IsDefined(InitialReplicationProgressPercentage))
+            {
+                builder.Append("  initialReplicationProgressPercentage:");
+                builder.AppendLine($" '{InitialReplicationProgressPercentage.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InitialReplicationProcessedBytes))
+            {
+                builder.Append("  initialReplicationProcessedBytes:");
+                builder.AppendLine($" '{InitialReplicationProcessedBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InitialReplicationTransferredBytes))
+            {
+                builder.Append("  initialReplicationTransferredBytes:");
+                builder.AppendLine($" '{InitialReplicationTransferredBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InitialReplicationProgressHealth))
+            {
+                builder.Append("  initialReplicationProgressHealth:");
+                builder.AppendLine($" '{InitialReplicationProgressHealth.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResyncProgressPercentage))
+            {
+                builder.Append("  resyncProgressPercentage:");
+                builder.AppendLine($" '{ResyncProgressPercentage.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResyncProcessedBytes))
+            {
+                builder.Append("  resyncProcessedBytes:");
+                builder.AppendLine($" '{ResyncProcessedBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResyncTransferredBytes))
+            {
+                builder.Append("  resyncTransferredBytes:");
+                builder.AppendLine($" '{ResyncTransferredBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResyncProgressHealth))
+            {
+                builder.Append("  resyncProgressHealth:");
+                builder.AppendLine($" '{ResyncProgressHealth.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResyncRequired))
+            {
+                builder.Append("  resyncRequired:");
+                builder.AppendLine($" '{ResyncRequired}'");
+            }
+
+            if (Optional.IsDefined(ResyncState))
+            {
+                builder.Append("  resyncState:");
+                builder.AppendLine($" '{ResyncState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(ProtectedDisks))
+            {
+                builder.Append("  protectedDisks:");
+                builder.AppendLine(" [");
+                foreach (var item in ProtectedDisks)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(MobilityAgentDetails))
+            {
+                builder.Append("  mobilityAgentDetails:");
+                AppendChildObject(builder, MobilityAgentDetails, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(VmNics))
+            {
+                builder.Append("  vmNics:");
+                builder.AppendLine(" [");
+                foreach (var item in VmNics)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(LastPlannedFailoverStartOn))
+            {
+                builder.Append("  lastPlannedFailoverStartTime:");
+                builder.AppendLine($" '{LastPlannedFailoverStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastPlannedFailoverStatus))
+            {
+                builder.Append("  lastPlannedFailoverStatus:");
+                builder.AppendLine($" '{LastPlannedFailoverStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DiscoveredVmDetails))
+            {
+                builder.Append("  discoveredVmDetails:");
+                AppendChildObject(builder, DiscoveredVmDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(LastUsedPolicyId))
+            {
+                builder.Append("  lastUsedPolicyId:");
+                builder.AppendLine($" '{LastUsedPolicyId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastUsedPolicyFriendlyName))
+            {
+                builder.Append("  lastUsedPolicyFriendlyName:");
+                builder.AppendLine($" '{LastUsedPolicyFriendlyName}'");
+            }
+
+            if (Optional.IsDefined(IsAgentRegistrationSuccessfulAfterFailover))
+            {
+                builder.Append("  isAgentRegistrationSuccessfulAfterFailover:");
+                var boolValue = IsAgentRegistrationSuccessfulAfterFailover.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(InstanceType))
+            {
+                builder.Append("  instanceType:");
+                builder.AppendLine($" '{InstanceType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<InMageRcmFailbackReplicationDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -508,6 +720,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support '{options.Format}' format.");
             }
@@ -524,6 +738,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeInMageRcmFailbackReplicationDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmFailbackReplicationDetails)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class InboundNatRuleData : IUtf8JsonSerializable, IJsonModel<InboundNatRuleData>
+    public partial class InboundNatRuleData : IUtf8JsonSerializable, IJsonModel<InboundNatRuleData>, IPersistableModel<InboundNatRuleData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InboundNatRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -331,6 +332,124 @@ namespace Azure.ResourceManager.Network
             return new InboundNatRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), frontendIPConfiguration, backendIPConfiguration.Value, Optional.ToNullable(protocol), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(enableFloatingIP), Optional.ToNullable(enableTcpReset), Optional.ToNullable(frontendPortRangeStart), Optional.ToNullable(frontendPortRangeEnd), backendAddressPool, Optional.ToNullable(provisioningState));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FrontendIPConfiguration))
+            {
+                builder.Append("  frontendIPConfiguration:");
+                AppendChildObject(builder, FrontendIPConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(BackendIPConfiguration))
+            {
+                builder.Append("  backendIPConfiguration:");
+                AppendChildObject(builder, BackendIPConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(Protocol))
+            {
+                builder.Append("  protocol:");
+                builder.AppendLine($" '{Protocol.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FrontendPort))
+            {
+                builder.Append("  frontendPort:");
+                builder.AppendLine($" '{FrontendPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BackendPort))
+            {
+                builder.Append("  backendPort:");
+                builder.AppendLine($" '{BackendPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IdleTimeoutInMinutes))
+            {
+                builder.Append("  idleTimeoutInMinutes:");
+                builder.AppendLine($" '{IdleTimeoutInMinutes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnableFloatingIP))
+            {
+                builder.Append("  enableFloatingIP:");
+                var boolValue = EnableFloatingIP.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(EnableTcpReset))
+            {
+                builder.Append("  enableTcpReset:");
+                var boolValue = EnableTcpReset.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(FrontendPortRangeStart))
+            {
+                builder.Append("  frontendPortRangeStart:");
+                builder.AppendLine($" '{FrontendPortRangeStart.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FrontendPortRangeEnd))
+            {
+                builder.Append("  frontendPortRangeEnd:");
+                builder.AppendLine($" '{FrontendPortRangeEnd.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BackendAddressPool))
+            {
+                builder.Append("  backendAddressPool:");
+                AppendChildObject(builder, BackendAddressPool, options, 2);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<InboundNatRuleData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InboundNatRuleData>)this).GetFormatFromOptions(options) : options.Format;
@@ -339,6 +458,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(InboundNatRuleData)} does not support '{options.Format}' format.");
             }
@@ -355,6 +476,8 @@ namespace Azure.ResourceManager.Network
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeInboundNatRuleData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(InboundNatRuleData)} does not support '{options.Format}' format.");
             }

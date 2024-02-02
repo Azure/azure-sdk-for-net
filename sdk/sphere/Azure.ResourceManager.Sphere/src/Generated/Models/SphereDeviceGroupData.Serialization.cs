@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Sphere.Models;
 
 namespace Azure.ResourceManager.Sphere
 {
-    public partial class SphereDeviceGroupData : IUtf8JsonSerializable, IJsonModel<SphereDeviceGroupData>
+    public partial class SphereDeviceGroupData : IUtf8JsonSerializable, IJsonModel<SphereDeviceGroupData>, IPersistableModel<SphereDeviceGroupData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SphereDeviceGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -243,6 +244,93 @@ namespace Azure.ResourceManager.Sphere
             return new SphereDeviceGroupData(id, name, type, systemData.Value, description.Value, Optional.ToNullable(osFeedType), Optional.ToNullable(updatePolicy), Optional.ToNullable(allowCrashDumpsCollection), Optional.ToNullable(regionalDataBoundary), Optional.ToNullable(hasDeployment), Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(OSFeedType))
+            {
+                builder.Append("  osFeedType:");
+                builder.AppendLine($" '{OSFeedType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(UpdatePolicy))
+            {
+                builder.Append("  updatePolicy:");
+                builder.AppendLine($" '{UpdatePolicy.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AllowCrashDumpsCollection))
+            {
+                builder.Append("  allowCrashDumpsCollection:");
+                builder.AppendLine($" '{AllowCrashDumpsCollection.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RegionalDataBoundary))
+            {
+                builder.Append("  regionalDataBoundary:");
+                builder.AppendLine($" '{RegionalDataBoundary.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HasDeployment))
+            {
+                builder.Append("  hasDeployment:");
+                var boolValue = HasDeployment.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SphereDeviceGroupData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SphereDeviceGroupData>)this).GetFormatFromOptions(options) : options.Format;
@@ -251,6 +339,8 @@ namespace Azure.ResourceManager.Sphere
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SphereDeviceGroupData)} does not support '{options.Format}' format.");
             }
@@ -267,6 +357,8 @@ namespace Azure.ResourceManager.Sphere
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSphereDeviceGroupData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SphereDeviceGroupData)} does not support '{options.Format}' format.");
             }

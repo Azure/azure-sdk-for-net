@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.DataShare.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare
 {
-    public partial class DataShareInvitationData : IUtf8JsonSerializable, IJsonModel<DataShareInvitationData>
+    public partial class DataShareInvitationData : IUtf8JsonSerializable, IJsonModel<DataShareInvitationData>, IPersistableModel<DataShareInvitationData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataShareInvitationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -272,6 +273,110 @@ namespace Azure.ResourceManager.DataShare
             return new DataShareInvitationData(id, name, type, systemData.Value, Optional.ToNullable(expirationDate), Optional.ToNullable(invitationId), Optional.ToNullable(invitationStatus), Optional.ToNullable(respondedAt), Optional.ToNullable(sentAt), targetActiveDirectoryId.Value, targetEmail.Value, targetObjectId.Value, userEmail.Value, userName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ExpireOn))
+            {
+                builder.Append("  expirationDate:");
+                builder.AppendLine($" '{ExpireOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InvitationId))
+            {
+                builder.Append("  invitationId:");
+                builder.AppendLine($" '{InvitationId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(InvitationStatus))
+            {
+                builder.Append("  invitationStatus:");
+                builder.AppendLine($" '{InvitationStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RespondedOn))
+            {
+                builder.Append("  respondedAt:");
+                builder.AppendLine($" '{RespondedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SentOn))
+            {
+                builder.Append("  sentAt:");
+                builder.AppendLine($" '{SentOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetActiveDirectoryId))
+            {
+                builder.Append("  targetActiveDirectoryId:");
+                builder.AppendLine($" '{TargetActiveDirectoryId}'");
+            }
+
+            if (Optional.IsDefined(TargetEmail))
+            {
+                builder.Append("  targetEmail:");
+                builder.AppendLine($" '{TargetEmail}'");
+            }
+
+            if (Optional.IsDefined(TargetObjectId))
+            {
+                builder.Append("  targetObjectId:");
+                builder.AppendLine($" '{TargetObjectId}'");
+            }
+
+            if (Optional.IsDefined(UserEmail))
+            {
+                builder.Append("  userEmail:");
+                builder.AppendLine($" '{UserEmail}'");
+            }
+
+            if (Optional.IsDefined(UserName))
+            {
+                builder.Append("  userName:");
+                builder.AppendLine($" '{UserName}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DataShareInvitationData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataShareInvitationData>)this).GetFormatFromOptions(options) : options.Format;
@@ -280,6 +385,8 @@ namespace Azure.ResourceManager.DataShare
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataShareInvitationData)} does not support '{options.Format}' format.");
             }
@@ -296,6 +403,8 @@ namespace Azure.ResourceManager.DataShare
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataShareInvitationData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataShareInvitationData)} does not support '{options.Format}' format.");
             }

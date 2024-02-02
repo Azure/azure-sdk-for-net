@@ -9,12 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VMwareDetails : IUtf8JsonSerializable, IJsonModel<VMwareDetails>
+    public partial class VMwareDetails : IUtf8JsonSerializable, IJsonModel<VMwareDetails>, IPersistableModel<VMwareDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -545,6 +546,250 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VMwareDetails(instanceType, serializedAdditionalRawData, Optional.ToList(processServers), Optional.ToList(masterTargetServers), Optional.ToList(runAsAccounts), replicationPairCount.Value, processServerCount.Value, agentCount.Value, protectedServers.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, webLoad.Value, webLoadStatus.Value, databaseServerLoad.Value, databaseServerLoadStatus.Value, csServiceStatus.Value, ipAddress.Value, agentVersion.Value, hostName.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToNullable(sslCertExpireOn), Optional.ToNullable(sslCertExpiryRemainingDays), psTemplateVersion.Value, Optional.ToNullable(agentExpireOn), agentVersionDetails.Value, Optional.ToList(switchProviderBlockingErrorDetails));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(ProcessServers))
+            {
+                builder.Append("  processServers:");
+                builder.AppendLine(" [");
+                foreach (var item in ProcessServers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(MasterTargetServers))
+            {
+                builder.Append("  masterTargetServers:");
+                builder.AppendLine(" [");
+                foreach (var item in MasterTargetServers)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(RunAsAccounts))
+            {
+                builder.Append("  runAsAccounts:");
+                builder.AppendLine(" [");
+                foreach (var item in RunAsAccounts)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ReplicationPairCount))
+            {
+                builder.Append("  replicationPairCount:");
+                builder.AppendLine($" '{ReplicationPairCount}'");
+            }
+
+            if (Optional.IsDefined(ProcessServerCount))
+            {
+                builder.Append("  processServerCount:");
+                builder.AppendLine($" '{ProcessServerCount}'");
+            }
+
+            if (Optional.IsDefined(AgentCount))
+            {
+                builder.Append("  agentCount:");
+                builder.AppendLine($" '{AgentCount}'");
+            }
+
+            if (Optional.IsDefined(ProtectedServers))
+            {
+                builder.Append("  protectedServers:");
+                builder.AppendLine($" '{ProtectedServers}'");
+            }
+
+            if (Optional.IsDefined(SystemLoad))
+            {
+                builder.Append("  systemLoad:");
+                builder.AppendLine($" '{SystemLoad}'");
+            }
+
+            if (Optional.IsDefined(SystemLoadStatus))
+            {
+                builder.Append("  systemLoadStatus:");
+                builder.AppendLine($" '{SystemLoadStatus}'");
+            }
+
+            if (Optional.IsDefined(CpuLoad))
+            {
+                builder.Append("  cpuLoad:");
+                builder.AppendLine($" '{CpuLoad}'");
+            }
+
+            if (Optional.IsDefined(CpuLoadStatus))
+            {
+                builder.Append("  cpuLoadStatus:");
+                builder.AppendLine($" '{CpuLoadStatus}'");
+            }
+
+            if (Optional.IsDefined(TotalMemoryInBytes))
+            {
+                builder.Append("  totalMemoryInBytes:");
+                builder.AppendLine($" '{TotalMemoryInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AvailableMemoryInBytes))
+            {
+                builder.Append("  availableMemoryInBytes:");
+                builder.AppendLine($" '{AvailableMemoryInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MemoryUsageStatus))
+            {
+                builder.Append("  memoryUsageStatus:");
+                builder.AppendLine($" '{MemoryUsageStatus}'");
+            }
+
+            if (Optional.IsDefined(TotalSpaceInBytes))
+            {
+                builder.Append("  totalSpaceInBytes:");
+                builder.AppendLine($" '{TotalSpaceInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AvailableSpaceInBytes))
+            {
+                builder.Append("  availableSpaceInBytes:");
+                builder.AppendLine($" '{AvailableSpaceInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SpaceUsageStatus))
+            {
+                builder.Append("  spaceUsageStatus:");
+                builder.AppendLine($" '{SpaceUsageStatus}'");
+            }
+
+            if (Optional.IsDefined(WebLoad))
+            {
+                builder.Append("  webLoad:");
+                builder.AppendLine($" '{WebLoad}'");
+            }
+
+            if (Optional.IsDefined(WebLoadStatus))
+            {
+                builder.Append("  webLoadStatus:");
+                builder.AppendLine($" '{WebLoadStatus}'");
+            }
+
+            if (Optional.IsDefined(DatabaseServerLoad))
+            {
+                builder.Append("  databaseServerLoad:");
+                builder.AppendLine($" '{DatabaseServerLoad}'");
+            }
+
+            if (Optional.IsDefined(DatabaseServerLoadStatus))
+            {
+                builder.Append("  databaseServerLoadStatus:");
+                builder.AppendLine($" '{DatabaseServerLoadStatus}'");
+            }
+
+            if (Optional.IsDefined(CsServiceStatus))
+            {
+                builder.Append("  csServiceStatus:");
+                builder.AppendLine($" '{CsServiceStatus}'");
+            }
+
+            if (Optional.IsDefined(IPAddress))
+            {
+                builder.Append("  ipAddress:");
+                builder.AppendLine($" '{IPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AgentVersion))
+            {
+                builder.Append("  agentVersion:");
+                builder.AppendLine($" '{AgentVersion}'");
+            }
+
+            if (Optional.IsDefined(HostName))
+            {
+                builder.Append("  hostName:");
+                builder.AppendLine($" '{HostName}'");
+            }
+
+            if (Optional.IsDefined(LastHeartbeat))
+            {
+                builder.Append("  lastHeartbeat:");
+                builder.AppendLine($" '{LastHeartbeat.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VersionStatus))
+            {
+                builder.Append("  versionStatus:");
+                builder.AppendLine($" '{VersionStatus}'");
+            }
+
+            if (Optional.IsDefined(SslCertExpireOn))
+            {
+                builder.Append("  sslCertExpiryDate:");
+                builder.AppendLine($" '{SslCertExpireOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SslCertExpiryRemainingDays))
+            {
+                builder.Append("  sslCertExpiryRemainingDays:");
+                builder.AppendLine($" '{SslCertExpiryRemainingDays.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PSTemplateVersion))
+            {
+                builder.Append("  psTemplateVersion:");
+                builder.AppendLine($" '{PSTemplateVersion}'");
+            }
+
+            if (Optional.IsDefined(AgentExpireOn))
+            {
+                builder.Append("  agentExpiryDate:");
+                builder.AppendLine($" '{AgentExpireOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AgentVersionDetails))
+            {
+                builder.Append("  agentVersionDetails:");
+                AppendChildObject(builder, AgentVersionDetails, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(SwitchProviderBlockingErrorDetails))
+            {
+                builder.Append("  switchProviderBlockingErrorDetails:");
+                builder.AppendLine(" [");
+                foreach (var item in SwitchProviderBlockingErrorDetails)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(InstanceType))
+            {
+                builder.Append("  instanceType:");
+                builder.AppendLine($" '{InstanceType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VMwareDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VMwareDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -553,6 +798,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VMwareDetails)} does not support '{options.Format}' format.");
             }
@@ -569,6 +816,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVMwareDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VMwareDetails)} does not support '{options.Format}' format.");
             }

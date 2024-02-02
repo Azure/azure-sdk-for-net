@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class KubernetesClusterNode : IUtf8JsonSerializable, IJsonModel<KubernetesClusterNode>
+    public partial class KubernetesClusterNode : IUtf8JsonSerializable, IJsonModel<KubernetesClusterNode>, IPersistableModel<KubernetesClusterNode>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesClusterNode>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -345,6 +346,149 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new KubernetesClusterNode(agentPoolId.Value, availabilityZone.Value, bareMetalMachineId.Value, Optional.ToNullable(cpuCores), Optional.ToNullable(detailedStatus), detailedStatusMessage.Value, Optional.ToNullable(diskSizeGB), image.Value, kubernetesVersion.Value, Optional.ToList(labels), Optional.ToNullable(memorySizeGB), Optional.ToNullable(mode), name.Value, Optional.ToList(networkAttachments), Optional.ToNullable(powerState), Optional.ToNullable(role), Optional.ToList(taints), vmSkuName.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AgentPoolId))
+            {
+                builder.Append("  agentPoolId:");
+                builder.AppendLine($" '{AgentPoolId}'");
+            }
+
+            if (Optional.IsDefined(AvailabilityZone))
+            {
+                builder.Append("  availabilityZone:");
+                builder.AppendLine($" '{AvailabilityZone}'");
+            }
+
+            if (Optional.IsDefined(BareMetalMachineId))
+            {
+                builder.Append("  bareMetalMachineId:");
+                builder.AppendLine($" '{BareMetalMachineId}'");
+            }
+
+            if (Optional.IsDefined(CpuCores))
+            {
+                builder.Append("  cpuCores:");
+                builder.AppendLine($" '{CpuCores.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DetailedStatus))
+            {
+                builder.Append("  detailedStatus:");
+                builder.AppendLine($" '{DetailedStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DetailedStatusMessage))
+            {
+                builder.Append("  detailedStatusMessage:");
+                builder.AppendLine($" '{DetailedStatusMessage}'");
+            }
+
+            if (Optional.IsDefined(DiskSizeGB))
+            {
+                builder.Append("  diskSizeGB:");
+                builder.AppendLine($" '{DiskSizeGB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Image))
+            {
+                builder.Append("  image:");
+                builder.AppendLine($" '{Image}'");
+            }
+
+            if (Optional.IsDefined(KubernetesVersion))
+            {
+                builder.Append("  kubernetesVersion:");
+                builder.AppendLine($" '{KubernetesVersion}'");
+            }
+
+            if (Optional.IsCollectionDefined(Labels))
+            {
+                builder.Append("  labels:");
+                builder.AppendLine(" [");
+                foreach (var item in Labels)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(MemorySizeGB))
+            {
+                builder.Append("  memorySizeGB:");
+                builder.AppendLine($" '{MemorySizeGB.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Mode))
+            {
+                builder.Append("  mode:");
+                builder.AppendLine($" '{Mode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsCollectionDefined(NetworkAttachments))
+            {
+                builder.Append("  networkAttachments:");
+                builder.AppendLine(" [");
+                foreach (var item in NetworkAttachments)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(PowerState))
+            {
+                builder.Append("  powerState:");
+                builder.AppendLine($" '{PowerState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Role))
+            {
+                builder.Append("  role:");
+                builder.AppendLine($" '{Role.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Taints))
+            {
+                builder.Append("  taints:");
+                builder.AppendLine(" [");
+                foreach (var item in Taints)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(VmSkuName))
+            {
+                builder.Append("  vmSkuName:");
+                builder.AppendLine($" '{VmSkuName}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<KubernetesClusterNode>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterNode>)this).GetFormatFromOptions(options) : options.Format;
@@ -353,6 +497,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KubernetesClusterNode)} does not support '{options.Format}' format.");
             }
@@ -369,6 +515,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeKubernetesClusterNode(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(KubernetesClusterNode)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ReprotectAgentDetails : IUtf8JsonSerializable, IJsonModel<ReprotectAgentDetails>
+    public partial class ReprotectAgentDetails : IUtf8JsonSerializable, IJsonModel<ReprotectAgentDetails>, IPersistableModel<ReprotectAgentDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReprotectAgentDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -268,6 +269,119 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new ReprotectAgentDetails(id.Value, name.Value, biosId.Value, fabricObjectId.Value, fqdn.Value, version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToNullable(protectedItemCount), Optional.ToList(accessibleDatastores), vCenterId.Value, Optional.ToNullable(lastDiscoveryInUtc), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(BiosId))
+            {
+                builder.Append("  biosId:");
+                builder.AppendLine($" '{BiosId}'");
+            }
+
+            if (Optional.IsDefined(FabricObjectId))
+            {
+                builder.Append("  fabricObjectId:");
+                builder.AppendLine($" '{FabricObjectId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Fqdn))
+            {
+                builder.Append("  fqdn:");
+                builder.AppendLine($" '{Fqdn}'");
+            }
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("  version:");
+                builder.AppendLine($" '{Version}'");
+            }
+
+            if (Optional.IsDefined(LastHeartbeatReceivedOn))
+            {
+                builder.Append("  lastHeartbeatUtc:");
+                builder.AppendLine($" '{LastHeartbeatReceivedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Health))
+            {
+                builder.Append("  health:");
+                builder.AppendLine($" '{Health.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(HealthErrors))
+            {
+                builder.Append("  healthErrors:");
+                builder.AppendLine(" [");
+                foreach (var item in HealthErrors)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ProtectedItemCount))
+            {
+                builder.Append("  protectedItemCount:");
+                builder.AppendLine($" '{ProtectedItemCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(AccessibleDatastores))
+            {
+                builder.Append("  accessibleDatastores:");
+                builder.AppendLine(" [");
+                foreach (var item in AccessibleDatastores)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(VCenterId))
+            {
+                builder.Append("  vcenterId:");
+                builder.AppendLine($" '{VCenterId}'");
+            }
+
+            if (Optional.IsDefined(Last))
+            {
+                builder.Append("  lastDiscoveryInUtc:");
+                builder.AppendLine($" '{Last.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ReprotectAgentDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ReprotectAgentDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -276,6 +390,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ReprotectAgentDetails)} does not support '{options.Format}' format.");
             }
@@ -292,6 +408,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeReprotectAgentDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ReprotectAgentDetails)} does not support '{options.Format}' format.");
             }

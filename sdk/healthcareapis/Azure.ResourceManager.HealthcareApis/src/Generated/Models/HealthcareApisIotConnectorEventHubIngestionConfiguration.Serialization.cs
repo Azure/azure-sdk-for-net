@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
-    public partial class HealthcareApisIotConnectorEventHubIngestionConfiguration : IUtf8JsonSerializable, IJsonModel<HealthcareApisIotConnectorEventHubIngestionConfiguration>
+    public partial class HealthcareApisIotConnectorEventHubIngestionConfiguration : IUtf8JsonSerializable, IJsonModel<HealthcareApisIotConnectorEventHubIngestionConfiguration>, IPersistableModel<HealthcareApisIotConnectorEventHubIngestionConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareApisIotConnectorEventHubIngestionConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -110,6 +111,44 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             return new HealthcareApisIotConnectorEventHubIngestionConfiguration(eventHubName.Value, consumerGroup.Value, fullyQualifiedEventHubNamespace.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(EventHubName))
+            {
+                builder.Append("  eventHubName:");
+                builder.AppendLine($" '{EventHubName}'");
+            }
+
+            if (Optional.IsDefined(ConsumerGroup))
+            {
+                builder.Append("  consumerGroup:");
+                builder.AppendLine($" '{ConsumerGroup}'");
+            }
+
+            if (Optional.IsDefined(FullyQualifiedEventHubNamespace))
+            {
+                builder.Append("  fullyQualifiedEventHubNamespace:");
+                builder.AppendLine($" '{FullyQualifiedEventHubNamespace}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<HealthcareApisIotConnectorEventHubIngestionConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HealthcareApisIotConnectorEventHubIngestionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -118,6 +157,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(HealthcareApisIotConnectorEventHubIngestionConfiguration)} does not support '{options.Format}' format.");
             }
@@ -134,6 +175,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeHealthcareApisIotConnectorEventHubIngestionConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(HealthcareApisIotConnectorEventHubIngestionConfiguration)} does not support '{options.Format}' format.");
             }

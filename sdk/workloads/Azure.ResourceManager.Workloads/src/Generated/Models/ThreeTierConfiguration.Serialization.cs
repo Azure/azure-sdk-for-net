@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class ThreeTierConfiguration : IUtf8JsonSerializable, IJsonModel<ThreeTierConfiguration>
+    public partial class ThreeTierConfiguration : IUtf8JsonSerializable, IJsonModel<ThreeTierConfiguration>, IPersistableModel<ThreeTierConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreeTierConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -177,6 +178,80 @@ namespace Azure.ResourceManager.Workloads.Models
             return new ThreeTierConfiguration(deploymentType, appResourceGroup, serializedAdditionalRawData, networkConfiguration.Value, centralServer, applicationServer, databaseServer, highAvailabilityConfig.Value, storageConfiguration.Value, customResourceNames.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(NetworkConfiguration))
+            {
+                builder.Append("  networkConfiguration:");
+                AppendChildObject(builder, NetworkConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(CentralServer))
+            {
+                builder.Append("  centralServer:");
+                AppendChildObject(builder, CentralServer, options, 2);
+            }
+
+            if (Optional.IsDefined(ApplicationServer))
+            {
+                builder.Append("  applicationServer:");
+                AppendChildObject(builder, ApplicationServer, options, 2);
+            }
+
+            if (Optional.IsDefined(DatabaseServer))
+            {
+                builder.Append("  databaseServer:");
+                AppendChildObject(builder, DatabaseServer, options, 2);
+            }
+
+            if (Optional.IsDefined(HighAvailabilityConfig))
+            {
+                builder.Append("  highAvailabilityConfig:");
+                AppendChildObject(builder, HighAvailabilityConfig, options, 2);
+            }
+
+            if (Optional.IsDefined(StorageConfiguration))
+            {
+                builder.Append("  storageConfiguration:");
+                AppendChildObject(builder, StorageConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(CustomResourceNames))
+            {
+                builder.Append("  customResourceNames:");
+                AppendChildObject(builder, CustomResourceNames, options, 2);
+            }
+
+            if (Optional.IsDefined(DeploymentType))
+            {
+                builder.Append("  deploymentType:");
+                builder.AppendLine($" '{DeploymentType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AppResourceGroup))
+            {
+                builder.Append("  appResourceGroup:");
+                builder.AppendLine($" '{AppResourceGroup}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ThreeTierConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ThreeTierConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -185,6 +260,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ThreeTierConfiguration)} does not support '{options.Format}' format.");
             }
@@ -201,6 +278,8 @@ namespace Azure.ResourceManager.Workloads.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeThreeTierConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ThreeTierConfiguration)} does not support '{options.Format}' format.");
             }

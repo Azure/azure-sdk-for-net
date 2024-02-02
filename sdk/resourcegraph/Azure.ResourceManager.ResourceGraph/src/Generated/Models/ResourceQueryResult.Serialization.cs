@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
-    public partial class ResourceQueryResult : IUtf8JsonSerializable, IJsonModel<ResourceQueryResult>
+    public partial class ResourceQueryResult : IUtf8JsonSerializable, IJsonModel<ResourceQueryResult>, IPersistableModel<ResourceQueryResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceQueryResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -152,6 +153,67 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             return new ResourceQueryResult(totalRecords, count, resultTruncated, skipToken.Value, data, Optional.ToList(facets), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TotalRecords))
+            {
+                builder.Append("  totalRecords:");
+                builder.AppendLine($" '{TotalRecords.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Count))
+            {
+                builder.Append("  count:");
+                builder.AppendLine($" '{Count.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResultTruncated))
+            {
+                builder.Append("  resultTruncated:");
+                builder.AppendLine($" '{ResultTruncated.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SkipToken))
+            {
+                builder.Append("  $skipToken:");
+                builder.AppendLine($" '{SkipToken}'");
+            }
+
+            if (Optional.IsDefined(Data))
+            {
+                builder.Append("  data:");
+                builder.AppendLine($" '{Data.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Facets))
+            {
+                builder.Append("  facets:");
+                builder.AppendLine(" [");
+                foreach (var item in Facets)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ResourceQueryResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceQueryResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -160,6 +222,8 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ResourceQueryResult)} does not support '{options.Format}' format.");
             }
@@ -176,6 +240,8 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeResourceQueryResult(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ResourceQueryResult)} does not support '{options.Format}' format.");
             }

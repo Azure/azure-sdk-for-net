@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.MachineLearning.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning
 {
-    public partial class MachineLearningRegistryData : IUtf8JsonSerializable, IJsonModel<MachineLearningRegistryData>
+    public partial class MachineLearningRegistryData : IUtf8JsonSerializable, IJsonModel<MachineLearningRegistryData>, IPersistableModel<MachineLearningRegistryData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningRegistryData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -400,6 +401,143 @@ namespace Azure.ResourceManager.MachineLearning
             return new MachineLearningRegistryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, sku.Value, discoveryUrl.Value, intellectualPropertyPublisher.Value, managedResourceGroup.Value, mlFlowRegistryUri.Value, Optional.ToList(privateEndpointConnections), publicNetworkAccess.Value, Optional.ToList(regionDetails), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identity:");
+                AppendChildObject(builder, Identity, options, 2);
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(Sku))
+            {
+                builder.Append("  sku:");
+                AppendChildObject(builder, Sku, options, 2);
+            }
+
+            if (Optional.IsDefined(DiscoveryUri))
+            {
+                builder.Append("  discoveryUrl:");
+                builder.AppendLine($" '{DiscoveryUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(IntellectualPropertyPublisher))
+            {
+                builder.Append("  intellectualPropertyPublisher:");
+                builder.AppendLine($" '{IntellectualPropertyPublisher}'");
+            }
+
+            if (Optional.IsDefined(ManagedResourceGroup))
+            {
+                builder.Append("  managedResourceGroup:");
+                AppendChildObject(builder, ManagedResourceGroup, options, 2);
+            }
+
+            if (Optional.IsDefined(MlFlowRegistryUri))
+            {
+                builder.Append("  mlFlowRegistryUri:");
+                builder.AppendLine($" '{MlFlowRegistryUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                builder.Append("  privateEndpointConnections:");
+                builder.AppendLine(" [");
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                builder.Append("  publicNetworkAccess:");
+                builder.AppendLine($" '{PublicNetworkAccess}'");
+            }
+
+            if (Optional.IsCollectionDefined(RegionDetails))
+            {
+                builder.Append("  regionDetails:");
+                builder.AppendLine(" [");
+                foreach (var item in RegionDetails)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MachineLearningRegistryData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningRegistryData>)this).GetFormatFromOptions(options) : options.Format;
@@ -408,6 +546,8 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningRegistryData)} does not support '{options.Format}' format.");
             }
@@ -424,6 +564,8 @@ namespace Azure.ResourceManager.MachineLearning
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMachineLearningRegistryData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningRegistryData)} does not support '{options.Format}' format.");
             }

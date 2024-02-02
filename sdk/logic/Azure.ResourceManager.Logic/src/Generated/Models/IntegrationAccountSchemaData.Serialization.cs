@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Logic.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    public partial class IntegrationAccountSchemaData : IUtf8JsonSerializable, IJsonModel<IntegrationAccountSchemaData>
+    public partial class IntegrationAccountSchemaData : IUtf8JsonSerializable, IJsonModel<IntegrationAccountSchemaData>, IPersistableModel<IntegrationAccountSchemaData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationAccountSchemaData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -321,6 +322,133 @@ namespace Azure.ResourceManager.Logic
             return new IntegrationAccountSchemaData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, schemaType, targetNamespace.Value, documentName.Value, fileName.Value, Optional.ToNullable(createdTime), Optional.ToNullable(changedTime), metadata.Value, content.Value, Optional.ToNullable(contentType), contentLink.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SchemaType))
+            {
+                builder.Append("  schemaType:");
+                builder.AppendLine($" '{SchemaType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetNamespace))
+            {
+                builder.Append("  targetNamespace:");
+                builder.AppendLine($" '{TargetNamespace}'");
+            }
+
+            if (Optional.IsDefined(DocumentName))
+            {
+                builder.Append("  documentName:");
+                builder.AppendLine($" '{DocumentName}'");
+            }
+
+            if (Optional.IsDefined(FileName))
+            {
+                builder.Append("  fileName:");
+                builder.AppendLine($" '{FileName}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdTime:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ChangedOn))
+            {
+                builder.Append("  changedTime:");
+                builder.AppendLine($" '{ChangedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Metadata))
+            {
+                builder.Append("  metadata:");
+                builder.AppendLine($" '{Metadata.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Content))
+            {
+                builder.Append("  content:");
+                builder.AppendLine($" '{Content.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ContentType))
+            {
+                builder.Append("  contentType:");
+                builder.AppendLine($" '{ContentType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ContentLink))
+            {
+                builder.Append("  contentLink:");
+                AppendChildObject(builder, ContentLink, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<IntegrationAccountSchemaData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountSchemaData>)this).GetFormatFromOptions(options) : options.Format;
@@ -329,6 +457,8 @@ namespace Azure.ResourceManager.Logic
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(IntegrationAccountSchemaData)} does not support '{options.Format}' format.");
             }
@@ -345,6 +475,8 @@ namespace Azure.ResourceManager.Logic
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeIntegrationAccountSchemaData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(IntegrationAccountSchemaData)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ArcScVmm.Models;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
-    public partial class ScVmmVirtualMachineData : IUtf8JsonSerializable, IJsonModel<ScVmmVirtualMachineData>
+    public partial class ScVmmVirtualMachineData : IUtf8JsonSerializable, IJsonModel<ScVmmVirtualMachineData>, IPersistableModel<ScVmmVirtualMachineData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmVirtualMachineData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -409,6 +410,185 @@ namespace Azure.ResourceManager.ArcScVmm
             return new ScVmmVirtualMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, vmmServerId.Value, cloudId.Value, templateId.Value, checkpointType.Value, Optional.ToList(checkpoints), Optional.ToList(availabilitySets), osProfile.Value, hardwareProfile.Value, networkProfile.Value, storageProfile.Value, vmName.Value, uuid.Value, Optional.ToNullable(generation), powerState.Value, provisioningState.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                builder.Append("  extendedLocation:");
+                AppendChildObject(builder, ExtendedLocation, options, 2);
+            }
+
+            if (Optional.IsDefined(InventoryItemId))
+            {
+                builder.Append("  inventoryItemId:");
+                builder.AppendLine($" '{InventoryItemId}'");
+            }
+
+            if (Optional.IsDefined(VmmServerId))
+            {
+                builder.Append("  vmmServerId:");
+                builder.AppendLine($" '{VmmServerId}'");
+            }
+
+            if (Optional.IsDefined(CloudId))
+            {
+                builder.Append("  cloudId:");
+                builder.AppendLine($" '{CloudId}'");
+            }
+
+            if (Optional.IsDefined(TemplateId))
+            {
+                builder.Append("  templateId:");
+                builder.AppendLine($" '{TemplateId}'");
+            }
+
+            if (Optional.IsDefined(CheckpointType))
+            {
+                builder.Append("  checkpointType:");
+                builder.AppendLine($" '{CheckpointType}'");
+            }
+
+            if (Optional.IsCollectionDefined(Checkpoints))
+            {
+                builder.Append("  checkpoints:");
+                builder.AppendLine(" [");
+                foreach (var item in Checkpoints)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(AvailabilitySets))
+            {
+                builder.Append("  availabilitySets:");
+                builder.AppendLine(" [");
+                foreach (var item in AvailabilitySets)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(OSProfile))
+            {
+                builder.Append("  osProfile:");
+                AppendChildObject(builder, OSProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(HardwareProfile))
+            {
+                builder.Append("  hardwareProfile:");
+                AppendChildObject(builder, HardwareProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(NetworkProfile))
+            {
+                builder.Append("  networkProfile:");
+                AppendChildObject(builder, NetworkProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(StorageProfile))
+            {
+                builder.Append("  storageProfile:");
+                AppendChildObject(builder, StorageProfile, options, 2);
+            }
+
+            if (Optional.IsDefined(VmName))
+            {
+                builder.Append("  vmName:");
+                builder.AppendLine($" '{VmName}'");
+            }
+
+            if (Optional.IsDefined(Uuid))
+            {
+                builder.Append("  uuid:");
+                builder.AppendLine($" '{Uuid}'");
+            }
+
+            if (Optional.IsDefined(Generation))
+            {
+                builder.Append("  generation:");
+                builder.AppendLine($" '{Generation.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PowerState))
+            {
+                builder.Append("  powerState:");
+                builder.AppendLine($" '{PowerState}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ScVmmVirtualMachineData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScVmmVirtualMachineData>)this).GetFormatFromOptions(options) : options.Format;
@@ -417,6 +597,8 @@ namespace Azure.ResourceManager.ArcScVmm
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ScVmmVirtualMachineData)} does not support '{options.Format}' format.");
             }
@@ -433,6 +615,8 @@ namespace Azure.ResourceManager.ArcScVmm
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeScVmmVirtualMachineData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ScVmmVirtualMachineData)} does not support '{options.Format}' format.");
             }

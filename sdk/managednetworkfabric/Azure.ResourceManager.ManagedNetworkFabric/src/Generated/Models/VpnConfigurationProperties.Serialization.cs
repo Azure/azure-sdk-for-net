@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class VpnConfigurationProperties : IUtf8JsonSerializable, IJsonModel<VpnConfigurationProperties>
+    public partial class VpnConfigurationProperties : IUtf8JsonSerializable, IJsonModel<VpnConfigurationProperties>, IPersistableModel<VpnConfigurationProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnConfigurationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -145,6 +146,56 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new VpnConfigurationProperties(networkToNetworkInterconnectId.Value, Optional.ToNullable(administrativeState), peeringOption, optionBProperties.Value, optionAProperties.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(NetworkToNetworkInterconnectId))
+            {
+                builder.Append("  networkToNetworkInterconnectId:");
+                builder.AppendLine($" '{NetworkToNetworkInterconnectId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AdministrativeState))
+            {
+                builder.Append("  administrativeState:");
+                builder.AppendLine($" '{AdministrativeState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PeeringOption))
+            {
+                builder.Append("  peeringOption:");
+                builder.AppendLine($" '{PeeringOption.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OptionBProperties))
+            {
+                builder.Append("  optionBProperties:");
+                AppendChildObject(builder, OptionBProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(OptionAProperties))
+            {
+                builder.Append("  optionAProperties:");
+                AppendChildObject(builder, OptionAProperties, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VpnConfigurationProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VpnConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -153,6 +204,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VpnConfigurationProperties)} does not support '{options.Format}' format.");
             }
@@ -169,6 +222,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVpnConfigurationProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VpnConfigurationProperties)} does not support '{options.Format}' format.");
             }

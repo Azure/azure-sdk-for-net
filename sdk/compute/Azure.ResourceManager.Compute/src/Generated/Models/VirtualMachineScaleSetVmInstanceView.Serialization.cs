@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachineScaleSetVmInstanceView : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetVmInstanceView>
+    public partial class VirtualMachineScaleSetVmInstanceView : IUtf8JsonSerializable, IJsonModel<VirtualMachineScaleSetVmInstanceView>, IPersistableModel<VirtualMachineScaleSetVmInstanceView>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineScaleSetVmInstanceView>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -327,6 +328,137 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineScaleSetVmInstanceView(Optional.ToNullable(platformUpdateDomain), Optional.ToNullable(platformFaultDomain), rdpThumbPrint.Value, vmAgent.Value, maintenanceRedeployStatus.Value, Optional.ToList(disks), Optional.ToList(extensions), vmHealth.Value, bootDiagnostics.Value, Optional.ToList(statuses), assignedHost.Value, placementGroupId.Value, computerName.Value, osName.Value, osVersion.Value, Optional.ToNullable(hyperVGeneration), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PlatformUpdateDomain))
+            {
+                builder.Append("  platformUpdateDomain:");
+                builder.AppendLine($" '{PlatformUpdateDomain.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PlatformFaultDomain))
+            {
+                builder.Append("  platformFaultDomain:");
+                builder.AppendLine($" '{PlatformFaultDomain.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RdpThumbPrint))
+            {
+                builder.Append("  rdpThumbPrint:");
+                builder.AppendLine($" '{RdpThumbPrint}'");
+            }
+
+            if (Optional.IsDefined(VmAgent))
+            {
+                builder.Append("  vmAgent:");
+                AppendChildObject(builder, VmAgent, options, 2);
+            }
+
+            if (Optional.IsDefined(MaintenanceRedeployStatus))
+            {
+                builder.Append("  maintenanceRedeployStatus:");
+                AppendChildObject(builder, MaintenanceRedeployStatus, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Disks))
+            {
+                builder.Append("  disks:");
+                builder.AppendLine(" [");
+                foreach (var item in Disks)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Extensions))
+            {
+                builder.Append("  extensions:");
+                builder.AppendLine(" [");
+                foreach (var item in Extensions)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(VmHealth))
+            {
+                builder.Append("  vmHealth:");
+                AppendChildObject(builder, VmHealth, options, 2);
+            }
+
+            if (Optional.IsDefined(BootDiagnostics))
+            {
+                builder.Append("  bootDiagnostics:");
+                AppendChildObject(builder, BootDiagnostics, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(Statuses))
+            {
+                builder.Append("  statuses:");
+                builder.AppendLine(" [");
+                foreach (var item in Statuses)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(AssignedHost))
+            {
+                builder.Append("  assignedHost:");
+                builder.AppendLine($" '{AssignedHost.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PlacementGroupId))
+            {
+                builder.Append("  placementGroupId:");
+                builder.AppendLine($" '{PlacementGroupId}'");
+            }
+
+            if (Optional.IsDefined(ComputerName))
+            {
+                builder.Append("  computerName:");
+                builder.AppendLine($" '{ComputerName}'");
+            }
+
+            if (Optional.IsDefined(OSName))
+            {
+                builder.Append("  osName:");
+                builder.AppendLine($" '{OSName}'");
+            }
+
+            if (Optional.IsDefined(OSVersion))
+            {
+                builder.Append("  osVersion:");
+                builder.AppendLine($" '{OSVersion}'");
+            }
+
+            if (Optional.IsDefined(HyperVGeneration))
+            {
+                builder.Append("  hyperVGeneration:");
+                builder.AppendLine($" '{HyperVGeneration.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VirtualMachineScaleSetVmInstanceView>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmInstanceView>)this).GetFormatFromOptions(options) : options.Format;
@@ -335,6 +467,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support '{options.Format}' format.");
             }
@@ -351,6 +485,8 @@ namespace Azure.ResourceManager.Compute.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVirtualMachineScaleSetVmInstanceView(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmInstanceView)} does not support '{options.Format}' format.");
             }

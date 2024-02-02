@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    internal partial class ContainerExec : IUtf8JsonSerializable, IJsonModel<ContainerExec>
+    internal partial class ContainerExec : IUtf8JsonSerializable, IJsonModel<ContainerExec>, IPersistableModel<ContainerExec>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerExec>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -102,6 +103,42 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerExec(Optional.ToList(command), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Command))
+            {
+                builder.Append("  command:");
+                builder.AppendLine(" [");
+                foreach (var item in Command)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ContainerExec>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerExec>)this).GetFormatFromOptions(options) : options.Format;
@@ -110,6 +147,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerExec)} does not support '{options.Format}' format.");
             }
@@ -126,6 +165,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerExec(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerExec)} does not support '{options.Format}' format.");
             }

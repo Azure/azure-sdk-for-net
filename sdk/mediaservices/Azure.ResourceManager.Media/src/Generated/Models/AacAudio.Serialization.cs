@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AacAudio : IUtf8JsonSerializable, IJsonModel<AacAudio>
+    public partial class AacAudio : IUtf8JsonSerializable, IJsonModel<AacAudio>, IPersistableModel<AacAudio>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AacAudio>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -156,6 +157,62 @@ namespace Azure.ResourceManager.Media.Models
             return new AacAudio(odataType, label.Value, serializedAdditionalRawData, Optional.ToNullable(channels), Optional.ToNullable(samplingRate), Optional.ToNullable(bitrate), Optional.ToNullable(profile));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Profile))
+            {
+                builder.Append("  profile:");
+                builder.AppendLine($" '{Profile.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Channels))
+            {
+                builder.Append("  channels:");
+                builder.AppendLine($" '{Channels.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SamplingRate))
+            {
+                builder.Append("  samplingRate:");
+                builder.AppendLine($" '{SamplingRate.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Bitrate))
+            {
+                builder.Append("  bitrate:");
+                builder.AppendLine($" '{Bitrate.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OdataType))
+            {
+                builder.Append("  @odata.type:");
+                builder.AppendLine($" '{OdataType}'");
+            }
+
+            if (Optional.IsDefined(Label))
+            {
+                builder.Append("  label:");
+                builder.AppendLine($" '{Label}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AacAudio>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AacAudio>)this).GetFormatFromOptions(options) : options.Format;
@@ -164,6 +221,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AacAudio)} does not support '{options.Format}' format.");
             }
@@ -180,6 +239,8 @@ namespace Azure.ResourceManager.Media.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAacAudio(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AacAudio)} does not support '{options.Format}' format.");
             }

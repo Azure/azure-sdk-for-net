@@ -9,13 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics
 {
-    public partial class DataLakeAnalyticsFirewallRuleData : IUtf8JsonSerializable, IJsonModel<DataLakeAnalyticsFirewallRuleData>
+    public partial class DataLakeAnalyticsFirewallRuleData : IUtf8JsonSerializable, IJsonModel<DataLakeAnalyticsFirewallRuleData>, IPersistableModel<DataLakeAnalyticsFirewallRuleData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsFirewallRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -172,6 +173,62 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             return new DataLakeAnalyticsFirewallRuleData(id, name, type, systemData.Value, startIPAddress.Value, endIPAddress.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(StartIPAddress))
+            {
+                builder.Append("  startIpAddress:");
+                builder.AppendLine($" '{StartIPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndIPAddress))
+            {
+                builder.Append("  endIpAddress:");
+                builder.AppendLine($" '{EndIPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DataLakeAnalyticsFirewallRuleData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsFirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
@@ -180,6 +237,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DataLakeAnalyticsFirewallRuleData)} does not support '{options.Format}' format.");
             }
@@ -196,6 +255,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDataLakeAnalyticsFirewallRuleData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DataLakeAnalyticsFirewallRuleData)} does not support '{options.Format}' format.");
             }

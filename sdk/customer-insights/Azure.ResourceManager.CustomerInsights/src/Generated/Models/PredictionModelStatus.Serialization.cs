@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class PredictionModelStatus : IUtf8JsonSerializable, IJsonModel<PredictionModelStatus>
+    public partial class PredictionModelStatus : IUtf8JsonSerializable, IJsonModel<PredictionModelStatus>, IPersistableModel<PredictionModelStatus>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredictionModelStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -219,6 +220,92 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             return new PredictionModelStatus(Optional.ToNullable(tenantId), predictionName.Value, predictionGuidId.Value, status, message.Value, Optional.ToNullable(trainingSetCount), Optional.ToNullable(testSetCount), Optional.ToNullable(validationSetCount), Optional.ToNullable(trainingAccuracy), Optional.ToNullable(signalsUsed), modelVersion.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("  tenantId:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PredictionName))
+            {
+                builder.Append("  predictionName:");
+                builder.AppendLine($" '{PredictionName}'");
+            }
+
+            if (Optional.IsDefined(PredictionGuidId))
+            {
+                builder.Append("  predictionGuidId:");
+                builder.AppendLine($" '{PredictionGuidId}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Message))
+            {
+                builder.Append("  message:");
+                builder.AppendLine($" '{Message}'");
+            }
+
+            if (Optional.IsDefined(TrainingSetCount))
+            {
+                builder.Append("  trainingSetCount:");
+                builder.AppendLine($" '{TrainingSetCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TestSetCount))
+            {
+                builder.Append("  testSetCount:");
+                builder.AppendLine($" '{TestSetCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ValidationSetCount))
+            {
+                builder.Append("  validationSetCount:");
+                builder.AppendLine($" '{ValidationSetCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TrainingAccuracy))
+            {
+                builder.Append("  trainingAccuracy:");
+                builder.AppendLine($" '{TrainingAccuracy.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SignalsUsed))
+            {
+                builder.Append("  signalsUsed:");
+                builder.AppendLine($" '{SignalsUsed.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ModelVersion))
+            {
+                builder.Append("  modelVersion:");
+                builder.AppendLine($" '{ModelVersion}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PredictionModelStatus>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PredictionModelStatus>)this).GetFormatFromOptions(options) : options.Format;
@@ -227,6 +314,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PredictionModelStatus)} does not support '{options.Format}' format.");
             }
@@ -243,6 +332,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePredictionModelStatus(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PredictionModelStatus)} does not support '{options.Format}' format.");
             }

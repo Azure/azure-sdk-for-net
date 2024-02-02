@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class RegistrationContactInfo : IUtf8JsonSerializable, IJsonModel<RegistrationContactInfo>
+    public partial class RegistrationContactInfo : IUtf8JsonSerializable, IJsonModel<RegistrationContactInfo>, IPersistableModel<RegistrationContactInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegistrationContactInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -168,6 +169,80 @@ namespace Azure.ResourceManager.AppService.Models
             return new RegistrationContactInfo(addressMailing.Value, email, fax.Value, jobTitle.Value, nameFirst, nameLast, nameMiddle.Value, organization.Value, phone, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AddressMailing))
+            {
+                builder.Append("  addressMailing:");
+                AppendChildObject(builder, AddressMailing, options, 2);
+            }
+
+            if (Optional.IsDefined(Email))
+            {
+                builder.Append("  email:");
+                builder.AppendLine($" '{Email}'");
+            }
+
+            if (Optional.IsDefined(Fax))
+            {
+                builder.Append("  fax:");
+                builder.AppendLine($" '{Fax}'");
+            }
+
+            if (Optional.IsDefined(JobTitle))
+            {
+                builder.Append("  jobTitle:");
+                builder.AppendLine($" '{JobTitle}'");
+            }
+
+            if (Optional.IsDefined(NameFirst))
+            {
+                builder.Append("  nameFirst:");
+                builder.AppendLine($" '{NameFirst}'");
+            }
+
+            if (Optional.IsDefined(NameLast))
+            {
+                builder.Append("  nameLast:");
+                builder.AppendLine($" '{NameLast}'");
+            }
+
+            if (Optional.IsDefined(NameMiddle))
+            {
+                builder.Append("  nameMiddle:");
+                builder.AppendLine($" '{NameMiddle}'");
+            }
+
+            if (Optional.IsDefined(Organization))
+            {
+                builder.Append("  organization:");
+                builder.AppendLine($" '{Organization}'");
+            }
+
+            if (Optional.IsDefined(Phone))
+            {
+                builder.Append("  phone:");
+                builder.AppendLine($" '{Phone}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<RegistrationContactInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RegistrationContactInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -176,6 +251,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support '{options.Format}' format.");
             }
@@ -192,6 +269,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeRegistrationContactInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(RegistrationContactInfo)} does not support '{options.Format}' format.");
             }

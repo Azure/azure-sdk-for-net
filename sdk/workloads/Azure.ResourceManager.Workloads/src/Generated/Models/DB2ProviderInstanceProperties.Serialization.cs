@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class DB2ProviderInstanceProperties : IUtf8JsonSerializable, IJsonModel<DB2ProviderInstanceProperties>
+    public partial class DB2ProviderInstanceProperties : IUtf8JsonSerializable, IJsonModel<DB2ProviderInstanceProperties>, IPersistableModel<DB2ProviderInstanceProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DB2ProviderInstanceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -196,6 +197,86 @@ namespace Azure.ResourceManager.Workloads.Models
             return new DB2ProviderInstanceProperties(providerType, serializedAdditionalRawData, hostname.Value, dbName.Value, dbPort.Value, dbUsername.Value, dbPassword.Value, dbPasswordUri.Value, sapSid.Value, Optional.ToNullable(sslPreference), sslCertificateUri.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Hostname))
+            {
+                builder.Append("  hostname:");
+                builder.AppendLine($" '{Hostname}'");
+            }
+
+            if (Optional.IsDefined(DBName))
+            {
+                builder.Append("  dbName:");
+                builder.AppendLine($" '{DBName}'");
+            }
+
+            if (Optional.IsDefined(DBPort))
+            {
+                builder.Append("  dbPort:");
+                builder.AppendLine($" '{DBPort}'");
+            }
+
+            if (Optional.IsDefined(DBUsername))
+            {
+                builder.Append("  dbUsername:");
+                builder.AppendLine($" '{DBUsername}'");
+            }
+
+            if (Optional.IsDefined(DBPassword))
+            {
+                builder.Append("  dbPassword:");
+                builder.AppendLine($" '{DBPassword}'");
+            }
+
+            if (Optional.IsDefined(DBPasswordUri))
+            {
+                builder.Append("  dbPasswordUri:");
+                builder.AppendLine($" '{DBPasswordUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(SapSid))
+            {
+                builder.Append("  sapSid:");
+                builder.AppendLine($" '{SapSid}'");
+            }
+
+            if (Optional.IsDefined(SslPreference))
+            {
+                builder.Append("  sslPreference:");
+                builder.AppendLine($" '{SslPreference.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SslCertificateUri))
+            {
+                builder.Append("  sslCertificateUri:");
+                builder.AppendLine($" '{SslCertificateUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(ProviderType))
+            {
+                builder.Append("  providerType:");
+                builder.AppendLine($" '{ProviderType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DB2ProviderInstanceProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DB2ProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -204,6 +285,8 @@ namespace Azure.ResourceManager.Workloads.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DB2ProviderInstanceProperties)} does not support '{options.Format}' format.");
             }
@@ -220,6 +303,8 @@ namespace Azure.ResourceManager.Workloads.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDB2ProviderInstanceProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DB2ProviderInstanceProperties)} does not support '{options.Format}' format.");
             }

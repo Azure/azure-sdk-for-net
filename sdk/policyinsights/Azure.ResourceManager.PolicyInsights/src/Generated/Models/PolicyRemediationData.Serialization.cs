@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    public partial class PolicyRemediationData : IUtf8JsonSerializable, IJsonModel<PolicyRemediationData>
+    public partial class PolicyRemediationData : IUtf8JsonSerializable, IJsonModel<PolicyRemediationData>, IPersistableModel<PolicyRemediationData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyRemediationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -321,6 +322,128 @@ namespace Azure.ResourceManager.PolicyInsights
             return new PolicyRemediationData(id, name, type, systemData.Value, policyAssignmentId.Value, policyDefinitionReferenceId.Value, Optional.ToNullable(resourceDiscoveryMode), provisioningState.Value, Optional.ToNullable(createdOn), Optional.ToNullable(lastUpdatedOn), filters.Value, deploymentStatus.Value, statusMessage.Value, correlationId.Value, Optional.ToNullable(resourceCount), Optional.ToNullable(parallelDeployments), failureThreshold.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PolicyAssignmentId))
+            {
+                builder.Append("  policyAssignmentId:");
+                builder.AppendLine($" '{PolicyAssignmentId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PolicyDefinitionReferenceId))
+            {
+                builder.Append("  policyDefinitionReferenceId:");
+                builder.AppendLine($" '{PolicyDefinitionReferenceId}'");
+            }
+
+            if (Optional.IsDefined(ResourceDiscoveryMode))
+            {
+                builder.Append("  resourceDiscoveryMode:");
+                builder.AppendLine($" '{ResourceDiscoveryMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdOn:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastUpdatedOn))
+            {
+                builder.Append("  lastUpdatedOn:");
+                builder.AppendLine($" '{LastUpdatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Filter))
+            {
+                builder.Append("  filters:");
+                AppendChildObject(builder, Filter, options, 2);
+            }
+
+            if (Optional.IsDefined(DeploymentStatus))
+            {
+                builder.Append("  deploymentStatus:");
+                AppendChildObject(builder, DeploymentStatus, options, 2);
+            }
+
+            if (Optional.IsDefined(StatusMessage))
+            {
+                builder.Append("  statusMessage:");
+                builder.AppendLine($" '{StatusMessage}'");
+            }
+
+            if (Optional.IsDefined(CorrelationId))
+            {
+                builder.Append("  correlationId:");
+                builder.AppendLine($" '{CorrelationId}'");
+            }
+
+            if (Optional.IsDefined(ResourceCount))
+            {
+                builder.Append("  resourceCount:");
+                builder.AppendLine($" '{ResourceCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ParallelDeployments))
+            {
+                builder.Append("  parallelDeployments:");
+                builder.AppendLine($" '{ParallelDeployments.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FailureThreshold))
+            {
+                builder.Append("  failureThreshold:");
+                AppendChildObject(builder, FailureThreshold, options, 2);
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PolicyRemediationData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PolicyRemediationData>)this).GetFormatFromOptions(options) : options.Format;
@@ -329,6 +452,8 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PolicyRemediationData)} does not support '{options.Format}' format.");
             }
@@ -345,6 +470,8 @@ namespace Azure.ResourceManager.PolicyInsights
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePolicyRemediationData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PolicyRemediationData)} does not support '{options.Format}' format.");
             }

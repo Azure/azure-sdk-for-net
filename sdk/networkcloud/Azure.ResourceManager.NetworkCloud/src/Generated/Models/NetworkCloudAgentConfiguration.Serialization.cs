@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class NetworkCloudAgentConfiguration : IUtf8JsonSerializable, IJsonModel<NetworkCloudAgentConfiguration>
+    public partial class NetworkCloudAgentConfiguration : IUtf8JsonSerializable, IJsonModel<NetworkCloudAgentConfiguration>, IPersistableModel<NetworkCloudAgentConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudAgentConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -100,6 +101,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new NetworkCloudAgentConfiguration(hugepagesCount, Optional.ToNullable(hugepagesSize), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(HugepagesCount))
+            {
+                builder.Append("  hugepagesCount:");
+                builder.AppendLine($" '{HugepagesCount.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HugepagesSize))
+            {
+                builder.Append("  hugepagesSize:");
+                builder.AppendLine($" '{HugepagesSize.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<NetworkCloudAgentConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudAgentConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -108,6 +141,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkCloudAgentConfiguration)} does not support '{options.Format}' format.");
             }
@@ -124,6 +159,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkCloudAgentConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkCloudAgentConfiguration)} does not support '{options.Format}' format.");
             }

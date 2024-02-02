@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupInstanceDeletionInfo : IUtf8JsonSerializable, IJsonModel<BackupInstanceDeletionInfo>
+    public partial class BackupInstanceDeletionInfo : IUtf8JsonSerializable, IJsonModel<BackupInstanceDeletionInfo>, IPersistableModel<BackupInstanceDeletionInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupInstanceDeletionInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -133,6 +134,50 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new BackupInstanceDeletionInfo(Optional.ToNullable(deletionTime), Optional.ToNullable(billingEndDate), Optional.ToNullable(scheduledPurgeTime), deleteActivityId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DeleteOn))
+            {
+                builder.Append("  deletionTime:");
+                builder.AppendLine($" '{DeleteOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BillingEndOn))
+            {
+                builder.Append("  billingEndDate:");
+                builder.AppendLine($" '{BillingEndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ScheduledPurgeOn))
+            {
+                builder.Append("  scheduledPurgeTime:");
+                builder.AppendLine($" '{ScheduledPurgeOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DeleteActivityId))
+            {
+                builder.Append("  deleteActivityID:");
+                builder.AppendLine($" '{DeleteActivityId}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BackupInstanceDeletionInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackupInstanceDeletionInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -141,6 +186,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BackupInstanceDeletionInfo)} does not support '{options.Format}' format.");
             }
@@ -157,6 +204,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBackupInstanceDeletionInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BackupInstanceDeletionInfo)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ExchangeResultProperties : IUtf8JsonSerializable, IJsonModel<ExchangeResultProperties>
+    public partial class ExchangeResultProperties : IUtf8JsonSerializable, IJsonModel<ExchangeResultProperties>, IPersistableModel<ExchangeResultProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExchangeResultProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -227,6 +228,89 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ExchangeResultProperties(Optional.ToNullable(sessionId), netPayable.Value, refundsTotal.Value, purchasesTotal.Value, Optional.ToList(reservationsToPurchase), Optional.ToList(savingsPlansToPurchase), Optional.ToList(reservationsToExchange), policyResult.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SessionId))
+            {
+                builder.Append("  sessionId:");
+                builder.AppendLine($" '{SessionId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(NetPayable))
+            {
+                builder.Append("  netPayable:");
+                AppendChildObject(builder, NetPayable, options, 2);
+            }
+
+            if (Optional.IsDefined(RefundsTotal))
+            {
+                builder.Append("  refundsTotal:");
+                AppendChildObject(builder, RefundsTotal, options, 2);
+            }
+
+            if (Optional.IsDefined(PurchasesTotal))
+            {
+                builder.Append("  purchasesTotal:");
+                AppendChildObject(builder, PurchasesTotal, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(ReservationsToPurchase))
+            {
+                builder.Append("  reservationsToPurchase:");
+                builder.AppendLine(" [");
+                foreach (var item in ReservationsToPurchase)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(SavingsPlansToPurchase))
+            {
+                builder.Append("  savingsPlansToPurchase:");
+                builder.AppendLine(" [");
+                foreach (var item in SavingsPlansToPurchase)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(ReservationsToExchange))
+            {
+                builder.Append("  reservationsToExchange:");
+                builder.AppendLine(" [");
+                foreach (var item in ReservationsToExchange)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(PolicyResult))
+            {
+                builder.Append("  policyResult:");
+                AppendChildObject(builder, PolicyResult, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ExchangeResultProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExchangeResultProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -235,6 +319,8 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ExchangeResultProperties)} does not support '{options.Format}' format.");
             }
@@ -251,6 +337,8 @@ namespace Azure.ResourceManager.Reservations.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeExchangeResultProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ExchangeResultProperties)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
-    public partial class AnalysisIPv4FirewallSettings : IUtf8JsonSerializable, IJsonModel<AnalysisIPv4FirewallSettings>
+    public partial class AnalysisIPv4FirewallSettings : IUtf8JsonSerializable, IJsonModel<AnalysisIPv4FirewallSettings>, IPersistableModel<AnalysisIPv4FirewallSettings>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisIPv4FirewallSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -117,6 +118,44 @@ namespace Azure.ResourceManager.Analysis.Models
             return new AnalysisIPv4FirewallSettings(Optional.ToList(firewallRules), Optional.ToNullable(enablePowerBIService), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(FirewallRules))
+            {
+                builder.Append("  firewallRules:");
+                builder.AppendLine(" [");
+                foreach (var item in FirewallRules)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsPowerBIServiceEnabled))
+            {
+                builder.Append("  enablePowerBIService:");
+                var boolValue = IsPowerBIServiceEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AnalysisIPv4FirewallSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisIPv4FirewallSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -125,6 +164,8 @@ namespace Azure.ResourceManager.Analysis.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AnalysisIPv4FirewallSettings)} does not support '{options.Format}' format.");
             }
@@ -141,6 +182,8 @@ namespace Azure.ResourceManager.Analysis.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAnalysisIPv4FirewallSettings(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AnalysisIPv4FirewallSettings)} does not support '{options.Format}' format.");
             }

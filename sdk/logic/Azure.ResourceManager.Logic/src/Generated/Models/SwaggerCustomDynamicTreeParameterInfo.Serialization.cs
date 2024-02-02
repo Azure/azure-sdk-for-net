@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class SwaggerCustomDynamicTreeParameterInfo : IUtf8JsonSerializable, IJsonModel<SwaggerCustomDynamicTreeParameterInfo>
+    public partial class SwaggerCustomDynamicTreeParameterInfo : IUtf8JsonSerializable, IJsonModel<SwaggerCustomDynamicTreeParameterInfo>, IPersistableModel<SwaggerCustomDynamicTreeParameterInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SwaggerCustomDynamicTreeParameterInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -136,6 +137,51 @@ namespace Azure.ResourceManager.Logic.Models
             return new SwaggerCustomDynamicTreeParameterInfo(selectedItemValuePath.Value, value.Value, parameterReference.Value, Optional.ToNullable(required), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SelectedItemValuePath))
+            {
+                builder.Append("  selectedItemValuePath:");
+                builder.AppendLine($" '{SelectedItemValuePath}'");
+            }
+
+            if (Optional.IsDefined(Value))
+            {
+                builder.Append("  value:");
+                builder.AppendLine($" '{Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ParameterReference))
+            {
+                builder.Append("  parameterReference:");
+                builder.AppendLine($" '{ParameterReference}'");
+            }
+
+            if (Optional.IsDefined(IsRequired))
+            {
+                builder.Append("  required:");
+                var boolValue = IsRequired.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SwaggerCustomDynamicTreeParameterInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SwaggerCustomDynamicTreeParameterInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -144,6 +190,8 @@ namespace Azure.ResourceManager.Logic.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeParameterInfo)} does not support '{options.Format}' format.");
             }
@@ -160,6 +208,8 @@ namespace Azure.ResourceManager.Logic.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSwaggerCustomDynamicTreeParameterInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeParameterInfo)} does not support '{options.Format}' format.");
             }

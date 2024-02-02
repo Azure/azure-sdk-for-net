@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2ARecoveryPointDetails : IUtf8JsonSerializable, IJsonModel<A2ARecoveryPointDetails>
+    public partial class A2ARecoveryPointDetails : IUtf8JsonSerializable, IJsonModel<A2ARecoveryPointDetails>, IPersistableModel<A2ARecoveryPointDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2ARecoveryPointDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -125,6 +126,54 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new A2ARecoveryPointDetails(instanceType, serializedAdditionalRawData, Optional.ToNullable(recoveryPointSyncType), Optional.ToList(disks));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(RecoveryPointSyncType))
+            {
+                builder.Append("  recoveryPointSyncType:");
+                builder.AppendLine($" '{RecoveryPointSyncType.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Disks))
+            {
+                builder.Append("  disks:");
+                builder.AppendLine(" [");
+                foreach (var item in Disks)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(InstanceType))
+            {
+                builder.Append("  instanceType:");
+                builder.AppendLine($" '{InstanceType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<A2ARecoveryPointDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<A2ARecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -133,6 +182,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(A2ARecoveryPointDetails)} does not support '{options.Format}' format.");
             }
@@ -149,6 +200,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeA2ARecoveryPointDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(A2ARecoveryPointDetails)} does not support '{options.Format}' format.");
             }

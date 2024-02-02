@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class WebSiteInstanceStatusData : IUtf8JsonSerializable, IJsonModel<WebSiteInstanceStatusData>
+    public partial class WebSiteInstanceStatusData : IUtf8JsonSerializable, IJsonModel<WebSiteInstanceStatusData>, IPersistableModel<WebSiteInstanceStatusData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebSiteInstanceStatusData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -250,6 +251,99 @@ namespace Azure.ResourceManager.AppService
             return new WebSiteInstanceStatusData(id, name, type, systemData.Value, Optional.ToNullable(state), statusUrl.Value, detectorUrl.Value, consoleUrl.Value, healthCheckUrl.Value, Optional.ToDictionary(containers), kind.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(State))
+            {
+                builder.Append("  state:");
+                builder.AppendLine($" '{State.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StatusUri))
+            {
+                builder.Append("  statusUrl:");
+                builder.AppendLine($" '{StatusUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(DetectorUri))
+            {
+                builder.Append("  detectorUrl:");
+                builder.AppendLine($" '{DetectorUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(ConsoleUri))
+            {
+                builder.Append("  consoleUrl:");
+                builder.AppendLine($" '{ConsoleUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(HealthCheckUrlString))
+            {
+                builder.Append("  healthCheckUrl:");
+                builder.AppendLine($" '{HealthCheckUrlString}'");
+            }
+
+            if (Optional.IsCollectionDefined(Containers))
+            {
+                builder.Append("  containers:");
+                builder.AppendLine(" {");
+                foreach (var item in Containers)
+                {
+                    builder.Append($"    {item.Key}: ");
+
+                    AppendChildObject(builder, item.Value, options, 4);
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<WebSiteInstanceStatusData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebSiteInstanceStatusData>)this).GetFormatFromOptions(options) : options.Format;
@@ -258,6 +352,8 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(WebSiteInstanceStatusData)} does not support '{options.Format}' format.");
             }
@@ -274,6 +370,8 @@ namespace Azure.ResourceManager.AppService
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeWebSiteInstanceStatusData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(WebSiteInstanceStatusData)} does not support '{options.Format}' format.");
             }

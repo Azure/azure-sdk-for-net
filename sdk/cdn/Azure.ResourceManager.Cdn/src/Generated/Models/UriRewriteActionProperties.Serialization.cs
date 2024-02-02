@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class UriRewriteActionProperties : IUtf8JsonSerializable, IJsonModel<UriRewriteActionProperties>
+    public partial class UriRewriteActionProperties : IUtf8JsonSerializable, IJsonModel<UriRewriteActionProperties>, IPersistableModel<UriRewriteActionProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UriRewriteActionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -116,6 +117,51 @@ namespace Azure.ResourceManager.Cdn.Models
             return new UriRewriteActionProperties(typeName, sourcePattern, destination, Optional.ToNullable(preserveUnmatchedPath), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ActionType))
+            {
+                builder.Append("  typeName:");
+                builder.AppendLine($" '{ActionType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourcePattern))
+            {
+                builder.Append("  sourcePattern:");
+                builder.AppendLine($" '{SourcePattern}'");
+            }
+
+            if (Optional.IsDefined(Destination))
+            {
+                builder.Append("  destination:");
+                builder.AppendLine($" '{Destination}'");
+            }
+
+            if (Optional.IsDefined(PreserveUnmatchedPath))
+            {
+                builder.Append("  preserveUnmatchedPath:");
+                var boolValue = PreserveUnmatchedPath.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<UriRewriteActionProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UriRewriteActionProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -124,6 +170,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(UriRewriteActionProperties)} does not support '{options.Format}' format.");
             }
@@ -140,6 +188,8 @@ namespace Azure.ResourceManager.Cdn.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeUriRewriteActionProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(UriRewriteActionProperties)} does not support '{options.Format}' format.");
             }

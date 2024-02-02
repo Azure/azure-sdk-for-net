@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeKubernetesRole : IUtf8JsonSerializable, IJsonModel<EdgeKubernetesRole>
+    public partial class EdgeKubernetesRole : IUtf8JsonSerializable, IJsonModel<EdgeKubernetesRole>, IPersistableModel<EdgeKubernetesRole>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeKubernetesRole>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -239,6 +240,92 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             return new EdgeKubernetesRole(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(hostPlatform), Optional.ToNullable(provisioningState), Optional.ToNullable(hostPlatformType), kubernetesClusterInfo.Value, kubernetesRoleResources.Value, Optional.ToNullable(roleStatus));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(HostPlatform))
+            {
+                builder.Append("  hostPlatform:");
+                builder.AppendLine($" '{HostPlatform.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HostPlatformType))
+            {
+                builder.Append("  hostPlatformType:");
+                builder.AppendLine($" '{HostPlatformType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(KubernetesClusterInfo))
+            {
+                builder.Append("  kubernetesClusterInfo:");
+                AppendChildObject(builder, KubernetesClusterInfo, options, 2);
+            }
+
+            if (Optional.IsDefined(KubernetesRoleResources))
+            {
+                builder.Append("  kubernetesRoleResources:");
+                AppendChildObject(builder, KubernetesRoleResources, options, 2);
+            }
+
+            if (Optional.IsDefined(RoleStatus))
+            {
+                builder.Append("  roleStatus:");
+                builder.AppendLine($" '{RoleStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<EdgeKubernetesRole>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRole>)this).GetFormatFromOptions(options) : options.Format;
@@ -247,6 +334,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EdgeKubernetesRole)} does not support '{options.Format}' format.");
             }
@@ -263,6 +352,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEdgeKubernetesRole(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EdgeKubernetesRole)} does not support '{options.Format}' format.");
             }

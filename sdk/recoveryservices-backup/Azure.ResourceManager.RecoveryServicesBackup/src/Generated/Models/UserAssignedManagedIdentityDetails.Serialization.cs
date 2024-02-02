@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class UserAssignedManagedIdentityDetails : IUtf8JsonSerializable, IJsonModel<UserAssignedManagedIdentityDetails>
+    public partial class UserAssignedManagedIdentityDetails : IUtf8JsonSerializable, IJsonModel<UserAssignedManagedIdentityDetails>, IPersistableModel<UserAssignedManagedIdentityDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserAssignedManagedIdentityDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -115,6 +116,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new UserAssignedManagedIdentityDetails(identityArmId.Value, identityName.Value, userAssignedIdentityProperties, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(IdentityArmId))
+            {
+                builder.Append("  identityArmId:");
+                builder.AppendLine($" '{IdentityArmId}'");
+            }
+
+            if (Optional.IsDefined(IdentityName))
+            {
+                builder.Append("  identityName:");
+                builder.AppendLine($" '{IdentityName}'");
+            }
+
+            if (Optional.IsDefined(UserAssignedIdentityProperties))
+            {
+                builder.Append("  userAssignedIdentityProperties:");
+                AppendChildObject(builder, UserAssignedIdentityProperties, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<UserAssignedManagedIdentityDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UserAssignedManagedIdentityDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -123,6 +162,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(UserAssignedManagedIdentityDetails)} does not support '{options.Format}' format.");
             }
@@ -139,6 +180,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeUserAssignedManagedIdentityDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(UserAssignedManagedIdentityDetails)} does not support '{options.Format}' format.");
             }

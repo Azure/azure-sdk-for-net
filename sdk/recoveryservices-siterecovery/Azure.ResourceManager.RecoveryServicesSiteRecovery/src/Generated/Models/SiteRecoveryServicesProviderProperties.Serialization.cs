@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryServicesProviderProperties : IUtf8JsonSerializable, IJsonModel<SiteRecoveryServicesProviderProperties>
+    public partial class SiteRecoveryServicesProviderProperties : IUtf8JsonSerializable, IJsonModel<SiteRecoveryServicesProviderProperties>, IPersistableModel<SiteRecoveryServicesProviderProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryServicesProviderProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -353,6 +354,161 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryServicesProviderProperties(fabricType.Value, friendlyName.Value, providerVersion.Value, serverVersion.Value, providerVersionState.Value, Optional.ToNullable(providerVersionExpireOn), fabricFriendlyName.Value, Optional.ToNullable(lastHeartBeat), connectionStatus.Value, Optional.ToNullable(protectedItemCount), Optional.ToList(allowedScenarios), Optional.ToList(healthErrorDetails), draIdentifier.Value, machineId.Value, machineName.Value, biosId.Value, authenticationIdentityDetails.Value, resourceAccessIdentityDetails.Value, dataPlaneAuthenticationIdentityDetails.Value, providerVersionDetails.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(FabricType))
+            {
+                builder.Append("  fabricType:");
+                builder.AppendLine($" '{FabricType}'");
+            }
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsDefined(ProviderVersion))
+            {
+                builder.Append("  providerVersion:");
+                builder.AppendLine($" '{ProviderVersion}'");
+            }
+
+            if (Optional.IsDefined(ServerVersion))
+            {
+                builder.Append("  serverVersion:");
+                builder.AppendLine($" '{ServerVersion}'");
+            }
+
+            if (Optional.IsDefined(ProviderVersionState))
+            {
+                builder.Append("  providerVersionState:");
+                builder.AppendLine($" '{ProviderVersionState}'");
+            }
+
+            if (Optional.IsDefined(ProviderVersionExpireOn))
+            {
+                builder.Append("  providerVersionExpiryDate:");
+                builder.AppendLine($" '{ProviderVersionExpireOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FabricFriendlyName))
+            {
+                builder.Append("  fabricFriendlyName:");
+                builder.AppendLine($" '{FabricFriendlyName}'");
+            }
+
+            if (Optional.IsDefined(LastHeartbeatReceivedOn))
+            {
+                builder.Append("  lastHeartBeat:");
+                builder.AppendLine($" '{LastHeartbeatReceivedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ConnectionStatus))
+            {
+                builder.Append("  connectionStatus:");
+                builder.AppendLine($" '{ConnectionStatus}'");
+            }
+
+            if (Optional.IsDefined(ProtectedItemCount))
+            {
+                builder.Append("  protectedItemCount:");
+                builder.AppendLine($" '{ProtectedItemCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(AllowedScenarios))
+            {
+                builder.Append("  allowedScenarios:");
+                builder.AppendLine(" [");
+                foreach (var item in AllowedScenarios)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(HealthErrorDetails))
+            {
+                builder.Append("  healthErrorDetails:");
+                builder.AppendLine(" [");
+                foreach (var item in HealthErrorDetails)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(DraIdentifier))
+            {
+                builder.Append("  draIdentifier:");
+                builder.AppendLine($" '{DraIdentifier}'");
+            }
+
+            if (Optional.IsDefined(MachineId))
+            {
+                builder.Append("  machineId:");
+                builder.AppendLine($" '{MachineId}'");
+            }
+
+            if (Optional.IsDefined(MachineName))
+            {
+                builder.Append("  machineName:");
+                builder.AppendLine($" '{MachineName}'");
+            }
+
+            if (Optional.IsDefined(BiosId))
+            {
+                builder.Append("  biosId:");
+                builder.AppendLine($" '{BiosId}'");
+            }
+
+            if (Optional.IsDefined(AuthenticationIdentityDetails))
+            {
+                builder.Append("  authenticationIdentityDetails:");
+                AppendChildObject(builder, AuthenticationIdentityDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(ResourceAccessIdentityDetails))
+            {
+                builder.Append("  resourceAccessIdentityDetails:");
+                AppendChildObject(builder, ResourceAccessIdentityDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(DataPlaneAuthenticationIdentityDetails))
+            {
+                builder.Append("  dataPlaneAuthenticationIdentityDetails:");
+                AppendChildObject(builder, DataPlaneAuthenticationIdentityDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(ProviderVersionDetails))
+            {
+                builder.Append("  providerVersionDetails:");
+                AppendChildObject(builder, ProviderVersionDetails, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SiteRecoveryServicesProviderProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryServicesProviderProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -361,6 +517,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryServicesProviderProperties)} does not support '{options.Format}' format.");
             }
@@ -377,6 +535,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSiteRecoveryServicesProviderProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryServicesProviderProperties)} does not support '{options.Format}' format.");
             }

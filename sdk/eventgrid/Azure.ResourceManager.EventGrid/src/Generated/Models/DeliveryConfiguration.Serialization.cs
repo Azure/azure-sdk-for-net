@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class DeliveryConfiguration : IUtf8JsonSerializable, IJsonModel<DeliveryConfiguration>
+    public partial class DeliveryConfiguration : IUtf8JsonSerializable, IJsonModel<DeliveryConfiguration>, IPersistableModel<DeliveryConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeliveryConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -122,6 +123,44 @@ namespace Azure.ResourceManager.EventGrid.Models
             return new DeliveryConfiguration(Optional.ToNullable(deliveryMode), queue.Value, push.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(DeliveryMode))
+            {
+                builder.Append("  deliveryMode:");
+                builder.AppendLine($" '{DeliveryMode.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Queue))
+            {
+                builder.Append("  queue:");
+                AppendChildObject(builder, Queue, options, 2);
+            }
+
+            if (Optional.IsDefined(Push))
+            {
+                builder.Append("  push:");
+                AppendChildObject(builder, Push, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DeliveryConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeliveryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,6 +169,8 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support '{options.Format}' format.");
             }
@@ -146,6 +187,8 @@ namespace Azure.ResourceManager.EventGrid.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDeliveryConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support '{options.Format}' format.");
             }

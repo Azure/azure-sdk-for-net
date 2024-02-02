@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterWindowsProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterWindowsProfile>
+    public partial class ManagedClusterWindowsProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterWindowsProfile>, IPersistableModel<ManagedClusterWindowsProfile>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterWindowsProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -141,6 +142,57 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterWindowsProfile(adminUsername, adminPassword.Value, Optional.ToNullable(licenseType), Optional.ToNullable(enableCsiProxy), gmsaProfile.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AdminUsername))
+            {
+                builder.Append("  adminUsername:");
+                builder.AppendLine($" '{AdminUsername}'");
+            }
+
+            if (Optional.IsDefined(AdminPassword))
+            {
+                builder.Append("  adminPassword:");
+                builder.AppendLine($" '{AdminPassword}'");
+            }
+
+            if (Optional.IsDefined(LicenseType))
+            {
+                builder.Append("  licenseType:");
+                builder.AppendLine($" '{LicenseType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsCsiProxyEnabled))
+            {
+                builder.Append("  enableCSIProxy:");
+                var boolValue = IsCsiProxyEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(GmsaProfile))
+            {
+                builder.Append("  gmsaProfile:");
+                AppendChildObject(builder, GmsaProfile, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ManagedClusterWindowsProfile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterWindowsProfile>)this).GetFormatFromOptions(options) : options.Format;
@@ -149,6 +201,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedClusterWindowsProfile)} does not support '{options.Format}' format.");
             }
@@ -165,6 +219,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeManagedClusterWindowsProfile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ManagedClusterWindowsProfile)} does not support '{options.Format}' format.");
             }

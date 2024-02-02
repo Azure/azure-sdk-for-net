@@ -9,12 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryProcessServer : IUtf8JsonSerializable, IJsonModel<SiteRecoveryProcessServer>
+    public partial class SiteRecoveryProcessServer : IUtf8JsonSerializable, IJsonModel<SiteRecoveryProcessServer>, IPersistableModel<SiteRecoveryProcessServer>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryProcessServer>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -562,6 +563,252 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new SiteRecoveryProcessServer(friendlyName.Value, id.Value, ipAddress.Value, osType.Value, agentVersion.Value, Optional.ToNullable(lastHeartbeat), versionStatus.Value, Optional.ToList(mobilityServiceUpdates), hostId.Value, machineCount.Value, replicationPairCount.Value, systemLoad.Value, systemLoadStatus.Value, cpuLoad.Value, cpuLoadStatus.Value, Optional.ToNullable(totalMemoryInBytes), Optional.ToNullable(availableMemoryInBytes), memoryUsageStatus.Value, Optional.ToNullable(totalSpaceInBytes), Optional.ToNullable(availableSpaceInBytes), spaceUsageStatus.Value, psServiceStatus.Value, Optional.ToNullable(sslCertExpireOn), Optional.ToNullable(sslCertExpiryRemainingDays), osVersion.Value, Optional.ToList(healthErrors), Optional.ToNullable(agentExpireOn), agentVersionDetails.Value, Optional.ToNullable(health), Optional.ToNullable(psStatsRefreshTime), Optional.ToNullable(throughputUploadPendingDataInBytes), Optional.ToNullable(throughputInMBps), Optional.ToNullable(throughputInBytes), throughputStatus.Value, marsCommunicationStatus.Value, marsRegistrationStatus.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(FriendlyName))
+            {
+                builder.Append("  friendlyName:");
+                builder.AppendLine($" '{FriendlyName}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id}'");
+            }
+
+            if (Optional.IsDefined(IPAddress))
+            {
+                builder.Append("  ipAddress:");
+                builder.AppendLine($" '{IPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OSType))
+            {
+                builder.Append("  osType:");
+                builder.AppendLine($" '{OSType}'");
+            }
+
+            if (Optional.IsDefined(AgentVersion))
+            {
+                builder.Append("  agentVersion:");
+                builder.AppendLine($" '{AgentVersion}'");
+            }
+
+            if (Optional.IsDefined(LastHeartbeatReceivedOn))
+            {
+                builder.Append("  lastHeartbeat:");
+                builder.AppendLine($" '{LastHeartbeatReceivedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(VersionStatus))
+            {
+                builder.Append("  versionStatus:");
+                builder.AppendLine($" '{VersionStatus}'");
+            }
+
+            if (Optional.IsCollectionDefined(MobilityServiceUpdates))
+            {
+                builder.Append("  mobilityServiceUpdates:");
+                builder.AppendLine(" [");
+                foreach (var item in MobilityServiceUpdates)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(HostId))
+            {
+                builder.Append("  hostId:");
+                builder.AppendLine($" '{HostId}'");
+            }
+
+            if (Optional.IsDefined(MachineCount))
+            {
+                builder.Append("  machineCount:");
+                builder.AppendLine($" '{MachineCount}'");
+            }
+
+            if (Optional.IsDefined(ReplicationPairCount))
+            {
+                builder.Append("  replicationPairCount:");
+                builder.AppendLine($" '{ReplicationPairCount}'");
+            }
+
+            if (Optional.IsDefined(SystemLoad))
+            {
+                builder.Append("  systemLoad:");
+                builder.AppendLine($" '{SystemLoad}'");
+            }
+
+            if (Optional.IsDefined(SystemLoadStatus))
+            {
+                builder.Append("  systemLoadStatus:");
+                builder.AppendLine($" '{SystemLoadStatus}'");
+            }
+
+            if (Optional.IsDefined(CpuLoad))
+            {
+                builder.Append("  cpuLoad:");
+                builder.AppendLine($" '{CpuLoad}'");
+            }
+
+            if (Optional.IsDefined(CpuLoadStatus))
+            {
+                builder.Append("  cpuLoadStatus:");
+                builder.AppendLine($" '{CpuLoadStatus}'");
+            }
+
+            if (Optional.IsDefined(TotalMemoryInBytes))
+            {
+                builder.Append("  totalMemoryInBytes:");
+                builder.AppendLine($" '{TotalMemoryInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AvailableMemoryInBytes))
+            {
+                builder.Append("  availableMemoryInBytes:");
+                builder.AppendLine($" '{AvailableMemoryInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MemoryUsageStatus))
+            {
+                builder.Append("  memoryUsageStatus:");
+                builder.AppendLine($" '{MemoryUsageStatus}'");
+            }
+
+            if (Optional.IsDefined(TotalSpaceInBytes))
+            {
+                builder.Append("  totalSpaceInBytes:");
+                builder.AppendLine($" '{TotalSpaceInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AvailableSpaceInBytes))
+            {
+                builder.Append("  availableSpaceInBytes:");
+                builder.AppendLine($" '{AvailableSpaceInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SpaceUsageStatus))
+            {
+                builder.Append("  spaceUsageStatus:");
+                builder.AppendLine($" '{SpaceUsageStatus}'");
+            }
+
+            if (Optional.IsDefined(PsServiceStatus))
+            {
+                builder.Append("  psServiceStatus:");
+                builder.AppendLine($" '{PsServiceStatus}'");
+            }
+
+            if (Optional.IsDefined(SslCertExpireOn))
+            {
+                builder.Append("  sslCertExpiryDate:");
+                builder.AppendLine($" '{SslCertExpireOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SslCertExpiryRemainingDays))
+            {
+                builder.Append("  sslCertExpiryRemainingDays:");
+                builder.AppendLine($" '{SslCertExpiryRemainingDays.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OSVersion))
+            {
+                builder.Append("  osVersion:");
+                builder.AppendLine($" '{OSVersion}'");
+            }
+
+            if (Optional.IsCollectionDefined(HealthErrors))
+            {
+                builder.Append("  healthErrors:");
+                builder.AppendLine(" [");
+                foreach (var item in HealthErrors)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(AgentExpireOn))
+            {
+                builder.Append("  agentExpiryDate:");
+                builder.AppendLine($" '{AgentExpireOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AgentVersionDetails))
+            {
+                builder.Append("  agentVersionDetails:");
+                AppendChildObject(builder, AgentVersionDetails, options, 2);
+            }
+
+            if (Optional.IsDefined(Health))
+            {
+                builder.Append("  health:");
+                builder.AppendLine($" '{Health.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PsStatsRefreshOn))
+            {
+                builder.Append("  psStatsRefreshTime:");
+                builder.AppendLine($" '{PsStatsRefreshOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ThroughputUploadPendingDataInBytes))
+            {
+                builder.Append("  throughputUploadPendingDataInBytes:");
+                builder.AppendLine($" '{ThroughputUploadPendingDataInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ThroughputInMBps))
+            {
+                builder.Append("  throughputInMBps:");
+                builder.AppendLine($" '{ThroughputInMBps.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ThroughputInBytes))
+            {
+                builder.Append("  throughputInBytes:");
+                builder.AppendLine($" '{ThroughputInBytes.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ThroughputStatus))
+            {
+                builder.Append("  throughputStatus:");
+                builder.AppendLine($" '{ThroughputStatus}'");
+            }
+
+            if (Optional.IsDefined(MarsCommunicationStatus))
+            {
+                builder.Append("  marsCommunicationStatus:");
+                builder.AppendLine($" '{MarsCommunicationStatus}'");
+            }
+
+            if (Optional.IsDefined(MarsRegistrationStatus))
+            {
+                builder.Append("  marsRegistrationStatus:");
+                builder.AppendLine($" '{MarsRegistrationStatus}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SiteRecoveryProcessServer>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryProcessServer>)this).GetFormatFromOptions(options) : options.Format;
@@ -570,6 +817,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support '{options.Format}' format.");
             }
@@ -586,6 +835,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSiteRecoveryProcessServer(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support '{options.Format}' format.");
             }

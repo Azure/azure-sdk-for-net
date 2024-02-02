@@ -8,12 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using System.Xml;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceTypeExtension : IUtf8JsonSerializable, IJsonModel<ResourceTypeExtension>
+    public partial class ResourceTypeExtension : IUtf8JsonSerializable, IJsonModel<ResourceTypeExtension>, IPersistableModel<ResourceTypeExtension>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceTypeExtension>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -132,6 +134,50 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceTypeExtension(endpointUri.Value, Optional.ToList(extensionCategories), Optional.ToNullable(timeout), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(EndpointUri))
+            {
+                builder.Append("  endpointUri:");
+                builder.AppendLine($" '{EndpointUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsCollectionDefined(ExtensionCategories))
+            {
+                builder.Append("  extensionCategories:");
+                builder.AppendLine(" [");
+                foreach (var item in ExtensionCategories)
+                {
+                    builder.AppendLine($"    '{item.ToString()}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Timeout))
+            {
+                builder.Append("  timeout:");
+                var formattedTimeSpan = XmlConvert.ToString(Timeout.Value);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ResourceTypeExtension>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeExtension>)this).GetFormatFromOptions(options) : options.Format;
@@ -140,6 +186,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ResourceTypeExtension)} does not support '{options.Format}' format.");
             }
@@ -156,6 +204,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeResourceTypeExtension(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ResourceTypeExtension)} does not support '{options.Format}' format.");
             }

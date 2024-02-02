@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesAccountModel : IUtf8JsonSerializable, IJsonModel<CognitiveServicesAccountModel>
+    public partial class CognitiveServicesAccountModel : IUtf8JsonSerializable, IJsonModel<CognitiveServicesAccountModel>, IPersistableModel<CognitiveServicesAccountModel>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CognitiveServicesAccountModel>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -304,6 +305,138 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesAccountModel(format.Value, name.Value, version.Value, source.Value, callRateLimit.Value, serializedAdditionalRawData, baseModel.Value, Optional.ToNullable(isDefaultVersion), Optional.ToList(skus), Optional.ToNullable(maxCapacity), Optional.ToDictionary(capabilities), Optional.ToDictionary(finetuneCapabilities), deprecation.Value, Optional.ToNullable(lifecycleStatus), systemData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(BaseModel))
+            {
+                builder.Append("  baseModel:");
+                AppendChildObject(builder, BaseModel, options, 2);
+            }
+
+            if (Optional.IsDefined(IsDefaultVersion))
+            {
+                builder.Append("  isDefaultVersion:");
+                var boolValue = IsDefaultVersion.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(Skus))
+            {
+                builder.Append("  skus:");
+                builder.AppendLine(" [");
+                foreach (var item in Skus)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(MaxCapacity))
+            {
+                builder.Append("  maxCapacity:");
+                builder.AppendLine($" '{MaxCapacity.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Capabilities))
+            {
+                builder.Append("  capabilities:");
+                builder.AppendLine(" {");
+                foreach (var item in Capabilities)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsCollectionDefined(FinetuneCapabilities))
+            {
+                builder.Append("  finetuneCapabilities:");
+                builder.AppendLine(" {");
+                foreach (var item in FinetuneCapabilities)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Deprecation))
+            {
+                builder.Append("  deprecation:");
+                AppendChildObject(builder, Deprecation, options, 2);
+            }
+
+            if (Optional.IsDefined(LifecycleStatus))
+            {
+                builder.Append("  lifecycleStatus:");
+                builder.AppendLine($" '{LifecycleStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                AppendChildObject(builder, SystemData, options, 2);
+            }
+
+            if (Optional.IsDefined(Format))
+            {
+                builder.Append("  format:");
+                builder.AppendLine($" '{Format}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("  version:");
+                builder.AppendLine($" '{Version}'");
+            }
+
+            if (Optional.IsDefined(Source))
+            {
+                builder.Append("  source:");
+                builder.AppendLine($" '{Source}'");
+            }
+
+            if (Optional.IsDefined(CallRateLimit))
+            {
+                builder.Append("  callRateLimit:");
+                AppendChildObject(builder, CallRateLimit, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<CognitiveServicesAccountModel>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountModel>)this).GetFormatFromOptions(options) : options.Format;
@@ -312,6 +445,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CognitiveServicesAccountModel)} does not support '{options.Format}' format.");
             }
@@ -328,6 +463,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCognitiveServicesAccountModel(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CognitiveServicesAccountModel)} does not support '{options.Format}' format.");
             }

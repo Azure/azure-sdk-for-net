@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ReportRecordContract : IUtf8JsonSerializable, IJsonModel<ReportRecordContract>
+    public partial class ReportRecordContract : IUtf8JsonSerializable, IJsonModel<ReportRecordContract>, IPersistableModel<ReportRecordContract>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReportRecordContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -427,6 +428,182 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new ReportRecordContract(name.Value, Optional.ToNullable(timestamp), interval.Value, country.Value, region.Value, zip.Value, userId.Value, productId.Value, apiId.Value, operationId.Value, apiRegion.Value, subscriptionId.Value, Optional.ToNullable(callCountSuccess), Optional.ToNullable(callCountBlocked), Optional.ToNullable(callCountFailed), Optional.ToNullable(callCountOther), Optional.ToNullable(callCountTotal), Optional.ToNullable(bandwidth), Optional.ToNullable(cacheHitCount), Optional.ToNullable(cacheMissCount), Optional.ToNullable(apiTimeAvg), Optional.ToNullable(apiTimeMin), Optional.ToNullable(apiTimeMax), Optional.ToNullable(serviceTimeAvg), Optional.ToNullable(serviceTimeMin), Optional.ToNullable(serviceTimeMax), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(Timestamp))
+            {
+                builder.Append("  timestamp:");
+                builder.AppendLine($" '{Timestamp.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Interval))
+            {
+                builder.Append("  interval:");
+                builder.AppendLine($" '{Interval}'");
+            }
+
+            if (Optional.IsDefined(Country))
+            {
+                builder.Append("  country:");
+                builder.AppendLine($" '{Country}'");
+            }
+
+            if (Optional.IsDefined(Region))
+            {
+                builder.Append("  region:");
+                builder.AppendLine($" '{Region}'");
+            }
+
+            if (Optional.IsDefined(Zip))
+            {
+                builder.Append("  zip:");
+                builder.AppendLine($" '{Zip}'");
+            }
+
+            if (Optional.IsDefined(UserId))
+            {
+                builder.Append("  userId:");
+                builder.AppendLine($" '{UserId}'");
+            }
+
+            if (Optional.IsDefined(ProductId))
+            {
+                builder.Append("  productId:");
+                builder.AppendLine($" '{ProductId}'");
+            }
+
+            if (Optional.IsDefined(ApiId))
+            {
+                builder.Append("  apiId:");
+                builder.AppendLine($" '{ApiId}'");
+            }
+
+            if (Optional.IsDefined(OperationId))
+            {
+                builder.Append("  operationId:");
+                builder.AppendLine($" '{OperationId}'");
+            }
+
+            if (Optional.IsDefined(ApiRegion))
+            {
+                builder.Append("  apiRegion:");
+                builder.AppendLine($" '{ApiRegion}'");
+            }
+
+            if (Optional.IsDefined(SubscriptionResourceId))
+            {
+                builder.Append("  subscriptionId:");
+                builder.AppendLine($" '{SubscriptionResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CallCountSuccess))
+            {
+                builder.Append("  callCountSuccess:");
+                builder.AppendLine($" '{CallCountSuccess.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CallCountBlocked))
+            {
+                builder.Append("  callCountBlocked:");
+                builder.AppendLine($" '{CallCountBlocked.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CallCountFailed))
+            {
+                builder.Append("  callCountFailed:");
+                builder.AppendLine($" '{CallCountFailed.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CallCountOther))
+            {
+                builder.Append("  callCountOther:");
+                builder.AppendLine($" '{CallCountOther.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CallCountTotal))
+            {
+                builder.Append("  callCountTotal:");
+                builder.AppendLine($" '{CallCountTotal.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Bandwidth))
+            {
+                builder.Append("  bandwidth:");
+                builder.AppendLine($" '{Bandwidth.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CacheHitCount))
+            {
+                builder.Append("  cacheHitCount:");
+                builder.AppendLine($" '{CacheHitCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CacheMissCount))
+            {
+                builder.Append("  cacheMissCount:");
+                builder.AppendLine($" '{CacheMissCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ApiTimeAvg))
+            {
+                builder.Append("  apiTimeAvg:");
+                builder.AppendLine($" '{ApiTimeAvg.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ApiTimeMin))
+            {
+                builder.Append("  apiTimeMin:");
+                builder.AppendLine($" '{ApiTimeMin.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ApiTimeMax))
+            {
+                builder.Append("  apiTimeMax:");
+                builder.AppendLine($" '{ApiTimeMax.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ServiceTimeAvg))
+            {
+                builder.Append("  serviceTimeAvg:");
+                builder.AppendLine($" '{ServiceTimeAvg.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ServiceTimeMin))
+            {
+                builder.Append("  serviceTimeMin:");
+                builder.AppendLine($" '{ServiceTimeMin.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ServiceTimeMax))
+            {
+                builder.Append("  serviceTimeMax:");
+                builder.AppendLine($" '{ServiceTimeMax.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ReportRecordContract>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ReportRecordContract>)this).GetFormatFromOptions(options) : options.Format;
@@ -435,6 +612,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ReportRecordContract)} does not support '{options.Format}' format.");
             }
@@ -451,6 +630,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeReportRecordContract(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ReportRecordContract)} does not support '{options.Format}' format.");
             }

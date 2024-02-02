@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class PrivateStoreOfferResult : IUtf8JsonSerializable, IJsonModel<PrivateStoreOfferResult>
+    public partial class PrivateStoreOfferResult : IUtf8JsonSerializable, IJsonModel<PrivateStoreOfferResult>, IPersistableModel<PrivateStoreOfferResult>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateStoreOfferResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -274,6 +275,119 @@ namespace Azure.ResourceManager.Marketplace.Models
             return new PrivateStoreOfferResult(uniqueOfferId.Value, offerDisplayName.Value, publisherDisplayName.Value, Optional.ToNullable(eTag), Optional.ToNullable(privateStoreId), Optional.ToNullable(createdAt), Optional.ToNullable(modifiedAt), Optional.ToList(specificPlanIdsLimitation), Optional.ToNullable(updateSuppressedDueIdempotence), Optional.ToDictionary(iconFileUris), Optional.ToList(plans), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(UniqueOfferId))
+            {
+                builder.Append("  uniqueOfferId:");
+                builder.AppendLine($" '{UniqueOfferId}'");
+            }
+
+            if (Optional.IsDefined(OfferDisplayName))
+            {
+                builder.Append("  offerDisplayName:");
+                builder.AppendLine($" '{OfferDisplayName}'");
+            }
+
+            if (Optional.IsDefined(PublisherDisplayName))
+            {
+                builder.Append("  publisherDisplayName:");
+                builder.AppendLine($" '{PublisherDisplayName}'");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  eTag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrivateStoreId))
+            {
+                builder.Append("  privateStoreId:");
+                builder.AppendLine($" '{PrivateStoreId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createdAt:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ModifiedOn))
+            {
+                builder.Append("  modifiedAt:");
+                builder.AppendLine($" '{ModifiedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(SpecificPlanIdsLimitation))
+            {
+                builder.Append("  specificPlanIdsLimitation:");
+                builder.AppendLine(" [");
+                foreach (var item in SpecificPlanIdsLimitation)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsUpdateSuppressedDueToIdempotence))
+            {
+                builder.Append("  updateSuppressedDueIdempotence:");
+                var boolValue = IsUpdateSuppressedDueToIdempotence.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(IconFileUris))
+            {
+                builder.Append("  iconFileUris:");
+                builder.AppendLine(" {");
+                foreach (var item in IconFileUris)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value.AbsoluteUri}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsCollectionDefined(Plans))
+            {
+                builder.Append("  plans:");
+                builder.AppendLine(" [");
+                foreach (var item in Plans)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PrivateStoreOfferResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PrivateStoreOfferResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -282,6 +396,8 @@ namespace Azure.ResourceManager.Marketplace.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PrivateStoreOfferResult)} does not support '{options.Format}' format.");
             }
@@ -298,6 +414,8 @@ namespace Azure.ResourceManager.Marketplace.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePrivateStoreOfferResult(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PrivateStoreOfferResult)} does not support '{options.Format}' format.");
             }

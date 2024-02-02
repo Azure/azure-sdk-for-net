@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class DeletedKeyVaultProperties : IUtf8JsonSerializable, IJsonModel<DeletedKeyVaultProperties>
+    public partial class DeletedKeyVaultProperties : IUtf8JsonSerializable, IJsonModel<DeletedKeyVaultProperties>, IPersistableModel<DeletedKeyVaultProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeletedKeyVaultProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -178,6 +179,74 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new DeletedKeyVaultProperties(vaultId.Value, Optional.ToNullable(location), Optional.ToNullable(deletionDate), Optional.ToNullable(scheduledPurgeDate), Optional.ToDictionary(tags), Optional.ToNullable(purgeProtectionEnabled), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(VaultId))
+            {
+                builder.Append("  vaultId:");
+                builder.AppendLine($" '{VaultId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DeletedOn))
+            {
+                builder.Append("  deletionDate:");
+                builder.AppendLine($" '{DeletedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ScheduledPurgeOn))
+            {
+                builder.Append("  scheduledPurgeDate:");
+                builder.AppendLine($" '{ScheduledPurgeOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(PurgeProtectionEnabled))
+            {
+                builder.Append("  purgeProtectionEnabled:");
+                var boolValue = PurgeProtectionEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DeletedKeyVaultProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeletedKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -186,6 +255,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DeletedKeyVaultProperties)} does not support '{options.Format}' format.");
             }
@@ -202,6 +273,8 @@ namespace Azure.ResourceManager.KeyVault.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDeletedKeyVaultProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DeletedKeyVaultProperties)} does not support '{options.Format}' format.");
             }

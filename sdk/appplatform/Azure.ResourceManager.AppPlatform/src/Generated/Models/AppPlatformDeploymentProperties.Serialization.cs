@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformDeploymentProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformDeploymentProperties>
+    public partial class AppPlatformDeploymentProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformDeploymentProperties>, IPersistableModel<AppPlatformDeploymentProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformDeploymentProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -177,6 +178,68 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new AppPlatformDeploymentProperties(source.Value, deploymentSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(status), Optional.ToNullable(active), Optional.ToList(instances), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Source))
+            {
+                builder.Append("  source:");
+                AppendChildObject(builder, Source, options, 2);
+            }
+
+            if (Optional.IsDefined(DeploymentSettings))
+            {
+                builder.Append("  deploymentSettings:");
+                AppendChildObject(builder, DeploymentSettings, options, 2);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsActive))
+            {
+                builder.Append("  active:");
+                var boolValue = IsActive.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(Instances))
+            {
+                builder.Append("  instances:");
+                builder.AppendLine(" [");
+                foreach (var item in Instances)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AppPlatformDeploymentProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -185,6 +248,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AppPlatformDeploymentProperties)} does not support '{options.Format}' format.");
             }
@@ -201,6 +266,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAppPlatformDeploymentProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AppPlatformDeploymentProperties)} does not support '{options.Format}' format.");
             }

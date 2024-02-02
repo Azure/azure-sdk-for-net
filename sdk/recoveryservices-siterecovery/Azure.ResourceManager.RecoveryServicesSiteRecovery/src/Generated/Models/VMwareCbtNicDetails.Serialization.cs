@@ -9,12 +9,13 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VMwareCbtNicDetails : IUtf8JsonSerializable, IJsonModel<VMwareCbtNicDetails>
+    public partial class VMwareCbtNicDetails : IUtf8JsonSerializable, IJsonModel<VMwareCbtNicDetails>, IPersistableModel<VMwareCbtNicDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareCbtNicDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -264,6 +265,110 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new VMwareCbtNicDetails(nicId.Value, isPrimaryNic.Value, sourceIPAddress.Value, Optional.ToNullable(sourceIPAddressType), sourceNetworkId.Value, targetIPAddress.Value, Optional.ToNullable(targetIPAddressType), targetSubnetName.Value, testNetworkId.Value, testSubnetName.Value, testIPAddress.Value, Optional.ToNullable(testIPAddressType), targetNicName.Value, isSelectedForMigration.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(NicId))
+            {
+                builder.Append("  nicId:");
+                builder.AppendLine($" '{NicId}'");
+            }
+
+            if (Optional.IsDefined(IsPrimaryNic))
+            {
+                builder.Append("  isPrimaryNic:");
+                builder.AppendLine($" '{IsPrimaryNic}'");
+            }
+
+            if (Optional.IsDefined(SourceIPAddress))
+            {
+                builder.Append("  sourceIPAddress:");
+                builder.AppendLine($" '{SourceIPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceIPAddressType))
+            {
+                builder.Append("  sourceIPAddressType:");
+                builder.AppendLine($" '{SourceIPAddressType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceNetworkId))
+            {
+                builder.Append("  sourceNetworkId:");
+                builder.AppendLine($" '{SourceNetworkId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetIPAddress))
+            {
+                builder.Append("  targetIPAddress:");
+                builder.AppendLine($" '{TargetIPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetIPAddressType))
+            {
+                builder.Append("  targetIPAddressType:");
+                builder.AppendLine($" '{TargetIPAddressType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetSubnetName))
+            {
+                builder.Append("  targetSubnetName:");
+                builder.AppendLine($" '{TargetSubnetName}'");
+            }
+
+            if (Optional.IsDefined(TestNetworkId))
+            {
+                builder.Append("  testNetworkId:");
+                builder.AppendLine($" '{TestNetworkId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TestSubnetName))
+            {
+                builder.Append("  testSubnetName:");
+                builder.AppendLine($" '{TestSubnetName}'");
+            }
+
+            if (Optional.IsDefined(TestIPAddress))
+            {
+                builder.Append("  testIPAddress:");
+                builder.AppendLine($" '{TestIPAddress.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TestIPAddressType))
+            {
+                builder.Append("  testIPAddressType:");
+                builder.AppendLine($" '{TestIPAddressType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetNicName))
+            {
+                builder.Append("  targetNicName:");
+                builder.AppendLine($" '{TargetNicName}'");
+            }
+
+            if (Optional.IsDefined(IsSelectedForMigration))
+            {
+                builder.Append("  isSelectedForMigration:");
+                builder.AppendLine($" '{IsSelectedForMigration}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VMwareCbtNicDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtNicDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -272,6 +377,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VMwareCbtNicDetails)} does not support '{options.Format}' format.");
             }
@@ -288,6 +395,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVMwareCbtNicDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VMwareCbtNicDetails)} does not support '{options.Format}' format.");
             }

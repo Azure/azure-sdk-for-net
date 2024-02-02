@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningTrialComponent : IUtf8JsonSerializable, IJsonModel<MachineLearningTrialComponent>
+    public partial class MachineLearningTrialComponent : IUtf8JsonSerializable, IJsonModel<MachineLearningTrialComponent>, IPersistableModel<MachineLearningTrialComponent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningTrialComponent>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -188,6 +189,73 @@ namespace Azure.ResourceManager.MachineLearning.Models
             return new MachineLearningTrialComponent(codeId.Value, command, distribution.Value, environmentId, Optional.ToDictionary(environmentVariables), resources.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(CodeId))
+            {
+                builder.Append("  codeId:");
+                builder.AppendLine($" '{CodeId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Command))
+            {
+                builder.Append("  command:");
+                builder.AppendLine($" '{Command}'");
+            }
+
+            if (Optional.IsDefined(Distribution))
+            {
+                builder.Append("  distribution:");
+                AppendChildObject(builder, Distribution, options, 2);
+            }
+
+            if (Optional.IsDefined(EnvironmentId))
+            {
+                builder.Append("  environmentId:");
+                builder.AppendLine($" '{EnvironmentId.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
+            {
+                builder.Append("  environmentVariables:");
+                builder.AppendLine(" {");
+                foreach (var item in EnvironmentVariables)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            if (Optional.IsDefined(Resources))
+            {
+                builder.Append("  resources:");
+                AppendChildObject(builder, Resources, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MachineLearningTrialComponent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTrialComponent>)this).GetFormatFromOptions(options) : options.Format;
@@ -196,6 +264,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningTrialComponent)} does not support '{options.Format}' format.");
             }
@@ -212,6 +282,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMachineLearningTrialComponent(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningTrialComponent)} does not support '{options.Format}' format.");
             }

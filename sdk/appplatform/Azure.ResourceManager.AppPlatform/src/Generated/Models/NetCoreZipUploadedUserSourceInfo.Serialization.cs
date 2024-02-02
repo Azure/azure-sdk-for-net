@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class NetCoreZipUploadedUserSourceInfo : IUtf8JsonSerializable, IJsonModel<NetCoreZipUploadedUserSourceInfo>
+    public partial class NetCoreZipUploadedUserSourceInfo : IUtf8JsonSerializable, IJsonModel<NetCoreZipUploadedUserSourceInfo>, IPersistableModel<NetCoreZipUploadedUserSourceInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetCoreZipUploadedUserSourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -129,6 +130,56 @@ namespace Azure.ResourceManager.AppPlatform.Models
             return new NetCoreZipUploadedUserSourceInfo(type, version.Value, serializedAdditionalRawData, relativePath.Value, netCoreMainEntryPath.Value, runtimeVersion.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(NetCoreMainEntryPath))
+            {
+                builder.Append("  netCoreMainEntryPath:");
+                builder.AppendLine($" '{NetCoreMainEntryPath}'");
+            }
+
+            if (Optional.IsDefined(RuntimeVersion))
+            {
+                builder.Append("  runtimeVersion:");
+                builder.AppendLine($" '{RuntimeVersion}'");
+            }
+
+            if (Optional.IsDefined(RelativePath))
+            {
+                builder.Append("  relativePath:");
+                builder.AppendLine($" '{RelativePath}'");
+            }
+
+            if (Optional.IsDefined(UserSourceInfoType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{UserSourceInfoType}'");
+            }
+
+            if (Optional.IsDefined(Version))
+            {
+                builder.Append("  version:");
+                builder.AppendLine($" '{Version}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<NetCoreZipUploadedUserSourceInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetCoreZipUploadedUserSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -137,6 +188,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetCoreZipUploadedUserSourceInfo)} does not support '{options.Format}' format.");
             }
@@ -153,6 +206,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetCoreZipUploadedUserSourceInfo(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetCoreZipUploadedUserSourceInfo)} does not support '{options.Format}' format.");
             }

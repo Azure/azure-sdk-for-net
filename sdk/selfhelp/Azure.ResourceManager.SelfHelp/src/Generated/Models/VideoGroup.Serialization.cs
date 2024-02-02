@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class VideoGroup : IUtf8JsonSerializable, IJsonModel<VideoGroup>
+    public partial class VideoGroup : IUtf8JsonSerializable, IJsonModel<VideoGroup>, IPersistableModel<VideoGroup>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VideoGroup>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -113,6 +114,43 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new VideoGroup(Optional.ToList(videos), replacementKey.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsCollectionDefined(Videos))
+            {
+                builder.Append("  videos:");
+                builder.AppendLine(" [");
+                foreach (var item in Videos)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(ReplacementKey))
+            {
+                builder.Append("  replacementKey:");
+                builder.AppendLine($" '{ReplacementKey}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VideoGroup>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VideoGroup>)this).GetFormatFromOptions(options) : options.Format;
@@ -121,6 +159,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VideoGroup)} does not support '{options.Format}' format.");
             }
@@ -137,6 +177,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVideoGroup(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VideoGroup)} does not support '{options.Format}' format.");
             }

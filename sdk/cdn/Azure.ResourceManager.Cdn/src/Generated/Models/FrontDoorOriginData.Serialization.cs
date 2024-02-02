@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    public partial class FrontDoorOriginData : IUtf8JsonSerializable, IJsonModel<FrontDoorOriginData>
+    public partial class FrontDoorOriginData : IUtf8JsonSerializable, IJsonModel<FrontDoorOriginData>, IPersistableModel<FrontDoorOriginData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorOriginData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -350,6 +351,129 @@ namespace Azure.ResourceManager.Cdn
             return new FrontDoorOriginData(id, name, type, systemData.Value, originGroupName.Value, azureOrigin, hostName.Value, Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), originHostHeader.Value, Optional.ToNullable(priority), Optional.ToNullable(weight), sharedPrivateLinkResource.Value, Optional.ToNullable(enabledState), Optional.ToNullable(enforceCertificateNameCheck), Optional.ToNullable(provisioningState), Optional.ToNullable(deploymentStatus), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(OriginGroupName))
+            {
+                builder.Append("  originGroupName:");
+                builder.AppendLine($" '{OriginGroupName}'");
+            }
+
+            if (Optional.IsDefined(Origin))
+            {
+                builder.Append("  azureOrigin:");
+                AppendChildObject(builder, Origin, options, 2);
+            }
+
+            if (Optional.IsDefined(HostName))
+            {
+                builder.Append("  hostName:");
+                builder.AppendLine($" '{HostName}'");
+            }
+
+            if (Optional.IsDefined(HttpPort))
+            {
+                builder.Append("  httpPort:");
+                builder.AppendLine($" '{HttpPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(HttpsPort))
+            {
+                builder.Append("  httpsPort:");
+                builder.AppendLine($" '{HttpsPort.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(OriginHostHeader))
+            {
+                builder.Append("  originHostHeader:");
+                builder.AppendLine($" '{OriginHostHeader}'");
+            }
+
+            if (Optional.IsDefined(Priority))
+            {
+                builder.Append("  priority:");
+                builder.AppendLine($" '{Priority.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Weight))
+            {
+                builder.Append("  weight:");
+                builder.AppendLine($" '{Weight.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SharedPrivateLinkResource))
+            {
+                builder.Append("  sharedPrivateLinkResource:");
+                AppendChildObject(builder, SharedPrivateLinkResource, options, 2);
+            }
+
+            if (Optional.IsDefined(EnabledState))
+            {
+                builder.Append("  enabledState:");
+                builder.AppendLine($" '{EnabledState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EnforceCertificateNameCheck))
+            {
+                builder.Append("  enforceCertificateNameCheck:");
+                var boolValue = EnforceCertificateNameCheck.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DeploymentStatus))
+            {
+                builder.Append("  deploymentStatus:");
+                builder.AppendLine($" '{DeploymentStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<FrontDoorOriginData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginData>)this).GetFormatFromOptions(options) : options.Format;
@@ -358,6 +482,8 @@ namespace Azure.ResourceManager.Cdn
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(FrontDoorOriginData)} does not support '{options.Format}' format.");
             }
@@ -374,6 +500,8 @@ namespace Azure.ResourceManager.Cdn
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeFrontDoorOriginData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(FrontDoorOriginData)} does not support '{options.Format}' format.");
             }

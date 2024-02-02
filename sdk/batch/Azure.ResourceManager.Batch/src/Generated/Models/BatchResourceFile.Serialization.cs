@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchResourceFile : IUtf8JsonSerializable, IJsonModel<BatchResourceFile>
+    public partial class BatchResourceFile : IUtf8JsonSerializable, IJsonModel<BatchResourceFile>, IPersistableModel<BatchResourceFile>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchResourceFile>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -166,6 +167,68 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchResourceFile(autoStorageContainerName.Value, storageContainerUrl.Value, httpUrl.Value, blobPrefix.Value, filePath.Value, fileMode.Value, identityReference.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(AutoBlobContainerName))
+            {
+                builder.Append("  autoStorageContainerName:");
+                builder.AppendLine($" '{AutoBlobContainerName}'");
+            }
+
+            if (Optional.IsDefined(BlobContainerUri))
+            {
+                builder.Append("  storageContainerUrl:");
+                builder.AppendLine($" '{BlobContainerUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(HttpUri))
+            {
+                builder.Append("  httpUrl:");
+                builder.AppendLine($" '{HttpUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(BlobPrefix))
+            {
+                builder.Append("  blobPrefix:");
+                builder.AppendLine($" '{BlobPrefix}'");
+            }
+
+            if (Optional.IsDefined(FilePath))
+            {
+                builder.Append("  filePath:");
+                builder.AppendLine($" '{FilePath}'");
+            }
+
+            if (Optional.IsDefined(FileMode))
+            {
+                builder.Append("  fileMode:");
+                builder.AppendLine($" '{FileMode}'");
+            }
+
+            if (Optional.IsDefined(Identity))
+            {
+                builder.Append("  identityReference:");
+                AppendChildObject(builder, Identity, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<BatchResourceFile>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BatchResourceFile>)this).GetFormatFromOptions(options) : options.Format;
@@ -174,6 +237,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BatchResourceFile)} does not support '{options.Format}' format.");
             }
@@ -190,6 +255,8 @@ namespace Azure.ResourceManager.Batch.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBatchResourceFile(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BatchResourceFile)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class VirtualNetworkConfiguration : IUtf8JsonSerializable, IJsonModel<VirtualNetworkConfiguration>
+    public partial class VirtualNetworkConfiguration : IUtf8JsonSerializable, IJsonModel<VirtualNetworkConfiguration>, IPersistableModel<VirtualNetworkConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -118,6 +119,44 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new VirtualNetworkConfiguration(Optional.ToNullable(vnetid), subnetname.Value, subnetResourceId.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(VnetId))
+            {
+                builder.Append("  vnetid:");
+                builder.AppendLine($" '{VnetId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Subnetname))
+            {
+                builder.Append("  subnetname:");
+                builder.AppendLine($" '{Subnetname}'");
+            }
+
+            if (Optional.IsDefined(SubnetResourceId))
+            {
+                builder.Append("  subnetResourceId:");
+                builder.AppendLine($" '{SubnetResourceId.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<VirtualNetworkConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -126,6 +165,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VirtualNetworkConfiguration)} does not support '{options.Format}' format.");
             }
@@ -142,6 +183,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeVirtualNetworkConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(VirtualNetworkConfiguration)} does not support '{options.Format}' format.");
             }

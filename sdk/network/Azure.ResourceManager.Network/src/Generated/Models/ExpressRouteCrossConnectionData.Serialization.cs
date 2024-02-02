@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -16,7 +17,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class ExpressRouteCrossConnectionData : IUtf8JsonSerializable, IJsonModel<ExpressRouteCrossConnectionData>
+    public partial class ExpressRouteCrossConnectionData : IUtf8JsonSerializable, IJsonModel<ExpressRouteCrossConnectionData>, IPersistableModel<ExpressRouteCrossConnectionData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteCrossConnectionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -336,6 +337,138 @@ namespace Azure.ResourceManager.Network
             return new ExpressRouteCrossConnectionData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, Optional.ToNullable(etag), primaryAzurePort.Value, secondaryAzurePort.Value, Optional.ToNullable(sTag), peeringLocation.Value, Optional.ToNullable(bandwidthInMbps), expressRouteCircuit, Optional.ToNullable(serviceProviderProvisioningState), serviceProviderNotes.Value, Optional.ToNullable(provisioningState), Optional.ToList(peerings));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  etag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PrimaryAzurePort))
+            {
+                builder.Append("  primaryAzurePort:");
+                builder.AppendLine($" '{PrimaryAzurePort}'");
+            }
+
+            if (Optional.IsDefined(SecondaryAzurePort))
+            {
+                builder.Append("  secondaryAzurePort:");
+                builder.AppendLine($" '{SecondaryAzurePort}'");
+            }
+
+            if (Optional.IsDefined(STag))
+            {
+                builder.Append("  sTag:");
+                builder.AppendLine($" '{STag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PeeringLocation))
+            {
+                builder.Append("  peeringLocation:");
+                builder.AppendLine($" '{PeeringLocation}'");
+            }
+
+            if (Optional.IsDefined(BandwidthInMbps))
+            {
+                builder.Append("  bandwidthInMbps:");
+                builder.AppendLine($" '{BandwidthInMbps.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExpressRouteCircuit))
+            {
+                builder.Append("  expressRouteCircuit:");
+                AppendChildObject(builder, ExpressRouteCircuit, options, 2);
+            }
+
+            if (Optional.IsDefined(ServiceProviderProvisioningState))
+            {
+                builder.Append("  serviceProviderProvisioningState:");
+                builder.AppendLine($" '{ServiceProviderProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ServiceProviderNotes))
+            {
+                builder.Append("  serviceProviderNotes:");
+                builder.AppendLine($" '{ServiceProviderNotes}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Peerings))
+            {
+                builder.Append("  peerings:");
+                builder.AppendLine(" [");
+                foreach (var item in Peerings)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Location))
+            {
+                builder.Append("  location:");
+                builder.AppendLine($" '{Location.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                builder.Append("  tags:");
+                builder.AppendLine(" {");
+                foreach (var item in Tags)
+                {
+                    builder.Append($"    {item.Key}: ");
+                    if (item.Value == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($" '{item.Value}'");
+                }
+                builder.AppendLine("  }");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ExpressRouteCrossConnectionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCrossConnectionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -344,6 +477,8 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionData)} does not support '{options.Format}' format.");
             }
@@ -360,6 +495,8 @@ namespace Azure.ResourceManager.Network
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeExpressRouteCrossConnectionData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionData)} does not support '{options.Format}' format.");
             }

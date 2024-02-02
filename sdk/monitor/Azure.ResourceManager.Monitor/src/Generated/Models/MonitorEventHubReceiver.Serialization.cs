@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorEventHubReceiver : IUtf8JsonSerializable, IJsonModel<MonitorEventHubReceiver>
+    public partial class MonitorEventHubReceiver : IUtf8JsonSerializable, IJsonModel<MonitorEventHubReceiver>, IPersistableModel<MonitorEventHubReceiver>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorEventHubReceiver>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -139,6 +140,63 @@ namespace Azure.ResourceManager.Monitor.Models
             return new MonitorEventHubReceiver(name, eventHubNameSpace, eventHubName, Optional.ToNullable(useCommonAlertSchema), Optional.ToNullable(tenantId), subscriptionId, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(EventHubNameSpace))
+            {
+                builder.Append("  eventHubNameSpace:");
+                builder.AppendLine($" '{EventHubNameSpace}'");
+            }
+
+            if (Optional.IsDefined(EventHubName))
+            {
+                builder.Append("  eventHubName:");
+                builder.AppendLine($" '{EventHubName}'");
+            }
+
+            if (Optional.IsDefined(UseCommonAlertSchema))
+            {
+                builder.Append("  useCommonAlertSchema:");
+                var boolValue = UseCommonAlertSchema.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("  tenantId:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                builder.Append("  subscriptionId:");
+                builder.AppendLine($" '{SubscriptionId}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MonitorEventHubReceiver>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MonitorEventHubReceiver>)this).GetFormatFromOptions(options) : options.Format;
@@ -147,6 +205,8 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MonitorEventHubReceiver)} does not support '{options.Format}' format.");
             }
@@ -163,6 +223,8 @@ namespace Azure.ResourceManager.Monitor.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMonitorEventHubReceiver(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MonitorEventHubReceiver)} does not support '{options.Format}' format.");
             }

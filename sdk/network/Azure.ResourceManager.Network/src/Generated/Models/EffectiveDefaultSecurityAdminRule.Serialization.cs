@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class EffectiveDefaultSecurityAdminRule : IUtf8JsonSerializable, IJsonModel<EffectiveDefaultSecurityAdminRule>
+    public partial class EffectiveDefaultSecurityAdminRule : IUtf8JsonSerializable, IJsonModel<EffectiveDefaultSecurityAdminRule>, IPersistableModel<EffectiveDefaultSecurityAdminRule>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveDefaultSecurityAdminRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -399,6 +400,174 @@ namespace Azure.ResourceManager.Network.Models
             return new EffectiveDefaultSecurityAdminRule(id.Value, configurationDescription.Value, ruleCollectionDescription.Value, Optional.ToList(ruleCollectionAppliesToGroups), Optional.ToList(ruleGroups), kind, serializedAdditionalRawData, description.Value, flag.Value, Optional.ToNullable(protocol), Optional.ToList(sources), Optional.ToList(destinations), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("  description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(Flag))
+            {
+                builder.Append("  flag:");
+                builder.AppendLine($" '{Flag}'");
+            }
+
+            if (Optional.IsDefined(Protocol))
+            {
+                builder.Append("  protocol:");
+                builder.AppendLine($" '{Protocol.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(Sources))
+            {
+                builder.Append("  sources:");
+                builder.AppendLine(" [");
+                foreach (var item in Sources)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Destinations))
+            {
+                builder.Append("  destinations:");
+                builder.AppendLine(" [");
+                foreach (var item in Destinations)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(SourcePortRanges))
+            {
+                builder.Append("  sourcePortRanges:");
+                builder.AppendLine(" [");
+                foreach (var item in SourcePortRanges)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(DestinationPortRanges))
+            {
+                builder.Append("  destinationPortRanges:");
+                builder.AppendLine(" [");
+                foreach (var item in DestinationPortRanges)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Access))
+            {
+                builder.Append("  access:");
+                builder.AppendLine($" '{Access.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Priority))
+            {
+                builder.Append("  priority:");
+                builder.AppendLine($" '{Priority.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Direction))
+            {
+                builder.Append("  direction:");
+                builder.AppendLine($" '{Direction.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResourceGuid))
+            {
+                builder.Append("  resourceGuid:");
+                builder.AppendLine($" '{ResourceGuid.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResourceId))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{ResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ConfigurationDescription))
+            {
+                builder.Append("  configurationDescription:");
+                builder.AppendLine($" '{ConfigurationDescription}'");
+            }
+
+            if (Optional.IsDefined(RuleCollectionDescription))
+            {
+                builder.Append("  ruleCollectionDescription:");
+                builder.AppendLine($" '{RuleCollectionDescription}'");
+            }
+
+            if (Optional.IsCollectionDefined(RuleCollectionAppliesToGroups))
+            {
+                builder.Append("  ruleCollectionAppliesToGroups:");
+                builder.AppendLine(" [");
+                foreach (var item in RuleCollectionAppliesToGroups)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(RuleGroups))
+            {
+                builder.Append("  ruleGroups:");
+                builder.AppendLine(" [");
+                foreach (var item in RuleGroups)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Kind))
+            {
+                builder.Append("  kind:");
+                builder.AppendLine($" '{Kind.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<EffectiveDefaultSecurityAdminRule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveDefaultSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
@@ -407,6 +576,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(EffectiveDefaultSecurityAdminRule)} does not support '{options.Format}' format.");
             }
@@ -423,6 +594,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeEffectiveDefaultSecurityAdminRule(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(EffectiveDefaultSecurityAdminRule)} does not support '{options.Format}' format.");
             }

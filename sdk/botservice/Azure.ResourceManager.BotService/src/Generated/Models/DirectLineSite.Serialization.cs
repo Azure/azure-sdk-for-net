@@ -8,13 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class DirectLineSite : IUtf8JsonSerializable, IJsonModel<DirectLineSite>
+    public partial class DirectLineSite : IUtf8JsonSerializable, IJsonModel<DirectLineSite>, IPersistableModel<DirectLineSite>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DirectLineSite>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -351,6 +352,161 @@ namespace Azure.ResourceManager.BotService.Models
             return new DirectLineSite(Optional.ToNullable(tenantId), siteId.Value, siteName, key.Value, key2.Value, isEnabled, Optional.ToNullable(isTokenEnabled), Optional.ToNullable(isEndpointParametersEnabled), Optional.ToNullable(isDetailedLoggingEnabled), Optional.ToNullable(isBlockUserUploadEnabled), Optional.ToNullable(isNoStorageEnabled), Optional.ToNullable(eTag), appId.Value, Optional.ToNullable(isV1Enabled), Optional.ToNullable(isV3Enabled), Optional.ToNullable(isSecureSiteEnabled), Optional.ToList(trustedOrigins), Optional.ToNullable(isWebChatSpeechEnabled), Optional.ToNullable(isWebchatPreviewEnabled), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(TenantId))
+            {
+                builder.Append("  tenantId:");
+                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SiteId))
+            {
+                builder.Append("  siteId:");
+                builder.AppendLine($" '{SiteId}'");
+            }
+
+            if (Optional.IsDefined(SiteName))
+            {
+                builder.Append("  siteName:");
+                builder.AppendLine($" '{SiteName}'");
+            }
+
+            if (Optional.IsDefined(Key))
+            {
+                builder.Append("  key:");
+                builder.AppendLine($" '{Key}'");
+            }
+
+            if (Optional.IsDefined(Key2))
+            {
+                builder.Append("  key2:");
+                builder.AppendLine($" '{Key2}'");
+            }
+
+            if (Optional.IsDefined(IsEnabled))
+            {
+                builder.Append("  isEnabled:");
+                var boolValue = IsEnabled == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsTokenEnabled))
+            {
+                builder.Append("  isTokenEnabled:");
+                var boolValue = IsTokenEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsEndpointParametersEnabled))
+            {
+                builder.Append("  isEndpointParametersEnabled:");
+                var boolValue = IsEndpointParametersEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsDetailedLoggingEnabled))
+            {
+                builder.Append("  isDetailedLoggingEnabled:");
+                var boolValue = IsDetailedLoggingEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsBlockUserUploadEnabled))
+            {
+                builder.Append("  isBlockUserUploadEnabled:");
+                var boolValue = IsBlockUserUploadEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsNoStorageEnabled))
+            {
+                builder.Append("  isNoStorageEnabled:");
+                var boolValue = IsNoStorageEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ETag))
+            {
+                builder.Append("  eTag:");
+                builder.AppendLine($" '{ETag.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AppId))
+            {
+                builder.Append("  appId:");
+                builder.AppendLine($" '{AppId}'");
+            }
+
+            if (Optional.IsDefined(IsV1Enabled))
+            {
+                builder.Append("  isV1Enabled:");
+                var boolValue = IsV1Enabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsV3Enabled))
+            {
+                builder.Append("  isV3Enabled:");
+                var boolValue = IsV3Enabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsSecureSiteEnabled))
+            {
+                builder.Append("  isSecureSiteEnabled:");
+                var boolValue = IsSecureSiteEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(TrustedOrigins))
+            {
+                builder.Append("  trustedOrigins:");
+                builder.AppendLine(" [");
+                foreach (var item in TrustedOrigins)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(IsWebChatSpeechEnabled))
+            {
+                builder.Append("  isWebChatSpeechEnabled:");
+                var boolValue = IsWebChatSpeechEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsWebchatPreviewEnabled))
+            {
+                builder.Append("  isWebchatPreviewEnabled:");
+                var boolValue = IsWebchatPreviewEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<DirectLineSite>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DirectLineSite>)this).GetFormatFromOptions(options) : options.Format;
@@ -359,6 +515,8 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(DirectLineSite)} does not support '{options.Format}' format.");
             }
@@ -375,6 +533,8 @@ namespace Azure.ResourceManager.BotService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeDirectLineSite(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(DirectLineSite)} does not support '{options.Format}' format.");
             }

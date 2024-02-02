@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesAzureBlob : IUtf8JsonSerializable, IJsonModel<KubernetesAzureBlob>
+    public partial class KubernetesAzureBlob : IUtf8JsonSerializable, IJsonModel<KubernetesAzureBlob>, IPersistableModel<KubernetesAzureBlob>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesAzureBlob>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -284,6 +285,80 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             return new KubernetesAzureBlob(url.Value, containerName.Value, Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), servicePrincipal.Value, accountKey.Value, sasToken.Value, managedIdentity.Value, localAuthRef.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Uri))
+            {
+                builder.Append("  url:");
+                builder.AppendLine($" '{Uri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(ContainerName))
+            {
+                builder.Append("  containerName:");
+                builder.AppendLine($" '{ContainerName}'");
+            }
+
+            if (Optional.IsDefined(TimeoutInSeconds))
+            {
+                builder.Append("  timeoutInSeconds:");
+                builder.AppendLine($" '{TimeoutInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SyncIntervalInSeconds))
+            {
+                builder.Append("  syncIntervalInSeconds:");
+                builder.AppendLine($" '{SyncIntervalInSeconds.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ServicePrincipal))
+            {
+                builder.Append("  servicePrincipal:");
+                AppendChildObject(builder, ServicePrincipal, options, 2);
+            }
+
+            if (Optional.IsDefined(AccountKey))
+            {
+                builder.Append("  accountKey:");
+                builder.AppendLine($" '{AccountKey}'");
+            }
+
+            if (Optional.IsDefined(SasToken))
+            {
+                builder.Append("  sasToken:");
+                builder.AppendLine($" '{SasToken}'");
+            }
+
+            if (Optional.IsDefined(ManagedIdentity))
+            {
+                builder.Append("  managedIdentity:");
+                AppendChildObject(builder, ManagedIdentity, options, 2);
+            }
+
+            if (Optional.IsDefined(LocalAuthRef))
+            {
+                builder.Append("  localAuthRef:");
+                builder.AppendLine($" '{LocalAuthRef}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<KubernetesAzureBlob>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesAzureBlob>)this).GetFormatFromOptions(options) : options.Format;
@@ -292,6 +367,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KubernetesAzureBlob)} does not support '{options.Format}' format.");
             }
@@ -308,6 +385,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeKubernetesAzureBlob(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(KubernetesAzureBlob)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoverResourceDependency : IUtf8JsonSerializable, IJsonModel<MoverResourceDependency>
+    public partial class MoverResourceDependency : IUtf8JsonSerializable, IJsonModel<MoverResourceDependency>, IPersistableModel<MoverResourceDependency>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverResourceDependency>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -178,6 +179,69 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return new MoverResourceDependency(id.Value, resolutionStatus.Value, Optional.ToNullable(resolutionType), Optional.ToNullable(dependencyType), manualResolution.Value, automaticResolution.Value, Optional.ToNullable(isOptional), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ResolutionStatus))
+            {
+                builder.Append("  resolutionStatus:");
+                builder.AppendLine($" '{ResolutionStatus}'");
+            }
+
+            if (Optional.IsDefined(ResolutionType))
+            {
+                builder.Append("  resolutionType:");
+                builder.AppendLine($" '{ResolutionType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DependencyType))
+            {
+                builder.Append("  dependencyType:");
+                builder.AppendLine($" '{DependencyType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ManualResolution))
+            {
+                builder.Append("  manualResolution:");
+                AppendChildObject(builder, ManualResolution, options, 2);
+            }
+
+            if (Optional.IsDefined(AutomaticResolution))
+            {
+                builder.Append("  automaticResolution:");
+                AppendChildObject(builder, AutomaticResolution, options, 2);
+            }
+
+            if (Optional.IsDefined(IsOptional))
+            {
+                builder.Append("  isOptional:");
+                var boolValue = IsOptional.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MoverResourceDependency>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MoverResourceDependency>)this).GetFormatFromOptions(options) : options.Format;
@@ -186,6 +250,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MoverResourceDependency)} does not support '{options.Format}' format.");
             }
@@ -202,6 +268,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMoverResourceDependency(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MoverResourceDependency)} does not support '{options.Format}' format.");
             }

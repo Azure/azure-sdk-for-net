@@ -8,12 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using System.Xml;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ClusterUpgradePolicy : IUtf8JsonSerializable, IJsonModel<ClusterUpgradePolicy>
+    public partial class ClusterUpgradePolicy : IUtf8JsonSerializable, IJsonModel<ClusterUpgradePolicy>, IPersistableModel<ClusterUpgradePolicy>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterUpgradePolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -163,6 +165,87 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             return new ClusterUpgradePolicy(Optional.ToNullable(forceRestart), upgradeReplicaSetCheckTimeout, healthCheckWaitDuration, healthCheckStableDuration, healthCheckRetryTimeout, upgradeTimeout, upgradeDomainTimeout, healthPolicy, deltaHealthPolicy.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ForceRestart))
+            {
+                builder.Append("  forceRestart:");
+                var boolValue = ForceRestart.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(UpgradeReplicaSetCheckTimeout))
+            {
+                builder.Append("  upgradeReplicaSetCheckTimeout:");
+                var formattedTimeSpan = XmlConvert.ToString(UpgradeReplicaSetCheckTimeout);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(HealthCheckWaitDuration))
+            {
+                builder.Append("  healthCheckWaitDuration:");
+                var formattedTimeSpan = XmlConvert.ToString(HealthCheckWaitDuration);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(HealthCheckStableDuration))
+            {
+                builder.Append("  healthCheckStableDuration:");
+                var formattedTimeSpan = XmlConvert.ToString(HealthCheckStableDuration);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(HealthCheckRetryTimeout))
+            {
+                builder.Append("  healthCheckRetryTimeout:");
+                var formattedTimeSpan = XmlConvert.ToString(HealthCheckRetryTimeout);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(UpgradeTimeout))
+            {
+                builder.Append("  upgradeTimeout:");
+                var formattedTimeSpan = XmlConvert.ToString(UpgradeTimeout);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(UpgradeDomainTimeout))
+            {
+                builder.Append("  upgradeDomainTimeout:");
+                var formattedTimeSpan = XmlConvert.ToString(UpgradeDomainTimeout);
+                builder.AppendLine($" '{formattedTimeSpan}'");
+            }
+
+            if (Optional.IsDefined(HealthPolicy))
+            {
+                builder.Append("  healthPolicy:");
+                AppendChildObject(builder, HealthPolicy, options, 2);
+            }
+
+            if (Optional.IsDefined(DeltaHealthPolicy))
+            {
+                builder.Append("  deltaHealthPolicy:");
+                AppendChildObject(builder, DeltaHealthPolicy, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ClusterUpgradePolicy>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ClusterUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
@@ -171,6 +254,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ClusterUpgradePolicy)} does not support '{options.Format}' format.");
             }
@@ -187,6 +272,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeClusterUpgradePolicy(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ClusterUpgradePolicy)} does not support '{options.Format}' format.");
             }

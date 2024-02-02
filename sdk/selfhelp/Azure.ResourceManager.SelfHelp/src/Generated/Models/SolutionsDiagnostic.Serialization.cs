@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SolutionsDiagnostic : IUtf8JsonSerializable, IJsonModel<SolutionsDiagnostic>
+    public partial class SolutionsDiagnostic : IUtf8JsonSerializable, IJsonModel<SolutionsDiagnostic>, IPersistableModel<SolutionsDiagnostic>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SolutionsDiagnostic>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -175,6 +176,77 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new SolutionsDiagnostic(solutionId.Value, Optional.ToNullable(status), statusDetails.Value, replacementKey.Value, Optional.ToList(requiredParameters), Optional.ToList(insights), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SolutionId))
+            {
+                builder.Append("  solutionId:");
+                builder.AppendLine($" '{SolutionId}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StatusDetails))
+            {
+                builder.Append("  statusDetails:");
+                builder.AppendLine($" '{StatusDetails}'");
+            }
+
+            if (Optional.IsDefined(ReplacementKey))
+            {
+                builder.Append("  replacementKey:");
+                builder.AppendLine($" '{ReplacementKey}'");
+            }
+
+            if (Optional.IsCollectionDefined(RequiredParameters))
+            {
+                builder.Append("  requiredParameters:");
+                builder.AppendLine(" [");
+                foreach (var item in RequiredParameters)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsCollectionDefined(Insights))
+            {
+                builder.Append("  insights:");
+                builder.AppendLine(" [");
+                foreach (var item in Insights)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<SolutionsDiagnostic>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SolutionsDiagnostic>)this).GetFormatFromOptions(options) : options.Format;
@@ -183,6 +255,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(SolutionsDiagnostic)} does not support '{options.Format}' format.");
             }
@@ -199,6 +273,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeSolutionsDiagnostic(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(SolutionsDiagnostic)} does not support '{options.Format}' format.");
             }

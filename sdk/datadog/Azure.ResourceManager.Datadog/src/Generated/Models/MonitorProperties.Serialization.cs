@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Datadog.Models
 {
-    public partial class MonitorProperties : IUtf8JsonSerializable, IJsonModel<MonitorProperties>
+    public partial class MonitorProperties : IUtf8JsonSerializable, IJsonModel<MonitorProperties>, IPersistableModel<MonitorProperties>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -182,6 +183,68 @@ namespace Azure.ResourceManager.Datadog.Models
             return new MonitorProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(monitoringStatus), Optional.ToNullable(marketplaceSubscriptionStatus), datadogOrganizationProperties.Value, userInfo.Value, Optional.ToNullable(liftrResourceCategory), Optional.ToNullable(liftrResourcePreference), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MonitoringStatus))
+            {
+                builder.Append("  monitoringStatus:");
+                builder.AppendLine($" '{MonitoringStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(MarketplaceSubscriptionStatus))
+            {
+                builder.Append("  marketplaceSubscriptionStatus:");
+                builder.AppendLine($" '{MarketplaceSubscriptionStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DatadogOrganizationProperties))
+            {
+                builder.Append("  datadogOrganizationProperties:");
+                AppendChildObject(builder, DatadogOrganizationProperties, options, 2);
+            }
+
+            if (Optional.IsDefined(UserInfo))
+            {
+                builder.Append("  userInfo:");
+                AppendChildObject(builder, UserInfo, options, 2);
+            }
+
+            if (Optional.IsDefined(LiftrResourceCategory))
+            {
+                builder.Append("  liftrResourceCategory:");
+                builder.AppendLine($" '{LiftrResourceCategory.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LiftrResourcePreference))
+            {
+                builder.Append("  liftrResourcePreference:");
+                builder.AppendLine($" '{LiftrResourcePreference.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<MonitorProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MonitorProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -190,6 +253,8 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MonitorProperties)} does not support '{options.Format}' format.");
             }
@@ -206,6 +271,8 @@ namespace Azure.ResourceManager.Datadog.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeMonitorProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(MonitorProperties)} does not support '{options.Format}' format.");
             }

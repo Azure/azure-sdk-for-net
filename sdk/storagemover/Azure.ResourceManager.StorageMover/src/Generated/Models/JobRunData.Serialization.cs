@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    public partial class JobRunData : IUtf8JsonSerializable, IJsonModel<JobRunData>
+    public partial class JobRunData : IUtf8JsonSerializable, IJsonModel<JobRunData>, IPersistableModel<JobRunData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobRunData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -571,6 +572,218 @@ namespace Azure.ResourceManager.StorageMover
             return new JobRunData(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(scanStatus), agentName.Value, agentResourceId.Value, Optional.ToNullable(executionStartTime), Optional.ToNullable(executionEndTime), Optional.ToNullable(lastStatusUpdate), Optional.ToNullable(itemsScanned), Optional.ToNullable(itemsExcluded), Optional.ToNullable(itemsUnsupported), Optional.ToNullable(itemsNoTransferNeeded), Optional.ToNullable(itemsFailed), Optional.ToNullable(itemsTransferred), Optional.ToNullable(bytesScanned), Optional.ToNullable(bytesExcluded), Optional.ToNullable(bytesUnsupported), Optional.ToNullable(bytesNoTransferNeeded), Optional.ToNullable(bytesFailed), Optional.ToNullable(bytesTransferred), sourceName.Value, sourceResourceId.Value, sourceProperties.Value, targetName.Value, targetResourceId.Value, targetProperties.Value, jobDefinitionProperties.Value, error.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ScanStatus))
+            {
+                builder.Append("  scanStatus:");
+                builder.AppendLine($" '{ScanStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AgentName))
+            {
+                builder.Append("  agentName:");
+                builder.AppendLine($" '{AgentName}'");
+            }
+
+            if (Optional.IsDefined(AgentResourceId))
+            {
+                builder.Append("  agentResourceId:");
+                builder.AppendLine($" '{AgentResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExecutionStartOn))
+            {
+                builder.Append("  executionStartTime:");
+                builder.AppendLine($" '{ExecutionStartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ExecutionEndOn))
+            {
+                builder.Append("  executionEndTime:");
+                builder.AppendLine($" '{ExecutionEndOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastStatusUpdate))
+            {
+                builder.Append("  lastStatusUpdate:");
+                builder.AppendLine($" '{LastStatusUpdate.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ItemsScanned))
+            {
+                builder.Append("  itemsScanned:");
+                builder.AppendLine($" '{ItemsScanned.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ItemsExcluded))
+            {
+                builder.Append("  itemsExcluded:");
+                builder.AppendLine($" '{ItemsExcluded.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ItemsUnsupported))
+            {
+                builder.Append("  itemsUnsupported:");
+                builder.AppendLine($" '{ItemsUnsupported.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ItemsNoTransferNeeded))
+            {
+                builder.Append("  itemsNoTransferNeeded:");
+                builder.AppendLine($" '{ItemsNoTransferNeeded.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ItemsFailed))
+            {
+                builder.Append("  itemsFailed:");
+                builder.AppendLine($" '{ItemsFailed.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ItemsTransferred))
+            {
+                builder.Append("  itemsTransferred:");
+                builder.AppendLine($" '{ItemsTransferred.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BytesScanned))
+            {
+                builder.Append("  bytesScanned:");
+                builder.AppendLine($" '{BytesScanned.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BytesExcluded))
+            {
+                builder.Append("  bytesExcluded:");
+                builder.AppendLine($" '{BytesExcluded.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BytesUnsupported))
+            {
+                builder.Append("  bytesUnsupported:");
+                builder.AppendLine($" '{BytesUnsupported.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BytesNoTransferNeeded))
+            {
+                builder.Append("  bytesNoTransferNeeded:");
+                builder.AppendLine($" '{BytesNoTransferNeeded.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BytesFailed))
+            {
+                builder.Append("  bytesFailed:");
+                builder.AppendLine($" '{BytesFailed.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BytesTransferred))
+            {
+                builder.Append("  bytesTransferred:");
+                builder.AppendLine($" '{BytesTransferred.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceName))
+            {
+                builder.Append("  sourceName:");
+                builder.AppendLine($" '{SourceName}'");
+            }
+
+            if (Optional.IsDefined(SourceResourceId))
+            {
+                builder.Append("  sourceResourceId:");
+                builder.AppendLine($" '{SourceResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SourceProperties))
+            {
+                builder.Append("  sourceProperties:");
+                builder.AppendLine($" '{SourceProperties.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetName))
+            {
+                builder.Append("  targetName:");
+                builder.AppendLine($" '{TargetName}'");
+            }
+
+            if (Optional.IsDefined(TargetResourceId))
+            {
+                builder.Append("  targetResourceId:");
+                builder.AppendLine($" '{TargetResourceId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(TargetProperties))
+            {
+                builder.Append("  targetProperties:");
+                builder.AppendLine($" '{TargetProperties.ToString()}'");
+            }
+
+            if (Optional.IsDefined(JobDefinitionProperties))
+            {
+                builder.Append("  jobDefinitionProperties:");
+                builder.AppendLine($" '{JobDefinitionProperties.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Error))
+            {
+                builder.Append("  error:");
+                AppendChildObject(builder, Error, options, 2);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<JobRunData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<JobRunData>)this).GetFormatFromOptions(options) : options.Format;
@@ -579,6 +792,8 @@ namespace Azure.ResourceManager.StorageMover
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(JobRunData)} does not support '{options.Format}' format.");
             }
@@ -595,6 +810,8 @@ namespace Azure.ResourceManager.StorageMover
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeJobRunData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(JobRunData)} does not support '{options.Format}' format.");
             }

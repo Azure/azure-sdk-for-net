@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class PeeringExchangeConnection : IUtf8JsonSerializable, IJsonModel<PeeringExchangeConnection>
+    public partial class PeeringExchangeConnection : IUtf8JsonSerializable, IJsonModel<PeeringExchangeConnection>, IPersistableModel<PeeringExchangeConnection>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringExchangeConnection>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -148,6 +149,56 @@ namespace Azure.ResourceManager.Peering.Models
             return new PeeringExchangeConnection(Optional.ToNullable(peeringDBFacilityId), Optional.ToNullable(connectionState), bgpSession.Value, Optional.ToNullable(connectionIdentifier), errorMessage.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(PeeringDBFacilityId))
+            {
+                builder.Append("  peeringDBFacilityId:");
+                builder.AppendLine($" '{PeeringDBFacilityId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ConnectionState))
+            {
+                builder.Append("  connectionState:");
+                builder.AppendLine($" '{ConnectionState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(BgpSession))
+            {
+                builder.Append("  bgpSession:");
+                AppendChildObject(builder, BgpSession, options, 2);
+            }
+
+            if (Optional.IsDefined(ConnectionIdentifier))
+            {
+                builder.Append("  connectionIdentifier:");
+                builder.AppendLine($" '{ConnectionIdentifier.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                builder.Append("  errorMessage:");
+                builder.AppendLine($" '{ErrorMessage}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PeeringExchangeConnection>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PeeringExchangeConnection>)this).GetFormatFromOptions(options) : options.Format;
@@ -156,6 +207,8 @@ namespace Azure.ResourceManager.Peering.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PeeringExchangeConnection)} does not support '{options.Format}' format.");
             }
@@ -172,6 +225,8 @@ namespace Azure.ResourceManager.Peering.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePeeringExchangeConnection(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PeeringExchangeConnection)} does not support '{options.Format}' format.");
             }

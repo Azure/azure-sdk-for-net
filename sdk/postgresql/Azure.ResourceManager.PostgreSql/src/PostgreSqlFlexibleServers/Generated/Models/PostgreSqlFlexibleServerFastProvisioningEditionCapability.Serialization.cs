@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerFastProvisioningEditionCapability : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>
+    public partial class PostgreSqlFlexibleServerFastProvisioningEditionCapability : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>, IPersistableModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -166,6 +167,68 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(Optional.ToNullable(status), reason.Value, serializedAdditionalRawData, supportedTier.Value, supportedSku.Value, Optional.ToNullable(supportedStorageGb), supportedServerVersions.Value, Optional.ToNullable(serverCount));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SupportedTier))
+            {
+                builder.Append("  supportedTier:");
+                builder.AppendLine($" '{SupportedTier}'");
+            }
+
+            if (Optional.IsDefined(SupportedSku))
+            {
+                builder.Append("  supportedSku:");
+                builder.AppendLine($" '{SupportedSku}'");
+            }
+
+            if (Optional.IsDefined(SupportedStorageGb))
+            {
+                builder.Append("  supportedStorageGb:");
+                builder.AppendLine($" '{SupportedStorageGb.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SupportedServerVersions))
+            {
+                builder.Append("  supportedServerVersions:");
+                builder.AppendLine($" '{SupportedServerVersions}'");
+            }
+
+            if (Optional.IsDefined(ServerCount))
+            {
+                builder.Append("  serverCount:");
+                builder.AppendLine($" '{ServerCount.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(CapabilityStatus))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{CapabilityStatus.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Reason))
+            {
+                builder.Append("  reason:");
+                builder.AppendLine($" '{Reason}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>)this).GetFormatFromOptions(options) : options.Format;
@@ -174,6 +237,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerFastProvisioningEditionCapability)} does not support '{options.Format}' format.");
             }
@@ -190,6 +255,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializePostgreSqlFlexibleServerFastProvisioningEditionCapability(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerFastProvisioningEditionCapability)} does not support '{options.Format}' format.");
             }

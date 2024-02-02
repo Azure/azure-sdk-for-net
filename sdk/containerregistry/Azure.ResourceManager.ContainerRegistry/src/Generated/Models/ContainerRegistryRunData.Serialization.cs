@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ContainerRegistry.Models;
@@ -15,7 +16,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    public partial class ContainerRegistryRunData : IUtf8JsonSerializable, IJsonModel<ContainerRegistryRunData>
+    public partial class ContainerRegistryRunData : IUtf8JsonSerializable, IJsonModel<ContainerRegistryRunData>, IPersistableModel<ContainerRegistryRunData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryRunData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -468,6 +469,198 @@ namespace Azure.ResourceManager.ContainerRegistry
             return new ContainerRegistryRunData(id, name, type, systemData.Value, runId.Value, Optional.ToNullable(status), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(runType), agentPoolName.Value, Optional.ToNullable(createTime), Optional.ToNullable(startTime), Optional.ToNullable(finishTime), Optional.ToList(outputImages), task.Value, imageUpdateTrigger.Value, sourceTrigger.Value, timerTrigger.Value, platform.Value, agentConfiguration.Value, sourceRegistryAuth.Value, Optional.ToList(customRegistries), runErrorMessage.Value, updateTriggerToken.Value, logArtifact.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(isArchiveEnabled), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(RunId))
+            {
+                builder.Append("  runId:");
+                builder.AppendLine($" '{RunId}'");
+            }
+
+            if (Optional.IsDefined(Status))
+            {
+                builder.Append("  status:");
+                builder.AppendLine($" '{Status.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastUpdatedOn))
+            {
+                builder.Append("  lastUpdatedTime:");
+                builder.AppendLine($" '{LastUpdatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(RunType))
+            {
+                builder.Append("  runType:");
+                builder.AppendLine($" '{RunType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AgentPoolName))
+            {
+                builder.Append("  agentPoolName:");
+                builder.AppendLine($" '{AgentPoolName}'");
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  createTime:");
+                builder.AppendLine($" '{CreatedOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startTime:");
+                builder.AppendLine($" '{StartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FinishOn))
+            {
+                builder.Append("  finishTime:");
+                builder.AppendLine($" '{FinishOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(OutputImages))
+            {
+                builder.Append("  outputImages:");
+                builder.AppendLine(" [");
+                foreach (var item in OutputImages)
+                {
+                    AppendChildObject(builder, item, options, 4);
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(Task))
+            {
+                builder.Append("  task:");
+                builder.AppendLine($" '{Task}'");
+            }
+
+            if (Optional.IsDefined(ImageUpdateTrigger))
+            {
+                builder.Append("  imageUpdateTrigger:");
+                AppendChildObject(builder, ImageUpdateTrigger, options, 2);
+            }
+
+            if (Optional.IsDefined(SourceTrigger))
+            {
+                builder.Append("  sourceTrigger:");
+                AppendChildObject(builder, SourceTrigger, options, 2);
+            }
+
+            if (Optional.IsDefined(TimerTrigger))
+            {
+                builder.Append("  timerTrigger:");
+                AppendChildObject(builder, TimerTrigger, options, 2);
+            }
+
+            if (Optional.IsDefined(Platform))
+            {
+                builder.Append("  platform:");
+                AppendChildObject(builder, Platform, options, 2);
+            }
+
+            if (Optional.IsDefined(AgentConfiguration))
+            {
+                builder.Append("  agentConfiguration:");
+                AppendChildObject(builder, AgentConfiguration, options, 2);
+            }
+
+            if (Optional.IsDefined(SourceRegistryAuth))
+            {
+                builder.Append("  sourceRegistryAuth:");
+                builder.AppendLine($" '{SourceRegistryAuth}'");
+            }
+
+            if (Optional.IsCollectionDefined(CustomRegistries))
+            {
+                builder.Append("  customRegistries:");
+                builder.AppendLine(" [");
+                foreach (var item in CustomRegistries)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(RunErrorMessage))
+            {
+                builder.Append("  runErrorMessage:");
+                builder.AppendLine($" '{RunErrorMessage}'");
+            }
+
+            if (Optional.IsDefined(UpdateTriggerToken))
+            {
+                builder.Append("  updateTriggerToken:");
+                builder.AppendLine($" '{UpdateTriggerToken}'");
+            }
+
+            if (Optional.IsDefined(LogArtifact))
+            {
+                builder.Append("  logArtifact:");
+                AppendChildObject(builder, LogArtifact, options, 2);
+            }
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsArchiveEnabled))
+            {
+                builder.Append("  isArchiveEnabled:");
+                var boolValue = IsArchiveEnabled.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<ContainerRegistryRunData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryRunData>)this).GetFormatFromOptions(options) : options.Format;
@@ -476,6 +669,8 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryRunData)} does not support '{options.Format}' format.");
             }
@@ -492,6 +687,8 @@ namespace Azure.ResourceManager.ContainerRegistry
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeContainerRegistryRunData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryRunData)} does not support '{options.Format}' format.");
             }

@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class WebAppBackupSchedule : IUtf8JsonSerializable, IJsonModel<WebAppBackupSchedule>
+    public partial class WebAppBackupSchedule : IUtf8JsonSerializable, IJsonModel<WebAppBackupSchedule>, IPersistableModel<WebAppBackupSchedule>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppBackupSchedule>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -139,6 +140,63 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppBackupSchedule(frequencyInterval, frequencyUnit, keepAtLeastOneBackup, retentionPeriodInDays, Optional.ToNullable(startTime), Optional.ToNullable(lastExecutionTime), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(FrequencyInterval))
+            {
+                builder.Append("  frequencyInterval:");
+                builder.AppendLine($" '{FrequencyInterval.ToString()}'");
+            }
+
+            if (Optional.IsDefined(FrequencyUnit))
+            {
+                builder.Append("  frequencyUnit:");
+                builder.AppendLine($" '{FrequencyUnit.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ShouldKeepAtLeastOneBackup))
+            {
+                builder.Append("  keepAtLeastOneBackup:");
+                var boolValue = ShouldKeepAtLeastOneBackup == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(RetentionPeriodInDays))
+            {
+                builder.Append("  retentionPeriodInDays:");
+                builder.AppendLine($" '{RetentionPeriodInDays.ToString()}'");
+            }
+
+            if (Optional.IsDefined(StartOn))
+            {
+                builder.Append("  startTime:");
+                builder.AppendLine($" '{StartOn.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(LastExecutedOn))
+            {
+                builder.Append("  lastExecutionTime:");
+                builder.AppendLine($" '{LastExecutedOn.Value.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<WebAppBackupSchedule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebAppBackupSchedule>)this).GetFormatFromOptions(options) : options.Format;
@@ -147,6 +205,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(WebAppBackupSchedule)} does not support '{options.Format}' format.");
             }
@@ -163,6 +223,8 @@ namespace Azure.ResourceManager.AppService.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeWebAppBackupSchedule(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(WebAppBackupSchedule)} does not support '{options.Format}' format.");
             }

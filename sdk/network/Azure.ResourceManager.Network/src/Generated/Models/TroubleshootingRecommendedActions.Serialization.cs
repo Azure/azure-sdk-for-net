@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class TroubleshootingRecommendedActions : IUtf8JsonSerializable, IJsonModel<TroubleshootingRecommendedActions>
+    public partial class TroubleshootingRecommendedActions : IUtf8JsonSerializable, IJsonModel<TroubleshootingRecommendedActions>, IPersistableModel<TroubleshootingRecommendedActions>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TroubleshootingRecommendedActions>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -125,6 +126,50 @@ namespace Azure.ResourceManager.Network.Models
             return new TroubleshootingRecommendedActions(actionId.Value, actionText.Value, actionUri.Value, actionUriText.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ActionId))
+            {
+                builder.Append("  actionId:");
+                builder.AppendLine($" '{ActionId}'");
+            }
+
+            if (Optional.IsDefined(ActionText))
+            {
+                builder.Append("  actionText:");
+                builder.AppendLine($" '{ActionText}'");
+            }
+
+            if (Optional.IsDefined(ActionUri))
+            {
+                builder.Append("  actionUri:");
+                builder.AppendLine($" '{ActionUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(ActionUriText))
+            {
+                builder.Append("  actionUriText:");
+                builder.AppendLine($" '{ActionUriText}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<TroubleshootingRecommendedActions>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TroubleshootingRecommendedActions>)this).GetFormatFromOptions(options) : options.Format;
@@ -133,6 +178,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(TroubleshootingRecommendedActions)} does not support '{options.Format}' format.");
             }
@@ -149,6 +196,8 @@ namespace Azure.ResourceManager.Network.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeTroubleshootingRecommendedActions(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(TroubleshootingRecommendedActions)} does not support '{options.Format}' format.");
             }

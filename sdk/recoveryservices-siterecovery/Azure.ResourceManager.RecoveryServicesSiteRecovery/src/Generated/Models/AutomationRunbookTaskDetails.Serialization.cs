@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class AutomationRunbookTaskDetails : IUtf8JsonSerializable, IJsonModel<AutomationRunbookTaskDetails>
+    public partial class AutomationRunbookTaskDetails : IUtf8JsonSerializable, IJsonModel<AutomationRunbookTaskDetails>, IPersistableModel<AutomationRunbookTaskDetails>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationRunbookTaskDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -192,6 +193,87 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new AutomationRunbookTaskDetails(instanceType, serializedAdditionalRawData, name.Value, cloudServiceName.Value, subscriptionId.Value, accountName.Value, runbookId.Value, runbookName.Value, jobId.Value, jobOutput.Value, Optional.ToNullable(isPrimarySideScript));
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(CloudServiceName))
+            {
+                builder.Append("  cloudServiceName:");
+                builder.AppendLine($" '{CloudServiceName}'");
+            }
+
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                builder.Append("  subscriptionId:");
+                builder.AppendLine($" '{SubscriptionId}'");
+            }
+
+            if (Optional.IsDefined(AccountName))
+            {
+                builder.Append("  accountName:");
+                builder.AppendLine($" '{AccountName}'");
+            }
+
+            if (Optional.IsDefined(RunbookId))
+            {
+                builder.Append("  runbookId:");
+                builder.AppendLine($" '{RunbookId}'");
+            }
+
+            if (Optional.IsDefined(RunbookName))
+            {
+                builder.Append("  runbookName:");
+                builder.AppendLine($" '{RunbookName}'");
+            }
+
+            if (Optional.IsDefined(JobId))
+            {
+                builder.Append("  jobId:");
+                builder.AppendLine($" '{JobId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(JobOutput))
+            {
+                builder.Append("  jobOutput:");
+                builder.AppendLine($" '{JobOutput}'");
+            }
+
+            if (Optional.IsDefined(IsPrimarySideScript))
+            {
+                builder.Append("  isPrimarySideScript:");
+                var boolValue = IsPrimarySideScript.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(InstanceType))
+            {
+                builder.Append("  instanceType:");
+                builder.AppendLine($" '{InstanceType}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<AutomationRunbookTaskDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRunbookTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -200,6 +282,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AutomationRunbookTaskDetails)} does not support '{options.Format}' format.");
             }
@@ -216,6 +300,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeAutomationRunbookTaskDetails(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(AutomationRunbookTaskDetails)} does not support '{options.Format}' format.");
             }

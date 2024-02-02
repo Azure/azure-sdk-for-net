@@ -8,12 +8,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkTapRuleMatchCondition : IUtf8JsonSerializable, IJsonModel<NetworkTapRuleMatchCondition>
+    public partial class NetworkTapRuleMatchCondition : IUtf8JsonSerializable, IJsonModel<NetworkTapRuleMatchCondition>, IPersistableModel<NetworkTapRuleMatchCondition>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkTapRuleMatchCondition>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -162,6 +163,66 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkTapRuleMatchCondition(Optional.ToList(protocolTypes), vlanMatchCondition.Value, ipCondition.Value, serializedAdditionalRawData, Optional.ToNullable(encapsulationType), portCondition.Value);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(EncapsulationType))
+            {
+                builder.Append("  encapsulationType:");
+                builder.AppendLine($" '{EncapsulationType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(PortCondition))
+            {
+                builder.Append("  portCondition:");
+                AppendChildObject(builder, PortCondition, options, 2);
+            }
+
+            if (Optional.IsCollectionDefined(ProtocolTypes))
+            {
+                builder.Append("  protocolTypes:");
+                builder.AppendLine(" [");
+                foreach (var item in ProtocolTypes)
+                {
+                    if (item == null)
+                    {
+                        builder.Append("null");
+                        continue;
+                    }
+                    builder.AppendLine($"    '{item}'");
+                }
+                builder.AppendLine("  ]");
+            }
+
+            if (Optional.IsDefined(VlanMatchCondition))
+            {
+                builder.Append("  vlanMatchCondition:");
+                AppendChildObject(builder, VlanMatchCondition, options, 2);
+            }
+
+            if (Optional.IsDefined(IPCondition))
+            {
+                builder.Append("  ipCondition:");
+                AppendChildObject(builder, IPCondition, options, 2);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                stringBuilder.AppendLine($"{indent}{line}");
+            }
+        }
+
         BinaryData IPersistableModel<NetworkTapRuleMatchCondition>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkTapRuleMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
@@ -170,6 +231,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkTapRuleMatchCondition)} does not support '{options.Format}' format.");
             }
@@ -186,6 +249,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeNetworkTapRuleMatchCondition(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(NetworkTapRuleMatchCondition)} does not support '{options.Format}' format.");
             }
