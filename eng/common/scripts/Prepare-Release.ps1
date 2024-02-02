@@ -109,9 +109,7 @@ else
   $ParsedReleaseDate = [datetime]$ReleaseDate
 }
 
-# On some machines, where people modified date format via Windows Registry,
-# "$ParsedReleaseDate.ToString("MM/dd/yyyy")" produces the date as "MM-dd-yyyy", which is probably a bug somewhere,
-# yet if we concatenate the parts individually, everything works as expected.
+# Use InvariantCulture so that the date format is consistent on all machines
 $releaseDateString = $ParsedReleaseDate.ToSTring("MM/dd/yyyy", [CultureInfo]::InvariantCulture)
 $month = $ParsedReleaseDate.ToString("MMMM")
 
