@@ -14,16 +14,16 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    public partial class CodeInterpreterLogOutput : IUtf8JsonSerializable, IJsonModel<CodeInterpreterLogOutput>
+    public partial class RunStepCodeInterpreterLogOutput : IUtf8JsonSerializable, IJsonModel<RunStepCodeInterpreterLogOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CodeInterpreterLogOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepCodeInterpreterLogOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<CodeInterpreterLogOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RunStepCodeInterpreterLogOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodeInterpreterLogOutput>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepCodeInterpreterLogOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CodeInterpreterLogOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepCodeInterpreterLogOutput)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,19 +49,19 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteEndObject();
         }
 
-        CodeInterpreterLogOutput IJsonModel<CodeInterpreterLogOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RunStepCodeInterpreterLogOutput IJsonModel<RunStepCodeInterpreterLogOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodeInterpreterLogOutput>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepCodeInterpreterLogOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CodeInterpreterLogOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunStepCodeInterpreterLogOutput)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCodeInterpreterLogOutput(document.RootElement, options);
+            return DeserializeRunStepCodeInterpreterLogOutput(document.RootElement, options);
         }
 
-        internal static CodeInterpreterLogOutput DeserializeCodeInterpreterLogOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static RunStepCodeInterpreterLogOutput DeserializeRunStepCodeInterpreterLogOutput(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -91,46 +91,46 @@ namespace Azure.AI.OpenAI.Assistants
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CodeInterpreterLogOutput(type, serializedAdditionalRawData, logs);
+            return new RunStepCodeInterpreterLogOutput(type, serializedAdditionalRawData, logs);
         }
 
-        BinaryData IPersistableModel<CodeInterpreterLogOutput>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RunStepCodeInterpreterLogOutput>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodeInterpreterLogOutput>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepCodeInterpreterLogOutput>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CodeInterpreterLogOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepCodeInterpreterLogOutput)} does not support '{options.Format}' format.");
             }
         }
 
-        CodeInterpreterLogOutput IPersistableModel<CodeInterpreterLogOutput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RunStepCodeInterpreterLogOutput IPersistableModel<RunStepCodeInterpreterLogOutput>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CodeInterpreterLogOutput>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RunStepCodeInterpreterLogOutput>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCodeInterpreterLogOutput(document.RootElement, options);
+                        return DeserializeRunStepCodeInterpreterLogOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CodeInterpreterLogOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunStepCodeInterpreterLogOutput)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CodeInterpreterLogOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RunStepCodeInterpreterLogOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new CodeInterpreterLogOutput FromResponse(Response response)
+        internal static new RunStepCodeInterpreterLogOutput FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeCodeInterpreterLogOutput(document.RootElement);
+            return DeserializeRunStepCodeInterpreterLogOutput(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -130,8 +131,28 @@ public class FunctionsTests : AssistantsTestBase
         SubmitToolOutputsAction outputsAction = run.RequiredAction as SubmitToolOutputsAction;
         Assert.That(outputsAction, Is.Not.Null);
         Assert.That(outputsAction.ToolCalls, Is.Not.Null.Or.Empty);
-        RequiredFunctionToolCall functionCall = outputsAction.ToolCalls[0] as RequiredFunctionToolCall;
-        Assert.That(functionCall, Is.Not.Null);
+        foreach (RequiredToolCall toolCall in outputsAction.ToolCalls)
+        {
+            RequiredFunctionToolCall requiredFunctionCall = toolCall as RequiredFunctionToolCall;
+            Assert.That(requiredFunctionCall, Is.Not.Null);
+            Assert.That(requiredFunctionCall.Name, Is.Not.Null.Or.Empty);
+            Assert.That(requiredFunctionCall.Arguments, Is.Not.Null.Or.Empty);
+            JsonElement argumentsJson = JsonDocument.Parse(requiredFunctionCall.Arguments).RootElement;
+            Assert.That(argumentsJson, Is.Not.Null);
+            Assert.That(argumentsJson.ValueKind, Is.EqualTo(JsonValueKind.Object));
+            List<JsonProperty> argumentProperties = argumentsJson.EnumerateObject().ToList();
+
+            if (requiredFunctionCall.Name == favoriteVacationDestinationFunction.Name)
+            {
+                Assert.That(argumentProperties, Is.Empty);
+            }
+            else if (requiredFunctionCall.Name == preferredAirlineForSeasonFunction.Name)
+            {
+                Assert.That(argumentProperties.Count, Is.EqualTo(1));
+                Assert.That(argumentProperties[0].Name, Is.EqualTo("season"));
+                Assert.That(argumentProperties[0].Value.GetString(), Is.EqualTo("fall"));
+            }
+        }
 
         Response<PageableList<RunStep>> listRunStepResponse = await client.GetRunStepsAsync(run);
         AssertSuccessfulResponse(listRunStepResponse);
