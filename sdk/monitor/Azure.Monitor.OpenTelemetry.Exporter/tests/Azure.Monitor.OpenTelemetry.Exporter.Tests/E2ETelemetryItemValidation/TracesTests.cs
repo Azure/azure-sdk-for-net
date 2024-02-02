@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Mail;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.Extensions.Logging;
@@ -13,6 +14,7 @@ using OpenTelemetry.Logs;
 using OpenTelemetry.Trace;
 using Xunit;
 using Xunit.Abstractions;
+using Xunit.Sdk;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 {
@@ -159,7 +161,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 catch (Exception ex)
                 {
                     activity?.SetStatus(ActivityStatusCode.Error);
-                    activity?.RecordException(ex);
+                    activity?.RecordException(ex, new TagList
+                    {
+                        { "someKey", "someValue" },
+                    });
                 }
             }
 
@@ -187,7 +192,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedExceptionMessage: "Test exception",
                 expectedExceptionTypeName: "System.Exception",
                 expectedTraceId: traceId,
-                expectedSpanId: spanId);
+                expectedSpanId: spanId,
+                expectedProperties: new Dictionary<string, string> { { "someKey", "someValue" } },
+                additionalChecks: data =>
+                {
+                    Assert.False(data.Properties.ContainsKey("exception.type"));
+                    Assert.False(data.Properties.ContainsKey("exception.message"));
+                    Assert.False(data.Properties.ContainsKey("exception.stacktrace"));
+                });
         }
 
         [Theory]
