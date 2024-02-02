@@ -37,9 +37,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
             // HACK: Remove the V2 for now. This Enum should be removed in the future.
             if (atp.activityType.HasFlag(OperationType.V2))
-                {
+            {
                 atp.activityType &= ~OperationType.V2;
-                }
             }
 
             switch (atp.activityType)
