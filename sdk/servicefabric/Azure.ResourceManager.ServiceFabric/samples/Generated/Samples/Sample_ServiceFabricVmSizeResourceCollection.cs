@@ -7,24 +7,24 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ServiceFabric;
-using Azure.ResourceManager.ServiceFabric.Models;
 
 namespace Azure.ResourceManager.ServiceFabric.Samples
 {
-    public partial class Sample_SubscriptionResourceExtensions
+    public partial class Sample_ServiceFabricVmSizeResourceCollection
     {
-        // Get cluster version
+        // List unsupported vm sizes
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetClusterVersions_GetClusterVersion()
+        public async Task GetAll_ListUnsupportedVmSizes()
         {
-            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ClusterVersionsGet_example.json
-            // this example is just showing the usage of "ClusterVersions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/UnsupportedVMSizesList_example.json
+            // this example is just showing the usage of "UnsupportedVmSizes_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -37,24 +37,30 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // invoke the operation and iterate over the result
+            // get the collection of this ServiceFabricVmSizeResource
             AzureLocation location = new AzureLocation("eastus");
-            string clusterVersion = "6.1.480.9494";
-            await foreach (ClusterCodeVersionsResult item in subscriptionResource.GetClusterVersionsAsync(location, clusterVersion))
+            ServiceFabricVmSizeResourceCollection collection = subscriptionResource.GetServiceFabricVmSizeResources(location);
+
+            // invoke the operation and iterate over the result
+            await foreach (ServiceFabricVmSizeResource item in collection.GetAllAsync())
             {
-                Console.WriteLine($"Succeeded: {item}");
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ServiceFabricVmSizeResourceData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
             Console.WriteLine($"Succeeded");
         }
 
-        // Get cluster version by environment
+        // Get unsupported vm sizes
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetClusterVersionsByEnvironment_GetClusterVersionByEnvironment()
+        public async Task Get_GetUnsupportedVmSizes()
         {
-            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ClusterVersionsGetByEnvironment_example.json
-            // this example is just showing the usage of "ClusterVersions_GetByEnvironment" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/UnsupportedVMSizesGet_example.json
+            // this example is just showing the usage of "UnsupportedVmSizes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -67,25 +73,28 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // invoke the operation and iterate over the result
+            // get the collection of this ServiceFabricVmSizeResource
             AzureLocation location = new AzureLocation("eastus");
-            ClusterVersionsEnvironment environment = ClusterVersionsEnvironment.Windows;
-            string clusterVersion = "6.1.480.9494";
-            await foreach (ClusterCodeVersionsResult item in subscriptionResource.GetClusterVersionsByEnvironmentAsync(location, environment, clusterVersion))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
+            ServiceFabricVmSizeResourceCollection collection = subscriptionResource.GetServiceFabricVmSizeResources(location);
 
-            Console.WriteLine($"Succeeded");
+            // invoke the operation
+            string vmSize = "Standard_B1ls1";
+            ServiceFabricVmSizeResource result = await collection.GetAsync(vmSize);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ServiceFabricVmSizeResourceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List cluster versions
+        // Get unsupported vm sizes
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetClusterVersions_ListClusterVersions()
+        public async Task Exists_GetUnsupportedVmSizes()
         {
-            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ClusterVersionsList_example.json
-            // this example is just showing the usage of "ClusterVersions_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/UnsupportedVMSizesGet_example.json
+            // this example is just showing the usage of "UnsupportedVmSizes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -98,23 +107,24 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // invoke the operation and iterate over the result
+            // get the collection of this ServiceFabricVmSizeResource
             AzureLocation location = new AzureLocation("eastus");
-            await foreach (ClusterCodeVersionsResult item in subscriptionResource.GetClusterVersionsAsync(location))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
+            ServiceFabricVmSizeResourceCollection collection = subscriptionResource.GetServiceFabricVmSizeResources(location);
 
-            Console.WriteLine($"Succeeded");
+            // invoke the operation
+            string vmSize = "Standard_B1ls1";
+            bool result = await collection.ExistsAsync(vmSize);
+
+            Console.WriteLine($"Succeeded: {result}");
         }
 
-        // List cluster versions by environment
+        // Get unsupported vm sizes
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetClusterVersionsByEnvironment_ListClusterVersionsByEnvironment()
+        public async Task GetIfExists_GetUnsupportedVmSizes()
         {
-            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/ClusterVersionsListByEnvironment.json
-            // this example is just showing the usage of "ClusterVersions_ListByEnvironment" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/servicefabric/resource-manager/Microsoft.ServiceFabric/preview/2023-11-01-preview/examples/UnsupportedVMSizesGet_example.json
+            // this example is just showing the usage of "UnsupportedVmSizes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -127,15 +137,27 @@ namespace Azure.ResourceManager.ServiceFabric.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // invoke the operation and iterate over the result
+            // get the collection of this ServiceFabricVmSizeResource
             AzureLocation location = new AzureLocation("eastus");
-            ClusterVersionsEnvironment environment = ClusterVersionsEnvironment.Windows;
-            await foreach (ClusterCodeVersionsResult item in subscriptionResource.GetClusterVersionsByEnvironmentAsync(location, environment))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
+            ServiceFabricVmSizeResourceCollection collection = subscriptionResource.GetServiceFabricVmSizeResources(location);
 
-            Console.WriteLine($"Succeeded");
+            // invoke the operation
+            string vmSize = "Standard_B1ls1";
+            NullableResponse<ServiceFabricVmSizeResource> response = await collection.GetIfExistsAsync(vmSize);
+            ServiceFabricVmSizeResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ServiceFabricVmSizeResourceData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }
