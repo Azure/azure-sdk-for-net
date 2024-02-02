@@ -4,7 +4,6 @@ $LanguageDisplayName = ".NET"
 $PackageRepository = "Nuget"
 $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/main/_data/releases/latest/dotnet-packages.csv"
-$DocsGithubStoragePrefix = 'dotnet/'
 $GithubUri = "https://github.com/Azure/azure-sdk-for-net"
 $PackageRepositoryUri = "https://www.nuget.org/packages"
 
@@ -192,7 +191,7 @@ function Get-dotnet-GithubIoDocIndex()
     -blobArtifactsReplacement '$1' `
     -storageAccountName 'azuresdkdocs' `
     -storageContainerName '$web' `
-    -storagrefix 'python/'
+    -storagePrefix 'dotnet/'
 
   # Build up the artifact to service name mapping for GithubIo toc.
   $tocContent = Get-TocMapping -metadata $metadata -artifacts $artifacts
