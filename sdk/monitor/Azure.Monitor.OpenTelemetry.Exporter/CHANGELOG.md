@@ -8,6 +8,10 @@
 
 ### Bugs Fixed
 
+* Fixed an issue where additional tags provider with `activity.RecordException`
+  were dropped.
+  ([#41767](https://github.com/Azure/azure-sdk-for-net/pull/41767))
+  
 ### Other Changes
 
 ## 1.2.0 (2024-01-24)
@@ -15,7 +19,7 @@
 ### Other Changes
 
 * Update OpenTelemetry dependencies
-  ([41398](https://github.com/Azure/azure-sdk-for-net/pull/41398))
+  ([#41398](https://github.com/Azure/azure-sdk-for-net/pull/41398))
   - OpenTelemetry 1.7.0
 
 ## 1.1.0 (2023-11-29)
