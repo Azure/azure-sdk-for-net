@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> The info w.r.t Agent Upgrade. </summary>
     public partial class AgentUpgrade
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AgentUpgrade"/>. </summary>
         public AgentUpgrade()
         {
@@ -20,18 +53,22 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="AgentUpgrade"/>. </summary>
         /// <param name="desiredVersion"> Specifies the version info w.r.t AgentUpgrade for the machine. </param>
         /// <param name="correlationId"> The correlation ID passed in from RSM per upgrade. </param>
-        /// <param name="enableAutomaticUpgrade"> Specifies if RSM should try to upgrade this machine. </param>
-        /// <param name="lastAttemptTimestamp"> Timestamp of last upgrade attempt. </param>
+        /// <param name="isAutomaticUpgradeEnabled"> Specifies if RSM should try to upgrade this machine. </param>
+        /// <param name="lastAttemptDesiredVersion"> Specifies the version of the last attempt. </param>
+        /// <param name="lastAttemptedOn"> Timestamp of last upgrade attempt. </param>
         /// <param name="lastAttemptStatus"> Specifies the status of Agent Upgrade. </param>
         /// <param name="lastAttemptMessage"> Failure message of last upgrade attempt if any. </param>
-        internal AgentUpgrade(string desiredVersion, Guid? correlationId, bool? enableAutomaticUpgrade, DateTimeOffset? lastAttemptTimestamp, LastAttemptStatusEnum? lastAttemptStatus, string lastAttemptMessage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgentUpgrade(string desiredVersion, Guid? correlationId, bool? isAutomaticUpgradeEnabled, string lastAttemptDesiredVersion, DateTimeOffset? lastAttemptedOn, LastAttemptStatusEnum? lastAttemptStatus, string lastAttemptMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DesiredVersion = desiredVersion;
             CorrelationId = correlationId;
-            EnableAutomaticUpgrade = enableAutomaticUpgrade;
-            LastAttemptTimestamp = lastAttemptTimestamp;
+            IsAutomaticUpgradeEnabled = isAutomaticUpgradeEnabled;
+            LastAttemptDesiredVersion = lastAttemptDesiredVersion;
+            LastAttemptedOn = lastAttemptedOn;
             LastAttemptStatus = lastAttemptStatus;
             LastAttemptMessage = lastAttemptMessage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specifies the version info w.r.t AgentUpgrade for the machine. </summary>
@@ -39,9 +76,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> The correlation ID passed in from RSM per upgrade. </summary>
         public Guid? CorrelationId { get; set; }
         /// <summary> Specifies if RSM should try to upgrade this machine. </summary>
-        public bool? EnableAutomaticUpgrade { get; set; }
+        public bool? IsAutomaticUpgradeEnabled { get; set; }
+        /// <summary> Specifies the version of the last attempt. </summary>
+        public string LastAttemptDesiredVersion { get; }
         /// <summary> Timestamp of last upgrade attempt. </summary>
-        public DateTimeOffset? LastAttemptTimestamp { get; }
+        public DateTimeOffset? LastAttemptedOn { get; }
         /// <summary> Specifies the status of Agent Upgrade. </summary>
         public LastAttemptStatusEnum? LastAttemptStatus { get; }
         /// <summary> Failure message of last upgrade attempt if any. </summary>

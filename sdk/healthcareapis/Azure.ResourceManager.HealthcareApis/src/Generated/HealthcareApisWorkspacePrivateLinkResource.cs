@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.HealthcareApis
         private readonly WorkspacePrivateLinkResourcesRestOperations _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient;
         private readonly HealthcareApisPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/workspaces/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="HealthcareApisWorkspacePrivateLinkResource"/> class for mocking. </summary>
         protected HealthcareApisWorkspacePrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.HealthcareApis
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HealthcareApis/workspaces/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <term>Operation Id</term>
         /// <description>WorkspacePrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspacePrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

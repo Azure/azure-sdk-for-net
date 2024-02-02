@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Peering.Models
 {
     /// <summary> The PeeringPatch. </summary>
@@ -12,6 +15,13 @@ namespace Azure.ResourceManager.Peering.Models
     {
         /// <summary> Initializes a new instance of <see cref="PeeringPatch"/>. </summary>
         public PeeringPatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PeeringPatch"/>. </summary>
+        /// <param name="tags"> Gets or sets the tags, a dictionary of descriptors arm object. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PeeringPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(tags, serializedAdditionalRawData)
         {
         }
     }

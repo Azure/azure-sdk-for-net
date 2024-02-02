@@ -342,4 +342,16 @@
   <data name="TroubleshootingGuideLink" xml:space="preserve">
     <value>For troubleshooting information, see https://aka.ms/azsdk/net/eventhubs/exceptions/troubleshoot</value>
   </data>
+  <data name="InvalidEmulatorEndpoint" xml:space="preserve">
+    <value>The Event Hubs emulator is only available locally.  The endpoint must reference to the local host.</value>
+  </data>
+  <data name="BufferedProducerStartupTimeout" xml:space="preserve">
+    <value>The buffered producer took too long to start.</value>
+  </data>
+  <data name="BufferedProducerStartupTimeout1" xml:space="preserve">
+    <value>The buffered producer took too long to start.</value>
+  </data>
+  <data name="ProcessorLoadBalancingFatalErrorMask" xml:space="preserve">
+    <value>FATAL: The processor has experienced a fatal error in its load balancing and health check task.  Recovery is NOT possible; the processor is shutting down.  Error message: {0}</value>
+  </data>
 </root>

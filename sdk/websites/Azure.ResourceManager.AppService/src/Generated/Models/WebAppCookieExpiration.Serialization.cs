@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class WebAppCookieExpiration : IUtf8JsonSerializable
+    public partial class WebAppCookieExpiration : IUtf8JsonSerializable, IJsonModel<WebAppCookieExpiration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebAppCookieExpiration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WebAppCookieExpiration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebAppCookieExpiration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebAppCookieExpiration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Convention))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("timeToExpiration"u8);
                 writer.WriteStringValue(TimeToExpiration);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WebAppCookieExpiration DeserializeWebAppCookieExpiration(JsonElement element)
+        WebAppCookieExpiration IJsonModel<WebAppCookieExpiration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebAppCookieExpiration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebAppCookieExpiration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebAppCookieExpiration(document.RootElement, options);
+        }
+
+        internal static WebAppCookieExpiration DeserializeWebAppCookieExpiration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<CookieExpirationConvention> convention = default;
             Optional<string> timeToExpiration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("convention"u8))
@@ -52,8 +94,44 @@ namespace Azure.ResourceManager.AppService.Models
                     timeToExpiration = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WebAppCookieExpiration(Optional.ToNullable(convention), timeToExpiration.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WebAppCookieExpiration(Optional.ToNullable(convention), timeToExpiration.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WebAppCookieExpiration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebAppCookieExpiration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WebAppCookieExpiration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        WebAppCookieExpiration IPersistableModel<WebAppCookieExpiration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebAppCookieExpiration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWebAppCookieExpiration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebAppCookieExpiration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebAppCookieExpiration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Recovery plan InMageAzureV2 failover input. </summary>
@@ -16,6 +19,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
             RecoveryPointType = recoveryPointType;
             InstanceType = "InMageAzureV2";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanInMageAzureV2FailoverContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="recoveryPointType"> The recovery point type. </param>
+        /// <param name="useMultiVmSyncPoint"> A value indicating whether multi VM sync enabled VMs should use multi VM sync points for failover. </param>
+        internal RecoveryPlanInMageAzureV2FailoverContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, InMageV2RpRecoveryPointType recoveryPointType, string useMultiVmSyncPoint) : base(instanceType, serializedAdditionalRawData)
+        {
+            RecoveryPointType = recoveryPointType;
+            UseMultiVmSyncPoint = useMultiVmSyncPoint;
+            InstanceType = instanceType ?? "InMageAzureV2";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RecoveryPlanInMageAzureV2FailoverContent"/> for deserialization. </summary>
+        internal RecoveryPlanInMageAzureV2FailoverContent()
+        {
         }
 
         /// <summary> The recovery point type. </summary>

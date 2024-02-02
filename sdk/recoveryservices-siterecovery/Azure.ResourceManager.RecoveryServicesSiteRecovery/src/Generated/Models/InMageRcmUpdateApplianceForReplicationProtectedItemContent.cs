@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageRcm provider specific input to update appliance for replication protected item. </summary>
@@ -14,6 +17,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public InMageRcmUpdateApplianceForReplicationProtectedItemContent()
         {
             InstanceType = "InMageRcm";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmUpdateApplianceForReplicationProtectedItemContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="runAsAccountId"> The run as account Id. </param>
+        internal InMageRcmUpdateApplianceForReplicationProtectedItemContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string runAsAccountId) : base(instanceType, serializedAdditionalRawData)
+        {
+            RunAsAccountId = runAsAccountId;
+            InstanceType = instanceType ?? "InMageRcm";
         }
 
         /// <summary> The run as account Id. </summary>

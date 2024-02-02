@@ -5,53 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Volume details using the backup policy
-    /// Serialized Name: VolumeBackups
-    /// </summary>
+    /// <summary> Volume details using the backup policy. </summary>
     public partial class NetAppVolumeBackupDetail
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupDetail"/>. </summary>
         internal NetAppVolumeBackupDetail()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeBackupDetail"/>. </summary>
-        /// <param name="volumeName">
-        /// Volume name
-        /// Serialized Name: VolumeBackups.volumeName
-        /// </param>
-        /// <param name="backupsCount">
-        /// Total count of backups for volume
-        /// Serialized Name: VolumeBackups.backupsCount
-        /// </param>
-        /// <param name="isPolicyEnabled">
-        /// Policy enabled
-        /// Serialized Name: VolumeBackups.policyEnabled
-        /// </param>
-        internal NetAppVolumeBackupDetail(string volumeName, int? backupsCount, bool? isPolicyEnabled)
+        /// <param name="volumeName"> Volume name. </param>
+        /// <param name="backupsCount"> Total count of backups for volume. </param>
+        /// <param name="isPolicyEnabled"> Policy enabled. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeBackupDetail(string volumeName, int? backupsCount, bool? isPolicyEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VolumeName = volumeName;
             BackupsCount = backupsCount;
             IsPolicyEnabled = isPolicyEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Volume name
-        /// Serialized Name: VolumeBackups.volumeName
-        /// </summary>
+        /// <summary> Volume name. </summary>
         public string VolumeName { get; }
-        /// <summary>
-        /// Total count of backups for volume
-        /// Serialized Name: VolumeBackups.backupsCount
-        /// </summary>
+        /// <summary> Total count of backups for volume. </summary>
         public int? BackupsCount { get; }
-        /// <summary>
-        /// Policy enabled
-        /// Serialized Name: VolumeBackups.policyEnabled
-        /// </summary>
+        /// <summary> Policy enabled. </summary>
         public bool? IsPolicyEnabled { get; }
     }
 }

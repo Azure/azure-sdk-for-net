@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly SqlPoolMaintenanceWindowOptionsRestOperations _synapseMaintenanceWindowOptionSqlPoolMaintenanceWindowOptionsRestClient;
         private readonly SynapseMaintenanceWindowOptionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/maintenanceWindowOptions";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseMaintenanceWindowOptionResource"/> class for mocking. </summary>
         protected SynapseMaintenanceWindowOptionResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/maintenanceWindowOptions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +100,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolMaintenanceWindowOptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseMaintenanceWindowOptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -136,6 +144,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolMaintenanceWindowOptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseMaintenanceWindowOptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

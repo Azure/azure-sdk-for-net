@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -13,11 +14,44 @@ namespace Azure.AI.OpenAI
     /// <summary> The configuration information for an audio transcription request. </summary>
     public partial class AudioTranscriptionOptions
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AudioTranscriptionOptions"/>. </summary>
         /// <param name="audioData">
         /// The audio data to transcribe. This must be the binary content of a file in one of the supported media formats:
         ///  flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
         /// </param>
+        /// <param name="filename"> The optional filename or descriptive identifier to associate with with the audio data. </param>
         /// <param name="responseFormat"> The requested format of the transcription response data, which will influence the content and detail of the result. </param>
         /// <param name="language">
         /// The primary spoken language of the audio data to be transcribed, supplied as a two-letter ISO-639-1 language code
@@ -34,15 +68,20 @@ namespace Azure.AI.OpenAI
         /// If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
         /// </param>
         /// <param name="deploymentName"> The model to use for this transcription request. </param>
-        internal AudioTranscriptionOptions(BinaryData audioData, AudioTranscriptionFormat? responseFormat, string language, string prompt, float? temperature, string deploymentName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AudioTranscriptionOptions(BinaryData audioData, string filename, AudioTranscriptionFormat? responseFormat, string language, string prompt, float? temperature, string deploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AudioData = audioData;
+            Filename = filename;
             ResponseFormat = responseFormat;
             Language = language;
             Prompt = prompt;
             Temperature = temperature;
             DeploymentName = deploymentName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+        /// <summary> The optional filename or descriptive identifier to associate with with the audio data. </summary>
+        public string Filename { get; set; }
         /// <summary> The requested format of the transcription response data, which will influence the content and detail of the result. </summary>
         public AudioTranscriptionFormat? ResponseFormat { get; set; }
         /// <summary>

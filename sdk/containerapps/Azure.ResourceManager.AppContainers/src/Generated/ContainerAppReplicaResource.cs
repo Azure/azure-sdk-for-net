@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ContainerAppsRevisionReplicasRestOperations _containerAppReplicaContainerAppsRevisionReplicasRestClient;
         private readonly ContainerAppReplicaData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/revisions/replicas";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppReplicaResource"/> class for mocking. </summary>
         protected ContainerAppReplicaResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/revisions/replicas";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -102,6 +102,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsRevisionReplicas_GetReplica</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppReplicaResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +141,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerAppsRevisionReplicas_GetReplica</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

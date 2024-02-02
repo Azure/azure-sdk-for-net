@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.FluidRelay
         private readonly FluidRelayContainersRestOperations _fluidRelayContainerRestClient;
         private readonly FluidRelayContainerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.FluidRelay/fluidRelayServers/fluidRelayContainers";
+
         /// <summary> Initializes a new instance of the <see cref="FluidRelayContainerResource"/> class for mocking. </summary>
         protected FluidRelayContainerResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.FluidRelay
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.FluidRelay/fluidRelayServers/fluidRelayContainers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.FluidRelay
         /// <term>Operation Id</term>
         /// <description>FluidRelayContainers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FluidRelayContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +141,14 @@ namespace Azure.ResourceManager.FluidRelay
         /// <term>Operation Id</term>
         /// <description>FluidRelayContainers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FluidRelayContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,6 +180,14 @@ namespace Azure.ResourceManager.FluidRelay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FluidRelayContainers_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FluidRelayContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,6 +222,14 @@ namespace Azure.ResourceManager.FluidRelay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FluidRelayContainers_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FluidRelayContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

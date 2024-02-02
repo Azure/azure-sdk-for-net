@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.Resources
         private readonly FeaturesRestOperations _featureRestClient;
         private readonly SubscriptionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/subscriptions";
+
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResource"/> class for mocking. </summary>
         protected SubscriptionResource()
         {
@@ -79,9 +82,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/subscriptions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -122,6 +122,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>PolicyDefinitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPolicyDefinitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyDefinitionName"> The name of the policy definition to get. </param>
@@ -144,6 +152,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPolicyDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -175,6 +191,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>PolicySetDefinitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPolicySetDefinitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
@@ -197,6 +221,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicySetDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPolicySetDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -228,6 +260,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Providers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
@@ -251,6 +291,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Providers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,6 +331,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
@@ -306,6 +362,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
@@ -328,6 +392,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscriptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -361,6 +433,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Subscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -392,6 +472,10 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tags_DeleteValue</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -430,6 +514,10 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Tags_DeleteValue</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tagName"> The name of the tag. </param>
@@ -466,6 +554,10 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tags_CreateOrUpdateValue</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -504,6 +596,10 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Tags_CreateOrUpdateValue</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tagName"> The name of the tag. </param>
@@ -541,6 +637,10 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Tags_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tagName"> The name of the tag to create. </param>
@@ -575,6 +675,10 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tags_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -611,6 +715,10 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Tags_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tagName"> The name of the tag. </param>
@@ -645,6 +753,10 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tags_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -681,6 +793,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Tags_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -689,7 +809,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionTagsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionTagsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PredefinedTag.DeserializePredefinedTag, _subscriptionTagsClientDiagnostics, Pipeline, "SubscriptionResource.GetAllPredefinedTags", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PredefinedTag.DeserializePredefinedTag(e), _subscriptionTagsClientDiagnostics, Pipeline, "SubscriptionResource.GetAllPredefinedTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -703,6 +823,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Tags_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -711,7 +839,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionTagsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionTagsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PredefinedTag.DeserializePredefinedTag, _subscriptionTagsClientDiagnostics, Pipeline, "SubscriptionResource.GetAllPredefinedTags", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PredefinedTag.DeserializePredefinedTag(e), _subscriptionTagsClientDiagnostics, Pipeline, "SubscriptionResource.GetAllPredefinedTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -724,6 +852,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscriptions_ListLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -733,7 +869,7 @@ namespace Azure.ResourceManager.Resources
         public virtual AsyncPageable<LocationExpanded> GetLocationsAsync(bool? includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionRestClient.CreateListLocationsRequest(Id.SubscriptionId, includeExtendedLocations);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, LocationExpanded.DeserializeLocationExpanded, _subscriptionClientDiagnostics, Pipeline, "SubscriptionResource.GetLocations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => LocationExpanded.DeserializeLocationExpanded(e), _subscriptionClientDiagnostics, Pipeline, "SubscriptionResource.GetLocations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -747,6 +883,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Subscriptions_ListLocations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="includeExtendedLocations"> Whether to include extended locations. </param>
@@ -755,7 +899,7 @@ namespace Azure.ResourceManager.Resources
         public virtual Pageable<LocationExpanded> GetLocations(bool? includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionRestClient.CreateListLocationsRequest(Id.SubscriptionId, includeExtendedLocations);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, LocationExpanded.DeserializeLocationExpanded, _subscriptionClientDiagnostics, Pipeline, "SubscriptionResource.GetLocations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => LocationExpanded.DeserializeLocationExpanded(e), _subscriptionClientDiagnostics, Pipeline, "SubscriptionResource.GetLocations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -768,6 +912,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Features_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -790,6 +942,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Features_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

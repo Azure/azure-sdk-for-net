@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.GraphServices.Models
 {
     /// <summary> Account patch properties. </summary>
@@ -12,6 +15,13 @@ namespace Azure.ResourceManager.GraphServices.Models
     {
         /// <summary> Initializes a new instance of <see cref="GraphServicesAccountResourcePatch"/>. </summary>
         public GraphServicesAccountResourcePatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GraphServicesAccountResourcePatch"/>. </summary>
+        /// <param name="tags"> List of key value pairs that describe the resource. This will overwrite the existing tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GraphServicesAccountResourcePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(tags, serializedAdditionalRawData)
         {
         }
     }

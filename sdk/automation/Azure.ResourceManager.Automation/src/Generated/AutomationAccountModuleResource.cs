@@ -48,6 +48,9 @@ namespace Azure.ResourceManager.Automation
         private readonly FieldsRestOperations _fieldsRestClient;
         private readonly AutomationModuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/modules";
+
         /// <summary> Initializes a new instance of the <see cref="AutomationAccountModuleResource"/> class for mocking. </summary>
         protected AutomationAccountModuleResource()
         {
@@ -81,9 +84,6 @@ namespace Azure.ResourceManager.Automation
 #endif
         }
 
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automation/automationAccounts/modules";
-
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
@@ -115,6 +115,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Module_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountModuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -148,6 +156,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Module_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountModuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,6 +195,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Module_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountModuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,6 +238,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Module_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountModuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -247,6 +279,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Module_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountModuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,6 +322,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Module_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountModuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The update parameters for module. </param>
@@ -315,6 +363,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Activity_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -351,6 +403,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Activity_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="activityName"> The name of activity. </param>
@@ -386,6 +442,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Activity_ListByModule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -394,7 +454,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _activityRestClient.CreateListByModuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _activityRestClient.CreateListByModuleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AutomationActivity.DeserializeAutomationActivity, _activityClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetActivities", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AutomationActivity.DeserializeAutomationActivity(e), _activityClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetActivities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -408,6 +468,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Activity_ListByModule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -416,7 +480,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _activityRestClient.CreateListByModuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _activityRestClient.CreateListByModuleNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AutomationActivity.DeserializeAutomationActivity, _activityClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetActivities", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AutomationActivity.DeserializeAutomationActivity(e), _activityClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetActivities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -429,6 +493,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ObjectDataTypes_ListFieldsByModuleAndType</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -442,7 +510,7 @@ namespace Azure.ResourceManager.Automation
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _objectDataTypesRestClient.CreateListFieldsByModuleAndTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomationModuleField.DeserializeAutomationModuleField, _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByModuleAndType", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AutomationModuleField.DeserializeAutomationModuleField(e), _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByModuleAndType", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -456,6 +524,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>ObjectDataTypes_ListFieldsByModuleAndType</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="typeName"> The name of type. </param>
@@ -468,7 +540,7 @@ namespace Azure.ResourceManager.Automation
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _objectDataTypesRestClient.CreateListFieldsByModuleAndTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AutomationModuleField.DeserializeAutomationModuleField, _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByModuleAndType", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AutomationModuleField.DeserializeAutomationModuleField(e), _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByModuleAndType", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -481,6 +553,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Fields_ListByType</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -494,7 +570,7 @@ namespace Azure.ResourceManager.Automation
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fieldsRestClient.CreateListByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomationModuleField.DeserializeAutomationModuleField, _fieldsClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByType", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AutomationModuleField.DeserializeAutomationModuleField(e), _fieldsClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByType", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -508,6 +584,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Fields_ListByType</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="typeName"> The name of type. </param>
@@ -520,7 +600,7 @@ namespace Azure.ResourceManager.Automation
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fieldsRestClient.CreateListByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, typeName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AutomationModuleField.DeserializeAutomationModuleField, _fieldsClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByType", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AutomationModuleField.DeserializeAutomationModuleField(e), _fieldsClientDiagnostics, Pipeline, "AutomationAccountModuleResource.GetFieldsByType", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -533,6 +613,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Module_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountModuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -588,6 +676,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Module_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountModuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -642,6 +738,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Module_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountModuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -691,6 +795,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Module_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountModuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -739,6 +851,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Module_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountModuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -791,6 +911,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Module_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountModuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -26,6 +26,15 @@ namespace Azure.Maps.Routing.Models
             Type = GeoJsonObjectType.GeoJsonPolygon;
         }
 
+        /// <summary> Initializes a new instance of <see cref="GeoJsonPolygon"/>. </summary>
+        /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
+        /// <param name="coordinates"> Coordinates for the `GeoJson Polygon` geometry type. </param>
+        internal GeoJsonPolygon(GeoJsonObjectType type, IList<IList<IList<double>>> coordinates) : base(type)
+        {
+            Coordinates = coordinates;
+            Type = type;
+        }
+
         /// <summary> Coordinates for the `GeoJson Polygon` geometry type. </summary>
         public IList<IList<IList<double>>> Coordinates { get; }
     }

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly PrivateEndpointConnectionsPrivateLinkHubRestOperations _synapsePrivateEndpointConnectionForPrivateLinkHubPrivateEndpointConnectionsPrivateLinkHubRestClient;
         private readonly SynapsePrivateEndpointConnectionForPrivateLinkHubData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/privateLinkHubs/privateEndpointConnections";
+
         /// <summary> Initializes a new instance of the <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource"/> class for mocking. </summary>
         protected SynapsePrivateEndpointConnectionForPrivateLinkHubResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/privateLinkHubs/privateEndpointConnections";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnectionsPrivateLinkHub_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnectionsPrivateLinkHub_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

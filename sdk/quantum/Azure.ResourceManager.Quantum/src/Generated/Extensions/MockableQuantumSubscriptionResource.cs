@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-10-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuantumWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -85,6 +93,14 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-10-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="QuantumWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -108,6 +124,10 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// <term>Operation Id</term>
         /// <description>Offerings_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-10-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locationName"> Location. </param>
@@ -121,7 +141,7 @@ namespace Azure.ResourceManager.Quantum.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => OfferingsRestClient.CreateListRequest(Id.SubscriptionId, locationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OfferingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProviderDescription.DeserializeProviderDescription, OfferingsClientDiagnostics, Pipeline, "MockableQuantumSubscriptionResource.GetOfferings", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProviderDescription.DeserializeProviderDescription(e), OfferingsClientDiagnostics, Pipeline, "MockableQuantumSubscriptionResource.GetOfferings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -134,6 +154,10 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Offerings_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-10-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -148,7 +172,7 @@ namespace Azure.ResourceManager.Quantum.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => OfferingsRestClient.CreateListRequest(Id.SubscriptionId, locationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OfferingsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProviderDescription.DeserializeProviderDescription, OfferingsClientDiagnostics, Pipeline, "MockableQuantumSubscriptionResource.GetOfferings", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProviderDescription.DeserializeProviderDescription(e), OfferingsClientDiagnostics, Pipeline, "MockableQuantumSubscriptionResource.GetOfferings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -161,6 +185,10 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspace_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-10-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,6 +226,10 @@ namespace Azure.ResourceManager.Quantum.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspace_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-10-preview</description>
         /// </item>
         /// </list>
         /// </summary>

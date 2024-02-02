@@ -29,11 +29,11 @@ namespace Azure.Identity
         private readonly bool _skipTenantValidation;
         private readonly AuthenticationRecord _record;
         private readonly AsyncLockWithValue<IAccount> _accountAsyncLock;
-
         internal string TenantId { get; }
         internal string Username { get; }
-
         internal MsalPublicClient Client { get; }
+        internal TenantIdResolverBase TenantIdResolver { get; }
+        internal bool UseOperatingSystemAccount { get; }
 
         /// <summary>
         /// Creates a new <see cref="SharedTokenCacheCredential"/> which will authenticate users signed in through developer tools supporting Azure single sign on.
@@ -83,6 +83,8 @@ namespace Azure.Identity
                 null,
                 options ?? s_DefaultCacheOptions);
             _accountAsyncLock = new AsyncLockWithValue<IAccount>();
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
+            UseOperatingSystemAccount = (options as IMsalPublicClientInitializerOptions)?.UseOperatingSystemAccount ?? false;
         }
 
         /// <summary>
@@ -117,9 +119,21 @@ namespace Azure.Identity
 
             try
             {
-                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, TenantIdResolver.AllTenants);
-                IAccount account = await GetAccountAsync(tenantId, requestContext.IsCaeEnabled, async, cancellationToken).ConfigureAwait(false);
-                AuthenticationResult result = await Client.AcquireTokenSilentAsync(requestContext.Scopes, requestContext.Claims, account, tenantId, requestContext.IsCaeEnabled, async, cancellationToken).ConfigureAwait(false);
+                var tenantId = TenantIdResolver.Resolve(TenantId, requestContext, TenantIdResolverBase.AllTenants);
+
+                IAccount account = UseOperatingSystemAccount ?
+                    PublicClientApplication.OperatingSystemAccount :
+                    await GetAccountAsync(tenantId, requestContext.IsCaeEnabled, async, cancellationToken).ConfigureAwait(false);
+
+                AuthenticationResult result = await Client.AcquireTokenSilentAsync(
+                    requestContext.Scopes,
+                    requestContext.Claims,
+                    account,
+                    tenantId,
+                    requestContext.IsCaeEnabled,
+                    async,
+                    cancellationToken).ConfigureAwait(false);
+
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }
             catch (MsalUiRequiredException ex)

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -21,8 +22,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="assetId"> Specifies the unique id of the dedicated physical machine on which the dedicated host resides. </param>
         /// <param name="availableCapacity"> Unutilized capacity of the dedicated host. </param>
         /// <param name="statuses"> The resource status information. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the dedicated host. </param>
-        internal DedicatedHostInstanceViewWithName(string assetId, DedicatedHostAvailableCapacity availableCapacity, IReadOnlyList<InstanceViewStatus> statuses, string name) : base(assetId, availableCapacity, statuses)
+        internal DedicatedHostInstanceViewWithName(string assetId, DedicatedHostAvailableCapacity availableCapacity, IReadOnlyList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> serializedAdditionalRawData, string name) : base(assetId, availableCapacity, statuses, serializedAdditionalRawData)
         {
             Name = name;
         }

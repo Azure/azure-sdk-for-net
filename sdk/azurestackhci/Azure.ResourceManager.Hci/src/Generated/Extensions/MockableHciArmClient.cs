@@ -36,6 +36,122 @@ namespace Azure.ResourceManager.Hci.Mocking
             return apiVersion;
         }
 
+        /// <summary> Gets an object representing a VirtualMachineInstanceResource along with the instance operations that can be performed on it in the ArmClient. </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <returns> Returns a <see cref="VirtualMachineInstanceResource"/> object. </returns>
+        public virtual VirtualMachineInstanceResource GetVirtualMachineInstance(ResourceIdentifier scope)
+        {
+            return new VirtualMachineInstanceResource(Client, scope.AppendProviderResource("Microsoft.AzureStackHCI", "virtualMachineInstances", "default"));
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="GalleryImageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GalleryImageResource.CreateResourceIdentifier" /> to create a <see cref="GalleryImageResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GalleryImageResource"/> object. </returns>
+        public virtual GalleryImageResource GetGalleryImageResource(ResourceIdentifier id)
+        {
+            GalleryImageResource.ValidateResourceId(id);
+            return new GalleryImageResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="LogicalNetworkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogicalNetworkResource.CreateResourceIdentifier" /> to create a <see cref="LogicalNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LogicalNetworkResource"/> object. </returns>
+        public virtual LogicalNetworkResource GetLogicalNetworkResource(ResourceIdentifier id)
+        {
+            LogicalNetworkResource.ValidateResourceId(id);
+            return new LogicalNetworkResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="MarketplaceGalleryImageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MarketplaceGalleryImageResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceGalleryImageResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MarketplaceGalleryImageResource"/> object. </returns>
+        public virtual MarketplaceGalleryImageResource GetMarketplaceGalleryImageResource(ResourceIdentifier id)
+        {
+            MarketplaceGalleryImageResource.ValidateResourceId(id);
+            return new MarketplaceGalleryImageResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NetworkInterfaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkInterfaceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkInterfaceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkInterfaceResource"/> object. </returns>
+        public virtual NetworkInterfaceResource GetNetworkInterfaceResource(ResourceIdentifier id)
+        {
+            NetworkInterfaceResource.ValidateResourceId(id);
+            return new NetworkInterfaceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="StorageContainerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageContainerResource.CreateResourceIdentifier" /> to create a <see cref="StorageContainerResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StorageContainerResource"/> object. </returns>
+        public virtual StorageContainerResource GetStorageContainerResource(ResourceIdentifier id)
+        {
+            StorageContainerResource.ValidateResourceId(id);
+            return new StorageContainerResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualHardDiskResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualHardDiskResource.CreateResourceIdentifier" /> to create a <see cref="VirtualHardDiskResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualHardDiskResource"/> object. </returns>
+        public virtual VirtualHardDiskResource GetVirtualHardDiskResource(ResourceIdentifier id)
+        {
+            VirtualHardDiskResource.ValidateResourceId(id);
+            return new VirtualHardDiskResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="VirtualMachineInstanceResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="VirtualMachineInstanceResource"/> object. </returns>
+        public virtual VirtualMachineInstanceResource GetVirtualMachineInstanceResource(ResourceIdentifier id)
+        {
+            VirtualMachineInstanceResource.ValidateResourceId(id);
+            return new VirtualMachineInstanceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HybridIdentityMetadataResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridIdentityMetadataResource.CreateResourceIdentifier" /> to create a <see cref="HybridIdentityMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HybridIdentityMetadataResource"/> object. </returns>
+        public virtual HybridIdentityMetadataResource GetHybridIdentityMetadataResource(ResourceIdentifier id)
+        {
+            HybridIdentityMetadataResource.ValidateResourceId(id);
+            return new HybridIdentityMetadataResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="GuestAgentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GuestAgentResource.CreateResourceIdentifier" /> to create a <see cref="GuestAgentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GuestAgentResource"/> object. </returns>
+        public virtual GuestAgentResource GetGuestAgentResource(ResourceIdentifier id)
+        {
+            GuestAgentResource.ValidateResourceId(id);
+            return new GuestAgentResource(Client, id);
+        }
+
         /// <summary>
         /// Gets an object representing an <see cref="ArcSettingResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ArcSettingResource.CreateResourceIdentifier" /> to create an <see cref="ArcSettingResource"/> <see cref="ResourceIdentifier"/> from its components.

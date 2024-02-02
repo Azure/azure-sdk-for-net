@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Maintenance
         private readonly PublicMaintenanceConfigurationsRestOperations _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient;
         private readonly MaintenanceConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Maintenance/publicMaintenanceConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="MaintenancePublicConfigurationResource"/> class for mocking. </summary>
         protected MaintenancePublicConfigurationResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Maintenance
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Maintenance/publicMaintenanceConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +100,14 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>PublicMaintenanceConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenancePublicConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,6 +139,14 @@ namespace Azure.ResourceManager.Maintenance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PublicMaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenancePublicConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

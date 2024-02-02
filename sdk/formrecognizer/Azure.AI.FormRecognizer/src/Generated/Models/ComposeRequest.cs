@@ -25,6 +25,15 @@ namespace Azure.AI.FormRecognizer.Models
             ModelIds = modelIds.ToList();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ComposeRequest"/>. </summary>
+        /// <param name="modelIds"> List of model ids to compose. </param>
+        /// <param name="modelName"> Optional user defined model name (max length: 1024). </param>
+        internal ComposeRequest(IList<Guid> modelIds, string modelName)
+        {
+            ModelIds = modelIds;
+            ModelName = modelName;
+        }
+
         /// <summary> List of model ids to compose. </summary>
         public IList<Guid> ModelIds { get; }
         /// <summary> Optional user defined model name (max length: 1024). </summary>

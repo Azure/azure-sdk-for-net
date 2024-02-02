@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         private readonly WorkflowRestOperations _dataReplicationWorkflowWorkflowRestClient;
         private readonly DataReplicationWorkflowData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationVaults/jobs";
+
         /// <summary> Initializes a new instance of the <see cref="DataReplicationWorkflowResource"/> class for mocking. </summary>
         protected DataReplicationWorkflowResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationVaults/jobs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <term>Operation Id</term>
         /// <description>Workflow_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationWorkflowResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflow_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationWorkflowResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

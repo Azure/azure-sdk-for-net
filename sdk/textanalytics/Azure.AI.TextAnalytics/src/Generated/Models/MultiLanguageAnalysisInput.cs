@@ -19,6 +19,13 @@ namespace Azure.AI.TextAnalytics.Models
             Documents = new ChangeTrackingList<MultiLanguageInput>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="MultiLanguageAnalysisInput"/>. </summary>
+        /// <param name="documents"></param>
+        internal MultiLanguageAnalysisInput(IList<MultiLanguageInput> documents)
+        {
+            Documents = documents;
+        }
+
         /// <summary> Gets the documents. </summary>
         public IList<MultiLanguageInput> Documents { get; }
     }

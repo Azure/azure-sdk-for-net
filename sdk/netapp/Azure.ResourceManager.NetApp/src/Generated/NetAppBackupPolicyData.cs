@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -16,10 +17,41 @@ namespace Azure.ResourceManager.NetApp
     /// <summary>
     /// A class representing the NetAppBackupPolicy data model.
     /// Backup policy information
-    /// Serialized Name: BackupPolicy
     /// </summary>
     public partial class NetAppBackupPolicyData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NetAppBackupPolicyData"/>. </summary>
         /// <param name="location"> The location. </param>
         public NetAppBackupPolicyData(AzureLocation location) : base(location)
@@ -34,43 +66,17 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag">
-        /// A unique read-only string that changes whenever the resource is updated.
-        /// Serialized Name: BackupPolicy.etag
-        /// </param>
-        /// <param name="backupPolicyId">
-        /// Backup Policy Resource ID
-        /// Serialized Name: BackupPolicy.properties.backupPolicyId
-        /// </param>
-        /// <param name="provisioningState">
-        /// Azure lifecycle management
-        /// Serialized Name: BackupPolicy.properties.provisioningState
-        /// </param>
-        /// <param name="dailyBackupsToKeep">
-        /// Daily backups count to keep
-        /// Serialized Name: BackupPolicy.properties.dailyBackupsToKeep
-        /// </param>
-        /// <param name="weeklyBackupsToKeep">
-        /// Weekly backups count to keep
-        /// Serialized Name: BackupPolicy.properties.weeklyBackupsToKeep
-        /// </param>
-        /// <param name="monthlyBackupsToKeep">
-        /// Monthly backups count to keep
-        /// Serialized Name: BackupPolicy.properties.monthlyBackupsToKeep
-        /// </param>
-        /// <param name="volumesAssigned">
-        /// Volumes using current backup policy
-        /// Serialized Name: BackupPolicy.properties.volumesAssigned
-        /// </param>
-        /// <param name="isEnabled">
-        /// The property to decide policy is enabled or not
-        /// Serialized Name: BackupPolicy.properties.enabled
-        /// </param>
-        /// <param name="volumeBackups">
-        /// A list of volumes assigned to this policy
-        /// Serialized Name: BackupPolicy.properties.volumeBackups
-        /// </param>
-        internal NetAppBackupPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ResourceIdentifier backupPolicyId, string provisioningState, int? dailyBackupsToKeep, int? weeklyBackupsToKeep, int? monthlyBackupsToKeep, int? volumesAssigned, bool? isEnabled, IReadOnlyList<NetAppVolumeBackupDetail> volumeBackups) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="backupPolicyId"> Backup Policy Resource ID. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="dailyBackupsToKeep"> Daily backups count to keep. </param>
+        /// <param name="weeklyBackupsToKeep"> Weekly backups count to keep. </param>
+        /// <param name="monthlyBackupsToKeep"> Monthly backups count to keep. </param>
+        /// <param name="volumesAssigned"> Volumes using current backup policy. </param>
+        /// <param name="isEnabled"> The property to decide policy is enabled or not. </param>
+        /// <param name="volumeBackups"> A list of volumes assigned to this policy. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppBackupPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ResourceIdentifier backupPolicyId, string provisioningState, int? dailyBackupsToKeep, int? weeklyBackupsToKeep, int? monthlyBackupsToKeep, int? volumesAssigned, bool? isEnabled, IReadOnlyList<NetAppVolumeBackupDetail> volumeBackups, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             BackupPolicyId = backupPolicyId;
@@ -81,52 +87,31 @@ namespace Azure.ResourceManager.NetApp
             VolumesAssigned = volumesAssigned;
             IsEnabled = isEnabled;
             VolumeBackups = volumeBackups;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// A unique read-only string that changes whenever the resource is updated.
-        /// Serialized Name: BackupPolicy.etag
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppBackupPolicyData"/> for deserialization. </summary>
+        internal NetAppBackupPolicyData()
+        {
+        }
+
+        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
-        /// <summary>
-        /// Backup Policy Resource ID
-        /// Serialized Name: BackupPolicy.properties.backupPolicyId
-        /// </summary>
+        /// <summary> Backup Policy Resource ID. </summary>
         public ResourceIdentifier BackupPolicyId { get; }
-        /// <summary>
-        /// Azure lifecycle management
-        /// Serialized Name: BackupPolicy.properties.provisioningState
-        /// </summary>
+        /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// Daily backups count to keep
-        /// Serialized Name: BackupPolicy.properties.dailyBackupsToKeep
-        /// </summary>
+        /// <summary> Daily backups count to keep. </summary>
         public int? DailyBackupsToKeep { get; set; }
-        /// <summary>
-        /// Weekly backups count to keep
-        /// Serialized Name: BackupPolicy.properties.weeklyBackupsToKeep
-        /// </summary>
+        /// <summary> Weekly backups count to keep. </summary>
         public int? WeeklyBackupsToKeep { get; set; }
-        /// <summary>
-        /// Monthly backups count to keep
-        /// Serialized Name: BackupPolicy.properties.monthlyBackupsToKeep
-        /// </summary>
+        /// <summary> Monthly backups count to keep. </summary>
         public int? MonthlyBackupsToKeep { get; set; }
-        /// <summary>
-        /// Volumes using current backup policy
-        /// Serialized Name: BackupPolicy.properties.volumesAssigned
-        /// </summary>
+        /// <summary> Volumes using current backup policy. </summary>
         public int? VolumesAssigned { get; }
-        /// <summary>
-        /// The property to decide policy is enabled or not
-        /// Serialized Name: BackupPolicy.properties.enabled
-        /// </summary>
+        /// <summary> The property to decide policy is enabled or not. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// A list of volumes assigned to this policy
-        /// Serialized Name: BackupPolicy.properties.volumeBackups
-        /// </summary>
+        /// <summary> A list of volumes assigned to this policy. </summary>
         public IReadOnlyList<NetAppVolumeBackupDetail> VolumeBackups { get; }
     }
 }

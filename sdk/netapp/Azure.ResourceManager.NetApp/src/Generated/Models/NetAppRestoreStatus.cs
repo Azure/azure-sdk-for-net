@@ -5,45 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Restore status
-    /// Serialized Name: RestoreStatus
-    /// </summary>
+    /// <summary> Restore status. </summary>
     public partial class NetAppRestoreStatus
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NetAppRestoreStatus"/>. </summary>
         internal NetAppRestoreStatus()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppRestoreStatus"/>. </summary>
-        /// <param name="isHealthy">
-        /// Restore health status
-        /// Serialized Name: RestoreStatus.healthy
-        /// </param>
-        /// <param name="relationshipStatus">
-        /// Status of the restore SnapMirror relationship
-        /// Serialized Name: RestoreStatus.relationshipStatus
-        /// </param>
-        /// <param name="mirrorState">
-        /// The status of the restore
-        /// Serialized Name: RestoreStatus.mirrorState
-        /// </param>
-        /// <param name="unhealthyReason">
-        /// Reason for the unhealthy restore relationship
-        /// Serialized Name: RestoreStatus.unhealthyReason
-        /// </param>
-        /// <param name="errorMessage">
-        /// Displays error message if the restore is in an error state
-        /// Serialized Name: RestoreStatus.errorMessage
-        /// </param>
-        /// <param name="totalTransferBytes">
-        /// Displays the total bytes transferred
-        /// Serialized Name: RestoreStatus.totalTransferBytes
-        /// </param>
-        internal NetAppRestoreStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? totalTransferBytes)
+        /// <param name="isHealthy"> Restore health status. </param>
+        /// <param name="relationshipStatus"> Status of the restore SnapMirror relationship. </param>
+        /// <param name="mirrorState"> The status of the restore. </param>
+        /// <param name="unhealthyReason"> Reason for the unhealthy restore relationship. </param>
+        /// <param name="errorMessage"> Displays error message if the restore is in an error state. </param>
+        /// <param name="totalTransferBytes"> Displays the total bytes transferred. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppRestoreStatus(bool? isHealthy, NetAppRelationshipStatus? relationshipStatus, NetAppMirrorState? mirrorState, string unhealthyReason, string errorMessage, long? totalTransferBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsHealthy = isHealthy;
             RelationshipStatus = relationshipStatus;
@@ -51,37 +66,20 @@ namespace Azure.ResourceManager.NetApp.Models
             UnhealthyReason = unhealthyReason;
             ErrorMessage = errorMessage;
             TotalTransferBytes = totalTransferBytes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Restore health status
-        /// Serialized Name: RestoreStatus.healthy
-        /// </summary>
+        /// <summary> Restore health status. </summary>
         public bool? IsHealthy { get; }
-        /// <summary>
-        /// Status of the restore SnapMirror relationship
-        /// Serialized Name: RestoreStatus.relationshipStatus
-        /// </summary>
+        /// <summary> Status of the restore SnapMirror relationship. </summary>
         public NetAppRelationshipStatus? RelationshipStatus { get; }
-        /// <summary>
-        /// The status of the restore
-        /// Serialized Name: RestoreStatus.mirrorState
-        /// </summary>
+        /// <summary> The status of the restore. </summary>
         public NetAppMirrorState? MirrorState { get; }
-        /// <summary>
-        /// Reason for the unhealthy restore relationship
-        /// Serialized Name: RestoreStatus.unhealthyReason
-        /// </summary>
+        /// <summary> Reason for the unhealthy restore relationship. </summary>
         public string UnhealthyReason { get; }
-        /// <summary>
-        /// Displays error message if the restore is in an error state
-        /// Serialized Name: RestoreStatus.errorMessage
-        /// </summary>
+        /// <summary> Displays error message if the restore is in an error state. </summary>
         public string ErrorMessage { get; }
-        /// <summary>
-        /// Displays the total bytes transferred
-        /// Serialized Name: RestoreStatus.totalTransferBytes
-        /// </summary>
+        /// <summary> Displays the total bytes transferred. </summary>
         public long? TotalTransferBytes { get; }
     }
 }

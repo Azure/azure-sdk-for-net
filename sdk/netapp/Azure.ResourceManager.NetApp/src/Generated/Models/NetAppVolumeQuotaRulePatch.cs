@@ -5,47 +5,79 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Patchable Quota Rule of a Volume
-    /// Serialized Name: VolumeQuotaRulePatch
-    /// </summary>
+    /// <summary> Patchable Quota Rule of a Volume. </summary>
     public partial class NetAppVolumeQuotaRulePatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaRulePatch"/>. </summary>
         public NetAppVolumeQuotaRulePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary>
-        /// Resource tags
-        /// Serialized Name: VolumeQuotaRulePatch.tags
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumeQuotaRulePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="provisioningState"> Gets the status of the VolumeQuotaRule at the time the operation was called. </param>
+        /// <param name="quotaSizeInKiBs"> Size of quota. </param>
+        /// <param name="quotaType"> Type of quota. </param>
+        /// <param name="quotaTarget"> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumeQuotaRulePatch(IDictionary<string, string> tags, NetAppProvisioningState? provisioningState, long? quotaSizeInKiBs, NetAppVolumeQuotaType? quotaType, string quotaTarget, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            ProvisioningState = provisioningState;
+            QuotaSizeInKiBs = quotaSizeInKiBs;
+            QuotaType = quotaType;
+            QuotaTarget = quotaTarget;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary>
-        /// Gets the status of the VolumeQuotaRule at the time the operation was called.
-        /// Serialized Name: VolumeQuotaRulePatch.properties.provisioningState
-        /// </summary>
+        /// <summary> Gets the status of the VolumeQuotaRule at the time the operation was called. </summary>
         public NetAppProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Size of quota
-        /// Serialized Name: VolumeQuotaRulePatch.properties.quotaSizeInKiBs
-        /// </summary>
+        /// <summary> Size of quota. </summary>
         public long? QuotaSizeInKiBs { get; set; }
-        /// <summary>
-        /// Type of quota
-        /// Serialized Name: VolumeQuotaRulePatch.properties.quotaType
-        /// </summary>
+        /// <summary> Type of quota. </summary>
         public NetAppVolumeQuotaType? QuotaType { get; set; }
-        /// <summary>
-        /// UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;
-        /// Serialized Name: VolumeQuotaRulePatch.properties.quotaTarget
-        /// </summary>
+        /// <summary> UserID/GroupID/SID based on the quota target type. UserID and groupID can be found by running ‘id’ or ‘getent’ command for the user or group and SID can be found by running &lt;wmic useraccount where name='user-name' get sid&gt;. </summary>
         public string QuotaTarget { get; set; }
     }
 }

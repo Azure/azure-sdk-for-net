@@ -6,21 +6,40 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeGroupVolume : IUtf8JsonSerializable
+    public partial class NetAppVolumeGroupVolume : IUtf8JsonSerializable, IJsonModel<NetAppVolumeGroupVolume>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeGroupVolume>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetAppVolumeGroupVolume>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeGroupVolume>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetAppVolumeGroupVolume)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -45,6 +64,11 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(FileSystemId))
+            {
+                writer.WritePropertyName("fileSystemId"u8);
+                writer.WriteStringValue(FileSystemId.Value);
+            }
             writer.WritePropertyName("creationToken"u8);
             writer.WriteStringValue(CreationToken);
             if (Optional.IsDefined(ServiceLevel))
@@ -68,6 +92,11 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
             }
             if (Optional.IsDefined(SnapshotId))
             {
@@ -98,12 +127,37 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("backupId");
                 }
             }
+            if (options.Format != "W" && Optional.IsDefined(BaremetalTenantId))
+            {
+                writer.WritePropertyName("baremetalTenantId"u8);
+                writer.WriteStringValue(BaremetalTenantId);
+            }
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
             if (Optional.IsDefined(NetworkFeatures))
             {
                 writer.WritePropertyName("networkFeatures"u8);
                 writer.WriteStringValue(NetworkFeatures.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(NetworkSiblingSetId))
+            {
+                writer.WritePropertyName("networkSiblingSetId"u8);
+                writer.WriteStringValue(NetworkSiblingSetId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StorageToNetworkProximity))
+            {
+                writer.WritePropertyName("storageToNetworkProximity"u8);
+                writer.WriteStringValue(StorageToNetworkProximity.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(MountTargets))
+            {
+                writer.WritePropertyName("mountTargets"u8);
+                writer.WriteStartArray();
+                foreach (var item in MountTargets)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(VolumeType))
             {
@@ -174,6 +228,11 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("throughputMibps");
                 }
             }
+            if (options.Format != "W" && Optional.IsDefined(ActualThroughputMibps))
+            {
+                writer.WritePropertyName("actualThroughputMibps"u8);
+                writer.WriteNumberValue(ActualThroughputMibps.Value);
+            }
             if (Optional.IsDefined(EncryptionKeySource))
             {
                 writer.WritePropertyName("encryptionKeySource"u8);
@@ -216,10 +275,42 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("unixPermissions");
                 }
             }
+            if (options.Format != "W" && Optional.IsDefined(CloneProgress))
+            {
+                if (CloneProgress != null)
+                {
+                    writer.WritePropertyName("cloneProgress"u8);
+                    writer.WriteNumberValue(CloneProgress.Value);
+                }
+                else
+                {
+                    writer.WriteNull("cloneProgress");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(FileAccessLogs))
+            {
+                writer.WritePropertyName("fileAccessLogs"u8);
+                writer.WriteStringValue(FileAccessLogs.Value.ToString());
+            }
             if (Optional.IsDefined(AvsDataStore))
             {
                 writer.WritePropertyName("avsDataStore"u8);
                 writer.WriteStringValue(AvsDataStore.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(DataStoreResourceId))
+            {
+                writer.WritePropertyName("dataStoreResourceId"u8);
+                writer.WriteStartArray();
+                foreach (var item in DataStoreResourceId)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(IsDefaultQuotaEnabled))
             {
@@ -236,6 +327,16 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("defaultGroupQuotaInKiBs"u8);
                 writer.WriteNumberValue(DefaultGroupQuotaInKiBs.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(MaximumNumberOfFiles))
+            {
+                writer.WritePropertyName("maximumNumberOfFiles"u8);
+                writer.WriteNumberValue(MaximumNumberOfFiles.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(VolumeGroupName))
+            {
+                writer.WritePropertyName("volumeGroupName"u8);
+                writer.WriteStringValue(VolumeGroupName);
+            }
             if (Optional.IsDefined(CapacityPoolResourceId))
             {
                 writer.WritePropertyName("capacityPoolResourceId"u8);
@@ -246,10 +347,20 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("proximityPlacementGroup"u8);
                 writer.WriteStringValue(ProximityPlacementGroupId);
             }
+            if (options.Format != "W" && Optional.IsDefined(T2Network))
+            {
+                writer.WritePropertyName("t2Network"u8);
+                writer.WriteStringValue(T2Network);
+            }
             if (Optional.IsDefined(VolumeSpecName))
             {
                 writer.WritePropertyName("volumeSpecName"u8);
                 writer.WriteStringValue(VolumeSpecName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsEncrypted))
+            {
+                writer.WritePropertyName("encrypted"u8);
+                writer.WriteBooleanValue(IsEncrypted.Value);
             }
             if (Optional.IsCollectionDefined(PlacementRules))
             {
@@ -266,17 +377,70 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("enableSubvolumes"u8);
                 writer.WriteStringValue(EnableSubvolumes.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisionedAvailabilityZone))
+            {
+                if (ProvisionedAvailabilityZone != null)
+                {
+                    writer.WritePropertyName("provisionedAvailabilityZone"u8);
+                    writer.WriteStringValue(ProvisionedAvailabilityZone);
+                }
+                else
+                {
+                    writer.WriteNull("provisionedAvailabilityZone");
+                }
+            }
             if (Optional.IsDefined(IsLargeVolume))
             {
                 writer.WritePropertyName("isLargeVolume"u8);
                 writer.WriteBooleanValue(IsLargeVolume.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(OriginatingResourceId))
+            {
+                if (OriginatingResourceId != null)
+                {
+                    writer.WritePropertyName("originatingResourceId"u8);
+                    writer.WriteStringValue(OriginatingResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("originatingResourceId");
+                }
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetAppVolumeGroupVolume DeserializeNetAppVolumeGroupVolume(JsonElement element)
+        NetAppVolumeGroupVolume IJsonModel<NetAppVolumeGroupVolume>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeGroupVolume>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetAppVolumeGroupVolume)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppVolumeGroupVolume(document.RootElement, options);
+        }
+
+        internal static NetAppVolumeGroupVolume DeserializeNetAppVolumeGroupVolume(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -340,7 +504,8 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<string> provisionedAvailabilityZone = default;
             Optional<bool> isLargeVolume = default;
             Optional<ResourceIdentifier> originatingResourceId = default;
-            Optional<long?> inheritedSizeInBytes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -888,21 +1053,47 @@ namespace Azure.ResourceManager.NetApp.Models
                             originatingResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("inheritedSizeInBytes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                inheritedSizeInBytes = null;
-                                continue;
-                            }
-                            inheritedSizeInBytes = property0.Value.GetInt64();
-                            continue;
-                        }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetAppVolumeGroupVolume(id.Value, name.Value, Optional.ToNullable(type), Optional.ToDictionary(tags), Optional.ToList(zones), Optional.ToNullable(fileSystemId), creationToken, Optional.ToNullable(serviceLevel), usageThreshold, exportPolicy.Value, Optional.ToList(protocolTypes), provisioningState.Value, snapshotId.Value, Optional.ToNullable(deleteBaseSnapshot), backupId.Value, baremetalTenantId.Value, subnetId, Optional.ToNullable(networkFeatures), Optional.ToNullable(networkSiblingSetId), Optional.ToNullable(storageToNetworkProximity), Optional.ToList(mountTargets), volumeType.Value, dataProtection.Value, Optional.ToNullable(isRestoring), Optional.ToNullable(snapshotDirectoryVisible), Optional.ToNullable(kerberosEnabled), Optional.ToNullable(securityStyle), Optional.ToNullable(smbEncryption), Optional.ToNullable(smbAccessBasedEnumeration), Optional.ToNullable(smbNonBrowsable), Optional.ToNullable(smbContinuouslyAvailable), Optional.ToNullable(throughputMibps), Optional.ToNullable(actualThroughputMibps), Optional.ToNullable(encryptionKeySource), keyVaultPrivateEndpointResourceId.Value, Optional.ToNullable(ldapEnabled), Optional.ToNullable(coolAccess), Optional.ToNullable(coolnessPeriod), Optional.ToNullable(coolAccessRetrievalPolicy), unixPermissions.Value, Optional.ToNullable(cloneProgress), Optional.ToNullable(fileAccessLogs), Optional.ToNullable(avsDataStore), Optional.ToList(dataStoreResourceId), Optional.ToNullable(isDefaultQuotaEnabled), Optional.ToNullable(defaultUserQuotaInKiBs), Optional.ToNullable(defaultGroupQuotaInKiBs), Optional.ToNullable(maximumNumberOfFiles), volumeGroupName.Value, capacityPoolResourceId.Value, proximityPlacementGroup.Value, t2Network.Value, volumeSpecName.Value, Optional.ToNullable(encrypted), Optional.ToList(placementRules), Optional.ToNullable(enableSubvolumes), provisionedAvailabilityZone.Value, Optional.ToNullable(isLargeVolume), originatingResourceId.Value, Optional.ToNullable(inheritedSizeInBytes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetAppVolumeGroupVolume(id.Value, name.Value, Optional.ToNullable(type), Optional.ToDictionary(tags), Optional.ToList(zones), Optional.ToNullable(fileSystemId), creationToken, Optional.ToNullable(serviceLevel), usageThreshold, exportPolicy.Value, Optional.ToList(protocolTypes), provisioningState.Value, snapshotId.Value, Optional.ToNullable(deleteBaseSnapshot), backupId.Value, baremetalTenantId.Value, subnetId, Optional.ToNullable(networkFeatures), Optional.ToNullable(networkSiblingSetId), Optional.ToNullable(storageToNetworkProximity), Optional.ToList(mountTargets), volumeType.Value, dataProtection.Value, Optional.ToNullable(isRestoring), Optional.ToNullable(snapshotDirectoryVisible), Optional.ToNullable(kerberosEnabled), Optional.ToNullable(securityStyle), Optional.ToNullable(smbEncryption), Optional.ToNullable(smbAccessBasedEnumeration), Optional.ToNullable(smbNonBrowsable), Optional.ToNullable(smbContinuouslyAvailable), Optional.ToNullable(throughputMibps), Optional.ToNullable(actualThroughputMibps), Optional.ToNullable(encryptionKeySource), keyVaultPrivateEndpointResourceId.Value, Optional.ToNullable(ldapEnabled), Optional.ToNullable(coolAccess), Optional.ToNullable(coolnessPeriod), Optional.ToNullable(coolAccessRetrievalPolicy), unixPermissions.Value, Optional.ToNullable(cloneProgress), Optional.ToNullable(fileAccessLogs), Optional.ToNullable(avsDataStore), Optional.ToList(dataStoreResourceId), Optional.ToNullable(isDefaultQuotaEnabled), Optional.ToNullable(defaultUserQuotaInKiBs), Optional.ToNullable(defaultGroupQuotaInKiBs), Optional.ToNullable(maximumNumberOfFiles), volumeGroupName.Value, capacityPoolResourceId.Value, proximityPlacementGroup.Value, t2Network.Value, volumeSpecName.Value, Optional.ToNullable(encrypted), Optional.ToList(placementRules), Optional.ToNullable(enableSubvolumes), provisionedAvailabilityZone.Value, Optional.ToNullable(isLargeVolume), originatingResourceId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetAppVolumeGroupVolume>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeGroupVolume>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetAppVolumeGroupVolume)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NetAppVolumeGroupVolume IPersistableModel<NetAppVolumeGroupVolume>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeGroupVolume>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetAppVolumeGroupVolume(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetAppVolumeGroupVolume)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetAppVolumeGroupVolume>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

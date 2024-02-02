@@ -19,6 +19,13 @@ namespace Azure.AI.TextAnalytics.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextTask"/>. </summary>
+        /// <param name="kind"> Enumeration of supported Text Analysis tasks. </param>
+        internal AnalyzeTextTask(AnalyzeTextTaskKind kind)
+        {
+            Kind = kind;
+        }
+
         /// <summary> Enumeration of supported Text Analysis tasks. </summary>
         internal AnalyzeTextTaskKind Kind { get; set; }
     }

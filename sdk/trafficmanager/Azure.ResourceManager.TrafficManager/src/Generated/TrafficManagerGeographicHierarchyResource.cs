@@ -36,6 +36,9 @@ namespace Azure.ResourceManager.TrafficManager
         private readonly GeographicHierarchiesRestOperations _trafficManagerGeographicHierarchyGeographicHierarchiesRestClient;
         private readonly TrafficManagerGeographicHierarchyData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/trafficManagerGeographicHierarchies";
+
         /// <summary> Initializes a new instance of the <see cref="TrafficManagerGeographicHierarchyResource"/> class for mocking. </summary>
         protected TrafficManagerGeographicHierarchyResource()
         {
@@ -62,9 +65,6 @@ namespace Azure.ResourceManager.TrafficManager
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/trafficManagerGeographicHierarchies";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +98,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// <term>Operation Id</term>
         /// <description>GeographicHierarchies_GetDefault</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerGeographicHierarchyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +137,14 @@ namespace Azure.ResourceManager.TrafficManager
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GeographicHierarchies_GetDefault</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerGeographicHierarchyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

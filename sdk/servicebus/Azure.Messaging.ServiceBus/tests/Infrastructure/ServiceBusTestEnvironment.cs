@@ -82,6 +82,14 @@ namespace Azure.Messaging.ServiceBus.Tests
         public string FullyQualifiedNamespace => ParsedConnectionString.Endpoint.Host;
 
         /// <summary>
+        ///   The secondary fully qualified namespace for the Service Bus namespace represented by this scope.
+        /// </summary>
+        ///
+        /// <value>The secondary fully qualified namespace, as contained within the associated connection string.</value>
+        ///
+        public string SecondaryFullyQualifiedNamespace => ServiceBusConnectionStringProperties.Parse(ServiceBusSecondaryNamespaceConnectionString).Endpoint.Host;
+
+        /// <summary>
         ///   The shared access key name for the Service Bus namespace represented by this scope.
         /// </summary>
         ///

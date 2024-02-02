@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,11 +15,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class TopicTypeData : IUtf8JsonSerializable
+    public partial class TopicTypeData : IUtf8JsonSerializable, IJsonModel<TopicTypeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TopicTypeData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TopicTypeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TopicTypeData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TopicTypeData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Provider))
@@ -75,12 +105,51 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("areRegionalAndGlobalSourcesSupported"u8);
                 writer.WriteBooleanValue(AreRegionalAndGlobalSourcesSupported.Value);
             }
+            if (Optional.IsCollectionDefined(AdditionalEnforcedPermissions))
+            {
+                writer.WritePropertyName("additionalEnforcedPermissions"u8);
+                writer.WriteStartArray();
+                foreach (var item in AdditionalEnforcedPermissions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TopicTypeData DeserializeTopicTypeData(JsonElement element)
+        TopicTypeData IJsonModel<TopicTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TopicTypeData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TopicTypeData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTopicTypeData(document.RootElement, options);
+        }
+
+        internal static TopicTypeData DeserializeTopicTypeData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -98,6 +167,9 @@ namespace Azure.ResourceManager.EventGrid
             Optional<string> sourceResourceFormat = default;
             Optional<IList<TopicTypeSourceScope>> supportedScopesForSource = default;
             Optional<bool> areRegionalAndGlobalSourcesSupported = default;
+            Optional<IList<TopicTypeAdditionalEnforcedPermission>> additionalEnforcedPermissions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -208,11 +280,61 @@ namespace Azure.ResourceManager.EventGrid
                             areRegionalAndGlobalSourcesSupported = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("additionalEnforcedPermissions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<TopicTypeAdditionalEnforcedPermission> array = new List<TopicTypeAdditionalEnforcedPermission>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(TopicTypeAdditionalEnforcedPermission.DeserializeTopicTypeAdditionalEnforcedPermission(item));
+                            }
+                            additionalEnforcedPermissions = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TopicTypeData(id, name, type, systemData.Value, provider.Value, displayName.Value, description.Value, Optional.ToNullable(resourceRegionType), Optional.ToNullable(provisioningState), Optional.ToList(supportedLocations), sourceResourceFormat.Value, Optional.ToList(supportedScopesForSource), Optional.ToNullable(areRegionalAndGlobalSourcesSupported));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TopicTypeData(id, name, type, systemData.Value, provider.Value, displayName.Value, description.Value, Optional.ToNullable(resourceRegionType), Optional.ToNullable(provisioningState), Optional.ToList(supportedLocations), sourceResourceFormat.Value, Optional.ToList(supportedScopesForSource), Optional.ToNullable(areRegionalAndGlobalSourcesSupported), Optional.ToList(additionalEnforcedPermissions), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TopicTypeData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TopicTypeData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TopicTypeData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TopicTypeData IPersistableModel<TopicTypeData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TopicTypeData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTopicTypeData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TopicTypeData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TopicTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

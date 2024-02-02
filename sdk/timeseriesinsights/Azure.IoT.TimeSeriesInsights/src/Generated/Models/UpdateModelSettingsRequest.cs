@@ -15,6 +15,15 @@ namespace Azure.IoT.TimeSeriesInsights
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="UpdateModelSettingsRequest"/>. </summary>
+        /// <param name="name"> Model display name which is shown in the UX and mutable by the user. Initial value is "DefaultModel". </param>
+        /// <param name="defaultTypeId"> Default type id of the model that new instances will automatically belong to. </param>
+        internal UpdateModelSettingsRequest(string name, string defaultTypeId)
+        {
+            Name = name;
+            DefaultTypeId = defaultTypeId;
+        }
+
         /// <summary> Model display name which is shown in the UX and mutable by the user. Initial value is "DefaultModel". </summary>
         public string Name { get; set; }
         /// <summary> Default type id of the model that new instances will automatically belong to. </summary>

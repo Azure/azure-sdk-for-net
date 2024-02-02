@@ -5,17 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkManagerCommit : IUtf8JsonSerializable
+    public partial class NetworkManagerCommit : IUtf8JsonSerializable, IJsonModel<NetworkManagerCommit>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkManagerCommit>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetworkManagerCommit>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerCommit>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkManagerCommit)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(CommitId))
+            {
+                writer.WritePropertyName("commitId"u8);
+                writer.WriteStringValue(CommitId);
+            }
             writer.WritePropertyName("targetLocations"u8);
             writer.WriteStartArray();
             foreach (var item in TargetLocations)
@@ -35,11 +50,40 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("commitType"u8);
             writer.WriteStringValue(CommitType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkManagerCommit DeserializeNetworkManagerCommit(JsonElement element)
+        NetworkManagerCommit IJsonModel<NetworkManagerCommit>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerCommit>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkManagerCommit)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkManagerCommit(document.RootElement, options);
+        }
+
+        internal static NetworkManagerCommit DeserializeNetworkManagerCommit(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +92,8 @@ namespace Azure.ResourceManager.Network.Models
             IList<string> targetLocations = default;
             Optional<IList<string>> configurationIds = default;
             NetworkConfigurationDeploymentType commitType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commitId"u8))
@@ -84,8 +130,44 @@ namespace Azure.ResourceManager.Network.Models
                     commitType = new NetworkConfigurationDeploymentType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkManagerCommit(commitId.Value, targetLocations, Optional.ToList(configurationIds), commitType);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkManagerCommit(commitId.Value, targetLocations, Optional.ToList(configurationIds), commitType, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkManagerCommit>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerCommit>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkManagerCommit)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NetworkManagerCommit IPersistableModel<NetworkManagerCommit>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerCommit>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetworkManagerCommit(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkManagerCommit)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetworkManagerCommit>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

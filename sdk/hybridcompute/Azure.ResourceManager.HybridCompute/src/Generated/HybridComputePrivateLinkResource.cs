@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.HybridCompute
         private readonly PrivateLinkResourcesRestOperations _hybridComputePrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly HybridComputePrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.HybridCompute/privateLinkScopes/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="HybridComputePrivateLinkResource"/> class for mocking. </summary>
         protected HybridComputePrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.HybridCompute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HybridCompute/privateLinkScopes/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-03-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputePrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-03-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridComputePrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

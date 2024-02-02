@@ -36,6 +36,9 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         private readonly SystemAssignedIdentitiesRestOperations _systemAssignedIdentityRestClient;
         private readonly SystemAssignedIdentityData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedIdentity/identities";
+
         /// <summary> Initializes a new instance of the <see cref="SystemAssignedIdentityResource"/> class for mocking. </summary>
         protected SystemAssignedIdentityResource()
         {
@@ -62,9 +65,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedIdentity/identities";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +98,14 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <term>Operation Id</term>
         /// <description>SystemAssignedIdentities_GetByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SystemAssignedIdentityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +137,14 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SystemAssignedIdentities_GetByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SystemAssignedIdentityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

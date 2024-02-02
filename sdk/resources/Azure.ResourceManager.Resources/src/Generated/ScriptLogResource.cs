@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Resources
         private readonly DeploymentScriptsRestOperations _scriptLogDeploymentScriptsRestClient;
         private readonly ScriptLogData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/deploymentScripts/logs";
+
         /// <summary> Initializes a new instance of the <see cref="ScriptLogResource"/> class for mocking. </summary>
         protected ScriptLogResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/deploymentScripts/logs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +100,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>DeploymentScripts_GetLogsDefault</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptLogResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tail"> The number of lines to show from the tail of the deployment script log. Valid value is a positive number up to 1000. If 'tail' is not provided, all available logs are shown up to container instance log capacity of 4mb. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeploymentScripts_GetLogsDefault</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptLogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

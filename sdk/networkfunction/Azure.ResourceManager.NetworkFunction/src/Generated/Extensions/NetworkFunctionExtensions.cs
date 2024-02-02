@@ -100,6 +100,14 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <term>Operation Id</term>
         /// <description>AzureTrafficCollectors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureTrafficCollectorResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -129,6 +137,14 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureTrafficCollectors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureTrafficCollectorResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -160,6 +176,10 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <term>Operation Id</term>
         /// <description>AzureTrafficCollectorsBySubscription_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -187,6 +207,10 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureTrafficCollectorsBySubscription_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
         /// </item>
         /// </list>
         /// <item>

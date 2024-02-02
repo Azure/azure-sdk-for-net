@@ -15,6 +15,15 @@ namespace Azure.Communication.Messages
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="MessageTemplateValueQuickAction"/>. </summary>
+        /// <param name="text"> The [Optional] quick action text. </param>
+        /// <param name="payload"> The [Optional] quick action payload. </param>
+        internal MessageTemplateValueQuickAction(string text, string payload)
+        {
+            Text = text;
+            Payload = payload;
+        }
+
         /// <summary> The [Optional] quick action text. </summary>
         public string Text { get; set; }
         /// <summary> The [Optional] quick action payload. </summary>

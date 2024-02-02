@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SqlMetricAvailability
+    public partial class SqlMetricAvailability : IUtf8JsonSerializable, IJsonModel<SqlMetricAvailability>
     {
-        internal static SqlMetricAvailability DeserializeSqlMetricAvailability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlMetricAvailability>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SqlMetricAvailability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlMetricAvailability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlMetricAvailability)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Retention))
+            {
+                writer.WritePropertyName("retention"u8);
+                writer.WriteStringValue(Retention);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TimeGrain))
+            {
+                writer.WritePropertyName("timeGrain"u8);
+                writer.WriteStringValue(TimeGrain);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SqlMetricAvailability IJsonModel<SqlMetricAvailability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlMetricAvailability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlMetricAvailability)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlMetricAvailability(document.RootElement, options);
+        }
+
+        internal static SqlMetricAvailability DeserializeSqlMetricAvailability(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> retention = default;
             Optional<string> timeGrain = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("retention"u8))
@@ -32,8 +90,44 @@ namespace Azure.ResourceManager.Sql.Models
                     timeGrain = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlMetricAvailability(retention.Value, timeGrain.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlMetricAvailability(retention.Value, timeGrain.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlMetricAvailability>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlMetricAvailability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SqlMetricAvailability)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SqlMetricAvailability IPersistableModel<SqlMetricAvailability>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlMetricAvailability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlMetricAvailability(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlMetricAvailability)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlMetricAvailability>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

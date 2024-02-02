@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Marketplace
         private readonly PrivateStoreRestOperations _marketplaceAdminApprovalRequestPrivateStoreRestClient;
         private readonly MarketplaceAdminApprovalRequestData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Marketplace/privateStores/adminRequestApprovals";
+
         /// <summary> Initializes a new instance of the <see cref="MarketplaceAdminApprovalRequestResource"/> class for mocking. </summary>
         protected MarketplaceAdminApprovalRequestResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Marketplace
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Marketplace/privateStores/adminRequestApprovals";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +98,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_GetAdminRequestApproval</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAdminApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,6 +143,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_GetAdminRequestApproval</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAdminApprovalRequestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="publisherId"> The publisher id of this offer. </param>
@@ -170,6 +186,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_UpdateAdminRequestApproval</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAdminApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,6 +232,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStore_UpdateAdminRequestApproval</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAdminApprovalRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

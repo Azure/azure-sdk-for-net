@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.IotHub
         private readonly PrivateLinkResourcesRestOperations _iotHubPrivateEndpointGroupInformationPrivateLinkResourcesRestClient;
         private readonly IotHubPrivateEndpointGroupInformationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Devices/iotHubs/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="IotHubPrivateEndpointGroupInformationResource"/> class for mocking. </summary>
         protected IotHubPrivateEndpointGroupInformationResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.IotHub
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Devices/iotHubs/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.IotHub
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubPrivateEndpointGroupInformationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.IotHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubPrivateEndpointGroupInformationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

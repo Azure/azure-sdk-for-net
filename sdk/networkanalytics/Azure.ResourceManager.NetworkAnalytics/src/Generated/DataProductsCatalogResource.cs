@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.NetworkAnalytics
         private readonly DataProductsCatalogsRestOperations _dataProductsCatalogRestClient;
         private readonly DataProductsCatalogData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.NetworkAnalytics/dataProductsCatalogs";
+
         /// <summary> Initializes a new instance of the <see cref="DataProductsCatalogResource"/> class for mocking. </summary>
         protected DataProductsCatalogResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.NetworkAnalytics
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.NetworkAnalytics/dataProductsCatalogs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +100,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <term>Operation Id</term>
         /// <description>DataProductsCatalogs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductsCatalogResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,6 +139,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataProductsCatalogs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProductsCatalogResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

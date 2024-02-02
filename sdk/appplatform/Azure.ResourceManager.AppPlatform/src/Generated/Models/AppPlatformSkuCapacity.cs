@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> The SKU capacity. </summary>
     public partial class AppPlatformSkuCapacity
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AppPlatformSkuCapacity"/>. </summary>
         /// <param name="minimum"> Gets or sets the minimum. </param>
         internal AppPlatformSkuCapacity(int minimum)
@@ -22,12 +57,19 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="maximum"> Gets or sets the maximum. </param>
         /// <param name="default"> Gets or sets the default. </param>
         /// <param name="scaleType"> Gets or sets the type of the scale. </param>
-        internal AppPlatformSkuCapacity(int minimum, int? maximum, int? @default, AppPlatformSkuScaleType? scaleType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformSkuCapacity(int minimum, int? maximum, int? @default, AppPlatformSkuScaleType? scaleType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Minimum = minimum;
             Maximum = maximum;
             Default = @default;
             ScaleType = scaleType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformSkuCapacity"/> for deserialization. </summary>
+        internal AppPlatformSkuCapacity()
+        {
         }
 
         /// <summary> Gets or sets the minimum. </summary>

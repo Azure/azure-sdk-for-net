@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,10 +15,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    public partial class DevTestLabEnvironmentData : IUtf8JsonSerializable
+    public partial class DevTestLabEnvironmentData : IUtf8JsonSerializable, IJsonModel<DevTestLabEnvironmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabEnvironmentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DevTestLabEnvironmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabEnvironmentData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -32,6 +41,26 @@ namespace Azure.ResourceManager.DevTestLabs
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DeploymentProperties))
@@ -44,12 +73,61 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("armTemplateDisplayName"u8);
                 writer.WriteStringValue(ArmTemplateDisplayName);
             }
+            if (options.Format != "W" && Optional.IsDefined(ResourceGroupId))
+            {
+                writer.WritePropertyName("resourceGroupId"u8);
+                writer.WriteStringValue(ResourceGroupId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedByUser))
+            {
+                writer.WritePropertyName("createdByUser"u8);
+                writer.WriteStringValue(CreatedByUser);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UniqueIdentifier))
+            {
+                writer.WritePropertyName("uniqueIdentifier"u8);
+                writer.WriteStringValue(UniqueIdentifier.Value);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevTestLabEnvironmentData DeserializeDevTestLabEnvironmentData(JsonElement element)
+        DevTestLabEnvironmentData IJsonModel<DevTestLabEnvironmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabEnvironmentData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabEnvironmentData(document.RootElement, options);
+        }
+
+        internal static DevTestLabEnvironmentData DeserializeDevTestLabEnvironmentData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +144,8 @@ namespace Azure.ResourceManager.DevTestLabs
             Optional<string> createdByUser = default;
             Optional<string> provisioningState = default;
             Optional<Guid> uniqueIdentifier = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -161,8 +241,44 @@ namespace Azure.ResourceManager.DevTestLabs
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DevTestLabEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, deploymentProperties.Value, armTemplateDisplayName.Value, resourceGroupId.Value, createdByUser.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DevTestLabEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, deploymentProperties.Value, armTemplateDisplayName.Value, resourceGroupId.Value, createdByUser.Value, provisioningState.Value, Optional.ToNullable(uniqueIdentifier), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DevTestLabEnvironmentData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabEnvironmentData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DevTestLabEnvironmentData IPersistableModel<DevTestLabEnvironmentData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDevTestLabEnvironmentData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabEnvironmentData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevTestLabEnvironmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

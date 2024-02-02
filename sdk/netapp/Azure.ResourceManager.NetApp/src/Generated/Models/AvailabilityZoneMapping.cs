@@ -5,43 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// The AvailabilityZoneMapping.
-    /// Serialized Name: RegionInfoAvailabilityZoneMappingsItem
-    /// </summary>
+    /// <summary> The AvailabilityZoneMapping. </summary>
     public partial class AvailabilityZoneMapping
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AvailabilityZoneMapping"/>. </summary>
-        public AvailabilityZoneMapping()
+        internal AvailabilityZoneMapping()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="AvailabilityZoneMapping"/>. </summary>
-        /// <param name="availabilityZone">
-        /// Logical availability zone.
-        /// Serialized Name: RegionInfoAvailabilityZoneMappingsItem.availabilityZone
-        /// </param>
-        /// <param name="isAvailable">
-        /// Available availability zone
-        /// Serialized Name: RegionInfoAvailabilityZoneMappingsItem.isAvailable
-        /// </param>
-        internal AvailabilityZoneMapping(string availabilityZone, bool? isAvailable)
+        /// <param name="availabilityZone"> Logical availability zone. </param>
+        /// <param name="isAvailable"> Available availability zone. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailabilityZoneMapping(string availabilityZone, bool? isAvailable, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AvailabilityZone = availabilityZone;
             IsAvailable = isAvailable;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Logical availability zone.
-        /// Serialized Name: RegionInfoAvailabilityZoneMappingsItem.availabilityZone
-        /// </summary>
-        public string AvailabilityZone { get; set; }
-        /// <summary>
-        /// Available availability zone
-        /// Serialized Name: RegionInfoAvailabilityZoneMappingsItem.isAvailable
-        /// </summary>
-        public bool? IsAvailable { get; set; }
+        /// <summary> Logical availability zone. </summary>
+        public string AvailabilityZone { get; }
+        /// <summary> Available availability zone. </summary>
+        public bool? IsAvailable { get; }
     }
 }

@@ -5,21 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeDataProtection : IUtf8JsonSerializable
+    public partial class NetAppVolumeDataProtection : IUtf8JsonSerializable, IJsonModel<NetAppVolumeDataProtection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeDataProtection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetAppVolumeDataProtection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Backup))
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeDataProtection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("backup"u8);
-                writer.WriteObjectValue(Backup);
+                throw new FormatException($"The model {nameof(NetAppVolumeDataProtection)} does not support '{format}' format.");
             }
+
+            writer.WriteStartObject();
             if (Optional.IsDefined(Replication))
             {
                 writer.WritePropertyName("replication"u8);
@@ -35,30 +41,51 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("volumeRelocation"u8);
                 writer.WriteObjectValue(VolumeRelocation);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetAppVolumeDataProtection DeserializeNetAppVolumeDataProtection(JsonElement element)
+        NetAppVolumeDataProtection IJsonModel<NetAppVolumeDataProtection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeDataProtection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetAppVolumeDataProtection)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppVolumeDataProtection(document.RootElement, options);
+        }
+
+        internal static NetAppVolumeDataProtection DeserializeNetAppVolumeDataProtection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<NetAppVolumeBackupConfiguration> backup = default;
             Optional<NetAppReplicationObject> replication = default;
             Optional<VolumeSnapshotProperties> snapshot = default;
             Optional<NetAppVolumeRelocationProperties> volumeRelocation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("backup"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    backup = NetAppVolumeBackupConfiguration.DeserializeNetAppVolumeBackupConfiguration(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("replication"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -86,8 +113,44 @@ namespace Azure.ResourceManager.NetApp.Models
                     volumeRelocation = NetAppVolumeRelocationProperties.DeserializeNetAppVolumeRelocationProperties(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetAppVolumeDataProtection(backup.Value, replication.Value, snapshot.Value, volumeRelocation.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetAppVolumeDataProtection(replication.Value, snapshot.Value, volumeRelocation.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetAppVolumeDataProtection>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeDataProtection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetAppVolumeDataProtection)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NetAppVolumeDataProtection IPersistableModel<NetAppVolumeDataProtection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeDataProtection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetAppVolumeDataProtection(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetAppVolumeDataProtection)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetAppVolumeDataProtection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

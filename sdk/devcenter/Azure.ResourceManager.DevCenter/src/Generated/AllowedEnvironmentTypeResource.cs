@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.DevCenter
         private readonly ProjectAllowedEnvironmentTypesRestOperations _allowedEnvironmentTypeProjectAllowedEnvironmentTypesRestClient;
         private readonly AllowedEnvironmentTypeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects/allowedEnvironmentTypes";
+
         /// <summary> Initializes a new instance of the <see cref="AllowedEnvironmentTypeResource"/> class for mocking. </summary>
         protected AllowedEnvironmentTypeResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DevCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects/allowedEnvironmentTypes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>ProjectAllowedEnvironmentTypes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AllowedEnvironmentTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProjectAllowedEnvironmentTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AllowedEnvironmentTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

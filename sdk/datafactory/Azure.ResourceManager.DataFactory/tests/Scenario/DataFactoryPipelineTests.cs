@@ -284,7 +284,10 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 
         private async Task<DataFactoryDatasetResource> CreateDefaultMySqlTableDataset(DataFactoryResource dataFactory, string linkedServiceName, string datasetName)
         {
-            DataFactoryLinkedServiceData lkWebSource = new DataFactoryLinkedServiceData(new MySqlLinkedService("server=10.0.0.122;port=3306;database=db;user=https:\\\\test.com;sslmode=1;usesystemtruststore=0"));
+            DataFactoryLinkedServiceData lkWebSource = new DataFactoryLinkedServiceData(new MySqlLinkedService()
+            {
+                ConnectionString = "server=10.0.0.122;port=3306;database=db;user=https:\\\\test.com;sslmode=1;usesystemtruststore=0"
+            });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkWebSource);
 
             DataFactoryDatasetData dsWebSource = new DataFactoryDatasetData(new MySqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
@@ -1424,9 +1427,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new CopyActivitySource(),new CopySink())
-                        {
-                            Source = new AzureDatabricksDeltaLakeSource()
+                        new CopyActivity(taskName, new AzureDatabricksDeltaLakeSource()
                             {
                                 Query = "abc",
                                 ExportSettings = new AzureDatabricksDeltaLakeExportCommand()
@@ -1434,8 +1435,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                     DateFormat = "xxx",
                                     TimestampFormat = "xxx"
                                 }
-                            },
-                            Sink = new AzureDatabricksDeltaLakeSink()
+                            }, new AzureDatabricksDeltaLakeSink()
                             {
                                 PreCopyScript = "abc",
                                 ImportSettings = new AzureDatabricksDeltaLakeImportCommand()
@@ -1443,7 +1443,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                     DateFormat = "xxx",
                                     TimestampFormat = "xxx"
                                 }
-                            },
+                            })
+                        {
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1469,9 +1470,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new CopyActivitySource(),new CopySink())
-                        {
-                            Source = new MongoDBAtlasSource()
+                        new CopyActivity(taskName, new MongoDBAtlasSource()
                             {
                                 Filter = DataFactoryElement<string>.FromExpression("@dataset().MyFilter"),
                                 CursorMethods = new MongoDBCursorMethodsProperties()
@@ -1482,12 +1481,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                     Project = DataFactoryElement<string>.FromExpression("@dataset().MyProject")
                                 },
                                 BatchSize = 5
-                            },
-                            Sink = new CosmosDBMongoDBApiSink()
+                            }, new CosmosDBMongoDBApiSink()
                             {
                                 WriteBehavior = "upsert",
                                 WriteBatchSize = 5000
-                            },
+                            })
+                        {
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1518,9 +1517,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new CopyActivitySource(),new CopySink())
-                        {
-                            Source = new MongoDBAtlasSource()
+                        new CopyActivity(taskName, new MongoDBAtlasSource()
                             {
                                 Filter = DataFactoryElement<string>.FromExpression("@dataset().MyFilter"),
                                 CursorMethods = new MongoDBCursorMethodsProperties()
@@ -1531,12 +1528,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                     Project = DataFactoryElement<string>.FromExpression("@dataset().MyProject")
                                 },
                                 BatchSize = 5
-                            },
-                            Sink = new MongoDBV2Sink()
+                            }, new MongoDBV2Sink()
                             {
                                 WriteBehavior = "upsert",
                                 WriteBatchSize = 5000
-                            },
+                            })
+                        {
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1569,17 +1566,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new CopyActivitySource(),new CopySink())
-                        {
-                            Source = new SqlSource()
-                            {
-                            },
-                            Sink = new SqlDWSink()
+                        new CopyActivity(taskName, new SqlSource(), new SqlDWSink()
                             {
                                 AllowPolyBase = true,
                                 WriteBatchSize = 5,
                                 WriteBatchTimeout = "PT0S"
-                            },
+                            })
+                        {
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1628,14 +1621,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new DataFactoryBlobSource(),new DataFactoryBlobSink())
+                        new CopyActivity(taskName, new DataFactoryBlobSource(), new DataFactoryBlobSink())
                         {
-                            Source = new DataFactoryBlobSource()
-                            {
-                            },
-                            Sink = new DataFactoryBlobSink()
-                            {
-                            },
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1645,14 +1632,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName)
                             }
                         },
-                        new CopyActivity(taskName + "1",new DataFactoryBlobSource(),new DataFactoryBlobSink())
+                        new CopyActivity(taskName + "1", new DataFactoryBlobSource(), new DataFactoryBlobSink())
                         {
-                            Source = new DataFactoryBlobSource()
-                            {
-                            },
-                            Sink = new DataFactoryBlobSink()
-                            {
-                            },
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1666,14 +1647,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 new PipelineActivityDependency(taskName,new List<DependencyCondition>() { DependencyCondition.Succeeded})
                             }
                         },
-                        new CopyActivity(taskName + "1",new DataFactoryBlobSource(),new DataFactoryBlobSink())
+                        new CopyActivity(taskName + "1", new DataFactoryBlobSource(), new DataFactoryBlobSink())
                         {
-                            Source = new DataFactoryBlobSource()
-                            {
-                            },
-                            Sink = new DataFactoryBlobSink()
-                            {
-                            },
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1713,14 +1688,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new CopyActivitySource(),new CopySink())
+                        new CopyActivity(taskName, new DataFactoryBlobSource(), new DataFactoryBlobSink())
                         {
-                            Source = new DataFactoryBlobSource()
-                            {
-                            },
-                            Sink = new DataFactoryBlobSink()
-                            {
-                            },
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1736,14 +1705,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 }
                             }
                         },
-                        new CopyActivity(taskName + "1",new CopyActivitySource(),new CopySink())
+                        new CopyActivity(taskName + "1", new DataFactoryBlobSource(), new DataFactoryBlobSink())
                         {
-                            Source = new DataFactoryBlobSource()
-                            {
-                            },
-                            Sink = new DataFactoryBlobSink()
-                            {
-                            },
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1769,14 +1732,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 new PipelineActivityDependency(taskName,new List<DependencyCondition>() { DependencyCondition.Succeeded})
                             }
                         },
-                        new CopyActivity(taskName + "1",new CopyActivitySource(),new CopySink())
+                        new CopyActivity(taskName + "1", new DataFactoryBlobSource(), new DataFactoryBlobSink())
                         {
-                            Source = new DataFactoryBlobSource()
-                            {
-                            },
-                            Sink = new DataFactoryBlobSink()
-                            {
-                            },
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1828,16 +1785,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new CopyActivitySource(),new CopySink())
-                        {
-                            Source = new WebSource()
-                            {
-                            },
-                            Sink = new DataFactoryBlobSink()
+                        new CopyActivity(taskName, new WebSource(), new DataFactoryBlobSink()
                             {
                                 WriteBatchSize = 1000000,
                                 WriteBatchTimeout = "01:00:00"
-                            },
+                            })
+                        {
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1889,19 +1842,23 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new CopyActivitySource(),new CopySink())
-                        {
-                            Source = new AzureSqlSource()
+                        new CopyActivity(taskName, new AzureSqlSource()
                             {
                                 SqlReaderQuery = "SELECT TOP 1 * FROM DBO.TestTable",
-                                PartitionOption = BinaryData.FromString("\"DynamicRange\""),
+                                PartitionOption = "DynamicRange",
                                 PartitionSettings = new SqlPartitionSettings()
                                 {
                                     PartitionColumnName = "partitionColumnName",
                                     PartitionUpperBound = "10",
                                     PartitionLowerBound = "1"
                                 }
-                            },
+                            }, new DataFactoryBlobSink()
+                            {
+                                WriteBatchSize = 1000000,
+                                WriteBatchTimeout = "01:00:00",
+                                BlobWriterAddHeader = true
+                            })
+                        {
                             Sink = new DataFactoryBlobSink()
                             {
                                 WriteBatchSize = 1000000,
@@ -1940,9 +1897,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new CopyActivitySource(),new CopySink())
-                        {
-                            Source = new SqlSource()
+                        new CopyActivity(taskName, new SqlSource()
                             {
                                 SourceRetryCount = 2,
                                 SourceRetryWait = "00:00:01",
@@ -1950,13 +1905,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 SqlReaderStoredProcedureName = "CopyTestSrcStoredProcedureWithParameters",
                                 StoredProcedureParameters = BinaryData.FromString("{\"stringData\": {\"value\": \"test\",\"type\": \"String\"},\"id\": {\"value\": \"3\",\"type\": \"Int\"}}"),
                                 IsolationLevel = "ReadCommitted"
-                            },
-                            Sink = new DataFactoryBlobSink()
+                            }, new DataFactoryBlobSink()
                             {
                                 BlobWriterAddHeader = true,
                                 WriteBatchSize = 100000,
                                 WriteBatchTimeout = "01:00:00"
-                            },
+                            })
+                        {
                             Translator = BinaryData.FromString("{\"type\": \"TabularTranslator\",\"columnMappings\": \"PartitionKey:PartitionKey\"}"),
                             Inputs =
                             {
@@ -1989,9 +1944,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new CopyActivitySource(),new CopySink())
-                        {
-                            Source = new AmazonRdsForSqlServerSource()
+                        new CopyActivity(taskName, new AmazonRdsForSqlServerSource()
                             {
                                 SourceRetryCount = 2,
                                 SourceRetryWait = "00:00:01",
@@ -1999,13 +1952,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 SqlReaderStoredProcedureName = "CopyTestSrcStoredProcedureWithParameters",
                                 StoredProcedureParameters = BinaryData.FromString("{\"stringData\": {\"value\": \"test\",\"type\": \"String\"},\"id\": {\"value\": \"3\",\"type\": \"Int\"}}"),
                                 IsolationLevel = "ReadCommitted"
-                            },
-                            Sink = new DataFactoryBlobSink()
+                            }, new DataFactoryBlobSink()
                             {
                                 BlobWriterAddHeader = true,
                                 WriteBatchSize = 100000,
                                 WriteBatchTimeout = "01:00:00"
-                            },
+                            })
+                        {
                             Translator = BinaryData.FromString("{\"type\": \"TabularTranslator\",\"columnMappings\": \"PartitionKey:PartitionKey\"}"),
                             Inputs =
                             {
@@ -2203,18 +2156,16 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new CopyActivitySource(), new AzureTableSink())
-                        {
-                            Source = new CassandraSource()
+                        new CopyActivity(taskName, new CassandraSource()
                             {
                                 Query = "select * from table",
                                 ConsistencyLevel = "TWO"
-                            },
-                            Sink = new AzureTableSink()
+                            }, new AzureTableSink()
                             {
                                 WriteBatchSize = 100000,
                                 AzureTableDefaultPartitionKeyValue = "defaultParitionKey"
-                            },
+                            })
+                        {
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -6303,9 +6254,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new DelimitedTextSource(),new DelimitedTextSink())
-                        {
-                            Source = new DelimitedTextSource()
+                        new CopyActivity(taskName, new DelimitedTextSource()
                             {
                                 StoreSettings = new GoogleCloudStorageReadSettings()
                                 {
@@ -6324,10 +6273,9 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                         new KeyValuePair<string, BinaryData>("additionalNullValues",BinaryData.FromString("[ \"\\\\N\", \"NULL\" ]"))
                                     }
                                 }
-                            },
-                            Sink = new DelimitedTextSink()
+                            }, new DelimitedTextSink()
                             {
-                                StoreSettings = new StoreWriteSettings()
+                                StoreSettings = new AzureBlobStorageWriteSettings()
                                 {
                                     MaxConcurrentConnections = 3,
                                     CopyBehavior = "PreserveHierarchy"
@@ -6336,7 +6284,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 {
                                     QuoteAllText = true,
                                 }
-                            },
+                            })
+                        {
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -6844,7 +6793,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             Source = new SqlMISource()
                             {
                                 SqlReaderQuery = "select * from my_table",
-                                PartitionOption = BinaryData.FromString("\"DynamicRange\""),
+                                PartitionOption = "DynamicRange",
                                 PartitionSettings = new SqlPartitionSettings()
                                 {
                                     PartitionColumnName = "column",
@@ -6856,7 +6805,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             {
                                 SqlWriterTableType = "MarketingType",
                                 SqlWriterUseTableLock = true,
-                                WriteBehavior = BinaryData.FromString("\"Upsert\""),
+                                WriteBehavior = "Upsert",
                                 UpsertSettings = new SqlUpsertSettings()
                                 {
                                     UseTempDB = true,

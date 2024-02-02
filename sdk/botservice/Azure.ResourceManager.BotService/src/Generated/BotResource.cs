@@ -48,6 +48,9 @@ namespace Azure.ResourceManager.BotService
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
         private readonly BotData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.BotService/botServices";
+
         /// <summary> Initializes a new instance of the <see cref="BotResource"/> class for mocking. </summary>
         protected BotResource()
         {
@@ -80,9 +83,6 @@ namespace Azure.ResourceManager.BotService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.BotService/botServices";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -123,6 +123,14 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>Channels_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotChannelResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="channelName"> The name of the Channel resource. </param>
@@ -143,6 +151,14 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Channels_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotChannelResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,6 +188,14 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>BotConnection_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotConnectionSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> The name of the Bot Service Connection Setting resource. </param>
@@ -194,6 +218,14 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BotConnection_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotConnectionSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,6 +257,14 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotServicePrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
@@ -248,6 +288,14 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotServicePrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
@@ -270,6 +318,14 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,6 +359,14 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>Bots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -334,6 +398,14 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bots_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -369,6 +441,14 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>Bots_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -402,6 +482,14 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bots_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -437,6 +525,14 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>Bots_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> The parameters to provide for the created bot. </param>
@@ -470,6 +566,10 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DirectLine_RegenerateKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -506,6 +606,10 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>DirectLine_RegenerateKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="channelName"> The name of the Channel resource for which keys are to be regenerated. </param>
@@ -541,6 +645,10 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>Email_CreateSignInUrl</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -570,6 +678,10 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Email_CreateSignInUrl</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -601,6 +713,10 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_ListByBotResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -608,7 +724,7 @@ namespace Azure.ResourceManager.BotService
         public virtual AsyncPageable<BotServicePrivateLinkResourceData> GetPrivateLinkResourcesByBotResourceAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByBotResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, BotServicePrivateLinkResourceData.DeserializeBotServicePrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "BotResource.GetPrivateLinkResourcesByBotResource", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BotServicePrivateLinkResourceData.DeserializeBotServicePrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "BotResource.GetPrivateLinkResourcesByBotResource", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -622,6 +738,10 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_ListByBotResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -629,7 +749,7 @@ namespace Azure.ResourceManager.BotService
         public virtual Pageable<BotServicePrivateLinkResourceData> GetPrivateLinkResourcesByBotResource(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByBotResourceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, BotServicePrivateLinkResourceData.DeserializeBotServicePrivateLinkResourceData, _privateLinkResourcesClientDiagnostics, Pipeline, "BotResource.GetPrivateLinkResourcesByBotResource", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BotServicePrivateLinkResourceData.DeserializeBotServicePrivateLinkResourceData(e), _privateLinkResourcesClientDiagnostics, Pipeline, "BotResource.GetPrivateLinkResourcesByBotResource", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -642,6 +762,14 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -697,6 +825,14 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>Bots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -751,6 +887,14 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>Bots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -800,6 +944,14 @@ namespace Azure.ResourceManager.BotService
         /// <term>Operation Id</term>
         /// <description>Bots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -848,6 +1000,14 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -900,6 +1060,14 @@ namespace Azure.ResourceManager.BotService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

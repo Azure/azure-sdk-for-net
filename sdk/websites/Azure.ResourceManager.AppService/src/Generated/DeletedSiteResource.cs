@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.AppService
         private readonly GlobalRestOperations _deletedSiteGlobalRestClient;
         private readonly DeletedSiteData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/deletedSites";
+
         /// <summary> Initializes a new instance of the <see cref="DeletedSiteResource"/> class for mocking. </summary>
         protected DeletedSiteResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/deletedSites";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -102,6 +102,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Global_GetDeletedWebApp</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +141,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Global_GetDeletedWebApp</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,6 +182,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Global_GetDeletedWebAppSnapshots</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -173,7 +197,7 @@ namespace Azure.ResourceManager.AppService
         public virtual AsyncPageable<AppSnapshot> GetDeletedWebAppSnapshotsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedSiteGlobalRestClient.CreateGetDeletedWebAppSnapshotsRequest(Id.SubscriptionId, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppSnapshot.DeserializeAppSnapshot, _deletedSiteGlobalClientDiagnostics, Pipeline, "DeletedSiteResource.GetDeletedWebAppSnapshots", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AppSnapshot.DeserializeAppSnapshot(e), _deletedSiteGlobalClientDiagnostics, Pipeline, "DeletedSiteResource.GetDeletedWebAppSnapshots", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -187,6 +211,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Global_GetDeletedWebAppSnapshots</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -194,7 +226,7 @@ namespace Azure.ResourceManager.AppService
         public virtual Pageable<AppSnapshot> GetDeletedWebAppSnapshots(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedSiteGlobalRestClient.CreateGetDeletedWebAppSnapshotsRequest(Id.SubscriptionId, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AppSnapshot.DeserializeAppSnapshot, _deletedSiteGlobalClientDiagnostics, Pipeline, "DeletedSiteResource.GetDeletedWebAppSnapshots", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AppSnapshot.DeserializeAppSnapshot(e), _deletedSiteGlobalClientDiagnostics, Pipeline, "DeletedSiteResource.GetDeletedWebAppSnapshots", "", null, cancellationToken);
         }
     }
 }

@@ -36,6 +36,9 @@ namespace Azure.ResourceManager.Monitor
         private readonly VMInsightsRestOperations _vmInsightsOnboardingStatusVmInsightsRestClient;
         private readonly VmInsightsOnboardingStatusData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/vmInsightsOnboardingStatuses";
+
         /// <summary> Initializes a new instance of the <see cref="VmInsightsOnboardingStatusResource"/> class for mocking. </summary>
         protected VmInsightsOnboardingStatusResource()
         {
@@ -62,9 +65,6 @@ namespace Azure.ResourceManager.Monitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/vmInsightsOnboardingStatuses";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +98,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>VMInsights_GetOnboardingStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-27-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VmInsightsOnboardingStatusResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +137,14 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VMInsights_GetOnboardingStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-27-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VmInsightsOnboardingStatusResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

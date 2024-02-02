@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> A class representing update parameters for EmailService resource. </summary>
@@ -12,6 +15,13 @@ namespace Azure.ResourceManager.Communication.Models
     {
         /// <summary> Initializes a new instance of <see cref="EmailServiceResourcePatch"/>. </summary>
         public EmailServiceResourcePatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EmailServiceResourcePatch"/>. </summary>
+        /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EmailServiceResourcePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(tags, serializedAdditionalRawData)
         {
         }
     }
