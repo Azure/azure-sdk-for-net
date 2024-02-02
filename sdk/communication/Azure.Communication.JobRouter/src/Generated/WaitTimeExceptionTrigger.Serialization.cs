@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -26,7 +25,7 @@ namespace Azure.Communication.JobRouter
             {
                 if (property.NameEquals("thresholdSeconds"u8))
                 {
-                    thresholdSeconds = property.Value.GetTimeSpan("P");
+                    ReadThresholdSeconds(property, ref thresholdSeconds);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

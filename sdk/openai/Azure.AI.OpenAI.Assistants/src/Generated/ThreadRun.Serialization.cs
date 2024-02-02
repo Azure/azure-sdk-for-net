@@ -280,52 +280,27 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 if (property.NameEquals("expires_at"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        expiresAt = null;
-                        continue;
-                    }
-                    expiresAt = property.Value.GetDateTimeOffset("O");
+                    DeserializeNullableDateTimeOffset(property, ref expiresAt);
                     continue;
                 }
                 if (property.NameEquals("started_at"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        startedAt = null;
-                        continue;
-                    }
-                    startedAt = property.Value.GetDateTimeOffset("O");
+                    DeserializeNullableDateTimeOffset(property, ref startedAt);
                     continue;
                 }
                 if (property.NameEquals("completed_at"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        completedAt = null;
-                        continue;
-                    }
-                    completedAt = property.Value.GetDateTimeOffset("O");
+                    DeserializeNullableDateTimeOffset(property, ref completedAt);
                     continue;
                 }
                 if (property.NameEquals("cancelled_at"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        cancelledAt = null;
-                        continue;
-                    }
-                    cancelledAt = property.Value.GetDateTimeOffset("O");
+                    DeserializeNullableDateTimeOffset(property, ref cancelledAt);
                     continue;
                 }
                 if (property.NameEquals("failed_at"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        failedAt = null;
-                        continue;
-                    }
-                    failedAt = property.Value.GetDateTimeOffset("O");
+                    DeserializeNullableDateTimeOffset(property, ref failedAt);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))

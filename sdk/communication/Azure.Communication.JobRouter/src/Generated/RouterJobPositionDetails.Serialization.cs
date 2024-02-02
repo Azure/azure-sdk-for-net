@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -49,7 +48,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("estimatedWaitTimeMinutes"u8))
                 {
-                    estimatedWaitTimeMinutes = property.Value.GetTimeSpan("P");
+                    ReadEstimatedWaitTime(property, ref estimatedWaitTimeMinutes);
                     continue;
                 }
             }
