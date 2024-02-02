@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.TrafficManager.Models;
 
@@ -25,8 +27,9 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="id"> Fully qualified resource Id for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. Ex- Microsoft.Network/trafficManagerProfiles. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="key"> The key returned by the User Metrics operation. </param>
-        internal TrafficManagerUserMetricData(ResourceIdentifier id, string name, ResourceType? resourceType, string key) : base(id, name, resourceType)
+        internal TrafficManagerUserMetricData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string key) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             Key = key;
         }

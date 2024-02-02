@@ -1,14 +1,10 @@
 # Release History
 
-## 1.13.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.13.0 (2024-02-06)
 
 ### Other Changes
+* Update `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` to 1.24.0
+* Update `Microsoft.Azure.SignalR.Serverless.Protocols` to 1.10.0
 
 ## 1.12.0 (2023-11-07)
 ### Features Added

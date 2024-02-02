@@ -17,6 +17,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 rename-mapping:
   AadAuthFailureMode: SearchAadAuthFailureMode
@@ -48,7 +49,7 @@ rename-mapping:
   SharedPrivateLinkResourceProvisioningState: SharedSearchServicePrivateLinkResourceProvisioningState
   SharedPrivateLinkResourceStatus: SharedSearchServicePrivateLinkResourceStatus
   UnavailableNameReason: SearchServiceNameUnavailableReason
-  
+
 
 format-by-name-rules:
   'tenantId': 'uuid'

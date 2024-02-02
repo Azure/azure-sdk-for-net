@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,19 +15,237 @@ using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    public partial class JobRunData : IUtf8JsonSerializable
+    public partial class JobRunData : IUtf8JsonSerializable, IJsonModel<JobRunData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobRunData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<JobRunData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<JobRunData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(JobRunData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ScanStatus))
+            {
+                writer.WritePropertyName("scanStatus"u8);
+                writer.WriteStringValue(ScanStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(AgentName))
+            {
+                writer.WritePropertyName("agentName"u8);
+                writer.WriteStringValue(AgentName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AgentResourceId))
+            {
+                writer.WritePropertyName("agentResourceId"u8);
+                writer.WriteStringValue(AgentResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExecutionStartOn))
+            {
+                writer.WritePropertyName("executionStartTime"u8);
+                writer.WriteStringValue(ExecutionStartOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExecutionEndOn))
+            {
+                writer.WritePropertyName("executionEndTime"u8);
+                writer.WriteStringValue(ExecutionEndOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastStatusUpdate))
+            {
+                writer.WritePropertyName("lastStatusUpdate"u8);
+                writer.WriteStringValue(LastStatusUpdate.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ItemsScanned))
+            {
+                writer.WritePropertyName("itemsScanned"u8);
+                writer.WriteNumberValue(ItemsScanned.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ItemsExcluded))
+            {
+                writer.WritePropertyName("itemsExcluded"u8);
+                writer.WriteNumberValue(ItemsExcluded.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ItemsUnsupported))
+            {
+                writer.WritePropertyName("itemsUnsupported"u8);
+                writer.WriteNumberValue(ItemsUnsupported.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ItemsNoTransferNeeded))
+            {
+                writer.WritePropertyName("itemsNoTransferNeeded"u8);
+                writer.WriteNumberValue(ItemsNoTransferNeeded.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ItemsFailed))
+            {
+                writer.WritePropertyName("itemsFailed"u8);
+                writer.WriteNumberValue(ItemsFailed.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ItemsTransferred))
+            {
+                writer.WritePropertyName("itemsTransferred"u8);
+                writer.WriteNumberValue(ItemsTransferred.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BytesScanned))
+            {
+                writer.WritePropertyName("bytesScanned"u8);
+                writer.WriteNumberValue(BytesScanned.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BytesExcluded))
+            {
+                writer.WritePropertyName("bytesExcluded"u8);
+                writer.WriteNumberValue(BytesExcluded.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BytesUnsupported))
+            {
+                writer.WritePropertyName("bytesUnsupported"u8);
+                writer.WriteNumberValue(BytesUnsupported.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BytesNoTransferNeeded))
+            {
+                writer.WritePropertyName("bytesNoTransferNeeded"u8);
+                writer.WriteNumberValue(BytesNoTransferNeeded.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BytesFailed))
+            {
+                writer.WritePropertyName("bytesFailed"u8);
+                writer.WriteNumberValue(BytesFailed.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BytesTransferred))
+            {
+                writer.WritePropertyName("bytesTransferred"u8);
+                writer.WriteNumberValue(BytesTransferred.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SourceName))
+            {
+                writer.WritePropertyName("sourceName"u8);
+                writer.WriteStringValue(SourceName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SourceResourceId))
+            {
+                writer.WritePropertyName("sourceResourceId"u8);
+                writer.WriteStringValue(SourceResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SourceProperties))
+            {
+                writer.WritePropertyName("sourceProperties"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(SourceProperties);
+#else
+                using (JsonDocument document = JsonDocument.Parse(SourceProperties))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetName))
+            {
+                writer.WritePropertyName("targetName"u8);
+                writer.WriteStringValue(TargetName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetResourceId))
+            {
+                writer.WritePropertyName("targetResourceId"u8);
+                writer.WriteStringValue(TargetResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetProperties))
+            {
+                writer.WritePropertyName("targetProperties"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(TargetProperties);
+#else
+                using (JsonDocument document = JsonDocument.Parse(TargetProperties))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (options.Format != "W" && Optional.IsDefined(JobDefinitionProperties))
+            {
+                writer.WritePropertyName("jobDefinitionProperties"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(JobDefinitionProperties);
+#else
+                using (JsonDocument document = JsonDocument.Parse(JobDefinitionProperties))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (options.Format != "W" && Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JobRunData DeserializeJobRunData(JsonElement element)
+        JobRunData IJsonModel<JobRunData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<JobRunData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(JobRunData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeJobRunData(document.RootElement, options);
+        }
+
+        internal static JobRunData DeserializeJobRunData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,6 +282,8 @@ namespace Azure.ResourceManager.StorageMover
             Optional<BinaryData> jobDefinitionProperties = default;
             Optional<JobRunError> error = default;
             Optional<StorageMoverProvisioningState> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -340,8 +562,44 @@ namespace Azure.ResourceManager.StorageMover
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new JobRunData(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(scanStatus), agentName.Value, agentResourceId.Value, Optional.ToNullable(executionStartTime), Optional.ToNullable(executionEndTime), Optional.ToNullable(lastStatusUpdate), Optional.ToNullable(itemsScanned), Optional.ToNullable(itemsExcluded), Optional.ToNullable(itemsUnsupported), Optional.ToNullable(itemsNoTransferNeeded), Optional.ToNullable(itemsFailed), Optional.ToNullable(itemsTransferred), Optional.ToNullable(bytesScanned), Optional.ToNullable(bytesExcluded), Optional.ToNullable(bytesUnsupported), Optional.ToNullable(bytesNoTransferNeeded), Optional.ToNullable(bytesFailed), Optional.ToNullable(bytesTransferred), sourceName.Value, sourceResourceId.Value, sourceProperties.Value, targetName.Value, targetResourceId.Value, targetProperties.Value, jobDefinitionProperties.Value, error.Value, Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new JobRunData(id, name, type, systemData.Value, Optional.ToNullable(status), Optional.ToNullable(scanStatus), agentName.Value, agentResourceId.Value, Optional.ToNullable(executionStartTime), Optional.ToNullable(executionEndTime), Optional.ToNullable(lastStatusUpdate), Optional.ToNullable(itemsScanned), Optional.ToNullable(itemsExcluded), Optional.ToNullable(itemsUnsupported), Optional.ToNullable(itemsNoTransferNeeded), Optional.ToNullable(itemsFailed), Optional.ToNullable(itemsTransferred), Optional.ToNullable(bytesScanned), Optional.ToNullable(bytesExcluded), Optional.ToNullable(bytesUnsupported), Optional.ToNullable(bytesNoTransferNeeded), Optional.ToNullable(bytesFailed), Optional.ToNullable(bytesTransferred), sourceName.Value, sourceResourceId.Value, sourceProperties.Value, targetName.Value, targetResourceId.Value, targetProperties.Value, jobDefinitionProperties.Value, error.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<JobRunData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JobRunData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(JobRunData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        JobRunData IPersistableModel<JobRunData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JobRunData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeJobRunData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(JobRunData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<JobRunData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

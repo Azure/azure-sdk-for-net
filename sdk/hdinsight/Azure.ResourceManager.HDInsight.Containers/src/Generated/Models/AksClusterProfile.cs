@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -12,6 +14,38 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Properties of the cluster pool underlying AKS cluster. </summary>
     public partial class AksClusterProfile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AksClusterProfile"/>. </summary>
         internal AksClusterProfile()
         {
@@ -21,11 +55,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="aksClusterResourceId"> ARM Resource ID of the AKS cluster. </param>
         /// <param name="aksClusterAgentPoolIdentityProfile"> Identity properties of the AKS cluster agentpool MSI. </param>
         /// <param name="aksVersion"> AKS control plane and default node pool version of this ClusterPool. </param>
-        internal AksClusterProfile(ResourceIdentifier aksClusterResourceId, HDInsightIdentityProfile aksClusterAgentPoolIdentityProfile, string aksVersion)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AksClusterProfile(ResourceIdentifier aksClusterResourceId, HDInsightIdentityProfile aksClusterAgentPoolIdentityProfile, string aksVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AksClusterResourceId = aksClusterResourceId;
             AksClusterAgentPoolIdentityProfile = aksClusterAgentPoolIdentityProfile;
             AksVersion = aksVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ARM Resource ID of the AKS cluster. </summary>
