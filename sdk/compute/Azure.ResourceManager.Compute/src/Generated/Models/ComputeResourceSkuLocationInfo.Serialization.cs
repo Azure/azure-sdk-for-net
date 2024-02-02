@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(ExtendedLocationType))
             {
                 writer.WritePropertyName("type"u8);
-                WriteExtendedLocationType(writer);
+                writer.WriteStringValue(ExtendedLocationType.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -167,7 +167,11 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    ReadExtendedLocationType(property, ref type);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new ExtendedLocationType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

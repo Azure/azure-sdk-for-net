@@ -39,7 +39,16 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("estimatedWaitTimeMinutes"u8))
                 {
-                    ReadEstimatedWaitTimes(property, ref estimatedWaitTimeMinutes);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<int, TimeSpan> dictionary = new Dictionary<int, TimeSpan>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetTimeSpan(null));
+                    }
+                    estimatedWaitTimeMinutes = dictionary;
                     continue;
                 }
                 if (property.NameEquals("longestJobWaitTimeMinutes"u8))
