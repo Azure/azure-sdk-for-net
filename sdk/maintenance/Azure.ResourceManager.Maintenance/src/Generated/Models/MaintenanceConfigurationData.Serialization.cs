@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.Maintenance
             if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                SerializeStartOn(writer);
             }
             if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDateTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                SerializeExpireOn(writer);
             }
             if (Optional.IsDefined(Duration))
             {

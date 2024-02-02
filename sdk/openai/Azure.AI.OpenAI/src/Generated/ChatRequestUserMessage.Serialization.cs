@@ -28,7 +28,7 @@ namespace Azure.AI.OpenAI
 
             writer.WriteStartObject();
             writer.WritePropertyName("content"u8);
-            writer.WriteStringValue(Content);
+            SerializeContent(writer);
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
