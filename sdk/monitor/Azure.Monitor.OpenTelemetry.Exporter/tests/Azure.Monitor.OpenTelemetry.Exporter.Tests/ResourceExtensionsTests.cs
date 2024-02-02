@@ -240,7 +240,7 @@ public class ResourceExtensionsTests
     [Theory]
     [InlineData(null)]
     [InlineData(InstrumentationKey)]
-    public void MetricTelemetryHasAllResourceAttributes(string? instrumentationKey)
+    public void MonitorBaseDataHasAllResourceAttributes(string? instrumentationKey)
     {
         try
         {
