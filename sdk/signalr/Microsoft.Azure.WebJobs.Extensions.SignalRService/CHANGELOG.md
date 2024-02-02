@@ -5,7 +5,6 @@
 ### Other Changes
 * Update `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` to 1.24.0
 * Update `Microsoft.Azure.SignalR.Serverless.Protocols` to 1.10.0
-* Update `System.IdentityModel.Tokens.Jwt` to 6.35.0
 
 ## 1.12.0 (2023-11-07)
 ### Features Added
