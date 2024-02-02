@@ -141,8 +141,7 @@ public class PipelineMessageTests : SyncAsyncTestBase
 
             await pipeline.SendSyncOrAsync(message, IsAsync);
 
-            message.TransferResponseDisposeOwnership();
-            response = message.Response!;
+            response = message.TransferResponseDisposeOwnership();
         }
 
         Assert.NotNull(response.ContentStream);

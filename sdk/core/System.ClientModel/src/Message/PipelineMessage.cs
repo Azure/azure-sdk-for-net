@@ -128,8 +128,15 @@ public class PipelineMessage : IDisposable
         }
     }
 
-    public void TransferResponseDisposeOwnership()
-        => _ownsResponse = false;
+    public PipelineResponse TransferResponseDisposeOwnership()
+    {
+        AssertResponse();
+
+        PipelineResponse response = Response!;
+        Response = null;
+        _ownsResponse = false;
+        return response;
+    }
 
     #region IDisposable
 

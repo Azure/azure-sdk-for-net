@@ -404,8 +404,7 @@ namespace Azure.Core.Tests
 
                 await pipeline.SendAsync(message, default).ConfigureAwait(false);
 
-                message.TransferResponseDisposeOwnership();
-                response = message.Response;
+                response = message.TransferResponseDisposeOwnership();
             }
 
             Assert.NotNull(response.ContentStream);

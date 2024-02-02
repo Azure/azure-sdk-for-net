@@ -204,8 +204,13 @@ namespace Azure.Core
         /// property will still hold the response object, but when this object is
         /// disposed, it will no longer dispose the response as well.
         /// </summary>
-        public void TransferResponseDisposeOwnership()
-            => _ownsResponse = false;
+        public Response TransferResponseDisposeOwnership()
+        {
+            Response response = Response;
+            _response = null;
+            _ownsResponse = false;
+            return response;
+        }
 
         /// <summary>
         /// Disposes the request and response.
