@@ -17,7 +17,7 @@ namespace Azure.Core
             {
                 return default;
             }
-            Guid? id = default;
+            string? id = null;
             string version = string.Empty;
             string headerSource = string.Empty;
             string nextRequestUri = string.Empty;
@@ -34,7 +34,7 @@ namespace Azure.Core
                     {
                         continue;
                     }
-                    id = Guid.Parse(property.Value.GetString()!);
+                    id = property.Value.GetString()!;
                 }
                 if (property.NameEquals("version"u8))
                 {
@@ -83,7 +83,7 @@ namespace Azure.Core
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id.ToString());
+            writer.WriteStringValue(Id);
             writer.WritePropertyName("version"u8);
             writer.WriteStringValue(Version);
             writer.WritePropertyName("headerSource"u8);
