@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
@@ -48,6 +49,78 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
             return apiVersion;
         }
 
+        /// <summary> Gets a collection of ServiceFabricVmSizeResources in the SubscriptionResource. </summary>
+        /// <param name="location"> The location parameter. </param>
+        /// <returns> An object representing collection of ServiceFabricVmSizeResources and their operations over a ServiceFabricVmSizeResource. </returns>
+        public virtual ServiceFabricVmSizeResourceCollection GetServiceFabricVmSizeResources(AzureLocation location)
+        {
+            return new ServiceFabricVmSizeResourceCollection(Client, Id, location);
+        }
+
+        /// <summary>
+        /// Get unsupported vm size for Service Fabric Clusters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/unsupportedVmSizes/{vmSize}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UnsupportedVmSizes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricVmSizeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location parameter. </param>
+        /// <param name="vmSize"> VM Size name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServiceFabricVmSizeResource>> GetServiceFabricVmSizeResourceAsync(AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
+        {
+            return await GetServiceFabricVmSizeResources(location).GetAsync(vmSize, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get unsupported vm size for Service Fabric Clusters.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/unsupportedVmSizes/{vmSize}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UnsupportedVmSizes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricVmSizeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location parameter. </param>
+        /// <param name="vmSize"> VM Size name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceFabricVmSizeResource> GetServiceFabricVmSizeResource(AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
+        {
+            return GetServiceFabricVmSizeResources(location).Get(vmSize, cancellationToken);
+        }
+
         /// <summary>
         /// Gets all Service Fabric cluster resources created or in the process of being created in the subscription.
         /// <list type="bullet">
@@ -61,7 +134,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -91,7 +164,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -121,11 +194,11 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="location"> The location parameter. </param>
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
@@ -152,11 +225,11 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="location"> The location parameter. </param>
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
@@ -183,11 +256,11 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="location"> The location parameter. </param>
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -215,11 +288,11 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="location"> The location parameter. </param>
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -247,11 +320,11 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="location"> The location parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
@@ -273,11 +346,11 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="location"> The location parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ClusterCodeVersionsResult> GetClusterVersions(AzureLocation location, CancellationToken cancellationToken = default)
@@ -299,11 +372,11 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="location"> The location parameter. </param>
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>
@@ -326,11 +399,11 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="location"> The location parameter. </param>
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ClusterCodeVersionsResult"/> that may take multiple service requests to iterate over. </returns>

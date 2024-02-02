@@ -9,7 +9,7 @@ csharp: true
 library-name: ServiceFabric
 namespace: Azure.ResourceManager.ServiceFabric
 require: https://github.com/Azure/azure-rest-api-specs/blob/784dcbc568c61801a33dfe197cb785ffe22a9dec/specification/servicefabric/resource-manager/readme.md
-#tag: package-2023-11-preview
+tag: package-2023-11-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -19,6 +19,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+
+#mgmt-debug: 
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -34,9 +37,11 @@ rename-mapping:
   Cluster.properties.eventStoreServiceEnabled: IsEventStoreServiceEnabled
   Cluster.properties.infrastructureServiceManager: IsInfrastructureServiceManagerEnabled
   Cluster.properties.waveUpgradePaused: IsWaveUpgradePaused
+  Cluster.properties.enableHttpGatewayExclusiveAuthMode: IsHttpGatewayExclusiveAuthModeEnabled
   ClusterUpdateParameters.properties.eventStoreServiceEnabled: IsEventStoreServiceEnabled
   ClusterUpdateParameters.properties.infrastructureServiceManager: IsInfrastructureServiceManagerEnabled
   ClusterUpdateParameters.properties.waveUpgradePaused: IsWaveUpgradePaused
+  ClusterUpdateParameters.properties.enableHttpGatewayExclusiveAuthMode: IsHttpGatewayExclusiveAuthModeEnabled
   ClusterCodeVersionsResult.properties.supportExpiryUtc: SupportExpireOn
   ClusterVersionDetails.supportExpiryUtc: SupportExpireOn
   NodeTypeDescription.multipleAvailabilityZones: IsMultipleAvailabilityZonesSupported
@@ -86,6 +91,7 @@ prepend-rp-prefix:
   - ClusterState
   - ProvisioningState
   - ServiceResource
+  - VMSizeResource
 
 acronym-mapping:
   CPU: Cpu
