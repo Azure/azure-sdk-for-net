@@ -123,10 +123,11 @@ namespace Azure.Monitor.Query.Tests
             var logsClient = new LogsQueryClient(_testEnvironment.LogsEndpoint, _testEnvironment.Credential);
             try
             {
-                var customColumnsQuery = await logsClient.QueryWorkspaceAsync<int>(workspaceId, $"{TableAName}" +
+                var query = $"{TableAName}" +
                     $" | distinct * |" +
                     $"project {StringColumnName}, {IntColumnName}, {BoolColumnName}, {FloatColumnName} |" +
-                    $"count",
+                    $"count";
+                var customColumnsQuery = await logsClient.QueryWorkspaceAsync<int>(workspaceId, query,
                     DataTimeRange);
                 var customColumns = customColumnsQuery.Value.Single();
                 return customColumns;
