@@ -10,18 +10,9 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The StartTranscriptionRequest. </summary>
     public partial class StartTranscriptionRequest
     {
-        /// <summary> Initializes a new instance of <see cref="StartTranscriptionRequest"/>. </summary>
+        /// <summary> Initializes a new instance of StartTranscriptionRequest. </summary>
         public StartTranscriptionRequest()
         {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StartTranscriptionRequest"/>. </summary>
-        /// <param name="locale"> Defines Locale for the transcription e,g en-US. </param>
-        /// <param name="operationContext"> The value to identify context of the operation. </param>
-        internal StartTranscriptionRequest(string locale, string operationContext)
-        {
-            Locale = locale;
-            OperationContext = operationContext;
         }
 
         /// <summary> Defines Locale for the transcription e,g en-US. </summary>

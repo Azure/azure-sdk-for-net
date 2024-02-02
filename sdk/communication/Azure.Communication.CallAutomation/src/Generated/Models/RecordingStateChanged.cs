@@ -12,12 +12,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The RecordingStateChanged. </summary>
     public partial class RecordingStateChanged
     {
-        /// <summary> Initializes a new instance of <see cref="RecordingStateChanged"/>. </summary>
+        /// <summary> Initializes a new instance of RecordingStateChanged. </summary>
         internal RecordingStateChanged()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecordingStateChanged"/>. </summary>
+        /// <summary> Initializes a new instance of RecordingStateChanged. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>

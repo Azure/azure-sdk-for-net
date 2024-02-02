@@ -10,16 +10,9 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The StopTranscriptionRequest. </summary>
     public partial class StopTranscriptionRequest
     {
-        /// <summary> Initializes a new instance of <see cref="StopTranscriptionRequest"/>. </summary>
+        /// <summary> Initializes a new instance of StopTranscriptionRequest. </summary>
         public StopTranscriptionRequest()
         {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="StopTranscriptionRequest"/>. </summary>
-        /// <param name="operationContext"> The value to identify context of the operation. </param>
-        internal StopTranscriptionRequest(string operationContext)
-        {
-            OperationContext = operationContext;
         }
 
         /// <summary> The value to identify context of the operation. </summary>

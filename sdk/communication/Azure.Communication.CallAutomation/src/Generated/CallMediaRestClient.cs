@@ -134,7 +134,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Starts transcription in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="startTranscriptionRequest"> The <see cref="StartTranscriptionRequest"/> to use. </param>
+        /// <param name="startTranscriptionRequest"> The StartTranscriptionRequest to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startTranscriptionRequest"/> is null. </exception>
         public async Task<Response> StartTranscriptionAsync(string callConnectionId, StartTranscriptionRequest startTranscriptionRequest, CancellationToken cancellationToken = default)
@@ -161,7 +161,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Starts transcription in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="startTranscriptionRequest"> The <see cref="StartTranscriptionRequest"/> to use. </param>
+        /// <param name="startTranscriptionRequest"> The StartTranscriptionRequest to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startTranscriptionRequest"/> is null. </exception>
         public Response StartTranscription(string callConnectionId, StartTranscriptionRequest startTranscriptionRequest, CancellationToken cancellationToken = default)

@@ -10,12 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The PlayCanceled. </summary>
     public partial class PlayCanceled
     {
-        /// <summary> Initializes a new instance of <see cref="PlayCanceled"/>. </summary>
+        /// <summary> Initializes a new instance of PlayCanceled. </summary>
         internal PlayCanceled()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlayCanceled"/>. </summary>
+        /// <summary> Initializes a new instance of PlayCanceled. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. </param>

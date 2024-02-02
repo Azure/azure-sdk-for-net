@@ -10,12 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The SendDtmfTonesResult. </summary>
     internal partial class SendDtmfTonesResultInternal
     {
-        /// <summary> Initializes a new instance of <see cref="SendDtmfTonesResultInternal"/>. </summary>
+        /// <summary> Initializes a new instance of SendDtmfTonesResultInternal. </summary>
         internal SendDtmfTonesResultInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SendDtmfTonesResultInternal"/>. </summary>
+        /// <summary> Initializes a new instance of SendDtmfTonesResultInternal. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         internal SendDtmfTonesResultInternal(string operationContext)
         {

@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The UpdateTranscriptionRequest. </summary>
     public partial class UpdateTranscriptionRequest
     {
-        /// <summary> Initializes a new instance of <see cref="UpdateTranscriptionRequest"/>. </summary>
+        /// <summary> Initializes a new instance of UpdateTranscriptionRequest. </summary>
         /// <param name="locale"> Defines new locale for transcription. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="locale"/> is null. </exception>
         public UpdateTranscriptionRequest(string locale)

@@ -10,12 +10,12 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The DialogTransfer. </summary>
     internal partial class DialogTransferInternal
     {
-        /// <summary> Initializes a new instance of <see cref="DialogTransferInternal"/>. </summary>
+        /// <summary> Initializes a new instance of DialogTransferInternal. </summary>
         internal DialogTransferInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DialogTransferInternal"/>. </summary>
+        /// <summary> Initializes a new instance of DialogTransferInternal. </summary>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
