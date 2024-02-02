@@ -12,6 +12,34 @@ namespace System.ClientModel.Primitives;
 
 public abstract class PipelineTransport : PipelinePolicy
 {
+    #region CreateMessage
+
+    /// <summary>
+    /// TBD: needed for inheritdoc.
+    /// </summary>
+    public PipelineMessage CreateMessage()
+    {
+        PipelineMessage message = CreateMessageCore();
+
+        if (message.Request is null)
+        {
+            throw new InvalidOperationException("Request was not set on message.");
+        }
+
+        if (message.Response is not null)
+        {
+            throw new InvalidOperationException("Response should not be set before transport is invoked.");
+        }
+
+        return message;
+    }
+
+    protected abstract PipelineMessage CreateMessageCore();
+
+    #endregion
+
+    #region Process message
+
     /// <summary>
     /// TBD: needed for inheritdoc.
     /// </summary>
@@ -115,6 +143,10 @@ public abstract class PipelineTransport : PipelinePolicy
         }
     }
 
+    protected abstract void ProcessCore(PipelineMessage message);
+
+    protected abstract ValueTask ProcessCoreAsync(PipelineMessage message);
+
     private static bool ClassifyResponse(PipelineMessage message)
     {
         if (!message.ResponseClassifier.TryClassify(message, out bool isError))
@@ -136,31 +168,9 @@ public abstract class PipelineTransport : PipelinePolicy
         }
     }
 
-    protected abstract void ProcessCore(PipelineMessage message);
+    #endregion
 
-    protected abstract ValueTask ProcessCoreAsync(PipelineMessage message);
-
-    /// <summary>
-    /// TBD: needed for inheritdoc.
-    /// </summary>
-    public PipelineMessage CreateMessage()
-    {
-        PipelineMessage message = CreateMessageCore();
-
-        if (message.Request is null)
-        {
-            throw new InvalidOperationException("Request was not set on message.");
-        }
-
-        if (message.Response is not null)
-        {
-            throw new InvalidOperationException("Response should not be set before transport is invoked.");
-        }
-
-        return message;
-    }
-
-    protected abstract PipelineMessage CreateMessageCore();
+    #region PipelinePolicy.Process overrides
 
     // These methods from PipelinePolicy just say "you've reached the end
     // of the line", i.e. they stop the invocation of the policy chain.
@@ -177,4 +187,6 @@ public abstract class PipelineTransport : PipelinePolicy
 
         Debug.Assert(++currentIndex == pipeline.Count, "Transport is not at last position in pipeline.");
     }
+
+    #endregion
 }
