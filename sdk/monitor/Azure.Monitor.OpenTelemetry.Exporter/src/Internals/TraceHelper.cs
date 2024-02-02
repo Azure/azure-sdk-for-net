@@ -25,9 +25,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
             TelemetryItem telemetryItem;
 
-            if (batchActivity.Count > 0 && azureMonitorResource?.MetricTelemetry != null)
+            if (batchActivity.Count > 0 && azureMonitorResource?.MonitorBaseData != null)
             {
-                telemetryItems.Add(azureMonitorResource.MetricTelemetry);
+                var otelResourceMetricTelemetry = new TelemetryItem(DateTime.UtcNow, azureMonitorResource, instrumentationKey!, azureMonitorResource.MonitorBaseData);
+                telemetryItems.Add(otelResourceMetricTelemetry);
             }
 
             foreach (var activity in batchActivity)
