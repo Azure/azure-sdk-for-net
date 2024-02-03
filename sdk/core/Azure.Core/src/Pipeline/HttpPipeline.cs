@@ -109,7 +109,7 @@ namespace Azure.Core.Pipeline
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier = default)
         {
-            HttpMessage message = new HttpMessage(CreateRequest(), classifier ?? ResponseClassifier);
+            HttpMessage message = new(CreateRequest(), classifier ?? ResponseClassifier);
 
             if (context != null)
             {
@@ -174,10 +174,11 @@ namespace Azure.Core.Pipeline
             if (message.Policies == null || message.Policies.Count == 0)
             {
                 _pipeline.Span[0].Process(message, _pipeline.Slice(1));
-                return;
             }
-
-            Send(message);
+            else
+            {
+                Send(message);
+            }
         }
 
         private void Send(HttpMessage message)
