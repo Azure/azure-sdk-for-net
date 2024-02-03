@@ -73,7 +73,9 @@ OpenAIClient client = useAzureOpenAI
     ? new OpenAIClient(
         new Uri("https://your-azure-openai-resource.com/"),
         new AzureKeyCredential("your-azure-openai-resource-api-key"))
-    : new OpenAIClient("your-api-key-from-platform.openai.com");
+    : new OpenAIClient(
+        new Uri("https://api.openai.com"),
+        new AzureKeyCredential("your-api-key-from-platform.openai.com"));
 ```
 
 #### Create OpenAIClient with an Azure Active Directory Credential
@@ -145,7 +147,9 @@ OpenAIClient client = useAzureOpenAI
     ? new OpenAIClient(
         new Uri("https://your-azure-openai-resource.com/"),
         new AzureKeyCredential("your-azure-openai-resource-api-key"))
-    : new OpenAIClient("your-api-key-from-platform.openai.com");
+    : new OpenAIClient(
+        new Uri("https://api.openai.com"),
+        new AzureKeyCredential("your-api-key-from-platform.openai.com"));
 
 Response<Completions> response = await client.GetCompletionsAsync(new CompletionsOptions()
 {
@@ -162,8 +166,9 @@ foreach (Choice choice in response.Value.Choices)
 ### Stream chat messages with non-Azure OpenAI
 
 ```C# Snippet:StreamChatMessages
-string nonAzureOpenAIApiKey = "your-api-key-from-platform.openai.com";
-var client = new OpenAIClient(nonAzureOpenAIApiKey, new OpenAIClientOptions());
+Uri nonAzureOpenAIEndpoint = new("https://api.openai.com");
+AzureKeyCredential nonAzureOpenAIApiKey = new("your-api-key-from-platform.openai.com");
+var client = new OpenAIClient(nonAzureOpenAIEndpoint, nonAzureOpenAIApiKey, new OpenAIClientOptions());
 var chatCompletionsOptions = new ChatCompletionsOptions()
 {
     DeploymentName = "gpt-3.5-turbo", // Use DeploymentName for "model" with non-Azure clients

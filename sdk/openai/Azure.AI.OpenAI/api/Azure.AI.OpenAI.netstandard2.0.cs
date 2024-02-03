@@ -1248,8 +1248,6 @@ namespace Azure.AI.OpenAI
     public partial class OpenAIClient
     {
         protected OpenAIClient() { }
-        public OpenAIClient(string openAIApiKey) { }
-        public OpenAIClient(string openAIApiKey, Azure.AI.OpenAI.OpenAIClientOptions options) { }
         public OpenAIClient(System.Uri endpoint, Azure.AzureKeyCredential keyCredential) { }
         public OpenAIClient(System.Uri endpoint, Azure.AzureKeyCredential keyCredential, Azure.AI.OpenAI.OpenAIClientOptions options) { }
         public OpenAIClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential) { }
@@ -1274,16 +1272,17 @@ namespace Azure.AI.OpenAI
     }
     public partial class OpenAIClientOptions : Azure.Core.ClientOptions
     {
-        public OpenAIClientOptions(Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion.V2023_12_01_Preview) { }
+        public OpenAIClientOptions(Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion version = Azure.AI.OpenAI.OpenAIClientOptions.ServiceVersion.Azure_V2023_12_01_Preview) { }
         public enum ServiceVersion
         {
-            V2022_12_01 = 1,
-            V2023_05_15 = 2,
-            V2023_06_01_Preview = 3,
-            V2023_07_01_Preview = 4,
-            V2023_08_01_Preview = 5,
-            V2023_09_01_Preview = 6,
-            V2023_12_01_Preview = 7,
+            Azure_V2022_12_01 = 1,
+            Azure_V2023_05_15 = 2,
+            Azure_V2023_06_01_Preview = 3,
+            Azure_V2023_07_01_Preview = 4,
+            Azure_V2023_08_01_Preview = 5,
+            Azure_V2023_09_01_Preview = 6,
+            Azure_V2023_12_01_Preview = 7,
+            OpenAI_V1 = 1000001,
         }
     }
     public partial class PineconeChatExtensionConfiguration : Azure.AI.OpenAI.AzureChatExtensionConfiguration, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.PineconeChatExtensionConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.PineconeChatExtensionConfiguration>

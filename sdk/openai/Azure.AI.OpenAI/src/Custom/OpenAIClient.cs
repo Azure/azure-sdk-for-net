@@ -18,9 +18,6 @@ public partial class OpenAIClient
     // CUSTOM CODE NOTE:
     //   This file is the central hub of .NET client customization for Azure OpenAI.
 
-    private const string PublicOpenAIApiVersion = "1";
-    private const string PublicOpenAIEndpoint = $"https://api.openai.com/v{PublicOpenAIApiVersion}";
-
     private bool _isConfiguredForAzureOpenAI = true;
 
     /// <summary>
@@ -47,9 +44,19 @@ public partial class OpenAIClient
         Argument.AssertNotNull(keyCredential, nameof(keyCredential));
         options ??= new OpenAIClientOptions();
 
+        _isConfiguredForAzureOpenAI = (options.ApiKind == "Azure");
+        AzureKeyCredentialPolicy keyCredentialPolicy =
+            _isConfiguredForAzureOpenAI
+            ? new AzureKeyCredentialPolicy(keyCredential, AuthorizationHeader)
+            : new AzureKeyCredentialPolicy(keyCredential, "Authorization", "Bearer");
+
         ClientDiagnostics = new ClientDiagnostics(options, true);
         _keyCredential = keyCredential;
-        _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+        _pipeline = HttpPipelineBuilder.Build(
+            options,
+            Array.Empty<HttpPipelinePolicy>(),
+            new HttpPipelinePolicy[] { keyCredentialPolicy },
+            new ResponseClassifier());
         _endpoint = endpoint;
         _apiVersion = options.Version;
     }
@@ -85,6 +92,8 @@ public partial class OpenAIClient
         Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
         options ??= new OpenAIClientOptions();
 
+        _isConfiguredForAzureOpenAI = (options.ApiKind == "Azure");
+
         ClientDiagnostics = new ClientDiagnostics(options, true);
         _tokenCredential = tokenCredential;
         _pipeline = HttpPipelineBuilder.Build(
@@ -102,32 +111,6 @@ public partial class OpenAIClient
     public OpenAIClient(Uri endpoint, TokenCredential tokenCredential)
         : this(endpoint, tokenCredential, new OpenAIClientOptions())
     {
-    }
-
-    /// <summary>
-    ///     Initializes a instance of OpenAIClient for use with the non-Azure OpenAI endpoint.
-    /// </summary>
-    /// <param name="openAIApiKey">
-    ///     The API key to use when connecting to the non-Azure OpenAI endpoint.
-    /// </param>
-    /// <param name="options"> The options for configuring the client. </param>
-    /// <remarks>
-    ///     <see cref="OpenAIClient"/> objects initialized with this constructor can only be used with the
-    ///     non-Azure OpenAI inference endpoint. To use <see cref="OpenAIClient"/> with an Azure OpenAI resource,
-    ///     use a constructor that accepts a resource URI and Azure authentication credential, instead.
-    /// </remarks>
-    /// <exception cref="ArgumentNullException"> <paramref name="openAIApiKey"/> is null. </exception>
-    public OpenAIClient(string openAIApiKey, OpenAIClientOptions options)
-        : this(new Uri(PublicOpenAIEndpoint), CreateDelegatedToken(openAIApiKey), options)
-    {
-        _isConfiguredForAzureOpenAI = false;
-    }
-
-    /// <inheritdoc cref="OpenAIClient(string, OpenAIClientOptions)"/>
-    public OpenAIClient(string openAIApiKey)
-        : this(new Uri(PublicOpenAIEndpoint), CreateDelegatedToken(openAIApiKey), new OpenAIClientOptions())
-    {
-        _isConfiguredForAzureOpenAI = false;
     }
 
     /// <summary> Return textual completions as configured for a given prompt. </summary>
@@ -856,7 +839,7 @@ public partial class OpenAIClient
         }
         else
         {
-            uri.AppendPath($"/{operationPath}", false);
+            uri.AppendPath($"/{ _apiVersion }/{operationPath}", false);
         }
         return uri;
     }

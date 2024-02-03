@@ -19,7 +19,9 @@ public partial class LegacyCompletions
             ? new OpenAIClient(
                 new Uri("https://your-azure-openai-resource.com/"),
                 new AzureKeyCredential("your-azure-openai-resource-api-key"))
-            : new OpenAIClient("your-api-key-from-platform.openai.com");
+            : new OpenAIClient(
+                new Uri("https://api.openai.com"),
+                new AzureKeyCredential("your-api-key-from-platform.openai.com"));
         #endregion
 
         Response<Completions> response = await client.GetCompletionsAsync(new CompletionsOptions()
