@@ -92,25 +92,14 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <returns>The request.</returns>
         public Request CreateRequest()
-        {
-            Request request = _transport.CreateRequest();
-            request.NetworkTimeout = _networkTimeout;
-            return request;
-        }
+            => _transport.CreateRequest();
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
         /// </summary>
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage()
-        {
-            Request request = CreateRequest();
-            HttpMessage message = new(request, ResponseClassifier)
-            {
-                NetworkTimeout = request.NetworkTimeout
-            };
-            return message;
-        }
+            => new(CreateRequest(), ResponseClassifier);
 
         /// <summary>
         /// </summary>
@@ -127,11 +116,7 @@ namespace Azure.Core.Pipeline
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier = default)
         {
-            Request request = CreateRequest();
-            HttpMessage message = new(request, classifier ?? ResponseClassifier)
-            {
-                NetworkTimeout = request.NetworkTimeout
-            };
+            HttpMessage message = new HttpMessage(CreateRequest(), classifier ?? ResponseClassifier);
 
             if (context != null)
             {
