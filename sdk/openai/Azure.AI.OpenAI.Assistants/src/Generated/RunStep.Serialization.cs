@@ -219,22 +219,42 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 if (property.NameEquals("expired_at"u8))
                 {
-                    DeserializeNullableDateTimeOffset(property, ref expiredAt);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        expiredAt = null;
+                        continue;
+                    }
+                    expiredAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("completed_at"u8))
                 {
-                    DeserializeNullableDateTimeOffset(property, ref completedAt);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        completedAt = null;
+                        continue;
+                    }
+                    completedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("cancelled_at"u8))
                 {
-                    DeserializeNullableDateTimeOffset(property, ref cancelledAt);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        cancelledAt = null;
+                        continue;
+                    }
+                    cancelledAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("failed_at"u8))
                 {
-                    DeserializeNullableDateTimeOffset(property, ref failedAt);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        failedAt = null;
+                        continue;
+                    }
+                    failedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))
