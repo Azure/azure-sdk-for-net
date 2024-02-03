@@ -3,7 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {
@@ -21,7 +20,7 @@ namespace Azure.Core
         private TimeSpan _delay = DefaultInitialDelay;
         private TimeSpan _maxDelay = DefaultMaxDelay;
         private RetryMode _retryMode = RetryMode.Exponential;
-        private TimeSpan _networkTimeout = HttpPipeline.DefaultNetworkTimeout;
+        private TimeSpan _networkTimeout = ClientOptions.DefaultNetworkTimeout;
 
         private bool _frozen;
 

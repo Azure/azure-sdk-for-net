@@ -15,8 +15,6 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public class HttpPipeline
     {
-        internal static readonly TimeSpan DefaultNetworkTimeout = TimeSpan.FromSeconds(100);
-
         private static readonly AsyncLocal<HttpMessagePropertiesScope?> CurrentHttpMessagePropertiesScope = new AsyncLocal<HttpMessagePropertiesScope?>();
 
         private protected readonly HttpPipelineTransport _transport;
@@ -63,7 +61,7 @@ namespace Azure.Core.Pipeline
             policies.CopyTo(all, 0);
 
             _pipeline = all;
-            _networkTimeout = DefaultNetworkTimeout;
+            _networkTimeout = ClientOptions.DefaultNetworkTimeout;
         }
 
         internal HttpPipeline(
@@ -84,7 +82,7 @@ namespace Azure.Core.Pipeline
             _perCallIndex = perCallIndex;
             _perRetryIndex = perRetryIndex;
 
-            _networkTimeout = networkTimeout ?? DefaultNetworkTimeout;
+            _networkTimeout = networkTimeout ?? ClientOptions.DefaultNetworkTimeout;
 
             _internallyConstructed = true;
         }
