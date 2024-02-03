@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Redis.Models
             if (Optional.IsDefined(RdbBackupMaxSnapshotCount))
             {
                 writer.WritePropertyName("rdb-backup-max-snapshot-count"u8);
-                WriteRdbBackupMaxSnapshotCount(writer);
+                writer.WriteNumberValue(RdbBackupMaxSnapshotCount.Value);
             }
             if (Optional.IsDefined(RdbStorageConnectionString))
             {
@@ -175,7 +175,11 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 if (property.NameEquals("rdb-backup-enabled"u8))
                 {
-                    ReadIsRdbBackupEnabled(property, ref rdbBackupEnabled);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rdbBackupEnabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("rdb-backup-frequency"u8))
@@ -185,7 +189,11 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 if (property.NameEquals("rdb-backup-max-snapshot-count"u8))
                 {
-                    ReadRdbBackupMaxSnapshotCount(property, ref rdbBackupMaxSnapshotCount);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rdbBackupMaxSnapshotCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("rdb-storage-connection-string"u8))
@@ -195,7 +203,11 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 if (property.NameEquals("aof-backup-enabled"u8))
                 {
-                    ReadIsAofBackupEnabled(property, ref aofBackupEnabled);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    aofBackupEnabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("aof-storage-connection-string-0"u8))
