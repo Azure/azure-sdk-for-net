@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Azure.Core;
@@ -13,24 +15,9 @@ namespace Azure
     /// Represents the HTTP response from the service.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public abstract class Response : IDisposable
+    public abstract class Response : PipelineResponse
 #pragma warning restore AZC0012 // Avoid single word type names
     {
-        /// <summary>
-        /// Gets the HTTP status code.
-        /// </summary>
-        public abstract int Status { get; }
-
-        /// <summary>
-        /// Gets the HTTP reason phrase.
-        /// </summary>
-        public abstract string ReasonPhrase { get; }
-
-        /// <summary>
-        /// Gets the contents of HTTP response. Returns <c>null</c> for responses without content.
-        /// </summary>
-        public abstract Stream? ContentStream { get; set; }
-
         /// <summary>
         /// Gets the client request id that was sent to the server as <c>x-ms-client-request-id</c> headers.
         /// </summary>
@@ -39,58 +26,43 @@ namespace Azure
         /// <summary>
         /// Get the HTTP response headers.
         /// </summary>
-        public virtual ResponseHeaders Headers => new ResponseHeaders(this);
-
-        // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
-        private static readonly BinaryData s_EmptyBinaryData = new BinaryData(Array.Empty<byte>());
+        // TODO: is is possible to not new-slot this?
+        public new virtual ResponseHeaders Headers => new ResponseHeaders(this);
 
         /// <summary>
         /// Gets the contents of HTTP response, if it is available.
         /// </summary>
         /// <remarks>
-        /// Throws <see cref="InvalidOperationException"/> when <see cref="ContentStream"/> is not a <see cref="MemoryStream"/>.
+        /// Throws <see cref="InvalidOperationException"/> when <see cref="PipelineResponse.ContentStream"/> is not a <see cref="MemoryStream"/>.
         /// </remarks>
-        public virtual BinaryData Content
+        public new virtual BinaryData Content => base.Content;
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected override PipelineResponseHeaders GetHeadersCore()
         {
-            get
-            {
-                if (ContentStream == null)
-                {
-                    return s_EmptyBinaryData;
-                }
-
-                MemoryStream? memoryContent = ContentStream as MemoryStream;
-
-                if (memoryContent == null)
-                {
-                    throw new InvalidOperationException($"The response is not fully buffered.");
-                }
-
-                if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
-                {
-                    return new BinaryData(segment.AsMemory());
-                }
-                else
-                {
-                    return new BinaryData(memoryContent.ToArray());
-                }
-            }
+            // TODO: we'll need to add an adapter in case someone were to override this.
+            throw new NotImplementedException();
         }
-
-        /// <summary>
-        /// Frees resources held by this <see cref="Response"/> instance.
-        /// </summary>
-        public abstract void Dispose();
-
-        /// <summary>
-        /// Indicates whether the status code of the returned response is considered
-        /// an error code.
-        /// </summary>
-        public virtual bool IsError { get; internal set; }
 
         internal HttpMessageSanitizer Sanitizer { get; set; } = HttpMessageSanitizer.Default;
 
         internal RequestFailedDetailsParser? RequestFailedDetailsParser { get; set; }
+
+        internal void SetIsError(bool value) => SetIsErrorCore(value);
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="isError"></param>
+        // Azure.Core overrides this only so it can seal it.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected sealed override void SetIsErrorCore(bool isError)
+            => base.SetIsErrorCore(isError);
 
         /// <summary>
         /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.
@@ -129,9 +101,7 @@ namespace Azure
         /// <param name="response">The HTTP response.</param>
         /// <returns>A new instance of <see cref="Response{T}"/> with the provided value and HTTP response.</returns>
         public static Response<T> FromValue<T>(T value, Response response)
-        {
-            return new ValueResponse<T>(response, value);
-        }
+            => new AzureCoreResponse<T>(value, response);
 
         /// <summary>
         /// Returns the string representation of this <see cref="Response"/>.
@@ -154,5 +124,64 @@ namespace Azure
                 stream = null;
             }
         }
+
+        #region Private implementation subtypes of abstract Response types
+        private class AzureCoreResponse<T> : Response<T>
+        {
+            public AzureCoreResponse(T value, Response response)
+                : base(value, response) { }
+        }
+
+        internal class AzureCoreDefaultResponse : Response
+        {
+            private readonly string DefaultMessage = "Types derived from abstract Response<T> must provide an implementation of the virtual GetRawResponse method that returns a non-null Response value.";
+
+            public override string ClientRequestId
+            {
+                get => throw new NotSupportedException(DefaultMessage);
+                set => throw new NotSupportedException(DefaultMessage);
+            }
+
+            public override int Status => throw new NotSupportedException(DefaultMessage);
+
+            public override string ReasonPhrase => throw new NotSupportedException(DefaultMessage);
+
+            public override Stream? ContentStream
+            {
+                get => throw new NotSupportedException(DefaultMessage);
+                set => throw new NotSupportedException(DefaultMessage);
+            }
+
+            protected override PipelineResponseHeaders GetHeadersCore()
+            {
+                throw new NotSupportedException(DefaultMessage);
+            }
+
+            public override void Dispose()
+            {
+                throw new NotSupportedException(DefaultMessage);
+            }
+
+            protected internal override bool ContainsHeader(string name)
+            {
+                throw new NotSupportedException(DefaultMessage);
+            }
+
+            protected internal override IEnumerable<HttpHeader> EnumerateHeaders()
+            {
+                throw new NotSupportedException(DefaultMessage);
+            }
+
+            protected internal override bool TryGetHeader(string name, [NotNullWhen(true)] out string? value)
+            {
+                throw new NotSupportedException(DefaultMessage);
+            }
+
+            protected internal override bool TryGetHeaderValues(string name, [NotNullWhen(true)] out IEnumerable<string>? values)
+            {
+                throw new NotSupportedException(DefaultMessage);
+            }
+        }
+        #endregion
     }
 }

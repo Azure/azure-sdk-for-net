@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Text;
 
 namespace Azure.Core
@@ -28,6 +27,8 @@ namespace Azure.Core
         private string? _host;
 
         private string? _scheme;
+
+        internal bool IsValidUri => Scheme != null && Host != null;
 
         /// <summary>
         /// Gets or sets the scheme name of the URI.

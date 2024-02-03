@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using Azure.Core.Pipeline;
 
@@ -11,15 +9,14 @@ namespace Azure.Core
     /// <summary>
     /// An abstraction to control delay behavior.
     /// </summary>
-#pragma warning disable AZC0012 // Avoid single word type names
     public abstract class DelayStrategy
-#pragma warning restore AZC0012 // Avoid single word type names
     {
+        internal const double DefaultJitterFactor = 0.2;
+
         private readonly Random _random = new ThreadSafeRandom();
         private readonly double _minJitterFactor;
         private readonly double _maxJitterFactor;
         private readonly TimeSpan _maxDelay;
-        internal const double DefaultJitterFactor = 0.2;
 
         /// <summary>
         /// Constructs a new instance of <see cref="DelayStrategy"/>. This constructor can be used by derived classes to customize the jitter factor and max delay.
@@ -29,10 +26,11 @@ namespace Azure.Core
         /// delay used will be a random double between 0.8 and 1.2. If set to 0, no jitter will be applied.</param>
         protected DelayStrategy(TimeSpan? maxDelay = default, double jitterFactor = DefaultJitterFactor)
         {
+            _minJitterFactor = 1.0 - jitterFactor;
+            _maxJitterFactor = 1.0 + jitterFactor;
+
             // use same defaults as RetryOptions
-            _minJitterFactor = 1 - jitterFactor;
-            _maxJitterFactor = 1 + jitterFactor;
-            _maxDelay = maxDelay ?? TimeSpan.FromMinutes(1);
+            _maxDelay = maxDelay ?? RetryOptions.DefaultMaxDelay;
         }
 
         /// <summary>
@@ -45,7 +43,10 @@ namespace Azure.Core
             TimeSpan? initialDelay = default,
             TimeSpan? maxDelay = default)
         {
-            return new ExponentialDelayStrategy(initialDelay ?? TimeSpan.FromSeconds(0.8), maxDelay ?? TimeSpan.FromMinutes(1));
+            initialDelay ??= RetryOptions.DefaultInitialDelay;
+            maxDelay ??= RetryOptions.DefaultMaxDelay;
+
+            return new ExponentialDelayStrategy(initialDelay, maxDelay);
         }
 
         /// <summary>
@@ -53,11 +54,8 @@ namespace Azure.Core
         /// </summary>
         /// <param name="delay">The delay to use.</param>
         /// <returns>The <see cref="DelayStrategy"/> instance.</returns>
-        public static DelayStrategy CreateFixedDelayStrategy(
-            TimeSpan? delay = default)
-        {
-            return new FixedDelayStrategy(delay ?? TimeSpan.FromSeconds(0.8));
-        }
+        public static DelayStrategy CreateFixedDelayStrategy(TimeSpan? delay = default)
+            => new FixedDelayStrategy(delay ?? RetryOptions.DefaultInitialDelay);
 
         /// <summary>
         /// Gets the next delay interval. Implement this method to provide custom delay logic.
@@ -74,12 +72,16 @@ namespace Azure.Core
         /// <param name="response">The response, if any, returned from the service.</param>
         /// <param name="retryNumber">The retry number.</param>
         /// <returns>A <see cref="TimeSpan"/> representing the next delay interval.</returns>
-        public TimeSpan GetNextDelay(Response? response, int retryNumber) =>
-            Max(
-                response?.Headers.RetryAfter ?? TimeSpan.Zero,
-                Min(
-                    ApplyJitter(GetNextDelayCore(response, retryNumber)),
-                    _maxDelay));
+        public TimeSpan GetNextDelay(Response? response, int retryNumber)
+        {
+            TimeSpan retryAfter = response?.Headers.RetryAfter ?? TimeSpan.Zero;
+
+            TimeSpan defaultDelay = GetNextDelayCore(response, retryNumber);
+            TimeSpan defaultWithJitter = ApplyJitter(defaultDelay);
+            TimeSpan cappedDefault = Min(defaultWithJitter, _maxDelay);
+
+            return Max(retryAfter, cappedDefault);
+        }
 
         private TimeSpan ApplyJitter(TimeSpan delay)
         {
@@ -99,7 +101,8 @@ namespace Azure.Core
         /// <param name="val1">The first value.</param>
         /// <param name="val2">The second value.</param>
         /// <returns>The maximum of the two <see cref="TimeSpan"/> values.</returns>
-        protected static TimeSpan Max(TimeSpan val1, TimeSpan val2) => val1 > val2 ? val1 : val2;
+        protected static TimeSpan Max(TimeSpan val1, TimeSpan val2)
+            => val1 > val2 ? val1 : val2;
 
         /// <summary>
         /// Gets the minimum of two <see cref="TimeSpan"/> values.
@@ -107,6 +110,7 @@ namespace Azure.Core
         /// <param name="val1">The first value.</param>
         /// <param name="val2">The second value.</param>
         /// <returns>The minimum of the two <see cref="TimeSpan"/> values.</returns>
-        protected static TimeSpan Min(TimeSpan val1, TimeSpan val2) => val1 < val2 ? val1 : val2;
+        protected static TimeSpan Min(TimeSpan val1, TimeSpan val2)
+            => val1 < val2 ? val1 : val2;
     }
 }

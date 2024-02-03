@@ -92,15 +92,14 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage()
-        {
-            return new HttpMessage(CreateRequest(), ResponseClassifier);
-        }
+            => new(CreateRequest(), ResponseClassifier);
 
         /// <summary>
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public HttpMessage CreateMessage(RequestContext? context) => CreateMessage(context, default);
+        public HttpMessage CreateMessage(RequestContext? context)
+            => CreateMessage(context, default);
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
@@ -110,12 +109,13 @@ namespace Azure.Core.Pipeline
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier = default)
         {
-            var message = CreateMessage();
-            if (classifier != null)
+            HttpMessage message = new HttpMessage(CreateRequest(), classifier ?? ResponseClassifier);
+
+            if (context != null)
             {
-                message.ResponseClassifier = classifier;
+                message.ApplyRequestContext(context, classifier);
             }
-            message.ApplyRequestContext(context, classifier);
+
             return message;
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Core.Pipeline
         /// <returns>The <see cref="ValueTask"/> representing the asynchronous operation.</returns>
         public ValueTask SendAsync(HttpMessage message, CancellationToken cancellationToken)
         {
-            message.CancellationToken = cancellationToken;
+            message.SetCancellationToken(cancellationToken);
             message.ProcessingStartTime = DateTimeOffset.UtcNow;
             AddHttpMessageProperties(message);
 
@@ -146,11 +146,12 @@ namespace Azure.Core.Pipeline
 
         private async ValueTask SendAsync(HttpMessage message)
         {
-            var length = _pipeline.Length + message.Policies!.Count;
-            var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
+            int length = _pipeline.Length + message.Policies!.Count;
+            HttpPipelinePolicy[] policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
+
             try
             {
-                var pipeline = CreateRequestPipeline(policies, message.Policies);
+                ReadOnlyMemory<HttpPipelinePolicy> pipeline = CreateRequestPipeline(policies, message.Policies);
                 await pipeline.Span[0].ProcessAsync(message, pipeline.Slice(1)).ConfigureAwait(false);
             }
             finally
@@ -166,27 +167,32 @@ namespace Azure.Core.Pipeline
         /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         public void Send(HttpMessage message, CancellationToken cancellationToken)
         {
-            message.CancellationToken = cancellationToken;
+            message.SetCancellationToken(cancellationToken);
             message.ProcessingStartTime = DateTimeOffset.UtcNow;
             AddHttpMessageProperties(message);
 
             if (message.Policies == null || message.Policies.Count == 0)
             {
                 _pipeline.Span[0].Process(message, _pipeline.Slice(1));
+                return;
             }
-            else
+
+            Send(message);
+        }
+
+        private void Send(HttpMessage message)
+        {
+            int length = _pipeline.Length + message.Policies!.Count;
+            HttpPipelinePolicy[] policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
+
+            try
             {
-                var length = _pipeline.Length + message.Policies.Count;
-                var policies = ArrayPool<HttpPipelinePolicy>.Shared.Rent(length);
-                try
-                {
-                    var pipeline = CreateRequestPipeline(policies, message.Policies);
-                    pipeline.Span[0].Process(message, pipeline.Slice(1));
-                }
-                finally
-                {
-                    ArrayPool<HttpPipelinePolicy>.Shared.Return(policies);
-                }
+                ReadOnlyMemory<HttpPipelinePolicy> pipeline = CreateRequestPipeline(policies, message.Policies);
+                pipeline.Span[0].Process(message, pipeline.Slice(1));
+            }
+            finally
+            {
+                ArrayPool<HttpPipelinePolicy>.Shared.Return(policies);
             }
         }
 
@@ -258,7 +264,7 @@ namespace Azure.Core.Pipeline
             }
 
             // Copy over client policies and splice in custom policies at designated indices
-            var pipeline = _pipeline.Span;
+            ReadOnlySpan<HttpPipelinePolicy> pipeline = _pipeline.Span;
             int transportIndex = pipeline.Length - 1;
 
             pipeline.Slice(0, _perCallIndex).CopyTo(policies);
@@ -291,7 +297,7 @@ namespace Azure.Core.Pipeline
             int count = 0;
             if (source != null)
             {
-                foreach (var policy in source)
+                foreach ((HttpPipelinePosition Position, HttpPipelinePolicy Policy) policy in source)
                 {
                     if (policy.Position == position)
                     {
@@ -328,7 +334,7 @@ namespace Azure.Core.Pipeline
                 if (parent != null)
                 {
                     Properties = new Dictionary<string, object?>(parent.Properties);
-                    foreach (var kvp in messageProperties)
+                    foreach (KeyValuePair<string, object?> kvp in messageProperties)
                     {
                         Properties[kvp.Key] = kvp.Value;
                     }

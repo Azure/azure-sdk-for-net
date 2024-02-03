@@ -16,11 +16,20 @@ namespace Azure.Core
 
         private string? _applicationId;
 
+        private bool _isLoggingEnabled = true;
+        private bool _isDistributedTracingEnabled = true;
+        private bool _isTelemetryEnabled;
+        private bool _isLoggingContentEnabled;
+        private int _loggedContentSizeLimit = 4 * 1024;
+
+        private bool _frozen;
+
         /// <summary>
         /// Creates a new instance of <see cref="DiagnosticsOptions"/> with default values.
         /// </summary>
         protected internal DiagnosticsOptions() : this(ClientOptions.Default.Diagnostics)
-        { }
+        {
+        }
 
         /// <summary>
         /// Initializes the newly created <see cref="DiagnosticsOptions"/> with the same settings as the specified <paramref name="diagnosticsOptions"/>.
@@ -78,39 +87,84 @@ namespace Azure.Core
         /// <summary>
         /// Get or sets value indicating whether HTTP pipeline logging is enabled.
         /// </summary>
-        public bool IsLoggingEnabled { get; set; } = true;
+        public bool IsLoggingEnabled
+        {
+            get => _isLoggingEnabled;
+            set
+            {
+                AssertNotFrozen();
+
+                _isLoggingEnabled = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets value indicating whether distributed tracing activities (<see cref="System.Diagnostics.Activity"/>) are going to be created for the clients methods calls and HTTP calls.
         /// </summary>
-        public bool IsDistributedTracingEnabled { get; set; } = true;
+        public bool IsDistributedTracingEnabled
+        {
+            get => _isDistributedTracingEnabled;
+            set
+            {
+                AssertNotFrozen();
+
+                _isDistributedTracingEnabled = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets value indicating whether the "User-Agent" header containing <see cref="ApplicationId"/>, client library package name and version, <see cref="RuntimeInformation.FrameworkDescription"/>
         /// and <see cref="RuntimeInformation.OSDescription"/> should be sent.
         /// The default value can be controlled process wide by setting <c>AZURE_TELEMETRY_DISABLED</c> to <c>true</c>, <c>false</c>, <c>1</c> or <c>0</c>.
         /// </summary>
-        public bool IsTelemetryEnabled { get; set; }
+        public bool IsTelemetryEnabled
+        {
+            get => _isTelemetryEnabled;
+            set
+            {
+                AssertNotFrozen();
+
+                _isTelemetryEnabled = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets value indicating if request or response content should be logged.
         /// </summary>
-        public bool IsLoggingContentEnabled { get; set; }
+        public bool IsLoggingContentEnabled
+        {
+            get => _isLoggingContentEnabled;
+            set
+            {
+                AssertNotFrozen();
+
+                _isLoggingContentEnabled = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets value indicating maximum size of content to log in bytes. Defaults to 4096.
         /// </summary>
-        public int LoggedContentSizeLimit { get; set; } = 4 * 1024;
+        public int LoggedContentSizeLimit
+        {
+            get => _loggedContentSizeLimit;
+            set
+            {
+                AssertNotFrozen();
+
+                _loggedContentSizeLimit = value;
+            }
+        }
 
         /// <summary>
         /// Gets a list of header names that are not redacted during logging.
         /// </summary>
-        public IList<string> LoggedHeaderNames { get; internal set; }
+        public IList<string> LoggedHeaderNames { get; private set; }
 
         /// <summary>
         /// Gets a list of query parameter names that are not redacted during logging.
         /// </summary>
-        public IList<string> LoggedQueryParameters { get; internal set; }
+        public IList<string> LoggedQueryParameters { get; private set; }
 
         /// <summary>
         /// Gets or sets the value sent as the first part of "User-Agent" headers for all requests issues by this client. Defaults to <see cref="DefaultApplicationId"/>.
@@ -120,6 +174,8 @@ namespace Azure.Core
             get => _applicationId;
             set
             {
+                AssertNotFrozen();
+
                 if (value != null && value.Length > MaxApplicationIdLength)
                 {
                     throw new ArgumentOutOfRangeException(nameof(value), $"{nameof(ApplicationId)} must be shorter than {MaxApplicationIdLength + 1} characters");
@@ -152,6 +208,29 @@ namespace Azure.Core
             }
 
             return null;
+        }
+
+        internal void Freeze()
+        {
+            _frozen = true;
+
+            if (LoggedHeaderNames is List<string> mutableHeaderNames)
+            {
+                LoggedHeaderNames = mutableHeaderNames.AsReadOnly();
+            }
+
+            if (LoggedQueryParameters is List<string> mutableQueryParameters)
+            {
+                LoggedQueryParameters = mutableQueryParameters.AsReadOnly();
+            }
+        }
+
+        private void AssertNotFrozen()
+        {
+            if (_frozen)
+            {
+                throw new InvalidOperationException("Cannot change a ClientOptions instance after it has been used to create a client.");
+            }
         }
     }
 }
