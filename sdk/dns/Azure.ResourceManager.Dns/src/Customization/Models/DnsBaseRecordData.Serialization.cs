@@ -65,6 +65,11 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("TTL"u8);
                 writer.WriteNumberValue(TtlInSeconds.Value);
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("fqdn"u8);
+                writer.WriteStringValue(Fqdn);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
