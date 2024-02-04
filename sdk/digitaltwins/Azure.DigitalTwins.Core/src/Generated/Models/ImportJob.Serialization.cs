@@ -22,7 +22,7 @@ namespace Azure.DigitalTwins.Core
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                SerializeErrorValue(writer);
+                JsonSerializer.Serialize(writer, Error);
             }
             writer.WriteEndObject();
         }
