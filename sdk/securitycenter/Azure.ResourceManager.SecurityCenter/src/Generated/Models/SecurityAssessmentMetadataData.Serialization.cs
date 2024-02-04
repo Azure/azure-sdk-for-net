@@ -253,7 +253,11 @@ namespace Azure.ResourceManager.SecurityCenter
                         }
                         if (property0.NameEquals("policyDefinitionId"u8))
                         {
-                            DeserializePolicyDefinitionId(property0, ref policyDefinitionId);
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            policyDefinitionId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("description"u8))
