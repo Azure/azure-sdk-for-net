@@ -74,13 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         }
 
         /// <summary> Web connectivity endpoint details. </summary>
-        internal WebConnectivityEndpoint Web { get; }
-        /// <summary> Web connectivity endpoint. </summary>
-        public string WebFqdn
-        {
-            get => Web?.Fqdn;
-        }
-
+        public WebConnectivityEndpoint Web { get; }
         /// <summary> List of SSH connectivity endpoints. </summary>
         public IReadOnlyList<SshConnectivityEndpoint> Ssh { get; }
     }

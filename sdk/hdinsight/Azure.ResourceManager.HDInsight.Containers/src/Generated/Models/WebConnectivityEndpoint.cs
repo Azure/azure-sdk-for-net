@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> Web connectivity endpoint details. </summary>
-    internal partial class WebConnectivityEndpoint
+    public partial class WebConnectivityEndpoint
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -58,10 +58,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         /// <summary> Initializes a new instance of <see cref="WebConnectivityEndpoint"/>. </summary>
         /// <param name="fqdn"> Web connectivity endpoint. </param>
+        /// <param name="privateFqdn"> Private web connectivity endpoint. This property will only be returned when enableInternalIngress is true. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WebConnectivityEndpoint(string fqdn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WebConnectivityEndpoint(string fqdn, string privateFqdn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Fqdn = fqdn;
+            PrivateFqdn = privateFqdn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,5 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         /// <summary> Web connectivity endpoint. </summary>
         public string Fqdn { get; }
+        /// <summary> Private web connectivity endpoint. This property will only be returned when enableInternalIngress is true. </summary>
+        public string PrivateFqdn { get; }
     }
 }

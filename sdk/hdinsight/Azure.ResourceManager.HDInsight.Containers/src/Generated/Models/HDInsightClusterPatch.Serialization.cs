@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
@@ -37,28 +36,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -107,11 +84,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             Optional<IDictionary<string, string>> tags = default;
-            AzureLocation location = default;
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            Optional<SystemData> systemData = default;
             Optional<UpdatableClusterProfile> clusterProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -129,35 +101,6 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -187,7 +130,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HDInsightClusterPatch(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, clusterProfile.Value, serializedAdditionalRawData);
+            return new HDInsightClusterPatch(Optional.ToDictionary(tags), clusterProfile.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterPatch>.Write(ModelReaderWriterOptions options)

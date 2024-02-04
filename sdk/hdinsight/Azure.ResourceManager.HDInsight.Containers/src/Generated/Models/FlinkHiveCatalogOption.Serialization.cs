@@ -26,12 +26,23 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("metastoreDbConnectionPasswordSecret"u8);
-            writer.WriteStringValue(MetastoreDBConnectionPasswordSecret);
+            if (Optional.IsDefined(MetastoreDBConnectionAuthenticationMode))
+            {
+                writer.WritePropertyName("metastoreDbConnectionAuthenticationMode"u8);
+                writer.WriteStringValue(MetastoreDBConnectionAuthenticationMode.Value.ToString());
+            }
+            if (Optional.IsDefined(MetastoreDBConnectionPasswordSecret))
+            {
+                writer.WritePropertyName("metastoreDbConnectionPasswordSecret"u8);
+                writer.WriteStringValue(MetastoreDBConnectionPasswordSecret);
+            }
             writer.WritePropertyName("metastoreDbConnectionURL"u8);
             writer.WriteStringValue(MetastoreDBConnectionUriString);
-            writer.WritePropertyName("metastoreDbConnectionUserName"u8);
-            writer.WriteStringValue(MetastoreDBConnectionUserName);
+            if (Optional.IsDefined(MetastoreDBConnectionUserName))
+            {
+                writer.WritePropertyName("metastoreDbConnectionUserName"u8);
+                writer.WriteStringValue(MetastoreDBConnectionUserName);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -70,13 +81,23 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            string metastoreDBConnectionPasswordSecret = default;
+            Optional<MetastoreDBConnectionAuthenticationMode> metastoreDBConnectionAuthenticationMode = default;
+            Optional<string> metastoreDBConnectionPasswordSecret = default;
             string metastoreDBConnectionURL = default;
-            string metastoreDBConnectionUserName = default;
+            Optional<string> metastoreDBConnectionUserName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("metastoreDbConnectionAuthenticationMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    metastoreDBConnectionAuthenticationMode = new MetastoreDBConnectionAuthenticationMode(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("metastoreDbConnectionPasswordSecret"u8))
                 {
                     metastoreDBConnectionPasswordSecret = property.Value.GetString();
@@ -98,7 +119,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlinkHiveCatalogOption(metastoreDBConnectionPasswordSecret, metastoreDBConnectionURL, metastoreDBConnectionUserName, serializedAdditionalRawData);
+            return new FlinkHiveCatalogOption(Optional.ToNullable(metastoreDBConnectionAuthenticationMode), metastoreDBConnectionPasswordSecret.Value, metastoreDBConnectionURL, metastoreDBConnectionUserName.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlinkHiveCatalogOption>.Write(ModelReaderWriterOptions options)

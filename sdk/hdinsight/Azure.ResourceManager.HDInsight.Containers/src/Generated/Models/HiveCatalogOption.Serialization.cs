@@ -28,12 +28,23 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStartObject();
             writer.WritePropertyName("catalogName"u8);
             writer.WriteStringValue(CatalogName);
-            writer.WritePropertyName("metastoreDbConnectionPasswordSecret"u8);
-            writer.WriteStringValue(MetastoreDBConnectionPasswordSecret);
+            if (Optional.IsDefined(MetastoreDBConnectionAuthenticationMode))
+            {
+                writer.WritePropertyName("metastoreDbConnectionAuthenticationMode"u8);
+                writer.WriteStringValue(MetastoreDBConnectionAuthenticationMode.Value.ToString());
+            }
+            if (Optional.IsDefined(MetastoreDBConnectionPasswordSecret))
+            {
+                writer.WritePropertyName("metastoreDbConnectionPasswordSecret"u8);
+                writer.WriteStringValue(MetastoreDBConnectionPasswordSecret);
+            }
             writer.WritePropertyName("metastoreDbConnectionURL"u8);
             writer.WriteStringValue(MetastoreDBConnectionUriString);
-            writer.WritePropertyName("metastoreDbConnectionUserName"u8);
-            writer.WriteStringValue(MetastoreDBConnectionUserName);
+            if (Optional.IsDefined(MetastoreDBConnectionUserName))
+            {
+                writer.WritePropertyName("metastoreDbConnectionUserName"u8);
+                writer.WriteStringValue(MetastoreDBConnectionUserName);
+            }
             writer.WritePropertyName("metastoreWarehouseDir"u8);
             writer.WriteStringValue(MetastoreWarehouseDir);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -75,9 +86,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 return null;
             }
             string catalogName = default;
-            string metastoreDBConnectionPasswordSecret = default;
+            Optional<MetastoreDBConnectionAuthenticationMode> metastoreDBConnectionAuthenticationMode = default;
+            Optional<string> metastoreDBConnectionPasswordSecret = default;
             string metastoreDBConnectionURL = default;
-            string metastoreDBConnectionUserName = default;
+            Optional<string> metastoreDBConnectionUserName = default;
             string metastoreWarehouseDir = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -86,6 +98,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 if (property.NameEquals("catalogName"u8))
                 {
                     catalogName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("metastoreDbConnectionAuthenticationMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    metastoreDBConnectionAuthenticationMode = new MetastoreDBConnectionAuthenticationMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("metastoreDbConnectionPasswordSecret"u8))
@@ -114,7 +135,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HiveCatalogOption(catalogName, metastoreDBConnectionPasswordSecret, metastoreDBConnectionURL, metastoreDBConnectionUserName, metastoreWarehouseDir, serializedAdditionalRawData);
+            return new HiveCatalogOption(catalogName, Optional.ToNullable(metastoreDBConnectionAuthenticationMode), metastoreDBConnectionPasswordSecret.Value, metastoreDBConnectionURL, metastoreDBConnectionUserName.Value, metastoreWarehouseDir, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HiveCatalogOption>.Write(ModelReaderWriterOptions options)

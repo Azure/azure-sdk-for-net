@@ -47,6 +47,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("catalogOptions"u8);
                 writer.WriteObjectValue(CatalogOptions);
             }
+            if (Optional.IsDefined(DeploymentMode))
+            {
+                writer.WritePropertyName("deploymentMode"u8);
+                writer.WriteStringValue(DeploymentMode.Value.ToString());
+            }
+            if (Optional.IsDefined(JobSpec))
+            {
+                writer.WritePropertyName("jobSpec"u8);
+                writer.WriteObjectValue(JobSpec);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -91,6 +101,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Optional<ComputeResourceRequirement> historyServer = default;
             ComputeResourceRequirement taskManager = default;
             Optional<FlinkCatalogOptions> catalogOptions = default;
+            Optional<DeploymentMode> deploymentMode = default;
+            Optional<FlinkJobProfile> jobSpec = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,13 +149,31 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     catalogOptions = FlinkCatalogOptions.DeserializeFlinkCatalogOptions(property.Value);
                     continue;
                 }
+                if (property.NameEquals("deploymentMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deploymentMode = new DeploymentMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("jobSpec"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    jobSpec = FlinkJobProfile.DeserializeFlinkJobProfile(property.Value);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlinkProfile(storage, Optional.ToNullable(numReplicas), jobManager, historyServer.Value, taskManager, catalogOptions.Value, serializedAdditionalRawData);
+            return new FlinkProfile(storage, Optional.ToNullable(numReplicas), jobManager, historyServer.Value, taskManager, catalogOptions.Value, Optional.ToNullable(deploymentMode), jobSpec.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FlinkProfile>.Write(ModelReaderWriterOptions options)

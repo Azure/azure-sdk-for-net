@@ -26,8 +26,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             writer.WriteStartObject();
-            writer.WritePropertyName("jobName"u8);
-            writer.WriteStringValue(JobName);
+            if (Optional.IsDefined(RunId))
+            {
+                writer.WritePropertyName("runId"u8);
+                writer.WriteStringValue(RunId);
+            }
+            if (Optional.IsDefined(JobName))
+            {
+                writer.WritePropertyName("jobName"u8);
+                writer.WriteStringValue(JobName);
+            }
             if (Optional.IsDefined(JobJarDirectory))
             {
                 writer.WritePropertyName("jobJarDirectory"u8);
@@ -134,7 +142,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            string jobName = default;
+            Optional<string> runId = default;
+            Optional<string> jobName = default;
             Optional<string> jobJarDirectory = default;
             Optional<string> jarName = default;
             Optional<string> entryClass = default;
@@ -152,6 +161,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("runId"u8))
+                {
+                    runId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("jobName"u8))
                 {
                     jobName = property.Value.GetString();
@@ -241,7 +255,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FlinkJobProperties(jobType, serializedAdditionalRawData, jobName, jobJarDirectory.Value, jarName.Value, entryClass.Value, args.Value, savePointName.Value, Optional.ToNullable(action), Optional.ToDictionary(flinkConfiguration), jobId.Value, status.Value, jobOutput.Value, actionResult.Value, lastSavePoint.Value);
+            return new FlinkJobProperties(jobType, serializedAdditionalRawData, runId.Value, jobName.Value, jobJarDirectory.Value, jarName.Value, entryClass.Value, args.Value, savePointName.Value, Optional.ToNullable(action), Optional.ToDictionary(flinkConfiguration), jobId.Value, status.Value, jobOutput.Value, actionResult.Value, lastSavePoint.Value);
         }
 
         BinaryData IPersistableModel<FlinkJobProperties>.Write(ModelReaderWriterOptions options)

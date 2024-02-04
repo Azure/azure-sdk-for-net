@@ -31,6 +31,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         private const string SavepointValue = "SAVEPOINT";
         private const string ListSavepointValue = "LIST_SAVEPOINT";
         private const string DeleteValue = "DELETE";
+        private const string LastStateUpdateValue = "LAST_STATE_UPDATE";
+        private const string RELaunchValue = "RE_LAUNCH";
 
         /// <summary> NEW. </summary>
         public static FlinkJobAction New { get; } = new FlinkJobAction(NewValue);
@@ -50,6 +52,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         public static FlinkJobAction ListSavepoint { get; } = new FlinkJobAction(ListSavepointValue);
         /// <summary> DELETE. </summary>
         public static FlinkJobAction Delete { get; } = new FlinkJobAction(DeleteValue);
+        /// <summary> LAST_STATE_UPDATE. </summary>
+        public static FlinkJobAction LastStateUpdate { get; } = new FlinkJobAction(LastStateUpdateValue);
+        /// <summary> RE_LAUNCH. </summary>
+        public static FlinkJobAction RELaunch { get; } = new FlinkJobAction(RELaunchValue);
         /// <summary> Determines if two <see cref="FlinkJobAction"/> values are the same. </summary>
         public static bool operator ==(FlinkJobAction left, FlinkJobAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FlinkJobAction"/> values are not the same. </summary>

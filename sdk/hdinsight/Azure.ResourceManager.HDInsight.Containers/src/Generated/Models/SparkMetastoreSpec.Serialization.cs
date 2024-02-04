@@ -30,12 +30,26 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(DBServerHost);
             writer.WritePropertyName("dbName"u8);
             writer.WriteStringValue(DBName);
-            writer.WritePropertyName("dbUserName"u8);
-            writer.WriteStringValue(DBUserName);
-            writer.WritePropertyName("dbPasswordSecretName"u8);
-            writer.WriteStringValue(DBPasswordSecretName);
-            writer.WritePropertyName("keyVaultId"u8);
-            writer.WriteStringValue(KeyVaultId);
+            if (Optional.IsDefined(DBConnectionAuthenticationMode))
+            {
+                writer.WritePropertyName("dbConnectionAuthenticationMode"u8);
+                writer.WriteStringValue(DBConnectionAuthenticationMode.Value.ToString());
+            }
+            if (Optional.IsDefined(DBUserName))
+            {
+                writer.WritePropertyName("dbUserName"u8);
+                writer.WriteStringValue(DBUserName);
+            }
+            if (Optional.IsDefined(DBPasswordSecretName))
+            {
+                writer.WritePropertyName("dbPasswordSecretName"u8);
+                writer.WriteStringValue(DBPasswordSecretName);
+            }
+            if (Optional.IsDefined(KeyVaultId))
+            {
+                writer.WritePropertyName("keyVaultId"u8);
+                writer.WriteStringValue(KeyVaultId);
+            }
             if (Optional.IsDefined(ThriftUriString))
             {
                 writer.WritePropertyName("thriftUrl"u8);
@@ -81,9 +95,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
             string dbServerHost = default;
             string dbName = default;
-            string dbUserName = default;
-            string dbPasswordSecretName = default;
-            string keyVaultId = default;
+            Optional<DBConnectionAuthenticationMode> dbConnectionAuthenticationMode = default;
+            Optional<string> dbUserName = default;
+            Optional<string> dbPasswordSecretName = default;
+            Optional<string> keyVaultId = default;
             Optional<string> thriftUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,6 +112,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 if (property.NameEquals("dbName"u8))
                 {
                     dbName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dbConnectionAuthenticationMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dbConnectionAuthenticationMode = new DBConnectionAuthenticationMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dbUserName"u8))
@@ -125,7 +149,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SparkMetastoreSpec(dbServerHost, dbName, dbUserName, dbPasswordSecretName, keyVaultId, thriftUrl.Value, serializedAdditionalRawData);
+            return new SparkMetastoreSpec(dbServerHost, dbName, Optional.ToNullable(dbConnectionAuthenticationMode), dbUserName.Value, dbPasswordSecretName.Value, keyVaultId.Value, thriftUrl.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SparkMetastoreSpec>.Write(ModelReaderWriterOptions options)

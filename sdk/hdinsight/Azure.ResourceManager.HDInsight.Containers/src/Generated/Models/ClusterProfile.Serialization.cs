@@ -40,8 +40,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("identityProfile"u8);
-            writer.WriteObjectValue(IdentityProfile);
+            if (Optional.IsDefined(IdentityProfile))
+            {
+                writer.WritePropertyName("identityProfile"u8);
+                writer.WriteObjectValue(IdentityProfile);
+            }
             writer.WritePropertyName("authorizationProfile"u8);
             writer.WriteObjectValue(AuthorizationProfile);
             if (Optional.IsDefined(SecretsProfile))
@@ -64,6 +67,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("connectivityProfile"u8);
                 writer.WriteObjectValue(ConnectivityProfile);
             }
+            if (Optional.IsDefined(ClusterAccessProfile))
+            {
+                writer.WritePropertyName("clusterAccessProfile"u8);
+                writer.WriteObjectValue(ClusterAccessProfile);
+            }
             if (Optional.IsDefined(LogAnalyticsProfile))
             {
                 writer.WritePropertyName("logAnalyticsProfile"u8);
@@ -84,28 +92,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WritePropertyName("autoscaleProfile"u8);
                 writer.WriteObjectValue(AutoscaleProfile);
             }
-            if (Optional.IsCollectionDefined(KafkaProfile))
+            if (Optional.IsDefined(RangerPluginProfile))
+            {
+                writer.WritePropertyName("rangerPluginProfile"u8);
+                writer.WriteObjectValue(RangerPluginProfile);
+            }
+            if (Optional.IsDefined(KafkaProfile))
             {
                 writer.WritePropertyName("kafkaProfile"u8);
-                writer.WriteStartObject();
-                foreach (var item in KafkaProfile)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue(KafkaProfile);
             }
             if (Optional.IsDefined(TrinoProfile))
             {
@@ -144,6 +139,11 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 writer.WritePropertyName("sparkProfile"u8);
                 writer.WriteObjectValue(SparkProfile);
+            }
+            if (Optional.IsDefined(RangerProfile))
+            {
+                writer.WritePropertyName("rangerProfile"u8);
+                writer.WriteObjectValue(RangerProfile);
             }
             if (Optional.IsCollectionDefined(StubProfile))
             {
@@ -219,20 +219,23 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             string clusterVersion = default;
             string ossVersion = default;
             Optional<IReadOnlyList<ClusterComponentItem>> components = default;
-            HDInsightIdentityProfile identityProfile = default;
+            Optional<HDInsightIdentityProfile> identityProfile = default;
             AuthorizationProfile authorizationProfile = default;
             Optional<ClusterSecretsProfile> secretsProfile = default;
             Optional<IList<ClusterServiceConfigsProfile>> serviceConfigsProfiles = default;
             Optional<ClusterConnectivityProfile> connectivityProfile = default;
+            Optional<ClusterAccessProfile> clusterAccessProfile = default;
             Optional<ClusterLogAnalyticsProfile> logAnalyticsProfile = default;
             Optional<ClusterPrometheusProfile> prometheusProfile = default;
             Optional<ClusterSshProfile> sshProfile = default;
             Optional<ClusterAutoscaleProfile> autoscaleProfile = default;
-            Optional<IDictionary<string, BinaryData>> kafkaProfile = default;
+            Optional<ClusterRangerPluginProfile> rangerPluginProfile = default;
+            Optional<KafkaProfile> kafkaProfile = default;
             Optional<TrinoProfile> trinoProfile = default;
             Optional<IDictionary<string, BinaryData>> llapProfile = default;
             Optional<FlinkProfile> flinkProfile = default;
             Optional<SparkProfile> sparkProfile = default;
+            Optional<RangerProfile> rangerProfile = default;
             Optional<IDictionary<string, BinaryData>> stubProfile = default;
             Optional<IList<ScriptActionProfile>> scriptActionProfiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -265,6 +268,10 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("identityProfile"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     identityProfile = HDInsightIdentityProfile.DeserializeHDInsightIdentityProfile(property.Value);
                     continue;
                 }
@@ -305,6 +312,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     connectivityProfile = ClusterConnectivityProfile.DeserializeClusterConnectivityProfile(property.Value);
                     continue;
                 }
+                if (property.NameEquals("clusterAccessProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clusterAccessProfile = ClusterAccessProfile.DeserializeClusterAccessProfile(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("logAnalyticsProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -341,25 +357,22 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     autoscaleProfile = ClusterAutoscaleProfile.DeserializeClusterAutoscaleProfile(property.Value);
                     continue;
                 }
+                if (property.NameEquals("rangerPluginProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rangerPluginProfile = ClusterRangerPluginProfile.DeserializeClusterRangerPluginProfile(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("kafkaProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
-                    }
-                    kafkaProfile = dictionary;
+                    kafkaProfile = KafkaProfile.DeserializeKafkaProfile(property.Value);
                     continue;
                 }
                 if (property.NameEquals("trinoProfile"u8))
@@ -410,6 +423,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     sparkProfile = SparkProfile.DeserializeSparkProfile(property.Value);
                     continue;
                 }
+                if (property.NameEquals("rangerProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rangerProfile = RangerProfile.DeserializeRangerProfile(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("stubProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -451,7 +473,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterProfile(clusterVersion, ossVersion, Optional.ToList(components), identityProfile, authorizationProfile, secretsProfile.Value, Optional.ToList(serviceConfigsProfiles), connectivityProfile.Value, logAnalyticsProfile.Value, prometheusProfile.Value, sshProfile.Value, autoscaleProfile.Value, Optional.ToDictionary(kafkaProfile), trinoProfile.Value, Optional.ToDictionary(llapProfile), flinkProfile.Value, sparkProfile.Value, Optional.ToDictionary(stubProfile), Optional.ToList(scriptActionProfiles), serializedAdditionalRawData);
+            return new ClusterProfile(clusterVersion, ossVersion, Optional.ToList(components), identityProfile.Value, authorizationProfile, secretsProfile.Value, Optional.ToList(serviceConfigsProfiles), connectivityProfile.Value, clusterAccessProfile.Value, logAnalyticsProfile.Value, prometheusProfile.Value, sshProfile.Value, autoscaleProfile.Value, rangerPluginProfile.Value, kafkaProfile.Value, trinoProfile.Value, Optional.ToDictionary(llapProfile), flinkProfile.Value, sparkProfile.Value, rangerProfile.Value, Optional.ToDictionary(stubProfile), Optional.ToList(scriptActionProfiles), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterProfile>.Write(ModelReaderWriterOptions options)
