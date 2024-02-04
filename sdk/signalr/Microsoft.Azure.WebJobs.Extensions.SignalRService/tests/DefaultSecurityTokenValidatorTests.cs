@@ -14,7 +14,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests
 {
     public class DefaultSecurityTokenValidatorTests
     {
-        private const string IssuerToken = "myfunctionauthtest";
+        // The issue token must be longer than 32 characters.
+        private const string IssuerToken = "1234567812345678912345678123456789";
         public static IEnumerable<object[]> TestData = new List<object[]>
         {
             new object []

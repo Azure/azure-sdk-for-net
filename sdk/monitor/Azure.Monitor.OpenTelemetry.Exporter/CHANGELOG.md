@@ -8,6 +8,11 @@
 
 ### Bugs Fixed
 
+* Fixed an issue where `_OTELRESOURCE_` metrics were emitted with duplicated
+  timestamps. This fix ensures accurate and distinct timestamping for all
+  `_OTELRESOURCE_` metrics.
+  ([#41761](https://github.com/Azure/azure-sdk-for-net/pull/41761))
+
 ### Other Changes
 
 ## 1.2.0 (2024-01-24)
