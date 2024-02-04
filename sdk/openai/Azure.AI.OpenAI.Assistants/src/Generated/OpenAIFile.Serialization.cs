@@ -99,7 +99,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 if (property.NameEquals("bytes"u8))
                 {
-                    DeserializeNullableSize(property, ref bytes);
+                    bytes = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("filename"u8))
