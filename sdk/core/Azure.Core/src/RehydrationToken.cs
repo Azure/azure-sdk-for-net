@@ -16,7 +16,7 @@ namespace Azure.Core
         /// Gets an ID representing the operation that can be used to poll for
         /// the status of the long-running operation.
         /// </summary>
-        public Guid? Id { get; }
+        public string? Id { get; }
 
         internal string Version { get; } = "1.0.0";
 
@@ -28,13 +28,11 @@ namespace Azure.Core
 
         internal RequestMethod RequestMethod { get; }
 
-        internal bool OriginalResponseHasLocation { get; }
-
         internal string? LastKnownLocation { get; }
 
-        internal OperationFinalStateVia FinalStateVia { get; }
+        internal string FinalStateVia { get; }
 
-        internal RehydrationToken(Guid? id, string? version, string headerSource, string nextRequestUri, string initialUri, RequestMethod requestMethod, bool originalResponseHasLocation, string? lastKnownLocation, OperationFinalStateVia finalStateVia)
+        internal RehydrationToken(string? id, string? version, string headerSource, string nextRequestUri, string initialUri, RequestMethod requestMethod, string? lastKnownLocation, string finalStateVia)
         {
             Id = id;
             if (version is not null)
@@ -45,7 +43,6 @@ namespace Azure.Core
             NextRequestUri = nextRequestUri;
             InitialUri = initialUri;
             RequestMethod = requestMethod;
-            OriginalResponseHasLocation = originalResponseHasLocation;
             LastKnownLocation = lastKnownLocation;
             FinalStateVia = finalStateVia;
         }
