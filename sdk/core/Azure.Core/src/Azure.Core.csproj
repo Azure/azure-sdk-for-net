@@ -66,7 +66,6 @@
     <Compile Include="Shared\VoidValue.cs" />
     <Compile Include="Shared\OperationInternal.cs" />
     <Compile Include="Shared\OperationInternalOfT.cs" />
-    <Compile Include="Shared\OperationFinalStateVia.cs" />
     <Compile Include="Shared\SequentialDelayStrategy.cs" />
     <Compile Include="Shared\SerializationConstructorAttribute.cs" />
     <Compile Include="Shared\TaskExtensions.cs" />
@@ -74,5 +73,5 @@
     <Compile Include="Shared\OperationPoller.cs" />
     <Compile Include="Shared\TypeReferenceTypeAttribute.cs" />
   </ItemGroup>
-	
+
 </Project>
