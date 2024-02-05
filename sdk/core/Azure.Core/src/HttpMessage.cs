@@ -184,7 +184,7 @@ namespace Azure.Core
         /// <summary>
         /// Returns the response content stream and releases its ownership to the caller.
         /// After this method has been called, any use of the
-        /// <see cref="Azure.Response.ContentStream"/> or <see cref="Azure.Response.Content"/>
+        /// <see cref="Response.ContentStream"/> or <see cref="Response.Content"/>
         /// properties on this message will result in an <see cref="InvalidOperationException"/>
         /// being thrown.
         /// </summary>
@@ -204,10 +204,11 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Transfers dispose ownership of the message's Response property to the
-        /// holder of the Response.  After calling this method, the <see cref="Response"/>
-        /// property will still hold the response object, but when this object is
-        /// disposed, it will no longer dispose the response as well.
+        /// Returns the value of the <see cref="Response"/> property and
+        /// transfers dispose ownership of the response to the caller. After
+        /// calling this method, the <see cref="Response"/> property will be
+        /// null and the caller will be responsible for disposing the returned
+        /// Response value, which may hold a live network stream.
         /// </summary>
         public Response TransferResponseDisposeOwnership()
         {
