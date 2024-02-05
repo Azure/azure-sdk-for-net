@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "InformixTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="InformixTableDataset"/> for deserialization. </summary>
+        internal InformixTableDataset()
+        {
+        }
+
         /// <summary> The Informix table name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> TableName { get; set; }
     }

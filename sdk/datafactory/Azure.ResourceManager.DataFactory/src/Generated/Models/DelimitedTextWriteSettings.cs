@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             FormatWriteSettingsType = formatWriteSettingsType ?? "DelimitedTextWriteSettings";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DelimitedTextWriteSettings"/> for deserialization. </summary>
+        internal DelimitedTextWriteSettings()
+        {
+        }
+
         /// <summary> Indicates whether string values should always be enclosed with quotes. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> QuoteAllText { get; set; }
         /// <summary> The file extension used to create the files. Type: string (or Expression with resultType string). </summary>

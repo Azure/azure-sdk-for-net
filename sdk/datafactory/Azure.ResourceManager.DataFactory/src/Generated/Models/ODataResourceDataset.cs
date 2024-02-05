@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "ODataResource";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ODataResourceDataset"/> for deserialization. </summary>
+        internal ODataResourceDataset()
+        {
+        }
+
         /// <summary> The OData resource path. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Path { get; set; }
     }

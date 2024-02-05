@@ -22,5 +22,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             CredentialType = credentialType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownCredential"/> for deserialization. </summary>
+        internal UnknownCredential()
+        {
+        }
     }
 }

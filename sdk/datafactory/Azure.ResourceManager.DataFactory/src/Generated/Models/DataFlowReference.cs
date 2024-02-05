@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFlowReference"/> for deserialization. </summary>
+        internal DataFlowReference()
+        {
+        }
+
         /// <summary> Data flow reference type. </summary>
         public DataFlowReferenceType ReferenceType { get; set; }
         /// <summary> Reference data flow name. </summary>

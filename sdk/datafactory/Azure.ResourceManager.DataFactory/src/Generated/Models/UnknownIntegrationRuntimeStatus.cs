@@ -22,5 +22,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             RuntimeType = runtimeType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownIntegrationRuntimeStatus"/> for deserialization. </summary>
+        internal UnknownIntegrationRuntimeStatus()
+        {
+        }
     }
 }

@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("web", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                WebLinkedServiceTypeProperties webLinkedServiceTypeProperties = new UnknownWebLinkedServiceTypeProperties("http://localhost", WebAuthenticationType.ClientCertificate);
+                WebLinkedServiceTypeProperties webLinkedServiceTypeProperties = new UnknownWebLinkedServiceTypeProperties("http://localhost", WebAuthenticationType.ClientCertificate, null);
                 return new DataFactoryLinkedServiceData(new WebLinkedService(webLinkedServiceTypeProperties)
                 {
                     LinkedServiceType = "Web",
@@ -858,7 +858,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("web", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                WebLinkedServiceTypeProperties webLinkedServiceTypeProperties = new UnknownWebLinkedServiceTypeProperties("http://localhost", WebAuthenticationType.ClientCertificate);
+                WebLinkedServiceTypeProperties webLinkedServiceTypeProperties = new UnknownWebLinkedServiceTypeProperties("http://localhost", WebAuthenticationType.ClientCertificate, null);
                 return new DataFactoryLinkedServiceData(new WebLinkedService(webLinkedServiceTypeProperties)
                 {
                     LinkedServiceType = "Web",
