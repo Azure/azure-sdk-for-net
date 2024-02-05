@@ -51,11 +51,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             var res = await httpClient.GetStringAsync("http://localhost:9999").ConfigureAwait(false);
             Assert.NotNull(res);
 
-            // Should dispose the providers and flush out telemetry.
-            await app.DisposeAsync();
-
             // Wait for the backend/ingestion to receive requests
             WaitForRequest(transport);
+
+            // Should dispose the providers and flush out telemetry.
+            await app.DisposeAsync();
 
             // Assert
             Assert.True(transport.Requests.Count > 0);
