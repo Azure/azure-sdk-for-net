@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Hci.Models;
@@ -290,6 +292,123 @@ namespace Azure.ResourceManager.Hci
             return new ArcSettingData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), arcInstanceResourceGroup.Value, Optional.ToNullable(arcApplicationClientId), Optional.ToNullable(arcApplicationTenantId), Optional.ToNullable(arcServicePrincipalObjectId), Optional.ToNullable(arcApplicationObjectId), Optional.ToNullable(aggregateState), Optional.ToList(perNodeDetails), connectivityProperties.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("    provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ArcInstanceResourceGroup))
+            {
+                builder.Append("    arcInstanceResourceGroup:");
+                builder.AppendLine($" '{ArcInstanceResourceGroup}'");
+            }
+
+            if (Optional.IsDefined(ArcApplicationClientId))
+            {
+                builder.Append("    arcApplicationClientId:");
+                builder.AppendLine($" '{ArcApplicationClientId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ArcApplicationTenantId))
+            {
+                builder.Append("    arcApplicationTenantId:");
+                builder.AppendLine($" '{ArcApplicationTenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ArcServicePrincipalObjectId))
+            {
+                builder.Append("    arcServicePrincipalObjectId:");
+                builder.AppendLine($" '{ArcServicePrincipalObjectId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ArcApplicationObjectId))
+            {
+                builder.Append("    arcApplicationObjectId:");
+                builder.AppendLine($" '{ArcApplicationObjectId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(AggregateState))
+            {
+                builder.Append("    aggregateState:");
+                builder.AppendLine($" '{AggregateState.ToString()}'");
+            }
+
+            if (Optional.IsCollectionDefined(PerNodeDetails))
+            {
+                if (PerNodeDetails.Any())
+                {
+                    builder.Append("    perNodeDetails:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PerNodeDetails)
+                    {
+                        AppendChildObject(builder, item, options, 6, true);
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ConnectivityProperties))
+            {
+                builder.Append("    connectivityProperties:");
+                builder.AppendLine($" '{ConnectivityProperties.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ArcSettingData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArcSettingData>)this).GetFormatFromOptions(options) : options.Format;
@@ -298,6 +417,8 @@ namespace Azure.ResourceManager.Hci
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ArcSettingData)} does not support '{options.Format}' format.");
             }
@@ -314,6 +435,8 @@ namespace Azure.ResourceManager.Hci
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeArcSettingData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ArcSettingData)} does not support '{options.Format}' format.");
             }

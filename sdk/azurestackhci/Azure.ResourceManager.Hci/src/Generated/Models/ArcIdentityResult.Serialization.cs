@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -152,6 +153,61 @@ namespace Azure.ResourceManager.Hci.Models
             return new ArcIdentityResult(Optional.ToNullable(arcApplicationClientId), Optional.ToNullable(arcApplicationTenantId), Optional.ToNullable(arcServicePrincipalObjectId), Optional.ToNullable(arcApplicationObjectId), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(ArcApplicationClientId))
+            {
+                builder.Append("    arcApplicationClientId:");
+                builder.AppendLine($" '{ArcApplicationClientId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ArcApplicationTenantId))
+            {
+                builder.Append("    arcApplicationTenantId:");
+                builder.AppendLine($" '{ArcApplicationTenantId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ArcServicePrincipalObjectId))
+            {
+                builder.Append("    arcServicePrincipalObjectId:");
+                builder.AppendLine($" '{ArcServicePrincipalObjectId.Value.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ArcApplicationObjectId))
+            {
+                builder.Append("    arcApplicationObjectId:");
+                builder.AppendLine($" '{ArcApplicationObjectId.Value.ToString()}'");
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ArcIdentityResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArcIdentityResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -160,6 +216,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(ArcIdentityResult)} does not support '{options.Format}' format.");
             }
@@ -176,6 +234,8 @@ namespace Azure.ResourceManager.Hci.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeArcIdentityResult(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(ArcIdentityResult)} does not support '{options.Format}' format.");
             }

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
@@ -528,6 +530,262 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesAccountProperties(Optional.ToNullable(provisioningState), endpoint.Value, Optional.ToList(capabilities), Optional.ToNullable(isMigrated), migrationToken.Value, skuChangeInfo.Value, customSubDomainName.Value, networkAcls.Value, encryption.Value, Optional.ToList(userOwnedStorage), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), apiProperties.Value, Optional.ToNullable(dateCreated), callRateLimit.Value, Optional.ToNullable(dynamicThrottlingEnabled), quotaLimit.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToList(allowedFqdnList), Optional.ToNullable(disableLocalAuth), Optional.ToDictionary(endpoints), Optional.ToNullable(restore), Optional.ToNullable(deletionDate), scheduledPurgeDate.Value, locations.Value, Optional.ToList(commitmentPlanAssociations), abusePenalty.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(ProvisioningState))
+            {
+                builder.Append("  provisioningState:");
+                builder.AppendLine($" '{ProvisioningState.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Endpoint))
+            {
+                builder.Append("  endpoint:");
+                builder.AppendLine($" '{Endpoint}'");
+            }
+
+            if (Optional.IsCollectionDefined(Capabilities))
+            {
+                if (Capabilities.Any())
+                {
+                    builder.Append("  capabilities:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Capabilities)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(IsMigrated))
+            {
+                builder.Append("  isMigrated:");
+                var boolValue = IsMigrated.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(MigrationToken))
+            {
+                builder.Append("  migrationToken:");
+                builder.AppendLine($" '{MigrationToken}'");
+            }
+
+            if (Optional.IsDefined(SkuChangeInfo))
+            {
+                builder.Append("  skuChangeInfo:");
+                AppendChildObject(builder, SkuChangeInfo, options, 2, false);
+            }
+
+            if (Optional.IsDefined(CustomSubDomainName))
+            {
+                builder.Append("  customSubDomainName:");
+                builder.AppendLine($" '{CustomSubDomainName}'");
+            }
+
+            if (Optional.IsDefined(NetworkAcls))
+            {
+                builder.Append("  networkAcls:");
+                AppendChildObject(builder, NetworkAcls, options, 2, false);
+            }
+
+            if (Optional.IsDefined(Encryption))
+            {
+                builder.Append("  encryption:");
+                AppendChildObject(builder, Encryption, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(UserOwnedStorage))
+            {
+                if (UserOwnedStorage.Any())
+                {
+                    builder.Append("  userOwnedStorage:");
+                    builder.AppendLine(" [");
+                    foreach (var item in UserOwnedStorage)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                if (PrivateEndpointConnections.Any())
+                {
+                    builder.Append("  privateEndpointConnections:");
+                    builder.AppendLine(" [");
+                    foreach (var item in PrivateEndpointConnections)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                builder.Append("  publicNetworkAccess:");
+                builder.AppendLine($" '{PublicNetworkAccess.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ApiProperties))
+            {
+                builder.Append("  apiProperties:");
+                AppendChildObject(builder, ApiProperties, options, 2, false);
+            }
+
+            if (Optional.IsDefined(CreatedOn))
+            {
+                builder.Append("  dateCreated:");
+                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(CallRateLimit))
+            {
+                builder.Append("  callRateLimit:");
+                AppendChildObject(builder, CallRateLimit, options, 2, false);
+            }
+
+            if (Optional.IsDefined(EnableDynamicThrottling))
+            {
+                builder.Append("  dynamicThrottlingEnabled:");
+                var boolValue = EnableDynamicThrottling.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(QuotaLimit))
+            {
+                builder.Append("  quotaLimit:");
+                AppendChildObject(builder, QuotaLimit, options, 2, false);
+            }
+
+            if (Optional.IsDefined(RestrictOutboundNetworkAccess))
+            {
+                builder.Append("  restrictOutboundNetworkAccess:");
+                var boolValue = RestrictOutboundNetworkAccess.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(AllowedFqdnList))
+            {
+                if (AllowedFqdnList.Any())
+                {
+                    builder.Append("  allowedFqdnList:");
+                    builder.AppendLine(" [");
+                    foreach (var item in AllowedFqdnList)
+                    {
+                        if (item == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($"    '{item}'");
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(DisableLocalAuth))
+            {
+                builder.Append("  disableLocalAuth:");
+                var boolValue = DisableLocalAuth.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsCollectionDefined(Endpoints))
+            {
+                if (Endpoints.Any())
+                {
+                    builder.Append("  endpoints:");
+                    builder.AppendLine(" {");
+                    foreach (var item in Endpoints)
+                    {
+                        builder.Append($"    {item.Key}: ");
+                        if (item.Value == null)
+                        {
+                            builder.Append("null");
+                            continue;
+                        }
+                        builder.AppendLine($" '{item.Value}'");
+                    }
+                    builder.AppendLine("  }");
+                }
+            }
+
+            if (Optional.IsDefined(Restore))
+            {
+                builder.Append("  restore:");
+                var boolValue = Restore.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(DeletedOn))
+            {
+                builder.Append("  deletionDate:");
+                var formattedDateTimeString = TypeFormatters.ToString(DeletedOn.Value, "o");
+                builder.AppendLine($" '{formattedDateTimeString}'");
+            }
+
+            if (Optional.IsDefined(ScheduledPurgeDate))
+            {
+                builder.Append("  scheduledPurgeDate:");
+                builder.AppendLine($" '{ScheduledPurgeDate}'");
+            }
+
+            if (Optional.IsDefined(Locations))
+            {
+                builder.Append("  locations:");
+                AppendChildObject(builder, Locations, options, 2, false);
+            }
+
+            if (Optional.IsCollectionDefined(CommitmentPlanAssociations))
+            {
+                if (CommitmentPlanAssociations.Any())
+                {
+                    builder.Append("  commitmentPlanAssociations:");
+                    builder.AppendLine(" [");
+                    foreach (var item in CommitmentPlanAssociations)
+                    {
+                        AppendChildObject(builder, item, options, 4, true);
+                    }
+                    builder.AppendLine("  ]");
+                }
+            }
+
+            if (Optional.IsDefined(AbusePenalty))
+            {
+                builder.Append("  abusePenalty:");
+                AppendChildObject(builder, AbusePenalty, options, 2, false);
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<CognitiveServicesAccountProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -536,6 +794,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(CognitiveServicesAccountProperties)} does not support '{options.Format}' format.");
             }
@@ -552,6 +812,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeCognitiveServicesAccountProperties(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(CognitiveServicesAccountProperties)} does not support '{options.Format}' format.");
             }

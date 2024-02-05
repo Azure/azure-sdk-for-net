@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -438,6 +440,198 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new GatewayApiData(id, name, type, systemData.Value, description.Value, authenticationSettings.Value, subscriptionKeyParameterNames.Value, Optional.ToNullable(type0), apiRevision.Value, apiVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isOnline), apiRevisionDescription.Value, apiVersionDescription.Value, apiVersionSetId.Value, Optional.ToNullable(subscriptionRequired), termsOfServiceUri.Value, contact.Value, license.Value, sourceApiId.Value, displayName.Value, serviceUri.Value, path.Value, Optional.ToList(protocols), apiVersionSet.Value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(Id))
+            {
+                builder.Append("  id:");
+                builder.AppendLine($" '{Id.ToString()}'");
+            }
+
+            if (Optional.IsDefined(Name))
+            {
+                builder.Append("  name:");
+                builder.AppendLine($" '{Name}'");
+            }
+
+            if (Optional.IsDefined(ResourceType))
+            {
+                builder.Append("  type:");
+                builder.AppendLine($" '{ResourceType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(SystemData))
+            {
+                builder.Append("  systemData:");
+                builder.AppendLine($" '{SystemData.ToString()}'");
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            if (Optional.IsDefined(Description))
+            {
+                builder.Append("    description:");
+                builder.AppendLine($" '{Description}'");
+            }
+
+            if (Optional.IsDefined(AuthenticationSettings))
+            {
+                builder.Append("    authenticationSettings:");
+                AppendChildObject(builder, AuthenticationSettings, options, 4, false);
+            }
+
+            if (Optional.IsDefined(SubscriptionKeyParameterNames))
+            {
+                builder.Append("    subscriptionKeyParameterNames:");
+                AppendChildObject(builder, SubscriptionKeyParameterNames, options, 4, false);
+            }
+
+            if (Optional.IsDefined(ApiType))
+            {
+                builder.Append("    type:");
+                builder.AppendLine($" '{ApiType.ToString()}'");
+            }
+
+            if (Optional.IsDefined(ApiRevision))
+            {
+                builder.Append("    apiRevision:");
+                builder.AppendLine($" '{ApiRevision}'");
+            }
+
+            if (Optional.IsDefined(ApiVersion))
+            {
+                builder.Append("    apiVersion:");
+                builder.AppendLine($" '{ApiVersion}'");
+            }
+
+            if (Optional.IsDefined(IsCurrent))
+            {
+                builder.Append("    isCurrent:");
+                var boolValue = IsCurrent.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(IsOnline))
+            {
+                builder.Append("    isOnline:");
+                var boolValue = IsOnline.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(ApiRevisionDescription))
+            {
+                builder.Append("    apiRevisionDescription:");
+                builder.AppendLine($" '{ApiRevisionDescription}'");
+            }
+
+            if (Optional.IsDefined(ApiVersionDescription))
+            {
+                builder.Append("    apiVersionDescription:");
+                builder.AppendLine($" '{ApiVersionDescription}'");
+            }
+
+            if (Optional.IsDefined(ApiVersionSetId))
+            {
+                builder.Append("    apiVersionSetId:");
+                builder.AppendLine($" '{ApiVersionSetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(IsSubscriptionRequired))
+            {
+                builder.Append("    subscriptionRequired:");
+                var boolValue = IsSubscriptionRequired.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            if (Optional.IsDefined(TermsOfServiceUri))
+            {
+                builder.Append("    termsOfServiceUrl:");
+                builder.AppendLine($" '{TermsOfServiceUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(Contact))
+            {
+                builder.Append("    contact:");
+                AppendChildObject(builder, Contact, options, 4, false);
+            }
+
+            if (Optional.IsDefined(License))
+            {
+                builder.Append("    license:");
+                AppendChildObject(builder, License, options, 4, false);
+            }
+
+            if (Optional.IsDefined(SourceApiId))
+            {
+                builder.Append("    sourceApiId:");
+                builder.AppendLine($" '{SourceApiId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DisplayName))
+            {
+                builder.Append("    displayName:");
+                builder.AppendLine($" '{DisplayName}'");
+            }
+
+            if (Optional.IsDefined(ServiceUri))
+            {
+                builder.Append("    serviceUrl:");
+                builder.AppendLine($" '{ServiceUri.AbsoluteUri}'");
+            }
+
+            if (Optional.IsDefined(Path))
+            {
+                builder.Append("    path:");
+                builder.AppendLine($" '{Path}'");
+            }
+
+            if (Optional.IsCollectionDefined(Protocols))
+            {
+                if (Protocols.Any())
+                {
+                    builder.Append("    protocols:");
+                    builder.AppendLine(" [");
+                    foreach (var item in Protocols)
+                    {
+                        builder.AppendLine($"      '{item.ToString()}'");
+                    }
+                    builder.AppendLine("    ]");
+                }
+            }
+
+            if (Optional.IsDefined(ApiVersionSet))
+            {
+                builder.Append("    apiVersionSet:");
+                AppendChildObject(builder, ApiVersionSet, options, 4, false);
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<GatewayApiData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GatewayApiData>)this).GetFormatFromOptions(options) : options.Format;
@@ -446,6 +640,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(GatewayApiData)} does not support '{options.Format}' format.");
             }
@@ -462,6 +658,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeGatewayApiData(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(GatewayApiData)} does not support '{options.Format}' format.");
             }

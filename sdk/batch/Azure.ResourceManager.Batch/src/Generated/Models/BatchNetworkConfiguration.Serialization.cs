@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -152,6 +153,65 @@ namespace Azure.ResourceManager.Batch.Models
             return new BatchNetworkConfiguration(subnetId.Value, Optional.ToNullable(dynamicVnetAssignmentScope), endpointConfiguration.Value, publicIPAddressConfiguration.Value, Optional.ToNullable(enableAcceleratedNetworking), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.AppendLine("{");
+
+            if (Optional.IsDefined(SubnetId))
+            {
+                builder.Append("  subnetId:");
+                builder.AppendLine($" '{SubnetId.ToString()}'");
+            }
+
+            if (Optional.IsDefined(DynamicVNetAssignmentScope))
+            {
+                builder.Append("  dynamicVnetAssignmentScope:");
+                builder.AppendLine($" '{DynamicVNetAssignmentScope.ToString()}'");
+            }
+
+            if (Optional.IsDefined(EndpointConfiguration))
+            {
+                builder.Append("  endpointConfiguration:");
+                AppendChildObject(builder, EndpointConfiguration, options, 2, false);
+            }
+
+            if (Optional.IsDefined(PublicIPAddressConfiguration))
+            {
+                builder.Append("  publicIPAddressConfiguration:");
+                AppendChildObject(builder, PublicIPAddressConfiguration, options, 2, false);
+            }
+
+            if (Optional.IsDefined(EnableAcceleratedNetworking))
+            {
+                builder.Append("  enableAcceleratedNetworking:");
+                var boolValue = EnableAcceleratedNetworking.Value == true ? "true" : "false";
+                builder.AppendLine($" {boolValue}");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
+        }
+
         BinaryData IPersistableModel<BatchNetworkConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BatchNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -160,6 +220,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "B":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(BatchNetworkConfiguration)} does not support '{options.Format}' format.");
             }
@@ -176,6 +238,8 @@ namespace Azure.ResourceManager.Batch.Models
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeBatchNetworkConfiguration(document.RootElement, options);
                     }
+                case "B":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(BatchNetworkConfiguration)} does not support '{options.Format}' format.");
             }
