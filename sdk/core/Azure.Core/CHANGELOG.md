@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `TransferResponseDisposeOwnership` to `HttpMessage` to enable returning an undisposed `Response` from protocol methods.
+
 ### Breaking Changes
 
 ### Bugs Fixed
