@@ -7,7 +7,7 @@
     <AssemblyTitle>Azure Communication Phone Numbers Service</AssemblyTitle>
     <Version>1.2.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.1.0</ApiCompatVersion>
+    <!--ApiCompatVersion>1.1.0</ApiCompatVersion -->
     <PackageTags>Microsoft Azure Communication Phone Numbers Service;Microsoft;Azure;Azure Communication Service;Azure Communication Phone Numbers Service;Phone Numbers;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
@@ -31,6 +31,9 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20240112.2" />
   </ItemGroup>
 
 </Project>
