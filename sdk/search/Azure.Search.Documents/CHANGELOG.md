@@ -1,14 +1,12 @@
 # Release History
 
-## 11.6.0-beta.2 (Unreleased)
+## 11.6.0-beta.2 (2024-02-05)
 
 ### Features Added
-
-### Breaking Changes
+- Publicly exposed HttpPipeline for all search clients.
 
 ### Bugs Fixed
-
-### Other Changes
+- Removed the unintentional addition of the abstract keyword to the `KnowledgeStoreProjectionSelector` and `KnowledgeStoreStorageProjectionSelector` types.
 
 ## 11.6.0-beta.1 (2024-01-17)
 
