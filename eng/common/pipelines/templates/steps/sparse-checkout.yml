@@ -80,7 +80,7 @@ steps:
               Write-Host "git -c advice.detachedHead=false checkout $commitish --"
 
               # This will use the default branch if repo.Commitish is empty
-              git -c advice.detachedHead=false checkout $commitish --
+              Invoke-Expression -Command "git -c advice.detachedHead=false checkout $commitish --"
             } else {
               Write-Host "Skipping checkout as repo has already been initialized"
             }
