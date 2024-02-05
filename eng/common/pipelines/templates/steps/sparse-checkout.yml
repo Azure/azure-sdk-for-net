@@ -26,6 +26,11 @@ steps:
       # Define this inline, because of the chicken/egg problem with loading a script when nothing
       # has been checked out yet.
       script: |
+        # Setting $PSNativeCommandArgumentPassing to 'Legacy' to use PowerShell
+        # 7.2 behavior for command argument passing. Newer behaviors will result
+        # in errors from git.exe.
+        $PSNativeCommandArgumentPassing = 'Legacy'
+        
         function SparseCheckout([Array]$paths, [Hashtable]$repository)
         {
             $dir = $repository.WorkingDirectory
@@ -80,7 +85,7 @@ steps:
               Write-Host "git -c advice.detachedHead=false checkout $commitish --"
 
               # This will use the default branch if repo.Commitish is empty
-              Invoke-Expression -Command "git -c advice.detachedHead=false checkout $commitish --"
+              git -c advice.detachedHead=false checkout $commitish --
             } else {
               Write-Host "Skipping checkout as repo has already been initialized"
             }
