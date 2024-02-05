@@ -37,5 +37,7 @@ namespace Azure.Communication.CallAutomation
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
         /// <summary> The identifier of the call automation entity which answers the call. </summary>
         public CommunicationUserIdentifierModel AnsweredBy { get; set; }
+        /// <summary> Live Transcription Configuration. </summary>
+        public TranscriptionConfiguration TranscriptionConfiguration { get; set; }
     }
 }

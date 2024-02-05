@@ -46,5 +46,7 @@ namespace Azure.Communication.CallAutomation
         public string CallbackUri { get; }
         /// <summary> AI options for the call. </summary>
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
+        /// <summary> Live Transcription Configuration. </summary>
+        public TranscriptionConfiguration TranscriptionConfiguration { get; set; }
     }
 }

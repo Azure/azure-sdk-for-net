@@ -112,6 +112,230 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        internal HttpMessage CreateStartTranscriptionRequest(string callConnectionId, StartTranscriptionRequest startTranscriptionRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":startTranscription", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(startTranscriptionRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Starts transcription in the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="startTranscriptionRequest"> The StartTranscriptionRequest to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startTranscriptionRequest"/> is null. </exception>
+        public async Task<Response> StartTranscriptionAsync(string callConnectionId, StartTranscriptionRequest startTranscriptionRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (startTranscriptionRequest == null)
+            {
+                throw new ArgumentNullException(nameof(startTranscriptionRequest));
+            }
+
+            using var message = CreateStartTranscriptionRequest(callConnectionId, startTranscriptionRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Starts transcription in the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="startTranscriptionRequest"> The StartTranscriptionRequest to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startTranscriptionRequest"/> is null. </exception>
+        public Response StartTranscription(string callConnectionId, StartTranscriptionRequest startTranscriptionRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (startTranscriptionRequest == null)
+            {
+                throw new ArgumentNullException(nameof(startTranscriptionRequest));
+            }
+
+            using var message = CreateStartTranscriptionRequest(callConnectionId, startTranscriptionRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateStopTranscriptionRequest(string callConnectionId, StopTranscriptionRequest stopTranscriptionRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":stopTranscription", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(stopTranscriptionRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Stops transcription in the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="stopTranscriptionRequest"> stop transcription request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopTranscriptionRequest"/> is null. </exception>
+        public async Task<Response> StopTranscriptionAsync(string callConnectionId, StopTranscriptionRequest stopTranscriptionRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (stopTranscriptionRequest == null)
+            {
+                throw new ArgumentNullException(nameof(stopTranscriptionRequest));
+            }
+
+            using var message = CreateStopTranscriptionRequest(callConnectionId, stopTranscriptionRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Stops transcription in the call. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="stopTranscriptionRequest"> stop transcription request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="stopTranscriptionRequest"/> is null. </exception>
+        public Response StopTranscription(string callConnectionId, StopTranscriptionRequest stopTranscriptionRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (stopTranscriptionRequest == null)
+            {
+                throw new ArgumentNullException(nameof(stopTranscriptionRequest));
+            }
+
+            using var message = CreateStopTranscriptionRequest(callConnectionId, stopTranscriptionRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUpdateTranscriptionRequest(string callConnectionId, UpdateTranscriptionRequest updateTranscriptionRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":updateTranscription", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(updateTranscriptionRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> UpdateTranscription Api. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="updateTranscriptionRequest"> The UpdateTranscription request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="updateTranscriptionRequest"/> is null. </exception>
+        /// <remarks> API to change transcription language. </remarks>
+        public async Task<Response> UpdateTranscriptionAsync(string callConnectionId, UpdateTranscriptionRequest updateTranscriptionRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (updateTranscriptionRequest == null)
+            {
+                throw new ArgumentNullException(nameof(updateTranscriptionRequest));
+            }
+
+            using var message = CreateUpdateTranscriptionRequest(callConnectionId, updateTranscriptionRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> UpdateTranscription Api. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="updateTranscriptionRequest"> The UpdateTranscription request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="updateTranscriptionRequest"/> is null. </exception>
+        /// <remarks> API to change transcription language. </remarks>
+        public Response UpdateTranscription(string callConnectionId, UpdateTranscriptionRequest updateTranscriptionRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (updateTranscriptionRequest == null)
+            {
+                throw new ArgumentNullException(nameof(updateTranscriptionRequest));
+            }
+
+            using var message = CreateUpdateTranscriptionRequest(callConnectionId, updateTranscriptionRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateCancelAllMediaOperationsRequest(string callConnectionId)
         {
             var message = _pipeline.CreateMessage();
